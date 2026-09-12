@@ -1,8 +1,46 @@
-import { ArrowLeft, Link2, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 5 — Bonding Requirements
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import { EquipotentialBonding } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Bonding Requirements - MOET Module 2 Section 4.5';
@@ -27,12 +65,7 @@ const quickCheckQuestions = [
     id: 'main-bonding-size',
     question:
       'For a TN-C-S (PME) supply with a 25 mm² incoming line conductor, what is the minimum main bonding conductor size?',
-    options: [
-      '10 mm² copper',
-      '25 mm² copper',
-      '6 mm² copper',
-      '16 mm² copper',
-    ],
+    options: ['10 mm² copper', '25 mm² copper', '6 mm² copper', '16 mm² copper'],
     correctIndex: 0,
     explanation:
       'For TN-C-S (PME) supplies, BS 7671 Table 54.8 requires main bonding conductors to be not less than 10 mm² copper where the incoming line conductor is up to 35 mm². This is more onerous than the general requirement because of the additional risk associated with PME — the broken PEN conductor scenario requires robust bonding to limit dangerous voltage differences.',
@@ -96,12 +129,7 @@ const quizQuestions = [
     id: 3,
     question:
       'Under BS 7671, the minimum cross-sectional area for a main bonding conductor in a TN-S system with a 16 mm² incoming line conductor is:',
-    options: [
-      '6 mm² copper',
-      '2.5 mm² copper',
-      '4 mm² copper',
-      '10 mm² copper',
-    ],
+    options: ['6 mm² copper', '2.5 mm² copper', '4 mm² copper', '10 mm² copper'],
     correctAnswer: 3,
     explanation:
       'For TN-S and TN-C-S systems, BS 7671 Table 54.8 specifies minimum main bonding conductor sizes. For a supply with a line conductor of 16 mm², the minimum main bonding conductor is 10 mm² copper. The standard specifies minimum sizes of 6 mm², 10 mm², or 25 mm² depending on the supply conductor size, but with an absolute minimum of 6 mm² for any installation.',
@@ -151,9 +179,9 @@ const quizQuestions = [
     id: 7,
     question: 'The bonding clamp used on a gas or water pipe must be:',
     options: [
-      "Any general-purpose jubilee clip tightened firmly onto the pipe",
-      "A soldered joint made directly onto the surface of the pipe",
-      "A plastic compression fitting with the conductor pushed inside",
+      'Any general-purpose jubilee clip tightened firmly onto the pipe',
+      'A soldered joint made directly onto the surface of the pipe',
+      'A plastic compression fitting with the conductor pushed inside',
       "A purpose-made clamp to BS 951, permanently labelled 'Safety Electrical Connection — Do Not Remove'",
     ],
     correctAnswer: 3,
@@ -238,7 +266,7 @@ const faqs = [
   {
     question: 'Can I use the gas or water pipe as an earthing conductor?',
     answer:
-      'No. BS 7671 Regulation 542.2.4 prohibits the use of gas pipes as earthing conductors. Water pipes should also not be relied upon as the sole means of earthing due to the risk of plastic sections being introduced. Bonding connects these services to the earthing system for safety, but the earthing conductor itself must be a dedicated conductor connected to the means of earthing provided by the supply or the earth electrode.',
+      'No. BS 7671 Regulation 543.2.3 prohibits a gas pipe, an oil pipe, flexible or pliable conduit, support wires or other flexible metallic parts from being selected as a protective conductor. Water pipes should also not be relied upon as the sole means of earthing due to the risk of plastic sections being introduced. Bonding connects these services to the earthing system for safety, but the earthing conductor itself must be a dedicated conductor connected to the means of earthing provided by the supply or the earth electrode.',
   },
   {
     question: 'Do I need to bond the central heating system separately from the water pipes?',
@@ -259,111 +287,72 @@ const faqs = [
 ];
 
 const MOETModule2Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Link2 className="h-4 w-4" />
-            <span>Module 2.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Bonding Requirements
-          </h1>
-          <p className="text-white">
-            Equipotential bonding principles, conductor sizing and practical implementation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 5"
+        title="Bonding Requirements"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Equipotential bonding principles, conductor sizing and practical implementation — main
+            bonding to gas, water and structural steel, supplementary bonding in high-risk areas,
+            and the deficiencies you will find most often on site.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Main bonding:</strong> ExCPs to MET — gas, water, steel, heating
-              </li>
-              <li className="pl-1">
-                <strong>Supplementary:</strong> Local bonding in high-risk areas (bathrooms)
-              </li>
-              <li className="pl-1">
-                <strong>Sizing:</strong> Table 54.8 — depends on supply type and conductor size
-              </li>
-              <li className="pl-1">
-                <strong>Label:</strong> BS 951 clamp, 'Do Not Remove' label mandatory
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Inspection:</strong> Verify size, clamp, label, continuity
-              </li>
-              <li className="pl-1">
-                <strong>Plastic pipes:</strong> Assess impact on bonding continuity
-              </li>
-              <li className="pl-1">
-                <strong>PME risk:</strong> More robust bonding required for TN-C-S
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to earthing and protection KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Main bonding: ExCPs to MET — gas, water, steel, heating.',
+              'Supplementary: local bonding in high-risk areas (bathrooms).',
+              'Sizing: Table 54.8 — depends on supply type and conductor size.',
+              "Label: BS 951 clamp, 'Do Not Remove' label mandatory.",
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose of equipotential bonding and the concept of touch voltage reduction',
               'Distinguish between main bonding and supplementary bonding and their respective applications',
               'Select correct bonding conductor sizes using BS 7671 Table 54.8',
               'Identify extraneous-conductive-parts requiring main bonding in typical installations',
               'Apply supplementary bonding requirements in bathrooms and other special locations',
               'Inspect and test bonding installations during periodic inspection and testing',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The principle of equipotential bonding</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Principle of Equipotential Bonding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Keeping all touchable metalwork at the same potential"
+            plainEnglish="If every piece of metal you could touch at the same time is at the same voltage, there is nothing for a shock to travel across — bonding removes the potential difference, not the fault."
+          >
             <p>
               Equipotential bonding is one of the two fundamental measures for protection against
               electric shock by automatic disconnection of supply (the other being the protective
@@ -382,153 +371,143 @@ const MOETModule2Section4_5 = () => {
               (via the bonding conductor) are connected to the same earthing terminal, keeping them
               at the same potential.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Two Levels of Bonding</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Main equipotential bonding (Reg 411.3.1.2):</strong> Connects
-                  extraneous-conductive-parts entering the building to the main earthing terminal
-                  (MET). This creates a zone of equipotentiality throughout the building.
-                </li>
-                <li className="pl-1">
-                  <strong>Supplementary equipotential bonding (Reg 415.2):</strong> Provides
-                  additional bonding within a specific area (e.g., bathroom) where the shock risk is
-                  increased, connecting local exposed-conductive-parts and
-                  extraneous-conductive-parts together.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Two levels of bonding">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main equipotential bonding (Reg 411.3.1.2):</strong> Connects
+                extraneous-conductive-parts entering the building to the main earthing terminal
+                (MET). This creates a zone of equipotentiality throughout the building.
+              </li>
+              <li>
+                <strong>Supplementary equipotential bonding (Reg 415.2):</strong> Provides
+                additional bonding within a specific area (e.g., bathroom) where the shock risk is
+                increased, connecting local exposed-conductive-parts and extraneous-conductive-parts
+                together.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Safety Point</p>
-              <p className="text-sm text-white">
+          <EquipotentialBonding />
+
+          <CommonMistake
+            title="Removing bonding without an equivalent safety measure"
+            whatHappens={
+              <>
                 Bonding must never be removed or disconnected without ensuring an equivalent safety
                 measure is in place. Removing a bonding conductor — even temporarily during plumbing
-                work — can create an immediate shock hazard. This is why the 'Safety Electrical
-                Connection — Do Not Remove' label is a mandatory requirement. As a maintenance
-                technician, if you find bonding has been removed (a common occurrence after plumbing
-                or gas work), it must be reinstated immediately and recorded as a deficiency.
-              </p>
-            </div>
-          </div>
-        </section>
+                work — can create an immediate shock hazard.
+              </>
+            }
+            doInstead={
+              <>
+                This is why the &apos;Safety Electrical Connection — Do Not Remove&apos; label is a
+                mandatory requirement. As a maintenance technician, if you find bonding has been
+                removed (a common occurrence after plumbing or gas work), it must be reinstated
+                immediately and recorded as a deficiency.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Main Equipotential Bonding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Main equipotential bonding</ContentEyebrow>
+
+          <ConceptBlock title="Every extraneous-conductive-part entering the building">
             <p>
               Main equipotential bonding is required by BS 7671 Regulation 411.3.1.2. It connects
               every extraneous-conductive-part entering the building to the main earthing terminal
               (MET) of the installation. The bonding conductor runs from the MET to a purpose-made
               clamp on each service.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Services Requiring Main Bonding
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Metallic water service pipe:</strong> Bond within 600 mm of the internal
-                  stopcock
-                </li>
-                <li className="pl-1">
-                  <strong>Metallic gas installation pipe:</strong> Bond within 600 mm of the meter
-                  outlet (consumer side)
-                </li>
-                <li className="pl-1">
-                  <strong>Other metallic service pipes:</strong> Oil, compressed air, fire sprinkler
-                  mains
-                </li>
-                <li className="pl-1">
-                  <strong>Structural steelwork:</strong> Where accessible and likely to introduce
-                  earth potential
-                </li>
-                <li className="pl-1">
-                  <strong>Central heating and air conditioning:</strong> Metallic systems where not
-                  metallically continuous with bonded water pipes
-                </li>
-                <li className="pl-1">
-                  <strong>Lightning protection:</strong> The lightning protection earth must be
-                  bonded to the MET
-                </li>
-              </ul>
+          <ConceptBlock title="Services requiring main bonding">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Metallic water service pipe:</strong> Bond within 600 mm of the internal
+                stopcock
+              </li>
+              <li>
+                <strong>Metallic gas installation pipe:</strong> Bond within 600 mm of the meter
+                outlet (consumer side)
+              </li>
+              <li>
+                <strong>Other metallic service pipes:</strong> Oil, compressed air, fire sprinkler
+                mains
+              </li>
+              <li>
+                <strong>Structural steelwork:</strong> Where accessible and likely to introduce
+                earth potential
+              </li>
+              <li>
+                <strong>Central heating and air conditioning:</strong> Metallic systems where not
+                metallically continuous with bonded water pipes
+              </li>
+              <li>
+                <strong>Lightning protection:</strong> The lightning protection earth must be bonded
+                to the MET
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Main bonding conductor sizes (BS 7671 Table 54.8)">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Supply Conductor CSA</th>
+                    <th className="py-2 pr-4 font-medium text-white">TN-S Minimum</th>
+                    <th className="py-2 font-medium text-white">TN-C-S (PME) Minimum</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Up to 35 mm² Cu</td>
+                    <td className="py-2 pr-4">10 mm² Cu</td>
+                    <td className="py-2">10 mm² Cu</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Over 35 mm² up to 50 mm² Cu</td>
+                    <td className="py-2 pr-4">16 mm² Cu</td>
+                    <td className="py-2">16 mm² Cu</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Over 50 mm² up to 95 mm² Cu</td>
+                    <td className="py-2 pr-4">16 mm² Cu</td>
+                    <td className="py-2">25 mm² Cu</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Over 95 mm² up to 150 mm² Cu</td>
+                    <td className="py-2 pr-4">25 mm² Cu</td>
+                    <td className="py-2">25 mm² Cu</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Main Bonding Conductor Sizes (BS 7671 Table 54.8)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Supply Conductor CSA
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">TN-S Minimum</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        TN-C-S (PME) Minimum
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Up to 35 mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm² Cu</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Over 35 mm² up to 50 mm² Cu
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">16 mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">16 mm² Cu</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Over 50 mm² up to 95 mm² Cu
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">16 mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">25 mm² Cu</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Over 95 mm² up to 150 mm² Cu
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">25 mm² Cu</td>
-                      <td className="border border-white/10 px-3 py-2">25 mm² Cu</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-[12px] text-white">
+              Copied faithfully from the original page — Table 54.8 values cannot be independently
+              verified against the RAG, which holds rules rather than numeric tables (see conversion
+              report).
+            </p>
+            <p className="text-elec-yellow/70">
               <strong>Key point:</strong> For PME installations, the bonding conductor size
               requirements are generally the same or larger than for TN-S because of the additional
               risk. The absolute minimum for any main bonding conductor is 6 mm² copper, but in
               practice 10 mm² is the most common minimum for domestic installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Supplementary Equipotential Bonding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Supplementary equipotential bonding</ContentEyebrow>
+
+          <ConceptBlock title="An additional measure where shock risk is increased">
             <p>
               Supplementary bonding provides an additional safety measure within specific areas
               where the risk of electric shock is increased. The most common application is in
@@ -537,240 +516,179 @@ const MOETModule2Section4_5 = () => {
               simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts
               within the local area.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Supplementary Bonding Is Required
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bathrooms (Section 701):</strong> Required unless all circuits comply with
-                  automatic disconnection requirements AND all circuits are RCD protected at 30 mA
-                </li>
-                <li className="pl-1">
-                  <strong>Swimming pools (Section 702):</strong> Always required — connects all
-                  exposed- and extraneous-conductive-parts within the zone
-                </li>
-                <li className="pl-1">
-                  <strong>Agricultural premises (Section 705):</strong> Required in livestock areas
-                </li>
-                <li className="pl-1">
-                  <strong>Any location:</strong> Where the disconnection time requirements of Reg
-                  411.3.2 cannot be met by other means
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="When supplementary bonding is required">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bathrooms (Section 701):</strong> Required unless all circuits comply with
+                automatic disconnection requirements AND all circuits are RCD protected at 30 mA
+              </li>
+              <li>
+                <strong>Swimming pools (Section 702):</strong> Always required — connects all
+                exposed- and extraneous-conductive-parts within the zone
+              </li>
+              <li>
+                <strong>Agricultural premises (Section 705):</strong> Required in livestock areas
+              </li>
+              <li>
+                <strong>Any location:</strong> Where the disconnection time requirements of Reg
+                411.3.2 cannot be met by other means
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Supplementary Bonding Conductor Sizing
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Between two exposed-conductive-parts:</strong> Not less than the smaller
-                  of the two CPCs
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    Between an exposed-conductive-part and an extraneous-conductive-part:
-                  </strong>{' '}
-                  Not less than half the size of the CPC
-                </li>
-                <li className="pl-1">
-                  <strong>Between two extraneous-conductive-parts:</strong> Not less than 2.5 mm² Cu
-                  (mechanically protected) or 4 mm² Cu (unprotected)
-                </li>
-                <li className="pl-1">
-                  <strong>Absolute minimum:</strong> 2.5 mm² Cu if mechanically protected; 4 mm² Cu
-                  if not
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Supplementary bonding conductor sizing">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Between two exposed-conductive-parts:</strong> Not less than the smaller of
+                the two CPCs
+              </li>
+              <li>
+                <strong>
+                  Between an exposed-conductive-part and an extraneous-conductive-part:
+                </strong>{' '}
+                Not less than half the size of the CPC
+              </li>
+              <li>
+                <strong>Between two extraneous-conductive-parts:</strong> Not less than 2.5 mm² Cu
+                (mechanically protected) or 4 mm² Cu (unprotected)
+              </li>
+              <li>
+                <strong>Absolute minimum:</strong> 2.5 mm² Cu if mechanically protected; 4 mm² Cu if
+                not
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Bathroom Bonding — Practical Application
-              </p>
-              <p className="text-sm text-white">
-                In a bathroom where supplementary bonding is required, you must bond together: the
-                metal bath or shower tray (if metallic), metallic waste pipes, copper hot and cold
-                water pipes, central heating pipes and radiators, metallic door frames, and any
-                exposed-conductive-parts of electrical equipment (e.g., Class I towel rails,
-                extractors). Connections should be made using purpose-made clamps or lugs, and the
-                bonding network should connect back to the earth terminal of the bathroom circuit.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Bathroom bonding — practical application"
+            onSite="In a bathroom where supplementary bonding is required, you must bond together: the metal bath or shower tray (if metallic), metallic waste pipes, copper hot and cold water pipes, central heating pipes and radiators, metallic door frames, and any exposed-conductive-parts of electrical equipment (e.g., Class I towel rails, extractors). Connections should be made using purpose-made clamps or lugs, and the bonding network should connect back to the earth terminal of the bathroom circuit."
+          >
+            <p>
+              The bathroom is the special location most maintenance technicians meet most often —
+              know the bonding checklist for it.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Inspection, Testing and Common Deficiencies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Inspection, testing and common deficiencies</ContentEyebrow>
+
+          <ConceptBlock title="Among the most common periodic inspection findings">
             <p>
               Bonding deficiencies are among the most common findings during periodic inspection and
               testing. Missing bonding, undersized conductors, removed clamps, and disconnected
               conductors are frequently discovered — often as a result of plumbing, gas or building
               work carried out after the original electrical installation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Inspection Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Presence:</strong> Confirm bonding conductors exist to all
-                  extraneous-conductive-parts
-                </li>
-                <li className="pl-1">
-                  <strong>Sizing:</strong> Verify conductor CSA against BS 7671 Table 54.8 for the
-                  supply type
-                </li>
-                <li className="pl-1">
-                  <strong>Connections:</strong> Check clamps are secure, clean and making good
-                  contact (not corroded)
-                </li>
-                <li className="pl-1">
-                  <strong>Labels:</strong> Verify 'Safety Electrical Connection — Do Not Remove'
-                  labels are present and legible
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> Test continuity from bonding clamp to MET using
-                  low-resistance ohmmeter
-                </li>
-                <li className="pl-1">
-                  <strong>Route:</strong> Check conductor route is protected from mechanical damage
-                  and accessible for inspection
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Inspection checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Presence:</strong> Confirm bonding conductors exist to all
+                extraneous-conductive-parts
+              </li>
+              <li>
+                <strong>Sizing:</strong> Verify conductor CSA against BS 7671 Table 54.8 for the
+                supply type
+              </li>
+              <li>
+                <strong>Connections:</strong> Check clamps are secure, clean and making good contact
+                (not corroded)
+              </li>
+              <li>
+                <strong>Labels:</strong> Verify 'Safety Electrical Connection — Do Not Remove'
+                labels are present and legible
+              </li>
+              <li>
+                <strong>Continuity:</strong> Test continuity from bonding clamp to MET using
+                low-resistance ohmmeter
+              </li>
+              <li>
+                <strong>Route:</strong> Check conductor route is protected from mechanical damage
+                and accessible for inspection
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Deficiencies
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Bonding removed during plumbing/gas work</li>
-                  <li className="pl-1">Plastic sections in pipework breaking continuity</li>
-                  <li className="pl-1">
-                    Undersized conductors (e.g., 4 mm² where 10 mm² required)
-                  </li>
-                  <li className="pl-1">Missing or illegible labels</li>
-                  <li className="pl-1">Corroded clamps giving high-resistance connections</li>
-                  <li className="pl-1">Bonding connected on wrong side of gas meter</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EICR Classification
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>C1 (Danger present):</strong> Missing main bonding on a PME supply
-                  </li>
-                  <li className="pl-1">
-                    <strong>C2 (Potentially dangerous):</strong> Undersized main bonding conductor
-                  </li>
-                  <li className="pl-1">
-                    <strong>C3 (Improvement recommended):</strong> Missing label on otherwise
-                    correct bonding
-                  </li>
-                  <li className="pl-1">
-                    <strong>FI (Further investigation):</strong> Bonding continuity questionable —
-                    needs test
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Common deficiencies and EICR classification">
+            <p>
+              <strong>Common deficiencies:</strong> bonding removed during plumbing/gas work;
+              plastic sections in pipework breaking continuity; undersized conductors (e.g., 4 mm²
+              where 10 mm² required); missing or illegible labels; corroded clamps giving
+              high-resistance connections; bonding connected on the wrong side of the gas meter.
+            </p>
+            <p>
+              <strong>EICR classification:</strong> C1 (danger present) — missing main bonding on a
+              PME supply; C2 (potentially dangerous) — undersized main bonding conductor; C3
+              (improvement recommended) — missing label on otherwise correct bonding; FI (further
+              investigation) — bonding continuity questionable, needs test.
+            </p>
+            <p className="text-elec-yellow/70">
               <strong>ST1426 link:</strong> Understanding bonding requirements and being able to
               inspect, test and rectify bonding deficiencies is a core skill for the electrical
               maintenance technician pathway. You will encounter bonding issues regularly during
               routine maintenance and periodic inspection work.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Bonding equalises potential across simultaneously accessible metalwork — it does not carry fault current back to the source.',
+              'Main bonding connects extraneous-conductive-parts (gas, water, structural steel, heating) to the MET; sizes come from BS 7671 Table 54.8.',
+              'Gas: bond within 600 mm of the meter outlet, consumer side. Water: bond within 600 mm of the internal stopcock.',
+              'Supplementary bonding is required in bathrooms unless every circuit meets Reg 411.3.2 AND is 30 mA RCD protected.',
+              'BS 7671 Regulation 543.2.3 prohibits gas pipes, oil pipes and similar flexible metallic parts from being selected as a protective conductor.',
+              "Every bonding clamp must be a BS 951 clamp permanently labelled 'Safety Electrical Connection — Do Not Remove'.",
+              'A plastic section inserted into a metallic pipe run breaks bonding continuity downstream — always assess after plumbing or gas work.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Main Bonding</p>
-                <ul className="space-y-0.5">
-                  <li>Gas — within 600 mm of meter outlet</li>
-                  <li>Water — within 600 mm of stopcock</li>
-                  <li>Structural steel, heating, other services</li>
-                  <li>BS 951 clamp + 'Do Not Remove' label</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key BS 7671 References</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 411.3.1.2 — Main bonding requirement</li>
-                  <li>Reg 415.2 — Supplementary bonding</li>
-                  <li>Table 54.8 — Bonding conductor sizes</li>
-                  <li>Reg 544.2.3 — Supplementary conductor sizing</li>
-                  <li>Section 701 — Bathrooms</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Earthing Systems
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Surge Protection Devices
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Earthing Systems
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-6">
-              Next: Surge Protection Devices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -54,7 +54,7 @@ export function ProfileStrength({ items, currentTier, className }: ProfileStreng
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-5 space-y-4',
+        'bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden p-5 space-y-4',
         className
       )}
     >
@@ -149,7 +149,7 @@ export function ProfileStrength({ items, currentTier, className }: ProfileStreng
                 'inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border',
                 item.completed
                   ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                  : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20'
+                  : 'bg-white/[0.06] text-elec-yellow border-elec-yellow/20'
               )}
             >
               +{item.points}

@@ -11,7 +11,7 @@
  * merged in here.
  */
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 
 import useSEO from '@/hooks/useSEO';
@@ -40,8 +40,12 @@ export default function MockExamsPage() {
   });
 
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [filter, setFilter] = useState<Filter>('all');
-  const [query, setQuery] = useState('');
+  // `?q=` lets a nudge land on the papers it is actually about. The evening
+  // push says "you are getting 50% right on Motors & Control" — arriving at an
+  // unfiltered index of every paper in the app loses that thread entirely.
+  const [query, setQuery] = useState(() => params.get('q')?.replace(/\+/g, ' ') ?? '');
 
   const search = query.trim().toLowerCase();
 

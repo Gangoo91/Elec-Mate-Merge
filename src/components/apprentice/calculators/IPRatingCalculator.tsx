@@ -491,7 +491,7 @@ const IPRatingCalculator = () => {
           : undefined;
     return {
       meta: {
-        title: 'IP Rating Decoder',
+        title: 'IP Rating',
         subtitle: 'Ingress protection rating decoded to BS EN 60529',
         standard: 'BS EN 60529',
       },

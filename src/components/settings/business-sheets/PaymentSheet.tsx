@@ -8,6 +8,7 @@ import { CompanyProfile } from '@/types/company';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import { hintCn, inputCn, labelCn } from '@/components/settings/formStyles';
 
 interface BankDetails {
   accountName: string;
@@ -161,8 +162,8 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Payment & banking">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -177,7 +178,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             {/* Stripe Connect */}
-            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4">
+            <div className="rounded-2xl bg-white/[0.05] border border-elec-yellow/35 p-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-12 h-12 rounded-xl bg-[#635BFF] flex items-center justify-center overflow-hidden shrink-0">
@@ -191,7 +192,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                   <div className="min-w-0">
                     <p className="text-[14px] font-semibold text-white">Stripe payments</p>
                     {stripeLoading ? (
-                      <p className="text-[12.5px] text-white/65">Checking status…</p>
+                      <p className="text-[12.5px] text-white">Checking status…</p>
                     ) : stripeStatus?.status === 'active' ? (
                       <div className="mt-0.5">
                         <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
@@ -205,7 +206,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                         </span>
                       </div>
                     ) : (
-                      <p className="text-[12.5px] text-white/65">Accept card payments</p>
+                      <p className="text-[12.5px] text-white">Accept card payments</p>
                     )}
                   </div>
                 </div>
@@ -214,7 +215,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                     type="button"
                     onClick={handleOpenStripeDashboard}
                     disabled={connecting}
-                    className="h-11 px-4 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 shrink-0"
+                    className="h-11 px-4 rounded-xl border border-elec-yellow/35 bg-white/[0.05] text-white text-[13px] font-medium hover:bg-white/[0.06] transition-colors touch-manipulation disabled:opacity-50 shrink-0"
                   >
                     Dashboard <span aria-hidden>↗</span>
                   </button>
@@ -243,39 +244,39 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Account name</Label>
+                  <Label className={labelCn}>Account name</Label>
                   <Input
                     value={bankDetails.accountName}
                     onChange={(e) =>
                       setBankDetails({ ...bankDetails, accountName: e.target.value })
                     }
                     placeholder="ABC Electrical Ltd"
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Bank name</Label>
+                  <Label className={labelCn}>Bank name</Label>
                   <Input
                     value={bankDetails.bankName}
                     onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
                     placeholder="e.g. Barclays"
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Sort code</Label>
+                  <Label className={labelCn}>Sort code</Label>
                   <Input
                     value={bankDetails.sortCode}
                     onChange={(e) =>
                       setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })
                     }
                     placeholder="12-34-56"
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                     inputMode="numeric"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Account number</Label>
+                  <Label className={labelCn}>Account number</Label>
                   <Input
                     value={bankDetails.accountNumber}
                     onChange={(e) =>
@@ -285,23 +286,23 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
                       })
                     }
                     placeholder="12345678"
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                     inputMode="numeric"
                   />
                 </div>
               </div>
               <div className="space-y-1.5 mt-4">
-                <Label className="text-white font-medium text-[13px]">
-                  Pay-online link <span className="text-white/40 font-normal">(optional)</span>
+                <Label className={labelCn}>
+                  Pay-online link <span className="text-white font-normal">(optional)</span>
                 </Label>
                 <Input
                   value={paymentLink}
                   onChange={(e) => setPaymentLink(e.target.value)}
                   placeholder="https://pay.yourfirm.com/…"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                   inputMode="url"
                 />
-                <p className="text-[11px] text-white/40">
+                <p className={hintCn}>
                   Shown to clients on the portal as a "Pay online" button, alongside your bank
                   details.
                 </p>
@@ -314,7 +315,7 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

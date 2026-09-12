@@ -1,8 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 1 · Subsection 5 — Legal and Regulatory Compliance in PPM
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Documentation requirements: documentation control, auditable
+ *     records."
+ *   · "Record information."
+ *   · "Produce or update documents. For example, handover notes and
+ *     reports."
+ *
+ * Note: the Module 4 KSB list has no statement covering statutory/
+ * regulatory duty itself (EAWR, PUWER, BS 7671 Part 6) the way Module 1's
+ * list does for health and safety — only the documentation-adjacent
+ * statements above map cleanly onto this page's core legal content.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Legal and Regulatory Compliance in PPM - MOET Module 4.1.5';
@@ -12,7 +55,8 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     id: 'eawr-reg4',
-    question: 'Under EAWR 1989 Regulation 4(2), the duty to maintain electrical systems is best described as:',
+    question:
+      'Under EAWR 1989 Regulation 4(2), the duty to maintain electrical systems is best described as:',
     options: [
       'A duty that applies only to high-voltage systems',
       'A voluntary code of practice with no legal force',
@@ -21,18 +65,13 @@ const quickCheckQuestions = [
     ],
     correctIndex: 3,
     explanation:
-      "Regulation 4(2) requires that systems be maintained so as to prevent danger, so far as is reasonably practicable. The HSE Memorandum of Guidance clarifies that the maintenance duty is, in effect, treated as absolute — if a system is not maintained and danger results, the duty holder commits a criminal offence.",
+      'Regulation 4(2) requires that systems be maintained so as to prevent danger, so far as is reasonably practicable. The HSE Memorandum of Guidance clarifies that the maintenance duty is, in effect, treated as absolute — if a system is not maintained and danger results, the duty holder commits a criminal offence.',
   },
   {
     id: 'eicr-interval',
     question:
       'According to IET Guidance Note 3, what is the recommended maximum interval between periodic inspections (EICRs) for a commercial office premises?',
-    options: [
-      '5 years',
-      '10 years',
-      '1 year',
-      '3 years',
-    ],
+    options: ['5 years', '10 years', '1 year', '3 years'],
     correctIndex: 0,
     explanation:
       'IET Guidance Note 3 recommends a maximum interval of 5 years between periodic inspections for commercial premises. However, this is a maximum — the actual interval should be determined based on the type of installation, its condition, the environment and the use of the building. Higher-risk environments (e.g., construction sites — 3 months, swimming pools — 1 year) require more frequent inspection.',
@@ -97,9 +136,9 @@ const quizQuestions = [
     question: 'An EICR (Electrical Installation Condition Report) is:',
     options: [
       'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
-      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
-      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
-      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
+      'A certificate issued for a new installation before it is first energised',
+      "A manufacturer's declaration that equipment complies with its product standard",
+      'A record of the portable appliance tests carried out across a site',
     ],
     correctAnswer: 0,
     explanation:
@@ -243,599 +282,547 @@ const faqs = [
 ];
 
 const MOETModule4Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Legal and Regulatory Compliance in PPM
-          </h1>
-          <p className="text-white">
-            EAWR, PUWER, BS 7671, EICRs, statutory obligations and insurance requirements
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.1 · Subsection 5"
+        title="Legal and Regulatory Compliance in PPM"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            EAWR, PUWER, BS 7671, EICRs, statutory obligations and insurance requirements.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EAWR Reg 4(2):</strong> Absolute duty to maintain electrical systems
+          <TLDR
+            points={[
+              'EAWR Reg 4(2): Absolute duty to maintain electrical systems.',
+              'PUWER Reg 5: Equipment in efficient state and good repair.',
+              'BS 7671 Part 6: Periodic inspection and EICR requirements.',
+              'RRO 2005: Statutory fire alarm and emergency lighting testing.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>EICRs:</strong> Periodic inspection at intervals per IET GN3.
               </li>
-              <li className="pl-1">
-                <strong>PUWER Reg 5:</strong> Equipment in efficient state and good repair
+              <li>
+                <strong>Defect codes:</strong> C1 danger, C2 potentially dangerous, C3 improvement.
               </li>
-              <li className="pl-1">
-                <strong>BS 7671 Part 6:</strong> Periodic inspection and EICR requirements
+              <li>
+                <strong>Insurance:</strong> Satisfactory EICR and records typically required.
               </li>
-              <li className="pl-1">
-                <strong>RRO 2005:</strong> Statutory fire alarm and emergency lighting testing
+              <li>
+                <strong>ST1426:</strong> Regulatory knowledge is a core KSB requirement.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EICRs:</strong> Periodic inspection at intervals per IET GN3
-              </li>
-              <li className="pl-1">
-                <strong>Defect codes:</strong> C1 danger, C2 potentially dangerous, C3 improvement
-              </li>
-              <li className="pl-1">
-                <strong>Insurance:</strong> Satisfactory EICR and records typically required
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Regulatory knowledge is a core KSB requirement
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'The Electricity at Work Regulations',
+
+                gist: 'The statutory duties: Reg 4(2) maintenance, Reg 13 precautions on dead equipment, Reg 14 live working, Reg 16 competence.',
+
+                where: '1.4.2',
+              },
+
+              {
+                term: 'PUWER',
+
+                gist: 'Work equipment must be suitable, maintained, inspected and used only by people who have been trained.',
+
+                where: '1.4.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the duty to maintain under EAWR 1989 and PUWER 1998',
               'Describe the periodic inspection requirements of BS 7671 Part 6',
               'Apply IET Guidance Note 3 recommended inspection intervals',
               'Distinguish between statutory and non-statutory maintenance obligations',
               'Interpret EICR defect classification codes (C1, C2, C3, FI)',
               'Identify insurance and compliance documentation requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The duty to maintain: EAWR and PUWER</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Duty to Maintain: EAWR and PUWER
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Two pieces of legislation that create a direct legal duty">
             <p>
               Two key pieces of UK legislation create direct legal duties to maintain electrical
               systems: the Electricity at Work Regulations 1989 (EAWR) and the Provision and Use of
               Work Equipment Regulations 1998 (PUWER). Understanding these duties is essential for
               maintenance technicians and is assessed as part of the ST1426 apprenticeship.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EAWR 1989 — Regulation 4(2)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                "As may be necessary to prevent danger, all systems shall be maintained so as to
-                prevent, so far as is reasonably practicable, such danger."
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <RegsCallout
+            source="Electricity at Work Regulations 1989 — Regulation 4(2)"
+            clause="As may be necessary to prevent danger, all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger."
+            meaning={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-300/60">
+                <li>
                   <strong>Scope:</strong> All electrical systems at all voltages in all workplaces
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Duty holder:</strong> Employer, self-employed, or any person who has
                   control of the system
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Nature of duty:</strong> The HSE Memorandum of Guidance clarifies that the
                   duty to maintain is absolute in its effect — if the system is not maintained and
                   danger results, an offence has been committed
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Records:</strong> While not explicitly required, the HSE strongly
                   recommends maintenance records as evidence of compliance
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Enforcement:</strong> HSE inspectors can issue improvement notices,
                   prohibition notices, or prosecute for breaches
                 </li>
               </ul>
-            </div>
+            }
+            cite="Reference: EAWR 1989, Regulation 4(2)"
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PUWER 1998 — Regulation 5
-              </h3>
-              <p className="text-sm text-white mb-2">
-                "Every employer shall ensure that work equipment is maintained in an efficient
-                state, in efficient working order and in good repair."
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <RegsCallout
+            source="Provision and Use of Work Equipment Regulations 1998 — Regulation 5"
+            clause="Every employer shall ensure that work equipment is maintained in an efficient state, in efficient working order and in good repair."
+            meaning={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-300/60">
+                <li>
                   <strong>Scope:</strong> All work equipment — which includes electrical equipment
                   used at work
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Maintenance log:</strong> Where appropriate, a maintenance log must be
                   kept up to date
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Inspection:</strong> Where safety depends on installation conditions,
                   equipment must be inspected at suitable intervals
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Records of inspection:</strong> Records must be kept until the next
                   inspection is carried out
                 </li>
               </ul>
-            </div>
+            }
+            cite="Reference: PUWER 1998, Regulation 5"
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Criminal Liability</p>
-              <p className="text-sm text-white">
-                Breach of EAWR or PUWER is a criminal offence. Penalties can include unlimited fines
-                and imprisonment. Directors and senior managers can be held personally liable under
-                HASAWA 1974 Section 37 if the offence was committed with their consent, connivance
-                or neglect. For maintenance technicians, there is also a personal duty under EAWR
-                Regulation 3 to cooperate with the employer in meeting the maintenance requirements.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Criminal liability">
+            <p>
+              Breach of EAWR or PUWER is a criminal offence. Penalties can include unlimited fines
+              and imprisonment. Directors and senior managers can be held personally liable under
+              HASAWA 1974 Section 37 if the offence was committed with their consent, connivance or
+              neglect. For maintenance technicians, there is also a personal duty under EAWR
+              Regulation 3 to cooperate with the employer in meeting the maintenance requirements.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            BS 7671 Part 6 and Periodic Inspection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 Part 6 and periodic inspection</ContentEyebrow>
+
+          <ConceptBlock title="The primary mechanism for verifying ongoing safety">
             <p>
               BS 7671 (IET Wiring Regulations) Part 6 sets out the requirements for inspection and
               testing of electrical installations. While initial verification applies to new work,
               periodic inspection applies to existing installations and is the primary mechanism for
               verifying ongoing compliance and safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IET Guidance Note 3 — Recommended Maximum Intervals
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Installation Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Interval</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic (owner-occupied)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic (rented — England)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5 years (statutory)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commercial offices/shops</td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial</td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hospitals and medical</td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Educational establishments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Theatres and cinemas</td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Swimming pools</td>
-                      <td className="border border-white/10 px-3 py-2">1 year</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Construction sites</td>
-                      <td className="border border-white/10 px-3 py-2">3 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Agricultural and horticultural
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Marinas</td>
-                      <td className="border border-white/10 px-3 py-2">1 year</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="IET Guidance Note 3 — recommended maximum intervals">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Installation type
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Max interval
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Domestic (owner-occupied)</td>
+                    <td className="border border-white/10 px-3 py-2">10 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Domestic (rented — England)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">5 years (statutory)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Commercial offices/shops</td>
+                    <td className="border border-white/10 px-3 py-2">5 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Industrial</td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Hospitals and medical</td>
+                    <td className="border border-white/10 px-3 py-2">5 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Educational establishments</td>
+                    <td className="border border-white/10 px-3 py-2">5 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Theatres and cinemas</td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Swimming pools</td>
+                    <td className="border border-white/10 px-3 py-2">1 year</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Construction sites</td>
+                    <td className="border border-white/10 px-3 py-2">3 months</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Agricultural and horticultural
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Marinas</td>
+                    <td className="border border-white/10 px-3 py-2">1 year</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EICR Defect Classification Codes
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
-                        C1
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Danger present — risk of injury
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate remedial action required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
-                        C2
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Potentially dangerous</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Urgent remedial action required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
-                        C3
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not a defect per se, but improvement desirable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-blue-400">
-                        FI
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Further investigation required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cannot determine condition without further investigation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="EICR defect classification codes">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Code
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Meaning
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Action required
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
+                      C1
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Danger present — risk of injury
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Immediate remedial action required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
+                      C2
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Potentially dangerous
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Urgent remedial action required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
+                      C3
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Improvement recommended
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Not a defect per se, but improvement desirable
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-blue-400">
+                      FI
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Further investigation required
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Cannot determine condition without further investigation
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Statutory vs Non-Statutory Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Statutory vs non-statutory maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Both matter — only one carries legal penalties">
             <p>
               Maintenance obligations can be divided into statutory requirements (required by law)
               and non-statutory requirements (recommended by standards, manufacturers or insurers).
               Both are important, but statutory requirements carry legal penalties for
               non-compliance.
             </p>
-
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Statutory Examples
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Non-Statutory Examples
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Electrical installation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic inspection (EAWR Reg 4(2))
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermographic survey, torque checking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Fire safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm testing (RRO 2005), emergency lighting testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detector sensitivity testing beyond minimum
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Work equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment maintenance (PUWER Reg 5)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer recommended service intervals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Lifting equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        6/12-monthly thorough examination (LOLER 1998)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More frequent operator checks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Pressure systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Written scheme of examination (PSSR 2000)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Routine compressor maintenance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Category
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Statutory examples
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Non-statutory examples
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Electrical installation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Periodic inspection (EAWR Reg 4(2))
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Thermographic survey, torque checking
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Fire safety</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fire alarm testing (RRO 2005), emergency lighting testing
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Detector sensitivity testing beyond minimum
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Work equipment</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Equipment maintenance (PUWER Reg 5)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Manufacturer recommended service intervals
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Lifting equipment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      6/12-monthly thorough examination (LOLER 1998)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      More frequent operator checks
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Pressure systems
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Written scheme of examination (PSSR 2000)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Routine compressor maintenance
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Insurance Requirements
-                </h3>
-                <p className="text-sm text-white">
-                  Insurance policies typically require evidence of a maintained installation. Common
-                  requirements include a satisfactory EICR, documented fire alarm and emergency
-                  lighting test records, thermographic survey reports, and PAT testing records.
-                  Failure to maintain these records may result in claims being rejected or policies
-                  being voided.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Compliance Documentation
-                </h3>
-                <p className="text-sm text-white">
-                  A comprehensive compliance file should contain: current EICR, fire alarm log book,
-                  emergency lighting log book, PAT testing records, maintenance schedules and
-                  completed work orders, thermographic survey reports, and any condition monitoring
-                  data. This file should be available for inspection by the HSE, fire authority,
-                  insurers and auditors.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Insurance requirements">
+            <p>
+              Insurance policies typically require evidence of a maintained installation. Common
+              requirements include a satisfactory EICR, documented fire alarm and emergency lighting
+              test records, thermographic survey reports, and PAT testing records. Failure to
+              maintain these records may result in claims being rejected or policies being voided.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Compliance documentation">
+            <p>
+              A comprehensive compliance file should contain: current EICR, fire alarm log book,
+              emergency lighting log book, PAT testing records, maintenance schedules and completed
+              work orders, thermographic survey reports, and any condition monitoring data. This
+              file should be available for inspection by the HSE, fire authority, insurers and
+              auditors.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            The Maintenance Technician's Role in Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The maintenance technician&apos;s role in compliance</ContentEyebrow>
+
+          <ConceptBlock title="Both practical and professional">
             <p>
               As a maintenance technician working towards ST1426, your role in regulatory compliance
               is both practical and professional. You are the eyes and hands of the maintenance
               programme — carrying out the work, recording the findings and raising concerns.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Your Compliance Responsibilities
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Follow the schedule:</strong> Complete PPM tasks on time and to the
-                  standard required
-                </li>
-                <li className="pl-1">
-                  <strong>Record accurately:</strong> Document findings truthfully and completely —
-                  never falsify records
-                </li>
-                <li className="pl-1">
-                  <strong>Report defects:</strong> Raise any deficiencies, hazards or non-compliance
-                  you discover
-                </li>
-                <li className="pl-1">
-                  <strong>Work safely:</strong> Follow safe systems of work, permits and isolation
-                  procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Know the law:</strong> Understand which maintenance activities are
-                  statutory requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous learning:</strong> Keep your knowledge of regulations and
-                  standards current
-                </li>
-              </ul>
+          <ConceptBlock title="Your compliance responsibilities">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Follow the schedule:</strong> Complete PPM tasks on time and to the standard
+                required
+              </li>
+              <li>
+                <strong>Record accurately:</strong> Document findings truthfully and completely —
+                never falsify records
+              </li>
+              <li>
+                <strong>Report defects:</strong> Raise any deficiencies, hazards or non-compliance
+                you discover
+              </li>
+              <li>
+                <strong>Work safely:</strong> Follow safe systems of work, permits and isolation
+                procedures
+              </li>
+              <li>
+                <strong>Know the law:</strong> Understand which maintenance activities are statutory
+                requirements
+              </li>
+              <li>
+                <strong>Continuous learning:</strong> Keep your knowledge of regulations and
+                standards current
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Falsifying maintenance records is a serious professional and legal matter"
+            whatHappens={
+              <>
+                If a record states that a fire alarm was tested when it was not, and a fire
+                subsequently occurs with casualties, the person who signed the record faces criminal
+                prosecution for fraud and potentially for manslaughter.
+              </>
+            }
+            doInstead={
+              <>
+                Always record what you actually did and what you actually found — the maintenance
+                record is a legal document.
+              </>
+            }
+          />
+
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">ST1426 link: </span>
+            The maintenance technician standard requires knowledge of statutory and regulatory
+            requirements, the ability to work within compliance frameworks, and professional
+            behaviours including honesty, integrity and responsibility. These are assessed through
+            the knowledge test and professional discussion at end-point assessment.
+          </p>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Key legislation"
+            points={[
+              'EAWR 1989 — Reg 4(2) duty to maintain.',
+              'PUWER 1998 — Reg 5 efficient state and good repair.',
+              'RRO 2005 — Fire safety system maintenance.',
+              'HASAWA 1974 — Overarching employer duties.',
+              'LOLER 1998 — Lifting equipment examination.',
+            ]}
+          />
+
+          <KeyTakeaways
+            title="EICR classification"
+            points={[
+              'C1 — Danger present: immediate action.',
+              'C2 — Potentially dangerous: urgent action.',
+              'C3 — Improvement recommended: advisory.',
+              'FI — Further investigation required.',
+              'Satisfactory EICR = no C1 or C2 codes.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Electrical Inspection Routines
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Visual and Sensory Inspection
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Professional Integrity</p>
-              <p className="text-sm text-white">
-                Falsifying maintenance records is a serious professional and legal matter. If a
-                record states that a fire alarm was tested when it was not, and a fire subsequently
-                occurs with casualties, the person who signed the record faces criminal prosecution
-                for fraud and potentially for manslaughter. Always record what you actually did and
-                what you actually found — the maintenance record is a legal document.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires knowledge
-              of statutory and regulatory requirements, the ability to work within compliance
-              frameworks, and professional behaviours including honesty, integrity and
-              responsibility. These are assessed through the knowledge test and professional
-              discussion at end-point assessment.
-            </p>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Legislation</p>
-                <ul className="space-y-0.5">
-                  <li>EAWR 1989 — Reg 4(2) duty to maintain</li>
-                  <li>PUWER 1998 — Reg 5 efficient state and good repair</li>
-                  <li>RRO 2005 — Fire safety system maintenance</li>
-                  <li>HASAWA 1974 — Overarching employer duties</li>
-                  <li>LOLER 1998 — Lifting equipment examination</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">EICR Classification</p>
-                <ul className="space-y-0.5">
-                  <li>C1 — Danger present: immediate action</li>
-                  <li>C2 — Potentially dangerous: urgent action</li>
-                  <li>C3 — Improvement recommended: advisory</li>
-                  <li>FI — Further investigation required</li>
-                  <li>Satisfactory EICR = no C1 or C2 codes</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Inspection Routines
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1">
-              Back to Section 1 Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

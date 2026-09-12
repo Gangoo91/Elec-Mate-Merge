@@ -1,8 +1,40 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 5 — Completing Work to Industry Standards
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * ⚠️ ACCURACY FLAG: the original page's first paragraph names
+ * "BS 7671:2018+A2:2022" as the current 18th Edition. The current edition is
+ * BS 7671:2018+A4:2026. Per the conversion brief this is reported, not
+ * silently fixed — the sentence is preserved verbatim below.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Completing Work to Industry Standards - MOET Module 7 Section 2.5';
@@ -41,10 +73,10 @@ const quickCheckQuestions = [
     id: 'ip-rating-awareness',
     question: 'When replacing a component in a panel with an IP rating, what must you ensure?',
     options: [
-      "That the replacement component carries the same colour finish as the original to preserve appearance",
-      "That the panel is upgraded to the highest available IP rating regardless of its original specification",
+      'That the replacement component carries the same colour finish as the original to preserve appearance',
+      'That the panel is upgraded to the highest available IP rating regardless of its original specification',
       "The panel's IP rating is maintained after the work — all covers, gaskets and cable entries are properly refitted and sealed",
-      "That the IP rating is recorded in the maintenance log even if the seals are not refitted",
+      'That the IP rating is recorded in the maintenance log even if the seals are not refitted',
     ],
     correctIndex: 2,
     explanation:
@@ -257,300 +289,221 @@ const faqs = [
 ];
 
 const MOETModule7Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Completing Work to Industry Standards
-          </h1>
-          <p className="text-white">
-            Quality standards, professional workmanship and regulatory compliance for EPA success
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 5"
+        title="Completing Work to Industry Standards"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Quality standards, professional workmanship and regulatory compliance for EPA success.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Good workmanship, proper materials, competent persons
-              </li>
-              <li className="pl-1">
-                <strong>Manufacturer:</strong> Follow data sheets and installation guides
-              </li>
-              <li className="pl-1">
-                <strong>Quality:</strong> Connections, cable management, labelling, testing
-              </li>
-              <li className="pl-1">
-                <strong>Evidence:</strong> Documentation and certification where required
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Assessed:</strong> Workmanship quality is directly marked
-              </li>
-              <li className="pl-1">
-                <strong>Distinction:</strong> Exceptional quality and attention to detail
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Demonstrating regulatory awareness
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Professional standards and behaviours
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'BS 7671: good workmanship, proper materials, competent persons.',
+              'Manufacturer: follow data sheets and installation guides.',
+              'Quality: connections, cable management, labelling, testing.',
+              'Evidence: documentation and certification where required.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply BS 7671 workmanship requirements to all maintenance and repair work',
               "Follow manufacturer's instructions and data sheets for correct component installation",
               'Demonstrate professional cable management and termination quality',
               'Maintain IP ratings and environmental protection after maintenance',
               'Complete appropriate documentation and certification for maintenance work',
               'Understand when minor works certificates and other compliance documents are required',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Assessed:</strong> workmanship quality is directly marked.
+              </li>
+              <li>
+                <strong>Distinction:</strong> exceptional quality and attention to detail.
+              </li>
+              <li>
+                <strong>Compliance:</strong> demonstrating regulatory awareness.
+              </li>
+              <li>
+                <strong>ST1426:</strong> professional standards and behaviours.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            BS 7671 Workmanship Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>BS 7671 workmanship requirements</ContentEyebrow>
+
+          <ConceptBlock title="BS 7671 workmanship requirements">
             <p>
-              BS 7671:2018+A2:2022 (the 18th Edition IET Wiring Regulations) sets the benchmark for
+              BS 7671:2018+A4:2026 (the 18th Edition IET Wiring Regulations) sets the benchmark for
               all electrical work in the UK. Chapter 13 establishes the fundamental principles,
               including the requirement for good workmanship by competent persons using proper
               materials. These requirements apply to maintenance and repair work just as much as new
               installations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Workmanship Regulations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reg 134.1.1:</strong> Good workmanship by competent persons using proper
-                  materials
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 510.1:</strong> Selection and erection of equipment shall comply with
-                  the relevant regulations
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 514.9.1:</strong> Accurate circuit identification and labelling at
-                  every distribution board
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 526.1:</strong> Connections must provide durable electrical continuity
-                  and adequate mechanical strength
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 526.3:</strong> Connections must be accessible for inspection and
-                  testing (with some defined exceptions)
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 421.1.201:</strong> Precautions to prevent fire — including correct
-                  cable selection and installation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key workmanship regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reg 134.1.1:</strong> good workmanship by competent persons using proper
+                materials.
+              </li>
+              <li>
+                <strong>Reg 510.1:</strong> selection and erection of equipment shall comply with
+                the relevant regulations.
+              </li>
+              <li>
+                <strong>Reg 514.9.1:</strong> accurate circuit identification and labelling at every
+                distribution board.
+              </li>
+              <li>
+                <strong>Reg 526.1:</strong> connections must provide durable electrical continuity
+                and adequate mechanical strength.
+              </li>
+              <li>
+                <strong>Reg 526.3:</strong> connections must be accessible for inspection and
+                testing (with some defined exceptions).
+              </li>
+              <li>
+                <strong>Reg 421.1.201:</strong> precautions to prevent fire — including correct
+                cable selection and installation.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Maintenance vs New Installation Standards
-              </p>
-              <p className="text-sm text-white">
-                There is a common misconception that maintenance work does not need to meet the same
-                standard as new installations. This is incorrect. BS 7671 applies to all electrical
-                work, and the Electricity at Work Regulations 1989 require all electrical systems to
-                be maintained in a safe condition. Your maintenance work must meet the same quality
-                and compliance standards as a new installation.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> During the EPA, the assessor evaluates your workmanship
+          <ConceptBlock title="Maintenance vs new installation standards">
+            <p>
+              There is a common misconception that maintenance work does not need to meet the same
+              standard as new installations. This is incorrect. BS 7671 applies to all electrical
+              work, and the Electricity at Work Regulations 1989 require all electrical systems to
+              be maintained in a safe condition. Your maintenance work must meet the same quality
+              and compliance standards as a new installation.
+            </p>
+            <p>
+              <strong>Key point:</strong> during the EPA, the assessor evaluates your workmanship
               against the BS 7671 standard. Every connection, cable route, and component
               installation should demonstrate that you understand and apply these requirements as a
               matter of professional habit.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Professional Workmanship in Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Professional workmanship in practice</ContentEyebrow>
+
+          <ConceptBlock title="Professional workmanship in practice">
             <p>
               Good workmanship is visible. An experienced assessor can tell the quality of your work
               at a glance — neat cable management, consistent termination quality, correct component
               orientation, and attention to detail all contribute to the overall standard. These
               elements combine to create work that is safe, reliable, and maintainable.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Workmanship Quality Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Connections:</strong> Correct torque, full conductor insertion, no stray
-                  strands, correct ferrules where needed
-                </li>
-                <li className="pl-1">
-                  <strong>Cable management:</strong> Neat routing, correct bending radii, proper
-                  support, no strain on terminals
-                </li>
-                <li className="pl-1">
-                  <strong>Component mounting:</strong> Secure fixings, correct orientation, DIN rail
-                  clips engaged, adequate clearance
-                </li>
-                <li className="pl-1">
-                  <strong>Labelling:</strong> Clear, durable, accurate identification of circuits,
-                  components and cables
-                </li>
-                <li className="pl-1">
-                  <strong>Segregation:</strong> Power and control circuits separated where required
-                  by BS 7671 Chapter 52
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> IP rating maintained, covers refitted, gaskets in
-                  place, blanking plates fitted
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> Continuity, insulation resistance, and functional tests
-                  completed and recorded
-                </li>
-                <li className="pl-1">
-                  <strong>Housekeeping:</strong> Work area clean, debris removed from equipment,
-                  tools accounted for
-                </li>
-              </ul>
+          <ConceptBlock title="Workmanship quality checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Connections:</strong> correct torque, full conductor insertion, no stray
+                strands, correct ferrules where needed.
+              </li>
+              <li>
+                <strong>Cable management:</strong> neat routing, correct bending radii, proper
+                support, no strain on terminals.
+              </li>
+              <li>
+                <strong>Component mounting:</strong> secure fixings, correct orientation, DIN rail
+                clips engaged, adequate clearance.
+              </li>
+              <li>
+                <strong>Labelling:</strong> clear, durable, accurate identification of circuits,
+                components and cables.
+              </li>
+              <li>
+                <strong>Segregation:</strong> power and control circuits separated where required by
+                BS 7671 Chapter 52.
+              </li>
+              <li>
+                <strong>Protection:</strong> IP rating maintained, covers refitted, gaskets in
+                place, blanking plates fitted.
+              </li>
+              <li>
+                <strong>Testing:</strong> continuity, insulation resistance, and functional tests
+                completed and recorded.
+              </li>
+              <li>
+                <strong>Housekeeping:</strong> work area clean, debris removed from equipment, tools
+                accounted for.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Connection quality: pass vs distinction">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Aspect</th>
+                    <th className="py-2 pr-4 font-medium text-white">Pass standard</th>
+                    <th className="py-2 font-medium text-white">Distinction standard</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Torque</td>
+                    <td className="py-2 pr-4">Adequately tightened</td>
+                    <td className="py-2">
+                      Torque screwdriver used, manufacturer&apos;s values applied
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Cable dressing</td>
+                    <td className="py-2 pr-4">Acceptable routing</td>
+                    <td className="py-2">Neat, consistent bending radii, no crossing conductors</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ferrules</td>
+                    <td className="py-2 pr-4">Used where required</td>
+                    <td className="py-2">Correct size, proper crimping, consistent throughout</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Identification</td>
+                    <td className="py-2 pr-4">Basic labelling present</td>
+                    <td className="py-2">Comprehensive, durable labels matching circuit chart</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Connection Quality: Pass vs Distinction
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pass Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Distinction Standard
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Torque</td>
-                      <td className="border border-white/10 px-3 py-2">Adequately tightened</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Torque screwdriver used, manufacturer's values applied
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable dressing</td>
-                      <td className="border border-white/10 px-3 py-2">Acceptable routing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Neat, consistent bending radii, no crossing conductors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ferrules</td>
-                      <td className="border border-white/10 px-3 py-2">Used where required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct size, proper crimping, consistent throughout
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Identification</td>
-                      <td className="border border-white/10 px-3 py-2">Basic labelling present</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive, durable labels matching circuit chart
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Workmanship quality is the most visible indicator of
+            <p>
+              <strong>Key point:</strong> workmanship quality is the most visible indicator of
               competence. An assessor who sees neat, professional work immediately has confidence in
               your ability. Conversely, poor workmanship raises doubts about every aspect of your
               practice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Environmental Protection and IP Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Environmental protection and IP ratings</ContentEyebrow>
+
+          <ConceptBlock title="Environmental protection and IP ratings">
             <p>
               Electrical enclosures are designed to protect against the ingress of solid objects and
               moisture, classified by their IP (Ingress Protection) rating. During maintenance,
@@ -558,188 +511,146 @@ const MOETModule7Section2_5 = () => {
               a professional responsibility that is often overlooked — and is specifically checked
               by EPA assessors.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common IP Ratings in Electrical Maintenance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">IP Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Protection Level
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP20</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Finger-safe, no moisture protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Internal distribution boards
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP44</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protected against objects &gt; 1 mm and splashing water
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Indoor industrial panels</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP55</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust-protected, protected against water jets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outdoor enclosures, washdown areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP65</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust-tight, protected against water jets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outdoor equipment, food processing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IP66</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust-tight, protected against powerful water jets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        External switchgear, harsh environments
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common IP ratings in electrical maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">IP rating</th>
+                    <th className="py-2 pr-4 font-medium text-white">Protection level</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IP20</td>
+                    <td className="py-2 pr-4">Finger-safe, no moisture protection</td>
+                    <td className="py-2">Internal distribution boards</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IP44</td>
+                    <td className="py-2 pr-4">
+                      Protected against objects &gt; 1 mm and splashing water
+                    </td>
+                    <td className="py-2">Indoor industrial panels</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IP55</td>
+                    <td className="py-2 pr-4">Dust-protected, protected against water jets</td>
+                    <td className="py-2">Outdoor enclosures, washdown areas</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IP65</td>
+                    <td className="py-2 pr-4">Dust-tight, protected against water jets</td>
+                    <td className="py-2">Outdoor equipment, food processing</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">IP66</td>
+                    <td className="py-2 pr-4">Dust-tight, protected against powerful water jets</td>
+                    <td className="py-2">External switchgear, harsh environments</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maintaining IP Ratings After Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Covers:</strong> Refit all covers with correct fixings — do not leave any
-                  missing or loosely fitted
-                </li>
-                <li className="pl-1">
-                  <strong>Gaskets:</strong> Check gasket condition before refitting — replace any
-                  that are damaged, compressed or perished
-                </li>
-                <li className="pl-1">
-                  <strong>Cable glands:</strong> Tighten all glands to the correct compression —
-                  verify the seal around the cable sheath
-                </li>
-                <li className="pl-1">
-                  <strong>Blanking plates:</strong> Fit blanking plates to any unused cable entries
-                  — do not leave open holes
-                </li>
-                <li className="pl-1">
-                  <strong>Door seals:</strong> Ensure enclosure door seals are intact and the door
-                  closes fully and latches correctly
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> After maintenance, check every opening you created:
+          <ConceptBlock title="Maintaining IP ratings after maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Covers:</strong> refit all covers with correct fixings — do not leave any
+                missing or loosely fitted.
+              </li>
+              <li>
+                <strong>Gaskets:</strong> check gasket condition before refitting — replace any that
+                are damaged, compressed or perished.
+              </li>
+              <li>
+                <strong>Cable glands:</strong> tighten all glands to the correct compression —
+                verify the seal around the cable sheath.
+              </li>
+              <li>
+                <strong>Blanking plates:</strong> fit blanking plates to any unused cable entries —
+                do not leave open holes.
+              </li>
+              <li>
+                <strong>Door seals:</strong> ensure enclosure door seals are intact and the door
+                closes fully and latches correctly.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> after maintenance, check every opening you created:
               covers, cable entries, glands, blanking plates. If you opened it, you are responsible
               for restoring it to its original IP rating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Documentation and Compliance Records
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Documentation and compliance records</ContentEyebrow>
+
+          <ConceptBlock title="Documentation and compliance records">
             <p>
               Completing work to industry standards includes creating appropriate documentation.
               This provides evidence of compliance, enables future maintenance, and demonstrates the
               professional behaviours expected under ST1426. The level of documentation depends on
               the nature and extent of the work.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Requirements by Work Type
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Like-for-like replacement:</strong> Maintenance log entry with details of
-                  fault, replacement, and verification testing
-                </li>
-                <li className="pl-1">
-                  <strong>Minor alteration:</strong> Minor works certificate (BS 7671 Appendix 6)
-                  plus maintenance log
-                </li>
-                <li className="pl-1">
-                  <strong>Addition to circuit:</strong> Minor works certificate with test results
-                  for the new work
-                </li>
-                <li className="pl-1">
-                  <strong>New circuit:</strong> Electrical installation certificate (BS 7671
-                  Appendix 6) with full Schedule of Test Results
-                </li>
-                <li className="pl-1">
-                  <strong>Periodic inspection:</strong> Electrical installation condition report
-                  (EICR)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Documentation requirements by work type">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Like-for-like replacement:</strong> maintenance log entry with details of
+                fault, replacement, and verification testing.
+              </li>
+              <li>
+                <strong>Minor alteration:</strong> minor works certificate (BS 7671 Appendix 6) plus
+                maintenance log.
+              </li>
+              <li>
+                <strong>Addition to circuit:</strong> minor works certificate with test results for
+                the new work.
+              </li>
+              <li>
+                <strong>New circuit:</strong> electrical installation certificate (BS 7671 Appendix
+                6) with full Schedule of Test Results.
+              </li>
+              <li>
+                <strong>Periodic inspection:</strong> electrical installation condition report
+                (EICR).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                What to Record in a Maintenance Log
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Date, time, and technician name</li>
-                <li className="pl-1">
-                  Equipment identified (location, asset number, circuit reference)
-                </li>
-                <li className="pl-1">Fault description and symptoms</li>
-                <li className="pl-1">Diagnosis process and findings</li>
-                <li className="pl-1">Work carried out (components replaced, adjustments made)</li>
-                <li className="pl-1">Test results (pre and post repair)</li>
-                <li className="pl-1">Verification of correct operation</li>
-                <li className="pl-1">Recommendations for follow-up or preventive action</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Documentation is not an afterthought — it is an integral
+          <ConceptBlock title="What to record in a maintenance log">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Date, time, and technician name.</li>
+              <li>Equipment identified (location, asset number, circuit reference).</li>
+              <li>Fault description and symptoms.</li>
+              <li>Diagnosis process and findings.</li>
+              <li>Work carried out (components replaced, adjustments made).</li>
+              <li>Test results (pre and post repair).</li>
+              <li>Verification of correct operation.</li>
+              <li>Recommendations for follow-up or preventive action.</li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> documentation is not an afterthought — it is an integral
               part of completing work to industry standards. A maintenance task is not finished
               until it is properly documented.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Verification Testing and Handover
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Verification testing and handover</ContentEyebrow>
+
+          <ConceptBlock title="Verification testing and handover">
             <p>
               The final stage of completing work to industry standards is verification — confirming
               that the work is correct, safe, and the system operates as intended. This includes
@@ -747,178 +658,127 @@ const MOETModule7Section2_5 = () => {
               handover to the responsible person. Skipping or rushing this stage is a common reason
               for lower grades in the EPA practical observation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Verification Testing Sequence
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Systematic check of all work before energising
-                  — connections, cable routes, component installation, labelling
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical tests:</strong> Continuity of protective conductors, insulation
-                  resistance, earth fault loop impedance where appropriate
-                </li>
-                <li className="pl-1">
-                  <strong>Functional tests:</strong> Operate the system under normal conditions —
-                  check all functions, sequences, and interlocks
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device verification:</strong> Confirm RCDs trip within required
-                  times, overloads are correctly set
-                </li>
-                <li className="pl-1">
-                  <strong>Record results:</strong> Document all test readings and compare against
-                  acceptable values
-                </li>
-              </ol>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Professional Handover
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inform the responsible person:</strong> Explain what work was carried out
-                  and confirm the system is safe to return to service
-                </li>
-                <li className="pl-1">
-                  <strong>Provide documentation:</strong> Hand over maintenance logs, test results,
-                  and any certificates
-                </li>
-                <li className="pl-1">
-                  <strong>Highlight any concerns:</strong> Report any additional issues found during
-                  the work that may require future attention
-                </li>
-                <li className="pl-1">
-                  <strong>Confirm understanding:</strong> Ensure the responsible person understands
-                  any changes made or precautions needed
-                </li>
-                <li className="pl-1">
-                  <strong>Remove isolation:</strong> Only remove lock-off and restore power when
-                  safe to do so and with authorisation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Distinction-Level Verification
-              </p>
-              <p className="text-sm text-white">
-                Distinction candidates do not just confirm the work functions — they verify it
-                thoroughly. This means testing under both normal and fault conditions, checking that
-                protection coordination is maintained, confirming all ancillary systems (alarms,
-                indicators, interlocks) operate correctly, and providing a clear, professional
-                verbal summary of the work to the assessor or responsible person.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Completing work to industry standards is assessed across
-              multiple EPA components — practical observation, professional discussion, and
-              portfolio evidence. Demonstrating consistent, documented compliance is a
-              distinction-level behaviour.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>BS 7671 Reg 134.1.1:</strong> Good workmanship, competent persons, proper
-                materials
+          <ConceptBlock title="Verification testing sequence">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection:</strong> systematic check of all work before energising —
+                connections, cable routes, component installation, labelling.
               </li>
-              <li className="pl-1">
-                <strong>BS 7671 Reg 514.9.1:</strong> Accurate circuit identification and labelling
+              <li>
+                <strong>Electrical tests:</strong> continuity of protective conductors, insulation
+                resistance, earth fault loop impedance where appropriate.
               </li>
-              <li className="pl-1">
-                <strong>BS 7671 Reg 526.1:</strong> Durable electrical continuity and mechanical
-                strength at connections
+              <li>
+                <strong>Functional tests:</strong> operate the system under normal conditions —
+                check all functions, sequences, and interlocks.
               </li>
-              <li className="pl-1">
-                <strong>EAWR 1989 Reg 4(2):</strong> Electrical systems shall be maintained to
-                prevent danger
+              <li>
+                <strong>Protective device verification:</strong> confirm RCDs trip within required
+                times, overloads are correctly set.
               </li>
-              <li className="pl-1">
-                <strong>IP Rating:</strong> Must be restored after any maintenance that disturbs the
-                enclosure
+              <li>
+                <strong>Record results:</strong> document all test readings and compare against
+                acceptable values.
               </li>
-              <li className="pl-1">
-                <strong>CE/UKCA marking:</strong> Verify all replacement components carry
-                appropriate product markings
+            </ol>
+          </ConceptBlock>
+
+          <ConceptBlock title="Professional handover">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inform the responsible person:</strong> explain what work was carried out
+                and confirm the system is safe to return to service.
               </li>
-              <li className="pl-1">
-                <strong>Minor works certificate:</strong> Required for alterations and additions,
-                not like-for-like replacement
+              <li>
+                <strong>Provide documentation:</strong> hand over maintenance logs, test results,
+                and any certificates.
               </li>
-              <li className="pl-1">
-                <strong>Torque settings:</strong> Always follow manufacturer's specified values
-                using a calibrated tool
+              <li>
+                <strong>Highlight any concerns:</strong> report any additional issues found during
+                the work that may require future attention.
+              </li>
+              <li>
+                <strong>Confirm understanding:</strong> ensure the responsible person understands
+                any changes made or precautions needed.
+              </li>
+              <li>
+                <strong>Remove isolation:</strong> only remove lock-off and restore power when safe
+                to do so and with authorisation.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Distinction-level verification">
+            <p>
+              Distinction candidates do not just confirm the work functions — they verify it
+              thoroughly. This means testing under both normal and fault conditions, checking that
+              protection coordination is maintained, confirming all ancillary systems (alarms,
+              indicators, interlocks) operate correctly, and providing a clear, professional verbal
+              summary of the work to the assessor or responsible person.
+            </p>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Industry Standards" questions={quizQuestions} />
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> completing work to industry standards is assessed across
+            multiple EPA components — practical observation, professional discussion, and portfolio
+            evidence. Demonstrating consistent, documented compliance is a distinction-level
+            behaviour.
+          </p>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Control Systems
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-6">
-              Next: Marking Criteria Awareness
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'BS 7671 Reg 134.1.1: good workmanship, competent persons, proper materials.',
+              'BS 7671 Reg 514.9.1: accurate circuit identification and labelling.',
+              'BS 7671 Reg 526.1: durable electrical continuity and mechanical strength at connections.',
+              'EAWR 1989 Reg 4(2): electrical systems shall be maintained to prevent danger.',
+              'IP rating must be restored after any maintenance that disturbs the enclosure.',
+              'CE/UKCA marking: verify all replacement components carry appropriate product markings.',
+              'Minor works certificate required for alterations and additions, not like-for-like replacement.',
+              "Torque settings: always follow manufacturer's specified values using a calibrated tool.",
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Industry Standards" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Control System Troubleshooting
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Assessment Marking Criteria Awareness
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

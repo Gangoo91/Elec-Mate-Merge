@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 1 · Subsection 4 — Flow and Level Measurement
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Flow and Level Measurement - MOET Module 5 Section 1.4';
@@ -258,122 +298,69 @@ const faqs = [
 ];
 
 const MOETModule5Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Flow and Level Measurement
-          </h1>
-          <p className="text-white">
-            Flow meters, level sensors and industrial measurement techniques for process control
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.1 · Subsection 4"
+        title="Flow and Level Measurement"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Flow meters, level sensors and industrial measurement techniques for process control —
+            how each technology works, when it fits, and how it fails.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>DP flow:</strong> Orifice plate creates pressure drop — flow proportional to
-                sqrt of DP
-              </li>
-              <li className="pl-1">
-                <strong>Mag flow:</strong> Faraday's law — conductive fluid through magnetic field
-                generates voltage
-              </li>
-              <li className="pl-1">
-                <strong>Level:</strong> Hydrostatic pressure, ultrasonic time-of-flight, radar,
-                capacitance, floats
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Match technology to fluid, accuracy, pipe size and
-                environment
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Check impulse lines, verify 4-20 mA output, inspect
-                orifice plates
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Verify zero, span and scaling against process
-                conditions
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Match meter type, size, materials, signal output and
-                process rating
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to process measurement and instrumentation maintenance
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'DP flow: Orifice plate creates pressure drop — flow proportional to sqrt of DP.',
+              "Mag flow: Faraday's law — conductive fluid through magnetic field generates voltage.",
+              'Level: Hydrostatic pressure, ultrasonic time-of-flight, radar, capacitance, floats.',
+              'Selection: Match technology to fluid, accuracy, pipe size and environment.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain differential pressure flow measurement using orifice plates and the square root relationship',
               'Describe electromagnetic, ultrasonic, Coriolis and turbine flow meter principles',
               'Identify hydrostatic, ultrasonic, radar and capacitance level measurement methods',
               'Distinguish between continuous level transmitters and point-level switches',
               'Select appropriate flow and level instruments for common industrial applications',
               'Apply maintenance and fault-finding procedures to flow and level instrumentation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Check impulse lines, verify 4-20 mA output, inspect
+                orifice plates.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Verify zero, span and scaling against process
+                conditions.
+              </li>
+              <li>
+                <strong>Replacement:</strong> Match meter type, size, materials, signal output and
+                process rating.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to process measurement and instrumentation
+                maintenance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Differential Pressure Flow Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Differential pressure flow measurement</ContentEyebrow>
+
+          <ConceptBlock title="The oldest, most widely installed flow technology">
             <p>
               Differential pressure (DP) flow measurement is the oldest and most widely installed
               flow measurement technology in industry. Despite the availability of more modern
@@ -384,158 +371,154 @@ const MOETModule5Section1_4 = () => {
             <p>
               The principle is straightforward: a restriction (primary element) is placed in the
               pipe. As fluid flows through the restriction, its velocity increases and its static
-              pressure decreases according to Bernoulli's principle. A differential pressure
+              pressure decreases according to Bernoulli&apos;s principle. A differential pressure
               transmitter measures the pressure drop across the restriction, and the flow rate is
               calculated from the square root relationship: Q = k x sqrt(delta P).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Primary Elements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Orifice plate:</strong> A thin plate with a concentric hole — the most
-                  common type. Low cost, no moving parts, but creates permanent pressure loss. Beta
-                  ratio (bore/pipe diameter) typically 0.3-0.7.
-                </li>
-                <li className="pl-1">
-                  <strong>Venturi tube:</strong> A gradually converging section followed by a throat
-                  and a gradual diverging section. Lower permanent pressure loss than an orifice
-                  plate. Higher cost, larger physical size.
-                </li>
-                <li className="pl-1">
-                  <strong>Flow nozzle:</strong> A compromise between orifice plate and venturi —
-                  better pressure recovery than an orifice but smaller than a venturi. Used in steam
-                  flow measurement.
-                </li>
-                <li className="pl-1">
-                  <strong>Pitot tube:</strong> Measures the difference between total (stagnation)
-                  pressure and static pressure at a point in the flow. Used for air velocity
-                  measurement in ducts.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Primary elements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Orifice plate:</strong> A thin plate with a concentric hole — the most
+                common type. Low cost, no moving parts, but creates permanent pressure loss. Beta
+                ratio (bore/pipe diameter) typically 0.3-0.7.
+              </li>
+              <li>
+                <strong>Venturi tube:</strong> A gradually converging section followed by a throat
+                and a gradual diverging section. Lower permanent pressure loss than an orifice
+                plate. Higher cost, larger physical size.
+              </li>
+              <li>
+                <strong>Flow nozzle:</strong> A compromise between orifice plate and venturi —
+                better pressure recovery than an orifice but smaller than a venturi. Used in steam
+                flow measurement.
+              </li>
+              <li>
+                <strong>Pitot tube:</strong> Measures the difference between total (stagnation)
+                pressure and static pressure at a point in the flow. Used for air velocity
+                measurement in ducts.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Square Root Problem</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="The square root problem"
+            whatHappens={
+              <>
                 Because flow is proportional to the square root of DP, the measurement accuracy
                 deteriorates significantly at low flows. At 25 % flow, the DP is only 6.25 % of full
                 scale, making the signal difficult to measure accurately. This limits the useful
                 rangeability of DP flow meters to approximately 3:1 or 4:1 (compared with 10:1 or
-                better for mag flow and Coriolis meters). Multivariable transmitters with advanced
-                characterisation can improve this to some extent.
-              </p>
-            </div>
+                better for mag flow and Coriolis meters).
+              </>
+            }
+            doInstead={
+              <>
+                Size the primary element for the expected flow range rather than the pipe size
+                alone. Multivariable transmitters with advanced characterisation can improve the
+                usable rangeability to some extent, but do not expect a DP meter to read accurately
+                far below its designed span.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Impulse lines connecting the orifice plate tappings
-              to the DP transmitter are a common source of measurement errors. Blocked impulse
-              lines, leaking fittings, trapped air (in liquid service) or trapped condensate (in gas
-              service) will all cause incorrect readings. Regular impulse line maintenance — blowing
-              through, checking for leaks, verifying valve positions — is essential.
+          <ConceptBlock title="Maintenance tip: impulse lines">
+            <p>
+              Impulse lines connecting the orifice plate tappings to the DP transmitter are a common
+              source of measurement errors. Blocked impulse lines, leaking fittings, trapped air (in
+              liquid service) or trapped condensate (in gas service) will all cause incorrect
+              readings. Regular impulse line maintenance — blowing through, checking for leaks,
+              verifying valve positions — is essential.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Electromagnetic and Ultrasonic Flow Meters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electromagnetic and ultrasonic flow meters</ContentEyebrow>
+
+          <ConceptBlock title="No moving parts, no pressure drop">
             <p>
               Modern flow measurement has moved increasingly toward technologies that offer wider
               rangeability, lower maintenance, no moving parts and no pressure drop. Electromagnetic
               and ultrasonic flow meters lead this trend and are now the preferred choice for new
               installations in water, wastewater, chemical processing and HVAC applications.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electromagnetic (Mag) Flow Meters
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Based on Faraday's law of electromagnetic induction: a voltage is induced in a
-                conductor moving through a magnetic field. The conductive fluid is the conductor,
-                electromagnetic coils generate the field, and electrodes in the pipe wall measure
-                the induced voltage, which is proportional to the fluid velocity.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Requirements:</strong> Fluid must be electrically conductive (minimum
-                  approximately 5 microS/cm) — suitable for water, acids, alkalis, slurries
-                </li>
-                <li className="pl-1">
-                  <strong>Not suitable for:</strong> Hydrocarbons, gases, deionised water, solvents
-                  (low conductivity)
-                </li>
-                <li className="pl-1">
-                  <strong>Advantages:</strong> No moving parts, no pressure drop, handles slurries
-                  and dirty fluids, wide rangeability (100:1), bidirectional
-                </li>
-                <li className="pl-1">
-                  <strong>Pipe lining:</strong> The meter tube must have a non-conductive lining
-                  (PTFE, rubber, ceramic) to prevent the signal short-circuiting through the pipe
-                  wall
-                </li>
-                <li className="pl-1">
-                  <strong>Installation:</strong> Must be full bore (pipe must be completely full of
-                  liquid) — not suitable for partially filled pipes
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Electromagnetic (mag) flow meters">
+            <p>
+              Based on Faraday&apos;s law of electromagnetic induction: a voltage is induced in a
+              conductor moving through a magnetic field. The conductive fluid is the conductor,
+              electromagnetic coils generate the field, and electrodes in the pipe wall measure the
+              induced voltage, which is proportional to the fluid velocity.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Requirements:</strong> Fluid must be electrically conductive (minimum
+                approximately 5 microS/cm) — suitable for water, acids, alkalis, slurries.
+              </li>
+              <li>
+                <strong>Not suitable for:</strong> Hydrocarbons, gases, deionised water, solvents
+                (low conductivity).
+              </li>
+              <li>
+                <strong>Advantages:</strong> No moving parts, no pressure drop, handles slurries and
+                dirty fluids, wide rangeability (100:1), bidirectional.
+              </li>
+              <li>
+                <strong>Pipe lining:</strong> The meter tube must have a non-conductive lining
+                (PTFE, rubber, ceramic) to prevent the signal short-circuiting through the pipe
+                wall.
+              </li>
+              <li>
+                <strong>Installation:</strong> Must be full bore (pipe must be completely full of
+                liquid) — not suitable for partially filled pipes.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ultrasonic Flow Meters
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Ultrasonic flow meters use sound waves to measure fluid velocity. Two main
-                principles are used:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Transit time:</strong> Two transducers send ultrasonic pulses diagonally
-                  across the pipe in both directions. The pulse travelling with the flow arrives
-                  faster than the one against the flow. The difference in transit times is
-                  proportional to the fluid velocity. Works with clean liquids and gases.
-                </li>
-                <li className="pl-1">
-                  <strong>Doppler:</strong> Ultrasonic pulses are reflected from particles or
-                  bubbles in the fluid. The frequency shift (Doppler effect) is proportional to
-                  velocity. Requires particles or bubbles in the fluid. Used for slurries and dirty
-                  fluids.
-                </li>
-                <li className="pl-1">
-                  <strong>Clamp-on:</strong> Transducers mount on the outside of the pipe — no pipe
-                  cutting, no wetted parts, no shutdown required. Ideal for retrofit and temporary
-                  measurement.
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Ultrasonic flow meters">
+            <p>
+              Ultrasonic flow meters use sound waves to measure fluid velocity. Two main principles
+              are used:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Transit time:</strong> Two transducers send ultrasonic pulses diagonally
+                across the pipe in both directions. The pulse travelling with the flow arrives
+                faster than the one against the flow. The difference in transit times is
+                proportional to the fluid velocity. Works with clean liquids and gases.
+              </li>
+              <li>
+                <strong>Doppler:</strong> Ultrasonic pulses are reflected from particles or bubbles
+                in the fluid. The frequency shift (Doppler effect) is proportional to velocity.
+                Requires particles or bubbles in the fluid. Used for slurries and dirty fluids.
+              </li>
+              <li>
+                <strong>Clamp-on:</strong> Transducers mount on the outside of the pipe — no pipe
+                cutting, no wetted parts, no shutdown required. Ideal for retrofit and temporary
+                measurement.
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> When selecting between mag flow and ultrasonic, the fluid
               conductivity is the deciding factor. If the fluid is conductive (water, chemicals,
               slurries), mag flow is typically preferred for its accuracy and reliability. If the
               fluid is non-conductive (hydrocarbons, gases) or pipe cutting is not possible,
               ultrasonic is the better choice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Level Measurement — Continuous Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Level measurement — continuous methods</ContentEyebrow>
+
+          <ConceptBlock title="A proportional output at all times">
             <p>
               Level measurement determines the quantity of material (liquid, solid or slurry) in a
               tank or vessel. Continuous level measurement provides a proportional output (4-20 mA)
@@ -543,78 +526,62 @@ const MOETModule5Section1_4 = () => {
               management and safety monitoring. Several technologies are available, each suited to
               different applications and environments.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Hydrostatic Pressure
-                </h3>
-                <p className="text-sm text-white">
-                  The simplest continuous level method for liquid-filled tanks. A pressure
-                  transmitter at the bottom of the tank measures the hydrostatic head: P = rho x g x
-                  h. For open tanks, the transmitter reference is vented to atmosphere. For closed
-                  (pressurised) vessels, a differential pressure transmitter is used with the high
-                  side at the bottom and the low side at the top of the vessel. Submersible pressure
-                  sensors can be lowered into deep tanks or wells.
-                </p>
-              </div>
+          <ConceptBlock title="Hydrostatic pressure">
+            <p>
+              The simplest continuous level method for liquid-filled tanks. A pressure transmitter
+              at the bottom of the tank measures the hydrostatic head: P = rho x g x h. For open
+              tanks, the transmitter reference is vented to atmosphere. For closed (pressurised)
+              vessels, a differential pressure transmitter is used with the high side at the bottom
+              and the low side at the top of the vessel. Submersible pressure sensors can be lowered
+              into deep tanks or wells.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Ultrasonic Level</h3>
-                <p className="text-sm text-white">
-                  A non-contact method using time-of-flight measurement. The sensor is mounted at
-                  the top of the tank and measures the distance to the liquid surface. Level = tank
-                  height minus distance. Suitable for liquids and solids. Affected by foam, heavy
-                  vapour, temperature gradients and turbulent surfaces. Cost-effective for many
-                  applications up to approximately 10 m range.
-                </p>
-              </div>
+          <ConceptBlock title="Ultrasonic level">
+            <p>
+              A non-contact method using time-of-flight measurement. The sensor is mounted at the
+              top of the tank and measures the distance to the liquid surface. Level = tank height
+              minus distance. Suitable for liquids and solids. Affected by foam, heavy vapour,
+              temperature gradients and turbulent surfaces. Cost-effective for many applications up
+              to approximately 10 m range.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Radar (Microwave) Level
-                </h3>
-                <p className="text-sm text-white">
-                  Uses electromagnetic waves instead of sound waves. Unaffected by temperature,
-                  pressure, vapour, dust and most chemical atmospheres. Two variants: free-space
-                  radar (antenna transmits through the vapour space) and guided wave radar (GWR —
-                  the signal is guided along a probe immersed in the liquid). Guided wave radar can
-                  measure interface levels (e.g., oil on water) and is highly accurate in turbulent
-                  conditions.
-                </p>
-              </div>
+          <ConceptBlock title="Radar (microwave) level">
+            <p>
+              Uses electromagnetic waves instead of sound waves. Unaffected by temperature,
+              pressure, vapour, dust and most chemical atmospheres. Two variants: free-space radar
+              (antenna transmits through the vapour space) and guided wave radar (GWR — the signal
+              is guided along a probe immersed in the liquid). Guided wave radar can measure
+              interface levels (e.g. oil on water) and is highly accurate in turbulent conditions.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Capacitance Level</h3>
-                <p className="text-sm text-white">
-                  A probe and the tank wall form a capacitor. As the liquid (dielectric) rises
-                  around the probe, the capacitance changes proportionally. Suitable for conductive
-                  and non-conductive liquids, granular solids and powders. Requires calibration for
-                  the specific fluid dielectric constant. Insulated probes are used for conductive
-                  liquids.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Capacitance level">
+            <p>
+              A probe and the tank wall form a capacitor. As the liquid (dielectric) rises around
+              the probe, the capacitance changes proportionally. Suitable for conductive and
+              non-conductive liquids, granular solids and powders. Requires calibration for the
+              specific fluid dielectric constant. Insulated probes are used for conductive liquids.
+            </p>
+            <p>
               <strong>Maintenance tip:</strong> When a level transmitter reading disagrees with a
               sight glass or manual dip measurement, do not automatically assume the transmitter is
               wrong. Check the sight glass isolation valves, verify the specific gravity (density)
               used in the hydrostatic calculation, inspect for blockages in impulse lines, and
               verify the transmitter zero and span before condemning the instrument.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Point Level Detection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Point level detection</ContentEyebrow>
+
+          <ConceptBlock title="Simpler, cheaper, often more reliable for alarms">
             <p>
               Point level switches provide simple on/off detection at a specific level — high alarm,
               low alarm, pump start, pump stop, or overfill protection. Unlike continuous
@@ -622,124 +589,129 @@ const MOETModule5Section1_4 = () => {
               above or below the switch point. They are simpler, cheaper and often more reliable for
               safety-critical alarm functions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Point Level Technologies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Float switches:</strong> A buoyant float rises with the liquid and
-                  operates a reed switch or micro-switch. Simple, reliable, low cost. Affected by
-                  foam, turbulence and sticky materials.
-                </li>
-                <li className="pl-1">
-                  <strong>Vibrating fork (tuning fork):</strong> Two tines vibrate at their resonant
-                  frequency. When immersed in liquid, the frequency changes, triggering the output.
-                  Excellent for liquids, slurries and light powders. Self-cleaning due to vibration.
-                </li>
-                <li className="pl-1">
-                  <strong>Conductive (conductivity) probes:</strong> Two or more electrodes detect
-                  the presence of a conductive liquid (water-based). Simple and low cost. Not
-                  suitable for non-conductive liquids.
-                </li>
-                <li className="pl-1">
-                  <strong>Paddle (rotary) switches:</strong> A motor-driven paddle rotates slowly.
-                  When immersed in solid material (grain, powder), the paddle stalls and the torque
-                  increase triggers the switch. Used in silos and hoppers.
-                </li>
-                <li className="pl-1">
-                  <strong>Admittance (RF capacitance):</strong> Detects the presence of material by
-                  capacitance change. Handles coatings and build-up better than standard capacitance
-                  probes.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common point level technologies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Float switches:</strong> A buoyant float rises with the liquid and operates
+                a reed switch or micro-switch. Simple, reliable, low cost. Affected by foam,
+                turbulence and sticky materials.
+              </li>
+              <li>
+                <strong>Vibrating fork (tuning fork):</strong> Two tines vibrate at their resonant
+                frequency. When immersed in liquid, the frequency changes, triggering the output.
+                Excellent for liquids, slurries and light powders. Self-cleaning due to vibration.
+              </li>
+              <li>
+                <strong>Conductive (conductivity) probes:</strong> Two or more electrodes detect the
+                presence of a conductive liquid (water-based). Simple and low cost. Not suitable for
+                non-conductive liquids.
+              </li>
+              <li>
+                <strong>Paddle (rotary) switches:</strong> A motor-driven paddle rotates slowly.
+                When immersed in solid material (grain, powder), the paddle stalls and the torque
+                increase triggers the switch. Used in silos and hoppers.
+              </li>
+              <li>
+                <strong>Admittance (RF capacitance):</strong> Detects the presence of material by
+                capacitance change. Handles coatings and build-up better than standard capacitance
+                probes.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety-Critical Level Applications
-              </h3>
-              <p className="text-sm text-white mb-3">
-                In applications where high level could cause a safety hazard (tank overfill,
-                chemical spill, boiler overpressure), the level switch is part of a
-                safety-instrumented system (SIS). Requirements include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Independent of the control system level transmitter (diversity)
-                </li>
-                <li className="pl-1">Self-monitoring or regularly proof-tested</li>
-                <li className="pl-1">
-                  Fail-safe design — output drops out on failure (de-energise to trip)
-                </li>
-                <li className="pl-1">
-                  SIL-rated to the required safety integrity level (IEC 61511)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians should understand the
-              basic principles of flow and level measurement, be able to identify common instrument
-              types installed on plant, carry out basic checks and calibration verification, and
-              recognise when specialist instrumentation support is required.
+          <ConceptBlock title="Safety-critical level applications">
+            <p>
+              In applications where high level could cause a safety hazard (tank overfill, chemical
+              spill, boiler overpressure), the level switch is part of a safety-instrumented system
+              (SIS). Requirements include:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Independent of the control system level transmitter (diversity).</li>
+              <li>Self-monitoring or regularly proof-tested.</li>
+              <li>Fail-safe design — output drops out on failure (de-energise to trip).</li>
+              <li>SIL-rated to the required safety integrity level (IEC 61511).</li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians should understand the basic principles of flow
+              and level measurement, be able to identify common instrument types installed on plant,
+              carry out basic checks and calibration verification, and recognise when specialist
+              instrumentation support is required.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=YG81w0HFXNc"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Electronic Pressure Switches — How They Work"
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+            channel="The Engineering Mindset"
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Temperature and Pressure Sensors
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-5">
-              Next: Signal Conditioning
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            duration="10:13"
+
+            topic="Pressure sensing and switching in process plant"
+
+            caption="Covers the sensing element and the switching logic together, which is how you meet them on a real skid."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'DP flow via an orifice plate follows Q = k x sqrt(delta P) — halving accuracy at low flows limits rangeability to roughly 3:1 or 4:1 compared with 10:1+ for mag flow and Coriolis.',
+              'Mag flow meters need a conductive fluid (minimum around 5 microS/cm), a non-conductive pipe lining, and a full bore — unsuitable for hydrocarbons or gases.',
+              'Ultrasonic flow meters use transit time (clean fluids) or Doppler shift (fluids with particles/bubbles); clamp-on versions need no pipe cutting.',
+              'A Coriolis meter measures mass flow and density directly, independent of fluid properties — the highest-accuracy technology, and the standard for custody transfer.',
+              'Hydrostatic level (P = rho x g x h) is the simplest continuous method; closed vessels need a DP transmitter with high side at the bottom and low side at the top.',
+              'Ultrasonic level is affected by foam, vapour and turbulence; radar (microwave) is largely immune to all three and is preferred in demanding process conditions.',
+              'Point level switches (float, vibrating fork, conductive, paddle, admittance) give on/off detection only — never continuous measurement — and are simpler and often more reliable for alarms.',
+              'A safety-critical level switch must be independent of the control-system transmitter, self-monitoring or proof-tested, fail-safe, and SIL-rated to IEC 61511.',
+              'Impulse-line blockage, leaks and trapped air/condensate are the most common causes of DP flow and level measurement error — check them before condemning the transmitter.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Temperature and Pressure Sensors
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Signal Conditioning
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

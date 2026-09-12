@@ -218,7 +218,7 @@ const BillingTab = () => {
                 {isSubscribed ? 'Your Premium Features' : 'Current Features'}
               </Eyebrow>
               {inheritsFrom && (
-                <p className="mt-2 text-[12px] text-white/70">
+                <p className="mt-2 text-[12px] text-white">
                   Everything in {inheritsFrom}, plus:
                 </p>
               )}
@@ -251,7 +251,7 @@ const BillingTab = () => {
               ) : (
                 <Button
                   onClick={() => navigate('/subscriptions')}
-                  className="h-11 px-5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-white font-medium touch-manipulation"
+                  className="h-11 px-5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-elec-yellow/35 text-white font-medium touch-manipulation"
                 >
                   View Plans →
                 </Button>
@@ -377,7 +377,7 @@ const BillingTab = () => {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-300 mb-1">
                     You may have two subscriptions
                   </p>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
+                  <p className="text-[13px] text-white leading-relaxed">
                     This account has billing set up through both{' '}
                     {Capacitor.getPlatform() === 'android' ? 'Google Play' : 'the App Store'} and
                     Stripe. Cancelling one does not cancel the other — check both, or email
@@ -389,7 +389,7 @@ const BillingTab = () => {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-300 mb-1">
                   Manage your subscription where you bought it
                 </p>
-                <p className="text-[13px] text-white/80 leading-relaxed">
+                <p className="text-[13px] text-white leading-relaxed">
                   Apple and Google require subscriptions purchased through their stores to be managed in their settings, and Stripe subscriptions can only be managed via the web. If you bought on the web and signed in on the iOS app, you'll need to cancel or change your plan from a browser — not in the app. Same the other way around.
                 </p>
               </div>
@@ -398,37 +398,15 @@ const BillingTab = () => {
         </motion.section>
       )}
 
-      {/* ── SECURITY BADGE ── */}
-      <motion.section variants={itemVariants} className="h-full">
-        <SettingsCard eyebrow={isSubscribed ? '03' : '02'} title="Security">
-          <ListRow
-            title={
-              isNative
-                ? Capacitor.getPlatform() === 'ios'
-                  ? 'Secured by Apple'
-                  : 'Secured by Google'
-                : 'Secured by Stripe'
-            }
-            subtitle="Bank-level encryption protects all transactions"
-            trailing={
-              <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-blue-400">
-                Encrypted
-              </span>
-            }
-            accent="blue"
-          />
-        </SettingsCard>
-      </motion.section>
-
       {/* ── SUPPORT ── */}
       <motion.section variants={itemVariants} className="h-full">
-        <SettingsCard eyebrow={isSubscribed ? '04' : '03'} title="Billing Support">
+        <SettingsCard eyebrow="Help" title="Billing support">
           <ListRow
             title="Contact Billing"
             subtitle="info@elec-mate.com"
             onClick={() => openExternalUrl('mailto:info@elec-mate.com')}
             trailing={
-              <span aria-hidden className="text-[13px] font-medium text-elec-yellow/90">
+              <span aria-hidden className="text-[13px] font-medium text-elec-yellow">
                 {'\u2192'}
               </span>
             }

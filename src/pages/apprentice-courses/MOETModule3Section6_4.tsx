@@ -1,14 +1,56 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.6 · Subsection 4 — Smart Grids and Smart Meters
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Industry 4.0 - the integration of physical systems with internet
+ *     connectivity and cloud computing: technologies, systems, and
+ *     benefits."
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Smart Grids and Smart Meters - MOET Module 3.6.4';
 const DESCRIPTION =
   'Comprehensive guide to smart grid technology and smart metering for electrical maintenance technicians: distribution automation, demand-side response, smart meter operation, SMETS2 specifications, communication infrastructure, cybersecurity and UK rollout under ST1426.';
 
+/* ------------------------------------------------------------------ */
+/*  Quick-check questions (4) — shown after each content section       */
+/* ------------------------------------------------------------------ */
 const quickCheckQuestions = [
   {
     id: 'smart-grid-definition',
@@ -54,9 +96,9 @@ const quickCheckQuestions = [
     question: 'How do SMETS2 smart meters communicate with energy suppliers?',
     options: [
       "By sending data over the consumer's home broadband router, which must stay connected at all times",
-      "Via the DCC national network on a dedicated wide-area link (cellular or radio), separate from the home internet",
+      'Via the DCC national network on a dedicated wide-area link (cellular or radio), separate from the home internet',
       "Through the mains wiring itself, using power-line carrier signals injected onto the consumer's final circuits",
-      "By a manual meter reader visiting the property and transcribing the digital display once each quarter",
+      'By a manual meter reader visiting the property and transcribing the digital display once each quarter',
     ],
     correctIndex: 1,
     explanation:
@@ -64,6 +106,9 @@ const quickCheckQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Quiz questions (12) — end-of-page assessment                       */
+/* ------------------------------------------------------------------ */
 const quizQuestions = [
   {
     id: 1,
@@ -224,6 +269,9 @@ const quizQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  FAQs (5)                                                           */
+/* ------------------------------------------------------------------ */
 const faqs = [
   {
     question: 'Do I need to understand smart meters for the ST1426 qualification?',
@@ -253,118 +301,57 @@ const faqs = [
 ];
 
 const MOETModule3Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Smart Grids and Smart Meters
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.6 · Subsection 4"
+        title="Smart Grids and Smart Meters"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Digital grid technology, smart metering and demand management for maintenance
-            technicians
+            technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Smart grid:</strong> Two-way digital network with real-time monitoring and
-                control
-              </li>
-              <li className="pl-1">
-                <strong>SMETS2:</strong> UK smart meter standard — DCC network, any-supplier
-                compatible
-              </li>
-              <li className="pl-1">
-                <strong>DSR:</strong> Shifting demand to balance supply and reduce peak loading
-              </li>
-              <li className="pl-1">
-                <strong>DSO:</strong> Active network management replacing passive DNO model
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Data:</strong> Smart meter data aids fault diagnosis and load analysis
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> PV, batteries, EV, heat pumps all connect to smart
-                grid
-              </li>
-              <li className="pl-1">
-                <strong>Meters:</strong> Do not tamper — meter work requires supplier authority
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Emerging technologies awareness required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Smart grid: Two-way digital network with real-time monitoring and control.',
+              'SMETS2: UK smart meter standard — DCC network, any-supplier compatible.',
+              'DSR: Shifting demand to balance supply and reduce peak loading.',
+              'DSO: Active network management replacing passive DNO model.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Data: Smart meter data aids fault diagnosis and load analysis.</li>
+              <li>Integration: PV, batteries, EV, heat pumps all connect to smart grid.</li>
+              <li>Meters: Do not tamper — meter work requires supplier authority.</li>
+              <li>ST1426: Emerging technologies awareness required.</li>
+            </ul>
+          </ConceptBlock>
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the principles of smart grid technology and the DNO to DSO transition',
               'Describe SMETS2 smart meter specification, components and communication architecture',
               'Identify demand-side response mechanisms and their role in grid balancing',
               'Understand the DCC national communications network and cybersecurity requirements',
               "Recognise the maintenance technician's responsibilities regarding smart meters",
               'Apply smart meter data for diagnostic purposes in electrical maintenance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Smart grid principles and the DSO transition</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Smart Grid Principles and the DSO Transition
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The most significant transformation since the grid's creation">
             <p>
               The electricity grid is undergoing the most significant transformation since its
               creation. The traditional model — large centralised power stations generating
@@ -389,126 +376,96 @@ const MOETModule3Section6_4 = () => {
               heat pumps) without the prohibitive cost of upgrading every cable and transformer on
               the network.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Traditional Grid vs Smart Grid
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Traditional Grid
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Smart Grid</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Power flow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        One-way (generation to consumer)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-way (prosumers export and import)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Generation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Centralised (large power stations)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distributed (millions of small generators)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monitoring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited (substation level)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive (real-time at LV level)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control</td>
-                      <td className="border border-white/10 px-3 py-2">Manual switching</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automated, real-time optimisation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Demand management</td>
-                      <td className="border border-white/10 px-3 py-2">Supply follows demand</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Demand responds to supply (DSR)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Consumer role</td>
-                      <td className="border border-white/10 px-3 py-2">Passive consumer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Active prosumer (produces, stores, trades)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Traditional grid vs smart grid">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">Traditional grid</th>
+                    <th className="py-2 font-medium text-white">Smart grid</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Power flow</td>
+                    <td className="py-2 pr-4">One-way (generation to consumer)</td>
+                    <td className="py-2">Two-way (prosumers export and import)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Generation</td>
+                    <td className="py-2 pr-4">Centralised (large power stations)</td>
+                    <td className="py-2">Distributed (millions of small generators)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Monitoring</td>
+                    <td className="py-2 pr-4">Limited (substation level)</td>
+                    <td className="py-2">Comprehensive (real-time at LV level)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Control</td>
+                    <td className="py-2 pr-4">Manual switching</td>
+                    <td className="py-2">Automated, real-time optimisation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Demand management</td>
+                    <td className="py-2 pr-4">Supply follows demand</td>
+                    <td className="py-2">Demand responds to supply (DSR)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Consumer role</td>
+                    <td className="py-2 pr-4">Passive consumer</td>
+                    <td className="py-2">Active prosumer (produces, stores, trades)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Smart Grid Technologies
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>SCADA and DMS:</strong> Supervisory control and data acquisition,
-                  distribution management systems for real-time network operation
-                </li>
-                <li className="pl-1">
-                  <strong>FLISR:</strong> Fault location, isolation and service restoration —
-                  automatic fault response within seconds
-                </li>
-                <li className="pl-1">
-                  <strong>ANM:</strong> Active Network Management — real-time constraint management
-                  for distributed generation
-                </li>
-                <li className="pl-1">
-                  <strong>OLTC:</strong> On-Load Tap Changers — automatic voltage regulation on
-                  distribution transformers
-                </li>
-                <li className="pl-1">
-                  <strong>Smart meters:</strong> Real-time consumption data, remote reading, tariff
-                  switching, load control
-                </li>
-                <li className="pl-1">
-                  <strong>LV monitoring:</strong> Sensors on LV feeders providing visibility
-                  previously only available at HV level
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Key smart grid technologies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>SCADA and DMS:</strong> Supervisory control and data acquisition,
+                distribution management systems for real-time network operation.
+              </li>
+              <li>
+                <strong>FLISR:</strong> Fault location, isolation and service restoration —
+                automatic fault response within seconds.
+              </li>
+              <li>
+                <strong>ANM:</strong> Active Network Management — real-time constraint management
+                for distributed generation.
+              </li>
+              <li>
+                <strong>OLTC:</strong> On-Load Tap Changers — automatic voltage regulation on
+                distribution transformers.
+              </li>
+              <li>
+                <strong>Smart meters:</strong> Real-time consumption data, remote reading, tariff
+                switching, load control.
+              </li>
+              <li>
+                <strong>LV monitoring:</strong> Sensors on LV feeders providing visibility
+                previously only available at HV level.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The DNO to DSO transition is creating new roles and
               capabilities in network management. Maintenance technicians will increasingly work on
               equipment that is remotely monitored and controlled by the DSO — understanding the
               smart grid context helps you work safely and effectively within this system.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Smart Meter Technology (SMETS2)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Smart meter technology (SMETS2)</ContentEyebrow>
+
+          <ConceptBlock title="The consumer-facing element of the smart grid">
             <p>
               Smart meters are the consumer-facing element of the smart grid. Over 33 million SMETS2
               meters have been installed in Great Britain, making the smart meter the most widely
@@ -524,65 +481,58 @@ const MOETModule3Section6_4 = () => {
               any supplier. This is a critical distinction that the maintenance technician should
               understand when advising building operators about meter functionality.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SMETS2 System Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Electricity meter (ESME):</strong> Measures import/export energy (kWh),
-                  records 30-min profiles, hosts the ZigBee HAN coordinator, contains a load-control
-                  switch (for supplier remote disconnection/reconnection)
-                </li>
-                <li className="pl-1">
-                  <strong>Gas meter (GSME):</strong> Battery-powered meter with ZigBee module
-                  communicating to the ESME; measures gas consumption in cubic metres (converted to
-                  kWh)
-                </li>
-                <li className="pl-1">
-                  <strong>Communications hub (CHF):</strong> Fitted to the ESME; provides WAN
-                  connection (cellular or radio) to the DCC and LAN/HAN ZigBee connections
-                </li>
-                <li className="pl-1">
-                  <strong>In-home display (IHD):</strong> Wireless display showing real-time
-                  electricity and gas consumption in kWh and pounds
-                </li>
-                <li className="pl-1">
-                  <strong>Consumer Access Device (CAD):</strong> Optional ZigBee device allowing
-                  third-party systems to access real-time energy data
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="SMETS2 system components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electricity meter (ESME):</strong> Measures import/export energy (kWh),
+                records 30-min profiles, hosts the ZigBee HAN coordinator, contains a load-control
+                switch (for supplier remote disconnection/reconnection).
+              </li>
+              <li>
+                <strong>Gas meter (GSME):</strong> Battery-powered meter with ZigBee module
+                communicating to the ESME; measures gas consumption in cubic metres (converted to
+                kWh).
+              </li>
+              <li>
+                <strong>Communications hub (CHF):</strong> Fitted to the ESME; provides WAN
+                connection (cellular or radio) to the DCC and LAN/HAN ZigBee connections.
+              </li>
+              <li>
+                <strong>In-home display (IHD):</strong> Wireless display showing real-time
+                electricity and gas consumption in kWh and pounds.
+              </li>
+              <li>
+                <strong>Consumer Access Device (CAD):</strong> Optional ZigBee device allowing
+                third-party systems to access real-time energy data.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Architecture
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>HAN (Home Area Network):</strong> ZigBee (2.4 GHz) connecting meter, gas
-                  module, IHD and CADs within the home
-                </li>
-                <li className="pl-1">
-                  <strong>WAN (Wide Area Network):</strong> Cellular (2G/4G) or long-range radio
-                  connecting the meter to the DCC national hub
-                </li>
-                <li className="pl-1">
-                  <strong>DCC (Data Communications Company):</strong> Central hub routing data
-                  between meters, suppliers, network operators and authorised parties
-                </li>
-                <li className="pl-1">
-                  <strong>Security:</strong> End-to-end encryption, digital certificates,
-                  NCSC-assured security architecture
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Communication architecture">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HAN (Home Area Network):</strong> ZigBee (2.4 GHz) connecting meter, gas
+                module, IHD and CADs within the home.
+              </li>
+              <li>
+                <strong>WAN (Wide Area Network):</strong> Cellular (2G/4G) or long-range radio
+                connecting the meter to the DCC national hub.
+              </li>
+              <li>
+                <strong>DCC (Data Communications Company):</strong> Central hub routing data between
+                meters, suppliers, network operators and authorised parties.
+              </li>
+              <li>
+                <strong>Security:</strong> End-to-end encryption, digital certificates, NCSC-assured
+                security architecture.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Important: Meter Tampering is a Criminal Offence
-              </p>
+          <ConceptBlock title="Important: meter tampering is a criminal offence">
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
               <p className="text-sm text-white">
                 Smart meters are the property of the metering company. Interfering with, bypassing,
                 or tampering with a smart meter is a criminal offence under the Theft Act 1968
@@ -593,7 +543,6 @@ const MOETModule3Section6_4 = () => {
                 disconnection, arrange this through the supplier or DNO.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The SMETS2 specification ensures interoperability — every
               meter works with every supplier via the DCC. This resolved the SMETS1 problem where
@@ -601,18 +550,15 @@ const MOETModule3Section6_4 = () => {
               architecture helps the technician advise building operators on smart meter
               capabilities and limitations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Demand-Side Response and Energy Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Demand-side response and energy management</ContentEyebrow>
+
+          <ConceptBlock title="Why DSR matters to the maintenance technician">
             <p>
               Demand-side response is a fundamental smart grid strategy that shifts or reduces
               electricity consumption in response to grid conditions, price signals, or direct
@@ -629,62 +575,53 @@ const MOETModule3Section6_4 = () => {
               pump that runs at 3 am is not malfunctioning; it is pre-heating the building before
               the morning peak. Understanding DSR prevents misdiagnosis and unnecessary call-outs.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Types of Demand-Side Response
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Price-based DSR:</strong> Consumers respond to time-of-use tariffs —
-                    charging EVs and batteries overnight when prices are low
-                  </li>
-                  <li className="pl-1">
-                    <strong>Incentive-based DSR:</strong> Consumers/businesses receive payments for
-                    reducing demand during grid stress events
-                  </li>
-                  <li className="pl-1">
-                    <strong>Direct load control:</strong> DNO/supplier remotely controls specific
-                    loads (e.g., EV chargers, storage heaters) via smart meters or dedicated control
-                    systems
-                  </li>
-                  <li className="pl-1">
-                    <strong>Aggregated DSR:</strong> An aggregator coordinates hundreds of small
-                    flexible loads (heat pumps, batteries, EVs) into a virtual power plant offering
-                    grid services
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  DSR-Enabled Equipment (maintained by technicians)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Smart EV chargers:</strong> Schedule charging to off-peak periods;
-                    respond to DNO constraints
-                  </li>
-                  <li className="pl-1">
-                    <strong>Heat pumps:</strong> Pre-heat buildings before peak period; modulate
-                    output based on tariff
-                  </li>
-                  <li className="pl-1">
-                    <strong>Battery storage:</strong> Charge from grid/PV during cheap periods;
-                    discharge during expensive periods
-                  </li>
-                  <li className="pl-1">
-                    <strong>Hot water cylinders:</strong> Heat water during cheap periods for later
-                    use (thermal storage)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Industrial loads:</strong> Shift production processes to avoid peak
-                    tariff periods
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Types of demand-side response">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Price-based DSR:</strong> Consumers respond to time-of-use tariffs —
+                charging EVs and batteries overnight when prices are low.
+              </li>
+              <li>
+                <strong>Incentive-based DSR:</strong> Consumers/businesses receive payments for
+                reducing demand during grid stress events.
+              </li>
+              <li>
+                <strong>Direct load control:</strong> DNO/supplier remotely controls specific loads
+                (e.g., EV chargers, storage heaters) via smart meters or dedicated control systems.
+              </li>
+              <li>
+                <strong>Aggregated DSR:</strong> An aggregator coordinates hundreds of small
+                flexible loads (heat pumps, batteries, EVs) into a virtual power plant offering grid
+                services.
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="DSR-enabled equipment (maintained by technicians)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Smart EV chargers:</strong> Schedule charging to off-peak periods; respond
+                to DNO constraints.
+              </li>
+              <li>
+                <strong>Heat pumps:</strong> Pre-heat buildings before peak period; modulate output
+                based on tariff.
+              </li>
+              <li>
+                <strong>Battery storage:</strong> Charge from grid/PV during cheap periods;
+                discharge during expensive periods.
+              </li>
+              <li>
+                <strong>Hot water cylinders:</strong> Heat water during cheap periods for later use
+                (thermal storage).
+              </li>
+              <li>
+                <strong>Industrial loads:</strong> Shift production processes to avoid peak tariff
+                periods.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> As a maintenance technician, the equipment you maintain is
               increasingly operated on DSR schedules. Understanding why an EV charger delays
@@ -692,18 +629,15 @@ const MOETModule3Section6_4 = () => {
               distinguish normal DSR behaviour from faults — avoiding unnecessary call-outs and
               ensuring DSR-enabled equipment is maintained to operate correctly.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Cybersecurity and Future Smart Grid Developments
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cybersecurity and future smart grid developments</ContentEyebrow>
+
+          <ConceptBlock title="Critical national infrastructure">
             <p>
               As the grid becomes increasingly digitalised, cybersecurity becomes a critical
               concern. The smart grid represents critical national infrastructure — a successful
@@ -714,78 +648,67 @@ const MOETModule3Section6_4 = () => {
             <p>
               The cybersecurity threat to energy infrastructure is real and growing. Nation-state
               actors, criminal organisations, and hacktivists have all targeted energy networks
-              globally. The UK's National Cyber Security Centre (NCSC) classifies the energy sector
-              as critical national infrastructure requiring enhanced protection. The DCC's security
-              architecture was designed to Government security standards, and smart meter
-              communications use end-to-end encryption with digital certificates for device
-              authentication.
+              globally. The UK&apos;s National Cyber Security Centre (NCSC) classifies the energy
+              sector as critical national infrastructure requiring enhanced protection. The
+              DCC&apos;s security architecture was designed to Government security standards, and
+              smart meter communications use end-to-end encryption with digital certificates for
+              device authentication.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cybersecurity Layers
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">End-to-end encryption (meter to DCC to supplier)</li>
-                  <li className="pl-1">Digital certificates for device authentication</li>
-                  <li className="pl-1">Network segmentation (OT separate from IT)</li>
-                  <li className="pl-1">Intrusion detection systems (IDS) on SCADA networks</li>
-                  <li className="pl-1">Multi-factor authentication for control access</li>
-                  <li className="pl-1">Regular penetration testing and security audits</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Emerging Technologies
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">AI/ML for predictive network management</li>
-                  <li className="pl-1">Digital twins for network simulation</li>
-                  <li className="pl-1">Blockchain for peer-to-peer energy trading</li>
-                  <li className="pl-1">5G for ultra-low-latency grid control</li>
-                  <li className="pl-1">IoT sensors for comprehensive network monitoring</li>
-                  <li className="pl-1">Vehicle-to-grid (V2G) for EV battery grid services</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Cybersecurity layers">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>End-to-end encryption (meter to DCC to supplier).</li>
+              <li>Digital certificates for device authentication.</li>
+              <li>Network segmentation (OT separate from IT).</li>
+              <li>Intrusion detection systems (IDS) on SCADA networks.</li>
+              <li>Multi-factor authentication for control access.</li>
+              <li>Regular penetration testing and security audits.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Security: Technician Responsibilities
-              </p>
+          <ConceptBlock title="Emerging technologies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>AI/ML for predictive network management.</li>
+              <li>Digital twins for network simulation.</li>
+              <li>Blockchain for peer-to-peer energy trading.</li>
+              <li>5G for ultra-low-latency grid control.</li>
+              <li>IoT sensors for comprehensive network monitoring.</li>
+              <li>Vehicle-to-grid (V2G) for EV battery grid services.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Security: technician responsibilities">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
               <p className="text-sm text-white">
                 While the maintenance technician is not responsible for network cybersecurity, you
                 have a role in maintaining the security of the systems you access. This includes:
                 never sharing access credentials for charger management platforms, inverter
                 monitoring systems, or BMS portals; reporting any suspicious activity or unknown
                 devices connected to smart meter HANs; ensuring firmware updates are applied from
-                verified sources only; and following the manufacturer's security guidelines for
+                verified sources only; and following the manufacturer&apos;s security guidelines for
                 remote access to equipment. A compromised charger or inverter could provide a
                 gateway into the broader energy network.
               </p>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              awareness of smart grid and smart metering technologies as part of the emerging
-              technologies module. The smart grid context affects how every electrical installation
-              operates — from the supply voltage to the load profiles of the equipment you maintain.
-              Technicians who understand this context deliver better maintenance outcomes and can
-              advise building operators on energy management opportunities.
-            </p>
-          </div>
-        </section>
+          <p className="text-sm text-white italic">
+            <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate awareness
+            of smart grid and smart metering technologies as part of the emerging technologies
+            module. The smart grid context affects how every electrical installation operates — from
+            the supply voltage to the load profiles of the equipment you maintain. Technicians who
+            understand this context deliver better maintenance outcomes and can advise building
+            operators on energy management opportunities.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            The Maintenance Technician and Smart Grid Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The maintenance technician and smart grid systems</ContentEyebrow>
+
+          <ConceptBlock title="The operating context for your daily work">
             <p>
               Smart grid technology is not an abstract concept for the maintenance technician — it
               directly affects how the systems you maintain operate day to day. Smart meter data,
@@ -794,69 +717,59 @@ const MOETModule3Section6_4 = () => {
               Understanding this context transforms your ability to diagnose faults, advise building
               operators, and carry out effective preventive maintenance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Using Smart Meter Data for Maintenance Diagnostics
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Baseline consumption:</strong> Establish normal consumption profiles for a
-                  building — any significant deviation indicates a potential fault or change in
-                  usage
-                </li>
-                <li className="pl-1">
-                  <strong>Overnight standing load:</strong> High consumption between 01:00 and 05:00
-                  may indicate equipment left running, immersion heater stuck on, or faulty controls
-                </li>
-                <li className="pl-1">
-                  <strong>Step changes:</strong> A sudden permanent increase in consumption suggests
-                  a new load or failed equipment (e.g., a failed thermostat causing continuous
-                  heating)
-                </li>
-                <li className="pl-1">
-                  <strong>Seasonal comparison:</strong> Comparing winter and summer profiles reveals
-                  heating system performance — degraded heat pump COP shows as increased consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Post-maintenance verification:</strong> Comparing consumption before and
-                  after maintenance work confirms the effectiveness of repairs or efficiency
-                  improvements
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Using smart meter data for maintenance diagnostics">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Baseline consumption:</strong> Establish normal consumption profiles for a
+                building — any significant deviation indicates a potential fault or change in usage.
+              </li>
+              <li>
+                <strong>Overnight standing load:</strong> High consumption between 01:00 and 05:00
+                may indicate equipment left running, immersion heater stuck on, or faulty controls.
+              </li>
+              <li>
+                <strong>Step changes:</strong> A sudden permanent increase in consumption suggests a
+                new load or failed equipment (e.g., a failed thermostat causing continuous heating).
+              </li>
+              <li>
+                <strong>Seasonal comparison:</strong> Comparing winter and summer profiles reveals
+                heating system performance — degraded heat pump COP shows as increased consumption.
+              </li>
+              <li>
+                <strong>Post-maintenance verification:</strong> Comparing consumption before and
+                after maintenance work confirms the effectiveness of repairs or efficiency
+                improvements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Practical Implications for Daily Work
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DSR-controlled equipment:</strong> An EV charger that does not start
-                  immediately may be on a DSR schedule, not faulty — check the smart charging
-                  settings before diagnosing a fault
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage variations:</strong> Smart grid voltage optimisation may reduce
-                  supply voltage — equipment designed for 240 V operating at 220 V is normal in an
-                  optimised network
-                </li>
-                <li className="pl-1">
-                  <strong>Remote monitoring alerts:</strong> Building management systems connected
-                  to smart meters may generate alerts that the maintenance technician must
-                  investigate
-                </li>
-                <li className="pl-1">
-                  <strong>Meter tampering awareness:</strong> During any work near the meter
-                  position, take care not to disturb seals, connections, or the communications hub
-                </li>
-                <li className="pl-1">
-                  <strong>Consumer advice:</strong> Help building operators understand their IHD
-                  data and identify energy-saving opportunities based on consumption patterns
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Practical implications for daily work">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DSR-controlled equipment:</strong> An EV charger that does not start
+                immediately may be on a DSR schedule, not faulty — check the smart charging settings
+                before diagnosing a fault.
+              </li>
+              <li>
+                <strong>Voltage variations:</strong> Smart grid voltage optimisation may reduce
+                supply voltage — equipment designed for 240 V operating at 220 V is normal in an
+                optimised network.
+              </li>
+              <li>
+                <strong>Remote monitoring alerts:</strong> Building management systems connected to
+                smart meters may generate alerts that the maintenance technician must investigate.
+              </li>
+              <li>
+                <strong>Meter tampering awareness:</strong> During any work near the meter position,
+                take care not to disturb seals, connections, or the communications hub.
+              </li>
+              <li>
+                <strong>Consumer advice:</strong> Help building operators understand their IHD data
+                and identify energy-saving opportunities based on consumption patterns.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The smart grid is not separate from your daily work — it
               is the operating context for every electrical installation. Technicians who understand
@@ -864,91 +777,58 @@ const MOETModule3Section6_4 = () => {
               accurately, avoid unnecessary call-outs, and provide higher-value maintenance services
               to building operators.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'FLISR: automatic fault detection, isolation, restoration. ANM: active network management for DER.',
+              'OLTC: on-load tap changers for voltage control. DSO: Distribution System Operator (replaces DNO).',
+              'DCC: Data Communications Company (meter hub). DSR: demand-side response (shift/reduce demand).',
+              'ESME: electricity smart metering equipment. GSME: gas smart metering equipment. CHF: communications hub function.',
+              'HAN: ZigBee (2.4 GHz) home area network. WAN: cellular/radio to DCC.',
+              'IHD: in-home display (real-time usage). CAD: consumer access device (third-party data).',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Smart Grid Technology</p>
-                <ul className="space-y-0.5">
-                  <li>FLISR: automatic fault detection, isolation, restoration</li>
-                  <li>ANM: active network management for DER</li>
-                  <li>OLTC: on-load tap changers for voltage control</li>
-                  <li>DSO: Distribution System Operator (replaces DNO)</li>
-                  <li>DCC: Data Communications Company (meter hub)</li>
-                  <li>DSR: demand-side response (shift/reduce demand)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Smart Meter (SMETS2)</p>
-                <ul className="space-y-0.5">
-                  <li>ESME: electricity smart metering equipment</li>
-                  <li>GSME: gas smart metering equipment</li>
-                  <li>CHF: communications hub function</li>
-                  <li>HAN: ZigBee (2.4 GHz) home area network</li>
-                  <li>WAN: cellular/radio to DCC</li>
-                  <li>IHD: in-home display (real-time usage)</li>
-                  <li>CAD: consumer access device (third-party data)</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Energy Storage Systems
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Electric Vehicle Charging Infrastructure
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Energy Storage Systems
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-5">
-              Next: EV Charging Infrastructure
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

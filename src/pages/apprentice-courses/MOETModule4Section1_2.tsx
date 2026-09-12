@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 1 · Subsection 2 — Maintenance Scheduling and Records
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Documentation requirements: documentation control, auditable
+ *     records."
+ *   · "Record information."
+ *   · "Produce or update documents. For example, handover notes and
+ *     reports."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Maintenance Scheduling and Records - MOET Module 4.1.2';
@@ -256,115 +292,64 @@ const faqs = [
 ];
 
 const MOETModule4Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Maintenance Scheduling and Records
-          </h1>
-          <p className="text-white">
-            CMMS systems, work order management, KPIs and data-driven maintenance decisions
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.1 · Subsection 2"
+        title="Maintenance Scheduling and Records"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            CMMS systems, work order management, KPIs and data-driven maintenance decisions.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>CMMS:</strong> Digital platform for managing all maintenance activities
+          <TLDR
+            points={[
+              'CMMS: Digital platform for managing all maintenance activities.',
+              'Work orders: Formal records of maintenance tasks from request to close.',
+              'KPIs: MTBF, MTTR, availability, PPM compliance, backlog.',
+              'Records: Accurate, contemporaneous documentation of all findings.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Asset registers:</strong> Switchgear, motors, drives, emergency systems.
               </li>
-              <li className="pl-1">
-                <strong>Work orders:</strong> Formal records of maintenance tasks from request to
-                close
+              <li>
+                <strong>Scheduling:</strong> Shutdown planning, statutory test intervals.
               </li>
-              <li className="pl-1">
-                <strong>KPIs:</strong> MTBF, MTTR, availability, PPM compliance, backlog
+              <li>
+                <strong>Trending:</strong> Insulation resistance, thermal data, vibration levels.
               </li>
-              <li className="pl-1">
-                <strong>Records:</strong> Accurate, contemporaneous documentation of all findings
+              <li>
+                <strong>ST1426:</strong> Accurate record keeping is a core competency.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Asset registers:</strong> Switchgear, motors, drives, emergency systems
-              </li>
-              <li className="pl-1">
-                <strong>Scheduling:</strong> Shutdown planning, statutory test intervals
-              </li>
-              <li className="pl-1">
-                <strong>Trending:</strong> Insulation resistance, thermal data, vibration levels
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Accurate record keeping is a core competency
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the functions and benefits of CMMS and CAFM systems',
               'Explain the work order lifecycle from request to close-out',
               'Apply scheduling techniques including Gantt charts and shutdown planning',
               'Maintain accurate asset registers and maintenance history records',
               'Calculate and interpret maintenance KPIs (MTBF, MTTR, availability)',
               'Use maintenance data to drive continuous improvement decisions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>CMMS and CAFM systems</ContentEyebrow>
 
-        {/* Section 01: CMMS and CAFM Systems */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            CMMS and CAFM Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The core tool for maintenance complexity">
             <p>
               Modern maintenance management relies on digital systems to handle the complexity of
               scheduling, tracking and recording maintenance activities across potentially thousands
@@ -372,548 +357,502 @@ const MOETModule4Section1_2 = () => {
               this purpose, while Computer Aided Facilities Management (CAFM) systems provide
               broader facilities management functionality.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core CMMS Functions</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Asset register:</strong> Centralised database of all assets with technical
-                  data, location, criticality and documentation links
-                </li>
-                <li className="pl-1">
-                  <strong>Work order management:</strong> Create, assign, track and close
-                  maintenance tasks with full audit trail
-                </li>
-                <li className="pl-1">
-                  <strong>PPM scheduling:</strong> Automated generation of planned maintenance work
-                  orders based on time, meter readings or condition triggers
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance history:</strong> Complete record of all work carried out on
-                  each asset, including findings, measurements and parts used
-                </li>
-                <li className="pl-1">
-                  <strong>Spare parts management:</strong> Stock levels, reorder points, usage
-                  tracking and cost allocation
-                </li>
-                <li className="pl-1">
-                  <strong>Reporting and KPIs:</strong> Automated calculation of performance metrics
-                  including MTBF, MTTR, availability and PPM compliance
-                </li>
-                <li className="pl-1">
-                  <strong>Mobile access:</strong> Tablet and smartphone apps allowing technicians to
-                  receive, update and close work orders in the field
-                </li>
-              </ul>
+          <ConceptBlock title="Core CMMS functions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Asset register:</strong> Centralised database of all assets with technical
+                data, location, criticality and documentation links
+              </li>
+              <li>
+                <strong>Work order management:</strong> Create, assign, track and close maintenance
+                tasks with full audit trail
+              </li>
+              <li>
+                <strong>PPM scheduling:</strong> Automated generation of planned maintenance work
+                orders based on time, meter readings or condition triggers
+              </li>
+              <li>
+                <strong>Maintenance history:</strong> Complete record of all work carried out on
+                each asset, including findings, measurements and parts used
+              </li>
+              <li>
+                <strong>Spare parts management:</strong> Stock levels, reorder points, usage
+                tracking and cost allocation
+              </li>
+              <li>
+                <strong>Reporting and KPIs:</strong> Automated calculation of performance metrics
+                including MTBF, MTTR, availability and PPM compliance
+              </li>
+              <li>
+                <strong>Mobile access:</strong> Tablet and smartphone apps allowing technicians to
+                receive, update and close work orders in the field
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Common CMMS/CAFM platforms"
+            onSite={
+              <>
+                As a maintenance technician, you will interact with a CMMS daily — receiving work
+                orders, recording findings, closing tasks and updating asset information. Becoming
+                proficient with the system your organisation uses is essential for effective
+                professional practice.
+              </>
+            }
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Platform
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Type
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Typical use
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">IBM Maximo</td>
+                    <td className="border border-white/10 px-3 py-2">Enterprise CMMS/EAM</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large industrial, utilities, transport
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">SAP PM</td>
+                    <td className="border border-white/10 px-3 py-2">Enterprise CMMS</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Manufacturing, process industries
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Planon / MRI</td>
+                    <td className="border border-white/10 px-3 py-2">CAFM</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Commercial property, FM service providers
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Concept Evolution</td>
+                    <td className="border border-white/10 px-3 py-2">CAFM</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      UK FM sector, NHS, education
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Fiix / UpKeep</td>
+                    <td className="border border-white/10 px-3 py-2">Cloud CMMS</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      SMEs, mobile-first maintenance teams
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common CMMS/CAFM Platforms
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Platform</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IBM Maximo</td>
-                      <td className="border border-white/10 px-3 py-2">Enterprise CMMS/EAM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large industrial, utilities, transport
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SAP PM</td>
-                      <td className="border border-white/10 px-3 py-2">Enterprise CMMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturing, process industries
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Planon / MRI</td>
-                      <td className="border border-white/10 px-3 py-2">CAFM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commercial property, FM service providers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Concept Evolution</td>
-                      <td className="border border-white/10 px-3 py-2">CAFM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK FM sector, NHS, education
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fiix / UpKeep</td>
-                      <td className="border border-white/10 px-3 py-2">Cloud CMMS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SMEs, mobile-first maintenance teams
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> As a maintenance technician, you will interact with a CMMS
-              daily — receiving work orders, recording findings, closing tasks and updating asset
-              information. Becoming proficient with the system your organisation uses is essential
-              for effective professional practice.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Work order management</ContentEyebrow>
 
-        {/* Section 02: Work Order Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Work Order Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The fundamental unit of maintenance management">
             <p>
               The work order is the fundamental unit of maintenance management. Every maintenance
               activity — whether planned preventive, corrective, emergency or improvement — should
               be captured as a work order in the CMMS. This provides traceability, accountability
               and the data needed for performance analysis.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Work Order Lifecycle
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Request:</strong> Work is initiated — either automatically from the PPM
-                    schedule, from a reactive fault report, or from a condition monitoring alert
-                  </li>
-                  <li className="pl-1">
-                    <strong>Plan:</strong> Resources identified — technician skill requirements,
-                    estimated duration, spare parts needed, special tools, permits required
-                  </li>
-                  <li className="pl-1">
-                    <strong>Schedule:</strong> Work allocated to a specific date, time and
-                    technician, considering equipment availability, resource capacity and priority
-                  </li>
-                  <li className="pl-1">
-                    <strong>Execute:</strong> Technician carries out the work, following the task
-                    instructions and method statement
-                  </li>
-                  <li className="pl-1">
-                    <strong>Record:</strong> Findings documented — condition observed, measurements
-                    taken, work carried out, parts used, anomalies found, time spent
-                  </li>
-                  <li className="pl-1">
-                    <strong>Close:</strong> Work order completed, reviewed by supervisor if
-                    required, and closed in the CMMS. History updated automatically
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Work order lifecycle">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Request:</strong> Work is initiated — either automatically from the PPM
+                schedule, from a reactive fault report, or from a condition monitoring alert
+              </li>
+              <li>
+                <strong>Plan:</strong> Resources identified — technician skill requirements,
+                estimated duration, spare parts needed, special tools, permits required
+              </li>
+              <li>
+                <strong>Schedule:</strong> Work allocated to a specific date, time and technician,
+                considering equipment availability, resource capacity and priority
+              </li>
+              <li>
+                <strong>Execute:</strong> Technician carries out the work, following the task
+                instructions and method statement
+              </li>
+              <li>
+                <strong>Record:</strong> Findings documented — condition observed, measurements
+                taken, work carried out, parts used, anomalies found, time spent
+              </li>
+              <li>
+                <strong>Close:</strong> Work order completed, reviewed by supervisor if required,
+                and closed in the CMMS. History updated automatically
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Work Order Priority Classification
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">
-                          Response Time
-                        </th>
-                        <th className="border border-white/10 px-3 py-2 text-left">
-                          Electrical Example
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
-                          P1 — Emergency
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Immediate (within 1-2 hours)
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Total power failure, exposed live conductors, fire alarm system down
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
-                          P2 — Urgent
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Same day (within 4-8 hours)
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Partial power loss, UPS on battery, emergency lighting fault
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
-                          P3 — Routine
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Within 5-10 working days
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Non-critical lighting failure, minor socket fault, cosmetic damage
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
-                          P4 — Planned
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Scheduled as per PPM calendar
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Annual switchboard inspection, quarterly RCD testing, motor greasing
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <ConceptBlock title="Work order priority classification">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Priority
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Response time
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Electrical example
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
+                      P1 — Emergency
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Immediate (within 1-2 hours)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Total power failure, exposed live conductors, fire alarm system down
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
+                      P2 — Urgent
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Same day (within 4-8 hours)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Partial power loss, UPS on battery, emergency lighting fault
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
+                      P3 — Routine
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Within 5-10 working days
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Non-critical lighting failure, minor socket fault, cosmetic damage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
+                      P4 — Planned
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Scheduled as per PPM calendar
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Annual switchboard inspection, quarterly RCD testing, motor greasing
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Mistake</p>
-              <p className="text-sm text-white">
-                One of the most damaging practices in maintenance management is allowing reactive
-                work to constantly displace planned maintenance. When every fault is treated as
-                urgent and PPM tasks are deferred, the maintenance programme enters a vicious cycle:
-                deferred PPM leads to more failures, which generate more reactive work, which defers
-                more PPM. Breaking this cycle requires discipline in prioritisation and ring-fencing
-                planned maintenance time.
-              </p>
-            </div>
-          </div>
-        </section>
+          <CommonMistake
+            title="Allowing reactive work to constantly displace planned maintenance"
+            whatHappens={
+              <>
+                When every fault is treated as urgent and PPM tasks are deferred, the maintenance
+                programme enters a vicious cycle: deferred PPM leads to more failures, which
+                generate more reactive work, which defers more PPM.
+              </>
+            }
+            doInstead={
+              <>
+                Breaking this cycle requires discipline in prioritisation and ring-fencing planned
+                maintenance time.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Scheduling Techniques */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Scheduling Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Scheduling techniques</ContentEyebrow>
+
+          <ConceptBlock title="The right work, at the right time, by the right person">
             <p>
               Effective scheduling ensures the right work is done at the right time by the right
               person with the right resources. Poor scheduling wastes labour (technicians waiting
               for parts or access), misses critical maintenance windows and creates frustration for
               both the maintenance team and building occupants.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Calendar-Based Scheduling
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The simplest approach: tasks are scheduled at fixed intervals (daily, weekly,
-                  monthly, quarterly, annually). The CMMS automatically generates work orders when
-                  the interval elapses. Suitable for routine PPM where the interval is well
-                  established.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Monthly: Emergency lighting function test, fire alarm weekly test (if not
-                    automated)
-                  </li>
-                  <li className="pl-1">
-                    Quarterly: RCD testing, generator load test, UPS battery check
-                  </li>
-                  <li className="pl-1">
-                    Annually: Switchboard thermal survey, motor insulation resistance test, full
-                    fire alarm service
-                  </li>
-                  <li className="pl-1">
-                    5-yearly: Electrical Installation Condition Report (EICR)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Shutdown Scheduling
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Some maintenance tasks can only be performed when equipment is de-energised and
-                  out of service. These tasks must be batched and scheduled into planned shutdown
-                  windows. Shutdown planning requires careful coordination.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Identify all tasks requiring shutdown access — do not waste the shutdown on
-                    tasks that could be done live
-                  </li>
-                  <li className="pl-1">
-                    Estimate task durations and sequence — critical path analysis determines the
-                    minimum shutdown duration
-                  </li>
-                  <li className="pl-1">
-                    Pre-stage materials and tools — every minute of shutdown is valuable
-                  </li>
-                  <li className="pl-1">
-                    Assign clear responsibilities — who does what, in what order
-                  </li>
-                  <li className="pl-1">
-                    Plan for contingencies — what if an unexpected fault is found during the
-                    shutdown?
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Resource Levelling</h3>
-                <p className="text-sm text-white">
-                  If all quarterly PPM tasks are scheduled for the first week of the quarter, the
-                  maintenance team will be overwhelmed. Resource levelling spreads the workload
-                  evenly across the available period. For example, if there are 100 quarterly tasks
-                  and a team of 5 technicians, the tasks should be distributed across 12-13 weeks,
-                  not crammed into one week. CMMS systems can automate this distribution based on
-                  available labour hours.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A well-scheduled maintenance programme balances workload,
-              minimises disruption and ensures critical tasks are never deferred. The CMMS is the
-              essential tool for achieving this, but it requires accurate data input from
-              technicians to function effectively.
+          <ConceptBlock title="Calendar-based scheduling">
+            <p>
+              The simplest approach: tasks are scheduled at fixed intervals (daily, weekly, monthly,
+              quarterly, annually). The CMMS automatically generates work orders when the interval
+              elapses. Suitable for routine PPM where the interval is well established.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Monthly: Emergency lighting function test, fire alarm weekly test (if not automated)
+              </li>
+              <li>Quarterly: RCD testing, generator load test, UPS battery check</li>
+              <li>
+                Annually: Switchboard thermal survey, motor insulation resistance test, full fire
+                alarm service
+              </li>
+              <li>5-yearly: Electrical Installation Condition Report (EICR)</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Shutdown scheduling">
+            <p>
+              Some maintenance tasks can only be performed when equipment is de-energised and out of
+              service. These tasks must be batched and scheduled into planned shutdown windows.
+              Shutdown planning requires careful coordination.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Identify all tasks requiring shutdown access — do not waste the shutdown on tasks
+                that could be done live
+              </li>
+              <li>
+                Estimate task durations and sequence — critical path analysis determines the minimum
+                shutdown duration
+              </li>
+              <li>Pre-stage materials and tools — every minute of shutdown is valuable</li>
+              <li>Assign clear responsibilities — who does what, in what order</li>
+              <li>
+                Plan for contingencies — what if an unexpected fault is found during the shutdown?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: KPIs and Data-Driven Decisions */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance KPIs and Data-Driven Decisions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Resource levelling"
+            onSite={
+              <>
+                A well-scheduled maintenance programme balances workload, minimises disruption and
+                ensures critical tasks are never deferred. The CMMS is the essential tool for
+                achieving this, but it requires accurate data input from technicians to function
+                effectively.
+              </>
+            }
+          >
+            <p>
+              If all quarterly PPM tasks are scheduled for the first week of the quarter, the
+              maintenance team will be overwhelmed. Resource levelling spreads the workload evenly
+              across the available period. For example, if there are 100 quarterly tasks and a team
+              of 5 technicians, the tasks should be distributed across 12-13 weeks, not crammed into
+              one week. CMMS systems can automate this distribution based on available labour hours.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Maintenance KPIs and data-driven decisions</ContentEyebrow>
+
+          <ConceptBlock title="Evidence-based rather than anecdotal">
             <p>
               Key Performance Indicators (KPIs) provide objective measurements of maintenance
               effectiveness. Without KPIs, maintenance management is based on assumptions and
               anecdotes. With them, decisions are evidence-based, improvements are measurable, and
               resources can be justified.
             </p>
-
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">KPI</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Target</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Tells You
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">MTBF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mean Time Between Failures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increasing trend</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment reliability — higher is better
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">MTTR</td>
-                      <td className="border border-white/10 px-3 py-2">Mean Time to Repair</td>
-                      <td className="border border-white/10 px-3 py-2">Decreasing trend</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Repair efficiency — lower is better
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Availability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MTBF / (MTBF + MTTR) x 100%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &gt;99% for critical assets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proportion of time equipment is operational
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        PPM Compliance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tasks completed on time / total scheduled
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt;90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discipline of the maintenance programme
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Planned/Reactive Ratio
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Planned hours / total maintenance hours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">&gt;80% planned</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maturity of maintenance programme
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Backlog</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outstanding work orders in weeks of effort
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Resource adequacy — growing backlog = insufficient resource
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">KPI</th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Definition
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Target
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      What it tells you
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">MTBF</td>
+                    <td className="border border-white/10 px-3 py-2">Mean Time Between Failures</td>
+                    <td className="border border-white/10 px-3 py-2">Increasing trend</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Equipment reliability — higher is better
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">MTTR</td>
+                    <td className="border border-white/10 px-3 py-2">Mean Time to Repair</td>
+                    <td className="border border-white/10 px-3 py-2">Decreasing trend</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Repair efficiency — lower is better
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Availability</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      MTBF / (MTBF + MTTR) x 100%
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      &gt;99% for critical assets
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Proportion of time equipment is operational
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">PPM compliance</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Tasks completed on time / total scheduled
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">&gt;90%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Discipline of the maintenance programme
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Planned/reactive ratio
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Planned hours / total maintenance hours
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">&gt;80% planned</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Maturity of maintenance programme
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Backlog</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Outstanding work orders in weeks of effort
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Resource adequacy — growing backlog = insufficient resource
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Using Data to Improve
-                </h3>
-                <p className="text-sm text-white">
-                  Maintenance data from the CMMS enables continuous improvement. If a particular
-                  motor type shows declining MTBF, the maintenance frequency can be increased or the
-                  failure mode investigated. If PPM compliance drops in a particular area, resource
-                  allocation can be adjusted. If certain spare parts are consistently used,
-                  stockholding can be optimised. The data only has value if it is accurate — which
-                  depends on technicians recording findings properly.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Trend Analysis</h3>
-                <p className="text-sm text-white">
-                  Single data points have limited value; trends tell the story. Plotting insulation
-                  resistance readings over time reveals whether insulation is degrading. Plotting
-                  MTBF for a group of assets shows whether reliability is improving or declining.
-                  Plotting PPM compliance month by month shows whether the maintenance programme is
-                  under control. Always look for the trend, not just the individual reading.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires you to use
-              appropriate data to inform maintenance decisions and contribute to continuous
-              improvement. Understanding KPIs and being able to explain what they mean is a key
-              competency for your end-point assessment.
+          <ConceptBlock title="Using data to improve">
+            <p>
+              Maintenance data from the CMMS enables continuous improvement. If a particular motor
+              type shows declining MTBF, the maintenance frequency can be increased or the failure
+              mode investigated. If PPM compliance drops in a particular area, resource allocation
+              can be adjusted. If certain spare parts are consistently used, stockholding can be
+              optimised. The data only has value if it is accurate — which depends on technicians
+              recording findings properly.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock
+            title="Trend analysis"
+            onSite={
+              <>
+                The maintenance technician standard requires you to use appropriate data to inform
+                maintenance decisions and contribute to continuous improvement. Understanding KPIs
+                and being able to explain what they mean is a key competency for your end-point
+                assessment.
+              </>
+            }
+          >
+            <p>
+              Single data points have limited value; trends tell the story. Plotting insulation
+              resistance readings over time reveals whether insulation is degrading. Plotting MTBF
+              for a group of assets shows whether reliability is improving or declining. Plotting
+              PPM compliance month by month shows whether the maintenance programme is under
+              control. Always look for the trend, not just the individual reading.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            title="Work order lifecycle"
+            points={[
+              'Request — initiate from PPM, reactive or condition alert.',
+              'Plan — identify resources, parts and permits.',
+              'Schedule — allocate date, time and technician.',
+              'Execute — carry out work per task instructions.',
+              'Record — document findings, measurements, actions.',
+              'Close — complete, review and update history.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Work Order Lifecycle</p>
-                <ul className="space-y-0.5">
-                  <li>1. Request — initiate from PPM, reactive or condition alert</li>
-                  <li>2. Plan — identify resources, parts and permits</li>
-                  <li>3. Schedule — allocate date, time and technician</li>
-                  <li>4. Execute — carry out work per task instructions</li>
-                  <li>5. Record — document findings, measurements, actions</li>
-                  <li>6. Close — complete, review and update history</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key KPI Formulae</p>
-                <ul className="space-y-0.5">
-                  <li>MTBF = Total operating time / Number of failures</li>
-                  <li>MTTR = Total repair time / Number of repairs</li>
-                  <li>Availability = MTBF / (MTBF + MTTR) x 100%</li>
-                  <li>PPM Compliance = Completed on time / Total scheduled x 100%</li>
-                  <li>Target: &gt;90% PPM compliance, &gt;80% planned ratio</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            title="Key KPI formulae"
+            points={[
+              'MTBF = total operating time / number of failures.',
+              'MTTR = total repair time / number of repairs.',
+              'Availability = MTBF / (MTBF + MTTR) x 100%.',
+              'PPM compliance = completed on time / total scheduled x 100%.',
+              'Target: >90% PPM compliance, >80% planned ratio.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section1-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Principles of PPM
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section1-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Lubrication, Cleaning and Adjustments
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Principles of PPM
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1-3">
-              Next: Lubrication, Cleaning and Adjustments
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

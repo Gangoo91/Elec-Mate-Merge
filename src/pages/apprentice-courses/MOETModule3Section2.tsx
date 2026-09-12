@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '3.2.1',
-      title: 'Motor construction and operation',
-      description: 'Motor types, construction principles and operating characteristics',
-      icon: Cog,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section2-1',
-    },
-    {
-      number: '3.2.2',
-      title: 'Direct-on-line (DOL) starters',
-      description: 'DOL starter operation, components and applications',
-      icon: Play,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section2-2',
-    },
-    {
-      number: '3.2.3',
-      title: 'Star/delta starters',
-      description: 'Star-delta starting principles, wiring and operation',
-      icon: RotateCw,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section2-3',
-    },
-    {
-      number: '3.2.4',
-      title: 'Variable speed drives (VSDs) and soft starters',
-      description: 'VSD technology, soft starters and speed control methods',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section2-4',
-    },
-    {
-      number: '3.2.5',
-      title: 'Motor maintenance and testing',
-      description: 'Preventive maintenance, testing procedures and fault diagnosis',
-      icon: Wrench,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section2-5',
-    },
-  ];
-
+  {
+    number: '3.2.1',
+    title: 'Motor construction and operation',
+    description: 'Motor types, construction principles and operating characteristics',
+    icon: Cog,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section2-1',
+  },
+  {
+    number: '3.2.2',
+    title: 'Direct-on-line (DOL) starters',
+    description: 'DOL starter operation, components and applications',
+    icon: Play,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section2-2',
+  },
+  {
+    number: '3.2.3',
+    title: 'Star/delta starters',
+    description: 'Star-delta starting principles, wiring and operation',
+    icon: RotateCw,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section2-3',
+  },
+  {
+    number: '3.2.4',
+    title: 'Variable speed drives (VSDs) and soft starters',
+    description: 'VSD technology, soft starters and speed control methods',
+    icon: Settings,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section2-4',
+  },
+  {
+    number: '3.2.5',
+    title: 'Motor maintenance and testing',
+    description: 'Preventive maintenance, testing procedures and fault diagnosis',
+    icon: Wrench,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section2-5',
+  },
+];
 
 const MOETModule3Section2 = () => {
   useSEO(

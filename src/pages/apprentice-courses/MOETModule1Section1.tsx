@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '1.1.1',
-      title: 'Permit to work systems',
-      description: 'Understanding and implementing permit to work procedures',
-      icon: FileText,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1-1',
-    },
-    {
-      number: '1.1.2',
-      title: 'Isolation procedures',
-      description: 'Safe isolation of electrical and mechanical systems',
-      icon: Lock,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1-2',
-    },
-    {
-      number: '1.1.3',
-      title: 'Lock-out / tag-out (LOTO)',
-      description: 'LOTO procedures for energy isolation and control',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1-3',
-    },
-    {
-      number: '1.1.4',
-      title: 'Safe access and work at height',
-      description: 'Working safely at height and access equipment requirements',
-      icon: HardHat,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1-4',
-    },
-    {
-      number: '1.1.5',
-      title: 'Working in confined spaces',
-      description: 'Safe entry and working procedures for confined spaces',
-      icon: Home,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1-5',
-    },
-  ];
-
+  {
+    number: '1.1.1',
+    title: 'Permit to work systems',
+    description: 'Understanding and implementing permit to work procedures',
+    icon: FileText,
+    href: '/study-centre/apprentice/m-o-e-t-module1-section1-1',
+  },
+  {
+    number: '1.1.2',
+    title: 'Isolation procedures',
+    description: 'Safe isolation of electrical and mechanical systems',
+    icon: Lock,
+    href: '/study-centre/apprentice/m-o-e-t-module1-section1-2',
+  },
+  {
+    number: '1.1.3',
+    title: 'Lock-out / tag-out (LOTO)',
+    description: 'LOTO procedures for energy isolation and control',
+    icon: Shield,
+    href: '/study-centre/apprentice/m-o-e-t-module1-section1-3',
+  },
+  {
+    number: '1.1.4',
+    title: 'Safe access and work at height',
+    description: 'Working safely at height and access equipment requirements',
+    icon: HardHat,
+    href: '/study-centre/apprentice/m-o-e-t-module1-section1-4',
+  },
+  {
+    number: '1.1.5',
+    title: 'Working in confined spaces',
+    description: 'Safe entry and working procedures for confined spaces',
+    icon: Home,
+    href: '/study-centre/apprentice/m-o-e-t-module1-section1-5',
+  },
+];
 
 const MOETModule1Section1 = () => {
   useSEO(

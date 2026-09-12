@@ -3,17 +3,13 @@ import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { TestingInstrument, CompanyProfile } from '@/types/company';
 import { isIrCapable } from '@/utils/irDefaults';
 import { toast } from 'sonner';
 import { Eyebrow, EmptyState } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { hintCn, inputCn, labelCn, selectTriggerCn } from '@/components/settings/formStyles';
 
 const INSTRUMENT_TYPES = [
   { value: 'multifunction', label: 'Multifunction Tester (MFT)' },
@@ -89,8 +85,8 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Testing instruments">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -113,7 +109,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
               instruments.map((instrument, index) => (
                 <div
                   key={instrument.id}
-                  className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 space-y-3"
+                  className={cn('space-y-4', index > 0 && 'border-t border-white/[0.1] pt-4')}
                 >
                   <div className="flex items-center justify-between">
                     <Eyebrow>Instrument {String(index + 1).padStart(2, '0')}</Eyebrow>
@@ -127,78 +123,70 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Type</Label>
-                      <Select
+                      <Label className={labelCn}>Type</Label>
+                      <MobileSelectPicker
                         value={instrument.instrument_type}
                         onValueChange={(value) =>
                           handleInstrumentChange(instrument.id, 'instrument_type', value)
                         }
-                      >
-                        <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                          {INSTRUMENT_TYPES.map((type) => (
-                            <SelectItem key={type.value} value={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                        options={INSTRUMENT_TYPES}
+                        placeholder="Type"
+                        triggerClassName={selectTriggerCn}
+                      />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Make</Label>
+                      <Label className={labelCn}>Make</Label>
                       <Input
                         value={instrument.make}
                         onChange={(e) =>
                           handleInstrumentChange(instrument.id, 'make', e.target.value)
                         }
                         placeholder="e.g. Megger"
-                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className={inputCn}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Model</Label>
+                      <Label className={labelCn}>Model</Label>
                       <Input
                         value={instrument.model}
                         onChange={(e) =>
                           handleInstrumentChange(instrument.id, 'model', e.target.value)
                         }
                         placeholder="e.g. MFT1741"
-                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className={inputCn}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Serial</Label>
+                      <Label className={labelCn}>Serial</Label>
                       <Input
                         value={instrument.serial_number}
                         onChange={(e) =>
                           handleInstrumentChange(instrument.id, 'serial_number', e.target.value)
                         }
                         placeholder="Serial number"
-                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className={inputCn}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Calibrated on</Label>
+                      <Label className={labelCn}>Calibrated on</Label>
                       <Input
                         type="date"
                         value={instrument.calibration_date}
                         onChange={(e) =>
                           handleInstrumentChange(instrument.id, 'calibration_date', e.target.value)
                         }
-                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className={inputCn}
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">Next calibration</Label>
+                      <Label className={labelCn}>Next calibration</Label>
                       <Input
                         type="date"
                         value={instrument.calibration_due || ''}
                         onChange={(e) =>
                           handleInstrumentChange(instrument.id, 'calibration_due', e.target.value)
                         }
-                        className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                        className={inputCn}
                       />
                     </div>
                   </div>
@@ -208,11 +196,9 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                       on every cert. Record it once here and the schedule fills
                       it in when the test voltage is chosen. */}
                   {isIrCapable(instrument.instrument_type) && (
-                    <div className="mt-4 border-t border-white/[0.08] pt-4">
-                      <Label className="text-white font-medium text-[12px]">
-                        Maximum insulation reading
-                      </Label>
-                      <p className="mt-1 text-[12px] leading-snug text-white">
+                    <div className="border-t border-white/[0.1] pt-4">
+                      <Label className={labelCn}>Maximum insulation reading</Label>
+                      <p className={hintCn}>
                         What this tester displays when a circuit reads off the scale. Include the
                         &gt; sign, exactly as you write it on a certificate.
                       </p>
@@ -225,7 +211,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                           ] as const
                         ).map(([label, field, example]) => (
                           <div key={field} className="space-y-1.5">
-                            <Label className="text-white font-medium text-[12px]">{label}</Label>
+                            <Label className={labelCn}>{label}</Label>
                             <Input
                               inputMode="text"
                               value={instrument[field] || ''}
@@ -233,7 +219,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
                                 handleInstrumentChange(instrument.id, field, e.target.value)
                               }
                               placeholder={example}
-                              className="h-11 bg-white/[0.06] border-white/[0.12] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                              className={inputCn}
                             />
                           </div>
                         ))}
@@ -247,7 +233,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
             <button
               type="button"
               onClick={handleAddInstrument}
-              className="w-full h-11 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] text-white text-[13px] font-medium transition-colors touch-manipulation"
+              className="w-full h-11 rounded-xl border border-elec-yellow/35 bg-white/[0.05] hover:bg-white/[0.06] text-white text-[13px] font-medium transition-colors touch-manipulation"
             >
               Add instrument +
             </button>
@@ -258,7 +244,7 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

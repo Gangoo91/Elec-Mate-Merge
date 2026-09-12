@@ -35,6 +35,7 @@ import {
 } from '@/components/college/primitives';
 import { SettingsCard } from '@/components/settings/rows';
 import { cn } from '@/lib/utils';
+import { chipOff, inputCn } from '@/components/settings/formStyles';
 
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
 const isNative = Capacitor.isNativePlatform();
@@ -388,16 +389,16 @@ const PrivacyTab = () => {
           <button
             type="button"
             onClick={() => setShowRights(!showRights)}
-            className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+            className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
           >
             <span aria-hidden className="w-[3px] h-10 rounded-full shrink-0 bg-elec-yellow" />
             <div className="flex-1 min-w-0">
               <div className="text-[15px] font-medium text-white">Your GDPR Rights</div>
-              <div className="mt-0.5 text-[11.5px] text-white/65">
+              <div className="mt-0.5 text-[11.5px] text-white">
                 Art. 15-21 — access, correct, erase, restrict, port, object
               </div>
             </div>
-            <span aria-hidden className="text-[13px] text-elec-yellow/90 shrink-0">
+            <span aria-hidden className="text-[13px] text-elec-yellow shrink-0">
               {showRights ? '▴' : '▾'}
             </span>
           </button>
@@ -434,7 +435,7 @@ const PrivacyTab = () => {
                     />
                   ))}
                 </ListCard>
-                <div className="px-5 sm:px-6 py-3 text-[11.5px] text-white/65 leading-relaxed">
+                <div className="px-5 sm:px-6 py-3 text-[11.5px] text-white leading-relaxed">
                   To exercise any right, contact{' '}
                   <button
                     onClick={() => openExternalUrl('mailto:info@elec-mate.com')}
@@ -464,7 +465,7 @@ const PrivacyTab = () => {
                     Required
                   </span>
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white/65">
+                <div className="mt-0.5 text-[11.5px] text-white">
                   Authentication and security
                 </div>
               </div>
@@ -477,7 +478,7 @@ const PrivacyTab = () => {
                 <div className="text-[15px] font-medium text-white truncate">
                   Analytics Cookies
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white/65">
+                <div className="mt-0.5 text-[11.5px] text-white">
                   Help us improve the platform
                 </div>
               </div>
@@ -491,7 +492,7 @@ const PrivacyTab = () => {
                 <div className="text-[15px] font-medium text-white truncate">
                   Marketing Cookies
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white/65">
+                <div className="mt-0.5 text-[11.5px] text-white">
                   Meta &amp; Google ads measurement; Vector company identification
                 </div>
               </div>
@@ -511,7 +512,7 @@ const PrivacyTab = () => {
             <Link
               key={link.to}
               to={link.to}
-              className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+              className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
             >
               <div className="flex-1 min-w-0 text-[15px] font-medium text-white truncate">
                 {link.label}
@@ -521,7 +522,7 @@ const PrivacyTab = () => {
           ))}
           <div className="flex items-center gap-2 px-5 sm:px-6 py-3">
             <Dot tone="green" />
-            <p className="text-[11.5px] text-white/65">
+            <p className="text-[11.5px] text-white">
               Registered with the Information Commissioner&apos;s Office · ICO Reg: ZB935897
             </p>
           </div>
@@ -543,7 +544,7 @@ const PrivacyTab = () => {
                     {actionLabels[entry.action] ?? entry.action}
                   </span>
                 </div>
-                <span className="text-[11.5px] text-white/65 tabular-nums whitespace-nowrap">
+                <span className="text-[11.5px] text-white tabular-nums whitespace-nowrap">
                   {new Date(entry.created_at).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short',
@@ -563,7 +564,7 @@ const PrivacyTab = () => {
           if (!isDeleting) setShowDeleteDialog(open);
         }}
       >
-        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-elec-dark border border-elec-yellow/35 rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-red-400">Delete Your Account</AlertDialogTitle>
             <AlertDialogDescription asChild>
@@ -599,10 +600,7 @@ const PrivacyTab = () => {
                   value={deleteConfirmText}
                   onChange={(e) => setDeleteConfirmText(e.target.value)}
                   placeholder="Type DELETE to confirm"
-                  className={cn(
-                    'font-mono bg-white/[0.06] border-white/[0.12] focus:border-red-500/50',
-                    'text-white placeholder:text-white h-11 touch-manipulation'
-                  )}
+                  className={cn(inputCn, 'font-mono')}
                   autoCapitalize="none"
                   autoCorrect="off"
                 />
@@ -612,7 +610,7 @@ const PrivacyTab = () => {
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel
               disabled={isDeleting}
-              className="min-h-[44px] bg-white/[0.06] border-white/[0.12] rounded-full text-white touch-manipulation"
+              className={cn(chipOff, 'min-h-[44px] h-auto rounded-full touch-manipulation')}
             >
               Cancel
             </AlertDialogCancel>

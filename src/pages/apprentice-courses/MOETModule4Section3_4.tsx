@@ -1,8 +1,50 @@
-import { ArrowLeft, Cog, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4.3 · Subsection 4 — Common Faults in Motors and Drives
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Common electrical plant, equipment, and systems failure
+ *     modes."
+ *   · "Electrical. Electrical fault-finding and rectification techniques;
+ *     diagnostic equipment."
+ *   · "Electrical. Problem solving and critical reasoning techniques."
+ *
+ * This page overlaps in subject matter with Module 3 Section 3.2 (motor
+ * maintenance and testing) and Module 2 Section 2.3 (motor theory), but
+ * keeps the FAULT DIAGNOSIS framing of the original — symptom, cause,
+ * diagnostic test — rather than the PM-schedule framing of Module 3 or the
+ * theory framing of Module 2. No content has been rewritten toward those
+ * modules or trimmed as duplicate.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Common Faults in Motors and Drives - MOET Module 4 Section 3.4';
@@ -138,10 +180,10 @@ const quizQuestions = [
     question:
       'A motor overload relay is set to 1.05 times the motor full load current (FLC). If the motor FLC is 20 A, the overload should trip if current exceeds:',
     options: [
-      "19 A instantaneously, on any momentary current peak",
-      "20 A sustained, matching the motor full load current exactly",
+      '19 A instantaneously, on any momentary current peak',
+      '20 A sustained, matching the motor full load current exactly',
       "21 A sustained over the relay's thermal time curve",
-      "25 A instantaneously, allowing for the motor starting current",
+      '25 A instantaneously, allowing for the motor starting current',
     ],
     correctAnswer: 2,
     explanation:
@@ -258,115 +300,64 @@ const faqs = [
 ];
 
 const MOETModule4Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cog className="h-4 w-4" />
-            <span>Module 4.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Common Faults in Motors and Drives
-          </h1>
-          <p className="text-white">
-            Typical motor and drive faults, their causes, symptoms and diagnostic techniques
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 4"
+        title="Common Faults in Motors and Drives"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Typical motor and drive faults, their causes, symptoms and diagnostic techniques.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Bearings:</strong> ~40% of motor failures — noise, vibration, overheating
+          <TLDR
+            points={[
+              'Bearings: ~40% of motor failures — noise, vibration, overheating.',
+              'Windings: ~30% — insulation breakdown, shorted turns, earth faults.',
+              'Single-phasing: Loss of one phase causes overheating and damage.',
+              'VSD faults: Overcurrent, overvoltage, earth fault, IGBT failure.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Nameplate data:</strong> Baseline for all diagnostic comparisons.
               </li>
-              <li className="pl-1">
-                <strong>Windings:</strong> ~30% — insulation breakdown, shorted turns, earth faults
+              <li>
+                <strong>Current balance:</strong> More than 10% imbalance = investigation needed.
               </li>
-              <li className="pl-1">
-                <strong>Single-phasing:</strong> Loss of one phase causes overheating and damage
+              <li>
+                <strong>IR testing:</strong> Motor windings minimum 1 MΩ at 500 V DC.
               </li>
-              <li className="pl-1">
-                <strong>VSD faults:</strong> Overcurrent, overvoltage, earth fault, IGBT failure
+              <li>
+                <strong>ST1426:</strong> Motor and drive diagnostics are core KSBs.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Nameplate data:</strong> Baseline for all diagnostic comparisons
-              </li>
-              <li className="pl-1">
-                <strong>Current balance:</strong> More than 10% imbalance = investigation needed
-              </li>
-              <li className="pl-1">
-                <strong>IR testing:</strong> Motor windings minimum 1 MΩ at 500 V DC
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Motor and drive diagnostics are core KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the common causes and symptoms of motor bearing failure',
               'Diagnose stator winding faults using insulation resistance and winding resistance tests',
               'Recognise the symptoms and dangers of single-phasing in three-phase motors',
               'Interpret variable speed drive fault codes and relate them to system conditions',
               'Carry out initial motor diagnostics including current measurement and phase balance checks',
               'Understand the effects of VSD operation on motor insulation and bearings',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Motor bearing faults</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Motor Bearing Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The single most common cause of motor breakdown">
             <p>
               Bearing failure is the single most common cause of electric motor breakdown,
               accounting for approximately 40 to 50 percent of all motor faults. Bearings are the
@@ -382,116 +373,93 @@ const MOETModule4Section3_4 = () => {
               measurement and noise assessment) can prevent unplanned failures and the significant
               costs associated with them.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Bearing Failure Modes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Failure Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptoms</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Causes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fatigue spalling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increasing vibration, rumbling noise, metallic particles in grease
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Normal wear, excessive load, misalignment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contamination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grinding noise, premature wear, discoloured grease
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust, moisture, incorrect grease, seal failure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical discharge (fluting)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-frequency whine, parallel grooves in bearing races
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VSD-induced shaft voltages, poor earthing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overheating</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excessive bearing temperature, discoloured (blue/brown) races
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Over-greasing, under-greasing, excessive load
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Misalignment damage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uneven wear pattern, vibration at 1x and 2x shaft speed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shaft misalignment with driven equipment, incorrect bearing fit
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common bearing failure modes">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Failure mode</th>
+                    <th className="py-2 pr-4 font-medium text-white">Symptoms</th>
+                    <th className="py-2 font-medium text-white">Common causes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fatigue spalling</td>
+                    <td className="py-2 pr-4">
+                      Increasing vibration, rumbling noise, metallic particles in grease
+                    </td>
+                    <td className="py-2">Normal wear, excessive load, misalignment</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Contamination</td>
+                    <td className="py-2 pr-4">
+                      Grinding noise, premature wear, discoloured grease
+                    </td>
+                    <td className="py-2">Dust, moisture, incorrect grease, seal failure</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Electrical discharge (fluting)</td>
+                    <td className="py-2 pr-4">
+                      High-frequency whine, parallel grooves in bearing races
+                    </td>
+                    <td className="py-2">VSD-induced shaft voltages, poor earthing</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Overheating</td>
+                    <td className="py-2 pr-4">
+                      Excessive bearing temperature, discoloured (blue/brown) races
+                    </td>
+                    <td className="py-2">Over-greasing, under-greasing, excessive load</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Misalignment damage</td>
+                    <td className="py-2 pr-4">
+                      Uneven wear pattern, vibration at 1x and 2x shaft speed
+                    </td>
+                    <td className="py-2">
+                      Shaft misalignment with driven equipment, incorrect bearing fit
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Bearing Diagnostic Techniques
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Vibration analysis:</strong> The most sensitive method — bearing defect
-                  frequencies appear at specific frequencies related to shaft speed, number of
-                  rolling elements and bearing geometry
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature monitoring:</strong> Bearing temperature above 70 degrees C or
-                  more than 20 degrees C above ambient is abnormal for most applications
-                </li>
-                <li className="pl-1">
-                  <strong>Audible assessment:</strong> Listening with a stethoscope or ultrasonic
-                  detector can identify bearing noise before it becomes audible to the unaided ear
-                </li>
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> On disassembly, examine the races, rolling
-                  elements and cage for pitting, scoring, discolouration and wear patterns
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Bearing diagnostic techniques"
+            onSite="Over-greasing is as damaging as under-greasing. Excess grease prevents heat dissipation and increases internal friction. Follow the manufacturer's lubrication schedule and use the specified grease type and quantity. More is not better."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Vibration analysis:</strong> The most sensitive method — bearing defect
+                frequencies appear at specific frequencies related to shaft speed, number of rolling
+                elements and bearing geometry.
+              </li>
+              <li>
+                <strong>Temperature monitoring:</strong> Bearing temperature above 70 degrees C or
+                more than 20 degrees C above ambient is abnormal for most applications.
+              </li>
+              <li>
+                <strong>Audible assessment:</strong> Listening with a stethoscope or ultrasonic
+                detector can identify bearing noise before it becomes audible to the unaided ear.
+              </li>
+              <li>
+                <strong>Visual inspection:</strong> On disassembly, examine the races, rolling
+                elements and cage for pitting, scoring, discolouration and wear patterns.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Over-greasing is as damaging as under-greasing. Excess
-              grease prevents heat dissipation and increases internal friction. Follow the
-              manufacturer's lubrication schedule and use the specified grease type and quantity.
-              More is not better.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Stator Winding Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Stator winding faults</ContentEyebrow>
+
+          <ConceptBlock title="The insulation system is the most vulnerable element">
             <p>
               Stator winding faults account for approximately 30 to 40 percent of motor failures.
               The stator winding consists of insulated copper conductors arranged in slots around
@@ -500,89 +468,77 @@ const MOETModule4Section3_4 = () => {
               vulnerable element. When the insulation fails, current flows through unintended paths,
               causing overheating, arcing and ultimately catastrophic failure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Winding Fault</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Earth fault (ground fault):</strong> Insulation failure between a winding
-                  conductor and the stator core (earth). Detected by insulation resistance testing —
-                  reading below 1 MΩ at 500 V DC
-                </li>
-                <li className="pl-1">
-                  <strong>Shorted turns (turn-to-turn):</strong> Insulation failure between adjacent
-                  turns within the same coil. Causes localised overheating and increased current in
-                  the affected phase. Detected by winding resistance comparison between phases
-                </li>
-                <li className="pl-1">
-                  <strong>Phase-to-phase short:</strong> Insulation failure between conductors of
-                  different phases. Causes high circulating currents and rapid overheating. Detected
-                  by insulation resistance testing between phases
-                </li>
-                <li className="pl-1">
-                  <strong>Open circuit:</strong> Complete break in a winding conductor. The motor
-                  will not start (if all three phases are open) or will single-phase (if one phase
-                  is open). Detected by continuity testing
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Types of winding fault">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Earth fault (ground fault):</strong> Insulation failure between a winding
+                conductor and the stator core (earth). Detected by insulation resistance testing —
+                reading below 1 MΩ at 500 V DC.
+              </li>
+              <li>
+                <strong>Shorted turns (turn-to-turn):</strong> Insulation failure between adjacent
+                turns within the same coil. Causes localised overheating and increased current in
+                the affected phase. Detected by winding resistance comparison between phases.
+              </li>
+              <li>
+                <strong>Phase-to-phase short:</strong> Insulation failure between conductors of
+                different phases. Causes high circulating currents and rapid overheating. Detected
+                by insulation resistance testing between phases.
+              </li>
+              <li>
+                <strong>Open circuit:</strong> Complete break in a winding conductor. The motor will
+                not start (if all three phases are open) or will single-phase (if one phase is
+                open). Detected by continuity testing.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Diagnostic Tests for Winding Faults
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation resistance (IR):</strong> Phase-to-earth and phase-to-phase at
-                  500 V DC. Minimum 1 MΩ, but healthy motors typically read hundreds of MΩ
-                </li>
-                <li className="pl-1">
-                  <strong>Winding resistance:</strong> Measure the DC resistance of each phase
-                  winding using a low-resistance ohmmeter. All three phases should be within 2% of
-                  each other. Greater imbalance suggests shorted turns
-                </li>
-                <li className="pl-1">
-                  <strong>Current balance:</strong> With the motor running, measure the current on
-                  each phase. More than 10% imbalance suggests a winding fault (if supply voltages
-                  are balanced)
-                </li>
-                <li className="pl-1">
-                  <strong>Surge comparison test:</strong> A specialist test that detects
-                  turn-to-turn faults by comparing the voltage waveform response of each phase to an
-                  identical surge pulse
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Diagnostic tests for winding faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation resistance (IR):</strong> Phase-to-earth and phase-to-phase at
+                500 V DC. Minimum 1 MΩ, but healthy motors typically read hundreds of MΩ.
+              </li>
+              <li>
+                <strong>Winding resistance:</strong> Measure the DC resistance of each phase winding
+                using a low-resistance ohmmeter. All three phases should be within 2% of each other.
+                Greater imbalance suggests shorted turns.
+              </li>
+              <li>
+                <strong>Current balance:</strong> With the motor running, measure the current on
+                each phase. More than 10% imbalance suggests a winding fault (if supply voltages are
+                balanced).
+              </li>
+              <li>
+                <strong>Surge comparison test:</strong> A specialist test that detects turn-to-turn
+                faults by comparing the voltage waveform response of each phase to an identical
+                surge pulse.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The 10 Degree Rule</p>
-              <p className="text-sm text-white">
-                For every 10 degrees Celsius that the winding temperature exceeds its insulation
-                class rating, the insulation life is approximately halved. A Class F motor (rated
-                155 degrees C) operating at 165 degrees C will have roughly half its expected
-                insulation life. This is why overheating — from overload, poor ventilation, high
-                ambient temperature or single-phasing — is the primary cause of insulation failure.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always measure insulation resistance with the motor
-              disconnected from the drive or starter. VSD output filters, surge suppressors and the
-              drive's internal components can mask a motor winding fault if the measurement is taken
-              at the drive end.
+          <ConceptBlock
+            title="The 10 degree rule"
+            onSite="Always measure insulation resistance with the motor disconnected from the drive or starter. VSD output filters, surge suppressors and the drive's internal components can mask a motor winding fault if the measurement is taken at the drive end."
+          >
+            <p>
+              For every 10 degrees Celsius that the winding temperature exceeds its insulation class
+              rating, the insulation life is approximately halved. A Class F motor (rated 155
+              degrees C) operating at 165 degrees C will have roughly half its expected insulation
+              life. This is why overheating — from overload, poor ventilation, high ambient
+              temperature or single-phasing — is the primary cause of insulation failure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Variable Speed Drive Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Variable speed drive faults</ContentEyebrow>
+
+          <ConceptBlock title="VSDs introduce their own fault conditions">
             <p>
               Variable speed drives (VSDs), also called variable frequency drives (VFDs) or
               inverters, are now the standard method for controlling motor speed in industrial
@@ -591,71 +547,54 @@ const MOETModule4Section3_4 = () => {
               enormous energy savings and process control benefits, they also introduce specific
               fault conditions that maintenance technicians must understand.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common VSD Fault Codes and Causes
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Causes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overcurrent (OC)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output current exceeded threshold
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mechanical overload, cable/motor fault, short ramp time
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overvoltage (OV)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DC bus voltage exceeded threshold
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Regeneration during deceleration, supply voltage high
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth fault (EF)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current to earth detected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor/cable insulation failure, moisture ingress
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overtemperature (OT)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drive heatsink temperature exceeded limit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Blocked ventilation, high ambient, fan failure, overload
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Undervoltage (UV)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DC bus voltage dropped below minimum
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supply dip, input fuse blown, poor supply connection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common VSD fault codes and causes">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Fault code</th>
+                    <th className="py-2 pr-4 font-medium text-white">Meaning</th>
+                    <th className="py-2 font-medium text-white">Common causes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Overcurrent (OC)</td>
+                    <td className="py-2 pr-4">Output current exceeded threshold</td>
+                    <td className="py-2">
+                      Mechanical overload, cable/motor fault, short ramp time
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Overvoltage (OV)</td>
+                    <td className="py-2 pr-4">DC bus voltage exceeded threshold</td>
+                    <td className="py-2">Regeneration during deceleration, supply voltage high</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Earth fault (EF)</td>
+                    <td className="py-2 pr-4">Current to earth detected</td>
+                    <td className="py-2">Motor/cable insulation failure, moisture ingress</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Overtemperature (OT)</td>
+                    <td className="py-2 pr-4">Drive heatsink temperature exceeded limit</td>
+                    <td className="py-2">
+                      Blocked ventilation, high ambient, fan failure, overload
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Undervoltage (UV)</td>
+                    <td className="py-2 pr-4">DC bus voltage dropped below minimum</td>
+                    <td className="py-2">Supply dip, input fuse blown, poor supply connection</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
+          <ConceptBlock title="Always check the fault history log first">
             <p>
               When diagnosing VSD faults, always check the fault history log first. Most drives
               store the last 8 to 20 fault events with timestamps and operating data (current,
@@ -663,58 +602,47 @@ const MOETModule4Section3_4 = () => {
               helpful — for example, an overcurrent trip at 3 Hz during acceleration suggests a
               different cause than the same trip at 50 Hz under steady-state load.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VSD Diagnostic Approach
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Read the fault code:</strong> Identify the specific fault type and check
-                  the manufacturer's manual for detailed explanations
-                </li>
-                <li className="pl-1">
-                  <strong>Review the fault log:</strong> Check the history — is this a recurring
-                  fault? What were the conditions each time?
-                </li>
-                <li className="pl-1">
-                  <strong>Check the supply:</strong> Measure input voltages for balance and correct
-                  level
-                </li>
-                <li className="pl-1">
-                  <strong>Check the output:</strong> With the motor disconnected, measure the
-                  insulation resistance of the motor cable and motor windings
-                </li>
-                <li className="pl-1">
-                  <strong>Check the environment:</strong> Verify ventilation, ambient temperature,
-                  and cleanliness of the drive heatsink and fans
-                </li>
-                <li className="pl-1">
-                  <strong>Review parameters:</strong> Confirm motor data, acceleration/deceleration
-                  ramp times, and protection settings are correct for the application
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="VSD diagnostic approach"
+            onSite="VSDs contain large DC bus capacitors that store dangerous energy even after the supply is disconnected. Always wait for the charge indicator to show safe levels (or measure the DC bus voltage directly) before opening a drive enclosure. Typical discharge times are 5 to 15 minutes, but can be longer on larger drives."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Read the fault code:</strong> Identify the specific fault type and check the
+                manufacturer's manual for detailed explanations.
+              </li>
+              <li>
+                <strong>Review the fault log:</strong> Check the history — is this a recurring
+                fault? What were the conditions each time?
+              </li>
+              <li>
+                <strong>Check the supply:</strong> Measure input voltages for balance and correct
+                level.
+              </li>
+              <li>
+                <strong>Check the output:</strong> With the motor disconnected, measure the
+                insulation resistance of the motor cable and motor windings.
+              </li>
+              <li>
+                <strong>Check the environment:</strong> Verify ventilation, ambient temperature, and
+                cleanliness of the drive heatsink and fans.
+              </li>
+              <li>
+                <strong>Review parameters:</strong> Confirm motor data, acceleration/deceleration
+                ramp times, and protection settings are correct for the application.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Warning:</strong> VSDs contain large DC bus capacitors that store dangerous
-              energy even after the supply is disconnected. Always wait for the charge indicator to
-              show safe levels (or measure the DC bus voltage directly) before opening a drive
-              enclosure. Typical discharge times are 5 to 15 minutes, but can be longer on larger
-              drives.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Motor Overheating and Thermal Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Motor overheating and thermal protection</ContentEyebrow>
+
+          <ConceptBlock title="The most damaging condition for an electric motor">
             <p>
               Overheating is the most damaging condition for an electric motor and is either the
               direct cause or a contributing factor in the majority of motor failures. The
@@ -723,255 +651,185 @@ const MOETModule4Section3_4 = () => {
               maintenance technician, understanding the causes of motor overheating and the
               protection systems designed to prevent it is fundamental to effective fault diagnosis.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Causes of Motor Overheating
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sustained overload:</strong> Mechanical load exceeding the motor's rated
-                  capacity, drawing excessive current
+          <ConceptBlock title="Causes of motor overheating">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sustained overload:</strong> Mechanical load exceeding the motor's rated
+                capacity, drawing excessive current.
+              </li>
+              <li>
+                <strong>Single-phasing:</strong> Loss of one supply phase causing remaining phases
+                to carry increased current.
+              </li>
+              <li>
+                <strong>Voltage imbalance:</strong> Unequal supply voltages causing circulating
+                currents in the rotor.
+              </li>
+              <li>
+                <strong>Blocked ventilation:</strong> Cooling fan failure, blocked air passages or
+                filters, or incorrect installation restricting airflow.
+              </li>
+              <li>
+                <strong>Frequent starting:</strong> Each DOL start dissipates significant energy in
+                the rotor — excessive starts per hour cause cumulative heating.
+              </li>
+              <li>
+                <strong>High ambient temperature:</strong> Motor installed in an environment above
+                its rated ambient (typically 40 degrees C).
+              </li>
+              <li>
+                <strong>Low-speed VSD operation:</strong> At low speeds, the integral cooling fan is
+                less effective — external forced cooling may be required.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ConceptBlock title="Thermal protection devices">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Bimetallic overload relay:</strong> Heats and trips based on current —
+                  provides inverse time characteristic.
                 </li>
-                <li className="pl-1">
-                  <strong>Single-phasing:</strong> Loss of one supply phase causing remaining phases
-                  to carry increased current
+                <li>
+                  <strong>Electronic overload relay:</strong> Digital current monitoring with
+                  programmable curves and phase-loss detection.
                 </li>
-                <li className="pl-1">
-                  <strong>Voltage imbalance:</strong> Unequal supply voltages causing circulating
-                  currents in the rotor
+                <li>
+                  <strong>PTC thermistors:</strong> Embedded in the windings — resistance increases
+                  sharply at the trip temperature.
                 </li>
-                <li className="pl-1">
-                  <strong>Blocked ventilation:</strong> Cooling fan failure, blocked air passages or
-                  filters, or incorrect installation restricting airflow
-                </li>
-                <li className="pl-1">
-                  <strong>Frequent starting:</strong> Each DOL start dissipates significant energy
-                  in the rotor — excessive starts per hour cause cumulative heating
-                </li>
-                <li className="pl-1">
-                  <strong>High ambient temperature:</strong> Motor installed in an environment above
-                  its rated ambient (typically 40 degrees C)
-                </li>
-                <li className="pl-1">
-                  <strong>Low-speed VSD operation:</strong> At low speeds, the integral cooling fan
-                  is less effective — external forced cooling may be required
+                <li>
+                  <strong>PT100 sensors:</strong> Embedded resistance temperature detectors
+                  providing continuous temperature monitoring.
                 </li>
               </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Thermal Protection Devices
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Bimetallic overload relay:</strong> Heats and trips based on current —
-                    provides inverse time characteristic
-                  </li>
-                  <li className="pl-1">
-                    <strong>Electronic overload relay:</strong> Digital current monitoring with
-                    programmable curves and phase-loss detection
-                  </li>
-                  <li className="pl-1">
-                    <strong>PTC thermistors:</strong> Embedded in the windings — resistance
-                    increases sharply at the trip temperature
-                  </li>
-                  <li className="pl-1">
-                    <strong>PT100 sensors:</strong> Embedded resistance temperature detectors
-                    providing continuous temperature monitoring
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Diagnostic Checks</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Measure running current on all three phases — compare to nameplate FLC
-                  </li>
-                  <li className="pl-1">
-                    Check supply voltage balance — less than 2% imbalance acceptable
-                  </li>
-                  <li className="pl-1">
-                    Inspect cooling system — fan, shroud, air filters, ventilation clearances
-                  </li>
-                  <li className="pl-1">
-                    Check ambient conditions — temperature, altitude, nearby heat sources
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> If a motor's overload relay keeps tripping, never simply
-              increase the overload setting without investigating the cause. The overload is
-              protecting the motor from damage — bypassing or increasing it removes that protection
-              and will almost certainly lead to winding failure.
-            </p>
+            </ConceptBlock>
+            <ConceptBlock
+              title="Diagnostic checks"
+              onSite="If a motor's overload relay keeps tripping, never simply increase the overload setting without investigating the cause. The overload is protecting the motor from damage — bypassing or increasing it removes that protection and will almost certainly lead to winding failure."
+            >
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>Measure running current on all three phases — compare to nameplate FLC.</li>
+                <li>Check supply voltage balance — less than 2% imbalance acceptable.</li>
+                <li>Inspect cooling system — fan, shroud, air filters, ventilation clearances.</li>
+                <li>Check ambient conditions — temperature, altitude, nearby heat sources.</li>
+              </ul>
+            </ConceptBlock>
           </div>
-        </section>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Motor and Drive Diagnostic Workflow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Practical motor and drive diagnostic workflow</ContentEyebrow>
+
+          <ConceptBlock title="Applying the six-point technique to motors and drives">
             <p>
               Bringing together the knowledge of motor and drive faults, here is a practical
               diagnostic workflow that you can apply to any motor or drive fault situation. This
               workflow follows the six-point technique introduced in Section 4.3.2, applied
               specifically to motors and drives.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Gather Evidence
-                </h3>
-                <p className="text-sm text-white">
-                  Interview the operator. Note the motor nameplate data. Check the VSD display for
-                  fault codes and review the fault history. Check the overload relay for trip
-                  indication. Note any unusual noise, smell, vibration or temperature.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Safe Isolation and Initial Measurements
-                </h3>
-                <p className="text-sm text-white">
-                  Isolate the motor circuit. Prove dead at the motor terminals. Measure insulation
-                  resistance (phase-to-earth and phase-to-phase). Measure winding resistance on all
-                  three phases. Compare results to baseline values and acceptable limits.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Mechanical Assessment
-                </h3>
-                <p className="text-sm text-white">
-                  If electrical tests are satisfactory, assess the mechanical condition. Can the
-                  shaft be turned freely by hand? Is there axial or radial play in the bearings? Is
-                  the coupling in good condition? Is the driven load free to move? Mechanical faults
-                  often present as electrical symptoms (overcurrent, overheating).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Supply and Drive Checks
-                </h3>
-                <p className="text-sm text-white">
-                  Verify supply voltage at the drive input on all three phases. Check for voltage
-                  balance. If a VSD is fitted, review parameters against the motor nameplate data.
-                  Confirm acceleration and deceleration ramp times are appropriate. Check drive
-                  ventilation and cooling.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 5 — Running Diagnostics
-                </h3>
-                <p className="text-sm text-white">
-                  If safe to re-energise, measure running current on all three phases under normal
-                  load. Compare to nameplate FLC. Monitor temperature. Listen for unusual sounds.
-                  Measure vibration if equipment is available. These running measurements reveal
-                  faults that are not detectable when the motor is stationary.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Document every measurement, observation and action throughout
-              the diagnostic process. This creates a complete audit trail that supports root cause
-              analysis, informs future maintenance decisions, and demonstrates the systematic
-              approach required by ST1426.
+          <ConceptBlock title="Step 1 — Gather evidence">
+            <p>
+              Interview the operator. Note the motor nameplate data. Check the VSD display for fault
+              codes and review the fault history. Check the overload relay for trip indication. Note
+              any unusual noise, smell, vibration or temperature.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Step 2 — Safe isolation and initial measurements">
+            <p>
+              Isolate the motor circuit. Prove dead at the motor terminals. Measure insulation
+              resistance (phase-to-earth and phase-to-phase). Measure winding resistance on all
+              three phases. Compare results to baseline values and acceptable limits.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Step 3 — Mechanical assessment">
+            <p>
+              If electrical tests are satisfactory, assess the mechanical condition. Can the shaft
+              be turned freely by hand? Is there axial or radial play in the bearings? Is the
+              coupling in good condition? Is the driven load free to move? Mechanical faults often
+              present as electrical symptoms (overcurrent, overheating).
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Step 4 — Supply and drive checks">
+            <p>
+              Verify supply voltage at the drive input on all three phases. Check for voltage
+              balance. If a VSD is fitted, review parameters against the motor nameplate data.
+              Confirm acceleration and deceleration ramp times are appropriate. Check drive
+              ventilation and cooling.
+            </p>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Motor Diagnostic Tests</p>
-                <ul className="space-y-0.5">
-                  <li>Insulation resistance — min 1 MΩ at 500 V DC</li>
-                  <li>Winding resistance — all phases within 2%</li>
-                  <li>Current balance — less than 10% imbalance</li>
-                  <li>Supply voltage balance — less than 2%</li>
-                  <li>Bearing temperature — below 70 degrees C typical</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">VSD Fault Codes (Generic)</p>
-                <ul className="space-y-0.5">
-                  <li>OC — Overcurrent: check load, cable, motor</li>
-                  <li>OV — Overvoltage: check ramp time, braking</li>
-                  <li>EF — Earth fault: check motor/cable IR</li>
-                  <li>OT — Overtemperature: check ventilation</li>
-                  <li>UV — Undervoltage: check supply, fuses</li>
-                </ul>
-              </div>
+          <ConceptBlock
+            title="Step 5 — Running diagnostics"
+            onSite="Document every measurement, observation and action throughout the diagnostic process. This creates a complete audit trail that supports root cause analysis, informs future maintenance decisions, and demonstrates the systematic approach required by ST1426."
+          >
+            <p>
+              If safe to re-energise, measure running current on all three phases under normal load.
+              Compare to nameplate FLC. Monitor temperature. Listen for unusual sounds. Measure
+              vibration if equipment is available. These running measurements reveal faults that are
+              not detectable when the motor is stationary.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Motor diagnostic tests: insulation resistance minimum 1 MΩ at 500 V DC; winding resistance within 2% across all phases; current balance within 10%; supply voltage balance within 2%; bearing temperature below 70 degrees C typical.',
+              'VSD fault codes: OC (overcurrent) — check load, cable, motor; OV (overvoltage) — check ramp time, braking; EF (earth fault) — check motor/cable IR; OT (overtemperature) — check ventilation; UV (undervoltage) — check supply, fuses.',
+              'Bearings and windings together account for roughly 70-80% of motor failures.',
+              'Always disconnect the motor from the drive or starter before insulation resistance testing.',
+              'VSD DC bus capacitors store dangerous energy after isolation — wait for the charge indicator or measure the bus voltage before opening the enclosure.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Use of Electrical Test Instruments
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Control Circuit Faults
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Electrical Test Instruments
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-5">
-              Next: Control Circuit Faults
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

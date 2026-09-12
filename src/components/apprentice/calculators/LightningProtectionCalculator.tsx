@@ -200,7 +200,7 @@ const LightningProtectionCalculator = () => {
 
     return {
       meta: {
-        title: 'Lightning Protection Calculator',
+        title: 'Lightning Protection',
         subtitle: 'BS EN 62305-2 risk assessment for lightning protection systems',
         standard: 'BS EN 62305-2',
       },
@@ -219,18 +219,31 @@ const LightningProtectionCalculator = () => {
           rows: [
             { label: 'Building dimensions', value: `${buildingLength} × ${buildingWidth} × ${buildingHeight} m (L×W×H)` },
             { label: 'UK region', value: `${ukRegion} (Ng = ${UK_REGIONS[ukRegion]} fl/km²/yr)` },
-            { label: 'Building construction', value: buildingConstruction },
-            { label: 'Roof type', value: roofType },
-            { label: 'Contents risk', value: contentsRisk },
-            { label: 'Occupancy', value: occupancy },
-            { label: 'Existing protection', value: existingProtection },
+            {
+              label: 'Building construction',
+              value: constructionOptions.find((c) => c.value === buildingConstruction)?.label ?? buildingConstruction,
+            },
+            { label: 'Roof type', value: roofTypeOptions.find((r) => r.value === roofType)?.label ?? roofType },
+            { label: 'Contents risk', value: contentsRiskOptions.find((c) => c.value === contentsRisk)?.label ?? contentsRisk },
+            { label: 'Occupancy', value: occupancyOptions.find((o) => o.value === occupancy)?.label ?? occupancy },
+            {
+              label: 'Existing protection',
+              value: existingProtectionOptions.find((e) => e.value === existingProtection)?.label ?? existingProtection,
+            },
             {
               label: 'Incoming services',
-              value: incomingServices.length ? incomingServices.join(', ') : 'None selected',
+              value: incomingServices.length
+                ? incomingServices
+                    .map((s) => serviceCheckboxes.find((c) => c.value === s)?.label ?? s)
+                    .join(', ')
+                : 'None selected',
             },
           ],
         },
         {
+          // Total risk and tolerable risk are already the headline — this
+          // section carries the R1–R4 breakdown behind that total instead of
+          // restating it.
           heading: 'Result',
           rows: [
             { label: 'Collection area (Ad)', value: `${result.collectionArea.toLocaleString()} m²` },
@@ -239,8 +252,6 @@ const LightningProtectionCalculator = () => {
             { label: 'Risk R2 (physical damage)', value: result.riskR2.toExponential(2) },
             { label: 'Risk R3 (electrical systems)', value: result.riskR3.toExponential(2) },
             { label: 'Risk R4 (economic loss)', value: result.riskR4.toExponential(2) },
-            { label: 'Total risk (R)', value: result.totalRisk.toExponential(2) },
-            { label: 'Tolerable risk (RT)', value: result.tolerableRisk.toExponential(2) },
             {
               label: 'Structural LPS',
               value: result.protectionRequired

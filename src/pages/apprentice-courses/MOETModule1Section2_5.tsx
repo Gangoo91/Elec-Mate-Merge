@@ -1,8 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.2 · Subsection 5 — Earthing and Bonding for Safety
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical isolation and deisolation
+ *                 requirements: lockout tagout and testing for dead."
+ *              · "Work environment hazards and risks. Risk assessments."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. Numeric
+ * safety values (conductor sizes, disconnection times, resistance limits)
+ * are carried over character-for-character — see the spec for this
+ * conversion batch.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earthing and Bonding for Safety - MOET Module 1.2.5';
@@ -60,7 +103,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 0,
     explanation:
-      'The earth fault loop impedance (Zs) determines the fault current that will flow during an earth fault: If = Uo/Zs. If Zs is too high, the fault current will be too low to operate the protective device (fuse or MCB) within the disconnection time specified in BS 7671 (0.4 s for socket outlets and portable equipment, 5 s for fixed equipment in TN systems). This would leave the exposed-conductive-part energised at a dangerous potential.',
+      'The earth fault loop impedance (Zs) determines the fault current that will flow during an earth fault: If = Uo/Zs. If Zs is too high, the fault current will be too low to operate the protective device (fuse or MCB) within the disconnection time specified in BS 7671 (in a 230 V TN system, 0.4 s for final circuits up to 63 A with socket-outlets and up to 32 A supplying only fixed equipment; 5 s for distribution circuits). This would leave the exposed-conductive-part energised at a dangerous potential.',
   },
 ];
 
@@ -95,8 +138,8 @@ const quizQuestions = [
     id: 3,
     question: 'The main earthing terminal is the point where:',
     options: [
-      "The supply neutral is connected to the line conductors inside the meter tails",
-      "The RCD and main switch are mounted within the consumer unit enclosure",
+      'The supply neutral is connected to the line conductors inside the meter tails',
+      'The RCD and main switch are mounted within the consumer unit enclosure',
       "The incoming supply cable is jointed to the consumer's meter tails",
       "The earthing conductor, main protective bonding conductors and circuit protective conductors all connect to form the installation's earth reference",
     ],
@@ -108,12 +151,7 @@ const quizQuestions = [
     id: 4,
     question:
       'Under BS 7671:2018+A4:2026, the minimum cross-sectional area of a main protective bonding conductor in a PME installation with 25 mm² supply tails is:',
-    options: [
-      '10 mm²',
-      '6 mm²',
-      '4 mm²',
-      '16 mm²',
-    ],
+    options: ['10 mm²', '6 mm²', '4 mm²', '16 mm²'],
     correctAnswer: 0,
     explanation:
       'For TN-C-S (PME) installations, BS 7671 Table 54.8 specifies minimum bonding conductor sizes. Where the supply neutral is 25 mm² copper, the minimum main protective bonding conductor is 10 mm² copper. For 35 mm² supply tails (common in modern domestic installations), the minimum is 10 mm² copper. These sizes ensure the bonding conductor can carry the prospective fault current without damage.',
@@ -135,7 +173,7 @@ const quizQuestions = [
     id: 6,
     question: 'An earth electrode for a TT system is typically:',
     options: [
-      'The metallic sheath of the distributor\'s incoming supply cable',
+      "The metallic sheath of the distributor's incoming supply cable",
       'The combined PEN conductor brought into the consumer unit',
       'A driven copper-clad steel rod, copper plate, or foundation earth electrode in direct contact with the general mass of earth',
       'The incoming metallic water service pipe used as the sole earth',
@@ -161,15 +199,10 @@ const quizQuestions = [
     id: 8,
     question:
       'For a 230 V final circuit supplying socket outlets, protected in a TN system, BS 7671 requires disconnection within:',
-    options: [
-      '0.4 seconds',
-      '0.2 seconds',
-      '1.0 second',
-      '5 seconds',
-    ],
+    options: ['0.4 seconds', '0.2 seconds', '1.0 second', '5 seconds'],
     correctAnswer: 0,
     explanation:
-      'BS 7671 Table 41.1 specifies maximum disconnection times for 230 V TN systems: 0.4 seconds for final circuits up to 63 A supplying socket outlets and portable equipment, and 5 seconds for distribution circuits and final circuits supplying only fixed equipment. These times ensure that the touch voltage on exposed-conductive-parts does not persist long enough to cause ventricular fibrillation.',
+      'BS 7671 Table 41.1 specifies maximum disconnection times for 230 V TN systems: 0.4 seconds for final circuits up to 63 A with socket-outlets, and up to 32 A supplying only fixed connected equipment; 5 seconds for distribution circuits and for final circuits above those ratings. Fixed equipment does not automatically get 5 s — a 16 A fixed-equipment final circuit still has to clear in 0.4 s. These times ensure that the touch voltage on exposed-conductive-parts does not persist long enough to cause ventricular fibrillation.',
   },
   {
     id: 9,
@@ -256,115 +289,64 @@ const faqs = [
 ];
 
 const MOETModule1Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Earthing and Bonding for Safety
-          </h1>
-          <p className="text-white">
-            Protective earthing, equipotential bonding and fault current management
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.2 · Subsection 5"
+        title="Earthing and Bonding for Safety"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Protective earthing, equipotential bonding and fault current management.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Earthing:</strong> Fault current path for automatic disconnection
-              </li>
-              <li className="pl-1">
-                <strong>Bonding:</strong> Equipotential zone — no dangerous voltage differences
-              </li>
-              <li className="pl-1">
-                <strong>Systems:</strong> TN-S, TN-C-S (PME), TT and IT
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Zs, Ze, R1+R2 and earth electrode resistance
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Key Standards
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Earthing: fault current path for automatic disconnection',
+              'Bonding: equipotential zone — no dangerous voltage differences',
+              'Systems: TN-S, TN-C-S (PME), TT and IT',
+              'Testing: Zs, Ze, R1+R2 and earth electrode resistance',
+            ]}
+          />
+
+          <ConceptBlock title="Key standards at a glance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>BS 7671:2018+A4:2026:</strong> Chapters 41, 54; Tables 41.1-41.6
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>EAWR 1989:</strong> Reg 8 (earthing); Reg 9 (integrity of earth)
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>BS EN 62305:</strong> Lightning protection earthing
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ENA ER S34:</strong> DNO earthing requirements
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose of earthing in creating a fault current path for automatic disconnection',
               'Describe the characteristics of TN-S, TN-C-S, TT and IT earthing systems',
               'Identify the requirements for main protective bonding under BS 7671',
               'Calculate earth fault loop impedance and verify disconnection times',
               'Explain protective conductor sizing using the adiabatic equation',
               'Describe testing methods for earthing systems and common defects',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Purpose of earthing</ContentEyebrow>
 
-        {/* Section 01: Purpose of Earthing */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Purpose of Earthing — Fault Current Paths and Disconnection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The Purpose of Earthing — Fault Current Paths and Disconnection">
             <p>
               Earthing is one of the most fundamental safety measures in any electrical
               installation. Its primary purpose is to provide a low-impedance path for fault current
@@ -381,128 +363,101 @@ const MOETModule1Section2_5 = () => {
               The earthing system ensures this situation is detected and cleared rapidly — typically
               within 0.4 seconds for circuits supplying socket outlets.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                How Earthing Achieves Safety
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fault current path:</strong> The earthing system provides a low-impedance
-                  return path for fault current from the point of fault back to the source
-                  (transformer star point)
-                </li>
-                <li className="pl-1">
-                  <strong>Sufficient fault current:</strong> The low impedance ensures enough
-                  current flows to operate the protective device — for a 32 A Type B MCB, the
-                  instantaneous trip requires at least 160 A (5 × In)
-                </li>
-                <li className="pl-1">
-                  <strong>Fast disconnection:</strong> The protective device disconnects within the
-                  required time: 0.4 s for portable equipment circuits (TN), 5 s for fixed equipment
-                  (TN), 0.2 s for TT systems with RCDs
-                </li>
-                <li className="pl-1">
-                  <strong>Limited touch voltage:</strong> During the brief fault clearance time, the
-                  touch voltage on the exposed-conductive-part is limited by the protective device
-                  operating quickly
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="How Earthing Achieves Safety">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault current path:</strong> The earthing system provides a low-impedance
+                return path for fault current from the point of fault back to the source
+                (transformer star point)
+              </li>
+              <li>
+                <strong>Sufficient fault current:</strong> The low impedance ensures enough current
+                flows to operate the protective device — for a 32 A Type B MCB, the instantaneous
+                trip requires at least 160 A (5 × In)
+              </li>
+              <li>
+                <strong>Fast disconnection:</strong> The protective device disconnects within the
+                required time: 0.4 s for final circuits within the 63 A / 32 A limits (TN), 5 s for
+                distribution circuits (TN), 0.2 s for TT systems with RCDs
+              </li>
+              <li>
+                <strong>Limited touch voltage:</strong> During the brief fault clearance time, the
+                touch voltage on the exposed-conductive-part is limited by the protective device
+                operating quickly
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Earth Fault Loop</p>
-              <p className="text-sm text-white mb-3">
-                The earth fault loop is the complete circuit that fault current flows through during
-                an earth fault. Understanding its components is essential for testing and verifying
-                that disconnection times will be met.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Source impedance:</strong> The transformer winding impedance (typically
-                  very low, 0.01-0.05 Ω)
-                </li>
-                <li className="pl-1">
-                  <strong>Line conductor (R1):</strong> Impedance of the phase conductor from the
-                  distribution board to the point of fault
-                </li>
-                <li className="pl-1">
-                  <strong>Fault:</strong> The fault itself (assumed zero impedance for a bolted
-                  fault)
-                </li>
-                <li className="pl-1">
-                  <strong>Protective conductor (R2):</strong> Impedance of the CPC from the point of
-                  fault back to the distribution board
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing conductor:</strong> From the distribution board MET to the means
-                  of earthing
-                </li>
-                <li className="pl-1">
-                  <strong>Return path:</strong> Through the supply earth (metallic sheath in TN-S,
-                  PEN in TN-C-S, or general mass of earth in TT)
-                </li>
-                <li className="pl-1">
-                  <strong>Total: Zs = Ze + (R1 + R2)</strong> — all components add up to determine
-                  the total loop impedance
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Disconnection Times (Table 41.1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Uo (V)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Disconnection Time (Socket Outlets)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Disconnection Time (Fixed Equipment)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN (TN-S, TN-C-S)</td>
-                      <td className="border border-white/10 px-3 py-2">230 V</td>
-                      <td className="border border-white/10 px-3 py-2">0.4 s</td>
-                      <td className="border border-white/10 px-3 py-2">5 s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TT</td>
-                      <td className="border border-white/10 px-3 py-2">230 V</td>
-                      <td className="border border-white/10 px-3 py-2">0.2 s</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 s</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The earthing system is only as effective as its weakest
-              link. A corroded connection, an undersized conductor, or a broken protective conductor
-              can render the entire fault protection system ineffective. Regular inspection and
-              testing of the earthing system is essential for continued safety.
+          <ConceptBlock title="The Earth Fault Loop">
+            <p>
+              The earth fault loop is the complete circuit that fault current flows through during
+              an earth fault. Understanding its components is essential for testing and verifying
+              that disconnection times will be met.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Source impedance:</strong> The transformer winding impedance (typically very
+                low, 0.01-0.05 Ω)
+              </li>
+              <li>
+                <strong>Line conductor (R1):</strong> Impedance of the phase conductor from the
+                distribution board to the point of fault
+              </li>
+              <li>
+                <strong>Fault:</strong> The fault itself (assumed zero impedance for a bolted fault)
+              </li>
+              <li>
+                <strong>Protective conductor (R2):</strong> Impedance of the CPC from the point of
+                fault back to the distribution board
+              </li>
+              <li>
+                <strong>Earthing conductor:</strong> From the distribution board MET to the means of
+                earthing
+              </li>
+              <li>
+                <strong>Return path:</strong> Through the supply earth (metallic sheath in TN-S, PEN
+                in TN-C-S, or general mass of earth in TT)
+              </li>
+              <li>
+                <strong>Total: Zs = Ze + (R1 + R2)</strong> — all components add up to determine the
+                total loop impedance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <AppendixTable
+            caption="BS 7671 Disconnection Times (Table 41.1)"
+            headers={[
+              'System',
+              'Uo (V)',
+              'Final circuits (≤63 A sockets, ≤32 A fixed)',
+              'Distribution circuits',
+            ]}
+            rows={[
+              ['TN (TN-S, TN-C-S)', '230 V', '0.4 s', '5 s'],
+              ['TT', '230 V', '0.2 s', '1.0 s'],
+            ]}
+          />
 
-        {/* Section 02: Earthing Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Earthing Systems — TN-S, TN-C-S, TT and IT
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Every link in the chain matters"
+            onSite="The earthing system is only as effective as its weakest link. A corroded connection, an undersized conductor, or a broken protective conductor can render the entire fault protection system ineffective. Regular inspection and testing of the earthing system is essential for continued safety."
+          >
+            <p>
+              Every earth fault relies on every link in the loop — source, conductors, connections
+              and return path — being intact and low-impedance at the moment it is needed.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Earthing systems</ContentEyebrow>
+
+          <ConceptBlock title="Earthing Systems — TN-S, TN-C-S, TT and IT">
             <p>
               BS 7671 classifies earthing systems using a letter code defined in IEC 60364. The
               first letter indicates the relationship of the source (transformer) to earth, and the
@@ -510,155 +465,114 @@ const MOETModule1Section2_5 = () => {
               installation to earth. Understanding which earthing system is in use is essential for
               selecting appropriate protection and calculating disconnection requirements.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Letter Code Explained</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First letter (source relationship to earth):</strong> T = directly
-                  connected to earth (terre); I = not connected to earth or connected through a high
-                  impedance
-                </li>
-                <li className="pl-1">
-                  <strong>Second letter (installation to earth):</strong> T = directly connected to
-                  earth via local electrode; N = connected to the source earth via the supply
-                  network
-                </li>
-                <li className="pl-1">
-                  <strong>Subsequent letters:</strong> S = separate neutral and earth conductors; C
-                  = combined neutral and earth (PEN conductor); C-S = combined in supply, separate
-                  in installation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Letter Code Explained">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>First letter (source relationship to earth):</strong> T = directly connected
+                to earth (terre); I = not connected to earth or connected through a high impedance
+              </li>
+              <li>
+                <strong>Second letter (installation to earth):</strong> T = directly connected to
+                earth via local electrode; N = connected to the source earth via the supply network
+              </li>
+              <li>
+                <strong>Subsequent letters:</strong> S = separate neutral and earth conductors; C =
+                combined neutral and earth (PEN conductor); C-S = combined in supply, separate in
+                installation
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UK Earthing Systems Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Earth Provision
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Ze</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical UK Use</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        RCD Requirement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">TN-S</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DNO cable sheath (separate PE)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">≤0.8 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Older urban areas with lead-sheathed cables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not essential for ADS (but required for additional protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">TN-C-S (PME)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PEN conductor, separated at origin
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">≤0.35 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most new installations; majority of UK supplies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not essential for ADS (but required for additional protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">TT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Installation's own earth electrode
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">≤21 Ω (varies)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rural areas; overhead supply; no DNO earth
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Essential — RCD protection required for all circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Unearthed or impedance-earthed source
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Very high</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hospitals (theatres), critical processes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation monitoring device required; RCD on second fault
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="UK Earthing Systems Comparison"
+            headers={[
+              'System',
+              'Earth Provision',
+              'Typical Ze',
+              'Typical UK Use',
+              'RCD Requirement',
+            ]}
+            rows={[
+              [
+                'TN-S',
+                'DNO cable sheath (separate PE)',
+                '≤0.8 Ω',
+                'Older urban areas with lead-sheathed cables',
+                'Not essential for ADS (but required for additional protection)',
+              ],
+              [
+                'TN-C-S (PME)',
+                'PEN conductor, separated at origin',
+                '≤0.35 Ω',
+                'Most new installations; majority of UK supplies',
+                'Not essential for ADS (but required for additional protection)',
+              ],
+              [
+                'TT',
+                "Installation's own earth electrode",
+                '≤21 Ω (varies)',
+                'Rural areas; overhead supply; no DNO earth',
+                'Essential — RCD protection required for all circuits',
+              ],
+              [
+                'IT',
+                'Unearthed or impedance-earthed source',
+                'Very high',
+                'Hospitals (theatres), critical processes',
+                'Insulation monitoring device required; RCD on second fault',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                PME (TN-C-S) — Special Considerations
-              </p>
-              <p className="text-sm text-white mb-3">
-                TN-C-S is the most common earthing system in the UK, but it has specific risks that
-                must be understood, particularly the 'broken PEN conductor' scenario.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Broken PEN risk:</strong> If the combined PEN conductor breaks between the
-                  consumer and the substation, the installation's earthing is lost. Load current
-                  from neighbouring properties flows through the consumer's earth, potentially
-                  raising all bonded metalwork to a dangerous potential
-                </li>
-                <li className="pl-1">
-                  <strong>Main bonding:</strong> Enhanced main protective bonding requirements for
-                  PME — larger minimum conductor sizes to manage the broken PEN scenario
-                </li>
-                <li className="pl-1">
-                  <strong>Restrictions:</strong> PME earthing is restricted or prohibited for
-                  certain locations: swimming pools, caravan parks (conductive locations), petrol
-                  forecourts, and some locations where the broken PEN scenario presents an
-                  unacceptable risk
-                </li>
-                <li className="pl-1">
-                  <strong>BS 7671 Section 411:</strong> Specifies the requirements for automatic
-                  disconnection in TN-C-S systems
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="PME (TN-C-S) — the broken PEN conductor scenario"
+            whatHappens={
+              <>
+                <p>
+                  TN-C-S is the most common earthing system in the UK, but it has specific risks
+                  that must be understood, particularly the &apos;broken PEN conductor&apos;
+                  scenario.
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                  <li>
+                    <strong>Broken PEN risk:</strong> If the combined PEN conductor breaks between
+                    the consumer and the substation, the installation&apos;s earthing is lost. Load
+                    current from neighbouring properties flows through the consumer&apos;s earth,
+                    potentially raising all bonded metalwork to a dangerous potential
+                  </li>
+                  <li>
+                    <strong>Main bonding:</strong> Enhanced main protective bonding requirements for
+                    PME — larger minimum conductor sizes to manage the broken PEN scenario
+                  </li>
+                  <li>
+                    <strong>Restrictions:</strong> PME earthing is restricted or prohibited for
+                    certain locations: swimming pools, caravan parks (conductive locations), petrol
+                    forecourts, and some locations where the broken PEN scenario presents an
+                    unacceptable risk
+                  </li>
+                </ul>
+              </>
+            }
+            doInstead={
+              <>
+                Always confirm the earthing system type at the start of any work on an installation.
+                It determines the disconnection time requirements, the need for RCD protection, the
+                bonding conductor sizes and the testing methods. Never assume — verify. BS 7671
+                Section 411 specifies the requirements for automatic disconnection in TN-C-S
+                systems.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Always confirm the earthing system type at the start of any
-              work on an installation. It determines the disconnection time requirements, the need
-              for RCD protection, the bonding conductor sizes and the testing methods. Never assume
-              — verify.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: Bonding, Electrodes and Conductor Sizing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Protective Bonding, Earth Electrodes and Conductor Sizing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Bonding and electrodes</ContentEyebrow>
+
+          <ConceptBlock title="Protective Bonding, Earth Electrodes and Conductor Sizing">
             <p>
               While earthing provides a fault current path for automatic disconnection, protective
               bonding creates an equipotential zone — ensuring that all metallic parts a person
@@ -666,188 +580,141 @@ const MOETModule1Section2_5 = () => {
               and bonding form the two pillars of protection against electric shock by indirect
               contact (touching an exposed-conductive-part that has become live due to a fault).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Main Protective Bonding (BS 7671 Regulation Group 411.3.1.2)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Main protective bonding conductors connect extraneous-conductive-parts to the main
-                earthing terminal (MET) at the origin of the installation.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>What must be bonded:</strong> Metallic water pipes, metallic gas pipes,
-                  metallic oil pipes, metallic central heating pipes, structural steelwork,
-                  lightning protection system earth, other metallic services entering the building
-                </li>
-                <li className="pl-1">
-                  <strong>Connection point:</strong> As close as practicable to the point of entry
-                  of the service into the building, and on the consumer's side of any insulating
-                  section or meter
-                </li>
-                <li className="pl-1">
-                  <strong>Label:</strong> Every main bonding connection must be labelled: "Safety
-                  Electrical Connection — Do Not Remove"
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> The bonding conductor must provide a permanent,
-                  reliable connection — not reliant on removable fittings
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Main Protective Bonding Conductor Sizes (BS 7671 Table 54.8)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Supply Neutral CSA (Cu)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Bonding Conductor (Cu) — TN-S
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Min Bonding Conductor (Cu) — TN-C-S (PME)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Up to 16 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">6 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">25 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">6 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">35 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">16 mm²</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">50 mm² and above</td>
-                      <td className="border border-white/10 px-3 py-2">10 mm²</td>
-                      <td className="border border-white/10 px-3 py-2">25 mm²</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Supplementary Bonding</p>
-              <p className="text-sm text-white mb-3">
-                Supplementary bonding provides local equipotential bonding within a specific area,
-                connecting exposed-conductive-parts and extraneous-conductive-parts together.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>When required:</strong> In special locations (BS 7671 Part 7) where the
-                  risk is higher — historically always required in bathrooms, but can now be omitted
-                  if all circuits are 30 mA RCD-protected
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum sizes:</strong> 4 mm² between two exposed-conductive-parts; 4 mm²
-                  between an exposed-conductive-part and an extraneous-conductive-part; 2.5 mm² if
-                  mechanically protected
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> The resistance between simultaneously accessible
-                  parts must be ≤ 50/(Ia) ohms, where Ia is the operating current of the protective
-                  device
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Electrode Types and Installation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Driven rod:</strong> Copper-clad steel rods (typically 1.2 m sections)
-                  coupled and driven into the ground. Most common type for TT systems. Target: RA ≤
-                  200 Ω (ideally &lt;100 Ω)
-                </li>
-                <li className="pl-1">
-                  <strong>Copper plate:</strong> Buried copper plate electrode — larger contact area
-                  with earth. Used where rod driving is impractical (rocky ground)
-                </li>
-                <li className="pl-1">
-                  <strong>Foundation earth electrode:</strong> Copper or steel conductor embedded in
-                  the building's concrete foundations during construction. Very effective due to
-                  large contact area with earth
-                </li>
-                <li className="pl-1">
-                  <strong>Earth mat/ring:</strong> Horizontal conductor buried around the building
-                  perimeter. Used for larger installations or HV substations
-                </li>
-                <li className="pl-1">
-                  <strong>Factors affecting resistance:</strong> Soil type (clay is better than
-                  sand/rock), moisture content, depth, electrode surface area, temperature
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protective Conductor Sizing — The Adiabatic Equation
-              </p>
-              <p className="text-sm text-white mb-3">
-                The minimum cross-sectional area of a protective conductor is determined by either
-                BS 7671 Table 54.7 (simplified method based on line conductor size) or the adiabatic
-                equation (calculation method based on fault current and time).
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Adiabatic equation:</strong> S = √(I²t) / k
-                </li>
-                <li className="pl-1">
-                  <strong>S</strong> = minimum conductor cross-sectional area (mm²)
-                </li>
-                <li className="pl-1">
-                  <strong>I</strong> = prospective earth fault current (A)
-                </li>
-                <li className="pl-1">
-                  <strong>t</strong> = disconnection time of the protective device (s)
-                </li>
-                <li className="pl-1">
-                  <strong>k</strong> = material factor from BS 7671 Tables 54.2-54.6 (e.g., k=115
-                  for PVC-insulated copper)
-                </li>
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Ensures the CPC can carry the fault current for the
-                  disconnection time without its temperature exceeding the insulation rating
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Undersized protective conductors are a serious safety
-              defect. If the CPC is too small, it may overheat and fail during a fault — losing the
-              earth path at the very moment it is needed most. Always verify CPC sizing against the
-              prospective fault current and disconnection time.
+          <ConceptBlock title="Main Protective Bonding (BS 7671 Regulation Group 411.3.1.2)">
+            <p>
+              Main protective bonding conductors connect extraneous-conductive-parts to the main
+              earthing terminal (MET) at the origin of the installation.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>What must be bonded:</strong> Metallic water pipes, metallic gas pipes,
+                metallic oil pipes, metallic central heating pipes, structural steelwork, lightning
+                protection system earth, other metallic services entering the building
+              </li>
+              <li>
+                <strong>Connection point:</strong> As close as practicable to the point of entry of
+                the service into the building, and on the consumer&apos;s side of any insulating
+                section or meter
+              </li>
+              <li>
+                <strong>Label:</strong> Every main bonding connection must be labelled: &quot;Safety
+                Electrical Connection — Do Not Remove&quot;
+              </li>
+              <li>
+                <strong>Continuity:</strong> The bonding conductor must provide a permanent,
+                reliable connection — not reliant on removable fittings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <AppendixTable
+            caption="Main Protective Bonding Conductor Sizes (BS 7671 Table 54.8)"
+            headers={[
+              'Supply Neutral CSA (Cu)',
+              'Min Bonding Conductor (Cu) — TN-S',
+              'Min Bonding Conductor (Cu) — TN-C-S (PME)',
+            ]}
+            rows={[
+              ['Up to 16 mm²', '6 mm²', '10 mm²'],
+              ['25 mm²', '6 mm²', '10 mm²'],
+              ['35 mm²', '10 mm²', '16 mm²'],
+              ['50 mm² and above', '10 mm²', '25 mm²'],
+            ]}
+          />
 
-        {/* Section 04: Testing, Maintenance and Common Defects */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Testing Earthing Systems, Maintenance and Common Defects
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Supplementary Bonding">
+            <p>
+              Supplementary bonding provides local equipotential bonding within a specific area,
+              connecting exposed-conductive-parts and extraneous-conductive-parts together.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>When required:</strong> In special locations (BS 7671 Part 7) where the risk
+                is higher — historically always required in bathrooms, but can now be omitted if all
+                circuits are 30 mA RCD-protected
+              </li>
+              <li>
+                <strong>Minimum sizes:</strong> 4 mm² between two exposed-conductive-parts; 4 mm²
+                between an exposed-conductive-part and an extraneous-conductive-part; 2.5 mm² if
+                mechanically protected
+              </li>
+              <li>
+                <strong>Verification:</strong> The resistance between simultaneously accessible
+                parts must be ≤ 50/(Ia) ohms, where Ia is the operating current of the protective
+                device
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Earth Electrode Types and Installation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Driven rod:</strong> Copper-clad steel rods (typically 1.2 m sections)
+                coupled and driven into the ground. Most common type for TT systems. Target: RA ≤
+                200 Ω (ideally &lt;100 Ω)
+              </li>
+              <li>
+                <strong>Copper plate:</strong> Buried copper plate electrode — larger contact area
+                with earth. Used where rod driving is impractical (rocky ground)
+              </li>
+              <li>
+                <strong>Foundation earth electrode:</strong> Copper or steel conductor embedded in
+                the building&apos;s concrete foundations during construction. Very effective due to
+                large contact area with earth
+              </li>
+              <li>
+                <strong>Earth mat/ring:</strong> Horizontal conductor buried around the building
+                perimeter. Used for larger installations or HV substations
+              </li>
+              <li>
+                <strong>Factors affecting resistance:</strong> Soil type (clay is better than
+                sand/rock), moisture content, depth, electrode surface area, temperature
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Protective Conductor Sizing — The Adiabatic Equation"
+            onSite="Undersized protective conductors are a serious safety defect. If the CPC is too small, it may overheat and fail during a fault — losing the earth path at the very moment it is needed most. Always verify CPC sizing against the prospective fault current and disconnection time."
+          >
+            <p>
+              The minimum cross-sectional area of a protective conductor is determined by either BS
+              7671 Table 54.7 (simplified method based on line conductor size) or the adiabatic
+              equation (calculation method based on fault current and time).
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Adiabatic equation:</strong> S = √(I²t) / k
+              </li>
+              <li>
+                <strong>S</strong> = minimum conductor cross-sectional area (mm²)
+              </li>
+              <li>
+                <strong>I</strong> = prospective earth fault current (A)
+              </li>
+              <li>
+                <strong>t</strong> = disconnection time of the protective device (s)
+              </li>
+              <li>
+                <strong>k</strong> = material factor from BS 7671 Tables 54.2-54.6 (e.g., k=115 for
+                PVC-insulated copper)
+              </li>
+              <li>
+                <strong>Purpose:</strong> Ensures the CPC can carry the fault current for the
+                disconnection time without its temperature exceeding the insulation rating
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Testing and defects</ContentEyebrow>
+
+          <ConceptBlock title="Testing Earthing Systems, Maintenance and Common Defects">
             <p>
               The earthing and bonding system must be tested at initial verification and at every
               periodic inspection to confirm that it continues to provide the required level of
@@ -855,264 +722,223 @@ const MOETModule1Section2_5 = () => {
               modifications and plumbing/gas work — can compromise the earthing system without any
               visible indication. Regular testing is the only way to identify these hidden defects.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Tests for Earthing and Bonding
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Continuity of protective conductors (R2):</strong> Low-resistance ohmmeter
-                  test to verify the CPC is intact throughout its length. Test between the
-                  distribution board earth bar and the earth terminal of every point on the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity of main bonding:</strong> Test from the MET to each bonded
-                  service. Expected reading: very low (&lt;0.05 Ω for short runs). Any high reading
-                  indicates a poor connection
-                </li>
-                <li className="pl-1">
-                  <strong>External earth fault loop impedance (Ze):</strong> Measured at the origin
-                  with the installation's earthing conductor disconnected from the MET. Confirms the
-                  DNO's earth provision is within acceptable limits
-                </li>
-                <li className="pl-1">
-                  <strong>Earth fault loop impedance (Zs):</strong> Measured at each point on the
-                  circuit. Must be within the maximum values in BS 7671 Tables 41.2-41.6 for the
-                  protective device type and rating
-                </li>
-                <li className="pl-1">
-                  <strong>Earth electrode resistance (RA):</strong> For TT systems — measured using
-                  a dedicated earth electrode tester (three-terminal method) or calculated from the
-                  Ze measurement
-                </li>
-                <li className="pl-1">
-                  <strong>R1+R2:</strong> Combined resistance of line and CPC — measured during dead
-                  testing and added to Ze to calculate Zs
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key Tests for Earthing and Bonding">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Continuity of protective conductors (R2):</strong> Low-resistance ohmmeter
+                test to verify the CPC is intact throughout its length. Test between the
+                distribution board earth bar and the earth terminal of every point on the circuit
+              </li>
+              <li>
+                <strong>Continuity of main bonding:</strong> Test from the MET to each bonded
+                service. Expected reading: very low (&lt;0.05 Ω for short runs). Any high reading
+                indicates a poor connection
+              </li>
+              <li>
+                <strong>External earth fault loop impedance (Ze):</strong> Measured at the origin
+                with the installation&apos;s earthing conductor disconnected from the MET. Confirms
+                the DNO&apos;s earth provision is within acceptable limits
+              </li>
+              <li>
+                <strong>Earth fault loop impedance (Zs):</strong> Measured at each point on the
+                circuit. Must be within the maximum values in BS 7671 Tables 41.2-41.6 for the
+                protective device type and rating
+              </li>
+              <li>
+                <strong>Earth electrode resistance (RA):</strong> For TT systems — measured using a
+                dedicated earth electrode tester (three-terminal method) or calculated from the Ze
+                measurement
+              </li>
+              <li>
+                <strong>R1+R2:</strong> Combined resistance of line and CPC — measured during dead
+                testing and added to Ze to calculate Zs
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Common Earthing and Bonding Defects
-              </p>
-              <p className="text-sm text-white mb-3">
-                The following defects are frequently found during periodic inspection and condition
-                reporting. Each one can render the protection system partially or completely
-                ineffective.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Disconnected main bonding:</strong> Plumbing or gas work has broken the
-                  bonding connection and not reconnected it — extremely common
-                </li>
-                <li className="pl-1">
-                  <strong>Corroded connections:</strong> Dissimilar metal joints (copper to steel),
-                  outdoor connections and damp environments cause corrosion that increases
-                  resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Missing labels:</strong> Bonding connections without the "Safety
-                  Electrical Connection — Do Not Remove" label, leading to removal during
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Undersized conductors:</strong> Bonding or CPC conductors smaller than the
-                  minimum specified in BS 7671 for the installation type
-                </li>
-                <li className="pl-1">
-                  <strong>Broken CPCs in ring circuits:</strong> A broken CPC in a ring final
-                  circuit may not be detected by a simple end-to-end continuity test — the ring
-                  measurement is essential
-                </li>
-                <li className="pl-1">
-                  <strong>Missing earth on old installations:</strong> Pre-1966 installations may
-                  have no CPC in the cables — only the circuit earth provided by conduit or sheath
-                </li>
-                <li className="pl-1">
-                  <strong>Plastic pipe replacement:</strong> Metallic water or gas pipes replaced
-                  with plastic sections, breaking the bonding continuity
-                </li>
-                <li className="pl-1">
-                  <strong>Earth electrode deterioration:</strong> Driven rods corroding underground,
-                  increasing resistance over time — annual measurement recommended
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Temporary Earthing for HV Work
-              </p>
-              <p className="text-sm text-white mb-3">
-                When working on HV systems that have been isolated and proved dead, temporary earths
-                (portable earthing equipment) are applied as an additional safety measure.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Discharge stored energy, protect against inadvertent
-                  re-energisation, maintain work area at earth potential
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Applied using approved portable earthing equipment —
-                  heavy-duty clamps connected by flexible copper conductor to the system earth bar
-                </li>
-                <li className="pl-1">
-                  <strong>Sequence:</strong> Always connect to the earth bar FIRST, then to the
-                  conductor being earthed. Remove in reverse order (conductor first, earth bar last)
-                </li>
-                <li className="pl-1">
-                  <strong>Rating:</strong> Portable earths must be rated for the prospective fault
-                  current of the system
-                </li>
-                <li className="pl-1">
-                  <strong>Inspection:</strong> Check portable earths before each use — look for
-                  damage to conductors, clamps and insulation. Periodic electrical testing required
-                </li>
-                <li className="pl-1">
-                  <strong>Recording:</strong> The application and removal of temporary earths must
-                  be recorded on the permit to work
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance of Earthing Systems
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Periodic inspection per BS 7671 (domestic: 10 years recommended; commercial: 5
-                    years; industrial: 3 years)
+          <CommonMistake
+            title="Common earthing and bonding defects"
+            whatHappens={
+              <>
+                <p>
+                  The following defects are frequently found during periodic inspection and
+                  condition reporting. Each one can render the protection system partially or
+                  completely ineffective.
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                  <li>
+                    <strong>Disconnected main bonding:</strong> Plumbing or gas work has broken the
+                    bonding connection and not reconnected it — extremely common
                   </li>
-                  <li className="pl-1">
-                    Visual check of all bonding connections during any electrical work
+                  <li>
+                    <strong>Corroded connections:</strong> Dissimilar metal joints (copper to
+                    steel), outdoor connections and damp environments cause corrosion that increases
+                    resistance
                   </li>
-                  <li className="pl-1">
-                    Earth electrode resistance measurement annually (TT systems)
+                  <li>
+                    <strong>Missing labels:</strong> Bonding connections without the &quot;Safety
+                    Electrical Connection — Do Not Remove&quot; label, leading to removal during
+                    maintenance
                   </li>
-                  <li className="pl-1">Re-test after any building work that may affect services</li>
-                  <li className="pl-1">Replace corroded clamps and connections immediately</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EAWR 1989 Earthing Regulations
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Reg 8:</strong> Earthing or other suitable precautions must be taken to
-                    prevent danger from conductors that may become charged
+                  <li>
+                    <strong>Undersized conductors:</strong> Bonding or CPC conductors smaller than
+                    the minimum specified in BS 7671 for the installation type
                   </li>
-                  <li className="pl-1">
-                    <strong>Reg 9:</strong> The integrity of referenced earthed conductors must be
-                    maintained — no single fault should result in danger
+                  <li>
+                    <strong>Broken CPCs in ring circuits:</strong> A broken CPC in a ring final
+                    circuit may not be detected by a simple end-to-end continuity test — the ring
+                    measurement is essential
                   </li>
-                  <li className="pl-1">
-                    <strong>Reg 10:</strong> Every joint and connection must be mechanically and
-                    electrically suitable
+                  <li>
+                    <strong>Missing earth on old installations:</strong> Pre-1966 installations may
+                    have no CPC in the cables — only the circuit earth provided by conduit or sheath
                   </li>
-                  <li className="pl-1">
-                    <strong>Reg 4(2):</strong> All systems must be maintained to prevent danger —
-                    includes the earthing system
+                  <li>
+                    <strong>Plastic pipe replacement:</strong> Metallic water or gas pipes replaced
+                    with plastic sections, breaking the bonding continuity
+                  </li>
+                  <li>
+                    <strong>Earth electrode deterioration:</strong> Driven rods corroding
+                    underground, increasing resistance over time — annual measurement recommended
                   </li>
                 </ul>
-              </div>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Periodic inspection per BS 7671 (domestic: 10 years recommended; commercial: 5
+                years; industrial: 3 years), a visual check of all bonding connections during any
+                electrical work, annual earth electrode resistance measurement on TT systems,
+                re-testing after any building work that may affect services, and immediate
+                replacement of corroded clamps and connections.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> As a maintenance technician, you will regularly test and
-              verify earthing and bonding as part of your inspection and maintenance duties. You
-              must be able to measure Ze, Zs, R1+R2 and earth electrode resistance, interpret the
-              results against BS 7671 requirements, and identify defects that require corrective
-              action.
+          <ConceptBlock title="Temporary Earthing for HV Work">
+            <p>
+              When working on HV systems that have been isolated and proved dead, temporary earths
+              (portable earthing equipment) are applied as an additional safety measure.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Purpose:</strong> Discharge stored energy, protect against inadvertent
+                re-energisation, maintain work area at earth potential
+              </li>
+              <li>
+                <strong>Application:</strong> Applied using approved portable earthing equipment —
+                heavy-duty clamps connected by flexible copper conductor to the system earth bar
+              </li>
+              <li>
+                <strong>Sequence:</strong> Always connect to the earth bar FIRST, then to the
+                conductor being earthed. Remove in reverse order (conductor first, earth bar last)
+              </li>
+              <li>
+                <strong>Rating:</strong> Portable earths must be rated for the prospective fault
+                current of the system
+              </li>
+              <li>
+                <strong>Inspection:</strong> Check portable earths before each use — look for damage
+                to conductors, clamps and insulation. Periodic electrical testing required
+              </li>
+              <li>
+                <strong>Recording:</strong> The application and removal of temporary earths must be
+                recorded on the permit to work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock
+            title="Maintenance of Earthing Systems"
+            onSite="As a maintenance technician, you will regularly test and verify earthing and bonding as part of your inspection and maintenance duties. You must be able to measure Ze, Zs, R1+R2 and earth electrode resistance, interpret the results against BS 7671 requirements, and identify defects that require corrective action."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Periodic inspection per BS 7671 (domestic: 10 years recommended; commercial: 5
+                years; industrial: 3 years)
+              </li>
+              <li>Visual check of all bonding connections during any electrical work</li>
+              <li>Earth electrode resistance measurement annually (TT systems)</li>
+              <li>Re-test after any building work that may affect services</li>
+              <li>Replace corroded clamps and connections immediately</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="EAWR 1989 Earthing Regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reg 8:</strong> Earthing or other suitable precautions must be taken to
+                prevent danger from conductors that may become charged
+              </li>
+              <li>
+                <strong>Reg 9:</strong> The integrity of referenced earthed conductors must be
+                maintained — no single fault should result in danger
+              </li>
+              <li>
+                <strong>Reg 10:</strong> Every joint and connection must be mechanically and
+                electrically suitable
+              </li>
+              <li>
+                <strong>Reg 4(2):</strong> All systems must be maintained to prevent danger —
+                includes the earthing system
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Earthing Systems</p>
-                <ul className="space-y-0.5">
-                  <li>TN-S — Separate earth (cable sheath)</li>
-                  <li>TN-C-S — Combined PEN, separated at origin (PME)</li>
-                  <li>TT — Installation earth electrode</li>
-                  <li>IT — Unearthed/impedance-earthed source</li>
-                  <li>Zs = Ze + (R1 + R2)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671:2018+A4:2026 — Chapters 41, 54</li>
-                  <li>EAWR 1989 — Regulations 8, 9, 10</li>
-                  <li>BS 7430 — Code of practice for earthing</li>
-                  <li>BS EN 62305 — Lightning protection</li>
-                  <li>ST1426 — Maintenance technician KSBs</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            title="Quick reference"
+            points={[
+              'Earthing systems: TN-S — separate earth (cable sheath); TN-C-S — combined PEN, separated at origin (PME); TT — installation earth electrode; IT — unearthed/impedance-earthed source. Zs = Ze + (R1 + R2).',
+              'Key references: BS 7671:2018+A4:2026 — Chapters 41, 54; EAWR 1989 — Regulations 8, 9, 10; BS 7430 — code of practice for earthing; BS EN 62305 — lightning protection; ST1426 — maintenance technician KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Earthing and bonding for safety knowledge check"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Approach Distances
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section3-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Hazard Identification
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Approach Distances
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

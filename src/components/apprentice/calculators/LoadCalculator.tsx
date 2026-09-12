@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Plus, X, Lightbulb, Zap, Info, BookOpen, ChevronDown } from 'lucide-react';
 import {
   CalculatorCard,
@@ -213,6 +215,117 @@ export const LoadCalculator = () => {
   }, [appliances, voltage]);
 
   const results = calculations();
+
+  const buildReport = (): CalcReport | null => {
+    if (!calculated || appliances.length === 0) return null;
+
+    const voltageLabel = voltageOptions.find((o) => o.value === voltage)?.label || `${voltage} V`;
+    // The select labels carry the Table A2 row in brackets. The client needs
+    // the load type; the row itself is printed against the diversity below.
+    const typeLabel = (type: string) =>
+      (typeOptions.find((o) => o.value === type)?.label || type).split(' (')[0];
+
+    // The appliance list is the whole point of a load assessment — a client
+    // cannot check a maximum demand figure without seeing what was counted.
+    // Power is entered in WATTS (the input carries unit="W"), so it is printed
+    // in watts here and only the kW totals are converted.
+    const applianceRows = appliances
+      .filter((a) => a.name.trim() && a.power > 0)
+      .map((a) => ({
+        label: a.name.trim(),
+        value: `${a.power} W × ${a.quantity} = ${(a.power * a.quantity).toLocaleString()} W`,
+        note: typeLabel(a.type),
+      }));
+
+    const diversityRows = Object.entries(results.breakdownByType).map(([type, data]) => ({
+      label: `${typeLabel(type)}${data.count > 1 ? ` (×${data.count})` : ''}`,
+      value: `${(data.demand / 1000).toFixed(2)} kW`,
+      note: `${(data.connected / 1000).toFixed(2)} kW connected · ${
+        A2_TEXT[A2_ROW_FOR_TYPE[type] ?? 'heatingAndPower'].household
+      }`,
+    }));
+
+    const hasMotor = appliances.some((a) => a.type === 'motor');
+
+    return {
+      meta: {
+        // Named for the picker entry the electrician actually chose ('Load Assessment').
+        // The separate Maximum Demand calculator already titles its report
+        // 'Maximum Demand', and two identically-titled PDFs are indistinguishable
+        // in the saved-reports drawer.
+        title: 'Load Assessment',
+        subtitle: `Load assessment for ${applianceRows.length} appliance${
+          applianceRows.length === 1 ? '' : 's'
+        } totalling ${results.totalConnectedLoad.toFixed(2)} kW connected, on a ${voltageLabel} supply`,
+        standard: 'IET On-Site Guide — Appendix A, Table A2',
+      },
+      headline: [
+        {
+          label: 'Assessed maximum demand',
+          value: results.totalMaximumDemand.toFixed(2),
+          unit: 'kW',
+        },
+        { label: 'Design current', value: results.designCurrent.toFixed(1), unit: 'A' },
+        { label: 'Recommended cable', value: results.recommendedCable.size },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [{ label: 'Supply voltage', value: voltageLabel }],
+        },
+        ...(applianceRows.length ? [{ heading: 'Appliances entered', rows: applianceRows }] : []),
+        {
+          heading: 'Diversity applied',
+          rows: diversityRows,
+        },
+        {
+          heading: 'Result',
+          // Deliberately does not repeat the headline figures — this is the
+          // journey from connected load to the cable and device suggestion.
+          rows: [
+            { label: 'Total connected load', value: `${results.totalConnectedLoad.toFixed(2)} kW` },
+            {
+              label: 'Diversity applied',
+              value: `${results.diversityApplied.toFixed(0)}%`,
+              note: 'Reduction from the connected load to the assessed maximum demand',
+            },
+            {
+              label: 'Load current at maximum demand',
+              value: `${results.current.toFixed(1)} A`,
+              note: `Maximum demand ÷ ${voltage} V — the design current adds a 25% margin`,
+            },
+            {
+              label: 'Cable current-carrying capacity',
+              value: `${results.recommendedCable.current} A`,
+              note: `${results.recommendedCable.size}, ${results.recommendedCable.method}`,
+            },
+            {
+              label: 'Protective device',
+              value: `${results.recommendedMCB} A`,
+              note: 'Type B or C',
+            },
+            {
+              label: 'Voltage drop over an assumed 20 m run',
+              value: `${results.voltageDrop.toFixed(2)} V`,
+              note: `${results.voltageDropPercent.toFixed(1)}% of ${voltage} V`,
+            },
+          ],
+        },
+      ],
+      notes: [
+        'Diversity allowances are taken from the IET On-Site Guide Appendix A, Table A2, applied per load type to the appliances listed above.',
+        'The design current includes a 25% margin over the assessed load current for future expansion.',
+        'The cable size and protective device are a first-pass suggestion based on Method C (clipped direct) and an assumed 20 m route length. Correction factors for grouping, ambient temperature and insulation must be applied before final selection.',
+        ...(hasMotor
+          ? [
+              'Table A2 gives no diversity allowance for motors in household premises, so the full motor load is carried in the figures above.',
+            ]
+          : []),
+      ].filter((t) => t.trim()),
+    };
+  };
+
+  useProvideCalcReport(calculated && appliances.length > 0 ? buildReport : null);
 
   return (
     <CalculatorCard

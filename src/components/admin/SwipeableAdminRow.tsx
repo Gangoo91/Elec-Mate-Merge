@@ -76,8 +76,15 @@ export default function SwipeableAdminRow({
 
   return (
     <div className={`relative overflow-hidden ${className}`} {...handlers}>
-      {/* Action buttons behind */}
-      <div className="absolute inset-y-0 right-0 flex items-stretch" style={{ width: maxOffset }}>
+      {/* Action buttons behind. Hidden while the row is closed: the content
+          sits on top, but fractional row heights let a sliver of the action
+          colour bleed along the bottom edge, which reads as a stray coloured
+          line in any list that gives its rows rounded corners or gaps. */}
+      <div
+        className={`absolute inset-y-0 right-0 flex items-stretch ${offset === 0 ? 'invisible' : ''}`}
+        aria-hidden={offset === 0}
+        style={{ width: maxOffset }}
+      >
         {actions.map((action, i) => (
           <button
             key={i}

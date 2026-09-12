@@ -41,10 +41,21 @@ export interface CoverPayloadKeys {
   em_mast_bg: string;
   em_mast_fg: string;
   /**
-   * One scheme lockup per masthead. `light` is the standard artwork for the
-   * white cover masthead; `dark` is the reversed artwork for the interior
-   * masthead, which keeps the cover colour on every page. Sending one for both
-   * makes it invisible on whichever ground it does not suit — ELE-1669.
+   * 🔴 These are named for the GROUND they sit on, not for the artwork.
+   *
+   *   em_scheme_logo_light — the lockup drawn on the COVER masthead
+   *   em_scheme_logo_dark  — the reversed lockup, for a dark ground
+   *
+   * The cover masthead is the only consumer today (`.cv-scheme`), and it reads
+   * `em_scheme_logo_light` unconditionally. That name was chosen when the cover
+   * masthead was assumed to always be white — but `mastheadFor()` flips it to
+   * the cover colour whenever the company's own logo is LIGHT artwork, because
+   * a pale logo needs a dark ground. On those covers the standard dark-ink
+   * lockup was invisible: ELE-1669 again, on the one page the client sees.
+   *
+   * So `em_scheme_logo_light` carries whichever variant `cover.schemeLogoVariant`
+   * asks for. Resolve it there, once, rather than asking twenty Liquid templates
+   * to branch on it.
    */
   em_scheme_logo_light: string;
   em_scheme_logo_dark: string;
@@ -80,7 +91,10 @@ export const coverPayloadKeys = (
     em_accent_deep: c.accentDeep,
     em_mast_bg: c.mast_bg,
     em_mast_fg: c.mast_fg,
-    em_scheme_logo_light: branding.schemeLogoLight ?? '',
+    // The cover masthead's ground decides the lockup — see the interface note.
+    em_scheme_logo_light:
+      (c.schemeLogoVariant === 'reversed' ? branding.schemeLogoDark : branding.schemeLogoLight) ??
+      '',
     em_scheme_logo_dark: branding.schemeLogoDark ?? '',
   };
 };

@@ -29,7 +29,7 @@ const ConfirmDeleteDialog = ({
 }: ConfirmDeleteDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl">
+      <AlertDialogContent className="bg-elec-dark border-elec-yellow/35 rounded-2xl">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-white">{title}</AlertDialogTitle>
           <AlertDialogDescription className="text-white">

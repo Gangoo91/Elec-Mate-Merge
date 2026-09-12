@@ -80,12 +80,12 @@ export function TierUpgradeCelebration({
       <Confetti active={showConfetti} duration={4000} particleCount={80} />
 
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-md bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <DialogContent className="max-w-md bg-elec-dark border border-elec-yellow/35 rounded-2xl overflow-hidden">
           <DialogHeader className="relative z-10 text-center pt-4">
             <div className="relative mx-auto mb-4">
               <div
                 className={cn(
-                  'relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 bg-white/[0.04] border border-white/[0.06]',
+                  'relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-500 bg-white/[0.04] border border-elec-yellow/35',
                   animationStep >= 1 ? 'scale-100 rotate-0' : 'scale-0 rotate-180'
                 )}
               >
@@ -148,7 +148,7 @@ export function TierUpgradeCelebration({
                 'inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-full border animate-pulse',
                 tier.color,
                 newTier === 'premium'
-                  ? 'bg-elec-yellow/10 border-elec-yellow/20'
+                  ? 'bg-white/[0.06] border-elec-yellow/20'
                   : 'bg-blue-500/10 border-blue-500/20'
               )}
             >
@@ -167,7 +167,7 @@ export function TierUpgradeCelebration({
               {tier.benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06]"
+                  className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.04] border border-elec-yellow/35"
                 >
                   <span
                     aria-hidden

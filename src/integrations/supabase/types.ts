@@ -4324,6 +4324,39 @@ export type Database = {
           },
         ];
       };
+      calculation_reports: {
+        Row: {
+          calculator_slug: string | null;
+          created_at: string;
+          id: string;
+          payload: Json;
+          storage_path: string;
+          subtitle: string | null;
+          title: string;
+          user_id: string;
+        };
+        Insert: {
+          calculator_slug?: string | null;
+          created_at?: string;
+          id?: string;
+          payload: Json;
+          storage_path: string;
+          subtitle?: string | null;
+          title: string;
+          user_id: string;
+        };
+        Update: {
+          calculator_slug?: string | null;
+          created_at?: string;
+          id?: string;
+          payload?: Json;
+          storage_path?: string;
+          subtitle?: string | null;
+          title?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       cancel_survey_responses: {
         Row: {
           context: Json;

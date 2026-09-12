@@ -5,18 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
 import { DocumentNumberingFields } from './DocumentNumberingFields';
+import { inputCn, labelCn, selectTriggerCn } from '@/components/settings/formStyles';
 
 interface CustomTerm {
   id: string;
@@ -107,6 +102,17 @@ const DEFAULT_TERMS_GROUPED = {
     ],
   },
 };
+
+const DEPOSIT_OPTIONS = [
+  { value: '0', label: 'No deposit' },
+  { value: '10', label: '10%' },
+  { value: '20', label: '20%' },
+  { value: '25', label: '25%' },
+  { value: '30', label: '30%' },
+  { value: '40', label: '40%' },
+  { value: '50', label: '50%' },
+  { value: '100', label: 'Full payment' },
+];
 
 function parseQuoteTerms(quoteTermsJson: string | undefined | null): {
   selected: string[];
@@ -204,8 +210,8 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Quote settings">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -221,43 +227,32 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Validity (days)</Label>
+                <Label className={labelCn}>Validity (days)</Label>
                 <Input
                   type="number"
                   value={quoteValidityDays}
                   onChange={(e) => setQuoteValidityDays(parseInt(e.target.value) || 30)}
                   placeholder="30"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Deposit %</Label>
-                <Select
+                <Label className={labelCn}>Deposit %</Label>
+                <MobileSelectPicker
                   value={String(depositPercentage)}
                   onValueChange={(v) => setDepositPercentage(parseInt(v, 10))}
-                >
-                  <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
-                    <SelectValue placeholder="Select deposit" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                    <SelectItem value="0">No deposit</SelectItem>
-                    <SelectItem value="10">10%</SelectItem>
-                    <SelectItem value="20">20%</SelectItem>
-                    <SelectItem value="25">25%</SelectItem>
-                    <SelectItem value="30">30%</SelectItem>
-                    <SelectItem value="40">40%</SelectItem>
-                    <SelectItem value="50">50%</SelectItem>
-                    <SelectItem value="100">Full payment</SelectItem>
-                  </SelectContent>
-                </Select>
+                  options={DEPOSIT_OPTIONS}
+                  placeholder="Select deposit"
+                  triggerClassName={selectTriggerCn}
+                />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Warranty</Label>
+                <Label className={labelCn}>Warranty</Label>
                 <Input
                   value={warrantyPeriod}
                   onChange={(e) => setWarrantyPeriod(e.target.value)}
                   placeholder="12 months"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -292,7 +287,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                     }
                   >
                     <CollapsibleTrigger className="w-full">
-                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation">
+                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.05] border border-elec-yellow/35 hover:bg-white/[0.06] transition-colors touch-manipulation">
                         <div className="flex items-center gap-2.5">
                           <span className="text-[13px] font-medium text-white">{group.label}</span>
                           <span className="text-[11px] text-white">
@@ -317,7 +312,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                           return (
                             <label
                               key={term.id}
-                              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.04] cursor-pointer touch-manipulation"
+                              className="flex items-start gap-3 min-h-[44px] p-2.5 rounded-xl hover:bg-white/[0.04] cursor-pointer touch-manipulation"
                             >
                               <Checkbox
                                 checked={isSelected}
@@ -348,7 +343,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                   {customTerms.map((term) => (
                     <div
                       key={term.id}
-                      className="flex items-start gap-3 p-2.5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                      className="flex items-start gap-3 min-h-[44px] p-2.5 rounded-xl bg-white/[0.05] border border-elec-yellow/35 touch-manipulation"
                     >
                       <Checkbox
                         checked={selectedTerms.includes(term.id)}
@@ -381,7 +376,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                   value={newCustomTerm}
                   onChange={(e) => setNewCustomTerm(e.target.value)}
                   placeholder="Add custom term…"
-                  className="flex-1 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={cn(inputCn, 'flex-1')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && newCustomTerm.trim()) {
                       e.preventDefault();
@@ -409,7 +404,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
                       setNewCustomTerm('');
                     }
                   }}
-                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
                 >
                   Add
                 </button>
@@ -422,7 +417,7 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

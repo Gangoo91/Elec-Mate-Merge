@@ -71,40 +71,20 @@ export const DEFAULT_CALC_DISCLAIMER =
   'It is not a certificate of inspection or testing and does not confirm the ' +
   'condition or compliance of any existing installation.';
 
-/**
- * Renders a report as the plain text the "Copy" buttons already produce.
+/*
+ * There is deliberately NO `reportToText` here.
  *
- * 41 of the 77 calculators build a label/value summary by hand for the
- * clipboard. Deriving that text from the report instead means the copied text
- * and the PDF can never disagree, and converting a calculator is a matter of
- * turning its string concatenation into a `CalcReport` — the data was always
- * there, it just had nowhere structured to live.
+ * An earlier version of this contract carried one, on the reasoning that the
+ * "Copy result" buttons should be derived from the report so the copied text
+ * and the PDF could never disagree. That was superseded: `CopyResultButton`
+ * scrapes the rendered result pane via `data-result-copy`, so what it copies is
+ * exactly what the electrician is looking at.
+ *
+ * The two are meant to differ. Copy is "the answer on my screen"; the PDF is the
+ * client document, and carries the inputs, the working, the notes and the
+ * disclaimer as well. Deriving one from the other would make the PDF poorer or
+ * the clipboard noisier, so please don't reinstate it.
  */
-export function reportToText(report: CalcReport): string {
-  const lines: string[] = [report.meta.title];
-  if (report.meta.subtitle) lines.push(report.meta.subtitle);
-
-  for (const h of report.headline ?? []) {
-    lines.push(`${h.label}: ${h.value}${h.unit ? ` ${h.unit}` : ''}${h.verdict ? ` (${h.verdict.toUpperCase()})` : ''}`);
-  }
-
-  for (const section of report.sections ?? []) {
-    lines.push('');
-    if (section.heading) lines.push(section.heading);
-    for (const row of section.rows ?? []) {
-      lines.push(`${row.label}: ${row.value}${row.note ? ` — ${row.note}` : ''}`);
-    }
-    for (const item of section.items ?? []) lines.push(`- ${item}`);
-  }
-
-  if (report.notes?.length) {
-    lines.push('');
-    lines.push('Notes & assumptions');
-    for (const n of report.notes) lines.push(`- ${n}`);
-  }
-
-  return lines.join('\n');
-}
 
 /** True when there is actually something worth putting on a page. */
 export function reportHasContent(report: CalcReport | null | undefined): boolean {

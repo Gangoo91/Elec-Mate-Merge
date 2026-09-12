@@ -102,7 +102,7 @@ export function ExpiryAlerts({
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-5 space-y-4',
+        'bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden p-5 space-y-4',
         className
       )}
     >

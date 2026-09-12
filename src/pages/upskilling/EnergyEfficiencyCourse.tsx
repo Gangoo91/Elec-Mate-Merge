@@ -5,6 +5,7 @@ import {
   TrendingDown,
   BarChart,
   FileCheck,
+  BookMarked,
 } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
@@ -93,6 +94,15 @@ export default function EnergyEfficiencyCourse() {
           index={index}
         />
       ))}
+      <ModuleCard
+        to="/study-centre/glossary?course=energy-efficiency"
+        moduleNumber={modules.length + 1}
+        title="Glossary"
+        description="Every abbreviation this course uses, defined in plain English — shared across the study centre so a term means the same thing wherever you meet it."
+        icon={BookMarked}
+        duration="Reference"
+        index={modules.length}
+      />
     </CourseShell>
   );
 }

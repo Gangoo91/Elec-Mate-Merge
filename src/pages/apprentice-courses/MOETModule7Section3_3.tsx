@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 3 · Subsection 3 — Logging On-the-Job Activities
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This subsection covers evidence and documentation for
+ * the EPA professional discussion, which the following ST1426 statements
+ * genuinely fit (reused from the Module 1/4 conversions where they were
+ * verified — quoted rather than numbered, as the published K/S/B numbering
+ * has not been verified against a primary source):
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * ⚠️ CORRECTED: the worked example table in "Writing effective log entries"
+ * originally read "K12 fault diagnosis, S7 testing, B3 safety" — inventing
+ * K/S/B code numbers, which the conversion brief explicitly forbids because
+ * the published numbering is unverified. This is ordinary body prose, not
+ * quiz data, so the codes have been removed and the descriptive KSB areas
+ * kept: "fault diagnosis, testing, safety".
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Logging On-the-Job Activities - MOET Module 7 Section 3.3';
@@ -134,10 +174,10 @@ const quizQuestions = [
     id: 6,
     question: 'Linking log entries to specific KSBs is important because:',
     options: [
-      "It increases the number of log entries required, which the assessor counts towards your grade",
-      "It allows you to skip the professional discussion, since the links already prove your competence",
-      "It shows awareness of the standard and lets the assessor verify your coverage",
-      "It is only needed for the knowledge test, where each question maps directly to a single KSB",
+      'It increases the number of log entries required, which the assessor counts towards your grade',
+      'It allows you to skip the professional discussion, since the links already prove your competence',
+      'It shows awareness of the standard and lets the assessor verify your coverage',
+      'It is only needed for the knowledge test, where each question maps directly to a single KSB',
     ],
     correctAnswer: 2,
     explanation:
@@ -254,116 +294,65 @@ const faqs = [
 ];
 
 const MOETModule7Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Logging On-the-Job Activities
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.3 · Subsection 3"
+        title="Logging On-the-Job Activities"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Building a detailed, dated record of workplace experience to evidence your developing
-            competence
+            competence.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Chronological record of practical experience
-              </li>
-              <li className="pl-1">
-                <strong>Content:</strong> Date, task, methods, outcomes, safety, KSBs
-              </li>
-              <li className="pl-1">
-                <strong>Frequency:</strong> After each significant activity or weekly
-              </li>
-              <li className="pl-1">
-                <strong>Value:</strong> Demonstrates breadth and depth of competence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Portfolio evidence:</strong> Logs form the backbone of your portfolio
-              </li>
-              <li className="pl-1">
-                <strong>Discussion prompts:</strong> Assessor may ask about logged activities
-              </li>
-              <li className="pl-1">
-                <strong>Gap identification:</strong> Reveals KSBs needing more evidence
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Demonstrates full range of required experience
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Purpose: chronological record of practical experience.',
+              'Content: date, task, methods, outcomes, safety, KSBs.',
+              'Frequency: after each significant activity or weekly.',
+              'Value: demonstrates breadth and depth of competence.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Write detailed, effective activity log entries that serve as strong portfolio evidence',
               'Capture technical details including test readings, methods and component information',
               'Link each activity to specific KSBs in the ST1426 standard',
               'Maintain a consistent logging routine throughout your apprenticeship',
               'Use activity logs to identify gaps in your evidence coverage',
               'Distinguish between activity logs and reflective accounts for maximum portfolio value',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Portfolio evidence:</strong> logs form the backbone of your portfolio.
+              </li>
+              <li>
+                <strong>Discussion prompts:</strong> assessor may ask about logged activities.
+              </li>
+              <li>
+                <strong>Gap identification:</strong> reveals KSBs needing more evidence.
+              </li>
+              <li>
+                <strong>ST1426:</strong> demonstrates full range of required experience.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Activity Logging Matters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Why activity logging matters</ContentEyebrow>
+
+          <ConceptBlock title="Why activity logging matters">
             <p>
               Your activity log is the backbone of your portfolio. While reflective accounts provide
               depth and witness statements provide independent verification, it is the activity log
@@ -371,498 +360,394 @@ const MOETModule7Section3_3 = () => {
               been exposed to the full range of maintenance activities required by the ST1426
               standard.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What the Assessor Looks for in Activity Logs
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Range:</strong> Evidence of different types of maintenance activity (fault
-                  diagnosis, planned maintenance, installation, commissioning, testing)
-                </li>
-                <li className="pl-1">
-                  <strong>Progression:</strong> Development from simple tasks to more complex work
-                  over the apprenticeship period
-                </li>
-                <li className="pl-1">
-                  <strong>Technical detail:</strong> Specific methods, readings, components and
-                  outcomes that demonstrate real understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Safety integration:</strong> Evidence that safe working practices are
-                  embedded in your everyday work
-                </li>
-                <li className="pl-1">
-                  <strong>KSB coverage:</strong> Activities that collectively address all the
-                  knowledge, skills and behaviours in the standard
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What the assessor looks for in activity logs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Range:</strong> evidence of different types of maintenance activity (fault
+                diagnosis, planned maintenance, installation, commissioning, testing).
+              </li>
+              <li>
+                <strong>Progression:</strong> development from simple tasks to more complex work
+                over the apprenticeship period.
+              </li>
+              <li>
+                <strong>Technical detail:</strong> specific methods, readings, components and
+                outcomes that demonstrate real understanding.
+              </li>
+              <li>
+                <strong>Safety integration:</strong> evidence that safe working practices are
+                embedded in your everyday work.
+              </li>
+              <li>
+                <strong>KSB coverage:</strong> activities that collectively address all the
+                knowledge, skills and behaviours in the standard.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Retrospective Logging Trap
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="The retrospective logging trap"
+            whatHappens={
+              <>
                 Trying to write your entire activity log in the final weeks before the EPA is one of
                 the most common mistakes apprentices make. Retrospective entries are vague, lack
-                specific detail, and are often obviously written after the fact. The assessor can
-                tell the difference between a log written in real time and one constructed from
-                memory months later.
-              </p>
-            </div>
+                specific detail, and are often obviously written after the fact.
+              </>
+            }
+            doInstead={
+              <>
+                The assessor can tell the difference between a log written in real time and one
+                constructed from memory months later — log activities as they happen.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Think of your activity log as a professional engineering
-              diary. It records your journey from learner to competent technician, with the specific
-              evidence to prove it.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> think of your activity log as a professional engineering
+            diary. It records your journey from learner to competent technician, with the specific
+            evidence to prove it.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Writing Effective Log Entries
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Writing effective log entries</ContentEyebrow>
+
+          <ConceptBlock title="Writing effective log entries">
             <p>
               An effective log entry captures enough detail for the assessor to understand what you
               did, how you did it, and why it matters. It should read like a technical account of a
               professional activity, not a brief diary note.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Structure of an Effective Log Entry
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What to Include
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Date and location</td>
-                      <td className="border border-white/10 px-3 py-2">When and where</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        15 Jan 2026, Building 3 plant room
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Equipment</td>
-                      <td className="border border-white/10 px-3 py-2">What you worked on</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AHU-3 supply fan motor (7.5 kW, 3-phase)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task description</td>
-                      <td className="border border-white/10 px-3 py-2">What you did and why</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Diagnosed intermittent tripping on thermal overload
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Methods and tools</td>
-                      <td className="border border-white/10 px-3 py-2">How you did it</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance test, current clamp readings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety measures</td>
-                      <td className="border border-white/10 px-3 py-2">How you worked safely</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe isolation at MCC, lock-off, proved dead
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outcome</td>
-                      <td className="border border-white/10 px-3 py-2">What the result was</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low IR reading (0.3 M&Omega;) confirmed winding fault
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">KSB reference</td>
-                      <td className="border border-white/10 px-3 py-2">Which standard areas</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        K12 fault diagnosis, S7 testing, B3 safety
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Structure of an effective log entry">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Element</th>
+                    <th className="py-2 pr-4 font-medium text-white">What to include</th>
+                    <th className="py-2 font-medium text-white">Example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Date and location</td>
+                    <td className="py-2 pr-4">When and where</td>
+                    <td className="py-2">15 Jan 2026, Building 3 plant room</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Equipment</td>
+                    <td className="py-2 pr-4">What you worked on</td>
+                    <td className="py-2">AHU-3 supply fan motor (7.5 kW, 3-phase)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Task description</td>
+                    <td className="py-2 pr-4">What you did and why</td>
+                    <td className="py-2">Diagnosed intermittent tripping on thermal overload</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Methods and tools</td>
+                    <td className="py-2 pr-4">How you did it</td>
+                    <td className="py-2">Insulation resistance test, current clamp readings</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safety measures</td>
+                    <td className="py-2 pr-4">How you worked safely</td>
+                    <td className="py-2">Safe isolation at MCC, lock-off, proved dead</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Outcome</td>
+                    <td className="py-2 pr-4">What the result was</td>
+                    <td className="py-2">Low IR reading (0.3 M&Omega;) confirmed winding fault</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">KSB reference</td>
+                    <td className="py-2 pr-4">Which standard areas</td>
+                    <td className="py-2">Fault diagnosis, testing, safety</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Be Specific, Not Generic</p>
-              <p className="text-sm text-white">
-                Compare: "Worked on a motor" versus "Diagnosed intermittent thermal overload
-                tripping on AHU-3 supply fan motor (7.5 kW, Star-Delta starter). Insulation
-                resistance test between phases and phase-to-earth revealed low reading on U-phase to
-                earth (0.3 M&Omega; against minimum 1 M&Omega;), indicating winding insulation
-                breakdown. Motor replaced and IR confirmed satisfactory (&gt;200 M&Omega; on all
-                phases)." The second entry is genuine evidence of competence.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Include specific values, readings and measurements
+          <ConceptBlock title="Be specific, not generic">
+            <p>
+              Compare: &quot;Worked on a motor&quot; versus &quot;Diagnosed intermittent thermal
+              overload tripping on AHU-3 supply fan motor (7.5 kW, Star-Delta starter). Insulation
+              resistance test between phases and phase-to-earth revealed low reading on U-phase to
+              earth (0.3 M&Omega; against minimum 1 M&Omega;), indicating winding insulation
+              breakdown. Motor replaced and IR confirmed satisfactory (&gt;200 M&Omega; on all
+              phases).&quot; The second entry is genuine evidence of competence.
+            </p>
+            <p>
+              <strong>Key point:</strong> include specific values, readings and measurements
               wherever possible. Numbers demonstrate technical understanding far more effectively
               than general descriptions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Establishing a Logging Routine
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Establishing a logging routine</ContentEyebrow>
+
+          <ConceptBlock title="Establishing a logging routine">
             <p>
               Consistent logging requires building it into your work routine. The most successful
               apprentices treat logging as part of completing a task — the job is not finished until
               it is recorded. Setting a regular time and format makes the process habitual rather
               than burdensome.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Your Logging Habit
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Set a fixed time:</strong> Dedicate 15-20 minutes at the end of each day
-                  or week to update your log
-                </li>
-                <li className="pl-1">
-                  <strong>Use a template:</strong> A consistent format with prompts ensures you
-                  capture all required elements
-                </li>
-                <li className="pl-1">
-                  <strong>Take photographs during the task:</strong> Before, during and after photos
-                  provide visual evidence and aid memory when writing
-                </li>
-                <li className="pl-1">
-                  <strong>Record readings immediately:</strong> Write down test values, component
-                  ratings and measurements on the spot
-                </li>
-                <li className="pl-1">
-                  <strong>Keep a pocket notebook:</strong> Quick notes during the day can be
-                  expanded into full log entries later
-                </li>
-                <li className="pl-1">
-                  <strong>Use digital tools:</strong> E-portfolio apps, phone notes or voice memos
-                  can capture details quickly on site
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Building your logging habit">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Set a fixed time:</strong> dedicate 15-20 minutes at the end of each day or
+                week to update your log.
+              </li>
+              <li>
+                <strong>Use a template:</strong> a consistent format with prompts ensures you
+                capture all required elements.
+              </li>
+              <li>
+                <strong>Take photographs during the task:</strong> before, during and after photos
+                provide visual evidence and aid memory when writing.
+              </li>
+              <li>
+                <strong>Record readings immediately:</strong> write down test values, component
+                ratings and measurements on the spot.
+              </li>
+              <li>
+                <strong>Keep a pocket notebook:</strong> quick notes during the day can be expanded
+                into full log entries later.
+              </li>
+              <li>
+                <strong>Use digital tools:</strong> e-portfolio apps, phone notes or voice memos can
+                capture details quickly on site.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Weekly Logging Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Have I logged all significant activities from this week?</li>
-                <li className="pl-1">
-                  Does each entry include specific technical details and test readings?
-                </li>
-                <li className="pl-1">
-                  Have I described the safety measures taken for each activity?
-                </li>
-                <li className="pl-1">Are KSB references included for every entry?</li>
-                <li className="pl-1">Have I attached any relevant photographs or documents?</li>
-                <li className="pl-1">
-                  Is there anything I observed or assisted with that I should also record?
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The goal is little and often. Fifteen minutes of logging
+          <ConceptBlock title="Weekly logging checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Have I logged all significant activities from this week?</li>
+              <li>Does each entry include specific technical details and test readings?</li>
+              <li>Have I described the safety measures taken for each activity?</li>
+              <li>Are KSB references included for every entry?</li>
+              <li>Have I attached any relevant photographs or documents?</li>
+              <li>Is there anything I observed or assisted with that I should also record?</li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> the goal is little and often. Fifteen minutes of logging
               each day produces far better evidence than two hours of retrospective writing each
               month.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Using Logs for Gap Analysis and Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Using logs for gap analysis and planning</ContentEyebrow>
+
+          <ConceptBlock title="Using logs for gap analysis and planning">
             <p>
               Your activity log is not just evidence — it is a planning tool. By reviewing your log
               against the ST1426 KSBs regularly, you can identify which areas have strong evidence
               and which need more attention. This allows you to proactively seek out activities that
               fill gaps in your experience.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Conducting a Log-Based Gap Analysis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Review KSB coverage:</strong> Check which KSBs your logged activities
-                  cover and which are missing
-                </li>
-                <li className="pl-1">
-                  <strong>Assess evidence quality:</strong> Do your existing entries provide
-                  sufficient detail for each KSB?
-                </li>
-                <li className="pl-1">
-                  <strong>Identify patterns:</strong> Are you logging the same type of activity
-                  repeatedly while missing other areas?
-                </li>
-                <li className="pl-1">
-                  <strong>Plan targeted activities:</strong> Discuss gaps with your employer and
-                  training provider to arrange relevant experience
-                </li>
-                <li className="pl-1">
-                  <strong>Set milestones:</strong> Create a timeline for filling gaps, with regular
-                  review points
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Conducting a log-based gap analysis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Review KSB coverage:</strong> check which KSBs your logged activities cover
+                and which are missing.
+              </li>
+              <li>
+                <strong>Assess evidence quality:</strong> do your existing entries provide
+                sufficient detail for each KSB?
+              </li>
+              <li>
+                <strong>Identify patterns:</strong> are you logging the same type of activity
+                repeatedly while missing other areas?
+              </li>
+              <li>
+                <strong>Plan targeted activities:</strong> discuss gaps with your employer and
+                training provider to arrange relevant experience.
+              </li>
+              <li>
+                <strong>Set milestones:</strong> create a timeline for filling gaps, with regular
+                review points.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Evidence Gaps for MOET Apprentices
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Control systems:</strong> PLC and BMS interaction — seek opportunities to
-                  work with these systems
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> New installation commissioning — ask to assist on
-                  commissioning activities
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Client interaction and reporting — log instances
-                  where you communicated with stakeholders
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous improvement:</strong> Suggesting and implementing improvements
-                  — document any suggestions you make
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Common evidence gaps for MOET apprentices"
+            onSite="The activity log directly supports the professional discussion by providing a chronological record of your practical development. The assessor will use it to select specific activities to discuss in detail, so every entry should be something you can confidently expand on."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Control systems:</strong> PLC and BMS interaction — seek opportunities to
+                work with these systems.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> new installation commissioning — ask to assist on
+                commissioning activities.
+              </li>
+              <li>
+                <strong>Communication:</strong> client interaction and reporting — log instances
+                where you communicated with stakeholders.
+              </li>
+              <li>
+                <strong>Continuous improvement:</strong> suggesting and implementing improvements —
+                document any suggestions you make.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The activity log directly supports the professional
-              discussion by providing a chronological record of your practical development. The
-              assessor will use it to select specific activities to discuss in detail, so every
-              entry should be something you can confidently expand on.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Leveraging Logs in the Professional Discussion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Leveraging logs in the professional discussion</ContentEyebrow>
+
+          <ConceptBlock title="Leveraging logs in the professional discussion">
             <p>
               During the professional discussion, the assessor will select activities from your log
               to explore in depth. Your log entries serve as the agenda for this conversation — the
               more detailed and well-structured they are, the better prepared you will be to expand
               on them confidently when questioned.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                How the Assessor Uses Your Activity Log
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Selecting discussion topics:</strong> The assessor scans your log for
-                  activities that cover multiple KSBs, enabling efficient evidence gathering during
-                  the discussion
-                </li>
-                <li className="pl-1">
-                  <strong>Probing technical knowledge:</strong> They may ask you to explain the
-                  theory behind your actions — why you chose a particular test method, what the
-                  readings mean, what alternatives existed
-                </li>
-                <li className="pl-1">
-                  <strong>Assessing progression:</strong> Comparing early and later log entries to
-                  see how your competence and independence have developed over the apprenticeship
-                </li>
-                <li className="pl-1">
-                  <strong>Verifying authenticity:</strong> Detailed, specific entries that you can
-                  expand upon fluently demonstrate genuine experience, while vague entries suggest
-                  limited involvement
-                </li>
-                <li className="pl-1">
-                  <strong>Exploring behaviours:</strong> Asking how you communicated with
-                  colleagues, dealt with unexpected situations, or demonstrated initiative during
-                  logged activities
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="How the assessor uses your activity log">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Selecting discussion topics:</strong> the assessor scans your log for
+                activities that cover multiple KSBs, enabling efficient evidence gathering during
+                the discussion.
+              </li>
+              <li>
+                <strong>Probing technical knowledge:</strong> they may ask you to explain the theory
+                behind your actions — why you chose a particular test method, what the readings
+                mean, what alternatives existed.
+              </li>
+              <li>
+                <strong>Assessing progression:</strong> comparing early and later log entries to see
+                how your competence and independence have developed over the apprenticeship.
+              </li>
+              <li>
+                <strong>Verifying authenticity:</strong> detailed, specific entries that you can
+                expand upon fluently demonstrate genuine experience, while vague entries suggest
+                limited involvement.
+              </li>
+              <li>
+                <strong>Exploring behaviours:</strong> asking how you communicated with colleagues,
+                dealt with unexpected situations, or demonstrated initiative during logged
+                activities.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example Discussion Questions from Log Entries
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  "You logged a motor replacement on 15 January. Talk me through your safe isolation
-                  procedure from start to finish."
-                </li>
-                <li className="pl-1">
-                  "Your entry mentions an insulation resistance reading of 0.3 M&Omega;. What is the
-                  minimum acceptable value and how did you know the motor needed replacing?"
-                </li>
-                <li className="pl-1">
-                  "I see you assisted with commissioning an AHU in March. What tests were carried
-                  out and what was your specific role?"
-                </li>
-                <li className="pl-1">
-                  "This entry describes a situation where you found an additional fault during
-                  routine maintenance. How did you communicate this to the client and what action
-                  was taken?"
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Example discussion questions from log entries">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                &quot;You logged a motor replacement on 15 January. Talk me through your safe
+                isolation procedure from start to finish.&quot;
+              </li>
+              <li>
+                &quot;Your entry mentions an insulation resistance reading of 0.3 M&Omega;. What is
+                the minimum acceptable value and how did you know the motor needed replacing?&quot;
+              </li>
+              <li>
+                &quot;I see you assisted with commissioning an AHU in March. What tests were carried
+                out and what was your specific role?&quot;
+              </li>
+              <li>
+                &quot;This entry describes a situation where you found an additional fault during
+                routine maintenance. How did you communicate this to the client and what action was
+                taken?&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Preparing for Discussion</p>
-              <p className="text-sm text-white">
-                Before the professional discussion, re-read every log entry and make sure you can
-                explain each one in more detail than written. For key activities, prepare to
-                discuss: the context and why the work was needed, your approach and reasoning, the
-                specific technical details, the outcome and any lessons learned, and how you would
-                handle it differently with the benefit of experience.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Your activity log is not just a static record — it is the
+          <ConceptBlock title="Preparing for discussion">
+            <p>
+              Before the professional discussion, re-read every log entry and make sure you can
+              explain each one in more detail than written. For key activities, prepare to discuss:
+              the context and why the work was needed, your approach and reasoning, the specific
+              technical details, the outcome and any lessons learned, and how you would handle it
+              differently with the benefit of experience.
+            </p>
+            <p>
+              <strong>Key point:</strong> your activity log is not just a static record — it is the
               script for your professional discussion. Every entry is a potential discussion topic,
               so write each one as though you will be asked about it in detail.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Purpose: chronological record demonstrating breadth and depth of practical experience.',
+              'Frequency: after each significant activity, or at least weekly.',
+              'Content: date, location, equipment, task, methods, safety, outcome, KSB references.',
+              'Detail level: specific enough for someone not present to understand what you did and why.',
+              'Test readings: always record specific values — they demonstrate technical understanding.',
+              'Safety: describe specific measures taken, not just "worked safely".',
+              'Gap analysis: review log against KSBs regularly to identify missing evidence areas.',
+              'Discussion prep: re-read all entries before the EPA — you may be asked about any of them.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Chronological record demonstrating breadth and depth of
-                practical experience
-              </li>
-              <li className="pl-1">
-                <strong>Frequency:</strong> After each significant activity, or at least weekly
-              </li>
-              <li className="pl-1">
-                <strong>Content:</strong> Date, location, equipment, task, methods, safety, outcome,
-                KSB references
-              </li>
-              <li className="pl-1">
-                <strong>Detail level:</strong> Specific enough for someone not present to understand
-                what you did and why
-              </li>
-              <li className="pl-1">
-                <strong>Test readings:</strong> Always record specific values — they demonstrate
-                technical understanding
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Describe specific measures taken, not just "worked safely"
-              </li>
-              <li className="pl-1">
-                <strong>Gap analysis:</strong> Review log against KSBs regularly to identify missing
-                evidence areas
-              </li>
-              <li className="pl-1">
-                <strong>Discussion prep:</strong> Re-read all entries before the EPA — you may be
-                asked about any of them
-              </li>
-            </ul>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Activity Logging" questions={quizQuestions} />
+          </Bleed>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Activity Logging" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Witness Statements
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-4">
-              Next: Mapping Evidence
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Collecting Witness Statements
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Mapping Evidence to Standards
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

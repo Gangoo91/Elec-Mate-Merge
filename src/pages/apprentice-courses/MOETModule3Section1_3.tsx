@@ -1,8 +1,55 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.1 · Subsection 3 — Circuit Breaker Operations
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * ✎ ACCURACY FIX (12 Sep): this page attributed the non-combustible consumer
+ *   unit requirement to "Amendment 2". Amendment attribution could not be
+ *   verified from the RAG (which holds current text, not amendment history),
+ *   and the claim is doubtful — the 421.1.201 national addition predates
+ *   Amendment 2 to the 18th Edition. Reworded throughout to cite the
+ *   regulation itself, which IS verified in bs7671_facets against
+ *   BS 7671:2018+A4:2026 and is the more useful reference for a learner.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { ConsumerUnit } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Circuit Breaker Operations - MOET Module 3 Section 1.3';
@@ -13,7 +60,7 @@ const quickCheckQuestions = [
   {
     id: 'amendment2-cu',
     question:
-      'Under Amendment 2 to BS 7671, what enclosure material is required for domestic consumer units?',
+      'Under BS 7671 Regulation 421.1.201, what enclosure material is required for domestic consumer units?',
     options: [
       'Fire-retardant plastic',
       'Non-combustible (metallic)',
@@ -22,18 +69,13 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      'Amendment 2 requires consumer units in domestic premises to be housed in non-combustible enclosures, which in practice means metallic (steel) consumer units. This was introduced to reduce the fire risk from arcing faults within the unit.',
+      'Regulation 421.1.201 requires consumer units in domestic premises to be housed in non-combustible enclosures, which in practice means metallic (steel) consumer units. This was introduced to reduce the fire risk from arcing faults within the unit.',
   },
   {
     id: 'spare-ways',
     question:
       'What is the recommended minimum spare capacity (spare ways) when specifying a distribution board?',
-    options: [
-      '10%',
-      '50%',
-      '5%',
-      '20%',
-    ],
+    options: ['10%', '50%', '5%', '20%'],
     correctIndex: 3,
     explanation:
       'A minimum of 20% spare ways is recommended when specifying distribution boards. This allows for future circuit additions without needing to replace the entire board — a common and costly issue in older installations.',
@@ -41,12 +83,7 @@ const quickCheckQuestions = [
   {
     id: 'rcd-test-freq',
     question: 'How often does the current RCD notice advise the user to test the device?',
-    options: [
-      'Monthly',
-      'Six-monthly',
-      'Quarterly',
-      'Annually',
-    ],
+    options: ['Monthly', 'Six-monthly', 'Quarterly', 'Annually'],
     correctIndex: 1,
     explanation:
       'Current guidance (BS 7671 Regulation 514.12 and Guidance Note 3) recommends pressing the RCD test button at least every six months. This verifies the mechanical trip mechanism operates correctly and the device will disconnect the supply in the event of an earth fault.',
@@ -55,12 +92,7 @@ const quickCheckQuestions = [
     id: 'spd-lead-length',
     question:
       'What is the recommended maximum combined lead length for SPD connections to maintain effectiveness?',
-    options: [
-      '2000 mm',
-      '100 mm',
-      '500 mm',
-      '1000 mm',
-    ],
+    options: ['2000 mm', '100 mm', '500 mm', '1000 mm'],
     correctIndex: 2,
     explanation:
       "SPD connections should ideally have a combined lead length of less than 500 mm. Longer cable runs increase inductance, which reduces the SPD's ability to clamp transient overvoltages effectively.",
@@ -71,7 +103,7 @@ const quizQuestions = [
   {
     id: 1,
     question:
-      'What enclosure material does Amendment 2 to BS 7671 require for domestic consumer units?',
+      'What enclosure material does BS 7671 Regulation 421.1.201 require for domestic consumer units?',
     options: [
       'High-impact PVC',
       'Non-combustible (metallic)',
@@ -80,17 +112,12 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Amendment 2 requires non-combustible (metallic) enclosures for consumer units in domestic premises to reduce fire risk from internal arcing faults.',
+      'Regulation 421.1.201 requires non-combustible (metallic) enclosures for consumer units in domestic premises to reduce fire risk from internal arcing faults.',
   },
   {
     id: 2,
     question: 'Which BS 7671 Regulation covers labelling and identification requirements?',
-    options: [
-      'Regulation 537',
-      'Regulation 411',
-      'Regulation 514',
-      'Regulation 612',
-    ],
+    options: ['Regulation 537', 'Regulation 411', 'Regulation 514', 'Regulation 612'],
     correctAnswer: 2,
     explanation:
       'Regulation 514 of BS 7671 covers labelling, identification marks, warning notices and diagrams for electrical installations.',
@@ -98,12 +125,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the recommended minimum percentage of spare ways in a distribution board?',
-    options: [
-      '10%',
-      '5%',
-      '30%',
-      '20%',
-    ],
+    options: ['10%', '5%', '30%', '20%'],
     correctAnswer: 3,
     explanation:
       'A minimum of 20% spare ways is recommended to allow for future circuit additions without requiring board replacement.',
@@ -111,12 +133,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Which type of SPD is most commonly installed at distribution boards?',
-    options: [
-      'Type 2',
-      'Type 1',
-      'Type 3',
-      'Type 4',
-    ],
+    options: ['Type 2', 'Type 1', 'Type 3', 'Type 4'],
     correctAnswer: 0,
     explanation:
       'Type 2 SPDs are the most commonly installed, placed at distribution boards to protect against switching surges and indirect lightning effects.',
@@ -137,12 +154,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'How often does the current RCD notice advise the user to test the device?',
-    options: [
-      'Monthly',
-      'Quarterly',
-      'Six-monthly',
-      'Annually',
-    ],
+    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
     correctAnswer: 2,
     explanation:
       'Current guidance (BS 7671 Regulation 514.12 and Guidance Note 3) recommends pressing the built-in RCD test button at least every six months.',
@@ -150,12 +162,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the maximum recommended combined lead length for SPD connections?',
-    options: [
-      '200 mm',
-      'No limit',
-      '1000 mm',
-      '500 mm',
-    ],
+    options: ['200 mm', 'No limit', '1000 mm', '500 mm'],
     correctAnswer: 3,
     explanation:
       'A combined lead length of less than 500 mm is recommended to minimise inductance and maintain SPD effectiveness.',
@@ -235,7 +242,8 @@ const faqs = [
       'A consumer unit is a specific type of distribution board designed for domestic and small commercial installations. It is single-phase with a combined main switch and typically uses plug-in MCBs or RCBOs. A distribution board is the broader term covering all types including three-phase commercial panels, lighting distribution boards and essential services panels.',
   },
   {
-    question: 'Why did Amendment 2 require metal consumer units?',
+    question:
+      'Why does BS 7671 require non-combustible consumer unit enclosures in domestic premises?',
     answer:
       'Statistics showed that arcing faults within plastic consumer units could cause the enclosure to ignite and spread fire. Metal (non-combustible) enclosures contain any internal arcing and prevent the enclosure itself from becoming a fire source. This change was a direct response to fire safety data.',
   },
@@ -257,116 +265,72 @@ const faqs = [
 ];
 
 const MOETModule3Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Circuit Breaker Operations
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.1 · Subsection 3"
+        title="Circuit Breaker Operations"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Distribution boards, consumer units, busbar arrangements, SPD integration and Amendment
-            2 requirements
+            2 requirements.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>DBs:</strong> Core equipment — MCBs, RCBOs, busbar systems
-              </li>
-              <li className="pl-1">
-                <strong>Amendment 2:</strong> Metal consumer units mandatory for domestic
-              </li>
-              <li className="pl-1">
-                <strong>Labelling:</strong> Regulation 514 — schedules must be accurate
-              </li>
-              <li className="pl-1">
-                <strong>SPDs:</strong> Type 2 at DB, max 500 mm lead length
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Most maintained:</strong> DBs are your primary daily equipment
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Correct labelling prevents wrong-circuit isolation
-              </li>
-              <li className="pl-1">
-                <strong>RCBO trend:</strong> Individual protection eliminates nuisance tripping
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to installation maintenance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'DBs: core equipment — MCBs, RCBOs, busbar systems.',
+              'Regulation 421.1.201: non-combustible consumer unit enclosures mandatory in domestic premises.',
+              'Labelling: Regulation 514 — schedules must be accurate.',
+              'SPDs: Type 2 at DB, max 500 mm lead length.',
+              'Most maintained: DBs are your primary daily equipment.',
+              'Safety: correct labelling prevents wrong-circuit isolation.',
+              'RCBO trend: individual protection eliminates nuisance tripping.',
+              'ST1426: maps to installation maintenance KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Describe the construction and layout of distribution boards and consumer units',
               'Explain busbar arrangements including single-busbar and split-load configurations',
               'Interpret and update circuit schedules and charts to Regulation 514',
               'Outline the requirements for surge protection device integration',
-              'Describe Amendment 2 consumer unit requirements including metal enclosures',
+              'Describe the Regulation 421.1.201 consumer unit requirements, including non-combustible enclosures',
               'Carry out inspection and maintenance procedures for distribution equipment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Distribution board design and construction</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Distribution Board Design and Construction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The equipment you will interact with most">
             <p>
               Distribution boards (DBs) are the workhorses of electrical distribution. They receive
               supply from the main switchboard or sub-main cables and distribute it to individual
@@ -380,149 +344,117 @@ const MOETModule3Section1_3 = () => {
               functions is essential for safe and effective maintenance, fault finding and circuit
               identification.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Distribution Board
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Three-Phase DBs:</strong> Used in commercial and industrial installations.
-                  Three-phase busbar system with single-pole, two-pole or three-pole outgoing
-                  devices. Available from 4-way to 48-way or more
-                </li>
-                <li className="pl-1">
-                  <strong>Single-Phase Consumer Units:</strong> Primarily domestic. Single-phase
-                  busbar with single-pole MCBs or RCBOs. Amendment 2 requires metallic enclosures in
-                  domestic premises
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting Distribution Boards:</strong> Specialised for lighting circuits,
-                  often incorporating contactors or relays for central switching. May include
-                  emergency lighting monitoring modules
-                </li>
-                <li className="pl-1">
-                  <strong>Essential Services Panels:</strong> Dedicated to life safety circuits —
-                  fire alarms, emergency lighting, lifts, smoke ventilation. Require enhanced
-                  protection and may be fed from standby generators
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Types of distribution board">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Three-Phase DBs:</strong> used in commercial and industrial installations.
+                Three-phase busbar system with single-pole, two-pole or three-pole outgoing devices.
+                Available from 4-way to 48-way or more
+              </li>
+              <li>
+                <strong>Single-Phase Consumer Units:</strong> primarily domestic. Single-phase
+                busbar with single-pole MCBs or RCBOs. Regulation 421.1.201 requires non-combustible
+                (in practice, metallic) enclosures in domestic premises
+              </li>
+              <li>
+                <strong>Lighting Distribution Boards:</strong> specialised for lighting circuits,
+                often incorporating contactors or relays for central switching. May include
+                emergency lighting monitoring modules
+              </li>
+              <li>
+                <strong>Essential Services Panels:</strong> dedicated to life safety circuits — fire
+                alarms, emergency lighting, lifts, smoke ventilation. Require enhanced protection
+                and may be fed from standby generators
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Internal Components</h3>
-              <p className="text-sm text-white mb-3">
-                A typical distribution board contains the following key components:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">An incoming switch-disconnector or MCCB (the incomer)</li>
-                <li className="pl-1">
-                  A busbar system (copper or tin-plated copper) in L1-L2-L3 repeating pattern
-                </li>
-                <li className="pl-1">
-                  DIN-rail mounted outgoing protective devices (MCBs, RCBOs, RCDs)
-                </li>
-                <li className="pl-1">A neutral bar and earth bar</li>
-                <li className="pl-1">Cable entry points with gland plates</li>
-                <li className="pl-1">
-                  A circuit schedule or chart holder on the inside of the door
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Internal components"
+            onSite="The busbar system is arranged to distribute load evenly across the three phases. In a typical three-phase DB, adjacent single-pole ways are connected to different phases in a repeating L1-L2-L3 pattern, allowing balanced loading by distributing circuits evenly across the board."
+          >
+            <p>A typical distribution board contains the following key components:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>An incoming switch-disconnector or MCCB (the incomer)</li>
+              <li>A busbar system (copper or tin-plated copper) in L1-L2-L3 repeating pattern</li>
+              <li>DIN-rail mounted outgoing protective devices (MCBs, RCBOs, RCDs)</li>
+              <li>A neutral bar and earth bar</li>
+              <li>Cable entry points with gland plates</li>
+              <li>A circuit schedule or chart holder on the inside of the door</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The busbar system is arranged to distribute load evenly
-              across the three phases. In a typical three-phase DB, adjacent single-pole ways are
-              connected to different phases in a repeating L1-L2-L3 pattern, allowing balanced
-              loading by distributing circuits evenly across the board.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Busbar Arrangements and Ways
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Busbar arrangements and ways</ContentEyebrow>
+
+          <ConceptBlock title="How power is shared out across the outgoing circuits">
             <p>
               The busbar arrangement determines how the distribution board distributes power to
               outgoing circuits and affects both the flexibility and resilience of the system.
               Understanding the different configurations helps you identify the board type during
               maintenance and plan circuit additions correctly.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Single-Busbar Configuration
-                </h3>
-                <p className="text-sm text-white">
-                  The simplest and most common arrangement. A single set of busbars runs the length
-                  of the board, fed by a single incomer. All outgoing devices connect to the same
-                  busbars. If the incomer trips, all circuits are lost. This is standard for most
-                  sub-distribution boards in commercial installations.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Split-Load Configuration
-                </h3>
-                <p className="text-sm text-white">
-                  In a split-load consumer unit, the busbars are divided into two sections by a main
-                  switch and one or more RCDs. One section protects circuits through an RCD, while
-                  the other section may have non-RCD-protected circuits (fire alarm, security). This
-                  avoids nuisance tripping of essential circuits.
-                </p>
-              </div>
-            </div>
+          <ConsumerUnit />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                The Move to Full RCBO Protection
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The trend in modern installations is toward full RCBO protection, where each circuit
-                has its own individual RCBO. This eliminates the problem of one earth fault tripping
-                an RCD and affecting multiple circuits. Each circuit has both overload and earth
-                fault protection in a single device, providing the best combination of safety and
-                continuity of supply.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">No nuisance tripping affecting multiple circuits</li>
-                <li className="pl-1">
-                  Easier fault identification — the tripped RCBO identifies the faulty circuit
-                </li>
-                <li className="pl-1">
-                  Better protection — each circuit has its own earth fault threshold
-                </li>
-                <li className="pl-1">
-                  Higher cost but increasingly standard for new installations
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Counting ways:</strong> A "way" is a single connection point for a single-pole
-              outgoing device. A 12-way three-phase board accommodates 12 single-pole MCBs (4 per
-              phase). A three-pole device occupies 3 ways. Always plan a minimum of 20% spare ways
-              for future additions.
+          <ConceptBlock title="Single-busbar configuration">
+            <p>
+              The simplest and most common arrangement. A single set of busbars runs the length of
+              the board, fed by a single incomer. All outgoing devices connect to the same busbars.
+              If the incomer trips, all circuits are lost. This is standard for most
+              sub-distribution boards in commercial installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Split-load configuration">
+            <p>
+              In a split-load consumer unit, the busbars are divided into two sections by a main
+              switch and one or more RCDs. One section protects circuits through an RCD, while the
+              other section may have non-RCD-protected circuits (fire alarm, security). This avoids
+              nuisance tripping of essential circuits.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Labelling and Circuit Schedules (Regulation 514)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The move to full RCBO protection">
+            <p>
+              The trend in modern installations is toward full RCBO protection, where each circuit
+              has its own individual RCBO. This eliminates the problem of one earth fault tripping
+              an RCD and affecting multiple circuits. Each circuit has both overload and earth fault
+              protection in a single device, providing the best combination of safety and continuity
+              of supply.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>No nuisance tripping affecting multiple circuits</li>
+              <li>Easier fault identification — the tripped RCBO identifies the faulty circuit</li>
+              <li>Better protection — each circuit has its own earth fault threshold</li>
+              <li>Higher cost but increasingly standard for new installations</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Counting ways"
+            onSite="Always plan a minimum of 20% spare ways for future additions."
+          >
+            <p>
+              A &quot;way&quot; is a single connection point for a single-pole outgoing device. A
+              12-way three-phase board accommodates 12 single-pole MCBs (4 per phase). A three-pole
+              device occupies 3 ways.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Labelling and circuit schedules (Regulation 514)</ContentEyebrow>
+
+          <ConceptBlock title="A fundamental requirement, frequently found deficient">
             <p>
               Regulation 514 of BS 7671 requires that every installation be provided with labels,
               identification marks and diagrams to ensure safe operation, inspection and
@@ -530,75 +462,68 @@ const MOETModule3Section1_3 = () => {
               identification — a fundamental requirement that is frequently found to be deficient
               during periodic inspection.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circuit Schedule Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Way number:</strong> Position in the board (1, 2, 3, etc.)
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit description:</strong> Clear identification (e.g., "Ground floor
-                  lighting", "Kitchen sockets")
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device:</strong> Type and rating (e.g., "MCB Type B 16 A")
-                </li>
-                <li className="pl-1">
-                  <strong>Phase allocation:</strong> L1, L2 or L3 for three-phase boards
-                </li>
-                <li className="pl-1">
-                  <strong>Cable size and type:</strong> E.g., "2.5 mm2 T&E"
-                </li>
-                <li className="pl-1">
-                  <strong>Area served:</strong> The zone or area the circuit supplies
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Circuit schedule requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Way number:</strong> position in the board (1, 2, 3, etc.)
+              </li>
+              <li>
+                <strong>Circuit description:</strong> clear identification (e.g., &quot;Ground floor
+                lighting&quot;, &quot;Kitchen sockets&quot;)
+              </li>
+              <li>
+                <strong>Protective device:</strong> type and rating (e.g., &quot;MCB Type B 16
+                A&quot;)
+              </li>
+              <li>
+                <strong>Phase allocation:</strong> L1, L2 or L3 for three-phase boards
+              </li>
+              <li>
+                <strong>Cable size and type:</strong> e.g., &quot;2.5 mm2 T&amp;E&quot;
+              </li>
+              <li>
+                <strong>Area served:</strong> the zone or area the circuit supplies
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Warning Notices Required by BS 7671
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Nominal voltage and frequency of the supply</li>
-                <li className="pl-1">Identification of the origin of supply (where not obvious)</li>
-                <li className="pl-1">RCD test notice: advising a six-monthly test, with instructions</li>
-                <li className="pl-1">Dual supply warning where more than one source is present</li>
-                <li className="pl-1">Periodic inspection due date (recommended)</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Warning notices required by BS 7671">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Nominal voltage and frequency of the supply</li>
+              <li>Identification of the origin of supply (where not obvious)</li>
+              <li>RCD test notice: advising a six-monthly test, with instructions</li>
+              <li>Dual supply warning where more than one source is present</li>
+              <li>Periodic inspection due date (recommended)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Maintenance Responsibility</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="The schedule falls out of date"
+            whatHappens={
+              <>
+                Outdated or missing circuit schedules are among the most common deficiencies found
+                during periodic inspection and represent a significant safety risk — incorrect
+                circuit identification can lead to work on the wrong circuit during isolation.
+              </>
+            }
+            doInstead={
+              <>
                 Circuit schedules must be kept up to date. If a circuit is modified, added or
-                removed during maintenance, the schedule must be updated immediately. Outdated or
-                missing schedules are among the most common deficiencies found during periodic
-                inspection and represent a significant safety risk — incorrect circuit
-                identification can lead to work on the wrong circuit during isolation.
-              </p>
-            </div>
+                removed during maintenance, the schedule must be updated immediately — this is not
+                optional, it is a regulatory requirement and a critical safety measure.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> As a maintenance technician, updating the circuit schedule
-              after any modification is not optional — it is a regulatory requirement and a critical
-              safety measure.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Surge Protection Device Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Surge protection device integration</ContentEyebrow>
+
+          <ConceptBlock title="A now-standard component in most new installations">
             <p>
               Surge protection devices (SPDs) protect electrical equipment from transient
               overvoltages caused by lightning, switching surges and other disturbances. BS 7671
@@ -606,251 +531,198 @@ const MOETModule3Section1_3 = () => {
               requirements for SPD installation, making them a standard component in most new
               installations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SPD Types and Applications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type 1 (Class I)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Origin / main switchboard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Direct lightning current. Required where external LPS fitted
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type 2 (Class II)</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution boards</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indirect lightning and switching surges. Most common type
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Type 3 (Class III)</td>
-                      <td className="border border-white/10 px-3 py-2">Near sensitive equipment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fine protection against residual surges
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="SPD types and applications">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Location</th>
+                    <th className="py-2 font-medium text-white">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Type 1 (Class I)</td>
+                    <td className="py-2 pr-4">Origin / main switchboard</td>
+                    <td className="py-2">
+                      Direct lightning current. Required where external LPS fitted
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Type 2 (Class II)</td>
+                    <td className="py-2 pr-4">Distribution boards</td>
+                    <td className="py-2">
+                      Indirect lightning and switching surges. Most common type
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Type 3 (Class III)</td>
+                    <td className="py-2 pr-4">Near sensitive equipment</td>
+                    <td className="py-2">Fine protection against residual surges</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Installation and Maintenance Considerations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lead length:</strong> Keep combined lead length below 500 mm to minimise
-                  inductance
-                </li>
-                <li className="pl-1">
-                  <strong>Disconnection:</strong> Dedicated MCB or fuse required for SPD
-                  disconnection if it fails short-circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Status indicator:</strong> Most modern SPDs have visual indicators (green
-                  = healthy, red = end-of-life)
-                </li>
-                <li className="pl-1">
-                  <strong>Check during maintenance:</strong> Verify SPD status indicator at every
-                  maintenance visit
-                </li>
-                <li className="pl-1">
-                  <strong>When required:</strong> Installations with sensitive electronics, external
-                  LPS, or where overvoltage consequences are serious
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Installation and maintenance considerations"
+            onSite="SPDs are now required in most commercial installations and many domestic installations. During maintenance, always check the SPD status indicator and report any devices showing end-of-life status for replacement."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lead length:</strong> keep combined lead length below 500 mm to minimise
+                inductance
+              </li>
+              <li>
+                <strong>Disconnection:</strong> dedicated MCB or fuse required for SPD disconnection
+                if it fails short-circuit
+              </li>
+              <li>
+                <strong>Status indicator:</strong> most modern SPDs have visual indicators (green =
+                healthy, red = end-of-life)
+              </li>
+              <li>
+                <strong>Check during maintenance:</strong> verify SPD status indicator at every
+                maintenance visit
+              </li>
+              <li>
+                <strong>When required:</strong> installations with sensitive electronics, external
+                LPS, or where overvoltage consequences are serious
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> SPDs are now required in most commercial installations and
-              many domestic installations. During maintenance, always check the SPD status indicator
-              and report any devices showing end-of-life status for replacement.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Inspection and Maintenance of Distribution Boards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Inspection and maintenance of distribution boards</ContentEyebrow>
+
+          <ConceptBlock title="A structured approach so nothing is missed">
             <p>
               Regular inspection and maintenance of distribution boards is a core part of the
-              maintenance technician's role. A structured approach ensures nothing is missed and
-              that developing faults are identified before they cause failure or safety hazards. The
-              following provides a comprehensive maintenance checklist.
+              maintenance technician&rsquo;s role. A structured approach ensures nothing is missed
+              and that developing faults are identified before they cause failure or safety hazards.
+              The following provides a comprehensive maintenance checklist.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Board Maintenance Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify the circuit schedule is present, legible and accurate
-                </li>
-                <li className="pl-1">Check all required warning notices are displayed</li>
-                <li className="pl-1">
-                  Inspect the enclosure for damage, corrosion or signs of overheating
-                </li>
-                <li className="pl-1">Check that all blanking plates are fitted (no open ways)</li>
-                <li className="pl-1">
-                  Verify the IP rating is maintained (glands, seals, covers intact)
-                </li>
-                <li className="pl-1">Check for signs of moisture ingress, dust or vermin</li>
-                <li className="pl-1">
-                  Inspect all connections for signs of overheating (discolouration, melting)
-                </li>
-                <li className="pl-1">
-                  Check torque on accessible connections using a calibrated torque driver
-                </li>
-                <li className="pl-1">
-                  Verify all MCBs and RCDs operate correctly (manual trip test)
-                </li>
-                <li className="pl-1">
-                  Test RCDs with an RCD tester to verify trip time is within specification
-                </li>
-                <li className="pl-1">Check SPD status indicators where fitted</li>
-                <li className="pl-1">
-                  Perform thermal imaging if equipment is available and board is energised
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Distribution board maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Verify the circuit schedule is present, legible and accurate</li>
+              <li>Check all required warning notices are displayed</li>
+              <li>Inspect the enclosure for damage, corrosion or signs of overheating</li>
+              <li>Check that all blanking plates are fitted (no open ways)</li>
+              <li>Verify the IP rating is maintained (glands, seals, covers intact)</li>
+              <li>Check for signs of moisture ingress, dust or vermin</li>
+              <li>Inspect all connections for signs of overheating (discolouration, melting)</li>
+              <li>Check torque on accessible connections using a calibrated torque driver</li>
+              <li>Verify all MCBs and RCDs operate correctly (manual trip test)</li>
+              <li>Test RCDs with an RCD tester to verify trip time is within specification</li>
+              <li>Check SPD status indicators where fitted</li>
+              <li>Perform thermal imaging if equipment is available and board is energised</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Deficiencies Found
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Missing or outdated circuit schedules</li>
-                  <li className="pl-1">Missing blanking plates exposing live busbars</li>
-                  <li className="pl-1">Loose connections causing overheating</li>
-                  <li className="pl-1">Failed RCDs not tripping on test</li>
-                  <li className="pl-1">Damaged cable glands compromising IP rating</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">After Maintenance</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Return board to normal operating condition</li>
-                  <li className="pl-1">Replace all covers and blanking plates</li>
-                  <li className="pl-1">Update circuit schedule if changes were made</li>
-                  <li className="pl-1">Record findings in maintenance log or CAFM system</li>
-                  <li className="pl-1">Report any deficiencies requiring further action</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Common deficiencies found">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Missing or outdated circuit schedules</li>
+              <li>Missing blanking plates exposing live busbars</li>
+              <li>Loose connections causing overheating</li>
+              <li>Failed RCDs not tripping on test</li>
+              <li>Damaged cable glands compromising IP rating</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Thermal imaging is an increasingly valuable maintenance tool
-              for distribution boards. It can identify overheating connections, overloaded circuits
-              and failing components without the need to isolate the board. Many organisations now
-              include thermographic surveys as a standard part of their PPM programme for
-              distribution equipment.
+          <ConceptBlock title="After maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Return board to normal operating condition</li>
+              <li>Replace all covers and blanking plates</li>
+              <li>Update circuit schedule if changes were made</li>
+              <li>Record findings in maintenance log or CAFM system</li>
+              <li>Report any deficiencies requiring further action</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Thermal imaging as a maintenance tool">
+            <p>
+              Thermal imaging is an increasingly valuable maintenance tool for distribution boards.
+              It can identify overheating connections, overloaded circuits and failing components
+              without the need to isolate the board. Many organisations now include thermographic
+              surveys as a standard part of their PPM programme for distribution equipment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=VGj32euYZ2c"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Circuit Breaker Basics — How Do They Work?"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">DB Maintenance Priorities</p>
-                <ul className="space-y-0.5">
-                  <li>1. Circuit schedule present and accurate</li>
-                  <li>2. All blanking plates fitted</li>
-                  <li>3. RCDs user-tested six-monthly (trip time in spec)</li>
-                  <li>4. Connections torque-checked annually</li>
-                  <li>5. SPD status indicators checked</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Reg 514 — Labelling requirements</li>
-                  <li>BS 7671 Reg 443 — SPD requirements</li>
-                  <li>Amendment 2 — Metal CU enclosures</li>
-                  <li>BS EN 61439 — Switchgear assemblies</li>
-                  <li>ST1426 — Maintenance technician KSBs</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="1:51"
+
+            topic="The thermal bimetal and the magnetic coil, doing two different jobs"
+
+            caption="Under two minutes, and it shows the two tripping mechanisms this page describes actually operating."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'DB maintenance priorities: circuit schedule present and accurate; all blanking plates fitted; RCDs user-tested six-monthly (trip time in spec); connections torque-checked annually; SPD status indicators checked.',
+              'Regulation 421.1.201 requires non-combustible (metallic) consumer unit enclosures for domestic premises.',
+              'Regulation 514 covers labelling requirements; Regulation 443 covers SPD requirements.',
+              'BS EN 61439 covers low-voltage switchgear and controlgear assemblies.',
+              'Always plan a minimum of 20% spare ways when specifying a distribution board.',
+              'ST1426 — maintenance technician KSBs map directly to distribution board inspection and upkeep.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section1-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  HV/LV Switchgear Types
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section1-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Busbars and Cabling Systems
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: HV/LV Switchgear
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1-4">
-              Next: Protective Devices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

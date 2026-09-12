@@ -238,7 +238,7 @@ export function FeedInTariffCalculator() {
 
     return {
       meta: {
-        title: 'Feed-in Tariff Calculator',
+        title: 'Feed-in Tariff',
         subtitle: 'Historical FIT payments for existing installations — an indicative estimate, not a guaranteed tariff',
       },
       headline: [

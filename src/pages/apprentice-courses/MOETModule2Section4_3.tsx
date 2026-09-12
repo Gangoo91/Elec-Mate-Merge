@@ -1,8 +1,44 @@
-import { ArrowLeft, AlertTriangle, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 3 — Overcurrent and
+ * Short-Circuit Protection
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Overcurrent and Short-Circuit Protection - MOET Module 2 Section 4.3';
@@ -70,12 +106,7 @@ const quizQuestions = [
     id: 1,
     question:
       'The prospective fault current at the origin of a typical UK domestic installation is usually in the range of:',
-    options: [
-      '100 A to 500 A',
-      '1 kA to 16 kA',
-      '20 kA to 50 kA',
-      '50 kA to 100 kA',
-    ],
+    options: ['100 A to 500 A', '1 kA to 16 kA', '20 kA to 50 kA', '50 kA to 100 kA'],
     correctAnswer: 1,
     explanation:
       'The prospective fault current at the origin of a typical UK domestic installation supplied from the public network is usually between 1 kA and 16 kA. The DNO (Distribution Network Operator) maximum declared value is typically 16 kA for single-phase supplies. BS 7671 Regulation 434.5.1 requires that all protective devices have a breaking capacity not less than this value.',
@@ -84,12 +115,7 @@ const quizQuestions = [
     id: 2,
     question:
       'BS 7671 Regulation 434.5.2 requires that the energy let-through of a protective device satisfies:',
-    options: [
-      'Ib ≤ In ≤ Iz',
-      'Zs × Ia ≤ Uo',
-      'I²t ≤ k²S²',
-      'I²t ≥ k²S²',
-    ],
+    options: ['Ib ≤ In ≤ Iz', 'Zs × Ia ≤ Uo', 'I²t ≤ k²S²', 'I²t ≥ k²S²'],
     correctAnswer: 2,
     explanation:
       'Regulation 434.5.2 requires that the let-through energy (I²t) of the protective device during a short-circuit does not exceed the withstand energy (k²S²) of the cable. This ensures the cable insulation is not damaged by the thermal effects of the fault current during the time taken for the protective device to operate. The value of k depends on the conductor and insulation materials.',
@@ -124,12 +150,7 @@ const quizQuestions = [
   {
     id: 5,
     question: 'The maximum disconnection time for a 32 A final circuit in a TN system at 230 V is:',
-    options: [
-      '0.1 seconds',
-      '0.4 seconds',
-      '5 seconds',
-      '1 second',
-    ],
+    options: ['0.1 seconds', '0.4 seconds', '5 seconds', '1 second'],
     correctAnswer: 1,
     explanation:
       'BS 7671 Table 41.1 specifies a maximum disconnection time of 0.4 seconds for TN systems on final circuits not exceeding 32 A at 230 V nominal (120-230 V Uo). For distribution circuits, the maximum disconnection time is 5 seconds. These times ensure that in the event of an earth fault, the supply is disconnected before the touch voltage duration becomes dangerous.',
@@ -151,12 +172,7 @@ const quizQuestions = [
     id: 7,
     question:
       'For a circuit protected by a 32 A Type B MCB in a TN system, the maximum earth fault loop impedance (Zs) is approximately:',
-    options: [
-      '0.27 ohms',
-      '1.09 ohms',
-      '7.19 ohms',
-      '1.37 ohms',
-    ],
+    options: ['0.27 ohms', '1.09 ohms', '7.19 ohms', '1.37 ohms'],
     correctAnswer: 3,
     explanation:
       'For a Type B MCB, instantaneous magnetic tripping occurs between 3 and 5 times In. Using the worst case (5 × In): the minimum fault current needed = 5 × 32 = 160 A. BS 7671:2018+A4:2026 applies Cmin = 0.95 to U0 in the Zs calculation: Maximum Zs = (U0 × Cmin) / Ia = (230 × 0.95) / 160 = 218.5 / 160 = 1.366 ohms ≈ 1.37 ohms (Table 41.3). The pre-A4 figure of 1.44 ohms (without Cmin) is now obsolete.',
@@ -179,12 +195,7 @@ const quizQuestions = [
     id: 9,
     question:
       'If a cable has a cross-sectional area (S) of 2.5 mm² and k = 115, the maximum fault energy the cable can withstand (k²S²) is:',
-    options: [
-      '287.5 A²s',
-      '82,656 A²s',
-      '115,000 A²s',
-      '828 A²s',
-    ],
+    options: ['287.5 A²s', '82,656 A²s', '115,000 A²s', '828 A²s'],
     correctAnswer: 1,
     explanation:
       "k²S² = 115² × 2.5² = 13,225 × 6.25 = 82,656.25 A²s. This is the maximum energy (I²t) that the cable can absorb during a short-circuit without the insulation temperature exceeding its damage threshold. The protective device's I²t let-through must not exceed this value. This calculation is fundamental to verifying short-circuit protection per BS 7671 Regulation 434.5.2.",
@@ -248,115 +259,69 @@ const faqs = [
 ];
 
 const MOETModule2Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <AlertTriangle className="h-4 w-4" />
-            <span>Module 2.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Overcurrent and Short-Circuit Protection
-          </h1>
-          <p className="text-white">
-            Protection coordination, fault current calculations and the adiabatic equation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 3"
+        title="Overcurrent and Short-Circuit Protection"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Protection coordination, fault current calculations and the adiabatic equation — how a
+            maintenance technician proves that a protective device and its cable can survive a
+            fault, not just carry normal load.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Overload:</strong> Excess demand in a sound circuit — moderate overcurrent
-              </li>
-              <li className="pl-1">
-                <strong>Short-circuit:</strong> Fault of negligible impedance — very high current
-              </li>
-              <li className="pl-1">
-                <strong>Adiabatic:</strong> I²t &le; k²S² verifies cable can withstand fault energy
-              </li>
-              <li className="pl-1">
-                <strong>Coordination:</strong> Discrimination ensures only nearest device trips
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Measurement:</strong> Verify Ipf at each board during inspection
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Breaking capacity must exceed measured Ipf
-              </li>
-              <li className="pl-1">
-                <strong>Fault diagnosis:</strong> Determine overload vs short-circuit from evidence
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to engineering principles and maintenance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Overload: excess demand in a sound circuit — moderate overcurrent.',
+              'Short-circuit: fault of negligible impedance — very high current.',
+              'Adiabatic: I squared t <= k squared S squared verifies the cable can withstand the fault energy.',
+              'Coordination: discrimination ensures only the device nearest the fault trips.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between overload and short-circuit fault conditions and their protection requirements',
               'Calculate and measure prospective fault current at the origin and at distribution boards',
               'Apply the adiabatic equation (I²t ≤ k²S²) to verify short-circuit withstand of cables',
               'Understand protection coordination: discrimination, cascading and back-up protection',
               'Verify disconnection times using earth fault loop impedance and device characteristics',
               'Reference BS 7671 Chapter 43 requirements for overcurrent and short-circuit protection',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Overload current vs short-circuit current</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Overload Current vs Short-Circuit Current
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Two fundamentally different types of overcurrent">
             <p>
               BS 7671 recognises two fundamentally different types of overcurrent, each requiring
               different protective characteristics. Understanding the distinction is critical for
@@ -381,85 +346,66 @@ const MOETModule2Section4_3 = () => {
               time is extremely fast, typically reaching peak value within the first half-cycle (10
               ms at 50 Hz).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Comparison of Overcurrent Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Overload</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Short-Circuit</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit condition</td>
-                      <td className="border border-white/10 px-3 py-2">Electrically sound</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation breakdown / fault
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical magnitude</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1.5 to 6 &times; design current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100s to 10,000s of amps</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rise time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gradual (seconds to minutes)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Near instantaneous (&lt; 10 ms)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protection mechanism</td>
-                      <td className="border border-white/10 px-3 py-2">Thermal (time-delayed)</td>
-                      <td className="border border-white/10 px-3 py-2">Magnetic (instantaneous)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 section</td>
-                      <td className="border border-white/10 px-3 py-2">Section 433</td>
-                      <td className="border border-white/10 px-3 py-2">Section 434</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Comparison of overcurrent types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Characteristic</th>
+                    <th className="py-2 pr-4 font-medium text-white">Overload</th>
+                    <th className="py-2 font-medium text-white">Short-Circuit</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Circuit condition</td>
+                    <td className="py-2 pr-4">Electrically sound</td>
+                    <td className="py-2">Insulation breakdown / fault</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Typical magnitude</td>
+                    <td className="py-2 pr-4">1.5 to 6 × design current</td>
+                    <td className="py-2">100s to 10,000s of amps</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Rise time</td>
+                    <td className="py-2 pr-4">Gradual (seconds to minutes)</td>
+                    <td className="py-2">Near instantaneous (&lt; 10 ms)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Protection mechanism</td>
+                    <td className="py-2 pr-4">Thermal (time-delayed)</td>
+                    <td className="py-2">Magnetic (instantaneous)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">BS 7671 section</td>
+                    <td className="py-2 pr-4">Section 433</td>
+                    <td className="py-2">Section 434</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Diagnostic Clue for Maintenance Technicians
-              </p>
-              <p className="text-sm text-white">
-                When an MCB trips, examining the trip flag or indicator can reveal whether the
-                thermal or magnetic element operated. Some MCBs have separate indicators for each.
-                For fuses, a clean melt of the element with minimal discolouration of the sand
-                suggests an overload (slow, sustained heating). A violently ruptured element with
-                extensive sand vitrification and possible external discolouration indicates a
-                high-energy short-circuit. This diagnostic evidence guides your fault-finding
-                approach.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Diagnostic clue for maintenance technicians"
+            onSite="When an MCB trips, examining the trip flag or indicator can reveal whether the thermal or magnetic element operated. Some MCBs have separate indicators for each. For fuses, a clean melt of the element with minimal discolouration of the sand suggests an overload (slow, sustained heating). A violently ruptured element with extensive sand vitrification and possible external discolouration indicates a high-energy short-circuit. This diagnostic evidence guides your fault-finding approach."
+          >
+            <p>
+              The physical evidence a device leaves behind after operating is itself a diagnostic
+              tool — read it before you reach for a replacement.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Prospective Fault Current and Breaking Capacity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Prospective fault current and breaking capacity</ContentEyebrow>
+
+          <ConceptBlock title="The maximum current a bolted fault could produce">
             <p>
               The prospective fault current (Ipf) at any point in an installation is the maximum
               current that would flow if a bolted fault (zero impedance) occurred at that point. It
@@ -475,96 +421,80 @@ const MOETModule2Section4_3 = () => {
               fault current, the device may fail explosively, causing fire, arc flash and
               potentially fatal injuries.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Measuring and Calculating Ipf
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Measurement:</strong> Use a calibrated loop impedance or PFC tester at the
-                  point of interest. The instrument measures the loop impedance and calculates Ipf =
-                  Uo / Z.
-                </li>
-                <li className="pl-1">
-                  <strong>At the origin:</strong> Ipf is highest. The DNO typically declares a
-                  maximum external loop impedance (Ze) for the supply. Ipf at origin = Uo / Ze.
-                </li>
-                <li className="pl-1">
-                  <strong>At sub-distribution boards:</strong> Ipf reduces as cable impedance is
-                  added. Ipf = Uo / (Ze + R1 + Rn), where R1 + Rn is the line and neutral conductor
-                  resistance of the sub-main cable.
-                </li>
-                <li className="pl-1">
-                  <strong>Typical UK values:</strong> 1 kA to 16 kA for domestic; up to 50 kA or
-                  more for large industrial installations near transformers.
-                </li>
-              </ul>
+          <ConceptBlock title="Measuring and calculating Ipf">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Measurement:</strong> Use a calibrated loop impedance or PFC tester at the
+                point of interest. The instrument measures the loop impedance and calculates Ipf =
+                Uo / Z.
+              </li>
+              <li>
+                <strong>At the origin:</strong> Ipf is highest. The DNO typically declares a maximum
+                external loop impedance (Ze) for the supply. Ipf at origin = Uo / Ze.
+              </li>
+              <li>
+                <strong>At sub-distribution boards:</strong> Ipf reduces as cable impedance is
+                added. Ipf = Uo / (Ze + R1 + Rn), where R1 + Rn is the line and neutral conductor
+                resistance of the sub-main cable.
+              </li>
+              <li>
+                <strong>Typical UK values:</strong> 1 kA to 16 kA for domestic; up to 50 kA or more
+                for large industrial installations near transformers.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Breaking capacity of common devices">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Device Type</th>
+                    <th className="py-2 font-medium text-white">Typical Breaking Capacity</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BS 3036 rewirable fuse</td>
+                    <td className="py-2">1 kA to 4 kA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MCB to BS EN 60898 (domestic)</td>
+                    <td className="py-2">6 kA or 10 kA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MCB to BS EN 60898 (enhanced)</td>
+                    <td className="py-2">10 kA to 25 kA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BS 88 HRC fuse</td>
+                    <td className="py-2">Up to 80 kA</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">MCCB to BS EN 60947-2</td>
+                    <td className="py-2">16 kA to 150 kA</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Breaking Capacity of Common Devices
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Breaking Capacity
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 3036 rewirable fuse</td>
-                      <td className="border border-white/10 px-3 py-2">1 kA to 4 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        MCB to BS EN 60898 (domestic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">6 kA or 10 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        MCB to BS EN 60898 (enhanced)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10 kA to 25 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 88 HRC fuse</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 80 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB to BS EN 60947-2</td>
-                      <td className="border border-white/10 px-3 py-2">16 kA to 150 kA</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-elec-yellow/70">
               <strong>Practical tip:</strong> During periodic inspection, always measure Ipf at the
               origin and at each distribution board. If the supply has been upgraded (e.g., the
               incoming cable or transformer has been changed), Ipf may have increased beyond the
               breaking capacity of existing devices. This is a common finding on older
               installations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            The Adiabatic Equation — Cable Fault Withstand
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The adiabatic equation — cable fault withstand</ContentEyebrow>
+
+          <ConceptBlock title="The cable must survive the fault, not just the device">
             <p>
               Even when a protective device has adequate breaking capacity, the cable must also
               survive the fault. During the brief time between the fault occurring and the device
@@ -580,99 +510,96 @@ const MOETModule2Section4_3 = () => {
               retained in the conductor — none escapes through the insulation. This is conservative
               (worst-case) and valid for fault durations up to approximately 5 seconds.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Adiabatic Equation</p>
-              <div className="text-center my-4">
-                <p className="text-lg font-mono text-elec-yellow">t &le; k²S² / I²</p>
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>t:</strong> Maximum permitted fault duration (seconds)
-                </li>
-                <li className="pl-1">
-                  <strong>k:</strong> Constant for conductor/insulation material (from BS 7671 Table
-                  43.1)
-                </li>
-                <li className="pl-1">
-                  <strong>S:</strong> Conductor cross-sectional area (mm²)
-                </li>
-                <li className="pl-1">
-                  <strong>I:</strong> Fault current (amperes)
-                </li>
-              </ul>
+          <ConceptBlock title="The adiabatic equation">
+            <div className="my-4 text-center">
+              <p className="font-mono text-lg text-elec-yellow">t ≤ k²S² / I²</p>
             </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>t:</strong> Maximum permitted fault duration (seconds)
+              </li>
+              <li>
+                <strong>k:</strong> Constant for conductor/insulation material (from BS 7671 Table
+                43.1)
+              </li>
+              <li>
+                <strong>S:</strong> Conductor cross-sectional area (mm²)
+              </li>
+              <li>
+                <strong>I:</strong> Fault current (amperes)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Values of k (BS 7671 Table 43.1)
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PVC (70°C)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">XLPE (90°C)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Copper</td>
-                      <td className="border border-white/10 px-3 py-2">115</td>
-                      <td className="border border-white/10 px-3 py-2">143</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">76</td>
-                      <td className="border border-white/10 px-3 py-2">94</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Values of k (BS 7671 Table 43.1)">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Conductor</th>
+                    <th className="py-2 pr-4 font-medium text-white">PVC (70°C)</th>
+                    <th className="py-2 font-medium text-white">XLPE (90°C)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Copper</td>
+                    <td className="py-2 pr-4">115</td>
+                    <td className="py-2">143</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Aluminium</td>
+                    <td className="py-2 pr-4">76</td>
+                    <td className="py-2">94</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p className="text-[12px] text-white">
+              Copied faithfully from the original page — not independently verifiable against the
+              RAG, which holds rules rather than numeric tables (see conversion report).
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Worked Example</h3>
-              <p className="text-sm text-white mb-2">
+          <ConceptBlock title="Worked example">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="mb-2">
                 <strong>Scenario:</strong> A 4 mm² copper/PVC cable is protected by a 32 A MCB. The
                 measured prospective fault current at the MCB is 3 kA (3000 A). Verify the cable can
                 withstand the fault.
               </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">k = 115 (copper conductor, PVC insulation)</li>
-                <li className="pl-1">S = 4 mm²</li>
-                <li className="pl-1">k²S² = 115² &times; 4² = 13,225 &times; 16 = 211,600 A²s</li>
-                <li className="pl-1">
+              <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                <li>k = 115 (copper conductor, PVC insulation)</li>
+                <li>S = 4 mm²</li>
+                <li>k²S² = 115² × 4² = 13,225 × 16 = 211,600 A²s</li>
+                <li>
                   Maximum permitted time: t = k²S²/I² = 211,600 / 3000² = 211,600 / 9,000,000 =
                   0.0235 s (23.5 ms)
                 </li>
-                <li className="pl-1">
+                <li>
                   Check: Does the MCB clear a 3 kA fault in less than 23.5 ms? A Type B 32 A MCB
                   with 6 kA breaking capacity will operate magnetically (instantaneously) at 3 kA,
                   clearing the fault in approximately 5-10 ms. ✓
                 </li>
               </ul>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-elec-yellow/70">
               <strong>Key point:</strong> The adiabatic equation is particularly important for small
               cables at high fault levels. A 1 mm² cable has only k²S² = 13,225 A²s — at a fault
               current of 6 kA, the maximum permitted clearing time is just 0.37 ms. If the
               protective device cannot clear that fast, a larger cable must be used.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Discrimination, Cascading and Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Discrimination, cascading and coordination</ContentEyebrow>
+
+          <ConceptBlock title="Only the device nearest the fault should trip">
             <p>
               In any installation with multiple levels of protection (main switch, sub-main devices,
               final circuit devices), the devices must be coordinated so that a fault causes minimum
@@ -681,155 +608,129 @@ const MOETModule2Section4_3 = () => {
               current levels requires careful selection and verification using manufacturer
               coordination data.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Discrimination Methods</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Time grading:</strong> Each upstream device has a progressively longer
-                  time delay. Common in industrial installations using adjustable MCCBs or
-                  electronic trip units.
-                </li>
-                <li className="pl-1">
-                  <strong>Current grading:</strong> Upstream devices have higher current settings.
-                  Effective for overload discrimination but less reliable for short-circuits where
-                  both devices may operate in the instantaneous region.
-                </li>
-                <li className="pl-1">
-                  <strong>Energy (I²t) discrimination:</strong> The I²t let-through of the
-                  downstream device is less than the I²t needed to trip the upstream device. HRC
-                  fuses are particularly good at this due to their excellent current-limiting
-                  properties.
-                </li>
-                <li className="pl-1">
-                  <strong>Zone-selective interlocking (ZSI):</strong> Electronic communication
-                  between devices — a downstream device signals the upstream device to add a time
-                  delay, allowing the downstream device to clear the fault first.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Discrimination methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time grading:</strong> Each upstream device has a progressively longer time
+                delay. Common in industrial installations using adjustable MCCBs or electronic trip
+                units.
+              </li>
+              <li>
+                <strong>Current grading:</strong> Upstream devices have higher current settings.
+                Effective for overload discrimination but less reliable for short-circuits where
+                both devices may operate in the instantaneous region.
+              </li>
+              <li>
+                <strong>Energy (I²t) discrimination:</strong> The I²t let-through of the downstream
+                device is less than the I²t needed to trip the upstream device. HRC fuses are
+                particularly good at this due to their excellent current-limiting properties.
+              </li>
+              <li>
+                <strong>Zone-selective interlocking (ZSI):</strong> Electronic communication between
+                devices — a downstream device signals the upstream device to add a time delay,
+                allowing the downstream device to clear the fault first.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascading (Back-Up Protection)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Cascading allows an installation to use downstream devices with a breaking capacity
-                lower than the prospective fault current, provided an upstream current-limiting
-                device (the back-up device) reduces the let-through energy to within the downstream
-                device's capability. This is permitted by BS 7671 Regulation 434.5.1 but only where
-                the devices are tested and certified as a coordinated combination by the
-                manufacturer.
-              </p>
-              <p className="text-sm text-white">
-                Example: An MCB with 6 kA breaking capacity installed where the Ipf is 12 kA. An
-                upstream BS 88 HRC fuse limits the fault current to below 6 kA. The combination is
-                verified by the manufacturer's coordination tables as safe and compliant.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Maintenance Implication</p>
-              <p className="text-sm text-white">
-                When replacing a protective device, you must check whether it forms part of a
-                coordinated back-up protection arrangement. Replacing the upstream fuse with a
-                different type or rating could invalidate the coordination, leaving the downstream
-                MCBs unprotected against fault currents exceeding their breaking capacity. Always
-                consult manufacturer documentation before changing any device in a coordinated
-                system.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Protection coordination is a key area of the electrical
-              engineering maintenance pathway. The ability to verify that protection is correctly
-              coordinated — and to identify when it is not — is essential for maintaining safe and
-              reliable electrical systems.
+          <ConceptBlock title="Cascading (back-up protection)">
+            <p>
+              Cascading allows an installation to use downstream devices with a breaking capacity
+              lower than the prospective fault current, provided an upstream current-limiting device
+              (the back-up device) reduces the let-through energy to within the downstream device's
+              capability. This is permitted by BS 7671 Regulation 434.5.1 but only where the devices
+              are tested and certified as a coordinated combination by the manufacturer.
             </p>
-          </div>
-        </section>
+            <p>
+              Example: an MCB with 6 kA breaking capacity installed where the Ipf is 12 kA. An
+              upstream BS 88 HRC fuse limits the fault current to below 6 kA. The combination is
+              verified by the manufacturer's coordination tables as safe and compliant.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <CommonMistake
+            title="Replacing a device in a coordinated back-up arrangement"
+            whatHappens={
+              <>
+                You must check whether a protective device forms part of a coordinated back-up
+                protection arrangement before replacing it. Replacing the upstream fuse with a
+                different type or rating could invalidate the coordination.
+              </>
+            }
+            doInstead={
+              <>
+                Leaving the downstream MCBs unprotected against fault currents exceeding their
+                breaking capacity. Always consult manufacturer documentation before changing any
+                device in a coordinated system.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="A key area of the maintenance pathway"
+            onSite="Protection coordination is a key area of the electrical engineering maintenance pathway. The ability to verify that protection is correctly coordinated — and to identify when it is not — is essential for maintaining safe and reliable electrical systems."
+          >
+            <p>
+              A coordinated system only stays coordinated if every replacement respects the original
+              manufacturer's verified combination.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Equations</p>
-                <ul className="space-y-0.5">
-                  <li>Adiabatic: t &le; k²S² / I²</li>
-                  <li>Ipf = Uo / Zs (at any point)</li>
-                  <li>Ib &le; In &le; Iz (overload)</li>
-                  <li>I2 &le; 1.45 &times; Iz</li>
-                  <li>Breaking capacity &ge; Ipf</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">BS 7671 References</p>
-                <ul className="space-y-0.5">
-                  <li>Section 433 — Overload protection</li>
-                  <li>Section 434 — Short-circuit protection</li>
-                  <li>Reg 434.5.1 — Breaking capacity requirement</li>
-                  <li>Reg 434.5.2 — I²t &le; k²S²</li>
-                  <li>Table 43.1 — Values of k</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              'Overload occurs in a sound circuit from excess demand (1.5-6x design current); short-circuit results from a fault of negligible impedance (100s to 10,000s of amps).',
+              'BS 7671 Regulation 434.5.1: breaking capacity must never be less than the prospective fault current (Ipf) at the point of installation.',
+              'The adiabatic equation, t <= k squared S squared / I squared, verifies the cable can absorb the fault energy before the device clears it.',
+              'Cascading (back-up protection) is only valid where the manufacturer has tested and certified the specific device combination.',
+              'Discrimination methods: time grading, current grading, I squared t energy discrimination, and zone-selective interlocking (ZSI).',
+              'During periodic inspection, verify breaking capacity >= Ipf, Zs against the tables, and that discrimination is still adequate.',
+              'BS 7671 Regulation 435.1 permits a single device to provide both overload and short-circuit protection.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  RCDs and RCBOs
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Earthing Systems (TN, TT, IT)
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: RCDs and RCBOs
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-4">
-              Next: Earthing Systems (TN, TT, IT)
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

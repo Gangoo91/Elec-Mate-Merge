@@ -494,7 +494,7 @@ const EnergyCostCalculator = () => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Energy Cost Calculator',
+        title: 'Energy Cost',
         subtitle: `${environment.charAt(0).toUpperCase()}${environment.slice(1)} — ${appliances.length} appliance${appliances.length === 1 ? '' : 's'}`,
       },
       headline: [
@@ -520,14 +520,30 @@ const EnergyCostCalculator = () => {
             { label: 'VAT rate', value: `${vatRate}%` },
           ],
         },
+        ...(appliances.length > 0
+          ? [
+              {
+                heading: 'Appliances entered',
+                rows: appliances.map((a) => {
+                  const usage =
+                    a.usageMode === 'hoursPerDay'
+                      ? `${a.hoursPerDay ?? 0} hrs/day`
+                      : `${a.cyclesPerWeek ?? 0} cycles/wk × ${a.cycleHours ?? 0} hrs`;
+                  return {
+                    label: `${a.name}${a.quantity > 1 ? ` (×${a.quantity})` : ''}`,
+                    value: `${a.powerW} W`,
+                    note: `Standby ${a.standbyW} W · ${usage}`,
+                  };
+                }),
+              },
+            ]
+          : []),
         {
           heading: 'Result',
           rows: [
             { label: 'Daily cost (estimate)', value: formatCurrency(result.dailyCost) },
             { label: 'Weekly cost (estimate)', value: formatCurrency(result.weeklyCost) },
             { label: 'Monthly cost (estimate)', value: formatCurrency(result.monthlyCost) },
-            { label: 'Annual cost (estimate)', value: formatCurrency(result.yearlyCost) },
-            { label: 'Annual consumption', value: `${result.yearlyKWh.toFixed(0)} kWh` },
             { label: 'Annual CO₂', value: `${result.yearlyCO2.toFixed(0)} kg` },
           ],
         },

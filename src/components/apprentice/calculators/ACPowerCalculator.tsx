@@ -204,16 +204,43 @@ const ACPowerCalculator = () => {
   const buildReport = (): CalcReport | null => {
     if (!results) return null;
 
+    // V&I tab: V and I are inputs, S/P/Q/PF/angle are all calculated from them.
+    // Power-components tab: the electrician typed two of {P, Q, S} directly,
+    // so only the third value (plus PF/angle) is actually calculated.
+    const usingVoltageCurrent = Boolean(voltage && current);
+    const enteredP = Boolean(activePower);
+    const enteredQ = Boolean(reactivePower);
+    const enteredS = Boolean(apparentPower);
+
     const headline: NonNullable<CalcReport['headline']> = [];
-    if (results.apparentPower !== undefined) {
-      headline.push({
-        label: 'Apparent power (S)',
-        value: results.apparentPower.toFixed(2),
-        unit: 'VA',
-      });
-    }
-    if (results.activePower !== undefined) {
-      headline.push({ label: 'Active power (P)', value: results.activePower.toFixed(2), unit: 'W' });
+    if (usingVoltageCurrent) {
+      if (results.apparentPower !== undefined) {
+        headline.push({
+          label: 'Apparent power (S)',
+          value: results.apparentPower.toFixed(2),
+          unit: 'VA',
+        });
+      }
+      if (results.activePower !== undefined) {
+        headline.push({ label: 'Active power (P)', value: results.activePower.toFixed(2), unit: 'W' });
+      }
+    } else {
+      if (enteredP && enteredQ && results.apparentPower !== undefined) {
+        headline.push({
+          label: 'Apparent power (S)',
+          value: results.apparentPower.toFixed(2),
+          unit: 'VA',
+        });
+      } else if (enteredP && enteredS && results.reactivePower !== undefined) {
+        headline.push({
+          label: 'Reactive power (Q)',
+          value: results.reactivePower.toFixed(2),
+          unit: 'VAr',
+        });
+      }
+      if (results.phaseAngle !== undefined) {
+        headline.push({ label: 'Phase angle', value: `${results.phaseAngle.toFixed(1)}°` });
+      }
     }
     if (results.powerFactor !== undefined) {
       headline.push({
@@ -225,7 +252,7 @@ const ACPowerCalculator = () => {
 
     const sections: NonNullable<CalcReport['sections']> = [];
 
-    if (voltage && current) {
+    if (usingVoltageCurrent) {
       sections.push({
         heading: 'Inputs',
         rows: [
@@ -235,6 +262,14 @@ const ACPowerCalculator = () => {
           { label: 'Power factor', value: `${powerFactor || '1.00'}`, note: pfType === 'lagging' ? 'Lagging (inductive)' : 'Leading (capacitive)' },
         ],
       });
+    } else {
+      const inputRows: NonNullable<CalcReport['sections']>[number]['rows'] = [];
+      if (enteredP) inputRows.push({ label: 'Active power (P)', value: `${activePower} W` });
+      if (enteredQ) inputRows.push({ label: 'Reactive power (Q)', value: `${reactivePower} VAr` });
+      if (enteredS) inputRows.push({ label: 'Apparent power (S)', value: `${apparentPower} VA` });
+      if (inputRows.length) {
+        sections.push({ heading: 'Inputs', rows: inputRows });
+      }
     }
 
     const resultRows: NonNullable<CalcReport['sections']>[number]['rows'] = [];
@@ -246,7 +281,13 @@ const ACPowerCalculator = () => {
     if (results.currentAtUnity !== undefined) resultRows!.push({ label: 'Current at unity PF', value: `${results.currentAtUnity.toFixed(2)} A` });
     if (results.protectiveDeviceRange) resultRows!.push({ label: 'Indicative protection', value: results.protectiveDeviceRange, note: 'Advisory only' });
 
-    sections.push({ heading: 'Result', rows: resultRows });
+    // Whatever already leads the report as a headline figure is not repeated here;
+    // derived from the headline itself so the two cannot drift apart again.
+    const headlineLabels = new Set(headline.map((h) => h.label));
+    sections.push({
+      heading: 'Result',
+      rows: (resultRows ?? []).filter((r) => !headlineLabels.has(r.label)),
+    });
 
     const notes: string[] = [];
     if (results.currentAtUnity !== undefined && results.current !== undefined) {
@@ -257,7 +298,7 @@ const ACPowerCalculator = () => {
 
     return {
       meta: {
-        title: 'AC Power Calculator',
+        title: 'AC Power',
         subtitle: 'Active, reactive and apparent power relationships',
       },
       headline,

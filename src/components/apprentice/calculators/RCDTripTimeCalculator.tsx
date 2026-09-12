@@ -164,7 +164,7 @@ const RCDTripTimeCalculator = () => {
       meta: {
         title: 'RCD Trip Time',
         subtitle: `${result.rating} · ${result.testDescription}`,
-        standard: 'BS 7671:2018+A4:2026 — Reg 643.7.1',
+        standard: 'BS 7671:2018+A4:2026 — Reg 643.7.3',
       },
       headline: [
         {
@@ -180,22 +180,30 @@ const RCDTripTimeCalculator = () => {
       ],
       sections: [
         {
-          heading: 'Result',
+          heading: 'Inputs',
           rows: [
             { label: 'RCD rating', value: result.rating },
             { label: 'Test current', value: result.testCurrent, note: result.testDescription },
-            { label: 'Maximum permitted trip time', value: `${result.maxTripTime} ms` },
             ...(result.actualTripTime !== undefined
               ? [{ label: 'Measured trip time', value: `${result.actualTripTime} ms` }]
               : []),
-            ...(result.safetyMargin !== undefined
-              ? [{ label: 'Margin', value: `${result.safetyMargin.toFixed(1)}%` }]
-              : []),
-            ...(result.isCompliant !== undefined
-              ? [{ label: 'Assessment', value: result.isCompliant ? 'PASS' : 'FAIL' }]
-              : []),
           ],
         },
+        ...(result.safetyMargin !== undefined || result.isCompliant !== undefined
+          ? [
+              {
+                heading: 'Result',
+                rows: [
+                  ...(result.safetyMargin !== undefined
+                    ? [{ label: 'Margin', value: `${result.safetyMargin.toFixed(1)}%` }]
+                    : []),
+                  ...(result.isCompliant !== undefined
+                    ? [{ label: 'Assessment', value: result.isCompliant ? 'PASS' : 'FAIL' }]
+                    : []),
+                ],
+              },
+            ]
+          : []),
       ],
       notes: [
         'Maximum trip times are those required by BS 7671 for the test current stated. A measured time within the limit does not on its own confirm the RCD is suitable for the circuit.',
@@ -415,12 +423,12 @@ const RCDTripTimeCalculator = () => {
                       label: 'Maximum disconnection time',
                       formula:
                         result.testCurrent === '1x'
-                          ? `A4:2026 Reg 643.8 NOTE → 1×IΔn at ${result.rating}`
+                          ? `A4:2026 Reg 643.7.3 NOTE → 1×IΔn at ${result.rating}`
                           : `Legacy (pre-A4) Table 3A → 5×IΔn at ${result.rating}`,
                       value: `${result.maxTripTime}ms maximum`,
                       description:
                         result.testCurrent === '1x'
-                          ? 'Under A4:2026 a general (non-delay) RCD must disconnect within 300ms at 1×IΔn (Reg 643.8 NOTE), regardless of rating. In practice devices often operate far faster.'
+                          ? 'Under A4:2026 a general (non-delay) RCD must disconnect within 300ms at 1×IΔn (Reg 643.7.3 NOTE), regardless of rating. In practice devices often operate far faster.'
                           : result.rating === '300mA'
                             ? 'Legacy reference only: the old 5×IΔn test allowed 150ms for 300mA RCDs. This test is no longer required under A4:2026.'
                             : 'Legacy reference only: the old 5×IΔn test required 40ms for 30/100mA RCDs. This test and Table 3A were deleted in A4:2026.',
@@ -492,7 +500,7 @@ const RCDTripTimeCalculator = () => {
                               style={{ backgroundColor: config.gradientFrom }}
                             />
                             1× IΔn test (A4:2026 requirement): a general (non-delay) RCD must
-                            disconnect within 300ms (Reg 643.8 NOTE) — in practice often much faster
+                            disconnect within 300ms (Reg 643.7.3 NOTE) — in practice often much faster
                           </li>
                           <li className="flex items-start gap-2 text-sm text-white">
                             <span
@@ -617,7 +625,7 @@ const RCDTripTimeCalculator = () => {
               variables={[
                 {
                   symbol: '1×IΔn',
-                  description: 'A4:2026 test — max 300ms for general RCDs (Reg 643.8)',
+                  description: 'A4:2026 test — max 300ms for general RCDs (Reg 643.7.3)',
                 },
                 {
                   symbol: '5×IΔn',

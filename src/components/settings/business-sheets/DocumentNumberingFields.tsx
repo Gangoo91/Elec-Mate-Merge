@@ -4,6 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  hintCn,
+  inputCn,
+  labelCn,
+} from '@/components/settings/formStyles';
 
 /**
  * Numbering settings for invoices or quotes.
@@ -106,30 +114,30 @@ export function DocumentNumberingFields({ docType }: { docType: NumberingDocType
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <Label className="mb-1 block text-[12px] font-medium text-white">Prefix</Label>
+          <Label className={labelCn}>Prefix</Label>
           <Input
             value={prefix}
             onChange={(e) => setPrefix(e.target.value)}
             placeholder={docType === 'quote' ? `${new Date().getFullYear()}/` : 'Invoice/'}
             maxLength={20}
-            className="h-11 touch-manipulation"
+            className={inputCn}
           />
         </div>
         <div>
-          <Label className="mb-1 block text-[12px] font-medium text-white">Next number</Label>
+          <Label className={labelCn}>Next number</Label>
           <Input
             type="number"
             inputMode="numeric"
             min={1}
             value={nextNumber ?? ''}
             onChange={(e) => setNextNumber(e.target.value ? Number(e.target.value) : null)}
-            className="h-11 touch-manipulation"
+            className={inputCn}
           />
         </div>
       </div>
 
       <div>
-        <Label className="mb-1 block text-[12px] font-medium text-white">Digits</Label>
+        <Label className={labelCn}>Digits</Label>
         <div className="flex gap-2">
           {[0, 3, 4, 5].map((w) => (
             <button
@@ -137,12 +145,7 @@ export function DocumentNumberingFields({ docType }: { docType: NumberingDocType
               type="button"
               onClick={() => setPadWidth(w)}
               aria-pressed={padWidth === w}
-              className={cn(
-                'h-11 flex-1 touch-manipulation rounded-xl border text-[13px] transition-colors',
-                padWidth === w
-                  ? 'border-elec-yellow bg-elec-yellow font-semibold text-black'
-                  : 'border-white/[0.12] bg-white/[0.06] font-medium text-white'
-              )}
+              className={cn(chipBase, padWidth === w ? chipOn : chipOff)}
             >
               {w === 0 ? 'None' : `${w}`}
             </button>
@@ -157,7 +160,7 @@ export function DocumentNumberingFields({ docType }: { docType: NumberingDocType
         </p>
         {/* Said plainly, because it is the question everyone asks and getting
             it wrong would mean silently rewriting issued paperwork. */}
-        <p className="mt-1 text-[11.5px] leading-relaxed text-white">
+        <p className={hintCn}>
           {noun === 'invoice' ? 'Invoices' : 'Quotes'} you have already issued keep their existing
           numbers — this only affects new ones.
         </p>
@@ -167,7 +170,7 @@ export function DocumentNumberingFields({ docType }: { docType: NumberingDocType
         type="button"
         onClick={save}
         disabled={saving}
-        className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white/70"
+        className="h-11 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-[filter] active:brightness-110 disabled:bg-white/[0.08] disabled:text-white"
       >
         {saving ? 'Saving…' : 'Save numbering'}
       </button>

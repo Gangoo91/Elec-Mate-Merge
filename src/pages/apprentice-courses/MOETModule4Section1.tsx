@@ -4,45 +4,44 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '4.1.1',
-      title: 'Principles of PPM',
-      description:
-        'Understanding preventive maintenance philosophy, benefits and implementation strategies',
-      icon: Calendar,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1-1',
-    },
-    {
-      number: '4.1.2',
-      title: 'Maintenance scheduling and records',
-      description: 'Creating maintenance schedules, record keeping and documentation systems',
-      icon: FileText,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1-2',
-    },
-    {
-      number: '4.1.3',
-      title: 'Lubrication, cleaning and adjustments',
-      description:
-        'Routine maintenance tasks including lubrication schedules and equipment adjustments',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1-3',
-    },
-    {
-      number: '4.1.4',
-      title: 'Electrical inspection routines',
-      description: 'Systematic electrical inspection procedures and safety checks',
-      icon: CheckSquare,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1-4',
-    },
-    {
-      number: '4.1.5',
-      title: 'Legal and regulatory compliance in PPM',
-      description: 'Regulatory requirements, standards compliance and legal obligations',
-      icon: Scale,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1-5',
-    },
-  ];
-
+  {
+    number: '4.1.1',
+    title: 'Principles of PPM',
+    description:
+      'Understanding preventive maintenance philosophy, benefits and implementation strategies',
+    icon: Calendar,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section1-1',
+  },
+  {
+    number: '4.1.2',
+    title: 'Maintenance scheduling and records',
+    description: 'Creating maintenance schedules, record keeping and documentation systems',
+    icon: FileText,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section1-2',
+  },
+  {
+    number: '4.1.3',
+    title: 'Lubrication, cleaning and adjustments',
+    description:
+      'Routine maintenance tasks including lubrication schedules and equipment adjustments',
+    icon: Settings,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section1-3',
+  },
+  {
+    number: '4.1.4',
+    title: 'Electrical inspection routines',
+    description: 'Systematic electrical inspection procedures and safety checks',
+    icon: CheckSquare,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section1-4',
+  },
+  {
+    number: '4.1.5',
+    title: 'Legal and regulatory compliance in PPM',
+    description: 'Regulatory requirements, standards compliance and legal obligations',
+    icon: Scale,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section1-5',
+  },
+];
 
 const MOETModule4Section1 = () => {
   useSEO(

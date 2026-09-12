@@ -1,8 +1,38 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 4 · Subsection 3 — Liaising with Non-Technical Staff
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Liaising with Non-Technical Staff - MOET Module 6 Section 4.3';
@@ -251,112 +281,64 @@ const faqs = [
 ];
 
 const MOETModule6Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
-  return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
 
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Liaising with Non-Technical Staff
-          </h1>
-          <p className="text-white">
+  return (
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.4 · Subsection 3"
+        title="Liaising with Non-Technical Staff"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Communicating effectively with building occupants, facilities managers, and clients
           </p>
-        </header>
 
-        {/* Summary boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Audience:</strong> Building managers, tenants, receptionists, clients
-              </li>
-              <li className="pl-1">
-                <strong>Language:</strong> Plain English — no jargon, focus on impact
-              </li>
-              <li className="pl-1">
-                <strong>Key skill:</strong> Translating technical information into operational terms
-              </li>
-              <li className="pl-1">
-                <strong>Professionalism:</strong> Courteous, honest, and responsive
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Notifications:</strong> Advance warning of planned disruption
-              </li>
-              <li className="pl-1">
-                <strong>Safety communication:</strong> Explaining restrictions and hazards
-              </li>
-              <li className="pl-1">
-                <strong>Expectation management:</strong> Honest timescales and follow-up
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to customer service and behaviour KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Audience: Building managers, tenants, receptionists, clients',
+              'Language: Plain English — no jargon, focus on impact',
+              'Key skill: Translating technical information into operational terms',
+              'Professionalism: Courteous, honest, and responsive',
+            ]}
+          />
 
-        {/* Learning outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Translate technical electrical information into plain language for non-technical audiences',
               'Manage expectations regarding timescales, disruption, and outcomes',
               'Communicate safety restrictions clearly and gain compliance from building occupants',
               'Handle complaints and difficult conversations with professionalism',
               'Write effective notices and updates for building occupants and clients',
               'Represent your organisation positively in all interactions with non-technical staff',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance Context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Notifications:</strong> Advance warning of planned disruption
+              </li>
+              <li>
+                <strong>Safety communication:</strong> Explaining restrictions and hazards
+              </li>
+              <li>
+                <strong>Expectation management:</strong> Honest timescales and follow-up
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to customer service and behaviour KSBs
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Your Audience
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding your audience</ContentEyebrow>
+
+          <ConceptBlock title="Understanding Your Audience">
             <p>
               As a maintenance technician, you will regularly interact with people who have no
               electrical training. Building managers, office workers, receptionists, security
@@ -371,17 +353,17 @@ const MOETModule6Section4_3 = () => {
               restore it within two hours. The technical detail matters to you and your supervisor;
               the operational impact matters to everyone else.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
+            <div className="my-6 rounded-lg bg-white/5 p-4">
+              <p className="mb-2 text-sm font-medium text-elec-yellow/80">
                 Common Non-Technical Contacts
               </p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
+                <table className="w-full text-left text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-elec-yellow/80 font-medium">Contact</th>
-                      <th className="py-2 pr-4 text-elec-yellow/80 font-medium">What They Need</th>
-                      <th className="py-2 text-elec-yellow/80 font-medium">Communication Style</th>
+                      <th className="py-2 pr-4 font-medium text-elec-yellow/80">Contact</th>
+                      <th className="py-2 pr-4 font-medium text-elec-yellow/80">What They Need</th>
+                      <th className="py-2 font-medium text-elec-yellow/80">Communication Style</th>
                     </tr>
                   </thead>
                   <tbody className="text-white">
@@ -414,34 +396,31 @@ const MOETModule6Section4_3 = () => {
                 </table>
               </div>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Translating Technical Information
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Translating technical information</ContentEyebrow>
+
+          <ConceptBlock title="Translating Technical Information">
             <p>
               Translating technical information does not mean dumbing it down — it means reframing
               it so the listener can make informed decisions relevant to their role. A facilities
               manager making decisions about building operations needs different information from a
               design engineer diagnosing a fault.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Translation Examples</h3>
+            <div className="my-6 rounded-lg bg-white/5 p-4">
+              <h3 className="mb-2 text-sm font-medium text-elec-yellow/80">Translation Examples</h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
+                <table className="w-full text-left text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-elec-yellow/80 font-medium">
+                      <th className="py-2 pr-4 font-medium text-elec-yellow/80">
                         Technical Version
                       </th>
-                      <th className="py-2 text-elec-yellow/80 font-medium">
+                      <th className="py-2 font-medium text-elec-yellow/80">
                         Plain Language Version
                       </th>
                     </tr>
@@ -488,121 +467,108 @@ const MOETModule6Section4_3 = () => {
                 </table>
               </div>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                The Five Questions Technique
-              </p>
-              <p className="text-sm text-white">
-                When communicating with non-technical staff, answer their five unspoken questions:
-                (1) What is wrong? (2) Am I safe? (3) What are you doing about it? (4) How long will
-                it take? (5) What do I need to do? If you address all five, most people will be
-                satisfied and cooperative.
-              </p>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="The Five Questions Technique">
+            <p>
+              When communicating with non-technical staff, answer their five unspoken questions: (1)
+              What is wrong? (2) Am I safe? (3) What are you doing about it? (4) How long will it
+              take? (5) What do I need to do? If you address all five, most people will be satisfied
+              and cooperative.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Managing Expectations and Disruption
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Managing expectations and disruption</ContentEyebrow>
+
+          <ConceptBlock title="Managing Expectations and Disruption">
             <p>
               Maintenance work inevitably causes disruption. The key to maintaining good
               relationships with building occupants is managing their expectations honestly. People
               tolerate inconvenience much better when they understand why it is necessary, how long
               it will last, and what measures are being taken to minimise the impact.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Work Notification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>What:</strong> Brief description of the work in plain language
-                </li>
-                <li className="pl-1">
-                  <strong>Why:</strong> Reason for the work (safety compliance, fault repair,
-                  improvement)
-                </li>
-                <li className="pl-1">
-                  <strong>When:</strong> Date and time, including start and expected finish
-                </li>
-                <li className="pl-1">
-                  <strong>Where:</strong> Specific areas affected — be precise
-                </li>
-                <li className="pl-1">
-                  <strong>Impact:</strong> What will be disrupted (power, lighting, access, noise)
-                </li>
-                <li className="pl-1">
-                  <strong>Mitigations:</strong> What you are doing to minimise disruption
-                </li>
-                <li className="pl-1">
-                  <strong>Contact:</strong> Who to contact with questions or concerns
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Pre-Work Notification Checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>What:</strong> Brief description of the work in plain language
+              </li>
+              <li>
+                <strong>Why:</strong> Reason for the work (safety compliance, fault repair,
+                improvement)
+              </li>
+              <li>
+                <strong>When:</strong> Date and time, including start and expected finish
+              </li>
+              <li>
+                <strong>Where:</strong> Specific areas affected — be precise
+              </li>
+              <li>
+                <strong>Impact:</strong> What will be disrupted (power, lighting, access, noise)
+              </li>
+              <li>
+                <strong>Mitigations:</strong> What you are doing to minimise disruption
+              </li>
+              <li>
+                <strong>Contact:</strong> Who to contact with questions or concerns
+              </li>
+            </ul>
             <p>
               Timing is important. For planned shutdowns in commercial buildings, 48 hours advance
               notice is typical. For emergency work, provide as much notice as practically possible
               — even 30 minutes is better than none. Always communicate through the building manager
               or facilities team unless you have a direct relationship with tenants.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Under-Promise, Over-Deliver</p>
-              <p className="text-sm text-white">
-                If a repair might take 2-4 hours, tell the occupants 4 hours. If you finish early,
-                they are pleased. If you said 2 hours and it takes 4, they are frustrated. Realistic
-                timescales build trust; optimistic ones destroy it. Never promise a timescale you
-                are not confident you can meet.
-              </p>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Under-Promise, Over-Deliver">
+            <p>
+              If a repair might take 2-4 hours, tell the occupants 4 hours. If you finish early,
+              they are pleased. If you said 2 hours and it takes 4, they are frustrated. Realistic
+              timescales build trust; optimistic ones destroy it. Never promise a timescale you are
+              not confident you can meet.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Handling Complaints and Difficult Conversations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Handling complaints and difficult conversations</ContentEyebrow>
+
+          <ConceptBlock title="Handling Complaints and Difficult Conversations">
             <p>
               Complaints and difficult conversations are a normal part of working in occupied
               buildings. Equipment failures cause genuine inconvenience, and people have a right to
               be frustrated. How you handle these situations reflects on you, your team, and your
               organisation.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The LAST Framework for Complaint Handling
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>L — Listen:</strong> Let the person speak without interruption. Show you
-                  are listening through body language and verbal acknowledgement
-                </li>
-                <li className="pl-1">
-                  <strong>A — Acknowledge:</strong> Validate their frustration: &quot;I understand
-                  this is causing problems for your team. I appreciate your patience&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>S — Solve:</strong> Explain what you can do: &quot;I am going to
-                  investigate the cause now. I expect to have an update for you within the
-                  hour&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>T — Thank:</strong> Thank them for reporting the issue: &quot;Thank you
-                  for letting us know. Early reports help us fix problems faster&quot;
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="The LAST Framework for Complaint Handling">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>L — Listen:</strong> Let the person speak without interruption. Show you are
+                listening through body language and verbal acknowledgement
+              </li>
+              <li>
+                <strong>A — Acknowledge:</strong> Validate their frustration: &quot;I understand
+                this is causing problems for your team. I appreciate your patience&quot;
+              </li>
+              <li>
+                <strong>S — Solve:</strong> Explain what you can do: &quot;I am going to investigate
+                the cause now. I expect to have an update for you within the hour&quot;
+              </li>
+              <li>
+                <strong>T — Thank:</strong> Thank them for reporting the issue: &quot;Thank you for
+                letting us know. Early reports help us fix problems faster&quot;
+              </li>
+            </ul>
             <p>
               Never become defensive, blame others, or argue with a complaint. Even if the complaint
               seems unreasonable, the person&apos;s frustration is real. Your job is to acknowledge
@@ -610,138 +576,193 @@ const MOETModule6Section4_3 = () => {
               beyond your ability to resolve, explain that you will escalate it to your supervisor
               and make sure you actually do.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Difficult Situations</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Refusing unsafe requests:</strong> &quot;I understand you need this done
-                  quickly, but I cannot safely re-energise this circuit until the fault is repaired.
-                  Doing so could cause a fire. I am working as fast as safely possible.&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>Repeated faults:</strong> &quot;I understand this is frustrating. I have
-                  recorded the pattern and will be raising it with our engineering team to find a
-                  permanent solution, rather than just fixing the same fault again.&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>Access denied:</strong> &quot;I appreciate this is inconvenient timing.
-                  However, this maintenance is required by law and the inspection is due. Could we
-                  agree a time this week that works for both of us?&quot;
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Difficult Situations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Refusing unsafe requests:</strong> &quot;I understand you need this done
+                quickly, but I cannot safely re-energise this circuit until the fault is repaired.
+                Doing so could cause a fire. I am working as fast as safely possible.&quot;
+              </li>
+              <li>
+                <strong>Repeated faults:</strong> &quot;I understand this is frustrating. I have
+                recorded the pattern and will be raising it with our engineering team to find a
+                permanent solution, rather than just fixing the same fault again.&quot;
+              </li>
+              <li>
+                <strong>Access denied:</strong> &quot;I appreciate this is inconvenient timing.
+                However, this maintenance is required by law and the inspection is due. Could we
+                agree a time this week that works for both of us?&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Professional Conduct in Occupied Spaces
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Professional conduct in occupied spaces</ContentEyebrow>
+
+          <ConceptBlock title="Professional Conduct in Occupied Spaces">
             <p>
               Working in occupied buildings requires a level of professionalism that goes beyond
               technical competence. You are representing your employer and the maintenance
               profession in someone else&apos;s workplace. First impressions matter, and repeated
               interactions build (or erode) the reputation of the entire maintenance team.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Professional Conduct Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Appearance:</strong> Clean PPE, identification badge visible, professional
-                  appearance
-                </li>
-                <li className="pl-1">
-                  <strong>Arrival:</strong> Report to reception or building management on arrival
-                </li>
-                <li className="pl-1">
-                  <strong>Work area:</strong> Keep contained, use dust sheets, minimise mess
-                </li>
-                <li className="pl-1">
-                  <strong>Noise:</strong> Schedule noisy work for least-disruptive times where
-                  possible
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Greet people, explain what you are doing if asked
-                </li>
-                <li className="pl-1">
-                  <strong>Departure:</strong> Leave the work area clean, remove all debris, sign out
-                </li>
-                <li className="pl-1">
-                  <strong>Follow-up:</strong> Honour any commitments you made regarding updates or
-                  completion
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                ST1426 Professional Behaviour
+          </ConceptBlock>
+
+          <ConceptBlock title="Professional Conduct Checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Appearance:</strong> Clean PPE, identification badge visible, professional
+                appearance
+              </li>
+              <li>
+                <strong>Arrival:</strong> Report to reception or building management on arrival
+              </li>
+              <li>
+                <strong>Work area:</strong> Keep contained, use dust sheets, minimise mess
+              </li>
+              <li>
+                <strong>Noise:</strong> Schedule noisy work for least-disruptive times where
+                possible
+              </li>
+              <li>
+                <strong>Communication:</strong> Greet people, explain what you are doing if asked
+              </li>
+              <li>
+                <strong>Departure:</strong> Leave the work area clean, remove all debris, sign out
+              </li>
+              <li>
+                <strong>Follow-up:</strong> Honour any commitments you made regarding updates or
+                completion
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ST1426 Professional Behaviour">
+            <p>
+              The ST1426 standard explicitly assesses professional behaviours in the end-point
+              assessment. This includes: personal presentation, customer interaction,
+              responsibility, working with others, and representing the organisation. How you
+              interact with non-technical staff is directly assessed — it is not a soft skill that
+              can be overlooked.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <Scenario
+            title="Explaining a shutdown to the production manager"
+
+            situation={
+              <>
+                <p>
+                  You have found a badly overheated connection in a distribution board feeding a
+                  production line. It needs isolating and repairing now. The production manager
+                  wants to finish a run first, and asks how long it can wait.
+                </p>
+
+                <p>
+                  They are not an electrician and have a genuine commercial pressure they are
+                  accountable for.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Lead with the consequence, not the mechanism. "This connection is hot enough to be
+                  degrading its own insulation, and if it fails it will do so as an arcing fault
+                  inside a live board" lands where "the ΔT is 60 °C over ambient" does not.
+                </p>
+
+                <p>
+                  Give a straight answer on time. Say what the repair involves and how long the line
+                  will be down — a specific number is what lets them make a decision, and refusing
+                  to give one makes you look evasive rather than careful.
+                </p>
+
+                <p>
+                  Be clear about what is and is not your call. You are telling them the condition of
+                  the equipment and what you are prepared to leave energised; the production
+                  decision is theirs, within that.
+                </p>
+
+                <p>
+                  Put the same thing in writing straight afterwards, briefly. A verbal warning about
+                  an electrical risk that later causes an incident is worth very little to anyone,
+                  including you.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Technical people often mistake explaining for justifying, and answer a commercial
+                question with a technical one. The manager does not need to understand thermography;
+                they need to know what happens if they wait, how long the alternative takes, and who
+                decides. Being able to move between those registers is a genuine skill, and it is
+                assessed in the professional discussion — being right is not the same as being
+                understood.
               </p>
-              <p className="text-sm text-white">
-                The ST1426 standard explicitly assesses professional behaviours in the end-point
-                assessment. This includes: personal presentation, customer interaction,
-                responsibility, working with others, and representing the organisation. How you
-                interact with non-technical staff is directly assessed — it is not a soft skill that
-                can be overlooked.
-              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Communicate the impact, not the cause: what is affected, when, for how long, and what to do.',
+              'The Five Questions Technique: what is wrong, am I safe, what are you doing about it, how long will it take, what do I need to do.',
+              'Pre-work notifications cover what, why, when, where, impact, mitigations and contact.',
+              'Under-promise, over-deliver: realistic timescales build trust; optimistic ones destroy it.',
+              'The LAST framework for complaints: Listen, Acknowledge, Solve, Thank.',
+              'Professional conduct in occupied spaces covers appearance, arrival, work area, noise, communication, departure and follow-up.',
+              'ST1426 explicitly assesses professional behaviour: personal presentation, customer interaction, responsibility, working with others, and representing the organisation.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Communicating with Supervisors and Engineers
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Professional Behaviour and Teamwork
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Communicating with Supervisors
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4-4">
-              Next: Professional Behaviour and Teamwork
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

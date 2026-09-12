@@ -1,8 +1,36 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 3 — Component Replacement and Repair
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Component Replacement and Repair - MOET Module 7 Section 2.3';
@@ -127,7 +155,7 @@ const quizQuestions = [
       'Checking only that the contactor is the same colour and brand as the one removed',
       'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
       'Confirming the contactor coil resistance matches the value of the removed unit and nothing more',
-      'Re-energising the circuit and leaving site, since testing is the next shift\'s responsibility',
+      "Re-energising the circuit and leaving site, since testing is the next shift's responsibility",
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +165,10 @@ const quizQuestions = [
     id: 6,
     question: 'When a like-for-like replacement is not available, you should:',
     options: [
-      "Fit the nearest available component regardless of its ratings to restore supply quickly",
-      "Fit a component with a lower current rating so the protection operates more sensitively",
+      'Fit the nearest available component regardless of its ratings to restore supply quickly',
+      'Fit a component with a lower current rating so the protection operates more sensitively',
       "Consult the manufacturer's data, verify the alternative meets or exceeds all ratings, and document the change",
-      "Leave the circuit isolated and out of service until the exact original part is obtained",
+      'Leave the circuit isolated and out of service until the exact original part is obtained',
     ],
     correctAnswer: 2,
     explanation:
@@ -257,116 +285,65 @@ const faqs = [
 ];
 
 const MOETModule7Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Component Replacement and Repair
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 3"
+        title="Component Replacement and Repair"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Hands-on practice with safe component removal, correct selection and professional
-            installation techniques
+            installation techniques.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safe removal:</strong> Isolate, label, photograph, disconnect
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Like-for-like matching on all key ratings
-              </li>
-              <li className="pl-1">
-                <strong>Installation:</strong> Correct torque, cable prep, dressing
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Functional testing before returning to service
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Workmanship:</strong> Assessed on quality, not just completion
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Reg 526.1 — connection standards
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Record what you replaced and why
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Practical maintenance competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Safe removal: isolate, label, photograph, disconnect.',
+              'Selection: like-for-like matching on all key ratings.',
+              'Installation: correct torque, cable prep, dressing.',
+              'Verification: functional testing before returning to service.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Safely remove faulty components following isolation and documentation procedures',
               'Select correct replacement components by matching all critical ratings and specifications',
               'Prepare cables and conductors to professional standards using appropriate tools',
               'Apply correct torque settings and termination techniques for reliable connections',
               'Carry out functional verification testing after component replacement',
               'Demonstrate professional workmanship and cable management to EPA standard',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Workmanship:</strong> assessed on quality, not just completion.
+              </li>
+              <li>
+                <strong>BS 7671:</strong> Reg 526.1 — connection standards.
+              </li>
+              <li>
+                <strong>Documentation:</strong> record what you replaced and why.
+              </li>
+              <li>
+                <strong>ST1426:</strong> practical maintenance competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Safe Component Removal Procedure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Safe component removal procedure</ContentEyebrow>
+
+          <ConceptBlock title="Safe component removal procedure">
             <p>
               Before any component can be replaced, it must be safely removed. This is not simply a
               matter of disconnecting wires — it requires a methodical approach that ensures safety,
@@ -374,285 +351,236 @@ const MOETModule7Section2_3 = () => {
               the EPA practical observation, the assessor will evaluate your entire removal process,
               not just the end result.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step-by-Step Component Removal
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Confirm safe isolation:</strong> Verify the circuit is isolated, locked
-                  off, and proved dead using the prove-test-prove method
-                </li>
-                <li className="pl-1">
-                  <strong>Review the circuit diagram:</strong> Understand the component's role in
-                  the circuit and identify all connections
-                </li>
-                <li className="pl-1">
-                  <strong>Photograph and label:</strong> Take photographs of the existing wiring
-                  arrangement and label each conductor with its terminal reference before
-                  disconnecting
-                </li>
-                <li className="pl-1">
-                  <strong>Disconnect carefully:</strong> Release terminal screws without damaging
-                  conductors; note any signs of overheating, arcing or damage
-                </li>
-                <li className="pl-1">
-                  <strong>Remove the component:</strong> Undo fixings and remove the component,
-                  noting its orientation and mounting method
-                </li>
-                <li className="pl-1">
-                  <strong>Inspect the removed component:</strong> Examine for the failure mode —
-                  burn marks, mechanical damage, loose internal connections
-                </li>
-                <li className="pl-1">
-                  <strong>Preserve as evidence:</strong> Keep the faulty component for inspection
-                  and warranty purposes
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Step-by-step component removal">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Confirm safe isolation:</strong> verify the circuit is isolated, locked off,
+                and proved dead using the prove-test-prove method.
+              </li>
+              <li>
+                <strong>Review the circuit diagram:</strong> understand the component&apos;s role in
+                the circuit and identify all connections.
+              </li>
+              <li>
+                <strong>Photograph and label:</strong> take photographs of the existing wiring
+                arrangement and label each conductor with its terminal reference before
+                disconnecting.
+              </li>
+              <li>
+                <strong>Disconnect carefully:</strong> release terminal screws without damaging
+                conductors; note any signs of overheating, arcing or damage.
+              </li>
+              <li>
+                <strong>Remove the component:</strong> undo fixings and remove the component, noting
+                its orientation and mounting method.
+              </li>
+              <li>
+                <strong>Inspect the removed component:</strong> examine for the failure mode — burn
+                marks, mechanical damage, loose internal connections.
+              </li>
+              <li>
+                <strong>Preserve as evidence:</strong> keep the faulty component for inspection and
+                warranty purposes.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Removal Errors</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Common removal errors"
+            whatHappens={
+              <>
                 Failing to label conductors before disconnection is the most common error during
                 component replacement. In a complex control panel with multiple identically coloured
-                conductors, reconnecting without labels becomes guesswork. Always label before
-                disconnecting — even if the connections seem obvious. Under assessment pressure,
-                what seemed obvious can quickly become confusing.
-              </p>
-            </div>
+                conductors, reconnecting without labels becomes guesswork. Under assessment
+                pressure, what seemed obvious can quickly become confusing.
+              </>
+            }
+            doInstead={
+              <>Always label before disconnecting — even if the connections seem obvious.</>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The removal phase reveals information about the fault
-              cause. Burn marks on terminals suggest high-resistance joints; mechanical damage
-              suggests environmental or installation issues. Reporting these observations to the
-              assessor demonstrates diagnostic awareness beyond simple replacement.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> the removal phase reveals information about the fault cause.
+            Burn marks on terminals suggest high-resistance joints; mechanical damage suggests
+            environmental or installation issues. Reporting these observations to the assessor
+            demonstrates diagnostic awareness beyond simple replacement.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Component Selection and Specification Matching
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Component selection and specification matching</ContentEyebrow>
+
+          <ConceptBlock title="Component selection and specification matching">
             <p>
               Correct component selection is critical for maintaining circuit protection, system
               performance, and regulatory compliance. The assessor will observe whether you verify
-              the replacement component's specifications match the original — or whether you simply
-              fit whatever is available. This distinction separates competent technicians from those
-              who create future problems.
+              the replacement component&apos;s specifications match the original — or whether you
+              simply fit whatever is available. This distinction separates competent technicians
+              from those who create future problems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Specifications to Match
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Critical Ratings
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Additional Checks
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current, type curve (B/C/D), breaking capacity, poles
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical compatibility with board, BS EN 60898
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contactor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coil voltage, contact rating, AC category
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Auxiliary contacts, mounting, DIN rail fit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD/RCBO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current rating, sensitivity (mA), type (AC/A/B)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Breaking capacity, time delay, board compatibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current, voltage, type (HRC/cartridge), breaking capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical size, category of duty, BS 88 reference
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Relay/Timer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coil voltage, contact configuration, contact rating
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Base compatibility, timing range, function
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Key specifications to match">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Component</th>
+                    <th className="py-2 pr-4 font-medium text-white">Critical ratings</th>
+                    <th className="py-2 font-medium text-white">Additional checks</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MCB</td>
+                    <td className="py-2 pr-4">
+                      Current, type curve (B/C/D), breaking capacity, poles
+                    </td>
+                    <td className="py-2">Physical compatibility with board, BS EN 60898</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Contactor</td>
+                    <td className="py-2 pr-4">Coil voltage, contact rating, AC category</td>
+                    <td className="py-2">Auxiliary contacts, mounting, DIN rail fit</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">RCD/RCBO</td>
+                    <td className="py-2 pr-4">Current rating, sensitivity (mA), type (AC/A/B)</td>
+                    <td className="py-2">Breaking capacity, time delay, board compatibility</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fuse</td>
+                    <td className="py-2 pr-4">
+                      Current, voltage, type (HRC/cartridge), breaking capacity
+                    </td>
+                    <td className="py-2">Physical size, category of duty, BS 88 reference</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Relay/Timer</td>
+                    <td className="py-2 pr-4">
+                      Coil voltage, contact configuration, contact rating
+                    </td>
+                    <td className="py-2">Base compatibility, timing range, function</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Reading Manufacturer Data</p>
-              <p className="text-sm text-white">
-                Always read the data printed on the component itself and cross-reference with the
-                manufacturer's data sheet. Do not rely on the packaging alone — check the markings
-                on the device. In the EPA, telling the assessor "I am checking the component
-                markings match the required specification" demonstrates professional practice.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> If you are unsure about a specification, explain to the
-              assessor that you would consult the manufacturer's technical data or seek guidance
-              from a senior colleague. Admitting uncertainty is a professional strength, not a
-              weakness.
+          <ConceptBlock title="Reading manufacturer data">
+            <p>
+              Always read the data printed on the component itself and cross-reference with the
+              manufacturer&apos;s data sheet. Do not rely on the packaging alone — check the
+              markings on the device. In the EPA, telling the assessor &quot;I am checking the
+              component markings match the required specification&quot; demonstrates professional
+              practice.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Key point:</strong> if you are unsure about a specification, explain to the
+              assessor that you would consult the manufacturer&apos;s technical data or seek
+              guidance from a senior colleague. Admitting uncertainty is a professional strength,
+              not a weakness.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cable Preparation and Termination Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cable preparation and termination techniques</ContentEyebrow>
+
+          <ConceptBlock title="Cable preparation and termination techniques">
             <p>
               The quality of your cable preparation and termination directly affects the reliability
               and safety of the installation. Poor terminations are the most common cause of
               electrical fires in the UK. During the EPA, the assessor will closely inspect your
               connection work — this is where workmanship quality is most visible.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Preparation Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Strip length:</strong> Match the terminal depth — enough conductor
-                  inserted for full contact, no excess exposed
-                </li>
-                <li className="pl-1">
-                  <strong>Stripping tool:</strong> Use an adjustable cable stripper set to the
-                  correct conductor size — avoid nicking strands
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor condition:</strong> Inspect stripped conductors for damage — no
-                  nicked, cut, or missing strands
-                </li>
-                <li className="pl-1">
-                  <strong>Ferrules:</strong> Use bootlace ferrules on stranded conductors entering
-                  screw terminals to prevent strand escape
-                </li>
-                <li className="pl-1">
-                  <strong>Orientation:</strong> Insert the conductor so the screw clamps down on the
-                  conductor, not pushes it out
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation clearance:</strong> Ensure insulation does not enter the
-                  terminal and conductor does not protrude excessively
-                </li>
-              </ul>
+          <ConceptBlock title="Cable preparation best practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Strip length:</strong> match the terminal depth — enough conductor inserted
+                for full contact, no excess exposed.
+              </li>
+              <li>
+                <strong>Stripping tool:</strong> use an adjustable cable stripper set to the correct
+                conductor size — avoid nicking strands.
+              </li>
+              <li>
+                <strong>Conductor condition:</strong> inspect stripped conductors for damage — no
+                nicked, cut, or missing strands.
+              </li>
+              <li>
+                <strong>Ferrules:</strong> use bootlace ferrules on stranded conductors entering
+                screw terminals to prevent strand escape.
+              </li>
+              <li>
+                <strong>Orientation:</strong> insert the conductor so the screw clamps down on the
+                conductor, not pushes it out.
+              </li>
+              <li>
+                <strong>Insulation clearance:</strong> ensure insulation does not enter the terminal
+                and conductor does not protrude excessively.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Torque settings for common terminals">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Terminal type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical torque (Nm)</th>
+                    <th className="py-2 font-medium text-white">Notes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MCB/RCBO terminal</td>
+                    <td className="py-2 pr-4">2.0 - 3.5</td>
+                    <td className="py-2">Check manufacturer&apos;s data for exact value</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Distribution board busbar</td>
+                    <td className="py-2 pr-4">2.5 - 5.0</td>
+                    <td className="py-2">Varies with conductor size</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Socket outlet terminal</td>
+                    <td className="py-2 pr-4">1.2 - 1.5</td>
+                    <td className="py-2">Smaller screws — easy to over-tighten</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">DIN rail terminal block</td>
+                    <td className="py-2 pr-4">0.5 - 1.2</td>
+                    <td className="py-2">Often spring-cage — no torque needed</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Torque Settings for Common Terminals
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Terminal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Torque (Nm)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB/RCBO terminal</td>
-                      <td className="border border-white/10 px-3 py-2">2.0 - 3.5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check manufacturer's data for exact value
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution board busbar
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2.5 - 5.0</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Varies with conductor size
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Socket outlet terminal</td>
-                      <td className="border border-white/10 px-3 py-2">1.2 - 1.5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smaller screws — easy to over-tighten
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DIN rail terminal block</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 - 1.2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Often spring-cage — no torque needed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> If you use a torque screwdriver during the EPA and explain
+            <p>
+              <strong>Key point:</strong> if you use a torque screwdriver during the EPA and explain
               why, this demonstrates a level of professionalism that distinguishes you from
               candidates who simply tighten by feel. It is a clear indicator of distinction-level
               practice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Functional Verification and Return to Service
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Functional verification and return to service</ContentEyebrow>
+
+          <ConceptBlock title="Functional verification and return to service">
             <p>
               Replacing the component is only part of the job. Functional verification — confirming
               the system works correctly after repair — is the final and often most overlooked step.
@@ -660,129 +588,119 @@ const MOETModule7Section2_3 = () => {
               down significantly. A professional technician never hands back a system without
               confirming it works.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Verification Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Check all connections, fixings, cable
-                  dressing, and no damage to adjacent equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> Verify circuit continuity through the new component
-                  before re-energising
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Confirm IR values are satisfactory (above
-                  1 M ohm for LV circuits)
-                </li>
-                <li className="pl-1">
-                  <strong>Re-energise under control:</strong> Remove locks, re-energise the circuit
-                  in a controlled manner, observing for any issues
-                </li>
-                <li className="pl-1">
-                  <strong>Functional test:</strong> Operate the system through its full range of
-                  functions — start, stop, forward, reverse, trip, reset
-                </li>
-                <li className="pl-1">
-                  <strong>Measure key parameters:</strong> Voltage at the component, current draw
-                  under load, operating temperatures
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device test:</strong> Confirm RCDs, overloads and emergency
-                  stops function correctly
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Verification checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection:</strong> check all connections, fixings, cable dressing,
+                and no damage to adjacent equipment.
+              </li>
+              <li>
+                <strong>Continuity:</strong> verify circuit continuity through the new component
+                before re-energising.
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> confirm IR values are satisfactory (above 1
+                M ohm for LV circuits).
+              </li>
+              <li>
+                <strong>Re-energise under control:</strong> remove locks, re-energise the circuit in
+                a controlled manner, observing for any issues.
+              </li>
+              <li>
+                <strong>Functional test:</strong> operate the system through its full range of
+                functions — start, stop, forward, reverse, trip, reset.
+              </li>
+              <li>
+                <strong>Measure key parameters:</strong> voltage at the component, current draw
+                under load, operating temperatures.
+              </li>
+              <li>
+                <strong>Protective device test:</strong> confirm RCDs, overloads and emergency stops
+                function correctly.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Documentation After Replacement
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Record the replacement:</strong> Component removed, component fitted, part
-                  numbers, ratings
-                </li>
-                <li className="pl-1">
-                  <strong>Test results:</strong> IR readings, continuity, functional test outcomes
-                </li>
-                <li className="pl-1">
-                  <strong>Root cause:</strong> If identified, note the probable cause of the
-                  original failure
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendations:</strong> Any follow-up work, monitoring or preventive
-                  actions
-                </li>
-                <li className="pl-1">
-                  <strong>Sign-off:</strong> Confirm the system has been returned to safe, normal
-                  operation
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Component replacement and repair is a core practical
-              competence in the Maintenance and Operations Engineering Technician standard. The EPA
-              practical observation will include at least one component replacement task, assessed
-              on safety, workmanship, verification and documentation.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Component Replacement" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Documentation after replacement"
+            onSite="Component replacement and repair is a core practical competence in the Maintenance and Operations Engineering Technician standard. The EPA practical observation will include at least one component replacement task, assessed on safety, workmanship, verification and documentation."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Fault Diagnosis
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-4">
-              Next: Control System Troubleshooting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Record the replacement:</strong> component removed, component fitted, part
+                numbers, ratings.
+              </li>
+              <li>
+                <strong>Test results:</strong> IR readings, continuity, functional test outcomes.
+              </li>
+              <li>
+                <strong>Root cause:</strong> if identified, note the probable cause of the original
+                failure.
+              </li>
+              <li>
+                <strong>Recommendations:</strong> any follow-up work, monitoring or preventive
+                actions.
+              </li>
+              <li>
+                <strong>Sign-off:</strong> confirm the system has been returned to safe, normal
+                operation.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Always label conductors before disconnecting, however obvious the wiring looks.',
+              'Match every critical rating on a replacement — current, type, breaking capacity, physical fit — never just "close enough".',
+              'Correct torque is a safety issue: under-tightened joints overheat, over-tightened ones damage conductors and terminals.',
+              'Functional verification is not optional — confirm the system actually works before returning it to service.',
+              'Report additional faults you find rather than fixing everything or ignoring what is outside your scope.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Component Replacement" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Fault Diagnosis Exercises
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Control System Troubleshooting
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -320,6 +320,7 @@ export default function AdminDocumentReview() {
         flaggedRes,
         appealedRes,
         needsAttentionRes,
+        stuckRes,
       ] = await Promise.all([
         supabase
           .from('elec_id_documents')
@@ -351,9 +352,28 @@ export default function AdminDocumentReview() {
           .or(
             'verification_status.eq.pending,verification_status.eq.needs_review,verification_status.eq.appealed,flagged_for_review.eq.true'
           ),
+        /*
+          🔴 Documents stuck mid-extraction.
+
+          `processing` was counted by nothing — not pending, not flagged, not
+          needs_attention, not even the All tab's filters — so 22 uploads sat
+          invisible while the page said "All caught up. New uploads will appear
+          here." They were between five weeks and three and a half months old
+          (24 May to 4 Aug 2026): the OCR/extraction step had died and every
+          one of those people is still waiting on a qualification check.
+
+          A day is generous for an extraction that normally takes seconds;
+          anything older than that is not processing, it is stuck.
+        */
+        supabase
+          .from('elec_id_documents')
+          .select('*', { count: 'exact', head: true })
+          .eq('verification_status', 'processing')
+          .lt('created_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()),
       ]);
       return {
         pending: pendingRes.count || 0,
+        stuck: stuckRes.count || 0,
         thisWeek: weekRes.count || 0,
         verified: verifiedRes.count || 0,
         rejected: rejectedRes.count || 0,
@@ -665,6 +685,11 @@ export default function AdminDocumentReview() {
     { value: 'verified', label: 'Approved', count: stats?.verified },
     { value: 'flagged', label: 'Flagged', count: stats?.flagged },
     { value: 'rejected', label: 'Rejected', count: stats?.rejected },
+    // Only offered when there is something in it — a permanent "Stuck 0" tab
+    // is noise, but a non-zero one needs to be one tap away.
+    ...(stats?.stuck
+      ? [{ value: 'processing', label: 'Stuck', count: stats.stuck }]
+      : []),
   ];
 
   const listTone: Tone =
@@ -741,11 +766,17 @@ export default function AdminDocumentReview() {
                   tone: 'orange',
                   onClick: () => setStatusFilter('needs_attention'),
                 },
+                /*
+                  "This Week" counted every upload in seven days and led
+                  nowhere — it set the filter to All. The uploads that have
+                  been stuck mid-extraction for months are the thing on this
+                  page that nobody is looking at, so they take the slot.
+                */
                 {
-                  label: 'This Week',
-                  value: stats?.thisWeek ?? 0,
-                  tone: 'blue',
-                  onClick: () => setStatusFilter('all'),
+                  label: 'Stuck',
+                  value: stats?.stuck ?? 0,
+                  tone: (stats?.stuck ? 'red' : 'blue') as Tone,
+                  onClick: () => setStatusFilter('processing'),
                 },
                 {
                   label: 'Approved',

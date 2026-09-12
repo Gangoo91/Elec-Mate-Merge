@@ -119,7 +119,7 @@ const SwimmingPoolCalculator = () => {
 
     return {
       meta: {
-        title: 'Swimming Pool Electrical Calculator',
+        title: 'Swimming Pool Electrical',
         subtitle: 'Zone compliance, circuit analysis and bonding',
         standard: 'BS 7671:2018+A4:2026 — Section 702',
       },
@@ -138,16 +138,23 @@ const SwimmingPoolCalculator = () => {
           rows: [
             { label: 'Pool type', value: inputs.poolType },
             { label: 'Pool volume', value: `${inputs.poolVolume} L` },
+            { label: 'Heater power', value: `${inputs.heaterPower} W`, note: inputs.heatingType },
+            { label: 'Pump motor', value: `${inputs.pumpPower} W` },
+            { label: 'Lighting', value: `${inputs.lighting} W` },
+            { label: 'Filtration system', value: inputs.filtrationSystem },
+            { label: 'Underwater lighting (SELV)', value: inputs.hasUnderwaterLighting ? 'Yes' : 'No' },
+            { label: 'Emergency stop system', value: inputs.hasEmergencyStop ? 'Yes' : 'No' },
             { label: 'Supply voltage', value: `${inputs.supplyVoltage} V` },
             { label: 'Earthing system', value: inputs.earthingSystem },
             { label: 'Installation zone', value: inputs.zone },
+            { label: 'Installation method', value: inputs.installationMethod },
+            { label: 'Cable run length', value: `${inputs.cableRunLength} m` },
+            { label: 'Ambient temperature', value: `${inputs.ambientTemperature} °C` },
           ],
         },
         {
           heading: 'Result',
           rows: [
-            { label: 'Total load', value: `${result.totalLoad} W` },
-            { label: 'Total current', value: `${result.totalCurrent} A` },
             { label: 'Supply requirements', value: result.supplyRequirements },
             { label: 'Main protection', value: result.mainProtection },
             { label: 'Earthing arrangements', value: result.earthingArrangements },
@@ -163,10 +170,12 @@ const SwimmingPoolCalculator = () => {
         },
         {
           heading: 'Bonding requirements',
-          items: result.bondingRequirements,
+          items: result.bondingRequirements.filter((r) => r.trim()),
         },
       ],
-      notes: result.regulatoryCompliance.issues.length ? result.regulatoryCompliance.issues : undefined,
+      notes: result.regulatoryCompliance.issues.filter((i) => i.trim()).length
+        ? result.regulatoryCompliance.issues.filter((i) => i.trim())
+        : undefined,
     };
   };
 

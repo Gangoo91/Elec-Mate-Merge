@@ -1,8 +1,47 @@
-import { ArrowLeft, Search, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4.3 · Subsection 2 — Systematic Diagnostic Approach
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical fault-finding and rectification techniques;
+ *     diagnostic equipment."
+ *   · "Electrical. Problem solving and critical reasoning techniques."
+ *   · "Electrical. Use electrical diagnostic equipment and apply fault
+ *     finding and rectification techniques."
+ *   · "Record information."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Systematic Diagnostic Approach - MOET Module 4 Section 3.2';
@@ -84,12 +123,7 @@ const quizQuestions = [
     id: 2,
     question:
       'In a series control circuit with 8 devices, using the half-split technique, the maximum number of tests needed to locate a single open-circuit fault is:',
-    options: [
-      '2 tests',
-      '8 tests',
-      '3 tests',
-      '4 tests',
-    ],
+    options: ['2 tests', '8 tests', '3 tests', '4 tests'],
     correctAnswer: 2,
     explanation:
       'Using half-split on 8 devices: test 1 (midpoint) narrows to 4 devices, test 2 narrows to 2 devices, test 3 identifies the faulty device. In general, the maximum number of tests is log2(n), rounded up. For 8 devices: log2(8) = 3 tests. Compare this to up to 8 tests with a sequential approach.',
@@ -267,117 +301,64 @@ const faqs = [
 ];
 
 const MOETModule4Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Search className="h-4 w-4" />
-            <span>Module 4.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Systematic Diagnostic Approach
-          </h1>
-          <p className="text-white">
-            Structured fault-finding methodology and diagnostic procedures for efficient diagnosis
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 2"
+        title="Systematic Diagnostic Approach"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Structured fault-finding methodology and diagnostic procedures for efficient diagnosis.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Six-point:</strong> Collect, analyse, locate, determine cause, rectify,
-                check
+          <TLDR
+            points={[
+              'Six-point: Collect, analyse, locate, determine cause, rectify, check.',
+              'Half-split: Test at midpoint to eliminate half the circuit each time.',
+              'Input-to-output: Follow signal flow from supply to load.',
+              'Function test: Operate the system through its sequence.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hypothesis driven:</strong> Form, test, revise — never guess randomly.
               </li>
-              <li className="pl-1">
-                <strong>Half-split:</strong> Test at midpoint to eliminate half the circuit each
-                time
+              <li>
+                <strong>Evidence based:</strong> Every test should answer a specific question.
               </li>
-              <li className="pl-1">
-                <strong>Input-to-output:</strong> Follow signal flow from supply to load
+              <li>
+                <strong>Root cause:</strong> Identify why the fault occurred, not just what failed.
               </li>
-              <li className="pl-1">
-                <strong>Function test:</strong> Operate the system through its sequence
+              <li>
+                <strong>ST1426:</strong> Systematic approach assessed in EPA practical element.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Hypothesis driven:</strong> Form, test, revise — never guess randomly
-              </li>
-              <li className="pl-1">
-                <strong>Evidence based:</strong> Every test should answer a specific question
-              </li>
-              <li className="pl-1">
-                <strong>Root cause:</strong> Identify why the fault occurred, not just what failed
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Systematic approach assessed in EPA practical element
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply the six-point fault-finding technique to electrical maintenance scenarios',
               'Use the half-split method to rapidly locate faults in series circuits',
               'Follow the input-to-output method for sequential signal tracing',
               'Conduct function testing on automated and sequential control systems',
               'Form, test and revise diagnostic hypotheses based on evidence',
               'Carry out root cause analysis to prevent fault recurrence',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The six-point fault-finding technique</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Six-Point Fault-Finding Technique
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The foundation of all structured fault finding">
             <p>
               The six-point technique is the foundation of all structured fault finding in
               electrical maintenance. It provides a logical framework that guides you from the
@@ -393,106 +374,79 @@ const MOETModule4Section3_2 = () => {
               current fault. While experience is valuable, every fault is unique in its specific
               context, and the systematic approach ensures you treat it as such.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Collect Evidence
-                </h3>
-                <p className="text-sm text-white">
-                  Gather all available information about the fault. This includes the operator's
-                  account, visual and sensory observations, trip indicator readings, fault codes,
-                  alarm logs, maintenance history and circuit documentation. The quality of your
-                  diagnosis depends directly on the quality of the evidence you collect. As covered
-                  in Section 4.3.1, this step should be thorough and unhurried.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Analyse Evidence
-                </h3>
-                <p className="text-sm text-white">
-                  Interpret the collected evidence logically. What do the symptoms suggest? What are
-                  the possible causes? Which causes are most likely given the evidence? This is
-                  where your technical knowledge is applied — understanding how the circuit works,
-                  what each symptom means, and what could produce the observed combination of
-                  symptoms. Form your preliminary hypothesis at this stage.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Locate the Fault
-                </h3>
-                <p className="text-sm text-white">
-                  Using an appropriate diagnostic technique (half-split, input-to-output, function
-                  test or unit substitution), systematically narrow down the fault location. Each
-                  test should be designed to confirm or eliminate a specific hypothesis. Record
-                  every test result — even negative results (tests that show everything is normal)
-                  are valuable because they eliminate possible causes.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Determine the Cause
-                </h3>
-                <p className="text-sm text-white">
-                  Once the fault is located, determine why it occurred. A blown fuse is a symptom,
-                  not a cause — what caused the excessive current? A burnt-out contactor coil is a
-                  component failure, but what caused the coil to overheat? Root cause analysis
-                  prevents recurrence and is a hallmark of a skilled maintenance technician. Common
-                  root causes include loose connections, incorrect settings, mechanical wear,
-                  environmental factors and design limitations.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 5 — Rectify the Fault
-                </h3>
-                <p className="text-sm text-white">
-                  Carry out the repair, addressing both the immediate failure and the root cause.
-                  Use correct replacement components rated for the application. Follow manufacturer
-                  specifications and relevant standards. Ensure all connections are secure and
-                  correctly torqued. If the root cause cannot be addressed immediately (e.g., it
-                  requires design modification), document it and implement temporary controls.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 6 — Check the System
-                </h3>
-                <p className="text-sm text-white">
-                  Verify that the repair has resolved the original fault. Carry out appropriate
-                  tests — insulation resistance, continuity, functional operation under load. Check
-                  for secondary faults or collateral damage that may have been caused by the
-                  original fault. Monitor the system for a suitable period to confirm stable
-                  operation. Only return the system to service when you are satisfied it is
-                  operating correctly.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The six-point technique is iterative, not linear. If your
-              tests at Step 3 disprove your hypothesis from Step 2, return to Step 2 with the new
-              evidence and re-analyse. Each iteration brings you closer to the correct diagnosis.
+          <ConceptBlock title="Step 1 — Collect evidence">
+            <p>
+              Gather all available information about the fault. This includes the operator's
+              account, visual and sensory observations, trip indicator readings, fault codes, alarm
+              logs, maintenance history and circuit documentation. The quality of your diagnosis
+              depends directly on the quality of the evidence you collect. As covered in Section
+              4.3.1, this step should be thorough and unhurried.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Step 2 — Analyse evidence">
+            <p>
+              Interpret the collected evidence logically. What do the symptoms suggest? What are the
+              possible causes? Which causes are most likely given the evidence? This is where your
+              technical knowledge is applied — understanding how the circuit works, what each
+              symptom means, and what could produce the observed combination of symptoms. Form your
+              preliminary hypothesis at this stage.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Half-Split Technique
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Step 3 — Locate the fault">
+            <p>
+              Using an appropriate diagnostic technique (half-split, input-to-output, function test
+              or unit substitution), systematically narrow down the fault location. Each test should
+              be designed to confirm or eliminate a specific hypothesis. Record every test result —
+              even negative results (tests that show everything is normal) are valuable because they
+              eliminate possible causes.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Step 4 — Determine the cause">
+            <p>
+              Once the fault is located, determine why it occurred. A blown fuse is a symptom, not a
+              cause — what caused the excessive current? A burnt-out contactor coil is a component
+              failure, but what caused the coil to overheat? Root cause analysis prevents recurrence
+              and is a hallmark of a skilled maintenance technician. Common root causes include
+              loose connections, incorrect settings, mechanical wear, environmental factors and
+              design limitations.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Step 5 — Rectify the fault">
+            <p>
+              Carry out the repair, addressing both the immediate failure and the root cause. Use
+              correct replacement components rated for the application. Follow manufacturer
+              specifications and relevant standards. Ensure all connections are secure and correctly
+              torqued. If the root cause cannot be addressed immediately (e.g., it requires design
+              modification), document it and implement temporary controls.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Step 6 — Check the system"
+            onSite="The six-point technique is iterative, not linear. If your tests at Step 3 disprove your hypothesis from Step 2, return to Step 2 with the new evidence and re-analyse. Each iteration brings you closer to the correct diagnosis."
+          >
+            <p>
+              Verify that the repair has resolved the original fault. Carry out appropriate tests —
+              insulation resistance, continuity, functional operation under load. Check for
+              secondary faults or collateral damage that may have been caused by the original fault.
+              Monitor the system for a suitable period to confirm stable operation. Only return the
+              system to service when you are satisfied it is operating correctly.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The half-split technique</ContentEyebrow>
+
+          <ConceptBlock title="Eliminate half the circuit with every test">
             <p>
               The half-split technique is one of the most powerful and efficient fault-locating
               methods available to the maintenance technician. It works on a simple mathematical
@@ -510,73 +464,58 @@ const MOETModule4Section3_2 = () => {
               Continue this process, and you will locate the fault in a maximum of 4 tests —
               log2(16) = 4.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Half-Split in Practice</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify the circuit extent:</strong> Determine the start point (supply)
-                  and end point (load) of the circuit section you are diagnosing
-                </li>
-                <li className="pl-1">
-                  <strong>Find the midpoint:</strong> Identify a test-accessible point approximately
-                  halfway through the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Test at the midpoint:</strong> Check for the expected signal (voltage,
-                  continuity, or logic state)
-                </li>
-                <li className="pl-1">
-                  <strong>Determine which half:</strong> If the signal is present at the midpoint,
-                  the fault is downstream; if absent, the fault is upstream
-                </li>
-                <li className="pl-1">
-                  <strong>Repeat:</strong> Apply the same process to the faulty half, testing at its
-                  midpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Continue:</strong> Until the fault is localised to a single component or
-                  connection
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Half-split in practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify the circuit extent:</strong> Determine the start point (supply) and
+                end point (load) of the circuit section you are diagnosing.
+              </li>
+              <li>
+                <strong>Find the midpoint:</strong> Identify a test-accessible point approximately
+                halfway through the circuit.
+              </li>
+              <li>
+                <strong>Test at the midpoint:</strong> Check for the expected signal (voltage,
+                continuity, or logic state).
+              </li>
+              <li>
+                <strong>Determine which half:</strong> If the signal is present at the midpoint, the
+                fault is downstream; if absent, the fault is upstream.
+              </li>
+              <li>
+                <strong>Repeat:</strong> Apply the same process to the faulty half, testing at its
+                midpoint.
+              </li>
+              <li>
+                <strong>Continue:</strong> Until the fault is localised to a single component or
+                connection.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">When to Use Half-Split</p>
-              <p className="text-sm text-white mb-3">
-                The half-split technique is most effective for:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Series circuits where a single open-circuit fault has broken the circuit
-                </li>
-                <li className="pl-1">
-                  Long cable runs where you need to locate a break or short circuit
-                </li>
-                <li className="pl-1">Control circuits with many series-connected contacts</li>
-                <li className="pl-1">Lighting circuits where one section has failed</li>
-                <li className="pl-1">Any circuit where you can access intermediate test points</li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="When to use half-split"
+            onSite="The half-split technique assumes a single fault. If multiple faults exist in the same circuit, the results can be misleading. If your diagnosis does not converge on a single point, consider the possibility of multiple faults and switch to a sequential approach for the affected section."
+          >
+            <p>The half-split technique is most effective for:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Series circuits where a single open-circuit fault has broken the circuit.</li>
+              <li>Long cable runs where you need to locate a break or short circuit.</li>
+              <li>Control circuits with many series-connected contacts.</li>
+              <li>Lighting circuits where one section has failed.</li>
+              <li>Any circuit where you can access intermediate test points.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Limitation:</strong> The half-split technique assumes a single fault. If
-              multiple faults exist in the same circuit, the results can be misleading. If your
-              diagnosis does not converge on a single point, consider the possibility of multiple
-              faults and switch to a sequential approach for the affected section.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Input-to-Output and Signal Tracing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Input-to-output and signal tracing</ContentEyebrow>
+
+          <ConceptBlock title="Follow the signal from source to load">
             <p>
               The input-to-output method, also known as signal tracing or signal injection, follows
               the logical flow of a circuit from its power source or signal input through to its
@@ -591,35 +530,34 @@ const MOETModule4Section3_2 = () => {
               it can be less efficient than half-split for very long circuits, as you may need to
               test many points before reaching the fault.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Tracing Example — Motor Starter Control Circuit
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Test point 1:</strong> Supply at the control fuse — 230 V present? If yes,
-                  supply is confirmed
-                </li>
-                <li className="pl-1">
-                  <strong>Test point 2:</strong> Output of the emergency stop — 230 V present? If
-                  yes, E-stop is healthy
-                </li>
-                <li className="pl-1">
-                  <strong>Test point 3:</strong> Through the stop button — 230 V present? If yes,
-                  stop circuit is healthy
-                </li>
-                <li className="pl-1">
-                  <strong>Test point 4:</strong> Through the overload contact — 230 V present? If
-                  no, overload has tripped or contact is faulty
-                </li>
-                <li className="pl-1">
-                  <strong>Test point 5:</strong> At contactor coil A1 — should have 230 V if all
-                  upstream contacts are closed
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Signal tracing example — motor starter control circuit">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Test point 1:</strong> Supply at the control fuse — 230 V present? If yes,
+                supply is confirmed.
+              </li>
+              <li>
+                <strong>Test point 2:</strong> Output of the emergency stop — 230 V present? If yes,
+                E-stop is healthy.
+              </li>
+              <li>
+                <strong>Test point 3:</strong> Through the stop button — 230 V present? If yes, stop
+                circuit is healthy.
+              </li>
+              <li>
+                <strong>Test point 4:</strong> Through the overload contact — 230 V present? If no,
+                overload has tripped or contact is faulty.
+              </li>
+              <li>
+                <strong>Test point 5:</strong> At contactor coil A1 — should have 230 V if all
+                upstream contacts are closed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Output-to-input (reverse tracing)">
             <p>
               A variation of this method is output-to-input (reverse tracing), which starts at the
               load and works backwards towards the supply. This can be more efficient when you
@@ -627,37 +565,29 @@ const MOETModule4Section3_2 = () => {
               running but the contactor is energised (main contacts closed), starting at the motor
               and working back towards the contactor is more logical than starting at the supply.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Important Consideration</p>
-              <p className="text-sm text-white">
-                When signal tracing in a control circuit that is energised (e.g., taking voltage
-                measurements), you must follow Regulation 14 of the Electricity at Work Regulations
-                1989. Live testing is only permitted when it is unreasonable to work dead, it is
-                reasonable to work live, and suitable precautions are in place. Use GS38-compliant
-                test probes, maintain safe clearances, and ensure you are competent to carry out the
-                measurements safely.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Tip:</strong> Always have the circuit schematic diagram in front of you when
-              signal tracing. Mark each test point on the diagram and annotate it with the measured
-              value. This visual record makes it much easier to see where the signal is lost and
-              prevents you from missing any part of the circuit.
+          <ConceptBlock
+            title="Important consideration"
+            onSite="Always have the circuit schematic diagram in front of you when signal tracing. Mark each test point on the diagram and annotate it with the measured value. This visual record makes it much easier to see where the signal is lost and prevents you from missing any part of the circuit."
+          >
+            <p>
+              When signal tracing in a control circuit that is energised (e.g., taking voltage
+              measurements), you must follow Regulation 14 of the Electricity at Work Regulations
+              1989. Live testing is only permitted when it is unreasonable to work dead, it is
+              reasonable to work live, and suitable precautions are in place. Use GS38-compliant
+              test probes, maintain safe clearances, and ensure you are competent to carry out the
+              measurements safely.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Function Testing and Hypothesis Revision
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Function testing and hypothesis revision</ContentEyebrow>
+
+          <ConceptBlock title="Operate the system through its sequence">
             <p>
               Function testing is a diagnostic approach where the system is operated through its
               normal sequence while you observe each stage. This method is particularly effective
@@ -675,261 +605,244 @@ const MOETModule4Section3_2 = () => {
               control systems include diagnostic displays that show the state of each interlock,
               making function testing straightforward.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Function Testing Process
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Understand the sequence:</strong> Before testing, understand the system's
-                  normal operational sequence from the documentation or control logic
-                </li>
-                <li className="pl-1">
-                  <strong>Start at the beginning:</strong> Initiate the sequence from the normal
-                  starting condition
-                </li>
-                <li className="pl-1">
-                  <strong>Observe each stage:</strong> Watch for the expected response at each step
-                  — does the pilot light illuminate, does the contactor pull in, does the valve
-                  open?
-                </li>
-                <li className="pl-1">
-                  <strong>Identify the stall point:</strong> Note exactly where the sequence stops
-                  or deviates from normal
-                </li>
-                <li className="pl-1">
-                  <strong>Investigate the stall:</strong> Determine what condition is required to
-                  advance past the stall point, then verify that condition
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Function testing process">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Understand the sequence:</strong> Before testing, understand the system's
+                normal operational sequence from the documentation or control logic.
+              </li>
+              <li>
+                <strong>Start at the beginning:</strong> Initiate the sequence from the normal
+                starting condition.
+              </li>
+              <li>
+                <strong>Observe each stage:</strong> Watch for the expected response at each step —
+                does the pilot light illuminate, does the contactor pull in, does the valve open?
+              </li>
+              <li>
+                <strong>Identify the stall point:</strong> Note exactly where the sequence stops or
+                deviates from normal.
+              </li>
+              <li>
+                <strong>Investigate the stall:</strong> Determine what condition is required to
+                advance past the stall point, then verify that condition.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hypothesis Revision — The Diagnostic Cycle
-              </p>
-              <p className="text-sm text-white mb-3">
-                Central to all systematic approaches is the concept of hypothesis revision. Fault
-                finding is a scientific process: you observe evidence, form a hypothesis (your best
-                theory of the fault), design a test to verify or disprove the hypothesis, and then
-                act on the result.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>If the test confirms your hypothesis:</strong> Proceed to locate the
-                  specific fault within the suspected area and determine its cause
-                </li>
-                <li className="pl-1">
-                  <strong>If the test disproves your hypothesis:</strong> This is not a failure — it
-                  is progress. The test result has eliminated one possibility and may provide new
-                  evidence pointing to the actual fault. Return to the analysis step with this new
-                  information
-                </li>
-                <li className="pl-1">
-                  <strong>If the test is inconclusive:</strong> Redesign the test to be more
-                  specific, or gather additional evidence before re-testing
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Hypothesis revision — the diagnostic cycle">
+            <p>
+              Central to all systematic approaches is the concept of hypothesis revision. Fault
+              finding is a scientific process: you observe evidence, form a hypothesis (your best
+              theory of the fault), design a test to verify or disprove the hypothesis, and then act
+              on the result.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>If the test confirms your hypothesis:</strong> Proceed to locate the
+                specific fault within the suspected area and determine its cause.
+              </li>
+              <li>
+                <strong>If the test disproves your hypothesis:</strong> This is not a failure — it
+                is progress. The test result has eliminated one possibility and may provide new
+                evidence pointing to the actual fault. Return to the analysis step with this new
+                information.
+              </li>
+              <li>
+                <strong>If the test is inconclusive:</strong> Redesign the test to be more specific,
+                or gather additional evidence before re-testing.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Avoiding Confirmation Bias</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Avoiding confirmation bias"
+            whatHappens={
+              <>
                 One of the most dangerous pitfalls in fault finding is confirmation bias — seeing
                 only evidence that supports your initial theory while ignoring evidence that
-                contradicts it. A skilled diagnostician actively looks for evidence that disproves
-                their hypothesis. If your first hypothesis survives attempts to disprove it, you can
-                have high confidence in the diagnosis. If it does not survive, you have learned
-                something valuable.
-              </p>
-            </div>
+                contradicts it.
+              </>
+            }
+            doInstead={
+              <>
+                A skilled diagnostician actively looks for evidence that disproves their hypothesis.
+                If your first hypothesis survives attempts to disprove it, you can have high
+                confidence in the diagnosis. If it does not survive, you have learned something
+                valuable.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The End Point Assessment for ST1426 explicitly assesses
-              your ability to use a systematic approach. Assessors want to see you collecting
-              evidence, forming hypotheses, selecting tests logically, and revising your diagnosis
-              based on results — not guessing or randomly testing components.
+          <ConceptBlock title="Assessed on method as much as result">
+            <p>
+              The End Point Assessment for ST1426 explicitly assesses your ability to use a
+              systematic approach. Assessors want to see you collecting evidence, forming
+              hypotheses, selecting tests logically, and revising your diagnosis based on results —
+              not guessing or randomly testing components.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Combining Techniques and Practical Application
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Combining techniques and practical application</ContentEyebrow>
+
+          <ConceptBlock title="Real-world diagnosis rarely uses one technique in isolation">
             <p>
               In real-world maintenance, you will rarely use a single diagnostic technique in
               isolation. Effective fault finding typically combines elements of several approaches,
               guided by the six-point framework. The skill lies in selecting the right technique for
               each stage of the diagnosis and adapting your approach as new information emerges.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Example — Combining Techniques
-              </p>
-              <p className="text-sm text-white mb-3">
+          <Scenario
+            title="Combining techniques on a packaging machine"
+            situation={
+              <>
                 A packaging machine has stopped. The operator reports it "just stopped" mid-cycle
                 with no warning. Here is how a systematic approach combines techniques:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              </>
+            }
+            whatToDo={
+              <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Collect evidence (six-point Step 1):</strong> Interview operator, check
                   machine display (shows "safety interlock fault"), check no tripped devices in the
-                  distribution board
+                  distribution board.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Analyse evidence (six-point Step 2):</strong> The display message suggests
                   a safety interlock is open. The machine has 12 safety interlocks (guard switches,
-                  light curtains, emergency stops)
+                  light curtains, emergency stops).
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Locate the fault (six-point Step 3):</strong> Use function testing — the
                   PLC diagnostic screen shows all interlocks satisfied except "Guard 7 — conveyor
                   discharge". Check Guard 7 physically — it is closed. Measure the signal at the PLC
                   input — 0 V (should be 24 V). Use input-to-output: 24 V present at the guard
                   switch, 0 V at the PLC input terminal. Fault is in the cable or connection between
-                  them
+                  them.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Determine cause (six-point Step 4):</strong> Cable routing passes through
                   a hinge point on a moving guard panel. Repeated flexing has fractured a conductor
-                  inside the cable
+                  inside the cable.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Rectify (six-point Step 5):</strong> Replace the cable with a flexible
-                  type rated for the application, re-route to avoid the pinch point
+                  type rated for the application, re-route to avoid the pinch point.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Check system (six-point Step 6):</strong> Verify Guard 7 signal at the
-                  PLC, function test all 12 interlocks, run the machine through a complete cycle
+                  PLC, function test all 12 interlocks, run the machine through a complete cycle.
                 </li>
               </ul>
-            </div>
+            }
+          />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Building Diagnostic Experience
-                </h3>
-                <p className="text-sm text-white">
-                  Every fault you diagnose adds to your experience database. Over time, you will
-                  recognise patterns — certain symptoms that consistently point to specific causes.
-                  This experience accelerates diagnosis but must never replace the systematic
-                  approach. Use experience to guide your hypothesis, but always verify with testing.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Working Under Pressure
-                </h3>
-                <p className="text-sm text-white">
-                  Production pressure to restore service quickly is a constant challenge for
-                  maintenance technicians. The systematic approach is actually the fastest method in
-                  most cases — despite appearing slower initially. A five-minute assessment that
-                  identifies the correct fault first time is always faster than 30 minutes of random
-                  component swapping that may not work at all.
-                </p>
-              </div>
-            </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ConceptBlock title="Building diagnostic experience">
+              <p>
+                Every fault you diagnose adds to your experience database. Over time, you will
+                recognise patterns — certain symptoms that consistently point to specific causes.
+                This experience accelerates diagnosis but must never replace the systematic
+                approach. Use experience to guide your hypothesis, but always verify with testing.
+              </p>
+            </ConceptBlock>
+            <ConceptBlock title="Working under pressure">
+              <p>
+                Production pressure to restore service quickly is a constant challenge for
+                maintenance technicians. The systematic approach is actually the fastest method in
+                most cases — despite appearing slower initially. A five-minute assessment that
+                identifies the correct fault first time is always faster than 30 minutes of random
+                component swapping that may not work at all.
+              </p>
+            </ConceptBlock>
+          </div>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Keep a personal fault-finding log. Record every significant
-              fault you diagnose — the symptoms, your diagnostic process, the root cause, and the
-              repair. Over time, this becomes an invaluable reference that accelerates your future
-              diagnostics. Many experienced technicians can diagnose common faults in seconds
-              because they have seen the same pattern dozens of times — but they all started by
-              building their experience one fault at a time.
+          <ConceptBlock title="Keep a personal fault-finding log">
+            <p>
+              Record every significant fault you diagnose — the symptoms, your diagnostic process,
+              the root cause, and the repair. Over time, this becomes an invaluable reference that
+              accelerates your future diagnostics. Many experienced technicians can diagnose common
+              faults in seconds because they have seen the same pattern dozens of times — but they
+              all started by building their experience one fault at a time.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=4_YaoRGUB5Y"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Fault Finding and How to Describe a Fault in Assessment"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Six-Point Technique</p>
-                <ul className="space-y-0.5">
-                  <li>1. Collect evidence — gather all available information</li>
-                  <li>2. Analyse evidence — interpret logically, form hypothesis</li>
-                  <li>3. Locate fault — use half-split, signal trace or function test</li>
-                  <li>4. Determine cause — root cause analysis, not just symptom</li>
-                  <li>5. Rectify fault — repair and address root cause</li>
-                  <li>6. Check system — verify repair, test for secondary faults</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Choosing a Technique</p>
-                <ul className="space-y-0.5">
-                  <li>Half-split — long series circuits, cable faults</li>
-                  <li>Input-to-output — sequential signal flow circuits</li>
-                  <li>Function test — automated sequences, interlocked systems</li>
-                  <li>Substitution — confirmation only, not primary method</li>
-                  <li>Combine methods as needed within six-point framework</li>
-                </ul>
-              </div>
+            channel="Craig Wiltshire"
+
+            duration="7:10"
+
+            topic="Working a fault through and putting it into words"
+
+            caption="Framed around describing the fault for an assessor, which is exactly what the professional discussion asks you to do."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              '1. Collect evidence — gather all available information.',
+              '2. Analyse evidence — interpret logically, form hypothesis.',
+              '3. Locate fault — use half-split, signal trace or function test.',
+              '4. Determine cause — root cause analysis, not just symptom.',
+              '5. Rectify fault — repair and address root cause.',
+              '6. Check system — verify repair, test for secondary faults.',
+              'Half-split suits long series circuits and cable faults; input-to-output suits sequential signal flow circuits; function test suits automated sequences and interlocked systems.',
+              'Substitution is a confirmation method only, never the primary diagnostic method — combine techniques as needed within the six-point framework.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Symptom Recognition and Initial Assessment
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Use of Electrical Test Instruments
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Symptom Recognition
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-3">
-              Next: Electrical Test Instruments
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

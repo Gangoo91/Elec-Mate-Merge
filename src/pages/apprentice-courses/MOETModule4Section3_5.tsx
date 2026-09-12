@@ -1,8 +1,45 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 3 · Subsection 5 — Control Circuit Faults
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Common electrical plant, equipment, and systems
+ *                 failure modes."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Control Circuit Faults - MOET Module 4 Section 3.5';
@@ -272,126 +309,76 @@ const faqs = [
 ];
 
 const MOETModule4Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 4.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Control Circuit Faults
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 5"
+        title="Control Circuit Faults"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Diagnosing faults in control circuits, relay logic, PLCs and automation systems
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Relay logic:</strong> Coil faults, contact welding, voltage drop, wiring
-                faults
-              </li>
-              <li className="pl-1">
-                <strong>PLC systems:</strong> I/O diagnostics, field device failures, communication
-                faults
-              </li>
-              <li className="pl-1">
-                <strong>Safety circuits:</strong> Fail-safe design, force-guided contacts, monitored
-                interlocks
-              </li>
-              <li className="pl-1">
-                <strong>Voltage test:</strong> Full voltage across a contact = contact is open
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Circuit diagrams:</strong> Essential for tracing control circuit signal flow
-              </li>
-              <li className="pl-1">
-                <strong>Fail-safe:</strong> NC stop buttons, safety relays — loss of signal = safe
-                state
-              </li>
-              <li className="pl-1">
-                <strong>Never bypass:</strong> Interlocks and safety devices must not be bypassed
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Control system diagnosis assessed at EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Relay logic: coil faults, contact welding, voltage drop, wiring faults.',
+              'PLC systems: I/O diagnostics, field device failures, communication faults.',
+              'Safety circuits: fail-safe design, force-guided contacts, monitored interlocks.',
+              'Voltage test: full voltage across a contact = contact is open.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Diagnose common relay and contactor control circuit faults',
               'Use PLC diagnostics to identify field device and I/O module faults',
               'Apply voltage measurement techniques to trace faults in live control circuits',
               'Understand fail-safe design principles in emergency stop and safety circuits',
               'Identify timer, sensor and interlock faults in automated systems',
               'Read and interpret control circuit schematic diagrams for fault finding',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Relay and Contactor Control Circuit Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Maintenance technician context">
             <p>
               Control circuits are the brain of any automated electrical system. They determine when
               motors start and stop, in what sequence, and under what conditions. When a control
               circuit fault occurs, the symptoms can range from a complete failure to start through
-              to erratic, intermittent or unsafe operation. Diagnosing control circuit faults
-              requires a solid understanding of how control circuits work and the ability to read
-              circuit diagrams — skills that are explicitly required by the ST1426 standard.
+              to erratic, intermittent or unsafe operation.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Circuit diagrams:</strong> essential for tracing control circuit signal
+                flow.
+              </li>
+              <li>
+                <strong>Fail-safe:</strong> NC stop buttons, safety relays — loss of signal = safe
+                state.
+              </li>
+              <li>
+                <strong>Never bypass:</strong> interlocks and safety devices must not be bypassed.
+              </li>
+              <li>
+                <strong>ST1426:</strong> control system diagnosis assessed at EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ContentEyebrow>Relay and contactor control circuit faults</ContentEyebrow>
+
+          <ConceptBlock title="Relay and contactor control circuit faults">
+            <p>
+              Diagnosing control circuit faults requires a solid understanding of how control
+              circuits work and the ability to read circuit diagrams — skills that are explicitly
+              required by the ST1426 standard.
             </p>
             <p>
               The fundamental components of relay-based control circuits are contactors, relays,
@@ -400,118 +387,90 @@ const MOETModule4Section3_5 = () => {
               allows you to diagnose faults efficiently using the systematic techniques covered in
               Section 4.3.2.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Control Circuit Component Failures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Failure Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptom</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contactor coil</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open circuit (burnt out) or short circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contactor does not pull in; or trips the control fuse
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contactor contacts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Welded closed, pitted, or high resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor cannot stop; intermittent operation; overheating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Auxiliary contact</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Worn, high resistance, or open circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loss of hold-on (motor stops when start button released)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overload relay</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tripped, contact failure, incorrect setting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor will not start; nuisance tripping; no protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pushbutton</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Worn mechanism, contact failure, wiring fault
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No response when pressed; intermittent operation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common control circuit component failures">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Component</th>
+                    <th className="py-2 pr-4 font-medium text-white">Failure mode</th>
+                    <th className="py-2 font-medium text-white">Symptom</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Contactor coil</td>
+                    <td className="py-2 pr-4">Open circuit (burnt out) or short circuit</td>
+                    <td className="py-2">Contactor does not pull in; or trips the control fuse</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Contactor contacts</td>
+                    <td className="py-2 pr-4">Welded closed, pitted, or high resistance</td>
+                    <td className="py-2">Motor cannot stop; intermittent operation; overheating</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Auxiliary contact</td>
+                    <td className="py-2 pr-4">Worn, high resistance, or open circuit</td>
+                    <td className="py-2">
+                      Loss of hold-on (motor stops when start button released)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Overload relay</td>
+                    <td className="py-2 pr-4">Tripped, contact failure, incorrect setting</td>
+                    <td className="py-2">Motor will not start; nuisance tripping; no protection</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Pushbutton</td>
+                    <td className="py-2 pr-4">Worn mechanism, contact failure, wiring fault</td>
+                    <td className="py-2">No response when pressed; intermittent operation</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Voltage Testing in Live Control Circuits
-              </p>
-              <p className="text-sm text-white mb-3">
-                One of the most powerful diagnostic techniques for control circuits is voltage
-                measurement across individual components in the live circuit. The principle is
-                simple but frequently misunderstood:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>A closed (healthy) contact:</strong> Has virtually zero volts across it —
-                  current flows freely through it
-                </li>
-                <li className="pl-1">
-                  <strong>An open (faulty) contact:</strong> Has the full supply voltage across it —
-                  it is the break in the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>A healthy coil:</strong> Has the supply voltage across it when energised
-                  (the voltage is being used to drive current through the coil)
-                </li>
-                <li className="pl-1">
-                  <strong>An open-circuit coil:</strong> May show supply voltage across it, but no
-                  current flows and the relay does not operate
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When measuring across contacts in a control circuit, full
+          <ConceptBlock title="Voltage testing in live control circuits">
+            <p>
+              One of the most powerful diagnostic techniques for control circuits is voltage
+              measurement across individual components in the live circuit. The principle is simple
+              but frequently misunderstood:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>A closed (healthy) contact:</strong> has virtually zero volts across it —
+                current flows freely through it.
+              </li>
+              <li>
+                <strong>An open (faulty) contact:</strong> has the full supply voltage across it —
+                it is the break in the circuit.
+              </li>
+              <li>
+                <strong>A healthy coil:</strong> has the supply voltage across it when energised
+                (the voltage is being used to drive current through the coil).
+              </li>
+              <li>
+                <strong>An open-circuit coil:</strong> may show supply voltage across it, but no
+                current flows and the relay does not operate.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> when measuring across contacts in a control circuit, full
               voltage across a contact means it is open. Zero volts across a contact means it is
               closed. This is counter-intuitive to beginners but is a fundamental diagnostic
               principle that you must understand and apply confidently.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            PLC and Automation System Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>PLC and automation system faults</ContentEyebrow>
+
+          <ConceptBlock title="PLC and automation system faults">
             <p>
               Programmable Logic Controllers (PLCs) have largely replaced relay-based control in
               modern industrial systems. While PLCs are inherently more reliable than relay logic
@@ -527,85 +486,75 @@ const MOETModule4Section3_5 = () => {
               record events with timestamps. Learning to use these diagnostic features is one of the
               most valuable skills a modern maintenance technician can develop.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PLC Fault Diagnosis Approach
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Check the PLC status:</strong> Is the PLC in RUN mode? Check the
-                  RUN/STOP/ERROR LEDs. A PLC in STOP or ERROR mode will not execute the programme
-                </li>
-                <li className="pl-1">
-                  <strong>Check the I/O LEDs:</strong> Compare the physical LED states on the I/O
-                  modules with the expected states. An input that should be ON but is OFF points to
-                  a field device or wiring fault
-                </li>
-                <li className="pl-1">
-                  <strong>Check the power supply:</strong> Verify the PLC power supply voltage and
-                  the field device power supply voltage (often 24 V DC). A drooping power supply can
-                  cause erratic I/O behaviour
-                </li>
-                <li className="pl-1">
-                  <strong>Check communication:</strong> If the PLC communicates with HMIs, other
-                  PLCs, or remote I/O, check communication status LEDs and network connections
-                </li>
-                <li className="pl-1">
-                  <strong>Isolate the fault domain:</strong> Is the fault in the input
-                  (sensor/switch), the PLC processing, or the output (actuator/contactor)? The I/O
-                  LED status tells you immediately
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="PLC fault diagnosis approach">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Check the PLC status:</strong> is the PLC in RUN mode? Check the
+                RUN/STOP/ERROR LEDs. A PLC in STOP or ERROR mode will not execute the programme.
+              </li>
+              <li>
+                <strong>Check the I/O LEDs:</strong> compare the physical LED states on the I/O
+                modules with the expected states. An input that should be ON but is OFF points to a
+                field device or wiring fault.
+              </li>
+              <li>
+                <strong>Check the power supply:</strong> verify the PLC power supply voltage and the
+                field device power supply voltage (often 24 V DC). A drooping power supply can cause
+                erratic I/O behaviour.
+              </li>
+              <li>
+                <strong>Check communication:</strong> if the PLC communicates with HMIs, other PLCs,
+                or remote I/O, check communication status LEDs and network connections.
+              </li>
+              <li>
+                <strong>Isolate the fault domain:</strong> is the fault in the input
+                (sensor/switch), the PLC processing, or the output (actuator/contactor)? The I/O LED
+                status tells you immediately.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Field Device Faults
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Proximity sensors:</strong> Misalignment, contamination (metal swarf,
-                  oil), cable damage, sensing distance drift
-                </li>
-                <li className="pl-1">
-                  <strong>Photoelectric sensors:</strong> Dirty lenses, misalignment, ambient light
-                  interference, reflector damage
-                </li>
-                <li className="pl-1">
-                  <strong>Limit switches:</strong> Mechanical wear, actuator damage, contact
-                  failure, misadjustment
-                </li>
-                <li className="pl-1">
-                  <strong>Solenoid valves:</strong> Coil failure, mechanical jamming, contamination,
-                  air supply loss
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure/temperature sensors:</strong> Drift, calibration loss, sensing
-                  element failure, wiring faults
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When a PLC output is commanded ON by the programme but
+          <ConceptBlock title="Common field device faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Proximity sensors:</strong> misalignment, contamination (metal swarf, oil),
+                cable damage, sensing distance drift.
+              </li>
+              <li>
+                <strong>Photoelectric sensors:</strong> dirty lenses, misalignment, ambient light
+                interference, reflector damage.
+              </li>
+              <li>
+                <strong>Limit switches:</strong> mechanical wear, actuator damage, contact failure,
+                misadjustment.
+              </li>
+              <li>
+                <strong>Solenoid valves:</strong> coil failure, mechanical jamming, contamination,
+                air supply loss.
+              </li>
+              <li>
+                <strong>Pressure/temperature sensors:</strong> drift, calibration loss, sensing
+                element failure, wiring faults.
+              </li>
+            </ul>
+            <p>
+              <strong>Practical tip:</strong> when a PLC output is commanded ON by the programme but
               the physical output LED is OFF, the output module or its fuse may have failed. When
               the output LED is ON but the connected device does not operate, the fault is in the
               output wiring or the device itself. This simple distinction immediately halves your
               diagnostic search area.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Timer, Counter and Sequential Control Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Timer, counter and sequential control faults</ContentEyebrow>
+
+          <ConceptBlock title="Timer, counter and sequential control faults">
             <p>
               Timers and counters are fundamental to automated process control. They control
               sequence timing, delay periods, cycle counts and watchdog functions. When they
@@ -614,31 +563,32 @@ const MOETModule4Section3_5 = () => {
               different types (on-delay, off-delay, pulse, retentive) and how they are triggered and
               reset.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Timer Fault Diagnosis</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Timer does not start:</strong> Check the enable/trigger signal is present.
-                  Check the timer has power. Check the timer type is correct (on-delay needs a
-                  rising edge; off-delay needs a falling edge)
-                </li>
-                <li className="pl-1">
-                  <strong>Timer runs but wrong duration:</strong> Check the time base setting
-                  (seconds vs minutes vs hours — a common error). Check the preset value. Check for
-                  a noisy or bouncing trigger signal that may be resetting the timer
-                </li>
-                <li className="pl-1">
-                  <strong>Timer output does not activate:</strong> Check the output contacts for
-                  failure. In PLC timers, check the addressing of the timer done bit
-                </li>
-                <li className="pl-1">
-                  <strong>Timer runs continuously:</strong> Check the reset signal. A timer that
-                  never receives its reset will continue running or remain latched
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Timer fault diagnosis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Timer does not start:</strong> check the enable/trigger signal is present.
+                Check the timer has power. Check the timer type is correct (on-delay needs a rising
+                edge; off-delay needs a falling edge).
+              </li>
+              <li>
+                <strong>Timer runs but wrong duration:</strong> check the time base setting (seconds
+                vs minutes vs hours — a common error). Check the preset value. Check for a noisy or
+                bouncing trigger signal that may be resetting the timer.
+              </li>
+              <li>
+                <strong>Timer output does not activate:</strong> check the output contacts for
+                failure. In PLC timers, check the addressing of the timer done bit.
+              </li>
+              <li>
+                <strong>Timer runs continuously:</strong> check the reset signal. A timer that never
+                receives its reset will continue running or remain latched.
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Sequential control faults">
             <p>
               Sequential control faults — where a process stalls at a particular step — are
               diagnosed by identifying what condition is required to advance to the next step and
@@ -647,35 +597,41 @@ const MOETModule4Section3_5 = () => {
               interlock chain for the next stage. Function testing, as described in Section 4.3.2,
               is the ideal diagnostic method for sequential faults.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Sequencing Error</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Common sequencing error"
+            whatHappens={
+              <>
                 A frequent cause of sequential control faults is sensor misadjustment after
                 maintenance. If a limit switch that confirms a cylinder has fully extended is
-                knocked out of position, the control system never receives the "extended"
-                confirmation and the sequence stalls waiting for it. Always check sensor positions
-                and adjustments after any mechanical maintenance work on automated equipment.
-              </p>
-            </div>
+                knocked out of position, the control system never receives the &quot;extended&quot;
+                confirmation and the sequence stalls waiting for it.
+              </>
+            }
+            doInstead={
+              <>
+                Always check sensor positions and adjustments after any mechanical maintenance work
+                on automated equipment.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When a sequence stalls, identify the current step and the
+          <ConceptBlock title="Diagnostic focus">
+            <p>
+              <strong>Key point:</strong> when a sequence stalls, identify the current step and the
               condition required to advance. Then verify that condition. This focused approach is
               far more efficient than testing random components.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Safety Circuit Faults and Interlock Diagnostics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety circuit faults and interlock diagnostics</ContentEyebrow>
+
+          <ConceptBlock title="Safety circuit faults and interlock diagnostics">
             <p>
               Safety circuits — including emergency stop circuits, guard interlocks, safety light
               curtains and safety PLCs — are the most critical control circuits in any installation.
@@ -684,237 +640,182 @@ const MOETModule4Section3_5 = () => {
               safety circuits must be treated with the highest priority and diagnosed with
               particular care.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety Circuit Design Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fail-safe:</strong> Any fault in the safety circuit must result in the
-                  system achieving a safe state. NC contacts in series, de-energise to trip
-                </li>
-                <li className="pl-1">
-                  <strong>Redundancy:</strong> Dual-channel safety circuits (Category 3 and 4 of BS
-                  EN ISO 13849) use two independent paths that cross-monitor each other
-                </li>
-                <li className="pl-1">
-                  <strong>Force-guided contacts:</strong> Safety relays use mechanically linked
-                  contacts that prevent simultaneous closure of NO and NC contacts
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring:</strong> Safety controllers continuously monitor for
-                  discrepancies between redundant channels — a discrepancy triggers a fault state
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Safety circuit design principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fail-safe:</strong> any fault in the safety circuit must result in the
+                system achieving a safe state. NC contacts in series, de-energise to trip.
+              </li>
+              <li>
+                <strong>Redundancy:</strong> dual-channel safety circuits (Category 3 and 4 of BS EN
+                ISO 13849) use two independent paths that cross-monitor each other.
+              </li>
+              <li>
+                <strong>Force-guided contacts:</strong> safety relays use mechanically linked
+                contacts that prevent simultaneous closure of NO and NC contacts.
+              </li>
+              <li>
+                <strong>Monitoring:</strong> safety controllers continuously monitor for
+                discrepancies between redundant channels — a discrepancy triggers a fault state.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Never Bypass Safety Circuits</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Never bypass safety circuits"
+            whatHappens={
+              <>
                 Under no circumstances should safety interlocks, emergency stops or guard switches
                 be bypassed, defeated or jumpered out — even temporarily for diagnostic purposes.
                 This is a criminal offence under the Health and Safety at Work Act 1974 and the
-                Provision and Use of Work Equipment Regulations 1998 (PUWER). If a safety device
-                needs to be defeated for testing, a formal safety procedure must be followed with
-                specific risk controls in place.
-              </p>
-            </div>
+                Provision and Use of Work Equipment Regulations 1998 (PUWER).
+              </>
+            }
+            doInstead={
+              <>
+                If a safety device needs to be defeated for testing, a formal safety procedure must
+                be followed with specific risk controls in place.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Diagnosing Safety Circuit Faults
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety relay diagnostics:</strong> Most safety relays have LED indicators
-                  showing the status of each input channel and the output contacts. Use these to
-                  identify which channel has the fault
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency stop chain:</strong> Use the half-split technique to locate an
-                  open e-stop in a series chain. Check each e-stop for correct latching and NC
-                  contact operation
-                </li>
-                <li className="pl-1">
-                  <strong>Guard switches:</strong> Check mechanical operation, wiring, and that the
-                  actuator correctly engages the switch when the guard is closed
-                </li>
-                <li className="pl-1">
-                  <strong>Safety light curtains:</strong> Check alignment LEDs, clean lenses, verify
-                  mounting security, and check for environmental interference
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Safety circuit understanding is a mandatory competence
+          <ConceptBlock title="Diagnosing safety circuit faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety relay diagnostics:</strong> most safety relays have LED indicators
+                showing the status of each input channel and the output contacts. Use these to
+                identify which channel has the fault.
+              </li>
+              <li>
+                <strong>Emergency stop chain:</strong> use the half-split technique to locate an
+                open e-stop in a series chain. Check each e-stop for correct latching and NC contact
+                operation.
+              </li>
+              <li>
+                <strong>Guard switches:</strong> check mechanical operation, wiring, and that the
+                actuator correctly engages the switch when the guard is closed.
+              </li>
+              <li>
+                <strong>Safety light curtains:</strong> check alignment LEDs, clean lenses, verify
+                mounting security, and check for environmental interference.
+              </li>
+            </ul>
+            <p>
+              <strong>ST1426 link:</strong> safety circuit understanding is a mandatory competence
               for maintenance technicians. You must be able to demonstrate knowledge of safety
               circuit principles, identify safety devices and their functions, and carry out fault
               diagnosis on safety circuits while maintaining the integrity of the safety function
               throughout.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Control Circuit Diagnostic Workflow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Control circuit diagnostic workflow</ContentEyebrow>
+
+          <ConceptBlock title="Control circuit diagnostic workflow">
             <p>
               Applying the six-point technique to control circuit faults, here is a practical
               workflow that covers the key diagnostic steps for any control circuit problem.
             </p>
-
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Understand the Circuit
-                </h3>
-                <p className="text-sm text-white">
-                  Obtain and study the circuit diagram before starting. Understand the normal
-                  sequence of operation, the function of each component, and the expected signal
-                  flow. If no diagram is available, sketch one as you investigate.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Identify the Symptom
-                </h3>
-                <p className="text-sm text-white">
-                  Define exactly what is wrong: "The motor does not start when the start button is
-                  pressed" is much more useful than "it doesn't work". Check all relevant indicators
-                  — pilot lights, PLC LEDs, alarm displays, trip indicators.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Check the Control Supply
-                </h3>
-                <p className="text-sm text-white">
-                  Verify that the control voltage is present and at the correct level. A missing or
-                  low control supply will cause all control functions to fail. Check the control
-                  transformer, control fuses and any control circuit isolators.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Trace the Signal
-                </h3>
-                <p className="text-sm text-white">
-                  Using the circuit diagram, trace the signal flow from the supply through each
-                  device in the control circuit. Use voltage measurement to identify where the
-                  signal is lost. The point where you have supply voltage on one side but not the
-                  other is where the fault lies.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 5 — Verify and Repair
-                </h3>
-                <p className="text-sm text-white">
-                  Once the faulty component is identified, confirm the diagnosis with a specific
-                  test (e.g., continuity test on the contact, resistance test on the coil). Carry
-                  out the repair, addressing the root cause. Test the complete circuit function
-                  before returning to service.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Control circuit faults are among the most satisfying to
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Understand the circuit.</strong> Obtain and study the circuit
+                diagram before starting. Understand the normal sequence of operation, the function
+                of each component, and the expected signal flow. If no diagram is available, sketch
+                one as you investigate.
+              </li>
+              <li>
+                <strong>Step 2 — Identify the symptom.</strong> Define exactly what is wrong:
+                &quot;The motor does not start when the start button is pressed&quot; is much more
+                useful than &quot;it doesn&apos;t work&quot;. Check all relevant indicators — pilot
+                lights, PLC LEDs, alarm displays, trip indicators.
+              </li>
+              <li>
+                <strong>Step 3 — Check the control supply.</strong> Verify that the control voltage
+                is present and at the correct level. A missing or low control supply will cause all
+                control functions to fail. Check the control transformer, control fuses and any
+                control circuit isolators.
+              </li>
+              <li>
+                <strong>Step 4 — Trace the signal.</strong> Using the circuit diagram, trace the
+                signal flow from the supply through each device in the control circuit. Use voltage
+                measurement to identify where the signal is lost. The point where you have supply
+                voltage on one side but not the other is where the fault lies.
+              </li>
+              <li>
+                <strong>Step 5 — Verify and repair.</strong> Once the faulty component is
+                identified, confirm the diagnosis with a specific test (e.g., continuity test on the
+                contact, resistance test on the coil). Carry out the repair, addressing the root
+                cause. Test the complete circuit function before returning to service.
+              </li>
+            </ol>
+            <p className="italic">
+              <strong>Note:</strong> control circuit faults are among the most satisfying to
               diagnose because they respond well to logical, systematic analysis. The circuit
               diagram is your map, the multimeter is your compass, and the six-point technique is
               your navigation method. With practice, you will develop the ability to diagnose most
               control circuit faults quickly and confidently.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Voltage across a closed contact = 0 V (healthy).',
+              'Voltage across an open contact = supply voltage (fault).',
+              'Voltage across an energised coil = supply voltage (healthy).',
+              'No voltage anywhere = control supply fault.',
+              'Always use GS38-compliant test equipment.',
+              'BS EN ISO 13849 — safety of machinery control systems.',
+              'BS EN 62061 — functional safety of control systems.',
+              'BS EN 60204-1 — safety of machinery electrical equipment.',
+              'PUWER 1998 — work equipment safety regulations.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Control Circuit Voltage Test Rules</p>
-                <ul className="space-y-0.5">
-                  <li>Voltage across closed contact = 0 V (healthy)</li>
-                  <li>Voltage across open contact = supply voltage (fault)</li>
-                  <li>Voltage across energised coil = supply voltage (healthy)</li>
-                  <li>No voltage anywhere = control supply fault</li>
-                  <li>Always use GS38-compliant test equipment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Safety Circuit Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS EN ISO 13849 — Safety of machinery control systems</li>
-                  <li>BS EN 62061 — Functional safety of control systems</li>
-                  <li>BS EN 60204-1 — Safety of machinery electrical equipment</li>
-                  <li>PUWER 1998 — Work equipment safety regulations</li>
-                  <li>ST1426 — Control system diagnosis KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Motor and Drive Faults
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Intermittent Faults and Environmental Factors
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Motor and Drive Faults
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-6">
-              Next: Intermittent Faults
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

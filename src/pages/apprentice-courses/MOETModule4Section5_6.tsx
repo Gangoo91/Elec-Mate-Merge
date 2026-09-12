@@ -1,8 +1,58 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.6 · Subsection 6 — Commissioning Procedures
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical plant, equipment, and systems
+ *                maintenance requirements: removing and replacing parts,
+ *                inspecting, testing, setting up, adjusting, cleaning, and
+ *                functional testing."
+ *   Skills    · "Electrical. Conduct functional testing."
+ *   Knowledge · "Documentation requirements: documentation control,
+ *                auditable records."
+ *
+ * Numeric detail (soak-test durations, RCD-related figures, voltage-drop
+ * percentages) is copied verbatim from the original page; the bs7671_facets
+ * RAG holds regulation rules, not this kind of procedural/numeric detail,
+ * so it could not be checked against it.
+ *
+ * This is the last subsection of Section 5 — "next" moves into Section 6
+ * (Root cause analysis), correcting the original page's next-button target,
+ * which pointed back to the section overview instead of continuing the
+ * course chain.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Commissioning Procedures - MOET Module 4.5.6';
@@ -177,7 +227,7 @@ const quizQuestions = [
     id: 9,
     question: 'A witness test during commissioning involves:',
     options: [
-      'A second technician repeating every test to check the first technician\'s work',
+      "A second technician repeating every test to check the first technician's work",
       'The client or their representative observing the tests and verifying the results',
       'Testing the installation without informing anyone, to catch hidden faults',
       'A legal statement signed by a witness confirming the installer was on site',
@@ -190,9 +240,9 @@ const quizQuestions = [
     id: 10,
     question: 'The commissioning record (documentation pack) should include:',
     options: [
-      "Only a single pass or fail statement covering the whole installation",
-      "Just the manufacturer data sheets for the equipment that was installed",
-      "Checklists, certificates, settings, thermal and soak records, snags and handover status",
+      'Only a single pass or fail statement covering the whole installation',
+      'Just the manufacturer data sheets for the equipment that was installed',
+      'Checklists, certificates, settings, thermal and soak records, snags and handover status',
       "The contractor's invoice and a copy of the agreed contract price only",
     ],
     correctAnswer: 2,
@@ -217,10 +267,10 @@ const quizQuestions = [
     question:
       "After commissioning is complete and the system is handed over, the maintenance technician's responsibility is to:",
     options: [
-      "File the records as the baseline, set the maintenance schedule, and watch early-life performance",
-      "Discard the commissioning records, since they are no longer needed after handover",
-      "Re-commission the entire installation from scratch every month as a routine task",
-      "Hand all responsibility to the client and take no further interest in the system",
+      'File the records as the baseline, set the maintenance schedule, and watch early-life performance',
+      'Discard the commissioning records, since they are no longer needed after handover',
+      'Re-commission the entire installation from scratch every month as a routine task',
+      'Hand all responsibility to the client and take no further interest in the system',
     ],
     correctAnswer: 0,
     explanation:
@@ -257,129 +307,78 @@ const faqs = [
 ];
 
 const MOETModule4Section5_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 4.5.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Commissioning Procedures
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 6"
+        title="Commissioning Procedures"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Systematic commissioning of electrical installations from pre-checks through
-            energisation to handover
+            energisation to handover.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Verify systems operate safely and to specification before
-                service
-              </li>
-              <li className="pl-1">
-                <strong>Sequence:</strong> Pre-checks, energisation (source outwards), functional
-                tests, soak test
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Checklists, test records, snag lists, handover pack
-              </li>
-              <li className="pl-1">
-                <strong>Baseline:</strong> Commissioning records become the reference for future
-                maintenance
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Purpose: Verify systems operate safely and to specification before service',
+              'Sequence: Pre-checks, energisation (source outwards), functional tests, soak test',
+              'Documentation: Checklists, test records, snag lists, handover pack',
+              'Baseline: Commissioning records become the reference for future maintenance',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>After repairs:</strong> Re-commission affected systems proportional to the
                 work scope
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Safety:</strong> Energisation involves live working risks — plan and control
                 carefully
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Records:</strong> Commissioning data provides the baseline for condition
                 monitoring
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to commissioning, handover, and quality assurance
                 competencies
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the purpose and stages of the electrical commissioning process',
               'Develop and execute pre-commissioning checklists for different equipment types',
               'Plan and execute a safe energisation sequence from source to final circuits',
               'Conduct performance verification including load testing and soak testing',
               'Document commissioning results and compile the handover documentation pack',
               'Apply commissioning principles to maintenance scenarios (re-commissioning after repairs)',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Understanding the commissioning process</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding the Commissioning Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Understanding the Commissioning Process"
+            onSite="The cost of inadequate commissioning: Inadequate commissioning is one of the leading causes of early-life equipment failure. Issues that should have been detected during commissioning — incorrect connections, wrong protective device settings, misaligned drives, incorrect control parameters — instead manifest as operational failures, sometimes with dangerous consequences. The time and cost of proper commissioning is always less than the time, cost, and risk of dealing with commissioning failures after the system is in service."
+          >
             <p>
               Commissioning is the systematic process of bringing an electrical installation or
               piece of equipment from a state of installation or repair to full operational
               readiness. It encompasses all the activities necessary to verify that the system
               operates safely, correctly, and to its design specification before it is handed over
-              for normal use. Unlike a simple "switch it on and see if it works" approach,
+              for normal use. Unlike a simple &quot;switch it on and see if it works&quot; approach,
               commissioning follows a structured, documented procedure that identifies and resolves
               issues at each stage.
             </p>
@@ -402,87 +401,43 @@ const MOETModule4Section5_6 = () => {
               verification that the replacement is correctly rated and functions properly. The
               principle is the same: verify before you return to service.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Phases</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Activities</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Planning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Define scope, sequence, responsibilities, acceptance criteria, safety
-                        requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Pre-commissioning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual inspection, torque checks, IR testing, continuity testing, earth loop
-                        impedance calculation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Energisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Staged power-up from source outwards, voltage checks at each stage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Functional testing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protective device operation, control sequences, interlocks, safety systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Performance/soak</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Load testing, thermal survey, extended run, performance verification
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6. Handover</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Documentation, training, snag resolution, formal acceptance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Commissioning Phases"
+            headers={['Phase', 'Key Activities']}
+            rows={[
+              [
+                '1. Planning',
+                'Define scope, sequence, responsibilities, acceptance criteria, safety requirements',
+              ],
+              [
+                '2. Pre-commissioning',
+                'Visual inspection, torque checks, IR testing, continuity testing, earth loop impedance calculation',
+              ],
+              [
+                '3. Energisation',
+                'Staged power-up from source outwards, voltage checks at each stage',
+              ],
+              [
+                '4. Functional testing',
+                'Protective device operation, control sequences, interlocks, safety systems',
+              ],
+              [
+                '5. Performance/soak',
+                'Load testing, thermal survey, extended run, performance verification',
+              ],
+              ['6. Handover', 'Documentation, training, snag resolution, formal acceptance'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Cost of Inadequate Commissioning
-              </p>
-              <p className="text-sm text-white">
-                Inadequate commissioning is one of the leading causes of early-life equipment
-                failure. Issues that should have been detected during commissioning — incorrect
-                connections, wrong protective device settings, misaligned drives, incorrect control
-                parameters — instead manifest as operational failures, sometimes with dangerous
-                consequences. The time and cost of proper commissioning is always less than the
-                time, cost, and risk of dealing with commissioning failures after the system is in
-                service.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Pre-Commissioning Checks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Pre-commissioning checks</ContentEyebrow>
+
+          <ConceptBlock title="Pre-Commissioning Checks">
             <p>
               Pre-commissioning checks are carried out while the system is de-energised and safe to
               work on. Their purpose is to verify that the installation is ready for energisation —
@@ -492,71 +447,57 @@ const MOETModule4Section5_6 = () => {
               satisfactorily completed. Only when all pre-commissioning checks have been completed
               and documented should the energisation phase begin.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Visual Inspection</h3>
-                <p className="text-sm text-white">
-                  A thorough visual inspection checks for: correct cable terminations and conductor
-                  identification (colours and marking), absence of visible damage to cables,
-                  equipment, and enclosures, correct routing of cables with appropriate support and
-                  separation, correct IP ratings for the environment, presence and condition of all
-                  covers, barriers, and enclosures, removal of all installation debris (cable ties,
-                  wire offcuts, packaging materials), correct labelling of all equipment, circuits,
-                  and warning notices, and accessibility of all isolation and switching devices.
-                </p>
-              </div>
+          <ConceptBlock title="Visual inspection">
+            <p>
+              A thorough visual inspection checks for: correct cable terminations and conductor
+              identification (colours and marking), absence of visible damage to cables, equipment,
+              and enclosures, correct routing of cables with appropriate support and separation,
+              correct IP ratings for the environment, presence and condition of all covers,
+              barriers, and enclosures, removal of all installation debris (cable ties, wire
+              offcuts, packaging materials), correct labelling of all equipment, circuits, and
+              warning notices, and accessibility of all isolation and switching devices.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Mechanical Checks</h3>
-                <p className="text-sm text-white mb-2">Mechanical checks include:</p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Torque verification on all bolted connections (busbars, cable lugs, earth bars)
-                    using a calibrated torque wrench to manufacturer's specification
-                  </li>
-                  <li className="pl-1">
-                    Verification that all switchgear operating mechanisms move freely and smoothly
-                  </li>
-                  <li className="pl-1">
-                    Checking that all racking mechanisms, draw-out mechanisms, and shutters operate
-                    correctly
-                  </li>
-                  <li className="pl-1">
-                    Verification that all interlocks engage and disengage correctly
-                  </li>
-                  <li className="pl-1">
-                    Checking motor shaft rotation freedom (where possible) before energisation
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Mechanical checks">
+            <p>Mechanical checks include:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Torque verification on all bolted connections (busbars, cable lugs, earth bars)
+                using a calibrated torque wrench to manufacturer&apos;s specification
+              </li>
+              <li>
+                Verification that all switchgear operating mechanisms move freely and smoothly
+              </li>
+              <li>
+                Checking that all racking mechanisms, draw-out mechanisms, and shutters operate
+                correctly
+              </li>
+              <li>Verification that all interlocks engage and disengage correctly</li>
+              <li>Checking motor shaft rotation freedom (where possible) before energisation</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Tests (De-Energised)
-                </h3>
-                <p className="text-sm text-white">
-                  Complete all BS 7671 initial verification tests before energisation: continuity of
-                  protective conductors (R1+R2), insulation resistance between all conductors,
-                  polarity verification, and calculation of expected earth fault loop impedance from
-                  Ze and R1+R2. For three-phase systems, verify correct phase identification at all
-                  termination points. For systems with protection relays, verify relay settings
-                  against the protection study before energisation.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Electrical tests (de-energised)">
+            <p>
+              Complete all BS 7671 initial verification tests before energisation: continuity of
+              protective conductors (R1+R2), insulation resistance between all conductors, polarity
+              verification, and calculation of expected earth fault loop impedance from Ze and
+              R1+R2. For three-phase systems, verify correct phase identification at all termination
+              points. For systems with protection relays, verify relay settings against the
+              protection study before energisation.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Energisation Sequence and Live Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Energisation sequence and live testing</ContentEyebrow>
+
+          <ConceptBlock title="Energisation Sequence and Live Testing">
             <p>
               Energisation is the most critical phase of commissioning from a safety perspective. It
               is the point at which the installation transitions from a de-energised state (where it
@@ -564,79 +505,57 @@ const MOETModule4Section5_6 = () => {
               can cause injury or death). The energisation sequence must be carefully planned,
               controlled, and documented, with clear communication between all team members.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Supply energisation.</strong> Close the main incoming switch or circuit
+                breaker. Verify correct supply voltage (phase-to-phase and phase-to-neutral) and
+                correct phase rotation at the main switchboard. Do not proceed if voltages are
+                incorrect or unexpected.
+              </li>
+              <li>
+                <strong>Main distribution.</strong> Close each main distribution feeder in turn. At
+                each distribution board, verify correct voltage before proceeding. Check for any
+                abnormal indications (smoke, unusual noise, burning smell).
+              </li>
+              <li>
+                <strong>Sub-distribution.</strong> Energise sub-distribution boards one at a time.
+                Verify voltages and correct operation of indicator lamps and metering at each level.
+              </li>
+              <li>
+                <strong>Final circuits.</strong> Close each final circuit individually. Verify
+                correct operation at the load end. For motor circuits, bump-test motors briefly
+                (momentary start) to confirm correct rotation before full starting.
+              </li>
+              <li>
+                <strong>Live tests.</strong> Conduct earth fault loop impedance (Zs) measurements,
+                RCD testing, and functional testing of protective devices now that the installation
+                is energised.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Staged Energisation Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1 — Supply energisation:</strong> Close the main incoming switch or
-                  circuit breaker. Verify correct supply voltage (phase-to-phase and
-                  phase-to-neutral) and correct phase rotation at the main switchboard. Do not
-                  proceed if voltages are incorrect or unexpected.
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2 — Main distribution:</strong> Close each main distribution feeder
-                  in turn. At each distribution board, verify correct voltage before proceeding.
-                  Check for any abnormal indications (smoke, unusual noise, burning smell).
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3 — Sub-distribution:</strong> Energise sub-distribution boards one
-                  at a time. Verify voltages and correct operation of indicator lamps and metering
-                  at each level.
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4 — Final circuits:</strong> Close each final circuit individually.
-                  Verify correct operation at the load end. For motor circuits, bump-test motors
-                  briefly (momentary start) to confirm correct rotation before full starting.
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 5 — Live tests:</strong> Conduct earth fault loop impedance (Zs)
-                  measurements, RCD testing, and functional testing of protective devices now that
-                  the installation is energised.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Phase rotation verification"
+            onSite="Safety during energisation: All persons must be aware that the system is transitioning from de-energised to live. Use a formal energisation permit or procedure, ensure all team members are briefed, keep all covers and barriers closed (test through designated test points where possible), use GS 38 compliant test equipment, and be prepared to de-energise immediately if any abnormality is detected. Have fire extinguishers readily available in case of an electrical fire during first energisation."
+          >
+            <p>
+              For three-phase installations, phase rotation must be verified at the incoming supply
+              and at every distribution point downstream. Use a phase rotation meter (phase sequence
+              indicator) to confirm that the rotation matches the design (typically L1-L2-L3,
+              clockwise). Incorrect phase rotation at any point must be corrected before energising
+              any three-phase equipment downstream. Common causes of incorrect rotation include
+              crossed phases at a terminal, incorrect cable allocation during installation, or a
+              change in supply phase sequence by the DNO.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phase Rotation Verification
-              </h3>
-              <p className="text-sm text-white">
-                For three-phase installations, phase rotation must be verified at the incoming
-                supply and at every distribution point downstream. Use a phase rotation meter (phase
-                sequence indicator) to confirm that the rotation matches the design (typically
-                L1-L2-L3, clockwise). Incorrect phase rotation at any point must be corrected before
-                energising any three-phase equipment downstream. Common causes of incorrect rotation
-                include crossed phases at a terminal, incorrect cable allocation during
-                installation, or a change in supply phase sequence by the DNO.
-              </p>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Safety During Energisation</p>
-              <p className="text-sm text-white">
-                During energisation, all persons must be aware that the system is transitioning from
-                de-energised to live. Use a formal energisation permit or procedure, ensure all team
-                members are briefed, keep all covers and barriers closed (test through designated
-                test points where possible), use GS 38 compliant test equipment, and be prepared to
-                de-energise immediately if any abnormality is detected. Have fire extinguishers
-                readily available in case of an electrical fire during first energisation.
-              </p>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ContentEyebrow>Performance testing and soak testing</ContentEyebrow>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Performance Testing and Soak Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Performance Testing and Soak Testing">
             <p>
               Once the installation is energised and the functional tests have confirmed correct
               operation, the next phase is performance testing — verifying that the system meets its
@@ -646,60 +565,51 @@ const MOETModule4Section5_6 = () => {
               for an extended period to identify intermittent or time-dependent faults), and thermal
               verification (using infrared thermography to check for hot spots).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Load Testing</h3>
-                <p className="text-sm text-white">
-                  Load testing verifies that the system can deliver its design performance under the
-                  expected operating conditions. For a distribution system, this means checking
-                  voltage levels at the furthest points under load, verifying that voltage drops are
-                  within the limits specified by BS 7671 (typically 5% for lighting, 5% for other
-                  uses, from the origin to the load), and confirming that no cables, connections, or
-                  equipment are overheating. For motor circuits, load testing verifies starting
-                  current, running current, speed, and vibration under load.
-                </p>
-              </div>
+          <ConceptBlock title="Load testing">
+            <p>
+              Load testing verifies that the system can deliver its design performance under the
+              expected operating conditions. For a distribution system, this means checking voltage
+              levels at the furthest points under load, verifying that voltage drops are within the
+              limits specified by BS 7671 (typically 5% for lighting, 5% for other uses, from the
+              origin to the load), and confirming that no cables, connections, or equipment are
+              overheating. For motor circuits, load testing verifies starting current, running
+              current, speed, and vibration under load.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Soak Testing</h3>
-                <p className="text-sm text-white">
-                  A soak test operates the system under normal load conditions for an extended
-                  period — typically 24 to 72 hours, though the duration depends on the system type
-                  and the client's requirements. During the soak period, the system is monitored
-                  for: temperature stability (all components should reach a steady-state temperature
-                  within design limits), intermittent faults (nuisance tripping, flickering,
-                  dropouts), abnormal noise or vibration (developing bearing failures, loose
-                  fixings), and performance consistency (output remaining within specification
-                  throughout).
-                </p>
-              </div>
+          <ConceptBlock title="Soak testing">
+            <p>
+              A soak test operates the system under normal load conditions for an extended period —
+              typically 24 to 72 hours, though the duration depends on the system type and the
+              client&apos;s requirements. During the soak period, the system is monitored for:
+              temperature stability (all components should reach a steady-state temperature within
+              design limits), intermittent faults (nuisance tripping, flickering, dropouts),
+              abnormal noise or vibration (developing bearing failures, loose fixings), and
+              performance consistency (output remaining within specification throughout).
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Thermal Survey</h3>
-                <p className="text-sm text-white">
-                  An infrared thermal survey conducted during the soak test (or as soon as the
-                  system has reached thermal equilibrium under load) provides a visual map of
-                  temperature distribution across all connections, conductors, and equipment. Hot
-                  spots identified at this stage — typically caused by high-resistance connections,
-                  undersized conductors, or unbalanced loads — can be rectified before they develop
-                  into failures. The thermal images also serve as a baseline for future comparative
-                  surveys during preventive maintenance.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Thermal survey">
+            <p>
+              An infrared thermal survey conducted during the soak test (or as soon as the system
+              has reached thermal equilibrium under load) provides a visual map of temperature
+              distribution across all connections, conductors, and equipment. Hot spots identified
+              at this stage — typically caused by high-resistance connections, undersized
+              conductors, or unbalanced loads — can be rectified before they develop into failures.
+              The thermal images also serve as a baseline for future comparative surveys during
+              preventive maintenance.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Handover and Ongoing Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Handover and ongoing maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Handover and Ongoing Maintenance">
             <p>
               The handover phase formally transfers the commissioned system from the commissioning
               team (or the maintenance team, in the case of re-commissioning after a repair) to the
@@ -708,154 +618,112 @@ const MOETModule4Section5_6 = () => {
               system. The quality of the handover directly affects the quality of ongoing
               maintenance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Documentation Pack
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Commissioning records:</strong> All checklists, test results, and
-                  verification records from the commissioning process
-                </li>
-                <li className="pl-1">
-                  <strong>BS 7671 certificates:</strong> EIC with Schedules of Inspection and Test
-                  Results
-                </li>
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Updated to reflect the actual installation,
-                  including any variations from the design
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment settings:</strong> Recorded parameters for all configurable
-                  equipment (drives, relays, BMS controllers)
-                </li>
-                <li className="pl-1">
-                  <strong>O&M manuals:</strong> Manufacturer's operation and maintenance
-                  documentation for all installed equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Warranty documentation:</strong> Product warranties, extended warranty
-                  details, and warranty conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Snag list:</strong> Status of all items identified during commissioning,
-                  with evidence of resolution
-                </li>
-                <li className="pl-1">
-                  <strong>Recommended maintenance schedule:</strong> Based on manufacturer's
-                  recommendations and commissioning findings
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Handover documentation pack">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Commissioning records:</strong> All checklists, test results, and
+                verification records from the commissioning process
+              </li>
+              <li>
+                <strong>BS 7671 certificates:</strong> EIC with Schedules of Inspection and Test
+                Results
+              </li>
+              <li>
+                <strong>As-built drawings:</strong> Updated to reflect the actual installation,
+                including any variations from the design
+              </li>
+              <li>
+                <strong>Equipment settings:</strong> Recorded parameters for all configurable
+                equipment (drives, relays, BMS controllers)
+              </li>
+              <li>
+                <strong>O&amp;M manuals:</strong> Manufacturer&apos;s operation and maintenance
+                documentation for all installed equipment
+              </li>
+              <li>
+                <strong>Warranty documentation:</strong> Product warranties, extended warranty
+                details, and warranty conditions
+              </li>
+              <li>
+                <strong>Snag list:</strong> Status of all items identified during commissioning,
+                with evidence of resolution
+              </li>
+              <li>
+                <strong>Recommended maintenance schedule:</strong> Based on manufacturer&apos;s
+                recommendations and commissioning findings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Commissioning Records as Maintenance Baseline
-              </h3>
-              <p className="text-sm text-white">
-                The commissioning records serve a vital function in ongoing maintenance: they
-                establish the baseline against which all future measurements are compared. The
-                insulation resistance, earth fault loop impedance, RCD trip times, motor currents,
-                and temperature profiles recorded during commissioning represent the "as new"
-                condition of the installation. Any deterioration detected during subsequent
-                maintenance inspections is measured against this baseline, enabling accurate
-                assessment of the rate of deterioration and informed decisions about intervention
-                timing.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in commissioning procedures, handover processes, and the establishment of maintenance
-              baselines. Demonstrating that you understand how commissioning links to ongoing
-              maintenance — that the records created today enable the condition-based maintenance of
-              tomorrow — is a key differentiator in the end-point assessment.
+          <ConceptBlock title="Commissioning records as maintenance baseline">
+            <p>
+              The commissioning records serve a vital function in ongoing maintenance: they
+              establish the baseline against which all future measurements are compared. The
+              insulation resistance, earth fault loop impedance, RCD trip times, motor currents, and
+              temperature profiles recorded during commissioning represent the &quot;as new&quot;
+              condition of the installation. Any deterioration detected during subsequent
+              maintenance inspections is measured against this baseline, enabling accurate
+              assessment of the rate of deterioration and informed decisions about intervention
+              timing.
             </p>
-          </div>
-        </section>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> The maintenance technician
+              standard requires competence in commissioning procedures, handover processes, and the
+              establishment of maintenance baselines. Demonstrating that you understand how
+              commissioning links to ongoing maintenance — that the records created today enable the
+              condition-based maintenance of tomorrow — is a key differentiator in the end-point
+              assessment.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Commissioning sequence: plan (scope, sequence, criteria, safety); pre-commission (visual, mechanical, electrical dead tests); energise (staged, source outwards, verify at each stage); functional test (protective devices, controls, safety); performance/soak (load test, thermal survey, extended run); handover (documentation, training, formal acceptance).',
+              'Commissioning documentation: pre-commissioning checklists (signed off), BS 7671 certificates (EIC + schedules), equipment settings and configurations, thermal survey images and report, soak test records and observations, snag list with resolution evidence.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Commissioning Sequence</p>
-                <ul className="space-y-0.5">
-                  <li>1. Plan — scope, sequence, criteria, safety</li>
-                  <li>2. Pre-commission — visual, mechanical, electrical (dead)</li>
-                  <li>3. Energise — staged, source outwards, verify at each stage</li>
-                  <li>4. Functional test — protective devices, controls, safety</li>
-                  <li>5. Performance/soak — load test, thermal survey, extended run</li>
-                  <li>6. Handover — documentation, training, formal acceptance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Commissioning Documentation</p>
-                <ul className="space-y-0.5">
-                  <li>Pre-commissioning checklists (signed off)</li>
-                  <li>BS 7671 certificates (EIC + schedules)</li>
-                  <li>Equipment settings and configurations</li>
-                  <li>Thermal survey images and report</li>
-                  <li>Soak test records and observations</li>
-                  <li>Snag list with resolution evidence</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Test Documentation and Certification
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next section <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Identifying Underlying Failures
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Test Documentation and Certification
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

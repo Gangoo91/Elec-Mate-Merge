@@ -537,8 +537,9 @@ export function useNativePushNotifications() {
         PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
           console.log('Push tap:', action);
           const data = action.notification.data;
-          // Tap tracking (best-effort) — campaign tap-through + per-recipient stamp.
-          if (data?.announcementId) {
+          // Tap tracking (best-effort) — campaign tap-through + per-recipient
+          // stamp, and per-push attribution for everything else via data.logId.
+          if (data?.announcementId || data?.logId) {
             supabase.auth
               .getUser()
               .then(({ data: u }) =>
@@ -546,6 +547,7 @@ export function useNativePushNotifications() {
                   .invoke('track-push-event', {
                     body: {
                       announcementId: data.announcementId,
+                      logId: data.logId,
                       recipientUserId: u?.user?.id,
                       event: 'tapped',
                     },

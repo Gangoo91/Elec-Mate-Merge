@@ -17,6 +17,7 @@
  * through a cache, and they live on the Trials page, not this one.
  */
 
+import { Link } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { RefreshCw, AlertTriangle, CheckCircle2 } from 'lucide-react';
@@ -61,6 +62,18 @@ import {
   ADMIN_STRIPE_STATS_QUERY_KEY,
 } from '@/hooks/useAdminStripeStats';
 import { useAdminOverviewSeries } from '@/hooks/useAdminOverviewSeries';
+import {
+  paceOver,
+  paceWindow,
+  paceShape,
+  marginalArpu,
+  flowOver,
+  steadyState,
+  requirementFor,
+  forecastMilestone,
+  nextMilestone,
+  horizonLabel,
+} from '@/lib/mrrForecast';
 import { useLifetimeBuyers } from '@/hooks/useLifetimeBuyers';
 import { useRevenueOps, recoveryRate, CHURN_REASON_LABELS } from '@/hooks/useRevenueOps';
 import { useStorePriceMix, STORE_PRODUCTS, storeLabel } from '@/hooks/useStorePriceMix';
@@ -68,7 +81,11 @@ import { useCollegeScheme } from '@/hooks/useCollegeScheme';
 
 /** "50% off", "£3 off", written the way the offer was sold. */
 const offerValue = (o: OfferRow): string => {
-  const amount = o.percentOff ? `${o.percentOff}% off` : o.amountOff ? `${gbp(o.amountOff, 2)} off` : '—';
+  const amount = o.percentOff
+    ? `${o.percentOff}% off`
+    : o.amountOff
+      ? `${gbp(o.amountOff, 2)} off`
+      : '—';
   const term =
     o.duration === 'forever'
       ? 'forever'
@@ -228,8 +245,11 @@ export default function AdminRevenue() {
   const queryClient = useQueryClient();
   const [range, setRange] = useState<Range>(30);
 
-  const { data: stripeStats, isLoading: stripeLoading, isFetching: stripeFetching } =
-    useAdminStripeStats();
+  const {
+    data: stripeStats,
+    isLoading: stripeLoading,
+    isFetching: stripeFetching,
+  } = useAdminStripeStats();
   const { data: series } = useAdminOverviewSeries();
   const { data: lifetime } = useLifetimeBuyers();
   const { data: ops } = useRevenueOps();
@@ -312,8 +332,103 @@ export default function AdminRevenue() {
     return pts;
   }, [series, stripeStats, rcLoaded, stripeMrr, rcMrr, mrr]);
 
-  const mrrThen =
-    mrrPoints.length > range ? mrrPoints[mrrPoints.length - 1 - range].total : null;
+  /*
+    The road to the next milestone, off the same daily snapshots as the chart.
+
+    Two straight lines, not a compound curve — see `mrrForecast` for why a 22%
+    monthly rate extrapolated seven months is a wish rather than a forecast.
+    The gap between the two dates is the honest uncertainty and is shown.
+  */
+  const MILESTONES = [5000, 10000, 20000, 50000];
+  const pace30 = useMemo(() => paceOver(mrrPoints, 30), [mrrPoints]);
+  const pace90 = useMemo(() => paceOver(mrrPoints, 90), [mrrPoints]);
+  const blendedArpu = paying > 0 ? mrr / paying : null;
+
+  /*
+    Net subscribers added over the same 30 days, so "how many more" can be
+    priced off what NEW people actually pay rather than the all-time average.
+  */
+  const payingRows = series?.metric_daily ?? [];
+  const paying30Ago = payingRows.length > 30
+    ? (Number(payingRows[payingRows.length - 31]?.stripe_paying) || 0) +
+      (Number(payingRows[payingRows.length - 31]?.rc_paying) || 0)
+    : null;
+  const subsAdded30 = paying30Ago != null ? paying - paying30Ago : 0;
+  const { value: arpuNow, basis: arpuBasis } = marginalArpu(
+    pace30?.added ?? 0,
+    subsAdded30,
+    blendedArpu
+  );
+
+  /*
+    Gross in, gross out, and the ceiling they imply.
+
+    `admin_metric_daily` carries a per-day count of paid churns on each rail,
+    so the leak is measured rather than modelled. The ceiling that falls out of
+    it is the most important number on this panel: linear projection assumes a
+    fixed number of leavers a month when it is really a fixed percentage, so
+    growth flattens where intake meets leak.
+  */
+  const churned30 = useMemo(
+    () =>
+      (series?.metric_daily ?? [])
+        .slice(-30)
+        .reduce(
+          (t, r) => t + (Number(r.stripe_churned_paid) || 0) + (Number(r.rc_churned_paid) || 0),
+          0
+        ),
+    [series]
+  );
+  const flow30 = useMemo(
+    () => flowOver(subsAdded30, churned30, paying30Ago, 30),
+    [subsAdded30, churned30, paying30Ago]
+  );
+  const ceiling = useMemo(
+    () => steadyState(flow30.grossNew, flow30.monthlyChurnPct, arpuNow),
+    [flow30, arpuNow]
+  );
+
+  /* Is the rate itself moving, and why do the two lines disagree? */
+  const pacePrev30 = useMemo(() => paceWindow(mrrPoints, 30, 30), [mrrPoints]);
+  const paceEarlier30 = useMemo(() => paceWindow(mrrPoints, 30, 60), [mrrPoints]);
+  const shape = useMemo(
+    () => paceShape(pace30, pacePrev30, paceEarlier30),
+    [pace30, pacePrev30, paceEarlier30]
+  );
+
+  const milestones = useMemo(
+    () => forecastMilestone(mrr, MILESTONES, [pace30, pace90], arpuNow),
+    // MILESTONES is a module-level constant in spirit; listing it would churn.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [mrr, pace30, pace90, arpuNow]
+  );
+  const nextGoal = nextMilestone(milestones);
+
+  /* What each goal needs, rather than whether it is "possible". */
+  const requirements = useMemo(() => {
+    const m = new Map<number, ReturnType<typeof requirementFor>>();
+    MILESTONES.forEach((t) =>
+      m.set(t, requirementFor(t, arpuNow, flow30.monthlyChurnPct, flow30.grossNew))
+    );
+    return m;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arpuNow, flow30]);
+
+  /*
+    Trials in flight are the only part of the gap already in the building.
+
+    Deliberately NOT multiplied by a conversion rate. The page has no live
+    conversion figure, and inventing one would put a modelled number next to
+    measured ones with nothing to mark the difference — the exact habit that
+    produced "64% never come back" and "usually responds within an hour".
+    Counts against counts is a statement that cannot be wrong, and right now it
+    happens to be the sharper one anyway: there are as many trials running as
+    the milestone needs subscribers.
+  */
+  const trialsInFlight =
+    (stripeStats?.stripe?.trialingSubscriptions ?? 0) + (rcStats?.revenuecat?.activeTrials ?? 0);
+
+  const mrrThen = mrrPoints.length > range ? mrrPoints[mrrPoints.length - 1 - range].total : null;
   const mrrDelta = mrrThen != null ? mrr - mrrThen : null;
   const mrrDeltaPct = mrrThen ? Math.round(((mrrDelta as number) / mrrThen) * 100) : null;
   const payingSeries = useMemo(
@@ -440,50 +555,47 @@ export default function AdminRevenue() {
     price, which is the real £3.50 / £9.99 rather than list.
   */
   const schemeRollup = useMemo(() => {
-    const redeemedByCode = new Map(
-      (offers?.collegeCodes ?? []).map((c) => [c.code, c])
-    );
+    const redeemedByCode = new Map((offers?.collegeCodes ?? []).map((c) => [c.code, c]));
     const build = (want: 'college' | 'employer') => {
-    const byCollege = new Map<
-      string,
-      {
-        college: string;
-        apprentice?: { code: string; redeemed: number; active: boolean; price: number };
-        electrician?: { code: string; redeemed: number; active: boolean; price: number };
-        redeemed: number;
-        mrr: number;
+      const byCollege = new Map<
+        string,
+        {
+          college: string;
+          apprentice?: { code: string; redeemed: number; active: boolean; price: number };
+          electrician?: { code: string; redeemed: number; active: boolean; price: number };
+          redeemed: number;
+          mrr: number;
+        }
+      >();
+      for (const c of (collegeScheme?.codes ?? []).filter((x) => x.scheme === want)) {
+        const live = redeemedByCode.get(c.code);
+        const entry = byCollege.get(c.org) ?? { college: c.org, redeemed: 0, mrr: 0 };
+        const slot = {
+          code: c.code,
+          redeemed: live?.redeemed ?? 0,
+          active: live?.active ?? c.is_active,
+          price: Number(c.price),
+        };
+        if (c.tier === 'electrician') entry.electrician = slot;
+        else entry.apprentice = slot;
+        entry.redeemed += slot.redeemed;
+        entry.mrr += slot.redeemed * slot.price;
+        byCollege.set(c.org, entry);
       }
-    >();
-    for (const c of (collegeScheme?.codes ?? []).filter((x) => x.scheme === want)) {
-      const live = redeemedByCode.get(c.code);
-      const entry =
-        byCollege.get(c.org) ?? { college: c.org, redeemed: 0, mrr: 0 };
-      const slot = {
-        code: c.code,
-        redeemed: live?.redeemed ?? 0,
-        active: live?.active ?? c.is_active,
-        price: Number(c.price),
+      const rows = [...byCollege.values()].sort(
+        (a, b) => b.redeemed - a.redeemed || a.college.localeCompare(b.college)
+      );
+      return {
+        rows,
+        taken: rows.filter((r) => r.redeemed > 0),
+        notUsed: rows.filter((r) => r.redeemed === 0),
+        colleges: rows.length,
+        codes: (collegeScheme?.codes ?? []).filter((x) => x.scheme === want).length,
+        redeemed: rows.reduce((t, r) => t + r.redeemed, 0),
+        mrr: Math.round(rows.reduce((t, r) => t + r.mrr, 0) * 100) / 100,
+        apprenticePrice: collegeScheme?.apprentice_price ?? 3.5,
+        electricianPrice: collegeScheme?.electrician_price ?? 9.99,
       };
-      if (c.tier === 'electrician') entry.electrician = slot;
-      else entry.apprentice = slot;
-      entry.redeemed += slot.redeemed;
-      entry.mrr += slot.redeemed * slot.price;
-      byCollege.set(c.org, entry);
-    }
-    const rows = [...byCollege.values()].sort(
-      (a, b) => b.redeemed - a.redeemed || a.college.localeCompare(b.college)
-    );
-    return {
-      rows,
-      taken: rows.filter((r) => r.redeemed > 0),
-      notUsed: rows.filter((r) => r.redeemed === 0),
-      colleges: rows.length,
-      codes: (collegeScheme?.codes ?? []).filter((x) => x.scheme === want).length,
-      redeemed: rows.reduce((t, r) => t + r.redeemed, 0),
-      mrr: Math.round(rows.reduce((t, r) => t + r.mrr, 0) * 100) / 100,
-      apprenticePrice: collegeScheme?.apprentice_price ?? 3.5,
-      electricianPrice: collegeScheme?.electrician_price ?? 9.99,
-    };
     };
     return { college: build('college'), employer: build('employer') };
   }, [collegeScheme, offers]);
@@ -500,9 +612,7 @@ export default function AdminRevenue() {
     const syncGap =
       (stripeStats?.discrepancies?.inStripeNotSupabase ?? 0) +
       (stripeStats?.discrepancies?.inSupabaseNotStripe ?? 0);
-    const unmapped = ladder
-      .filter((r) => r.tier === 'unknown')
-      .reduce((t, r) => t + r.count, 0);
+    const unmapped = ladder.filter((r) => r.tier === 'unknown').reduce((t, r) => t + r.count, 0);
     const unfulfilledLifetime = lifetime?.needsAttention.length ?? 0;
     const storeCoverage = storeMix ? storeMix.store_paying - storeMix.covered : 0;
     const failing = [syncGap, unmapped, unfulfilledLifetime, storeCoverage].filter(
@@ -581,7 +691,8 @@ export default function AdminRevenue() {
                       {gbp(Math.abs(mrrDelta))}
                     </Delta>
                     <span>
-                      {mrrDeltaPct != null && `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${range} days · `}
+                      {mrrDeltaPct != null &&
+                        `${mrrDeltaPct > 0 ? '+' : ''}${mrrDeltaPct}% in ${range} days · `}
                       {gbp((mrr * 12) / 1000, 1)}k a year
                     </span>
                   </>
@@ -609,7 +720,8 @@ export default function AdminRevenue() {
                     Stores{' '}
                     {rcLoaded ? (
                       <>
-                        <b className="font-semibold tabular-nums">{gbp(rcMrr)}</b> · {storeSubs} subs
+                        <b className="font-semibold tabular-nums">{gbp(rcMrr)}</b> · {storeSubs}{' '}
+                        subs
                       </>
                     ) : (
                       'loading'
@@ -650,6 +762,308 @@ export default function AdminRevenue() {
             </div>
           </div>
         </Panel>
+
+        {/*
+          Road to the next milestone.
+
+          Live off the same daily MRR snapshots the chart is drawn from, so the
+          date and the line can never disagree.
+        */}
+        {/*
+          Nothing until the money is real.
+
+          `mrr` is 0 while Stripe and RevenueCat are in flight, and this panel
+          happily forecast off it — every load flashed "Road to £5,000 · 6
+          months · £0.00 now · 0% of the way" before snapping to the truth. A
+          forecast that is briefly, confidently wrong is worse than one that
+          arrives a second later, so it waits for both sources like the MRR
+          line above it does.
+        */}
+        {nextGoal && pace30 && stripeStats && rcLoaded && mrr > 0 && (
+          <Panel tone="accent">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-10">
+              <div className="min-w-0">
+                <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
+                  Road to {gbp(nextGoal.target)}
+                </div>
+                <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="text-[44px] font-semibold leading-[46px] tracking-[-0.03em] text-white lg:text-[56px] lg:leading-[56px]">
+                    {horizonLabel(nextGoal.soonestDays)}
+                  </span>
+                  {nextGoal.soonest && (
+                    <span className="text-[13px] font-semibold" style={{ color: ACCENT }}>
+                      {nextGoal.soonest.toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric',
+                      })}
+                    </span>
+                  )}
+                </div>
+                <div className="mt-2 text-[13px] leading-[18px] text-white">
+                  {gbp(nextGoal.toGo, 2)} to go
+                  {nextGoal.subscribersNeeded != null && arpuNow ? (
+                    <>
+                      {' '}
+                      — about{' '}
+                      <span className="font-semibold">
+                        {nextGoal.subscribersNeeded} more paying subscribers
+                      </span>{' '}
+                      at {gbp(arpuNow, 2)}
+                      {arpuBasis === 'marginal'
+                        ? ' — what the last 30 days actually joined at'
+                        : ' average'}
+                      .
+                      {arpuBasis === 'marginal' && blendedArpu
+                        ? ` (The all-time average is ${gbp(blendedArpu, 2)}.)`
+                        : ''}
+                    </>
+                  ) : (
+                    '.'
+                  )}
+                </div>
+
+                {/* What is already in the pipe. */}
+                {trialsInFlight > 0 && nextGoal.subscribersNeeded != null && (
+                  <div className="mt-3 text-[13px] leading-[18px] text-white">
+                    <span className="font-semibold">{trialsInFlight} trials</span> are running
+                    right now — {' '}
+                    {trialsInFlight >= nextGoal.subscribersNeeded
+                      ? 'more than the milestone needs, if they convert.'
+                      : `enough for ${Math.round((trialsInFlight / nextGoal.subscribersNeeded) * 100)}% of it, if they all convert.`}
+                  </div>
+                )}
+
+                {/*
+                  🔴 Gross in, gross out, and where it stops.
+
+                  The headline rate is NET. It is the same +78 whether you won
+                  80 and lost 2 or won 128 and lost 50, and it was the second.
+                */}
+                {flow30.monthlyChurnPct != null && flow30.grossNew > 0 && (
+                  <div className="mt-4 rounded-xl border border-white/[0.1] bg-white/[0.035] px-4 py-3">
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[13px] text-white">
+                      <span>
+                        <span className="font-semibold" style={{ color: GOOD }}>
+                          +{flow30.grossNew}
+                        </span>{' '}
+                        joined
+                      </span>
+                      <span>
+                        <span className="font-semibold" style={{ color: SERIOUS }}>
+                          −{flow30.churned}
+                        </span>{' '}
+                        left
+                      </span>
+                      <span className="text-white/70">
+                        = {flow30.net > 0 ? '+' : ''}
+                        {flow30.net} net in 30 days
+                      </span>
+                      <span className="text-white/70">
+                        {flow30.monthlyChurnPct.toFixed(1)}% monthly churn
+                      </span>
+                    </div>
+                    {ceiling && (
+                      <div className="mt-2 text-[12px] leading-[17px] text-white">
+                        Keep both dials exactly where they are and you level off around{' '}
+                        <span className="font-semibold">
+                          {Math.round(ceiling.subscribers).toLocaleString('en-GB')} subscribers,{' '}
+                          {gbp(ceiling.mrr)} a month
+                        </span>{' '}
+                        — where the leak matches the intake. That is a description of today&rsquo;s
+                        settings, not a limit: every goal below shows the intake or the churn rate
+                        that clears it. Anything marked{' '}
+                        <span className="font-semibold">right on the line</span> is one you are
+                        already running at — it needs holding, not changing.
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Progress from where this milestone's run began. */}
+                <div className="mt-4">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-white/[0.08]">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${Math.min(100, Math.max(2, (mrr / nextGoal.target) * 100))}%`,
+                        background: ACCENT,
+                      }}
+                    />
+                  </div>
+                  <div className="mt-1.5 flex justify-between text-[11px] text-white">
+                    <span>{gbp(mrr, 2)} now</span>
+                    <span>{Math.round((mrr / nextGoal.target) * 100)}% of the way</span>
+                  </div>
+                </div>
+
+                {/*
+                  The basis, stated. A date with no visible arithmetic behind it
+                  is just a number someone made up.
+                */}
+                <div className="mt-4 text-[11.5px] leading-[16px] text-white/70">
+                  Straight lines from the daily MRR snapshots, not compounding.
+                  {pace30 && (
+                    <>
+                      {' '}
+                      Last {pace30.window} days: {gbp(pace30.added, 2)} added,{' '}
+                      {gbp(pace30.perDay, 2)}/day.
+                    </>
+                  )}
+                  {pace90 && pace90.window > pace30.window && (
+                    <>
+                      {' '}
+                      Last {pace90.window}: {gbp(pace90.perDay, 2)}/day.
+                    </>
+                  )}
+                  {nextGoal.latest &&
+                    nextGoal.soonest &&
+                    nextGoal.latest.getTime() - nextGoal.soonest.getTime() > 86_400_000 && (
+                      <>
+                        {' '}
+                        On the slower of the two it is{' '}
+                        {nextGoal.latest.toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                        })}
+                        .
+                      </>
+                    )}
+                  {/*
+                    Why the two lines disagree matters more than the midpoint.
+                    A step up that has since held flat makes the 90-day line
+                    slow for a reason that no longer applies to the business.
+                  */}
+                  {shape.shape === 'stepped' && pacePrev30 && paceEarlier30 && (
+                    <>
+                      {' '}
+                      The rate stepped up around two months ago —{' '}
+                      {gbp(paceEarlier30.perDay, 2)} → {gbp(pacePrev30.perDay, 2)} →{' '}
+                      {gbp(pace30.perDay, 2)} a day — and has held since, so the 90-day
+                      line is slow only because it still includes the quiet period.
+                    </>
+                  )}
+                  {shape.shape === 'slowing' && shape.changePct != null && (
+                    <>
+                      {' '}
+                      <span style={{ color: SERIOUS }}>
+                        The rate is {Math.abs(Math.round(shape.changePct))}% down on the
+                        previous 30 days
+                      </span>{' '}
+                      — these dates assume it stops falling.
+                    </>
+                  )}
+                  {shape.shape === 'accelerating' && shape.changePct != null && (
+                    <>
+                      {' '}
+                      The rate is {Math.round(shape.changePct)}% up on the previous 30 days,
+                      so even the faster line may be conservative.
+                    </>
+                  )}
+                  {/*
+                    A second, independent route to the same answer. If counting
+                    subscribers and counting pounds disagree, one of them is
+                    wrong and you should not trust either.
+                  */}
+                  {subsAdded30 > 0 && nextGoal.subscribersNeeded != null && (
+                    <>
+                      {' '}
+                      Cross-check: {subsAdded30} net subscribers joined in the last 30 days
+                      and {nextGoal.subscribersNeeded} are needed — about{' '}
+                      {Math.ceil((nextGoal.subscribersNeeded / subsAdded30) * 30)} days at
+                      that rate.
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Every milestone, so the far ones are visible too. */}
+              <div className="self-start">
+                {milestones.map((m) => (
+                  <div
+                    key={m.target}
+                    className="flex items-baseline gap-3 border-b border-white/[0.06] py-2.5 last:border-b-0"
+                  >
+                    <span
+                      className={cn(
+                        'w-[68px] shrink-0 text-[14px] font-semibold tabular-nums',
+                        m.reached ? 'text-white/45' : 'text-white'
+                      )}
+                    >
+                      {gbp(m.target)}
+                    </span>
+                    {m.reached ? (
+                      <span className="text-[12px]" style={{ color: GOOD }}>
+                        reached
+                      </span>
+                    ) : (
+                      <>
+                        <span className="min-w-0 flex-1 truncate text-[12px] text-white">
+                          {m.subscribersNeeded != null ? (
+                            <>
+                              +{m.subscribersNeeded.toLocaleString('en-GB')}
+                              {/* The word does not fit beside a date at 390px. */}
+                              <span className="hidden sm:inline"> subscribers</span>
+                            </>
+                          ) : (
+                            '—'
+                          )}
+                        </span>
+                        {/*
+                          Far milestones showed ONLY the optimistic date.
+                          £50,000 read "May 2031" as though that were a
+                          forecast, when the slower line put it years later —
+                          a single date on a five-year extrapolation is the
+                          false precision this panel exists to avoid. Once the
+                          two lines are more than a year apart, show the span
+                          and stop pretending.
+                        */}
+                        {/*
+                          What the goal NEEDS, not whether it is allowed.
+
+                          This used to print "past the ceiling" in red for
+                          anything above the steady state. That reads as a
+                          permanent verdict when the ceiling only describes
+                          today's two dial settings, and it turned a page used
+                          for setting targets into one that tells you your
+                          targets are out of reach. A goal is never impossible;
+                          it needs a number. Show the number.
+                        */}
+                        {(() => {
+                          const req = requirements.get(m.target);
+                          const onTrack = !req || req.withinCurrentSettings;
+                          return (
+                            <span
+                              className="shrink-0 text-right text-[12px] font-medium tabular-nums"
+                              style={{ color: onTrack ? 'rgba(255,255,255,0.7)' : ACCENT }}
+                            >
+                              {onTrack
+                                ? m.soonest
+                                  ? m.latest &&
+                                    m.latest.getTime() - m.soonest.getTime() > 365 * 86_400_000
+                                    ? `${m.soonest.getFullYear()}–${m.latest.getFullYear()}`
+                                    : m.soonest.toLocaleDateString('en-GB', {
+                                        month: 'short',
+                                        year: 'numeric',
+                                      })
+                                  : '—'
+                                : req.intakeMultiple != null && req.intakeMultiple < 1.1
+                                  ? 'right on the line'
+                                  : `${Math.round(req.intakePerMonth)}/mo in${
+                                      req.churnPct ? ` · or ${req.churnPct.toFixed(1)}% churn` : ''
+                                    }`}
+                            </span>
+                          );
+                        })()}
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Panel>
+        )}
 
         {/* Six figures */}
         <Panel padded={false} className="px-4 sm:px-5 lg:px-6">
@@ -785,11 +1199,7 @@ export default function AdminRevenue() {
               label="On today's price"
               sub={`of ${ladderSummary.total}`}
             />
-            <Fig
-              value={ladderSummary.legacyCount}
-              label="On a legacy price"
-              sub="never migrated"
-            />
+            <Fig value={ladderSummary.legacyCount} label="On a legacy price" sub="never migrated" />
             <Fig
               value={gbp(ladderSummary.legacyGap)}
               label="Monthly shortfall"
@@ -802,10 +1212,10 @@ export default function AdminRevenue() {
             />
           </div>
           <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
-            The shortfall is what grandfathered subscribers would add if they paid today's list price
-            for their tier. It is not money you are losing — it is the price of the promise you made
-            them — but nothing on this page reported it before. Founder pricing is excluded from the
-            shortfall on purpose: that one was a commitment, not an oversight.
+            The shortfall is what grandfathered subscribers would add if they paid today's list
+            price for their tier. It is not money you are losing — it is the price of the promise
+            you made them — but nothing on this page reported it before. Founder pricing is excluded
+            from the shortfall on purpose: that one was a commitment, not an oversight.
           </p>
         </Panel>
 
@@ -814,9 +1224,7 @@ export default function AdminRevenue() {
           <SectionHead
             title="Win-back"
             meta={
-              wb?.queue
-                ? `${wb.queue.emails_sent} emails to ${wb.queue.people} people`
-                : 'loading'
+              wb?.queue ? `${wb.queue.emails_sent} emails to ${wb.queue.people} people` : 'loading'
             }
           />
           {wb?.outcome && wb.queue ? (
@@ -938,7 +1346,10 @@ export default function AdminRevenue() {
             <>
               <div className="mt-3">
                 {storeLadder.rows.map((r) => (
-                  <div key={`${r.store}-${r.product_id}`} className="border-t border-white/[0.08] py-2.5">
+                  <div
+                    key={`${r.store}-${r.product_id}`}
+                    className="border-t border-white/[0.08] py-2.5"
+                  >
                     <div className="flex items-baseline gap-2">
                       <span
                         className="mt-1 h-2 w-2 shrink-0 self-start rounded-[2px]"
@@ -993,22 +1404,19 @@ export default function AdminRevenue() {
                 />
                 <Fig
                   value={
-                    storeMix.covered > 0
-                      ? gbp(storeLadder.impliedMrr / storeMix.covered, 2)
-                      : '—'
+                    storeMix.covered > 0 ? gbp(storeLadder.impliedMrr / storeMix.covered, 2) : '—'
                   }
                   label="Average matched"
                   sub="per subscriber"
                 />
               </div>
               <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
-                Apple and Google never return the price an individual subscriber pays, so the amounts
-                above are UK list prices looked up by product id — the store equivalent of the price
-                map the Stripe side uses. The check is the two figures beside each other: these
-                products imply {gbp(storeLadder.impliedMrr)} across{' '}
-                {storeMix.covered} matched subscribers, against {gbp(rcMrr)} of real store MRR across{' '}
-                {storeMix.store_paying}. The gap is the{' '}
-                {storeMix.store_paying - storeMix.covered} who subscribed before{' '}
+                Apple and Google never return the price an individual subscriber pays, so the
+                amounts above are UK list prices looked up by product id — the store equivalent of
+                the price map the Stripe side uses. The check is the two figures beside each other:
+                these products imply {gbp(storeLadder.impliedMrr)} across {storeMix.covered} matched
+                subscribers, against {gbp(rcMrr)} of real store MRR across {storeMix.store_paying}.
+                The gap is the {storeMix.store_paying - storeMix.covered} who subscribed before{' '}
                 {storeMix.events_from
                   ? new Date(storeMix.events_from).toLocaleDateString('en-GB', {
                       day: 'numeric',
@@ -1027,10 +1435,17 @@ export default function AdminRevenue() {
         <Panel tone="accent">
           <SectionHead
             title="College scheme"
-            meta={`50% for life · ${gbp(college.apprenticePrice, 2)} an apprentice · ${gbp(
-              college.electricianPrice,
-              2
-            )} an electrician`}
+            meta={
+              <>
+                {`50% for life · ${gbp(college.apprenticePrice, 2)} an apprentice · ${gbp(
+                  college.electricianPrice,
+                  2
+                )} an electrician · `}
+                <Link to="/admin/colleges" className="font-semibold text-elec-yellow">
+                  full picture on Colleges
+                </Link>
+              </>
+            }
           />
 
           {/*
@@ -1126,10 +1541,7 @@ export default function AdminRevenue() {
           */}
           {college.notUsed.length > 0 && (
             <>
-              <Divider
-                label={`Not yet used · ${college.notUsed.length}`}
-                className="mt-5"
-              />
+              <Divider label={`Not yet used · ${college.notUsed.length}`} className="mt-5" />
               <div className="mt-2 max-h-[190px] overflow-y-auto pr-1">
                 <ul className="m-0 grid list-none grid-cols-1 gap-x-6 gap-y-0.5 p-0 sm:grid-cols-2 lg:grid-cols-3">
                   {college.notUsed.map((r) => (
@@ -1507,10 +1919,7 @@ export default function AdminRevenue() {
           </div>
 
           <div className="mt-4">
-            <DailyCashChart
-              stripeDaily={gross?.daily ?? []}
-              storeDaily={rcGross?.daily ?? []}
-            />
+            <DailyCashChart stripeDaily={gross?.daily ?? []} storeDaily={rcGross?.daily ?? []} />
           </div>
           <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5">
             <span className="inline-flex items-center gap-1.5 text-[12px] text-white">
@@ -1528,9 +1937,8 @@ export default function AdminRevenue() {
             {gross && (
               <>
                 {' '}
-                Counted{' '}
-                {formatDistanceToNow(parseISO(gross.asOf), { addSuffix: true })}; refreshed every six
-                hours.
+                Counted {formatDistanceToNow(parseISO(gross.asOf), { addSuffix: true })}; refreshed
+                every six hours.
               </>
             )}
           </p>
@@ -1553,11 +1961,7 @@ export default function AdminRevenue() {
                 label="Confirmed"
                 sub={`${lifetime.exactCount} with a receipt`}
               />
-              <Fig
-                value={lifetime.buyers.length}
-                label="Buyers"
-                sub="lifetime access granted"
-              />
+              <Fig value={lifetime.buyers.length} label="Buyers" sub="lifetime access granted" />
               <Fig
                 value={lifetime.needsAttention.length}
                 label="Need attention"
@@ -1605,9 +2009,10 @@ export default function AdminRevenue() {
                 ))}
               </div>
               <p className="m-0 mt-3 max-w-[85ch] text-[12px] leading-[17px] text-white">
-                From the in-app cancel survey. Price is a long way from the top: people leave because
-                the product never became part of the job, which is an onboarding problem rather than
-                a pricing one — and the same conclusion the trial return curve reaches independently.
+                From the in-app cancel survey. Price is a long way from the top: people leave
+                because the product never became part of the job, which is an onboarding problem
+                rather than a pricing one — and the same conclusion the trial return curve reaches
+                independently.
               </p>
             </>
           )}
@@ -1635,9 +2040,11 @@ export default function AdminRevenue() {
                   sub={`${movement.canceled14} in the last 14`}
                 />
                 <Fig
-                  value={movement.started30 - movement.canceled30 >= 0
-                    ? `+${movement.started30 - movement.canceled30}`
-                    : `${movement.started30 - movement.canceled30}`}
+                  value={
+                    movement.started30 - movement.canceled30 >= 0
+                      ? `+${movement.started30 - movement.canceled30}`
+                      : `${movement.started30 - movement.canceled30}`
+                  }
                   label="Net, 30 days"
                   sub="starts minus cancellations"
                 />

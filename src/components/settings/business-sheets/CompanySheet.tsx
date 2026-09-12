@@ -8,6 +8,14 @@ import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  hintCn,
+  inputCn,
+  labelCn,
+} from '@/components/settings/formStyles';
 
 interface CompanySheetProps {
   open: boolean;
@@ -132,8 +140,8 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Company identity">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -153,7 +161,7 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
               <div className="flex items-start gap-4">
                 <div
                   className={cn(
-                    'rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] flex items-center justify-center overflow-hidden flex-shrink-0',
+                    'rounded-2xl bg-white/[0.05] border border-elec-yellow/35 flex items-center justify-center overflow-hidden flex-shrink-0',
                     logoSize === 'small' && 'w-16 h-16',
                     logoSize === 'medium' && 'w-20 h-20',
                     logoSize === 'large' && 'w-28 h-28'
@@ -201,24 +209,19 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
                       New logo ready — save to apply
                     </p>
                   )}
-                  <p className="text-[11px] text-white px-1">PNG, JPG or HEIC, max 20MB</p>
+                  <p className={hintCn}>PNG, JPG or HEIC, max 20MB</p>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-white font-medium text-[12px]">Logo size on documents</Label>
+                <Label className={labelCn}>Logo size on documents</Label>
                 <div className="flex gap-2">
                   {(['small', 'medium', 'large'] as const).map((size) => (
                     <button
                       key={size}
                       type="button"
                       onClick={() => setLogoSize(size)}
-                      className={cn(
-                        'flex-1 h-11 rounded-xl text-[13px] font-medium capitalize transition-colors touch-manipulation border',
-                        logoSize === size
-                          ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
-                      )}
+                      className={cn(chipBase, 'capitalize', logoSize === size ? chipOn : chipOff)}
                       aria-pressed={logoSize === size}
                     >
                       {size}
@@ -232,14 +235,14 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
 
             {/* Company name */}
             <div className="space-y-1.5">
-              <Label className="text-white font-medium text-[13px]">
+              <Label className={labelCn}>
                 Company name <span className="text-red-400">*</span>
               </Label>
               <Input
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="ABC Electrical Ltd"
-                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className={inputCn}
               />
             </div>
 
@@ -248,40 +251,40 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
             {/* Contact grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Email</Label>
+                <Label className={labelCn}>Email</Label>
                 <Input
                   value={companyEmail}
                   onChange={(e) => setCompanyEmail(e.target.value)}
                   type="email"
                   placeholder="info@company.com"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Phone</Label>
+                <Label className={labelCn}>Phone</Label>
                 <Input
                   value={companyPhone}
                   onChange={(e) => setCompanyPhone(e.target.value)}
                   placeholder="0123 456 7890"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Website</Label>
+                <Label className={labelCn}>Website</Label>
                 <Input
                   value={companyWebsite}
                   onChange={(e) => setCompanyWebsite(e.target.value)}
                   placeholder="www.company.com"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">VAT number</Label>
+                <Label className={labelCn}>VAT number</Label>
                 <Input
                   value={vatNumber}
                   onChange={(e) => setVatNumber(e.target.value)}
                   placeholder="GB123456789"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -290,7 +293,7 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
 
             {/* Address */}
             <div className="space-y-1.5">
-              <Label className="text-white font-medium text-[13px]">Business address</Label>
+              <Label className={labelCn}>Business address</Label>
               <PlacesAutocomplete
                 value={companyAddress}
                 onChange={(value) => setCompanyAddress(value)}
@@ -300,7 +303,7 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
                   setOfficeLng(place.lng);
                 }}
                 placeholder="Start typing your address…"
-                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className={inputCn}
               />
               {officeLat && officeLng && (
                 <div className="pt-1">
@@ -312,21 +315,21 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Postcode</Label>
+                <Label className={labelCn}>Postcode</Label>
                 <Input
                   value={companyPostcode}
                   onChange={(e) => setCompanyPostcode(e.target.value)}
                   placeholder="AB1 2CD"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Company reg</Label>
+                <Label className={labelCn}>Company reg</Label>
                 <Input
                   value={companyRegistration}
                   onChange={(e) => setCompanyRegistration(e.target.value)}
                   placeholder="12345678"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -337,7 +340,7 @@ const CompanySheet = ({ open, onOpenChange, profile, onSave, uploadLogo }: Compa
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

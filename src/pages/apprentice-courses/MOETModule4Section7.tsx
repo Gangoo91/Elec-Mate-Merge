@@ -4,36 +4,35 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '4.7.1',
-      title: 'Principles of reliability-centred maintenance (RCM)',
-      description: 'Understanding RCM philosophy and implementation strategies',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section7-1',
-    },
-    {
-      number: '4.7.2',
-      title: 'Balancing PPM and corrective maintenance',
-      description: 'Optimising the balance between preventive and corrective maintenance',
-      icon: Scale,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section7-2',
-    },
-    {
-      number: '4.7.3',
-      title: 'Criticality analysis of equipment',
-      description: 'Assessing equipment criticality and prioritising maintenance activities',
-      icon: AlertTriangle,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section7-3',
-    },
-    {
-      number: '4.7.4',
-      title: 'Industry best practices in RCM',
-      description: 'Learning from industry standards and best practice examples',
-      icon: BookOpen,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section7-4',
-    },
-  ];
-
+  {
+    number: '4.7.1',
+    title: 'Principles of reliability-centred maintenance (RCM)',
+    description: 'Understanding RCM philosophy and implementation strategies',
+    icon: Settings,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section7-1',
+  },
+  {
+    number: '4.7.2',
+    title: 'Balancing PPM and corrective maintenance',
+    description: 'Optimising the balance between preventive and corrective maintenance',
+    icon: Scale,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section7-2',
+  },
+  {
+    number: '4.7.3',
+    title: 'Criticality analysis of equipment',
+    description: 'Assessing equipment criticality and prioritising maintenance activities',
+    icon: AlertTriangle,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section7-3',
+  },
+  {
+    number: '4.7.4',
+    title: 'Industry best practices in RCM',
+    description: 'Learning from industry standards and best practice examples',
+    icon: BookOpen,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section7-4',
+  },
+];
 
 const MOETModule4Section7 = () => {
   useSEO(

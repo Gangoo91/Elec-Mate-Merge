@@ -1,8 +1,52 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.2 · Subsection 4 — Approach Distances and Live Working Restrictions
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical isolation and deisolation
+ *                 requirements: lockout tagout and testing for dead."
+ *              · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. Numeric
+ * safety values (approach distances) and regulation quotes are carried over
+ * character-for-character — see the spec for this conversion batch.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  RegsCallout,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Approach Distances and Live Working Restrictions - MOET Module 1.2.4';
@@ -28,12 +72,7 @@ const quickCheckQuestions = [
     id: 'hv-approach',
     question:
       'For an 11 kV system, what is the minimum safe approach distance for untrained persons?',
-    options: [
-      '1.0 metre',
-      '1.5 metres',
-      '3.0 metres',
-      '5.0 metres',
-    ],
+    options: ['1.0 metre', '1.5 metres', '3.0 metres', '5.0 metres'],
     correctIndex: 2,
     explanation:
       'For 11 kV systems, the minimum safe approach distance for untrained or unaccompanied persons is typically 3.0 metres (ENA TS 43-8). Authorised persons working under controlled conditions with appropriate PPE may work within closer defined limits, but these distances require formal authorisation, risk assessment and specific competence. The exact distances vary between DNO and organisational safety rules.',
@@ -98,16 +137,11 @@ const quizQuestions = [
   {
     id: 3,
     question:
-      'For a 33 kV overhead line, the minimum safe approach distance for persons and equipment is approximately:',
-    options: [
-      '3.0 metres',
-      '9.0 metres',
-      '15.0 metres',
-      '6.0 metres',
-    ],
-    correctAnswer: 3,
+      'HSE GS6 sets exclusion zones for work near overhead lines. For an 11 kV or 33 kV line, that zone is:',
+    options: ['3.0 metres', '9.0 metres', '15.0 metres', '6.0 metres'],
+    correctAnswer: 0,
     explanation:
-      'For 33 kV overhead lines, the minimum safe approach distance is approximately 6.0 metres for persons and non-insulated equipment (GS6 / ENA TS 43-8). This distance accounts for the possibility of flashover across the air gap at this voltage level. For cranes, excavators and other plant, additional clearances may apply depending on the equipment reach and site conditions.',
+      'GS6 — Avoiding danger from overhead power lines — gives 3 m for 11 kV and 33 kV lines, 6 m for 132 kV, and 7 m for 275 kV and 400 kV. Those are minimum exclusion zones, not targets: site Distribution Safety Rules frequently require more, and where they do the site figure governs. Conductors also swing in wind and sag under load, so the clearance you can see is not always the clearance you have.',
   },
   {
     id: 4,
@@ -259,116 +293,47 @@ const faqs = [
 ];
 
 const MOETModule1Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Approach Distances and Live Working Restrictions
-          </h1>
-          <p className="text-white">
-            Legal requirements, safe distances and justification for live electrical work
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.2 · Subsection 4"
+        title="Approach Distances and Live Working Restrictions"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Legal requirements, safe distances and justification for live electrical work.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Reg 14:</strong> No live working unless unreasonable to work dead
-              </li>
-              <li className="pl-1">
-                <strong>Three tests:</strong> Unreasonable dead, reasonable live, suitable
-                precautions
-              </li>
-              <li className="pl-1">
-                <strong>HV distances:</strong> Defined clearances per voltage level
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Justify, assess, record every decision
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Key References
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EAWR 1989:</strong> Regulations 12, 13, 14, 16, 29
-              </li>
-              <li className="pl-1">
-                <strong>HSG85:</strong> Safe working practices guidance
-              </li>
-              <li className="pl-1">
-                <strong>ENA TS 43-8:</strong> Overhead line clearances
-              </li>
-              <li className="pl-1">
-                <strong>GS6:</strong> Avoidance of danger from overhead lines
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Reg 14: no live working unless unreasonable to work dead',
+              'Three tests: unreasonable dead, reasonable live, suitable precautions',
+              'HV distances: defined clearances per voltage level',
+              'Documentation: justify, assess, record every decision',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'State the three conditions of EAWR Regulation 14 for live working',
               'Explain what constitutes a valid justification for live working',
               'Identify safe approach distances for HV systems at different voltage levels',
               'Describe barriering requirements and LV approach limits',
               'Explain accompaniment and competence requirements for live working',
               'Understand the Regulation 29 defence and the importance of record-keeping',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The three conditions</ContentEyebrow>
 
-        {/* Section 01: Regulation 14 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            EAWR Regulation 14 — The Three Conditions for Live Working
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="EAWR Regulation 14 — The Three Conditions for Live Working">
             <p>
               Regulation 14 of the Electricity at Work Regulations 1989 is the primary legal control
               on live working. It establishes an absolute prohibition on working on or near live
@@ -376,140 +341,136 @@ const MOETModule1Section2_4 = () => {
               satisfied simultaneously. This is not a discretionary decision — it is a legal
               requirement with criminal sanctions for non-compliance.
             </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Electricity at Work Regulations 1989 — Regulation 14"
+            clause={
+              <>
+                &quot;No person shall be engaged in any work activity on or so near any live
+                conductor (other than one suitably covered with insulating material so as to prevent
+                danger) that danger may arise unless — (a) it is unreasonable in all the
+                circumstances for it to be dead; (b) it is reasonable in all the circumstances for
+                him to be at work on or near it while it is live; and (c) suitable precautions
+                (including where necessary the provision of suitable protective equipment) have been
+                taken to prevent injury.&quot;
+              </>
+            }
+            meaning="All three conditions must be satisfied simultaneously, every time. There is no exemption based on duration, voltage level, or experience alone — even 230 V work must satisfy all three."
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 14"
+          />
+
+          <ConceptBlock title="Condition (a) — Unreasonable to Work Dead">
             <p>
-              The regulation states:{' '}
-              <em>
-                "No person shall be engaged in any work activity on or so near any live conductor
-                (other than one suitably covered with insulating material so as to prevent danger)
-                that danger may arise unless — (a) it is unreasonable in all the circumstances for
-                it to be dead; (b) it is reasonable in all the circumstances for him to be at work
-                on or near it while it is live; and (c) suitable precautions (including where
-                necessary the provision of suitable protective equipment) have been taken to prevent
-                injury."
-              </em>
+              This is the highest bar and must be considered first. The burden of proof is on the
+              duty holder to demonstrate why it is unreasonable to make the conductor dead.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Valid justifications:</strong> Diagnostic testing requiring energised
+                circuits, life-support or critical process systems that cannot be interrupted,
+                situations where isolation would create a greater hazard
+              </li>
+              <li>
+                <strong>Invalid justifications:</strong> Customer convenience or preference, cost of
+                arranging shutdown, time pressure, difficulty of access to isolation point, &apos;we
+                always do it this way&apos;
+              </li>
+              <li>
+                <strong>Test:</strong> Would a reasonable, competent electrical engineer agree that
+                dead working is genuinely unreasonable in these specific circumstances?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Condition (a) — Unreasonable to Work Dead
-              </p>
-              <p className="text-sm text-white mb-3">
-                This is the highest bar and must be considered first. The burden of proof is on the
-                duty holder to demonstrate why it is unreasonable to make the conductor dead.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Valid justifications:</strong> Diagnostic testing requiring energised
-                  circuits, life-support or critical process systems that cannot be interrupted,
-                  situations where isolation would create a greater hazard
-                </li>
-                <li className="pl-1">
-                  <strong>Invalid justifications:</strong> Customer convenience or preference, cost
-                  of arranging shutdown, time pressure, difficulty of access to isolation point, 'we
-                  always do it this way'
-                </li>
-                <li className="pl-1">
-                  <strong>Test:</strong> Would a reasonable, competent electrical engineer agree
-                  that dead working is genuinely unreasonable in these specific circumstances?
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Condition (b) — Reasonable to Work Live
-              </p>
-              <p className="text-sm text-white mb-3">
-                Even if condition (a) is met, it must also be reasonable for the specific person to
-                work on or near the live conductor. This considers the competence of the individual,
-                the nature of the work, and the environment.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Competence:</strong> The person must have specific training and experience
-                  in live working techniques
-                </li>
-                <li className="pl-1">
-                  <strong>Physical fitness:</strong> The person must be physically and mentally fit
-                  (not fatigued, unwell or under the influence of substances)
-                </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Conditions must be suitable — adequate lighting,
-                  space, absence of rain or moisture, stable footing
-                </li>
-                <li className="pl-1">
-                  <strong>Accompaniment:</strong> A second competent person must be present for LV
-                  live work; additional support for HV
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Condition (c) — Suitable Precautions Taken
-              </p>
-              <p className="text-sm text-white mb-3">
-                If conditions (a) and (b) are satisfied, suitable precautions must be taken to
-                prevent injury. These precautions must be appropriate to the specific task, voltage,
-                and environment.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>PPE:</strong> Insulating gloves, arc flash clothing, face shield — rated
-                  for the voltage and calculated incident energy
-                </li>
-                <li className="pl-1">
-                  <strong>Tools:</strong> VDE 1000 V rated insulated tools (BS EN 60900)
-                </li>
-                <li className="pl-1">
-                  <strong>Barriers:</strong> Insulating covers/shrouds on adjacent live parts not
-                  being worked on
-                </li>
-                <li className="pl-1">
-                  <strong>Accompaniment:</strong> Second competent person present with knowledge of
-                  emergency isolation
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency plan:</strong> Clear procedure for emergency isolation, first
-                  aid and rescue
-                </li>
-                <li className="pl-1">
-                  <strong>Insulating matting:</strong> BS EN 61111 rated matting in front of
-                  switchgear
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Legal Point</p>
-              <p className="text-sm text-white">
-                Regulations 4-16 of the EAWR 1989 impose ABSOLUTE duties — there is no 'so far as
-                reasonably practicable' qualifier. If live working results in injury and any of the
-                three conditions was not properly satisfied, it is a criminal offence. The only
-                defence available is Regulation 29 (due diligence), which requires the defendant to
-                prove they took ALL reasonable precautions and exercised ALL due diligence to avoid
-                the offence. This places an extremely high evidential burden on proper documentation
-                and record-keeping.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> If in doubt, work dead. The default position under the
-              EAWR 1989 is always dead working. Live working is the exception, not the rule, and
-              must be formally justified every single time.
+          <ConceptBlock title="Condition (b) — Reasonable to Work Live">
+            <p>
+              Even if condition (a) is met, it must also be reasonable for the specific person to
+              work on or near the live conductor. This considers the competence of the individual,
+              the nature of the work, and the environment.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Competence:</strong> The person must have specific training and experience
+                in live working techniques
+              </li>
+              <li>
+                <strong>Physical fitness:</strong> The person must be physically and mentally fit
+                (not fatigued, unwell or under the influence of substances)
+              </li>
+              <li>
+                <strong>Environment:</strong> Conditions must be suitable — adequate lighting,
+                space, absence of rain or moisture, stable footing
+              </li>
+              <li>
+                <strong>Accompaniment:</strong> A second competent person must be present for LV
+                live work; additional support for HV
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Condition (c) — Suitable Precautions Taken">
+            <p>
+              If conditions (a) and (b) are satisfied, suitable precautions must be taken to prevent
+              injury. These precautions must be appropriate to the specific task, voltage, and
+              environment.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PPE:</strong> Insulating gloves, arc flash clothing, face shield — rated for
+                the voltage and calculated incident energy
+              </li>
+              <li>
+                <strong>Tools:</strong> VDE 1000 V rated insulated tools (BS EN 60900)
+              </li>
+              <li>
+                <strong>Barriers:</strong> Insulating covers/shrouds on adjacent live parts not
+                being worked on
+              </li>
+              <li>
+                <strong>Accompaniment:</strong> Second competent person present with knowledge of
+                emergency isolation
+              </li>
+              <li>
+                <strong>Emergency plan:</strong> Clear procedure for emergency isolation, first aid
+                and rescue
+              </li>
+              <li>
+                <strong>Insulating matting:</strong> BS EN 61111 rated matting in front of
+                switchgear
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02: HV Approach Distances */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Safe Approach Distances for High Voltage Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="Treating Regulation 14 as a discretionary judgement call"
+            whatHappens={
+              <>
+                Regulations 4-16 of the EAWR 1989 impose ABSOLUTE duties — there is no &apos;so far
+                as reasonably practicable&apos; qualifier. If live working results in injury and any
+                of the three conditions was not properly satisfied, it is a criminal offence. The
+                only defence available is Regulation 29 (due diligence), which requires the
+                defendant to prove they took ALL reasonable precautions and exercised ALL due
+                diligence to avoid the offence. This places an extremely high evidential burden on
+                proper documentation and record-keeping.
+              </>
+            }
+            doInstead={
+              <>
+                If in doubt, work dead. The default position under the EAWR 1989 is always dead
+                working. Live working is the exception, not the rule, and must be formally justified
+                every single time.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>HV approach distances</ContentEyebrow>
+
+          <ConceptBlock title="Safe Approach Distances for High Voltage Systems">
             <p>
               High voltage systems present the additional hazard of flashover — the breakdown of the
               air gap between a live conductor and an earthed object (including the human body). At
@@ -522,161 +483,97 @@ const MOETModule1Section2_4 = () => {
               organisational safety rules. They vary according to the voltage level, whether the
               person is authorised or untrained, and whether the work is planned or unplanned.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Safe Approach Distances (ENA TS 43-8 / GS6)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Voltage Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Clearance (General)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Clearance (Cranes/Plant)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Up to 1 kV (LV)</td>
-                      <td className="border border-white/10 px-3 py-2">Contact distance</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 m (overhead)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevent direct contact; barriers for exposed parts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11 kV</td>
-                      <td className="border border-white/10 px-3 py-2">3.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">3.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common distribution voltage in UK
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">33 kV</td>
-                      <td className="border border-white/10 px-3 py-2">6.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">6.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primary distribution; larger clearance zone
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">66 kV</td>
-                      <td className="border border-white/10 px-3 py-2">7.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">7.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">Sub-transmission level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">132 kV</td>
-                      <td className="border border-white/10 px-3 py-2">9.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">9.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">Grid supply point level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">275 kV</td>
-                      <td className="border border-white/10 px-3 py-2">12.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">12.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        National Grid transmission
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">400 kV</td>
-                      <td className="border border-white/10 px-3 py-2">15.0 m</td>
-                      <td className="border border-white/10 px-3 py-2">15.0 m minimum</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        National Grid supergrid; largest clearance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Exclusion zones for work near overhead lines"
+            source="HSE GS6 — Avoiding danger from overhead power lines"
+            headers={['Voltage level', 'GS6 exclusion zone', 'Notes']}
+            rows={[
+              [
+                'Up to 1 kV (LV)',
+                'Treat as contact distance',
+                'Prevent direct contact; barrier or insulate exposed parts',
+              ],
+              ['11 kV and 33 kV', '3 m', 'Most UK distribution work sits here'],
+              ['132 kV', '6 m', 'Grid supply point level'],
+              ['275 kV and 400 kV', '7 m', 'National Grid transmission and supergrid'],
+            ]}
+            notes={
+              <>
+                These are the figures GS6 actually publishes. Your site will often impose{' '}
+                <strong>larger</strong> distances through its Distribution Safety Rules or
+                organisational safety rules — where it does, the site figure governs. Never work to
+                the GS6 minimum when a local rule says further back.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Important Notes on Approach Distances
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wind and weather:</strong> Overhead conductors can swing in wind, reducing
-                  clearances. Additional margins must be applied in adverse weather
-                </li>
-                <li className="pl-1">
-                  <strong>Sag:</strong> Conductors sag under heat load. Maximum sag conditions may
-                  bring conductors closer to the ground
-                </li>
-                <li className="pl-1">
-                  <strong>Plant and equipment:</strong> The clearance applies to the nearest point
-                  of the equipment (e.g., jib tip of a crane, bucket of an excavator), not just the
-                  operator
-                </li>
-                <li className="pl-1">
-                  <strong>Materials:</strong> Long conductive objects (scaffolding poles, ladders,
-                  metal pipes) effectively extend the reach of the person carrying them
-                </li>
-                <li className="pl-1">
-                  <strong>Underground cables:</strong> Different clearance rules apply — HSG47
-                  provides guidance on safe excavation near underground services
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Important Notes on Approach Distances">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wind and weather:</strong> Overhead conductors can swing in wind, reducing
+                clearances. Additional margins must be applied in adverse weather
+              </li>
+              <li>
+                <strong>Sag:</strong> Conductors sag under heat load. Maximum sag conditions may
+                bring conductors closer to the ground
+              </li>
+              <li>
+                <strong>Plant and equipment:</strong> The clearance applies to the nearest point of
+                the equipment (e.g., jib tip of a crane, bucket of an excavator), not just the
+                operator
+              </li>
+              <li>
+                <strong>Materials:</strong> Long conductive objects (scaffolding poles, ladders,
+                metal pipes) effectively extend the reach of the person carrying them
+              </li>
+              <li>
+                <strong>Underground cables:</strong> Different clearance rules apply — HSG47
+                provides guidance on safe excavation near underground services
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Barriering and Demarcation
-              </p>
-              <p className="text-sm text-white mb-3">
-                Where work is being carried out near HV equipment, physical barriers must be erected
-                to prevent inadvertent encroachment into the danger zone.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Physical barriers:</strong> Rigid barriers (e.g., Heras fencing) at the
-                  boundary of the safe approach distance
-                </li>
-                <li className="pl-1">
-                  <strong>Warning signs:</strong> 'DANGER — HIGH VOLTAGE' signs on barriers and at
-                  access points
-                </li>
-                <li className="pl-1">
-                  <strong>Goal posts:</strong> For vehicle routes passing under overhead lines —
-                  physical height restrictors
-                </li>
-                <li className="pl-1">
-                  <strong>Banksmen:</strong> For crane and plant operations near overhead lines — a
-                  dedicated person to monitor clearances
-                </li>
-                <li className="pl-1">
-                  <strong>Bunting and tape:</strong> Acceptable for demarcation but NOT as a
-                  physical barrier — it indicates a boundary but does not prevent encroachment
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> These are MINIMUM distances. Where practicable, maintain
-              the greatest possible clearance from HV equipment. The consequence of breaching the
-              clearance zone at high voltages is almost always fatal.
+          <ConceptBlock
+            title="Barriering and Demarcation"
+            onSite="These are MINIMUM distances. Where practicable, maintain the greatest possible clearance from HV equipment. The consequence of breaching the clearance zone at high voltages is almost always fatal."
+          >
+            <p>
+              Where work is being carried out near HV equipment, physical barriers must be erected
+              to prevent inadvertent encroachment into the danger zone.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Physical barriers:</strong> Rigid barriers (e.g., Heras fencing) at the
+                boundary of the safe approach distance
+              </li>
+              <li>
+                <strong>Warning signs:</strong> &apos;DANGER — HIGH VOLTAGE&apos; signs on barriers
+                and at access points
+              </li>
+              <li>
+                <strong>Goal posts:</strong> For vehicle routes passing under overhead lines —
+                physical height restrictors
+              </li>
+              <li>
+                <strong>Banksmen:</strong> For crane and plant operations near overhead lines — a
+                dedicated person to monitor clearances
+              </li>
+              <li>
+                <strong>Bunting and tape:</strong> Acceptable for demarcation but NOT as a physical
+                barrier — it indicates a boundary but does not prevent encroachment
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: LV Live Working and Accompaniment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            LV Approach Limits, Accompaniment and Competence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>LV limits and accompaniment</ContentEyebrow>
+
+          <ConceptBlock title="LV Approach Limits, Accompaniment and Competence">
             <p>
               Low voltage (230/400 V) presents a different risk profile to HV. The flashover
               distance at LV is negligible (a few millimetres in contaminated conditions), so the
@@ -685,346 +582,340 @@ const MOETModule1Section2_4 = () => {
               LV live working focus on preventing direct contact and ensuring rapid response in an
               emergency.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LV Approach Limits and Controls
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Approach limit:</strong> At LV, the approach limit is effectively contact
-                  distance — any exposed live part must be protected by barriers, insulating covers
-                  or shrouds
-                </li>
-                <li className="pl-1">
-                  <strong>Adjacent live parts:</strong> When working on one conductor, all adjacent
-                  live parts that are not being directly worked on must be covered with insulating
-                  material
-                </li>
-                <li className="pl-1">
-                  <strong>Workspace:</strong> Ensure adequate space to work without inadvertent
-                  contact — cramped conditions increase the risk of accidental contact
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting:</strong> Adequate lighting is essential — you must be able to
-                  clearly see the conductors and their identification
-                </li>
-                <li className="pl-1">
-                  <strong>Insulating matting:</strong> Place BS EN 61111 rated matting in front of
-                  switchgear and distribution boards
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="LV Approach Limits and Controls">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Approach limit:</strong> At LV, the approach limit is effectively contact
+                distance — any exposed live part must be protected by barriers, insulating covers or
+                shrouds
+              </li>
+              <li>
+                <strong>Adjacent live parts:</strong> When working on one conductor, all adjacent
+                live parts that are not being directly worked on must be covered with insulating
+                material
+              </li>
+              <li>
+                <strong>Workspace:</strong> Ensure adequate space to work without inadvertent
+                contact — cramped conditions increase the risk of accidental contact
+              </li>
+              <li>
+                <strong>Lighting:</strong> Adequate lighting is essential — you must be able to
+                clearly see the conductors and their identification
+              </li>
+              <li>
+                <strong>Insulating matting:</strong> Place BS EN 61111 rated matting in front of
+                switchgear and distribution boards
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Accompaniment Requirements
-              </p>
-              <p className="text-sm text-white mb-3">
-                Live working at any voltage should not be carried out alone. The accompaniment
-                requirement ensures that if an incident occurs, there is someone present who can
-                respond immediately.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>LV live working:</strong> A second competent person must be present who
-                  can isolate the supply in an emergency and administer first aid including CPR
-                </li>
-                <li className="pl-1">
-                  <strong>HV live working:</strong> Additional accompaniment as defined by the
-                  safety rules — typically an authorised person and a safety observer
-                </li>
-                <li className="pl-1">
-                  <strong>Competence of companion:</strong> The companion must know the location of
-                  the isolation point, be able to operate it, and be trained in emergency first aid
-                  (including CPR and AED use)
-                </li>
-                <li className="pl-1">
-                  <strong>Proximity:</strong> The companion must be close enough to respond
-                  immediately — not in a different room or building
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Clear verbal communication must be maintained
-                  throughout the live work
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Competence for Live Working (Regulation 16)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Regulation 16 of the EAWR 1989 requires that no person shall be engaged in
-                electrical work unless they possess sufficient 'technical knowledge or experience'
-                to prevent danger. For live working, the competence bar is higher than for dead
-                working.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Training:</strong> Specific formal training in live working techniques,
-                  not just general electrical competence
-                </li>
-                <li className="pl-1">
-                  <strong>Knowledge:</strong> Understanding of the specific hazards (shock, arc
-                  flash, burns), the relevant regulations, and the controls required
-                </li>
-                <li className="pl-1">
-                  <strong>Experience:</strong> Practical experience of the type of equipment and
-                  work being undertaken, ideally gained under supervision
-                </li>
-                <li className="pl-1">
-                  <strong>Assessment:</strong> Formal assessment of competence by the employer —
-                  typically documented in a competence register
-                </li>
-                <li className="pl-1">
-                  <strong>Supervision:</strong> Where a person is gaining competence (e.g., an
-                  apprentice), they must be directly supervised by a competent person at all times
-                </li>
-                <li className="pl-1">
-                  <strong>Refresher:</strong> Competence must be maintained through regular practice
-                  and periodic refresher training
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> As a maintenance technician apprentice, you will develop
-              competence progressively. Live working should only be carried out under direct
-              supervision of your mentor until you have been formally assessed as competent. Your
-              training log should record the specific live working competences you have
-              demonstrated.
+          <ConceptBlock title="Accompaniment Requirements">
+            <p>
+              Live working at any voltage should not be carried out alone. The accompaniment
+              requirement ensures that if an incident occurs, there is someone present who can
+              respond immediately.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LV live working:</strong> A second competent person must be present who can
+                isolate the supply in an emergency and administer first aid including CPR
+              </li>
+              <li>
+                <strong>HV live working:</strong> Additional accompaniment as defined by the safety
+                rules — typically an authorised person and a safety observer
+              </li>
+              <li>
+                <strong>Competence of companion:</strong> The companion must know the location of
+                the isolation point, be able to operate it, and be trained in emergency first aid
+                (including CPR and AED use)
+              </li>
+              <li>
+                <strong>Proximity:</strong> The companion must be close enough to respond
+                immediately — not in a different room or building
+              </li>
+              <li>
+                <strong>Communication:</strong> Clear verbal communication must be maintained
+                throughout the live work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock
+            title="Competence for Live Working (Regulation 16)"
+            onSite="As a maintenance technician apprentice, you will develop competence progressively. Live working should only be carried out under direct supervision of your mentor until you have been formally assessed as competent. Your training log should record the specific live working competences you have demonstrated."
+          >
+            <p>
+              Regulation 16 of the EAWR 1989 requires that no person shall be engaged in electrical
+              work unless they possess sufficient &apos;technical knowledge or experience&apos; to
+              prevent danger. For live working, the competence bar is higher than for dead working.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Training:</strong> Specific formal training in live working techniques, not
+                just general electrical competence
+              </li>
+              <li>
+                <strong>Knowledge:</strong> Understanding of the specific hazards (shock, arc flash,
+                burns), the relevant regulations, and the controls required
+              </li>
+              <li>
+                <strong>Experience:</strong> Practical experience of the type of equipment and work
+                being undertaken, ideally gained under supervision
+              </li>
+              <li>
+                <strong>Assessment:</strong> Formal assessment of competence by the employer —
+                typically documented in a competence register
+              </li>
+              <li>
+                <strong>Supervision:</strong> Where a person is gaining competence (e.g., an
+                apprentice), they must be directly supervised by a competent person at all times
+              </li>
+              <li>
+                <strong>Refresher:</strong> Competence must be maintained through regular practice
+                and periodic refresher training
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Recording Decisions and Regulation 29 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Recording Decisions and the Regulation 29 Defence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Recording decisions</ContentEyebrow>
+
+          <ConceptBlock title="Recording Decisions and the Regulation 29 Defence">
             <p>
               Documenting live working decisions is not just good practice — it is the primary means
               of demonstrating compliance with Regulation 14 and building a defence under Regulation
               29. In the event of an incident, the first question an HSE inspector will ask is:
-              'Where is the documented justification for this live work?' If it does not exist, the
-              prosecution case is essentially established.
+              &apos;Where is the documented justification for this live work?&apos; If it does not
+              exist, the prosecution case is essentially established.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What Must Be Recorded</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Justification:</strong> Written statement of why dead working is
-                  unreasonable in these specific circumstances
-                </li>
-                <li className="pl-1">
-                  <strong>Risk assessment:</strong> Task-specific assessment of the electrical
-                  hazards, arc flash risk and control measures
-                </li>
-                <li className="pl-1">
-                  <strong>Method statement:</strong> Step-by-step description of the work to be done
-                  and the sequence of operations
-                </li>
-                <li className="pl-1">
-                  <strong>Authorisation:</strong> Name and signature of the person who authorised
-                  the live work
-                </li>
-                <li className="pl-1">
-                  <strong>Personnel:</strong> Names, roles and competence records of all persons
-                  involved
-                </li>
-                <li className="pl-1">
-                  <strong>Precautions:</strong> Specific PPE, insulated tools, barriers,
-                  accompaniment and emergency procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Date and time:</strong> When the decision was made and when the work was
-                  carried out
-                </li>
-                <li className="pl-1">
-                  <strong>Review:</strong> Post-work review confirming the work was completed safely
-                  within the planned scope
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What Must Be Recorded">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Justification:</strong> Written statement of why dead working is
+                unreasonable in these specific circumstances
+              </li>
+              <li>
+                <strong>Risk assessment:</strong> Task-specific assessment of the electrical
+                hazards, arc flash risk and control measures
+              </li>
+              <li>
+                <strong>Method statement:</strong> Step-by-step description of the work to be done
+                and the sequence of operations
+              </li>
+              <li>
+                <strong>Authorisation:</strong> Name and signature of the person who authorised the
+                live work
+              </li>
+              <li>
+                <strong>Personnel:</strong> Names, roles and competence records of all persons
+                involved
+              </li>
+              <li>
+                <strong>Precautions:</strong> Specific PPE, insulated tools, barriers, accompaniment
+                and emergency procedures
+              </li>
+              <li>
+                <strong>Date and time:</strong> When the decision was made and when the work was
+                carried out
+              </li>
+              <li>
+                <strong>Review:</strong> Post-work review confirming the work was completed safely
+                within the planned scope
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Regulation 29 — The Due Diligence Defence
-              </p>
-              <p className="text-sm text-white mb-3">
-                Because Regulations 4-16 impose absolute duties (no 'reasonably practicable'
-                qualifier), the only defence available when charged with an offence is Regulation
-                29.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>The defence:</strong> "In any proceedings for an offence under these
-                  Regulations, it shall be a defence for the person charged to prove that he took
-                  all reasonable precautions and exercised all due diligence to avoid the commission
-                  of that offence"
-                </li>
-                <li className="pl-1">
-                  <strong>Burden of proof:</strong> On the defendant — you must prove you took all
-                  reasonable precautions, not that the prosecution must prove you did not
-                </li>
-                <li className="pl-1">
-                  <strong>Evidence required:</strong> Documented risk assessments, method
-                  statements, training records, competence assessments, tool calibration records,
-                  PPE inspection records, and the live working authorisation
-                </li>
-                <li className="pl-1">
-                  <strong>Systematic approach:</strong> The defence requires a systematic,
-                  documented approach to safety management — not just a one-off decision on the day
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Regulation 29 — The Due Diligence Defence">
+            <p>
+              Because Regulations 4-16 impose absolute duties (no &apos;reasonably practicable&apos;
+              qualifier), the only defence available when charged with an offence is Regulation 29.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>The defence:</strong> &quot;In any proceedings for an offence under these
+                Regulations, it shall be a defence for the person charged to prove that he took all
+                reasonable precautions and exercised all due diligence to avoid the commission of
+                that offence&quot;
+              </li>
+              <li>
+                <strong>Burden of proof:</strong> On the defendant — you must prove you took all
+                reasonable precautions, not that the prosecution must prove you did not
+              </li>
+              <li>
+                <strong>Evidence required:</strong> Documented risk assessments, method statements,
+                training records, competence assessments, tool calibration records, PPE inspection
+                records, and the live working authorisation
+              </li>
+              <li>
+                <strong>Systematic approach:</strong> The defence requires a systematic, documented
+                approach to safety management — not just a one-off decision on the day
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Live Working Decision Flowchart
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">1. Can the work be done dead? → YES → Work dead (Reg 12)</li>
-                  <li className="pl-1">2. Is it unreasonable to work dead? → NO → Work dead</li>
-                  <li className="pl-1">3. Is it reasonable to work live? → NO → Do not proceed</li>
-                  <li className="pl-1">
-                    4. Are suitable precautions in place? → NO → Implement precautions
-                  </li>
-                  <li className="pl-1">
-                    5. All three conditions met? → YES → Document and proceed
-                  </li>
-                  <li className="pl-1">6. Record all decisions and outcomes</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Record Retention</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Live working authorisations: minimum 3 years</li>
-                  <li className="pl-1">
-                    Risk assessments: retain for duration of the activity plus 3 years
-                  </li>
-                  <li className="pl-1">
-                    Training and competence records: duration of employment plus 6 years
-                  </li>
-                  <li className="pl-1">
-                    Incident reports: minimum 3 years (40 years for health surveillance)
-                  </li>
-                  <li className="pl-1">
-                    PPE inspection records: duration of item life plus 3 years
-                  </li>
-                  <li className="pl-1">Best practice: retain all records for at least 6 years</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Live Working Decision Flowchart">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>1. Can the work be done dead? → YES → Work dead (Reg 12)</li>
+              <li>2. Is it unreasonable to work dead? → NO → Work dead</li>
+              <li>3. Is it reasonable to work live? → NO → Do not proceed</li>
+              <li>4. Are suitable precautions in place? → NO → Implement precautions</li>
+              <li>5. All three conditions met? → YES → Document and proceed</li>
+              <li>6. Record all decisions and outcomes</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Personal Criminal Liability</p>
-              <p className="text-sm text-white">
-                Under the EAWR 1989, duties fall on individuals — not just companies. As an employee
-                (Regulation 3(2)(b)), you have a personal legal duty to cooperate with your employer
-                on safety matters and not to place yourself or others at risk. If you carry out live
-                work without proper justification, risk assessment and authorisation, you can be
+          <ConceptBlock title="Record Retention">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Live working authorisations: minimum 3 years</li>
+              <li>Risk assessments: retain for duration of the activity plus 3 years</li>
+              <li>Training and competence records: duration of employment plus 6 years</li>
+              <li>Incident reports: minimum 3 years (40 years for health surveillance)</li>
+              <li>PPE inspection records: duration of item life plus 3 years</li>
+              <li>Best practice: retain all records for at least 6 years</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Personal criminal liability under the EAWR 1989"
+            whatHappens={
+              <>
+                Duties fall on individuals — not just companies. As an employee (Regulation
+                3(2)(b)), you have a personal legal duty to cooperate with your employer on safety
+                matters and not to place yourself or others at risk. If you carry out live work
+                without proper justification, risk assessment and authorisation, you can be
                 personally prosecuted and fined, regardless of whether your employer instructed you
-                to do so. Never allow yourself to be pressured into unsafe live working.
+                to do so.
+              </>
+            }
+            doInstead={
+              <>
+                Never allow yourself to be pressured into unsafe live working. Documentation is your
+                protection. If it isn&apos;t written down, it didn&apos;t happen — at least in the
+                eyes of a court. Always ensure live working decisions are formally recorded before
+                the work begins.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="The panel that has to stay live"
+
+            situation={
+              <>
+                <p>
+                  You need to trace a fault on a control circuit inside a live distribution panel.
+                  The plant manager says the line cannot be shut down until the weekend, and asks
+                  you to work on it live.
+                </p>
+
+                <p>The work involves taking readings inside the panel with covers off.</p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Start from the legal position rather than the commercial one. EAWR Regulation 14
+                  does not permit live working because it is convenient. It requires that it is
+                  unreasonable in all the circumstances for the conductor to be dead, that it is
+                  reasonable in all the circumstances to work on it live, and that suitable
+                  precautions are taken. All three, not one.
+                </p>
+
+                <p>
+                  Test the first limb honestly. "Production would prefer not to stop" is not the
+                  same as "it is unreasonable for it to be dead". A cost or an inconvenience rarely
+                  satisfies that test on its own; a genuine inability to isolate — a life-safety
+                  system, a process that cannot be interrupted without creating a greater danger —
+                  sometimes does.
+                </p>
+
+                <p>
+                  If live testing is genuinely justified, the precautions are the rest of the job: a
+                  risk assessment for that specific task, GS38 instruments proved before and after,
+                  insulated tools, appropriate PPE, a safe working space and, where required, an
+                  accompanying person.
+                </p>
+
+                <p>
+                  Record the reasoning. If someone asks later why this was done live, the answer
+                  needs to be a documented decision, not a recollection.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Live working is where electricians are killed, and the pressure to do it almost
+                never presents as pressure — it presents as a reasonable request from someone with a
+                deadline. Reg 14 is written as three tests precisely so the decision cannot rest on
+                convenience. Knowing them well enough to say them out loud, in the moment, is what
+                makes refusing a request professional rather than awkward.
               </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Quick reference"
+            points={[
+              'Regulation 14 — three conditions, ALL of which must be satisfied: (a) unreasonable to work dead, (b) reasonable to work live, (c) suitable precautions taken. Document everything.',
+              'Key references: EAWR 1989 — Regulations 12, 13, 14, 16, 29; HSG85 — safe working practices; ENA TS 43-8 — overhead line clearances; GS6 — overhead line avoidance; ST1426 — maintenance technician KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Approach distances and live working restrictions knowledge check"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Personal Protective Equipment
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Earthing and Bonding
+                </div>
+              </button>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Documentation is your protection. If it isn't written
-              down, it didn't happen — at least in the eyes of a court. Always ensure live working
-              decisions are formally recorded before the work begins.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Regulation 14 — Three Conditions</p>
-                <ul className="space-y-0.5">
-                  <li>(a) Unreasonable to work dead</li>
-                  <li>(b) Reasonable to work live</li>
-                  <li>(c) Suitable precautions taken</li>
-                  <li>ALL THREE must be satisfied</li>
-                  <li>Document everything</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>EAWR 1989 — Regulations 12, 13, 14, 16, 29</li>
-                  <li>HSG85 — Safe working practices</li>
-                  <li>ENA TS 43-8 — Overhead line clearances</li>
-                  <li>GS6 — Overhead line avoidance</li>
-                  <li>ST1426 — Maintenance technician KSBs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: PPE
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-5">
-              Next: Earthing and Bonding
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

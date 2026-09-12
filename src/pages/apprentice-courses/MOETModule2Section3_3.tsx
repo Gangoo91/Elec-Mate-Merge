@@ -1,8 +1,43 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.3 · Subsection 3 — Synchronous Motors and
+ * Generators
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import { ACGenerator, FlemingsRightHandRule } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Synchronous Motors and Generators - MOET Module 2.3.3';
@@ -14,12 +49,7 @@ const quickCheckQuestions = [
     id: 'sync-speed-calc',
     question:
       'A synchronous motor has 6 poles and operates on a 50Hz supply. What is its running speed?',
-    options: [
-      '750 rev/min',
-      '1,500 rev/min',
-      '1,000 rev/min',
-      '3,000 rev/min',
-    ],
+    options: ['750 rev/min', '1,500 rev/min', '1,000 rev/min', '3,000 rev/min'],
     correctIndex: 2,
     explanation:
       'Synchronous speed = (120 x f) / p = (120 x 50) / 6 = 1,000 rev/min. Unlike induction motors, a synchronous motor runs at exactly synchronous speed — there is no slip. The rotor locks into step with the rotating stator field.',
@@ -138,12 +168,7 @@ const quizQuestions = [
     id: 7,
     question:
       'A steam turbine generator has 2 poles and must produce 50Hz. What speed must the turbine operate at?',
-    options: [
-      '1,500 rev/min',
-      '1,000 rev/min',
-      '750 rev/min',
-      '3,000 rev/min',
-    ],
+    options: ['1,500 rev/min', '1,000 rev/min', '750 rev/min', '3,000 rev/min'],
     correctAnswer: 3,
     explanation:
       'N = (120 x f) / p = (120 x 50) / 2 = 3,000 rev/min. Steam turbines are high-speed machines, so they typically drive 2-pole generators at 3,000 rev/min for 50Hz output. By contrast, a hydroelectric generator with many poles (e.g., 40 poles) runs at only 150 rev/min.',
@@ -248,119 +273,66 @@ const faqs = [
 ];
 
 const MOETModule2Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Synchronous Motors and Generators
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.3 · Subsection 3"
+        title="Synchronous Motors and Generators"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Synchronous speed, DC excitation, power factor control, alternators, and parallel
-            operation for electrical maintenance
+            operation for electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Speed:</strong> Runs at exactly synchronous speed — zero slip
+          <TLDR
+            points={[
+              'Speed: runs at exactly synchronous speed — zero slip.',
+              'Excitation: DC field on the rotor locks it to the stator rotating field.',
+              'Power factor: controllable — under/over excitation adjusts leading/lagging PF.',
+              'Generators: frequency = (p x N) / 120 — must synchronise before paralleling.',
+            ]}
+          />
+
+          <ConceptBlock title="Why this matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Power generation:</strong> every power station uses synchronous generators.
               </li>
-              <li className="pl-1">
-                <strong>Excitation:</strong> DC field on rotor locks it to the stator rotating field
+              <li>
+                <strong>Large drives:</strong> used for drives above ~1 MW (compressors, mills,
+                pumps).
               </li>
-              <li className="pl-1">
-                <strong>Power factor:</strong> Controllable — under/over excitation adjusts
-                leading/lagging PF
+              <li>
+                <strong>PF correction:</strong> synchronous condensers correct site power factor.
               </li>
-              <li className="pl-1">
-                <strong>Generators:</strong> Frequency = (p x N) / 120 — must synchronise before
-                paralleling
+              <li>
+                <strong>ST1426:</strong> understand synchronous machine principles and maintenance.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Context — Why This Matters
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Power generation:</strong> Every power station uses synchronous generators
-              </li>
-              <li className="pl-1">
-                <strong>Large drives:</strong> Used for drives above ~1 MW (compressors, mills,
-                pumps)
-              </li>
-              <li className="pl-1">
-                <strong>PF correction:</strong> Synchronous condensers correct site power factor
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Understand synchronous machine principles and maintenance
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principle of synchronous motor operation and how it differs from an induction motor',
               'Describe the relationship between frequency, speed, and number of poles in synchronous machines',
               'Explain how DC excitation controls power factor in a synchronous motor',
               'Describe the construction and operation of alternators (synchronous generators)',
               'State the requirements for paralleling a generator with the grid or another generator',
               'Identify maintenance requirements specific to synchronous machines',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Synchronous motor principles</ContentEyebrow>
 
-        {/* Section 1: Synchronous Motor Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Synchronous Motor Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Locked into step with the rotating field">
             <p>
               A synchronous motor operates at exactly synchronous speed — the speed of the rotating
               magnetic field produced by the stator windings. Unlike an induction motor, where the
@@ -369,211 +341,193 @@ const MOETModule2Section3_3 = () => {
               separate DC excitation to the rotor, creating fixed magnetic poles that are attracted
               to the rotating stator field and pulled along with it.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Key Characteristics</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm font-medium text-blue-400 mb-2">Synchronous Motor</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Runs at exactly synchronous speed</li>
-                    <li className="pl-1">Zero slip under all load conditions</li>
-                    <li className="pl-1">Requires DC excitation on rotor</li>
-                    <li className="pl-1">Power factor controllable</li>
-                    <li className="pl-1">No inherent starting torque</li>
-                    <li className="pl-1">More expensive and complex</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-purple-500/10 border border-purple-500/20">
-                  <p className="text-sm font-medium text-purple-400 mb-2">
-                    Induction Motor (comparison)
-                  </p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">Runs below synchronous speed</li>
-                    <li className="pl-1">Slip increases with load (3-6%)</li>
-                    <li className="pl-1">No external excitation needed</li>
-                    <li className="pl-1">Always operates at lagging PF</li>
-                    <li className="pl-1">Self-starting</li>
-                    <li className="pl-1">Simpler, cheaper, more robust</li>
-                  </ul>
-                </div>
+          <ConceptBlock title="Key characteristics">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded border border-blue-500/20 bg-blue-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-blue-400">Synchronous Motor</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-blue-400/70">
+                  <li>Runs at exactly synchronous speed</li>
+                  <li>Zero slip under all load conditions</li>
+                  <li>Requires DC excitation on rotor</li>
+                  <li>Power factor controllable</li>
+                  <li>No inherent starting torque</li>
+                  <li>More expensive and complex</li>
+                </ul>
+              </div>
+              <div className="rounded border border-purple-500/20 bg-purple-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-purple-400">
+                  Induction Motor (comparison)
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-400/70">
+                  <li>Runs below synchronous speed</li>
+                  <li>Slip increases with load (3-6%)</li>
+                  <li>No external excitation needed</li>
+                  <li>Always operates at lagging PF</li>
+                  <li>Self-starting</li>
+                  <li>Simpler, cheaper, more robust</li>
+                </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Starting a Synchronous Motor</p>
-              <p className="text-sm text-white mb-3">
-                A synchronous motor cannot start from standstill under its own synchronous torque —
-                the rotating field moves past the stationary rotor too quickly for the DC-excited
-                poles to lock on. Special starting arrangements are required:
-              </p>
-              <div className="space-y-3">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Damper (Amortisseur) Winding Starting
-                  </p>
-                  <p className="text-xs text-white">
-                    The most common method. Short-circuited bars embedded in the rotor pole faces
-                    act as a squirrel cage, providing induction motor starting torque. The motor
-                    accelerates to near synchronous speed with the DC field de-energised, then the
-                    field is energised and the rotor pulls into synchronism.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">Pony Motor Starting</p>
-                  <p className="text-xs text-white">
-                    A small auxiliary motor (pony motor) mechanically coupled to the synchronous
-                    motor shaft accelerates it to near synchronous speed. The DC field is then
-                    energised and the motor synchronises. The pony motor is then disconnected or
-                    declutched.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Variable Frequency Drive (VFD) Starting
-                  </p>
-                  <p className="text-xs text-white">
-                    The supply frequency is started at a very low value and gradually increased,
-                    bringing the synchronous motor up to speed without the rotor ever falling out of
-                    step. This is the modern preferred method for large synchronous motors.
-                  </p>
-                </div>
+          <ConceptBlock title="Starting a synchronous motor">
+            <p>
+              A synchronous motor cannot start from standstill under its own synchronous torque —
+              the rotating field moves past the stationary rotor too quickly for the DC-excited
+              poles to lock on. Special starting arrangements are required:
+            </p>
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">
+                  Damper (Amortisseur) Winding Starting
+                </p>
+                <p className="text-xs text-white">
+                  The most common method. Short-circuited bars embedded in the rotor pole faces act
+                  as a squirrel cage, providing induction motor starting torque. The motor
+                  accelerates to near synchronous speed with the DC field de-energised, then the
+                  field is energised and the rotor pulls into synchronism.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Pony Motor Starting</p>
+                <p className="text-xs text-white">
+                  A small auxiliary motor (pony motor) mechanically coupled to the synchronous motor
+                  shaft accelerates it to near synchronous speed. The DC field is then energised and
+                  the motor synchronises. The pony motor is then disconnected or declutched.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">
+                  Variable Frequency Drive (VFD) Starting
+                </p>
+                <p className="text-xs text-white">
+                  The supply frequency is started at a very low value and gradually increased,
+                  bringing the synchronous motor up to speed without the rotor ever falling out of
+                  step. This is the modern preferred method for large synchronous motors.
+                </p>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">The Load Angle</p>
-              <p className="text-sm text-white">
-                When a synchronous motor is loaded, the rotor poles do not align exactly with the
-                stator field poles — the rotor lags behind by an angle called the load angle
-                (delta). As mechanical load increases, the load angle increases. At the pull-out
-                torque (typically 1.5 to 2.5 times rated torque), the load angle reaches a critical
-                value (typically about 90 degrees for a cylindrical rotor). If the load exceeds
-                this, the motor loses synchronism and stalls.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="The load angle">
+            <p>
+              When a synchronous motor is loaded, the rotor poles do not align exactly with the
+              stator field poles — the rotor lags behind by an angle called the load angle (delta).
+              As mechanical load increases, the load angle increases. At the pull-out torque
+              (typically 1.5 to 2.5 times rated torque), the load angle reaches a critical value
+              (typically about 90 degrees for a cylindrical rotor). If the load exceeds this, the
+              motor loses synchronism and stalls.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Power Factor Control and Excitation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Power Factor Control and Excitation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Power factor control and excitation</ContentEyebrow>
+
+          <ConceptBlock title="A capability no induction motor possesses">
             <p>
               One of the most valuable characteristics of a synchronous motor is its ability to
               operate at a controllable power factor. By adjusting the DC excitation current, the
               motor can be made to operate at unity, lagging, or leading power factor — a capability
               that no induction motor possesses.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                V-Curves — Excitation vs Stator Current
-              </p>
-              <p className="text-sm text-white mb-3">
-                The relationship between DC excitation and stator current for a synchronous motor at
-                constant load produces a characteristic V-shaped curve:
-              </p>
-              <div className="space-y-3">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-amber-400 mb-1">
-                    Under-Excited (low DC field current)
-                  </p>
-                  <p className="text-xs text-white">
-                    The motor operates at a lagging power factor — it absorbs reactive power from
-                    the supply, similar to an induction motor. Stator current is relatively high.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-green-400 mb-1">
-                    Normal Excitation (unity power factor)
-                  </p>
-                  <p className="text-xs text-white">
-                    At the correct excitation level, the motor operates at unity power factor —
-                    stator current is at its minimum for a given load. This is the bottom of the
-                    V-curve.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-blue-400 mb-1">
-                    Over-Excited (high DC field current)
-                  </p>
-                  <p className="text-xs text-white">
-                    The motor operates at a leading power factor — it generates reactive power,
-                    acting like a capacitor connected to the supply. Stator current increases again.
-                    This mode is used for power factor correction.
-                  </p>
-                </div>
+          <ConceptBlock title="V-curves — excitation vs stator current">
+            <p>
+              The relationship between DC excitation and stator current for a synchronous motor at
+              constant load produces a characteristic V-shaped curve:
+            </p>
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-amber-400">
+                  Under-Excited (low DC field current)
+                </p>
+                <p className="text-xs text-white">
+                  The motor operates at a lagging power factor — it absorbs reactive power from the
+                  supply, similar to an induction motor. Stator current is relatively high.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-green-400">
+                  Normal Excitation (unity power factor)
+                </p>
+                <p className="text-xs text-white">
+                  At the correct excitation level, the motor operates at unity power factor — stator
+                  current is at its minimum for a given load. This is the bottom of the V-curve.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-blue-400">
+                  Over-Excited (high DC field current)
+                </p>
+                <p className="text-xs text-white">
+                  The motor operates at a leading power factor — it generates reactive power, acting
+                  like a capacitor connected to the supply. Stator current increases again. This
+                  mode is used for power factor correction.
+                </p>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
-              <p className="text-sm font-medium text-green-400 mb-3">Synchronous Condensers</p>
-              <p className="text-sm text-white mb-3">
+          <ConceptBlock title="Synchronous condensers">
+            <div className="rounded-lg border-l-2 border-green-500/50 bg-green-500/10 p-4">
+              <p className="mb-3 text-sm text-white">
                 A synchronous condenser is a synchronous motor running at no mechanical load,
                 operated in the over-excited condition solely to generate reactive power for power
                 factor correction.
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Continuously variable reactive power output (unlike fixed capacitor banks)
-                </li>
-                <li className="pl-1">
-                  Can both generate and absorb reactive power (adjusting excitation)
-                </li>
-                <li className="pl-1">Used at large industrial sites and grid substations</li>
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-green-400/70">
+                <li>Continuously variable reactive power output (unlike fixed capacitor banks)</li>
+                <li>Can both generate and absorb reactive power (adjusting excitation)</li>
+                <li>Used at large industrial sites and grid substations</li>
+                <li>
                   Being reintroduced to provide grid inertia as conventional generators are replaced
                   by renewables
                 </li>
-                <li className="pl-1">
+                <li>
                   Maintenance: bearings, brushes/slip rings, exciter, cooling — similar to any
                   synchronous machine
                 </li>
               </ul>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Excitation Systems</p>
-              <div className="space-y-3">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">Brushless Excitation</p>
-                  <p className="text-xs text-white">
-                    An AC exciter (small alternator) mounted on the same shaft has its output
-                    rectified by rotating diodes and fed directly to the main field winding. No
-                    brushes or slip rings — reduced maintenance. Controlled by the automatic voltage
-                    regulator (AVR) which adjusts the exciter field current.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Static Excitation (Brush-Type)
-                  </p>
-                  <p className="text-xs text-white">
-                    DC from a controlled rectifier is fed to the rotor field winding through slip
-                    rings and brushes. Faster response than brushless systems but requires brush
-                    maintenance. Used on many older and some modern large machines.
-                  </p>
-                </div>
+          <ConceptBlock title="Excitation systems">
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Brushless Excitation</p>
+                <p className="text-xs text-white">
+                  An AC exciter (small alternator) mounted on the same shaft has its output
+                  rectified by rotating diodes and fed directly to the main field winding. No
+                  brushes or slip rings — reduced maintenance. Controlled by the automatic voltage
+                  regulator (AVR) which adjusts the exciter field current.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">
+                  Static Excitation (Brush-Type)
+                </p>
+                <p className="text-xs text-white">
+                  DC from a controlled rectifier is fed to the rotor field winding through slip
+                  rings and brushes. Faster response than brushless systems but requires brush
+                  maintenance. Used on many older and some modern large machines.
+                </p>
               </div>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Alternators (Synchronous Generators) */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Alternators (Synchronous Generators)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Alternators (synchronous generators)</ContentEyebrow>
+
+          <ConceptBlock title="Every power station uses one">
             <p>
               An alternator is a synchronous generator that converts mechanical energy from a prime
               mover (turbine, engine, or wind turbine) into three-phase AC electrical energy. Every
@@ -581,142 +535,137 @@ const MOETModule2Section3_3 = () => {
               generator. Understanding alternator principles is essential for maintenance
               technicians working with standby power systems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Frequency and Pole Relationship
+          <ACGenerator />
+
+          <ConceptBlock title="Frequency and pole relationship">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="font-mono">f = (p x N) / 120</p>
+              <p className="mt-2 text-xs text-white">
+                Where: f = frequency (Hz), p = number of poles, N = speed (rev/min)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-mono">f = (p x N) / 120</p>
-                <p className="text-xs text-white mt-2">
-                  Where: f = frequency (Hz), p = number of poles, N = speed (rev/min)
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Prime Mover</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical Poles</th>
+                    <th className="py-2 pr-4 font-medium text-white">Speed for 50Hz</th>
+                    <th className="py-2 font-medium text-white">Rotor Type</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Steam turbine</td>
+                    <td className="py-2 pr-4">2</td>
+                    <td className="py-2 pr-4">3,000 rev/min</td>
+                    <td className="py-2">Cylindrical</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Gas turbine</td>
+                    <td className="py-2 pr-4">2 or 4</td>
+                    <td className="py-2 pr-4">3,000 or 1,500</td>
+                    <td className="py-2">Cylindrical</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Diesel engine</td>
+                    <td className="py-2 pr-4">4 to 8</td>
+                    <td className="py-2 pr-4">1,500 to 750</td>
+                    <td className="py-2">Salient pole</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Hydro turbine</td>
+                    <td className="py-2 pr-4">12 to 80+</td>
+                    <td className="py-2 pr-4">500 to 75</td>
+                    <td className="py-2">Salient pole</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <FlemingsRightHandRule />
+
+          <ConceptBlock title="Voltage regulation">
+            <p>
+              The output voltage of an alternator varies with load due to the armature reaction
+              effect and the impedance voltage drop in the stator windings. The automatic voltage
+              regulator (AVR) continuously adjusts the DC field excitation to maintain constant
+              output voltage as the load changes.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Resistive load:</strong> moderate voltage drop — AVR increases excitation
+                slightly
+              </li>
+              <li>
+                <strong>Inductive load (lagging PF):</strong> large voltage drop — AVR must increase
+                excitation significantly
+              </li>
+              <li>
+                <strong>Capacitive load (leading PF):</strong> voltage may rise — AVR reduces
+                excitation
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Rotor construction">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded border border-blue-500/20 bg-blue-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-blue-400">Salient Pole Rotor</p>
+                <ul className="list-disc space-y-1 pl-4 text-xs marker:text-blue-400/70">
+                  <li>Projecting poles with concentrated field coils</li>
+                  <li>Large diameter, short axial length</li>
+                  <li>4 or more poles — used for low-speed machines</li>
+                  <li>Hydro generators, diesel generator sets</li>
+                  <li>Damper bars fitted in pole face slots</li>
+                </ul>
+              </div>
+              <div className="rounded border border-purple-500/20 bg-purple-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-purple-400">
+                  Cylindrical (Round) Rotor
                 </p>
-              </div>
-              <div className="overflow-x-auto mt-3">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white font-medium">Prime Mover</th>
-                      <th className="py-2 pr-4 text-white font-medium">Typical Poles</th>
-                      <th className="py-2 pr-4 text-white font-medium">Speed for 50Hz</th>
-                      <th className="py-2 text-white font-medium">Rotor Type</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white text-xs">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Steam turbine</td>
-                      <td className="py-2 pr-4">2</td>
-                      <td className="py-2 pr-4">3,000 rev/min</td>
-                      <td className="py-2">Cylindrical</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Gas turbine</td>
-                      <td className="py-2 pr-4">2 or 4</td>
-                      <td className="py-2 pr-4">3,000 or 1,500</td>
-                      <td className="py-2">Cylindrical</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Diesel engine</td>
-                      <td className="py-2 pr-4">4 to 8</td>
-                      <td className="py-2 pr-4">1,500 to 750</td>
-                      <td className="py-2">Salient pole</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4">Hydro turbine</td>
-                      <td className="py-2 pr-4">12 to 80+</td>
-                      <td className="py-2 pr-4">500 to 75</td>
-                      <td className="py-2">Salient pole</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <ul className="list-disc space-y-1 pl-4 text-xs marker:text-purple-400/70">
+                  <li>Distributed field winding in machined slots</li>
+                  <li>Small diameter, long axial length</li>
+                  <li>2 or 4 poles — used for high-speed machines</li>
+                  <li>Steam turbine and gas turbine generators</li>
+                  <li>Solid steel forging — high mechanical strength</li>
+                </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Voltage Regulation</p>
-              <p className="text-sm text-white mb-3">
-                The output voltage of an alternator varies with load due to the armature reaction
-                effect and the impedance voltage drop in the stator windings. The automatic voltage
-                regulator (AVR) continuously adjusts the DC field excitation to maintain constant
-                output voltage as the load changes.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Resistive load:</strong> Moderate voltage drop — AVR increases excitation
-                  slightly
-                </li>
-                <li className="pl-1">
-                  <strong>Inductive load (lagging PF):</strong> Large voltage drop — AVR must
-                  increase excitation significantly
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitive load (leading PF):</strong> Voltage may rise — AVR reduces
-                  excitation
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Rotor Construction</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm font-medium text-blue-400 mb-2">Salient Pole Rotor</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Projecting poles with concentrated field coils</li>
-                    <li>Large diameter, short axial length</li>
-                    <li>4 or more poles — used for low-speed machines</li>
-                    <li>Hydro generators, diesel generator sets</li>
-                    <li>Damper bars fitted in pole face slots</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-purple-500/10 border border-purple-500/20">
-                  <p className="text-sm font-medium text-purple-400 mb-2">
-                    Cylindrical (Round) Rotor
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Distributed field winding in machined slots</li>
-                    <li>Small diameter, long axial length</li>
-                    <li>2 or 4 poles — used for high-speed machines</li>
-                    <li>Steam turbine and gas turbine generators</li>
-                    <li>Solid steel forging — high mechanical strength</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ContentEyebrow>Parallel operation and synchronisation</ContentEyebrow>
 
-        {/* Section 4: Parallel Operation of Generators */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Parallel Operation and Synchronisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Synchronised before paralleling">
             <p>
               In many installations — power stations, data centres, hospitals, and industrial plants
               — multiple generators operate in parallel to share the electrical load. Before a
               generator can be connected in parallel with the grid or another running generator, it
               must be synchronised to prevent catastrophic damage.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-              <p className="text-sm font-medium text-red-400 mb-3">
-                Synchronising Requirements — All Four Must Be Matched
-              </p>
+          <ConceptBlock title="Synchronising requirements — all four must be matched">
+            <div className="rounded-lg border-l-2 border-red-500/50 bg-red-500/10 p-4">
               <div className="space-y-3">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">1. Voltage Magnitude</p>
+                <div className="rounded bg-black/30 p-3">
+                  <p className="mb-1 text-sm font-medium text-white">1. Voltage Magnitude</p>
                   <p className="text-xs text-white">
                     The incoming generator's terminal voltage must match the busbar voltage.
                     Adjusted by varying the DC field excitation (AVR setpoint). A voltage mismatch
                     causes large circulating currents (reactive power flow) when the breaker closes.
                   </p>
                 </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">2. Frequency</p>
+                <div className="rounded bg-black/30 p-3">
+                  <p className="mb-1 text-sm font-medium text-white">2. Frequency</p>
                   <p className="text-xs text-white">
                     The incoming generator's frequency must closely match the busbar frequency.
                     Adjusted by varying the prime mover speed (governor setpoint). Ideally, the
@@ -724,8 +673,8 @@ const MOETModule2Section3_3 = () => {
                     frequency) so the breaker closes while the phase angle is slowly advancing.
                   </p>
                 </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">3. Phase Sequence</p>
+                <div className="rounded bg-black/30 p-3">
+                  <p className="mb-1 text-sm font-medium text-white">3. Phase Sequence</p>
                   <p className="text-xs text-white">
                     The phase sequence (rotation direction of the three-phase system) of the
                     incoming generator must match the busbar. Verified once during commissioning
@@ -733,8 +682,8 @@ const MOETModule2Section3_3 = () => {
                     circuit when the breaker closes.
                   </p>
                 </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-white mb-1">4. Phase Angle (In-Phase)</p>
+                <div className="rounded bg-black/30 p-3">
+                  <p className="mb-1 text-sm font-medium text-white">4. Phase Angle (In-Phase)</p>
                   <p className="text-xs text-white">
                     The breaker must close at the instant when the voltages of the incoming
                     generator and the busbar are exactly in phase (zero phase difference). Monitored
@@ -744,100 +693,90 @@ const MOETModule2Section3_3 = () => {
                 </div>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">
-                Load Sharing Between Parallel Generators
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Real power (kW) sharing:</strong> Controlled by the governor droop
-                  settings — increasing fuel to one machine increases its share of the real power
-                  load
-                </li>
-                <li className="pl-1">
-                  <strong>Reactive power (kVAr) sharing:</strong> Controlled by the AVR droop
-                  settings — increasing excitation on one machine increases its share of the
-                  reactive power
-                </li>
-                <li className="pl-1">
-                  <strong>Isochronous mode:</strong> One generator controls frequency (isochronous
-                  governor), others follow with droop — used in island mode (no grid connection)
-                </li>
-                <li className="pl-1">
-                  <strong>Grid parallel:</strong> The grid is effectively an infinite bus — it
-                  controls frequency and voltage; the generator's real and reactive power output are
-                  adjusted by governor and AVR
-                </li>
-              </ul>
+          <ConceptBlock title="Load sharing between parallel generators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Real power (kW) sharing:</strong> controlled by the governor droop settings
+                — increasing fuel to one machine increases its share of the real power load
+              </li>
+              <li>
+                <strong>Reactive power (kVAr) sharing:</strong> controlled by the AVR droop settings
+                — increasing excitation on one machine increases its share of the reactive power
+              </li>
+              <li>
+                <strong>Isochronous mode:</strong> one generator controls frequency (isochronous
+                governor), others follow with droop — used in island mode (no grid connection)
+              </li>
+              <li>
+                <strong>Grid parallel:</strong> the grid is effectively an infinite bus — it
+                controls frequency and voltage; the generator's real and reactive power output are
+                adjusted by governor and AVR
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ST1426 maintenance competency">
+            <p>
+              The Level 3 apprenticeship standard requires you to understand the principles of
+              synchronous machines, including starting methods, excitation systems, and the
+              requirements for parallel operation. You should be able to assist with generator
+              maintenance, interpret test results, and understand the safety implications of working
+              on synchronous machines — particularly the risk of back-feed from generators and
+              stored magnetic energy.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'A synchronous motor runs at exactly synchronous speed — zero slip — because a DC-excited rotor locks into step with the stator field.',
+              'Synchronous speed and alternator frequency both follow N = (120 x f) / p (or f = (p x N) / 120).',
+              'Under-excited: lagging power factor. Normal excitation: unity power factor. Over-excited: leading power factor.',
+              'A synchronous motor has no inherent starting torque — damper windings, a pony motor, or a VFD are used to bring it up to speed.',
+              'Before paralleling, all four parameters must be matched: voltage magnitude, frequency, phase sequence, and phase angle.',
+              'Pull-out torque is the maximum torque a synchronous motor can develop while remaining in synchronism — typically 1.5 to 2.5 times rated torque.',
+              'A synchronous condenser is a synchronous motor run at no load, over-excited solely to generate reactive power for power factor correction.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Synchronous Machines" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Induction Motors
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">DC Motors</div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                ST1426 Maintenance Competency
-              </p>
-              <p className="text-sm text-white">
-                The Level 3 apprenticeship standard requires you to understand the principles of
-                synchronous machines, including starting methods, excitation systems, and the
-                requirements for parallel operation. You should be able to assist with generator
-                maintenance, interpret test results, and understand the safety implications of
-                working on synchronous machines — particularly the risk of back-feed from generators
-                and stored magnetic energy.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Synchronous Machines" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Induction Motors
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-4">
-              Next: DC Motors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

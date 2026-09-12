@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 4 · Subsection 1 — Shift Handover Procedures
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Shift Handover Procedures - MOET Module 6 Section 4.1';
@@ -252,114 +283,51 @@ const faqs = [
 ];
 
 const MOETModule6Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Page header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Shift Handover Procedures
-          </h1>
-          <p className="text-white">
-            Information transfer, continuity and safety communication between maintenance shifts
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.4 · Subsection 1"
+        title="Shift Handover Procedures"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Information transfer, continuity and safety communication between maintenance shifts.
           </p>
-        </header>
 
-        {/* Summary boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Safe transfer of all critical information between shifts
-              </li>
-              <li className="pl-1">
-                <strong>Content:</strong> System status, active permits, outstanding work, hazards
-              </li>
-              <li className="pl-1">
-                <strong>Method:</strong> Face-to-face, structured, documented, signed by both
-                parties
-              </li>
-              <li className="pl-1">
-                <strong>Framework:</strong> SBAR — Situation, Background, Assessment, Recommendation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Isolation status:</strong> Critical — who is locked off and where
-              </li>
-              <li className="pl-1">
-                <strong>Active permits:</strong> Must be physically transferred
-              </li>
-              <li className="pl-1">
-                <strong>Walk-around:</strong> Joint verification of conditions
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to communication and safety KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Purpose: safe transfer of all critical information between shifts.',
+              'Content: system status, active permits, outstanding work, hazards.',
+              'Method: face-to-face, structured, documented, signed by both parties.',
+              'Framework: SBAR — Situation, Background, Assessment, Recommendation.',
+              'Isolation status: critical — who is locked off and where.',
+              'Active permits: must be physically transferred.',
+              'Walk-around: joint verification of conditions.',
+              'ST1426: maps to communication and safety KSBs.',
+            ]}
+          />
 
-        {/* Learning outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Conduct a structured shift handover following organisational procedures',
               'Communicate safety-critical information including isolation and permit status',
               'Complete handover documentation to an auditable standard',
               'Apply the SBAR communication framework to handover situations',
               'Carry out a handover walk-around to verify reported conditions',
               'Recognise the consequences of inadequate handover communication',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Why handovers matter</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Handovers Matter
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Why Handovers Matter">
             <p>
               Shift handovers are one of the highest-risk communication events in maintenance
               operations. At the point of handover, safety-critical information must transfer from
@@ -376,49 +344,45 @@ const MOETModule6Section4_1 = () => {
               dangerous gap by ensuring that every piece of safety-critical information is formally
               communicated, documented and acknowledged.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What Must Be Communicated
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>System status:</strong> What is running, what is shut down, what is in
-                  alarm
-                </li>
-                <li className="pl-1">
-                  <strong>Active permits:</strong> What work is in progress under permit, isolation
-                  details
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding tasks:</strong> Incomplete work, pending repairs, follow-up
-                  required
-                </li>
-                <li className="pl-1">
-                  <strong>Safety hazards:</strong> Temporary safety measures, barriers, warning
-                  signs
-                </li>
-                <li className="pl-1">
-                  <strong>Abnormal conditions:</strong> Anything different from normal operation
-                </li>
-                <li className="pl-1">
-                  <strong>Upcoming events:</strong> Planned shutdowns, deliveries, visitor access
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What Must Be Communicated">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>System status:</strong> what is running, what is shut down, what is in alarm
+              </li>
+              <li>
+                <strong>Active permits:</strong> what work is in progress under permit, isolation
+                details
+              </li>
+              <li>
+                <strong>Outstanding tasks:</strong> incomplete work, pending repairs, follow-up
+                required
+              </li>
+              <li>
+                <strong>Safety hazards:</strong> temporary safety measures, barriers, warning signs
+              </li>
+              <li>
+                <strong>Abnormal conditions:</strong> anything different from normal operation
+              </li>
+              <li>
+                <strong>Upcoming events:</strong> planned shutdowns, deliveries, visitor access
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Handover Gap</p>
-              <p className="text-sm text-white">
-                The period around shift change is when incidents are most likely to occur. The
-                outgoing team is fatigued and focused on finishing; the incoming team has not yet
-                established situational awareness. A structured handover procedure closes this
-                dangerous gap. Research shows that up to 70% of maintenance-related incidents have
-                poor communication as a contributing factor, with handover failures being the most
-                frequently cited communication breakdown.
-              </p>
-            </div>
+          <ConceptBlock title="The Handover Gap">
+            <p>
+              The period around shift change is when incidents are most likely to occur. The
+              outgoing team is fatigued and focused on finishing; the incoming team has not yet
+              established situational awareness. A structured handover procedure closes this
+              dangerous gap. Research shows that up to 70% of maintenance-related incidents have
+              poor communication as a contributing factor, with handover failures being the most
+              frequently cited communication breakdown.
+            </p>
+          </ConceptBlock>
 
+          <ConceptBlock title="Handover Risks in Electrical Maintenance">
             <p>
               For electrical maintenance specifically, the risks at handover are acute. Equipment
               may be isolated with lock-off devices in place, live working permits may be active,
@@ -428,18 +392,15 @@ const MOETModule6Section4_1 = () => {
               equipment under repair, or removal of safety measures that are still required. This is
               not theoretical — it has happened, and the consequences have been fatal.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The SBAR Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The SBAR framework</ContentEyebrow>
+
+          <ConceptBlock title="The SBAR Framework">
             <p>
               SBAR (Situation, Background, Assessment, Recommendation) provides a structured format
               for communicating complex information clearly and concisely. Originally developed in
@@ -447,31 +408,30 @@ const MOETModule6Section4_1 = () => {
               operations because it forces the communicator to organise their thoughts before
               speaking and ensures the receiver gets information in a logical sequence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SBAR Applied to Maintenance Handover
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Situation:</strong> &quot;Chiller 2 is currently isolated for compressor
-                  bearing replacement. Permit PTW-2847 is active.&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>Background:</strong> &quot;High vibration was detected during
-                  Monday&apos;s PPM. Bearings were ordered Tuesday, arrived this morning.&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>Assessment:</strong> &quot;Bearings have been replaced. Need to run the
-                  compressor on test for 2 hours before returning to normal service.&quot;
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendation:</strong> &quot;Complete the 2-hour test run, check
-                  vibration readings, then cancel the permit and return Chiller 2 to auto.&quot;
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="SBAR Applied to Maintenance Handover">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Situation:</strong> &quot;Chiller 2 is currently isolated for compressor
+                bearing replacement. Permit PTW-2847 is active.&quot;
+              </li>
+              <li>
+                <strong>Background:</strong> &quot;High vibration was detected during Monday&apos;s
+                PPM. Bearings were ordered Tuesday, arrived this morning.&quot;
+              </li>
+              <li>
+                <strong>Assessment:</strong> &quot;Bearings have been replaced. Need to run the
+                compressor on test for 2 hours before returning to normal service.&quot;
+              </li>
+              <li>
+                <strong>Recommendation:</strong> &quot;Complete the 2-hour test run, check vibration
+                readings, then cancel the permit and return Chiller 2 to auto.&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Why SBAR Works">
             <p>
               The power of SBAR is that it prevents the two most common communication failures in
               handovers: information overload (dumping everything at once without structure) and
@@ -480,86 +440,52 @@ const MOETModule6Section4_1 = () => {
               professional judgement, and what needs to happen next. The incoming technician
               receives a complete, logical picture rather than a disjointed collection of facts.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">SBAR Element</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Situation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What is happening right now
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DB-3 is isolated — feeds lighting circuits L1-L12 in Zone B
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Background</td>
-                      <td className="border border-white/10 px-3 py-2">Context and history</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault detected on L7; IR testing traced to damaged cable in ceiling
-                        void
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Assessment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Your professional judgement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable needs replacing — approximately 15m run, 2.5mm&#178; T&E through void
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Recommendation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What the incoming shift should do
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replace cable run, test, restore supply. Maintain isolation until complete.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="SBAR Applied to an Electrical Fault"
+            headers={['SBAR Element', 'Purpose', 'Electrical Example']}
+            rows={[
+              [
+                'Situation',
+                'What is happening right now',
+                'DB-3 is isolated — feeds lighting circuits L1-L12 in Zone B',
+              ],
+              [
+                'Background',
+                'Context and history',
+                'Earth fault detected on L7; IR testing traced to damaged cable in ceiling void',
+              ],
+              [
+                'Assessment',
+                'Your professional judgement',
+                'Cable needs replacing — approximately 15m run, 2.5mm² T&E through void',
+              ],
+              [
+                'Recommendation',
+                'What the incoming shift should do',
+                'Replace cable run, test, restore supply. Maintain isolation until complete.',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-sm font-medium text-amber-400 mb-2">
-                Practice SBAR Before You Need It
-              </p>
-              <p className="text-sm text-white">
-                SBAR becomes second nature with practice. Start using it for everyday communication
-                — when reporting faults to your supervisor, briefing colleagues, or requesting
-                materials. The more you practise the structure, the more naturally it will flow
-                during the high-pressure environment of a shift handover when multiple items need
-                communicating.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practice SBAR Before You Need It">
+            <p>
+              SBAR becomes second nature with practice. Start using it for everyday communication —
+              when reporting faults to your supervisor, briefing colleagues, or requesting
+              materials. The more you practise the structure, the more naturally it will flow during
+              the high-pressure environment of a shift handover when multiple items need
+              communicating.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Handover Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Handover documentation</ContentEyebrow>
+
+          <ConceptBlock title="Handover Documentation">
             <p>
               The handover log or report is a critical document. It provides continuity across
               shifts, creates an audit trail of what information was communicated and when, and
@@ -574,95 +500,61 @@ const MOETModule6Section4_1 = () => {
               arose, and how they were resolved. Gaps, vague entries, or missing signatures
               undermine this narrative and create risk — both operational and legal.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Log Contents
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Date and time:</strong> Of the handover
-                </li>
-                <li className="pl-1">
-                  <strong>Personnel:</strong> Names of outgoing and incoming team members
-                </li>
-                <li className="pl-1">
-                  <strong>System status summary:</strong> Current state of all major systems
-                </li>
-                <li className="pl-1">
-                  <strong>Active permits:</strong> Permit numbers, locations, scope, status
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding work:</strong> Tasks in progress, pending, or overdue
-                </li>
-                <li className="pl-1">
-                  <strong>Safety items:</strong> Isolations, temporary measures, hazards
-                </li>
-                <li className="pl-1">
-                  <strong>Actions for incoming:</strong> Specific tasks for the next shift
-                </li>
-                <li className="pl-1">
-                  <strong>Signatures:</strong> Both parties confirming the handover
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Handover Log Contents">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date and time:</strong> of the handover
+              </li>
+              <li>
+                <strong>Personnel:</strong> names of outgoing and incoming team members
+              </li>
+              <li>
+                <strong>System status summary:</strong> current state of all major systems
+              </li>
+              <li>
+                <strong>Active permits:</strong> permit numbers, locations, scope, status
+              </li>
+              <li>
+                <strong>Outstanding work:</strong> tasks in progress, pending, or overdue
+              </li>
+              <li>
+                <strong>Safety items:</strong> isolations, temporary measures, hazards
+              </li>
+              <li>
+                <strong>Actions for incoming:</strong> specific tasks for the next shift
+              </li>
+              <li>
+                <strong>Signatures:</strong> both parties confirming the handover
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Document Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Format</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Retention</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Handover log</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bound book or electronic log
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum 3 years (check local policy)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Permit register
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated permit tracking system
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duration of permit + audit period
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Isolation schedule
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Whiteboard, CMMS or printed sheet
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Until isolation removed and verified
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Walk-around checklist
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Printed or electronic form
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Filed with handover log</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Handover Documentation Types"
+            headers={['Document Type', 'Format', 'Retention']}
+            rows={[
+              [
+                'Handover log',
+                'Bound book or electronic log',
+                'Minimum 3 years (check local policy)',
+              ],
+              [
+                'Permit register',
+                'Dedicated permit tracking system',
+                'Duration of permit + audit period',
+              ],
+              [
+                'Isolation schedule',
+                'Whiteboard, CMMS or printed sheet',
+                'Until isolation removed and verified',
+              ],
+              ['Walk-around checklist', 'Printed or electronic form', 'Filed with handover log'],
+            ]}
+          />
 
+          <ConceptBlock title="Digital vs Paper Handover Systems">
             <p>
               Digital handover systems are increasingly common, offering advantages such as
               searchability, automatic time-stamping, and integration with the CMMS. However, the
@@ -670,18 +562,15 @@ const MOETModule6Section4_1 = () => {
               a paper logbook or a digital platform, the principles are identical: be thorough, be
               accurate, be specific, and ensure both parties sign off.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Walk-Around Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Walk-around verification</ContentEyebrow>
+
+          <ConceptBlock title="Walk-Around Verification">
             <p>
               A handover walk-around physically verifies that conditions on the ground match the
               handover report. This is particularly important for isolated equipment, active work
@@ -696,79 +585,60 @@ const MOETModule6Section4_1 = () => {
               consistent route covering all areas where work has been carried out, equipment is
               isolated, or conditions are abnormal.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Walk-Around Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Verify isolation points — locks in place, caution notices displayed
-                </li>
-                <li className="pl-1">
-                  Check active work areas — barriers, warning signs, housekeeping
-                </li>
-                <li className="pl-1">
-                  Inspect temporary measures — temporary earths, safety barriers, scaffolding
-                </li>
-                <li className="pl-1">
-                  Review alarm panels — confirm reported alarm states match actual
-                </li>
-                <li className="pl-1">
-                  Check critical equipment — running status matches handover report
-                </li>
-                <li className="pl-1">
-                  Verify tools and materials — confirm location of equipment left in work areas
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Walk-Around Checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Verify isolation points — locks in place, caution notices displayed</li>
+              <li>Check active work areas — barriers, warning signs, housekeeping</li>
+              <li>Inspect temporary measures — temporary earths, safety barriers, scaffolding</li>
+              <li>Review alarm panels — confirm reported alarm states match actual</li>
+              <li>Check critical equipment — running status matches handover report</li>
+              <li>Verify tools and materials — confirm location of equipment left in work areas</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Extend the Walk-Around
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Standard walk-arounds cover routine areas, but certain conditions require a more
-                thorough physical inspection:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Multiple isolations active:</strong> Visit every isolation point and
-                  verify lock-off details
-                </li>
-                <li className="pl-1">
-                  <strong>Live working in progress:</strong> Verify barriers, supervision
-                  arrangements, and rescue equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Post-incident:</strong> Review any areas affected by the incident, confirm
-                  temporary measures
-                </li>
-                <li className="pl-1">
-                  <strong>Contractor presence:</strong> Verify contractor work areas, permits, and
-                  interface points
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The walk-around demonstrates the professional behaviour
-              of verifying information rather than accepting it at face value — a critical safety
-              habit for maintenance technicians. In your EPA, discussing how you use walk-arounds to
-              confirm handover information shows genuine safety awareness.
+          <ConceptBlock title="When to Extend the Walk-Around">
+            <p>
+              Standard walk-arounds cover routine areas, but certain conditions require a more
+              thorough physical inspection:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Multiple isolations active:</strong> visit every isolation point and verify
+                lock-off details
+              </li>
+              <li>
+                <strong>Live working in progress:</strong> verify barriers, supervision
+                arrangements, and rescue equipment
+              </li>
+              <li>
+                <strong>Post-incident:</strong> review any areas affected by the incident, confirm
+                temporary measures
+              </li>
+              <li>
+                <strong>Contractor presence:</strong> verify contractor work areas, permits, and
+                interface points
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="ST1426 Link">
+            <p>
+              The walk-around demonstrates the professional behaviour of verifying information
+              rather than accepting it at face value — a critical safety habit for maintenance
+              technicians. In your EPA, discussing how you use walk-arounds to confirm handover
+              information shows genuine safety awareness.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Building Effective Handover Habits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Building effective handover habits</ContentEyebrow>
+
+          <ConceptBlock title="Building Effective Handover Habits">
             <p>
               Effective handovers are not just about following a procedure — they are about
               developing a professional mindset of responsibility and care. The best maintenance
@@ -776,231 +646,193 @@ const MOETModule6Section4_1 = () => {
               task because they understand that the information they transfer directly affects the
               safety of their colleagues.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Best Practices
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prepare in advance:</strong> Start writing your handover notes 30 minutes
-                  before the end of shift, not at the last minute
-                </li>
-                <li className="pl-1">
-                  <strong>Use a consistent format:</strong> Follow the SBAR structure for every item
-                  to ensure nothing is missed
-                </li>
-                <li className="pl-1">
-                  <strong>Prioritise safety items:</strong> Cover isolations, permits and hazards
-                  first — before routine operational items
-                </li>
-                <li className="pl-1">
-                  <strong>Encourage questions:</strong> Create an environment where the incoming
-                  team feels comfortable asking for clarification
-                </li>
-                <li className="pl-1">
-                  <strong>Never rush:</strong> If the handover is not complete, it is not complete —
-                  do not sign off until you are satisfied
-                </li>
-                <li className="pl-1">
-                  <strong>Read back critical items:</strong> Ask the incoming technician to repeat
-                  back isolation details and permit conditions
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Handover Best Practices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prepare in advance:</strong> start writing your handover notes 30 minutes
+                before the end of shift, not at the last minute
+              </li>
+              <li>
+                <strong>Use a consistent format:</strong> follow the SBAR structure for every item
+                to ensure nothing is missed
+              </li>
+              <li>
+                <strong>Prioritise safety items:</strong> cover isolations, permits and hazards
+                first — before routine operational items
+              </li>
+              <li>
+                <strong>Encourage questions:</strong> create an environment where the incoming team
+                feels comfortable asking for clarification
+              </li>
+              <li>
+                <strong>Never rush:</strong> if the handover is not complete, it is not complete —
+                do not sign off until you are satisfied
+              </li>
+              <li>
+                <strong>Read back critical items:</strong> ask the incoming technician to repeat
+                back isolation details and permit conditions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Handover Failure
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Consequence</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Prevention</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Rushing the handover
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critical information omitted
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Allocate adequate time, use a checklist
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Verbal-only handover
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No audit trail, details forgotten
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Always produce a written record
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Skipping the walk-around
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Report does not match reality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Make walk-around mandatory in procedure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Assuming knowledge
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incoming team unaware of changes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brief as if the incoming team knows nothing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Not flagging abnormal states
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incoming team operates under false assumptions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Highlight deviations from normal prominently
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Common Handover Failures"
+            headers={['Common Handover Failure', 'Consequence', 'Prevention']}
+            rows={[
+              [
+                'Rushing the handover',
+                'Critical information omitted',
+                'Allocate adequate time, use a checklist',
+              ],
+              [
+                'Verbal-only handover',
+                'No audit trail, details forgotten',
+                'Always produce a written record',
+              ],
+              [
+                'Skipping the walk-around',
+                'Report does not match reality',
+                'Make walk-around mandatory in procedure',
+              ],
+              [
+                'Assuming knowledge',
+                'Incoming team unaware of changes',
+                'Brief as if the incoming team knows nothing',
+              ],
+              [
+                'Not flagging abnormal states',
+                'Incoming team operates under false assumptions',
+                'Highlight deviations from normal prominently',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Responsibility Does Not End at Sign-Off
-              </p>
-              <p className="text-sm text-white">
-                If you realise after leaving site that you forgot to communicate something
-                important, contact the incoming shift immediately — by phone if necessary. A late
-                notification is far better than no notification. Record that the additional
-                information was communicated and add a supplementary entry to the handover log at
-                your next opportunity.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>EPA preparation:</strong> In the professional discussion, you may be asked
-              about a time when you had to communicate safety-critical information. Describing a
-              well-conducted shift handover — using SBAR, completing the walk-around, and ensuring
-              the incoming team understood the situation — demonstrates the communication skills,
-              safety awareness and professional responsibility that assessors are looking for.
+          <ConceptBlock title="The Responsibility Does Not End at Sign-Off">
+            <p>
+              If you realise after leaving site that you forgot to communicate something important,
+              contact the incoming shift immediately — by phone if necessary. A late notification is
+              far better than no notification. Record that the additional information was
+              communicated and add a supplementary entry to the handover log at your next
+              opportunity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="EPA Preparation">
+            <p>
+              In the professional discussion, you may be asked about a time when you had to
+              communicate safety-critical information. Describing a well-conducted shift handover —
+              using SBAR, completing the walk-around, and ensuring the incoming team understood the
+              situation — demonstrates the communication skills, safety awareness and professional
+              responsibility that assessors are looking for.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A handover that left a machine isolated and nobody knowing"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">SBAR Framework</p>
-                <ul className="space-y-0.5">
-                  <li>Situation — what is happening now</li>
-                  <li>Background — context and history</li>
-                  <li>Assessment — your professional judgement</li>
-                  <li>Recommendation — what to do next</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Handover Content</p>
-                <ul className="space-y-0.5">
-                  <li>System status and alarm states</li>
-                  <li>Active permits and isolation details</li>
-                  <li>Outstanding tasks and priorities</li>
-                  <li>Safety hazards and temporary measures</li>
-                  <li>Actions required by incoming shift</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Walk-Around Checks</p>
-                <ul className="space-y-0.5">
-                  <li>Isolation points — locks, notices</li>
-                  <li>Active work areas — barriers, signs</li>
-                  <li>Temporary safety measures in place</li>
-                  <li>Alarm panels — match reported states</li>
-                  <li>Equipment running status confirmed</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Face-to-face, structured, documented</li>
-                  <li>Both parties sign to confirm</li>
-                  <li>Safety items communicated first</li>
-                  <li>Never rush — thoroughness over speed</li>
-                  <li>HSE guidance: HSG256</li>
-                </ul>
-              </div>
+            situation={
+              <>
+                <p>
+                  You isolate a dryer at the end of a shift to await a spare part, lock it off and
+                  tag it. The handover is verbal and rushed because the next shift arrives late.
+                </p>
+
+                <p>
+                  At 02:00 production try to run the dryer, find it dead, and spend two hours
+                  fault-finding a machine that is working perfectly.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Put the isolation in the written handover, not just the conversation. Which
+                  machine, which isolator, which lock, why, and what is needed before it comes back.
+                </p>
+
+                <p>
+                  Say what the plant should do in the meantime. "Dryer 2 is isolated awaiting a fan
+                  bearing, do not attempt to run" is actionable; "dryer 2 is down" is not.
+                </p>
+
+                <p>
+                  Name who holds the key and how to reach them. A locked-off isolation with an
+                  unreachable keyholder is its own problem, especially overnight.
+                </p>
+
+                <p>
+                  Check the receiving shift has actually read it. A handover that is written but not
+                  acknowledged fails in the same way a verbal one does.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Two hours of night-shift fault-finding on a healthy machine is the visible cost. The
+                invisible one is worse: if someone had concluded the isolator was faulty and removed
+                the lock to prove it, they would have energised a machine with its fan bearing out
+                and someone possibly working on it. Handover is a safety document as much as an
+                operational one, which is why LOTO procedures treat shift change as a controlled
+                transfer rather than a conversation.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'SBAR framework: Situation (what is happening now), Background (context and history), Assessment (your professional judgement), Recommendation (what to do next).',
+              'Handover content: system status and alarm states, active permits and isolation details, outstanding tasks and priorities, safety hazards and temporary measures, actions required by incoming shift.',
+              'Walk-around checks: isolation points (locks, notices), active work areas (barriers, signs), temporary safety measures in place, alarm panels matching reported states, equipment running status confirmed.',
+              'Key principles: face-to-face, structured, documented; both parties sign to confirm; safety items communicated first; never rush — thoroughness over speed.',
+              'HSE guidance: HSG256 — Improving shift handover.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Handovers and stakeholder communication
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section4-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Communicating with Supervisors and Engineers
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4-2">
-              Next: Communicating with Supervisors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

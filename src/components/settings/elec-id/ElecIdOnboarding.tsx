@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { ECS_CARD_TYPES, UK_JOB_TITLES } from '@/data/uk-electrician-constants';
 import { supabase } from '@/integrations/supabase/client';
+import { inputCn, labelCn, selectTriggerCn } from '@/components/settings/formStyles';
+
+const JOB_TITLE_OPTIONS = UK_JOB_TITLES.map((title) => ({
+  value: title.value,
+  label: title.label,
+}));
+
+const ECS_CARD_OPTIONS = ECS_CARD_TYPES.map((card) => ({
+  value: card.value,
+  label: card.label,
+}));
 
 export interface OnboardingFormData {
   jobTitle: string;
@@ -170,15 +175,6 @@ const ElecIdOnboarding = ({
     }
   };
 
-  const jobTitlesByCategory = UK_JOB_TITLES.reduce(
-    (acc, title) => {
-      if (!acc[title.category]) acc[title.category] = [];
-      acc[title.category].push(title);
-      return acc;
-    },
-    {} as Record<string, typeof UK_JOB_TITLES>
-  );
-
   const renderStep = () => {
     switch (step.id) {
       case 'welcome':
@@ -202,7 +198,7 @@ const ElecIdOnboarding = ({
               {BENEFITS.map((benefit, index) => (
                 <div
                   key={index}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-left"
+                  className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35 text-left"
                 >
                   <span
                     aria-hidden
@@ -227,30 +223,15 @@ const ElecIdOnboarding = ({
               </p>
             </div>
 
-            <div className="space-y-3 max-w-sm mx-auto">
-              <Label className="text-white text-sm">Job title</Label>
-              <Select
+            <div className="max-w-sm mx-auto">
+              <Label className={labelCn}>Job title</Label>
+              <MobileSelectPicker
                 value={formData.jobTitle}
                 onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
-              >
-                <SelectTrigger className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white">
-                  <SelectValue placeholder="Select your job title" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] max-h-60">
-                  {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
-                    <React.Fragment key={category}>
-                      <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
-                        {category}
-                      </div>
-                      {titles.map((title) => (
-                        <SelectItem key={title.value} value={title.value}>
-                          {title.label}
-                        </SelectItem>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </SelectContent>
-              </Select>
+                options={JOB_TITLE_OPTIONS}
+                placeholder="Select your job title"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
           </div>
         );
@@ -265,47 +246,36 @@ const ElecIdOnboarding = ({
             </div>
 
             <div className="space-y-4 max-w-sm mx-auto">
-              <div className="space-y-2">
-                <Label className="text-white text-sm">ECS card type</Label>
-                <Select
+              <div>
+                <Label className={labelCn}>ECS card type</Label>
+                <MobileSelectPicker
                   value={formData.ecsCardType}
                   onValueChange={(value) => setFormData({ ...formData, ecsCardType: value })}
-                >
-                  <SelectTrigger className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white">
-                    <SelectValue placeholder="Select card type" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-                    {ECS_CARD_TYPES.map((card) => (
-                      <SelectItem key={card.value} value={card.value}>
-                        <div className="flex items-center gap-2">
-                          <div className="w-4 h-4 rounded" style={{ backgroundColor: card.color }} />
-                          {card.label}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  options={ECS_CARD_OPTIONS}
+                  placeholder="Select card type"
+                  triggerClassName={selectTriggerCn}
+                />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-white text-sm">Card expiry date</Label>
+              <div>
+                <Label className={labelCn}>Card expiry date</Label>
                 <Input
                   type="date"
                   value={formData.ecsCardExpiry}
                   onChange={(e) => setFormData({ ...formData, ecsCardExpiry: e.target.value })}
-                  className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white"
+                  className={inputCn}
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-white text-sm">
+              <div>
+                <Label className={labelCn}>
                   Card number <span className="text-white">(optional)</span>
                 </Label>
                 <Input
                   value={formData.ecsCardNumber}
                   onChange={(e) => setFormData({ ...formData, ecsCardNumber: e.target.value })}
                   placeholder="Enter card number"
-                  className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white placeholder:text-white"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -328,12 +298,12 @@ const ElecIdOnboarding = ({
             )}
 
             <div className="max-w-sm mx-auto space-y-3">
-              <div className="p-4 rounded-xl border border-elec-yellow/20 bg-elec-yellow/10">
+              <div className="p-4 rounded-xl border border-elec-yellow/20 bg-white/[0.06]">
                 <p className="font-semibold text-white">Your Elec-ID is ready!</p>
                 <p className="text-xs text-white mt-1">Basic profile created</p>
               </div>
 
-              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.04]">
+              <div className="p-4 rounded-xl border border-elec-yellow/35 bg-white/[0.04]">
                 <p className="text-sm text-white mb-2">Optional next steps</p>
                 <ul className="text-xs text-white space-y-1">
                   <li>· Upload your ECS / CSCS card for verification</li>
@@ -492,7 +462,7 @@ const ElecIdOnboarding = ({
         </AnimatePresence>
       </div>
 
-      <div className="flex gap-3 mt-6 sticky bottom-0 bg-[hsl(0_0%_12%)] pt-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static sm:bg-transparent">
+      <div className="flex gap-3 mt-6 sticky bottom-0 bg-white/[0.05] pt-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static sm:bg-transparent">
         {currentStep > 0 && currentStep < STEPS.length - 1 && (
           <Button
             variant="outline"

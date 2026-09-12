@@ -1,20 +1,53 @@
-import { Zap, Activity, Cog, Shield, Wrench } from 'lucide-react';
+import { Zap, Activity, Cog, Shield, Wrench, Sigma } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
 import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'Electrical fundamentals', icon: Zap, description: "Voltage, current, resistance, power, Ohm's and Watt's laws, units and symbols." },
-  { id: 2, title: 'AC/DC systems and components', icon: Activity, description: 'DC and AC principles, single- and three-phase systems, reactance and power factor.' },
-  { id: 3, title: 'Electrical machines', icon: Cog, description: 'Transformers, induction motors, synchronous machines and motor starting.' },
-  { id: 4, title: 'Circuit protection and earthing', icon: Shield, description: 'Fuses, breakers, RCDs, earthing systems, bonding and surge protection.' },
-  { id: 5, title: 'Materials, tools and test equipment', icon: Wrench, description: 'Conductors, insulation, hand and power tools, and test instruments.' },
+  {
+    id: 1,
+    title: 'Electrical fundamentals',
+    icon: Zap,
+    description: "Voltage, current, resistance, power, Ohm's and Watt's laws, units and symbols.",
+  },
+  {
+    id: 2,
+    title: 'AC/DC systems and components',
+    icon: Activity,
+    description:
+      'DC and AC principles, single- and three-phase systems, reactance and power factor.',
+  },
+  {
+    id: 3,
+    title: 'Electrical machines',
+    icon: Cog,
+    description: 'Transformers, induction motors, synchronous machines and motor starting.',
+  },
+  {
+    id: 4,
+    title: 'Circuit protection and earthing',
+    icon: Shield,
+    description: 'Fuses, breakers, RCDs, earthing systems, bonding and surge protection.',
+  },
+  {
+    id: 5,
+    title: 'Materials, tools and test equipment',
+    icon: Wrench,
+    description: 'Conductors, insulation, hand and power tools, and test instruments.',
+  },
+  {
+    id: 6,
+    title: 'Engineering mathematics',
+    icon: Sigma,
+    description: 'Transposition, trigonometry, areas and volumes, statistics and rates of change.',
+  },
 ];
 
 export default function MOETModule2() {
   useSEO({
     title: 'Module 2: Engineering Principles and Electrical Theory | MOET | Elec-Mate',
-    description: 'Electrical fundamentals, AC/DC systems, machines, protection, earthing and the test equipment maintenance engineers use.',
+    description:
+      'Electrical fundamentals, AC/DC systems, machines, protection, earthing and the test equipment maintenance engineers use.',
   });
 
   return (

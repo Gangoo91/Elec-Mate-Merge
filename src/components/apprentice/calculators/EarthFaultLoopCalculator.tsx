@@ -319,10 +319,13 @@ const EarthFaultLoopCalculator = () => {
             heading: 'Result',
             rows: [
               { label: 'Zs', value: `${result.zsValue.toFixed(3)} Ω` },
+              ...(result.deviceLabel
+                ? [{ label: 'Protective device', value: result.deviceLabel }]
+                : []),
               ...(result.maxZsValue
                 ? [{
                     label: `Maximum permitted Zs (${result.disconnectionTime} s)`,
-                    value: `${result.maxZsValue} Ω`,
+                    value: `${result.maxZsValue.toFixed(2)} Ω`,
                     note: result.tableRef,
                   }]
                 : []),
@@ -360,7 +363,7 @@ const EarthFaultLoopCalculator = () => {
         {
           heading: 'Result',
           rows: [
-            { label: 'RA (electrode resistance)', value: `${result.raValue} Ω` },
+            { label: 'RA (electrode resistance)', value: `${result.raValue.toFixed(1)} Ω` },
             { label: 'IΔn (residual operating current)', value: `${result.iDeltaNValue} A` },
             { label: 'RA × IΔn', value: `${result.product.toFixed(1)} V` },
             {

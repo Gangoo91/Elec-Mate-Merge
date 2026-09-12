@@ -1,8 +1,57 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 1 · Subsection 2 — Proximity and Position Sensors
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Functions and applications of electrical
+ *                 circuits."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Structural note: the original placed InlineCheck quickCheckQuestions[3]
+ * (photoelectric) after section 03 and quickCheckQuestions[2] (NPN/PNP) after
+ * section 04 — out of array order, but topically correct (check 3 asks about
+ * photoelectric modes, section 03 teaches photoelectric sensors; check 2 asks
+ * about NPN/PNP, section 04 teaches output wiring). That placement is
+ * preserved here rather than "corrected" to array order.
+ *
+ * No GS38, thermography, test-interval or C&G-qualification claims appear on
+ * this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Proximity and Position Sensors - MOET Module 5 Section 1.2';
@@ -70,12 +119,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'An inductive proximity sensor will reliably detect which of the following targets?',
-    options: [
-      'A glass bottle',
-      'A mild steel bracket',
-      'A cardboard box',
-      'A polythene bag',
-    ],
+    options: ['A glass bottle', 'A mild steel bracket', 'A cardboard box', 'A polythene bag'],
     correctAnswer: 1,
     explanation:
       'Inductive proximity sensors detect metallic targets only. They work by sensing eddy current losses in conductive materials. Mild steel (ferrous metal) provides the best detection range. Non-metallic materials such as glass, cardboard and plastic cannot be detected by inductive sensors.',
@@ -84,12 +128,7 @@ const quizQuestions = [
     id: 2,
     question:
       'The rated sensing distance (Sn) of an inductive sensor is specified for which target material?',
-    options: [
-      'Stainless steel',
-      'Copper',
-      'Mild steel (Fe 360)',
-      'Aluminium',
-    ],
+    options: ['Stainless steel', 'Copper', 'Mild steel (Fe 360)', 'Aluminium'],
     correctAnswer: 2,
     explanation:
       'The rated sensing distance (Sn) is always specified for a standard target of mild steel (Fe 360) with defined dimensions (typically a square plate with side length equal to the sensor diameter or 3 times the sensing distance). For non-ferrous metals, a correction factor must be applied — typically 0.4 for copper and 0.3-0.5 for aluminium.',
@@ -99,9 +138,9 @@ const quizQuestions = [
     question:
       'A capacitive proximity sensor is installed to detect the level of a liquid inside a plastic tank. What does the sensor actually measure?',
     options: [
-      "The weight of liquid pressing against the sensing face",
-      "The temperature difference between the liquid and the air above it",
-      "The electrical conductivity of the liquid flowing past the sensor",
+      'The weight of liquid pressing against the sensing face',
+      'The temperature difference between the liquid and the air above it',
+      'The electrical conductivity of the liquid flowing past the sensor',
       "The change in capacitance caused by the liquid's dielectric constant being higher than air",
     ],
     correctAnswer: 3,
@@ -167,9 +206,9 @@ const quizQuestions = [
     question: "The 'hysteresis' specification of a proximity sensor describes:",
     options: [
       'The difference between the switch-on point and the switch-off point as the target approaches and then retreats',
-      'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
-      'Only one cable run is needed — both emitter and receiver are in the same housing',
-      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
+      'The maximum distance at which the sensor will detect a standard target',
+      'The time delay between detection and the output actually changing state',
+      'The variation in sensing range caused by changes in ambient temperature',
     ],
     correctAnswer: 0,
     explanation:
@@ -221,9 +260,9 @@ const quizQuestions = [
       'Which proximity sensor technology would be most suitable for detecting the position of a pneumatic cylinder piston through a non-magnetic aluminium cylinder barrel?',
     options: [
       "Magnetic reed switch or Hall effect sensor detecting the piston's permanent magnet",
-      "Inductive proximity sensor mounted on the cylinder barrel",
-      "Capacitive proximity sensor mounted on the cylinder barrel",
-      "Through-beam photoelectric sensor across the cylinder stroke",
+      'Inductive proximity sensor mounted on the cylinder barrel',
+      'Capacitive proximity sensor mounted on the cylinder barrel',
+      'Through-beam photoelectric sensor across the cylinder stroke',
     ],
     correctAnswer: 0,
     explanation:
@@ -266,122 +305,68 @@ const faqs = [
 ];
 
 const MOETModule5Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Proximity and Position Sensors
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.1 · Subsection 2"
+        title="Proximity and Position Sensors"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Inductive, capacitive, optical and ultrasonic proximity sensors for industrial detection
+            — how each one works, when to specify it, and how to fault-find it.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Inductive:</strong> Detect metallic targets using electromagnetic fields —
-                short range, very robust
-              </li>
-              <li className="pl-1">
-                <strong>Capacitive:</strong> Detect any material (including liquids, powders) via
-                capacitance change
-              </li>
-              <li className="pl-1">
-                <strong>Photoelectric:</strong> Use light beams for long-range, non-contact
-                detection of any object
-              </li>
-              <li className="pl-1">
-                <strong>Outputs:</strong> NPN (sinking) or PNP (sourcing) — must match PLC input
-                configuration
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Check supply voltage, LED status and output state
-                with multimeter
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Match type, sensing distance, output (NPN/PNP, NO/NC),
-                voltage and connector
-              </li>
-              <li className="pl-1">
-                <strong>Alignment:</strong> Through-beam and retro-reflective sensors require
-                precise optical alignment
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to control and instrumentation maintenance knowledge
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Inductive: Detect metallic targets using electromagnetic fields — short range, very robust.',
+              'Capacitive: Detect any material (including liquids, powders) via capacitance change.',
+              'Photoelectric: Use light beams for long-range, non-contact detection of any object.',
+              'Outputs: NPN (sinking) or PNP (sourcing) — must match PLC input configuration.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principle of inductive, capacitive and photoelectric proximity sensors',
               'Identify NPN (sinking) and PNP (sourcing) output configurations and match them to PLC inputs',
               'Describe through-beam, retro-reflective and diffuse photoelectric sensing modes',
               'Select the appropriate sensor technology for common industrial detection tasks',
               'Apply systematic fault-finding procedures to proximity sensor circuits',
               'Specify replacement sensors using manufacturer data sheets and correction factors',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Check supply voltage, LED status and output state
+                with a multimeter.
+              </li>
+              <li>
+                <strong>Replacement:</strong> Match type, sensing distance, output (NPN/PNP, NO/NC),
+                voltage and connector.
+              </li>
+              <li>
+                <strong>Alignment:</strong> Through-beam and retro-reflective sensors require
+                precise optical alignment.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to control and instrumentation maintenance knowledge.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Inductive Proximity Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Inductive proximity sensors</ContentEyebrow>
+
+          <ConceptBlock title="The workhorse of industrial automation">
             <p>
               Inductive proximity sensors are the workhorses of industrial automation. Found on
               every production line, packaging machine and conveyor system, they detect the presence
@@ -397,227 +382,203 @@ const MOETModule5Section1_2 = () => {
               absorb energy from the oscillator, reducing its amplitude. A Schmitt trigger circuit
               detects this reduction and switches the output.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Specifications</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensing distance (Sn):</strong> Rated for mild steel standard target —
-                  ranges from 1 mm (M8 barrel) to 40 mm (M30 barrel) for standard sensors
-                </li>
-                <li className="pl-1">
-                  <strong>Correction factors:</strong> Non-ferrous metals reduce the effective range
-                  — aluminium approximately 0.4, copper approximately 0.4, brass approximately 0.5,
-                  stainless steel approximately 0.7
-                </li>
-                <li className="pl-1">
-                  <strong>Hysteresis:</strong> Typically 5-15 % of Sn — prevents output chatter at
-                  the switching threshold
-                </li>
-                <li className="pl-1">
-                  <strong>Switching frequency:</strong> Up to 5000 Hz for short-range sensors —
-                  critical for high-speed counting applications
-                </li>
-                <li className="pl-1">
-                  <strong>Supply voltage:</strong> Typically 10-30 V DC (some models 10-60 V DC)
-                </li>
-              </ul>
+          <ConceptBlock title="Key specifications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensing distance (Sn):</strong> Rated for mild steel standard target —
+                ranges from 1 mm (M8 barrel) to 40 mm (M30 barrel) for standard sensors.
+              </li>
+              <li>
+                <strong>Correction factors:</strong> Non-ferrous metals reduce the effective range —
+                aluminium approximately 0.4, copper approximately 0.4, brass approximately 0.5,
+                stainless steel approximately 0.7.
+              </li>
+              <li>
+                <strong>Hysteresis:</strong> Typically 5-15 % of Sn — prevents output chatter at the
+                switching threshold.
+              </li>
+              <li>
+                <strong>Switching frequency:</strong> Up to 5000 Hz for short-range sensors —
+                critical for high-speed counting applications.
+              </li>
+              <li>
+                <strong>Supply voltage:</strong> Typically 10-30 V DC (some models 10-60 V DC).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Flush vs non-flush mounting">
+            <p>Mounting style affects the sensing distance and installation requirements:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Flush (embeddable):</strong> Can be mounted with the face level with the
+                surrounding metal surface. The electromagnetic field is focused forward. Provides a
+                shorter sensing distance but better mechanical protection.
+              </li>
+              <li>
+                <strong>Non-flush (non-embeddable):</strong> Must protrude from the mounting surface
+                with a clear zone around the face equal to the sensor diameter. Provides
+                approximately double the sensing distance of a flush sensor of the same diameter.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Inductive sensor sizes and typical ranges">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Barrel size</th>
+                    <th className="py-2 pr-4 font-medium text-white">Flush Sn</th>
+                    <th className="py-2 pr-4 font-medium text-white">Non-flush Sn</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">M8</td>
+                    <td className="py-2 pr-4">1.5 mm</td>
+                    <td className="py-2 pr-4">3 mm</td>
+                    <td className="py-2">Small part detection, precision positioning</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">M12</td>
+                    <td className="py-2 pr-4">2-4 mm</td>
+                    <td className="py-2 pr-4">4-8 mm</td>
+                    <td className="py-2">General purpose, conveyor detection</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">M18</td>
+                    <td className="py-2 pr-4">5-8 mm</td>
+                    <td className="py-2 pr-4">8-14 mm</td>
+                    <td className="py-2">Machine guarding, cylinder position</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">M30</td>
+                    <td className="py-2 pr-4">10-15 mm</td>
+                    <td className="py-2 pr-4">15-30 mm</td>
+                    <td className="py-2">Heavy industry, large gap detection</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Flush vs Non-Flush Mounting
-              </p>
-              <p className="text-sm text-white mb-3">
-                Mounting style affects the sensing distance and installation requirements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flush (embeddable):</strong> Can be mounted with the face level with the
-                  surrounding metal surface. The electromagnetic field is focused forward. Provides
-                  a shorter sensing distance but better mechanical protection.
-                </li>
-                <li className="pl-1">
-                  <strong>Non-flush (non-embeddable):</strong> Must protrude from the mounting
-                  surface with a clear zone around the face equal to the sensor diameter. Provides
-                  approximately double the sensing distance of a flush sensor of the same diameter.
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inductive Sensor Sizes and Typical Ranges
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Barrel Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Flush Sn</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Non-Flush Sn</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M8</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 mm</td>
-                      <td className="border border-white/10 px-3 py-2">3 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small part detection, precision positioning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M12</td>
-                      <td className="border border-white/10 px-3 py-2">2-4 mm</td>
-                      <td className="border border-white/10 px-3 py-2">4-8 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose, conveyor detection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M18</td>
-                      <td className="border border-white/10 px-3 py-2">5-8 mm</td>
-                      <td className="border border-white/10 px-3 py-2">8-14 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Machine guarding, cylinder position
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M30</td>
-                      <td className="border border-white/10 px-3 py-2">10-15 mm</td>
-                      <td className="border border-white/10 px-3 py-2">15-30 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heavy industry, large gap detection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Maintenance tip:</strong> Always install inductive sensors with a gap of 70-80
               % of the rated sensing distance to allow for manufacturing tolerances, temperature
               drift and target variations. Operating at exactly the rated distance is unreliable and
               will cause intermittent faults.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Capacitive and Ultrasonic Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Capacitive and ultrasonic sensors</ContentEyebrow>
+
+          <ConceptBlock title="Extending detection beyond metal">
             <p>
               Where inductive sensors are limited to metallic targets, capacitive and ultrasonic
               sensors extend detection capability to virtually any material. Understanding when to
               use each type is a key competence for maintenance technicians working in process, food
               and beverage, pharmaceutical, and water treatment industries.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Capacitive Proximity Sensors
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Capacitive sensors detect changes in capacitance at the sensing face. The sensor
-                contains two concentric plate electrodes that form one half of a capacitor. The
-                target material — and the air gap — form the other half and the dielectric. When a
-                material with a dielectric constant greater than air approaches the sensor face, the
-                capacitance increases, triggering the output.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Detection capability:</strong> Metals, plastics, glass, wood, paper,
-                  liquids, powders and granular materials
-                </li>
-                <li className="pl-1">
-                  <strong>Level sensing:</strong> Can detect liquid levels through non-metallic tank
-                  walls (plastic, glass)
-                </li>
-                <li className="pl-1">
-                  <strong>Sensitivity adjustment:</strong> A potentiometer or teach-in function
-                  adjusts the trigger threshold — critical for through-wall detection
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> Sensitive to moisture, condensation and build-up on
-                  the sensing face; shorter range than inductive for metals
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ultrasonic Proximity Sensors
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Ultrasonic sensors use sound waves (typically 40-400 kHz) to measure distance. A
-                piezoelectric transducer emits a burst of ultrasonic pulses and measures the time of
-                flight for the echo to return from the target. The distance is calculated from d =
-                (v x t) / 2, where v is the speed of sound and t is the round-trip time.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Range:</strong> Typically 30 mm to 8 m depending on model and target size
-                </li>
-                <li className="pl-1">
-                  <strong>Material independence:</strong> Detects virtually any material — solid,
-                  liquid, powder — regardless of colour, transparency or surface finish
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental immunity:</strong> Unaffected by dust, steam, mist and spray
-                  — ideal for harsh environments
-                </li>
-                <li className="pl-1">
-                  <strong>Dead zone:</strong> Cannot detect targets closer than the minimum range
-                  (typically 30-200 mm) due to transducer ringing
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature sensitivity:</strong> Speed of sound varies with temperature —
-                  sensors must compensate or accuracy is affected
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Practical Consideration</p>
-              <p className="text-sm text-white">
-                Ultrasonic sensors can produce false echoes from structural steelwork, pipes or
-                adjacent objects within the sound cone. When installing an ultrasonic sensor for
-                level measurement, ensure the sound cone is clear of obstructions. The beam angle
-                widens with distance — typically 5-12 degrees total — so mounting the sensor
-                perpendicular to the surface being measured is essential for reliable operation.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Capacitive sensors are the go-to choice for detecting
-              non-metallic materials at close range and for level detection through tank walls.
-              Ultrasonic sensors are preferred when the environment is too harsh for optical sensors
-              (dust, steam, spray) or when distance measurement is needed rather than simple
-              presence detection.
+          <ConceptBlock title="Capacitive proximity sensors">
+            <p>
+              Capacitive sensors detect changes in capacitance at the sensing face. The sensor
+              contains two concentric plate electrodes that form one half of a capacitor. The target
+              material — and the air gap — form the other half and the dielectric. When a material
+              with a dielectric constant greater than air approaches the sensor face, the
+              capacitance increases, triggering the output.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Detection capability:</strong> Metals, plastics, glass, wood, paper,
+                liquids, powders and granular materials.
+              </li>
+              <li>
+                <strong>Level sensing:</strong> Can detect liquid levels through non-metallic tank
+                walls (plastic, glass).
+              </li>
+              <li>
+                <strong>Sensitivity adjustment:</strong> A potentiometer or teach-in function
+                adjusts the trigger threshold — critical for through-wall detection.
+              </li>
+              <li>
+                <strong>Limitations:</strong> Sensitive to moisture, condensation and build-up on
+                the sensing face; shorter range than inductive for metals.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Ultrasonic proximity sensors">
+            <p>
+              Ultrasonic sensors use sound waves (typically 40-400 kHz) to measure distance. A
+              piezoelectric transducer emits a burst of ultrasonic pulses and measures the time of
+              flight for the echo to return from the target. The distance is calculated from d = (v
+              x t) / 2, where v is the speed of sound and t is the round-trip time.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Range:</strong> Typically 30 mm to 8 m depending on model and target size.
+              </li>
+              <li>
+                <strong>Material independence:</strong> Detects virtually any material — solid,
+                liquid, powder — regardless of colour, transparency or surface finish.
+              </li>
+              <li>
+                <strong>Environmental immunity:</strong> Unaffected by dust, steam, mist and spray —
+                ideal for harsh environments.
+              </li>
+              <li>
+                <strong>Dead zone:</strong> Cannot detect targets closer than the minimum range
+                (typically 30-200 mm) due to transducer ringing.
+              </li>
+              <li>
+                <strong>Temperature sensitivity:</strong> Speed of sound varies with temperature —
+                sensors must compensate or accuracy is affected.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Photoelectric Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="False echoes from structural steelwork"
+            whatHappens={
+              <>
+                Ultrasonic sensors can produce false echoes from structural steelwork, pipes or
+                adjacent objects within the sound cone. The beam angle widens with distance —
+                typically 5-12 degrees total.
+              </>
+            }
+            doInstead={
+              <>
+                When installing an ultrasonic sensor for level measurement, ensure the sound cone is
+                clear of obstructions, and mount the sensor perpendicular to the surface being
+                measured — essential for reliable operation.
+              </>
+            }
+          />
+
+          <ConceptBlock title="Key point: capacitive versus ultrasonic">
+            <p>
+              Capacitive sensors are the go-to choice for detecting non-metallic materials at close
+              range and for level detection through tank walls. Ultrasonic sensors are preferred
+              when the environment is too harsh for optical sensors (dust, steam, spray) or when
+              distance measurement is needed rather than simple presence detection.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Photoelectric sensors</ContentEyebrow>
+
+          <ConceptBlock title="Three modes cover most applications">
             <p>
               Photoelectric sensors use light (visible red, infrared or laser) to detect the
               presence, absence, position or distance of objects. They offer significantly longer
@@ -625,102 +586,90 @@ const MOETModule5Section1_2 = () => {
               material. Three main operating modes cover the vast majority of industrial
               applications.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Through-Beam (Opposed Mode)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The emitter and receiver are mounted in separate housings facing each other across
-                  the detection zone. The target is detected when it breaks the light beam between
-                  them.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Longest range: up to 60 m for standard models</li>
-                  <li className="pl-1">
-                    Most reliable detection — strong signal, not dependent on target reflectivity
-                  </li>
-                  <li className="pl-1">Can detect transparent and translucent materials</li>
-                  <li className="pl-1">
-                    Disadvantage: requires wiring to both sides of the detection zone
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Through-beam (opposed mode)">
+            <p>
+              The emitter and receiver are mounted in separate housings facing each other across the
+              detection zone. The target is detected when it breaks the light beam between them.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Longest range: up to 60 m for standard models.</li>
+              <li>
+                Most reliable detection — strong signal, not dependent on target reflectivity.
+              </li>
+              <li>Can detect transparent and translucent materials.</li>
+              <li>Disadvantage: requires wiring to both sides of the detection zone.</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Retro-Reflective</h3>
-                <p className="text-sm text-white mb-2">
-                  The emitter and receiver are in the same housing. Light is transmitted to a
-                  reflector on the opposite side and returned to the receiver. The target is
-                  detected when it interrupts the reflected beam.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Range: up to 10-15 m</li>
-                  <li className="pl-1">Only one wiring point — reflector is passive</li>
-                  <li className="pl-1">
-                    Polarised filters prevent false triggering from shiny target surfaces
-                  </li>
-                  <li className="pl-1">
-                    Difficulty detecting highly reflective targets without polarisation
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Retro-reflective">
+            <p>
+              The emitter and receiver are in the same housing. Light is transmitted to a reflector
+              on the opposite side and returned to the receiver. The target is detected when it
+              interrupts the reflected beam.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Range: up to 10-15 m.</li>
+              <li>Only one wiring point — reflector is passive.</li>
+              <li>Polarised filters prevent false triggering from shiny target surfaces.</li>
+              <li>Difficulty detecting highly reflective targets without polarisation.</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Diffuse (Direct Reflection)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The emitter and receiver are in the same housing. Light is transmitted toward the
-                  target and the receiver detects light scattered back from the target surface. No
-                  reflector is needed.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Range: typically 100 mm to 2 m (target-dependent)</li>
-                  <li className="pl-1">
-                    Simplest installation — only one mounting point, no alignment
-                  </li>
-                  <li className="pl-1">
-                    Detection range varies significantly with target colour and surface finish
-                  </li>
-                  <li className="pl-1">
-                    <strong>Background suppression:</strong> Advanced variant that ignores objects
-                    beyond a set distance regardless of reflectivity
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Diffuse (direct reflection)">
+            <p>
+              The emitter and receiver are in the same housing. Light is transmitted toward the
+              target and the receiver detects light scattered back from the target surface. No
+              reflector is needed.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Range: typically 100 mm to 2 m (target-dependent).</li>
+              <li>Simplest installation — only one mounting point, no alignment.</li>
+              <li>Detection range varies significantly with target colour and surface finish.</li>
+              <li>
+                <strong>Background suppression:</strong> Advanced variant that ignores objects
+                beyond a set distance regardless of reflectivity.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Warning</p>
-              <p className="text-sm text-white">
-                Photoelectric sensors used as part of a safety system (e.g., access detection for
+          <CommonMistake
+            title="Using a standard photoelectric sensor for safety guarding"
+            whatHappens={
+              <>
+                Photoelectric sensors used as part of a safety system (e.g. access detection for
                 guarding) must be safety-rated light curtains or muting sensors conforming to BS EN
                 61496 and used with safety relay modules. Standard photoelectric sensors do not have
                 the required redundancy, self-monitoring or response time for safety-of-persons
                 applications.
-              </p>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Specify a safety-rated light curtain or muting sensor to BS EN 61496, wired through
+                a safety relay module — never a standard photoelectric sensor — for any guarding or
+                access-detection duty.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Dirty lenses are the most common cause of
-              photoelectric sensor failure. Establish a regular cleaning schedule and use sensors
-              with built-in contamination compensation where possible. Laser-based sensors are more
-              tolerant of contamination than LED-based models due to their focused beam.
+          <ConceptBlock title="Maintenance tip: dirty lenses">
+            <p>
+              Dirty lenses are the most common cause of photoelectric sensor failure. Establish a
+              regular cleaning schedule and use sensors with built-in contamination compensation
+              where possible. Laser-based sensors are more tolerant of contamination than LED-based
+              models due to their focused beam.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Output Configurations and Wiring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Output configurations and wiring</ContentEyebrow>
+
+          <ConceptBlock title="NPN versus PNP: match it or it won't work">
             <p>
               Understanding sensor output configurations is essential for correct wiring and PLC
               integration. The two main DC output types — NPN (sinking) and PNP (sourcing) —
@@ -728,280 +677,299 @@ const MOETModule5Section1_2 = () => {
               output type will result in the sensor appearing to not work, even though it is
               functioning correctly.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  NPN (Sinking) Output
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    When activated, the sensor switches the output pin to 0 V (negative rail)
-                  </li>
-                  <li className="pl-1">
-                    The load (or PLC input) is connected between the sensor output and the positive
-                    supply
-                  </li>
-                  <li className="pl-1">
-                    Current flows into the sensor output pin (it "sinks" current)
-                  </li>
-                  <li className="pl-1">Common in Japanese and Asian manufactured equipment</li>
-                  <li className="pl-1">Wire colours: Brown (+V), Blue (0 V), Black (output)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  PNP (Sourcing) Output
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    When activated, the sensor switches the output pin to the positive supply rail
-                  </li>
-                  <li className="pl-1">
-                    The load (or PLC input) is connected between the sensor output and 0 V
-                  </li>
-                  <li className="pl-1">
-                    Current flows out of the sensor output pin (it "sources" current)
-                  </li>
-                  <li className="pl-1">
-                    Standard in European and UK installations — matches most Siemens, Allen-Bradley,
-                    Schneider PLC inputs
-                  </li>
-                  <li className="pl-1">Wire colours: Brown (+V), Blue (0 V), Black (output)</li>
-                </ul>
-              </div>
+          <ConceptBlock title="NPN (sinking) output">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>When activated, the sensor switches the output pin to 0 V (negative rail).</li>
+              <li>
+                The load (or PLC input) is connected between the sensor output and the positive
+                supply.
+              </li>
+              <li>Current flows into the sensor output pin (it &quot;sinks&quot; current).</li>
+              <li>Common in Japanese and Asian manufactured equipment.</li>
+              <li>Wire colours: Brown (+V), Blue (0 V), Black (output).</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="PNP (sourcing) output">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                When activated, the sensor switches the output pin to the positive supply rail.
+              </li>
+              <li>The load (or PLC input) is connected between the sensor output and 0 V.</li>
+              <li>Current flows out of the sensor output pin (it &quot;sources&quot; current).</li>
+              <li>
+                Standard in European and UK installations — matches most Siemens, Allen-Bradley,
+                Schneider PLC inputs.
+              </li>
+              <li>Wire colours: Brown (+V), Blue (0 V), Black (output).</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="NO/NC and complementary outputs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>NO (Normally Open):</strong> Output is off when no target is present;
+                switches on when target detected.
+              </li>
+              <li>
+                <strong>NC (Normally Closed):</strong> Output is on when no target is present;
+                switches off when target detected.
+              </li>
+              <li>
+                <strong>Complementary (NO+NC):</strong> Two output pins — one NO and one NC — for
+                maximum flexibility.
+              </li>
+              <li>
+                <strong>Push-pull:</strong> Can drive both sinking and sourcing loads without
+                external configuration.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Standard wire colours (3-wire DC sensors)">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Wire colour</th>
+                    <th className="py-2 pr-4 font-medium text-white">Function</th>
+                    <th className="py-2 font-medium text-white">Connection</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Brown (BN)</td>
+                    <td className="py-2 pr-4">Positive supply</td>
+                    <td className="py-2">+24 V DC</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Blue (BU)</td>
+                    <td className="py-2 pr-4">Negative supply (0 V)</td>
+                    <td className="py-2">0 V DC</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Black (BK)</td>
+                    <td className="py-2 pr-4">Output (NO)</td>
+                    <td className="py-2">PLC input</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">White (WH)</td>
+                    <td className="py-2 pr-4">Output (NC) — 4-wire sensors only</td>
+                    <td className="py-2">PLC input (if used)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                NO/NC and Complementary Outputs
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NO (Normally Open):</strong> Output is off when no target is present;
-                  switches on when target detected
-                </li>
-                <li className="pl-1">
-                  <strong>NC (Normally Closed):</strong> Output is on when no target is present;
-                  switches off when target detected
-                </li>
-                <li className="pl-1">
-                  <strong>Complementary (NO+NC):</strong> Two output pins — one NO and one NC — for
-                  maximum flexibility
-                </li>
-                <li className="pl-1">
-                  <strong>Push-pull:</strong> Can drive both sinking and sourcing loads without
-                  external configuration
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Wire Colours (3-Wire DC Sensors)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Wire Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Connection</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Brown (BN)</td>
-                      <td className="border border-white/10 px-3 py-2">Positive supply</td>
-                      <td className="border border-white/10 px-3 py-2">+24 V DC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Blue (BU)</td>
-                      <td className="border border-white/10 px-3 py-2">Negative supply (0 V)</td>
-                      <td className="border border-white/10 px-3 py-2">0 V DC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Black (BK)</td>
-                      <td className="border border-white/10 px-3 py-2">Output (NO)</td>
-                      <td className="border border-white/10 px-3 py-2">PLC input</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">White (WH)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output (NC) — 4-wire sensors only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">PLC input (if used)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Key point:</strong> When replacing a proximity sensor, always verify whether
               the PLC input module is sinking or sourcing. A PNP sensor connected to a sourcing PLC
               input will not work — the PLC will never see the input change state. Check the PLC
               hardware manual or measure the voltage at the input terminal relative to 0 V with no
               sensor connected.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Position Sensors and Encoders
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Position sensors and encoders</ContentEyebrow>
+
+          <ConceptBlock title="Continuous information, not a single point">
             <p>
               Whilst proximity sensors detect the presence or absence of an object at a specific
               point, position sensors and encoders provide continuous information about position,
               speed or direction. They are essential components in servo systems, CNC machines,
               conveyor positioning and anywhere precise motion control is required.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Incremental Encoders
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  An incremental encoder generates a set number of pulses per revolution (PPR). The
-                  controller counts these pulses to determine speed and relative position. A second
-                  channel, offset by 90 degrees (quadrature), provides direction information.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Resolution: 100 to 10,000+ PPR (pulses per revolution)</li>
-                  <li className="pl-1">
-                    Quadrature outputs (A and B channels) for direction detection
-                  </li>
-                  <li className="pl-1">
-                    Index pulse (Z channel) provides one pulse per revolution for homing
-                  </li>
-                  <li className="pl-1">
-                    Loses position on power loss — must be re-homed after restart
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Absolute Encoders</h3>
-                <p className="text-sm text-white mb-2">
-                  An absolute encoder outputs a unique digital code for each shaft position. Unlike
-                  an incremental encoder, it knows its exact position immediately on power-up
-                  without needing a homing sequence.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Single-turn: unique code for each position within one revolution (e.g., 12-bit =
-                    4096 positions)
-                  </li>
-                  <li className="pl-1">
-                    Multi-turn: tracks position across multiple revolutions using gear mechanisms or
-                    battery-backed counters
-                  </li>
-                  <li className="pl-1">
-                    Output: parallel binary, SSI (Synchronous Serial Interface), or fieldbus
-                    (Profibus, EtherCAT)
-                  </li>
-                  <li className="pl-1">
-                    Higher cost than incremental, but no position loss on power failure
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Linear Position Sensors
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Linear position sensors measure displacement along a straight line. Common types
-                  include:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>LVDT (Linear Variable Differential Transformer):</strong> Contactless,
-                    robust, analogue output — used in hydraulic actuators, precision measurement
-                  </li>
-                  <li className="pl-1">
-                    <strong>Magnetostrictive:</strong> Absolute position along a waveguide — used in
-                    hydraulic cylinders
-                  </li>
-                  <li className="pl-1">
-                    <strong>Potentiometric:</strong> Simple resistive slider — low cost but wears
-                    over time
-                  </li>
-                  <li className="pl-1">
-                    <strong>Linear encoder:</strong> Optical or magnetic strip with read head — high
-                    resolution for CNC machines
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand sensor types, their operating principles and common failure modes. You
-              should be able to replace encoders, verify pulse counts with an oscilloscope or
-              frequency counter, and interpret encoder data sheets for correct replacement
-              specification.
+          <ConceptBlock title="Incremental encoders">
+            <p>
+              An incremental encoder generates a set number of pulses per revolution (PPR). The
+              controller counts these pulses to determine speed and relative position. A second
+              channel, offset by 90 degrees (quadrature), provides direction information.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Resolution: 100 to 10,000+ PPR (pulses per revolution).</li>
+              <li>Quadrature outputs (A and B channels) for direction detection.</li>
+              <li>Index pulse (Z channel) provides one pulse per revolution for homing.</li>
+              <li>Loses position on power loss — must be re-homed after restart.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Absolute encoders">
+            <p>
+              An absolute encoder outputs a unique digital code for each shaft position. Unlike an
+              incremental encoder, it knows its exact position immediately on power-up without
+              needing a homing sequence.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Single-turn: unique code for each position within one revolution (e.g. 12-bit = 4096
+                positions).
+              </li>
+              <li>
+                Multi-turn: tracks position across multiple revolutions using gear mechanisms or
+                battery-backed counters.
+              </li>
+              <li>
+                Output: parallel binary, SSI (Synchronous Serial Interface), or fieldbus (Profibus,
+                EtherCAT).
+              </li>
+              <li>Higher cost than incremental, but no position loss on power failure.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Linear position sensors">
+            <p>
+              Linear position sensors measure displacement along a straight line. Common types
+              include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>LVDT (Linear Variable Differential Transformer):</strong> Contactless,
+                robust, analogue output — used in hydraulic actuators, precision measurement.
+              </li>
+              <li>
+                <strong>Magnetostrictive:</strong> Absolute position along a waveguide — used in
+                hydraulic cylinders.
+              </li>
+              <li>
+                <strong>Potentiometric:</strong> Simple resistive slider — low cost but wears over
+                time.
+              </li>
+              <li>
+                <strong>Linear encoder:</strong> Optical or magnetic strip with read head — high
+                resolution for CNC machines.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="ST1426 and this section">
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to understand sensor types, their
+              operating principles and common failure modes. You should be able to replace encoders,
+              verify pulse counts with an oscilloscope or frequency counter, and interpret encoder
+              data sheets for correct replacement specification.
+            </p>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Principles of Sensing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-3">
-              Next: Temperature and Pressure Sensors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Scenario
+            title="A proximity sensor that works cold and fails when the line warms up"
+
+            situation={
+              <>
+                <p>
+                  An inductive proximity sensor detects a cam on an indexing table. First thing in
+                  the morning the machine runs faultlessly. After about two hours of production it
+                  starts missing an index roughly once every twenty cycles.
+                </p>
+
+                <p>
+                  Swapping the sensor for a new one of the same part number makes no difference.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Note that swapping the sensor and seeing no change has already told you something
+                  useful: the fault is probably not the sensor. Resist the urge to swap it again.
+                </p>
+
+                <p>
+                  Measure the actual sensing gap when cold and again when hot. Inductive sensors
+                  have a defined operating distance, and a machine that grows a fraction of a
+                  millimetre as it warms can push a marginal gap outside it. A gap set at the limit
+                  when cold will fail when hot.
+                </p>
+
+                <p>
+                  Check the target as well as the gap. Sensing distance is quoted for mild steel; a
+                  stainless or aluminium cam gives a reduced distance, and a cam that has been
+                  replaced with a different material will have shrunk the working margin without
+                  anyone changing the setting.
+                </p>
+
+                <p>
+                  Set the gap to around half the rated operating distance rather than at its edge,
+                  and re-check hot. If the machine has no adjustment left, the mounting needs
+                  correcting rather than the sensor replacing.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                "Works cold, fails hot" is one of the most reliable diagnostic clues in maintenance,
+                and it almost always points at something dimensional or resistive rather than at a
+                component being faulty. Fitting a third sensor would have achieved nothing except
+                confirming the first two were fine. Understanding that a sensor has a rated distance
+                — and that the rating assumes a particular target material — is what turns a
+                recurring intermittent into a five-minute adjustment.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Inductive sensors detect metallic targets only, using eddy currents induced by a high-frequency field — rated sensing distance (Sn) is always specified for mild steel.',
+              'Correction factors reduce the effective range for non-ferrous metals: roughly 0.4 for aluminium and copper, 0.5 for brass, 0.7 for stainless steel.',
+              'Capacitive sensors detect any material, including liquids and powders, by sensing a change in dielectric constant — useful for level sensing through non-metallic tank walls.',
+              'Ultrasonic sensors measure distance by time-of-flight and are immune to dust, steam and mist, but have a dead zone and are sensitive to temperature.',
+              'Through-beam gives the longest photoelectric range; retro-reflective needs one wiring point; diffuse needs no alignment but its range depends on target colour.',
+              'Standard photoelectric sensors are never a safety device — guarding needs a light curtain or muting sensor to BS EN 61496 with a safety relay module.',
+              'NPN (sinking) switches the load to 0 V; PNP (sourcing) switches it to the positive rail — the PLC input configuration must match the sensor output type.',
+              'Always install an inductive sensor at 70-80 % of its rated sensing distance, and always verify supply voltage and the LED indicator before condemning a sensor.',
+              'Incremental encoders lose position on power loss and must be re-homed; absolute encoders know their position immediately on power-up.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Principles of Sensing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Temperature and Pressure Sensors
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

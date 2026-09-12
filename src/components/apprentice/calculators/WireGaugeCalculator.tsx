@@ -265,7 +265,12 @@ const WireGaugeCalculator = () => {
 
     if (!wireData) return null;
 
-    const tempDerating = calculateTemperatureDerating(parseFloat(ambientTemp) || 30);
+    // `|| 30` turned a typed 0 °C into 30 °C, so the derating applied did not
+    // match the ambient shown on the client's report. Blank still falls back.
+    const typedAmbient = parseFloat(ambientTemp);
+    const tempDerating = calculateTemperatureDerating(
+      Number.isFinite(typedAmbient) ? typedAmbient : 30
+    );
     const groupingFactor = calculateGroupingFactor(parseFloat(cableGrouping) || 1);
 
     let baseAmpacity = wireData.ampacity.conduit;
@@ -302,7 +307,8 @@ const WireGaugeCalculator = () => {
       }
       if (voltageDropPercentage > 5) {
         warnings.push(
-          `High voltage drop: ${formatNumber(voltageDropPercentage)}% exceeds 5% limit`
+          `High voltage drop: ${formatNumber(voltageDropPercentage)}% — over the 5% general design guideline. ` +
+            `BS 7671 App. 4 limits differ by circuit type (3% lighting, 5% other on a public supply); check yours.`
         );
       } else if (voltageDropPercentage > 3) {
         warnings.push(
@@ -402,13 +408,19 @@ const WireGaugeCalculator = () => {
 
   const hasVoltageDropData = result && parseFloat(length) > 0 && parseFloat(loadCurrent) > 0;
 
+  const installationMethodLabels: Record<string, string> = {
+    conduit: 'In Conduit/Trunking',
+    free: 'Free Air',
+    buried: 'Direct Buried',
+  };
+
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Wire Gauge Calculator',
+        title: 'Wire Gauge',
         subtitle: 'AWG/metric conversion with voltage drop analysis',
-        standard: 'BS 7671 — BS 7671 — Appendix 4',
+        standard: 'BS 7671 — Appendix 4',
       },
       headline: [
         { label: 'Wire size', value: `AWG ${result.wire.awg}`, unit: `${result.wire.metric} mm²` },
@@ -440,7 +452,10 @@ const WireGaugeCalculator = () => {
             ...(length ? [{ label: 'Cable length', value: `${length} m` }] : []),
             ...(loadCurrent ? [{ label: 'Load current', value: `${loadCurrent} A` }] : []),
             { label: 'System voltage', value: `${systemVoltage} V` },
-            { label: 'Installation method', value: installationType },
+            {
+              label: 'Installation method',
+              value: installationMethodLabels[installationType] ?? installationType,
+            },
             { label: 'Ambient temperature', value: `${ambientTemp} °C` },
             { label: 'Cables in group', value: cableGrouping },
           ],
@@ -468,8 +483,8 @@ const WireGaugeCalculator = () => {
                   {
                     label: 'Assessment',
                     value: result.analysis.suitableForLength
-                      ? 'Meets BS 7671 voltage drop requirements (≤5%)'
-                      : 'Exceeds BS 7671 voltage drop limits',
+                      ? 'Within the 5% general design guideline — check the specific circuit’s BS 7671 limit'
+                      : 'Exceeds the 5% general design guideline — check the specific circuit’s BS 7671 limit',
                   },
                 ]
               : []),
@@ -713,8 +728,8 @@ const WireGaugeCalculator = () => {
                       )}
                       <span className="text-white font-medium">
                         {result.analysis.suitableForLength
-                          ? 'Meets BS 7671 voltage drop requirements (≤5%)'
-                          : 'Exceeds BS 7671 voltage drop limits'}
+                          ? 'Within the 5% general design guideline — confirm the limit for this circuit type'
+                          : 'Over the 5% general design guideline — confirm the limit for this circuit type'}
                       </span>
                     </div>
                   </>
@@ -864,7 +879,10 @@ const WireGaugeCalculator = () => {
                       <ul className="space-y-2">
                         {[
                           { reg: 'Section 523', desc: 'Current-carrying capacity' },
-                          { reg: 'Appendix 4', desc: 'Voltage drop limits (5%)' },
+                          {
+                            reg: 'Appendix 4',
+                            desc: 'Voltage drop limits — 3% lighting, 5% other (public supply)',
+                          },
                           { reg: 'Regulation 411', desc: 'Protective measures' },
                           { reg: 'Section 433', desc: 'Overload protection' },
                         ].map((item) => (

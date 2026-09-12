@@ -99,57 +99,91 @@ const DiversityFactorCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!showResults || !result) return null;
+
+    const installationLabel =
+      locationOptions.find((o) => o.value === location)?.label || location;
+    const supplyLabel = supplyType === 'three-phase' ? 'Three phase' : 'Single phase';
+    const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
+
+    // The loads the electrician actually entered. The first version showed only
+    // the computed TOTALS and labelled them "Inputs", so a client received a
+    // maximum demand figure with no way of seeing what had been counted to
+    // reach it — which is the one thing a diversity assessment has to show.
+    const loadRows = loads
+      .filter((l) => l.type && l.connectedLoad)
+      .map((l) => {
+        const units = parseInt(l.numberOfUnits || '1', 10);
+        const typeLabel = (loadTypes[l.type] || l.type).split(' — ')[0];
+        return {
+          label: units > 1 ? `${typeLabel} (×${units})` : typeLabel,
+          value: `${l.connectedLoad} ${l.inputMode === 'kw' ? 'kW' : 'A'}`,
+        };
+      });
+
+    const reductionKw = result.totalInstalledLoad - result.diversifiedLoad;
+
+    const perTypePrefixes = result.breakdownByType.map((b) => `${b.displayName}:`);
+    // The engine's per-type notes restate what "Diversity applied" already shows
+    // against the actual currents, so keep only the notes that add something —
+    // the Reg 536.4.202 warning, the basis of the tables, and any caution.
+    const generalNotes = result.complianceNotes.filter(
+      (n) => n.trim() && !perTypePrefixes.some((prefix) => n.startsWith(prefix))
+    );
+
     return {
       meta: {
-        title: 'Diversity Factor Calculator',
-        subtitle: 'Diversified demand and current after IET On-Site Guide allowances',
+        title: 'Diversity Factor',
+        subtitle: `Maximum demand assessment — ${supplyLabel} ${supplyVoltage} V, ${installationLabel.toLowerCase()}`,
         standard: 'IET On-Site Guide — Appendix A, Table A2',
       },
       headline: [
+        { label: 'Assessed maximum demand', value: result.diversifiedCurrent.toFixed(1), unit: 'A' },
         { label: 'Diversified load', value: result.diversifiedLoad.toFixed(2), unit: 'kW' },
-        { label: 'Diversified current', value: result.diversifiedCurrent.toFixed(1), unit: 'A' },
-        { label: 'Diversity factor', value: `${(result.overallDiversityFactor * 100).toFixed(0)}%` },
+        { label: 'Overall diversity', value: pct(result.overallDiversityFactor) },
       ],
       sections: [
         {
-          heading: 'Inputs',
+          heading: 'Supply',
           rows: [
-            {
-              label: 'Installation type',
-              value: locationOptions.find((o) => o.value === location)?.label || location,
-            },
-            { label: 'Supply type', value: supplyType === 'three-phase' ? 'Three phase' : 'Single phase' },
-            { label: 'Supply voltage', value: `${supplyVoltage} V` },
-            { label: 'Total installed load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
-            { label: 'Total design current', value: `${result.totalDesignCurrent.toFixed(1)} A` },
+            { label: 'Installation type', value: installationLabel },
+            { label: 'Supply', value: `${supplyLabel}, ${supplyVoltage} V` },
           ],
+        },
+        ...(loadRows.length ? [{ heading: 'Circuit loads assessed', rows: loadRows }] : []),
+        {
+          heading: 'Diversity applied',
+          // Per-type, with the engine's own regulation string — this is the
+          // justification for the reduction, and the reason a client can trust
+          // the headline figure.
+          rows: result.breakdownByType.map((b) => ({
+            label: `${b.displayName}${b.count > 1 ? ` (×${b.count})` : ''}`,
+            value: `${b.diversifiedCurrent.toFixed(1)} A`,
+            note: `${pct(b.diversityFactor)} of ${b.installedCurrent.toFixed(1)} A · ${b.regulation}`,
+          })),
         },
         {
-          heading: 'Result',
+          heading: 'Summary',
+          // Deliberately does NOT repeat the headline figures verbatim — it
+          // shows the journey from connected load to assessed demand.
           rows: [
-            { label: 'Diversified load', value: `${result.diversifiedLoad.toFixed(2)} kW` },
-            { label: 'Diversified current', value: `${result.diversifiedCurrent.toFixed(1)} A` },
+            { label: 'Total connected load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
             {
-              label: 'Overall diversity factor',
-              value: `${(result.overallDiversityFactor * 100).toFixed(0)}%`,
+              label: 'Total design current (no diversity)',
+              value: `${result.totalDesignCurrent.toFixed(1)} A`,
             },
-            { label: 'Recommended protection', value: getMainDeviceRecommendation() },
+            {
+              label: 'Reduction from diversity',
+              value: `${reductionKw.toFixed(2)} kW`,
+              note:
+                result.totalInstalledLoad > 0
+                  ? `${((reductionKw / result.totalInstalledLoad) * 100).toFixed(0)}% of the connected load`
+                  : undefined,
+            },
+            { label: 'Recommended main protection', value: getMainDeviceRecommendation() },
           ],
         },
-        ...(result.breakdownByType.length
-          ? [
-              {
-                heading: 'Load breakdown by type',
-                rows: result.breakdownByType.map((b) => ({
-                  label: `${b.displayName}${b.count > 1 ? ` (${b.count})` : ''}`,
-                  value: `${b.diversifiedCurrent.toFixed(1)} A / ${b.diversifiedLoad.toFixed(2)} kW`,
-                  note: `${(b.diversityFactor * 100).toFixed(0)}% — ${b.regulation}`,
-                })),
-              },
-            ]
-          : []),
       ],
-      notes: result.complianceNotes.length ? result.complianceNotes : undefined,
+      notes: generalNotes.length ? generalNotes : undefined,
     };
   };
 

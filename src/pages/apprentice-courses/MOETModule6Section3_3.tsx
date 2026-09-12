@@ -1,8 +1,37 @@
-import { ArrowLeft, Monitor, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 3 · Subsection 3 — Digital vs Paper-Based Reporting
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Digital vs Paper-Based Reporting - MOET Module 6 Section 3.3';
@@ -149,7 +178,7 @@ const quizQuestions = [
     options: [
       'Printing every digital record onto paper as the primary security measure',
       'Sharing a single login between the whole team so records are always accessible',
-      'Storing all records on one technician\'s personal device for safekeeping',
+      "Storing all records on one technician's personal device for safekeeping",
       'Access controls, regular backups, audit trails and compliance with data protection regulations',
     ],
     correctAnswer: 3,
@@ -215,7 +244,7 @@ const quizQuestions = [
       'Use both digital and paper-based recording methods competently, selecting the appropriate method for context',
       'Use only the digital CMMS, as paper records are no longer permitted under the standard',
       'Develop and write the maintenance management software used on site',
-      'Use only paper records, since digital systems fall outside the technician\'s role',
+      "Use only paper records, since digital systems fall outside the technician's role",
     ],
     correctAnswer: 0,
     explanation:
@@ -252,115 +281,51 @@ const faqs = [
 ];
 
 const MOETModule6Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Monitor className="h-4 w-4" />
-            <span>Module 6.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Digital vs Paper-Based Reporting
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.3 · Subsection 3"
+        title="Digital vs Paper-Based Reporting"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Comparing reporting methods, implementation strategies and hybrid approaches
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Digital:</strong> Real-time access, searchable, automated analytics
-              </li>
-              <li className="pl-1">
-                <strong>Paper:</strong> No power/network needed, ATEX compliant, familiar
-              </li>
-              <li className="pl-1">
-                <strong>Hybrid:</strong> Best of both — context-appropriate method selection
-              </li>
-              <li className="pl-1">
-                <strong>Goal:</strong> Single source of truth for all asset data
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Mobile CMMS:</strong> Data entry at the point of work
-              </li>
-              <li className="pl-1">
-                <strong>QR/barcode:</strong> Accurate asset identification on site
-              </li>
-              <li className="pl-1">
-                <strong>Photo evidence:</strong> Visual fault documentation
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Competence with both methods required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Digital: Real-time access, searchable, automated analytics',
+              'Paper: No power/network needed, ATEX compliant, familiar',
+              'Hybrid: Best of both — context-appropriate method selection',
+              'Goal: Single source of truth for all asset data',
+              'Mobile CMMS: Data entry at the point of work',
+              'QR/barcode: Accurate asset identification on site',
+              'Photo evidence: Visual fault documentation',
+              'ST1426: Competence with both methods required',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Compare advantages and limitations of digital and paper-based reporting',
               'Identify when each method is most appropriate in electrical maintenance',
               'Describe features and benefits of mobile CMMS applications',
               'Explain hybrid reporting strategies for different contexts',
               'Understand data security and quality considerations for digital systems',
               'Apply ST1426 requirements for using both digital and paper methods',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Digital Reporting Systems</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Digital Reporting Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Digital Reporting Systems">
             <p>
               Digital reporting has transformed maintenance management. Modern CMMS platforms
               provide mobile applications, real-time dashboards, automated work order generation,
@@ -378,86 +343,69 @@ const MOETModule6Section3_3 = () => {
               effectiveness. This transition from passive storage to active intelligence is the core
               advantage of digital reporting.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Benefits of Digital Reporting
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Real-time visibility:</strong> Managers see maintenance status instantly —
-                  no waiting for paper reports
-                </li>
-                <li className="pl-1">
-                  <strong>Searchability:</strong> Find any record across the entire asset base in
-                  seconds
-                </li>
-                <li className="pl-1">
-                  <strong>Automated triggers:</strong> Condition-based alerts and auto-generated
-                  work orders
-                </li>
-                <li className="pl-1">
-                  <strong>Trend analysis:</strong> Automatic KPI calculation and deterioration
-                  tracking
-                </li>
-                <li className="pl-1">
-                  <strong>Integration:</strong> Links to procurement, stores, finance and BMS
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Consistency:</strong> Mandatory fields and dropdown selections enforce
-                  data standards
-                </li>
-                <li className="pl-1">
-                  <strong>Remote access:</strong> View and update records from any location
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key Benefits of Digital Reporting">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Real-time visibility:</strong> Managers see maintenance status instantly —
+                no waiting for paper reports
+              </li>
+              <li>
+                <strong>Searchability:</strong> Find any record across the entire asset base in
+                seconds
+              </li>
+              <li>
+                <strong>Automated triggers:</strong> Condition-based alerts and auto-generated work
+                orders
+              </li>
+              <li>
+                <strong>Trend analysis:</strong> Automatic KPI calculation and deterioration
+                tracking
+              </li>
+              <li>
+                <strong>Integration:</strong> Links to procurement, stores, finance and BMS systems
+              </li>
+              <li>
+                <strong>Consistency:</strong> Mandatory fields and dropdown selections enforce data
+                standards
+              </li>
+              <li>
+                <strong>Remote access:</strong> View and update records from any location
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mobile CMMS Features for Technicians
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Receive and accept work orders on your mobile device</li>
-                <li className="pl-1">
-                  View asset history, drawings and manuals at the point of work
-                </li>
-                <li className="pl-1">Scan barcodes/QR codes for instant asset identification</li>
-                <li className="pl-1">Capture photographs and attach them to work orders</li>
-                <li className="pl-1">Record test measurements directly into digital forms</li>
-                <li className="pl-1">
-                  Offline mode — work without connectivity, sync when reconnected
-                </li>
-                <li className="pl-1">Digital signatures for sign-off procedures</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Mobile CMMS Features for Technicians">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Receive and accept work orders on your mobile device</li>
+              <li>View asset history, drawings and manuals at the point of work</li>
+              <li>Scan barcodes/QR codes for instant asset identification</li>
+              <li>Capture photographs and attach them to work orders</li>
+              <li>Record test measurements directly into digital forms</li>
+              <li>Offline mode — work without connectivity, sync when reconnected</li>
+              <li>Digital signatures for sign-off procedures</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Digital Does Not Mean Perfect
-              </p>
-              <p className="text-sm text-white">
-                Digital systems bring their own challenges: dependency on network connectivity,
-                battery life limitations on mobile devices, software bugs and updates, the risk of
-                data loss from server failures, and the ongoing costs of licences and subscriptions.
-                A digital system is only as good as its implementation, configuration, and the
-                discipline of its users. Technology alone does not improve maintenance — it is a
-                tool that enables improvement when properly used.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Digital Does Not Mean Perfect">
+            <p>
+              Digital systems bring their own challenges: dependency on network connectivity,
+              battery life limitations on mobile devices, software bugs and updates, the risk of
+              data loss from server failures, and the ongoing costs of licences and subscriptions. A
+              digital system is only as good as its implementation, configuration, and the
+              discipline of its users. Technology alone does not improve maintenance — it is a tool
+              that enables improvement when properly used.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Paper-Based Reporting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Paper-Based Reporting</ContentEyebrow>
+
+          <ConceptBlock title="Paper-Based Reporting">
             <p>
               Despite the rise of digital systems, paper-based reporting retains a legitimate role
               in maintenance. Understanding its strengths and limitations ensures you can work
@@ -472,127 +420,117 @@ const MOETModule6Section3_3 = () => {
               information: storing, retrieving, analysing, and sharing paper records is inherently
               slower and more labour-intensive than working with digital data.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Digital</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Paper</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Accessibility
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Any device, any location with connectivity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical access to file required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Searchability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Instant search across all records
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manual search — time consuming
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Durability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires backups, server maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vulnerable to fire, water, loss
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Hazardous areas
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ATEX-rated devices required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No restrictions — no ignition risk
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Power dependency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Requires charged device</td>
-                      <td className="border border-white/10 px-3 py-2">None — always available</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automated trends, KPIs, dashboards
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Manual analysis only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher initial, lower ongoing per record
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower initial, higher ongoing (storage, retrieval)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Digital vs Paper — Side by Side">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13.5px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Digital</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Paper</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Accessibility</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Any device, any location with connectivity
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Physical access to file required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Searchability</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Instant search across all records
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Manual search — time consuming
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Durability</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Requires backups, server maintenance
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Vulnerable to fire, water, loss
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Hazardous areas
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      ATEX-rated devices required
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      No restrictions — no ignition risk
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Power dependency
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Requires charged device</td>
+                    <td className="border border-white/10 px-3 py-2">None — always available</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Analysis</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Automated trends, KPIs, dashboards
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Manual analysis only</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Cost</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher initial, lower ongoing per record
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Lower initial, higher ongoing (storage, retrieval)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Paper Remains Appropriate
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>ATEX Zone 0 and Zone 1:</strong> Electronic devices are prohibited unless
-                  specifically ATEX certified — paper is the only option
-                </li>
-                <li className="pl-1">
-                  <strong>No network coverage:</strong> Remote sites, deep basements, or shielded
-                  areas where mobile devices cannot connect
-                </li>
-                <li className="pl-1">
-                  <strong>Statutory requirements:</strong> Some regulatory forms still require wet
-                  signatures (though this is decreasing)
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency backup:</strong> Paper forms should always be available as a
-                  contingency when digital systems fail
-                </li>
-                <li className="pl-1">
-                  <strong>Switchroom logbooks:</strong> Immediate access without needing to log in
-                  to a device
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="When Paper Remains Appropriate">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ATEX Zone 0 and Zone 1:</strong> Electronic devices are prohibited unless
+                specifically ATEX certified — paper is the only option
+              </li>
+              <li>
+                <strong>No network coverage:</strong> Remote sites, deep basements, or shielded
+                areas where mobile devices cannot connect
+              </li>
+              <li>
+                <strong>Statutory requirements:</strong> Some regulatory forms still require wet
+                signatures (though this is decreasing)
+              </li>
+              <li>
+                <strong>Emergency backup:</strong> Paper forms should always be available as a
+                contingency when digital systems fail
+              </li>
+              <li>
+                <strong>Switchroom logbooks:</strong> Immediate access without needing to log in to
+                a device
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Hybrid Approaches and Transition Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Hybrid Approaches and Transition Strategies</ContentEyebrow>
+
+          <ConceptBlock title="Hybrid Approaches and Transition Strategies">
             <p>
               Most organisations use a hybrid approach — combining digital and paper methods to suit
               different operational contexts. The key is ensuring all data ultimately feeds into a
@@ -607,96 +545,77 @@ const MOETModule6Section3_3 = () => {
               without proper training and change management, typically experience poor adoption,
               data quality problems, and frustration from both technicians and managers.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Hybrid Scenarios
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Mobile CMMS for routine work orders; paper PTW forms in hazardous areas
-                </li>
-                <li className="pl-1">
-                  Digital data entry at the point of work; printed reports for client handover
-                </li>
-                <li className="pl-1">
-                  Paper logbooks in switchrooms (immediate access); scanned and uploaded to CMMS
-                  daily
-                </li>
-                <li className="pl-1">
-                  Digital planned maintenance; paper emergency breakdown notes (transferred later)
-                </li>
-                <li className="pl-1">
-                  Digital certificates for competent person scheme submission; paper copies for site
-                  files
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common Hybrid Scenarios">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Mobile CMMS for routine work orders; paper PTW forms in hazardous areas</li>
+              <li>Digital data entry at the point of work; printed reports for client handover</li>
+              <li>
+                Paper logbooks in switchrooms (immediate access); scanned and uploaded to CMMS daily
+              </li>
+              <li>
+                Digital planned maintenance; paper emergency breakdown notes (transferred later)
+              </li>
+              <li>
+                Digital certificates for competent person scheme submission; paper copies for site
+                files
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Transition Best Practices
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Phased rollout:</strong> Start with one team or one site, learn from the
-                  experience, then expand
-                </li>
-                <li className="pl-1">
-                  <strong>Adequate training:</strong> Every user needs hands-on training, not just a
-                  manual
-                </li>
-                <li className="pl-1">
-                  <strong>Champion users:</strong> Identify enthusiastic early adopters who can
-                  support colleagues
-                </li>
-                <li className="pl-1">
-                  <strong>Data migration:</strong> Decide what historical paper records to digitise
-                  — prioritise active assets
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback loop:</strong> Gather user feedback and refine the system
-                  configuration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Transition Best Practices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phased rollout:</strong> Start with one team or one site, learn from the
+                experience, then expand
+              </li>
+              <li>
+                <strong>Adequate training:</strong> Every user needs hands-on training, not just a
+                manual
+              </li>
+              <li>
+                <strong>Champion users:</strong> Identify enthusiastic early adopters who can
+                support colleagues
+              </li>
+              <li>
+                <strong>Data migration:</strong> Decide what historical paper records to digitise —
+                prioritise active assets
+              </li>
+              <li>
+                <strong>Feedback loop:</strong> Gather user feedback and refine the system
+                configuration
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Transition Pitfalls to Avoid
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Running parallel systems without a clear migration plan</li>
-                <li className="pl-1">
-                  Inconsistent adoption — some technicians using digital, others still on paper
-                </li>
-                <li className="pl-1">Insufficient training leading to poor data quality</li>
-                <li className="pl-1">
-                  Losing historical paper records during transition — always digitise first
-                </li>
-                <li className="pl-1">
-                  Over-engineering the digital system — start simple and add complexity gradually
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Transition Pitfalls to Avoid">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Running parallel systems without a clear migration plan</li>
+              <li>Inconsistent adoption — some technicians using digital, others still on paper</li>
+              <li>Insufficient training leading to poor data quality</li>
+              <li>Losing historical paper records during transition — always digitise first</li>
+              <li>
+                Over-engineering the digital system — start simple and add complexity gradually
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Key Point">
+            <p>
               <strong>Key point:</strong> The reporting method is a tool — what matters most is the
               quality, accuracy and completeness of the information recorded. A well-completed paper
               form is infinitely more valuable than a poorly completed digital record.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Data Security, Quality and Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Data Security, Quality and Compliance</ContentEyebrow>
+
+          <ConceptBlock title="Data Security, Quality and Compliance">
             <p>
               Digital maintenance records carry responsibilities for data security, quality
               assurance, and regulatory compliance. As a technician, you play a key role in
@@ -704,202 +623,166 @@ const MOETModule6Section3_3 = () => {
               system that must be trustworthy, secure, and auditable. Understanding these
               responsibilities is essential for professional practice under ST1426.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Data Security Essentials
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Use strong, unique passwords for CMMS access</li>
-                  <li className="pl-1">Never share login credentials with colleagues</li>
-                  <li className="pl-1">Log out of shared devices after use</li>
-                  <li className="pl-1">Report suspected data breaches immediately</li>
-                  <li className="pl-1">Follow your organisation's acceptable use policy</li>
-                  <li className="pl-1">Be careful with sensitive data on personal devices</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Data Quality Principles
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Enter data promptly — ideally at the point of work</li>
-                  <li className="pl-1">Verify values before submitting</li>
-                  <li className="pl-1">Use standard terminology and correct asset identifiers</li>
-                  <li className="pl-1">Complete all mandatory fields without shortcuts</li>
-                  <li className="pl-1">If unsure about a field, ask — do not guess</li>
-                  <li className="pl-1">Record actual values, not rounded estimates</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Data Security Essentials">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Use strong, unique passwords for CMMS access</li>
+              <li>Never share login credentials with colleagues</li>
+              <li>Log out of shared devices after use</li>
+              <li>Report suspected data breaches immediately</li>
+              <li>Follow your organisation's acceptable use policy</li>
+              <li>Be careful with sensitive data on personal devices</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Regulatory Compliance Considerations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>GDPR:</strong> If records contain personal data (names, signatures,
-                  photos), data protection requirements apply
-                </li>
-                <li className="pl-1">
-                  <strong>EAWR 1989:</strong> Digital records are valid evidence of compliance,
-                  provided they are secure and auditable
-                </li>
-                <li className="pl-1">
-                  <strong>Electronic signatures:</strong> Legally valid under the Electronic
-                  Communications Act 2000 and eIDAS Regulation
-                </li>
-                <li className="pl-1">
-                  <strong>Retention periods:</strong> Digital records must be retained for the same
-                  periods as paper equivalents
-                </li>
-                <li className="pl-1">
-                  <strong>Backup requirements:</strong> Regular automated backups with off-site
-                  storage to prevent data loss
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Data Quality Principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Enter data promptly — ideally at the point of work</li>
+              <li>Verify values before submitting</li>
+              <li>Use standard terminology and correct asset identifiers</li>
+              <li>Complete all mandatory fields without shortcuts</li>
+              <li>If unsure about a field, ask — do not guess</li>
+              <li>Record actual values, not rounded estimates</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Regulatory Compliance Considerations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>GDPR:</strong> If records contain personal data (names, signatures, photos),
+                data protection requirements apply
+              </li>
+              <li>
+                <strong>EAWR 1989:</strong> Digital records are valid evidence of compliance,
+                provided they are secure and auditable
+              </li>
+              <li>
+                <strong>Electronic signatures:</strong> Legally valid under the Electronic
+                Communications Act 2000 and eIDAS Regulation
+              </li>
+              <li>
+                <strong>Retention periods:</strong> Digital records must be retained for the same
+                periods as paper equivalents
+              </li>
+              <li>
+                <strong>Backup requirements:</strong> Regular automated backups with off-site
+                storage to prevent data loss
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ST1426 Link">
+            <p>
               <strong>ST1426 link:</strong> The standard requires maintenance technicians to use
               information technology appropriately. This includes competent CMMS use, data security
               understanding, and accurate digital records. Demonstrating these skills is assessed in
               the EPA professional discussion.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            The Future of Maintenance Reporting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The Future of Maintenance Reporting</ContentEyebrow>
+
+          <ConceptBlock title="The Future of Maintenance Reporting">
             <p>
               Maintenance reporting continues to evolve with technology. Understanding emerging
               trends helps you prepare for the direction the industry is moving and positions you as
               a forward-thinking technician who can adapt to new methods and tools.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Emerging Trends</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>IoT and automated data collection:</strong> Sensors automatically feed
-                  data into the CMMS, reducing manual entry and enabling real-time monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Artificial intelligence:</strong> Machine learning algorithms analyse
-                  trend data to predict failures more accurately than manual review
-                </li>
-                <li className="pl-1">
-                  <strong>Augmented reality:</strong> AR overlays on mobile devices show asset data,
-                  procedures, and diagrams while looking at the equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Digital twins:</strong> Virtual replicas of physical assets enable
-                  simulation and predictive analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Voice-to-text:</strong> Hands-free data entry using voice recognition,
-                  particularly useful when working in constrained spaces
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Emerging Trends">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IoT and automated data collection:</strong> Sensors automatically feed data
+                into the CMMS, reducing manual entry and enabling real-time monitoring
+              </li>
+              <li>
+                <strong>Artificial intelligence:</strong> Machine learning algorithms analyse trend
+                data to predict failures more accurately than manual review
+              </li>
+              <li>
+                <strong>Augmented reality:</strong> AR overlays on mobile devices show asset data,
+                procedures, and diagrams while looking at the equipment
+              </li>
+              <li>
+                <strong>Digital twins:</strong> Virtual replicas of physical assets enable
+                simulation and predictive analysis
+              </li>
+              <li>
+                <strong>Voice-to-text:</strong> Hands-free data entry using voice recognition,
+                particularly useful when working in constrained spaces
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="Important">
+            <p className="italic">
               <strong>Important:</strong> Regardless of how reporting technology evolves, the
               fundamental principles remain unchanged: data must be accurate, complete, timely, and
               secure. The technician who masters these principles will adapt easily to any reporting
               system — paper, digital, or whatever comes next.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Digital advantage: Real-time access and dashboards',
+              'Digital advantage: Instant search across all records',
+              'Digital advantage: Automated trend analysis and KPIs',
+              'Digital advantage: Integration with business systems',
+              'Digital advantage: Mobile access at the point of work',
+              'Paper advantage: No power or connectivity required',
+              'Paper advantage: ATEX zone compliant',
+              'Paper advantage: Familiar and intuitive',
+              'Paper advantage: No software training needed',
+              'Paper advantage: Backup when digital systems are down',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Digital Advantages</p>
-                <ul className="space-y-0.5">
-                  <li>Real-time access and dashboards</li>
-                  <li>Instant search across all records</li>
-                  <li>Automated trend analysis and KPIs</li>
-                  <li>Integration with business systems</li>
-                  <li>Mobile access at the point of work</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Paper Advantages</p>
-                <ul className="space-y-0.5">
-                  <li>No power or connectivity required</li>
-                  <li>ATEX zone compliant</li>
-                  <li>Familiar and intuitive</li>
-                  <li>No software training needed</li>
-                  <li>Backup when digital systems are down</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Fault Reports and Corrective Actions
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Traceability and Compliance Requirements
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Section 3.2
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-4">
-              Next: Traceability & Compliance
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

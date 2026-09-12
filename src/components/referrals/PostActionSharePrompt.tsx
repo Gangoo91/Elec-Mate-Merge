@@ -10,7 +10,13 @@ import { Button } from '@/components/ui/button';
 import { Users } from 'lucide-react';
 import ReferralShareSheet from './ReferralShareSheet';
 
-type TriggerType = 'post_certificate' | 'post_quote' | 'milestone';
+type TriggerType =
+  | 'post_certificate'
+  | 'post_quote'
+  | 'milestone'
+  | 'post_mock'
+  | 'streak_milestone'
+  | 'course_complete';
 
 interface PostActionSharePromptProps {
   trigger: TriggerType;
@@ -30,9 +36,27 @@ const MESSAGES: Record<TriggerType, { headline: string; subline: string; cta: st
     cta: 'Refer a Mate',
   },
   milestone: {
-    headline: 'Milestone unlocked!',
-    subline: 'Share the love — invite your network.',
-    cta: 'Share Now',
+    headline: 'Milestone unlocked.',
+    // Named the offer. "Share the love — invite your network" asks for a favour
+    // without saying what is in it, which is the weakest possible version of a
+    // referral that actually pays a free month to both sides.
+    subline: 'A free month for you and for them, every time a mate subscribes.',
+    cta: 'Invite a mate',
+  },
+  post_mock: {
+    headline: 'That is a pass.',
+    subline: 'Know someone sitting the same exam? A free month for both of you.',
+    cta: 'Invite a mate',
+  },
+  streak_milestone: {
+    headline: 'Nobody revises on their own.',
+    subline: 'Bring a mate along — a free month each when they subscribe.',
+    cta: 'Invite a mate',
+  },
+  course_complete: {
+    headline: 'Course done.',
+    subline: 'Pass it on — a free month for you and the mate who joins.',
+    cta: 'Invite a mate',
   },
 };
 

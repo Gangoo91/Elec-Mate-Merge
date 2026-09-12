@@ -34,12 +34,28 @@ serve(withSentry('track-push-event', async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
-    const { announcementId, recipientUserId, event } = await req.json().catch(() => ({}));
-    if (event !== 'tapped' || !announcementId) return ok({ ok: true, skipped: true });
+    const { announcementId, recipientUserId, logId, event } = await req.json().catch(() => ({}));
+    if (event !== 'tapped') return ok({ ok: true, skipped: true });
+    if (!announcementId && !logId) return ok({ ok: true, skipped: true });
 
     const supabase = createClient(SUPABASE_URL, SERVICE_ROLE, {
       auth: { persistSession: false },
     });
+
+    // Per-push attribution. push_notification_log.read_at had existed unused
+    // since the table was created: nothing anywhere wrote it, so 5,362 study
+    // reminders went out with no way to tell whether a single one worked. A
+    // notification you cannot measure cannot be improved, and the copy stays
+    // whatever it was the day it shipped.
+    if (logId) {
+      await supabase
+        .from('push_notification_log')
+        .update({ read_at: new Date().toISOString() })
+        .eq('id', logId)
+        .is('read_at', null);
+    }
+
+    if (!announcementId) return ok();
 
     // Campaign-level tap-through counter (works even without a user id).
     await supabase.rpc('increment_announcement_tap', { aid: announcementId });

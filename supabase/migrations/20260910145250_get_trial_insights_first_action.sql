@@ -1,0 +1,18 @@
+-- get_trial_insights_first_action
+--
+-- HISTORICAL MARKER — body intentionally not reproduced.
+--
+-- This revision of public.get_trial_insights() was superseded 44 minutes
+-- later by 20260910153737_get_trial_insights_v2.sql, which is a full
+-- `create or replace` of the same function and the only object either revision
+-- touched (verified against supabase_migrations.schema_migrations: both create
+-- exactly `get_trial_insights` and grant exactly `get_trial_insights`).
+--
+-- The file exists so the migration list matches what the database recorded, and
+-- so `supabase migration list` does not report this version as unapplied. On a
+-- rebuild it is a deliberate no-op: replaying it and then v2 lands in the same
+-- state as replaying v2 alone.
+--
+-- The exact SQL that ran is retained in the database, in
+-- supabase_migrations.schema_migrations where version = '20260910145250'.
+select 1;

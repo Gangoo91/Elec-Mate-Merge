@@ -15,8 +15,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Loader2, RefreshCw, Copy, Check, Download, ChevronRight } from 'lucide-react';
+import { Loader2, RefreshCw, Copy, Check, Download, ChevronRight, Eye, Send } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -46,12 +47,15 @@ import {
 interface BulkResult {
   summary: {
     created: number;
+    updated?: number;
     skipped: number;
     failed: number;
     emailed?: number;
     emailFailed?: number;
   };
   created: string[];
+  /** Already existed: switched to free access and emailed, password untouched. */
+  updated?: string[];
   skipped: { email: string; reason: string }[];
   failed: { email: string; reason: string }[];
   /** Created AND sent the branded login email. */
@@ -124,13 +128,23 @@ export default function AdminBulkCreate() {
   const [raw, setRaw] = useState('');
   const [password, setPassword] = useState(genPassword());
   const [grantAccess, setGrantAccess] = useState(true);
+  const [appRole, setAppRole] = useState<'electrician' | 'apprentice' | ''>('electrician');
   const [reason, setReason] = useState('College cohort');
   const [collegeId, setCollegeId] = useState('');
   // Branded "your access is live" email, one per person, tailored to the batch.
   const [sendAccessEmail, setSendAccessEmail] = useState(true);
   const [orgName, setOrgName] = useState('');
   const [requester, setRequester] = useState('');
+  const [offered, setOffered] = useState(false);
+  const [employer, setEmployer] = useState(false);
   const [learnerCode, setLearnerCode] = useState('');
+  const [electricianCode, setElectricianCode] = useState('');
+  const [includeExisting, setIncludeExisting] = useState(false);
+  const [intro, setIntro] = useState('');
+  const [busy, setBusy] = useState<'preview' | 'test' | null>(null);
+  const [preview, setPreview] = useState<{ to: string; subject: string; html: string } | null>(
+    null
+  );
   const [isCreating, setIsCreating] = useState(false);
   const [result, setResult] = useState<BulkResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -161,6 +175,22 @@ export default function AdminBulkCreate() {
     },
   });
 
+  // Live discount codes, so the email never carries a code that does not exist.
+  const { data: promoCodes } = useQuery<
+    Array<{ code: string; plan_id: string | null; name: string | null }>
+  >({
+    queryKey: ['admin-promo-codes-active'],
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('promo_offers')
+        .select('code, plan_id, name')
+        .eq('is_active', true)
+        .order('code');
+      return (data ?? []) as Array<{ code: string; plan_id: string | null; name: string | null }>;
+    },
+  });
+
   const { data: batches } = useQuery<Batch[]>({
     queryKey: ['admin-bulk-create-batches'],
     staleTime: 60 * 1000,
@@ -181,6 +211,65 @@ export default function AdminBulkCreate() {
     for (const u of baseUsers ?? []) if (u.email) set.add(u.email.toLowerCase());
     return set;
   }, [baseUsers]);
+  const idByEmail = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const u of baseUsers ?? []) if (u.email) m.set(u.email.toLowerCase(), u.id);
+    return m;
+  }, [baseUsers]);
+
+  /*
+    Codes: what the org name matches in promo_offers, and whether what has
+    been typed is real. A wrong code in a tutor's email is worse than none.
+  */
+  const codeStatus = (c: string, want: 'apprentice' | 'electrician') => {
+    const v = c.trim().toUpperCase();
+    if (!v) return null;
+    const hit = promoCodes?.find((p) => p.code.toUpperCase() === v);
+    if (!promoCodes) return null;
+    if (!hit) return 'Not an active code';
+    if (hit.plan_id && hit.plan_id !== want)
+      return want === 'apprentice'
+        ? 'That is the electrician code, put it in the other box'
+        : 'That is the learner code, put it in the other box';
+    return null;
+  };
+  const learnerCodeIssue = codeStatus(learnerCode, 'apprentice');
+  const electricianCodeIssue = codeStatus(electricianCode, 'electrician');
+  const codeSuggestions = useMemo(() => {
+    const org = orgName.trim().toLowerCase();
+    if (org.length < 3 || !promoCodes) return [];
+    const strip = (x: string) =>
+      x
+        .toLowerCase()
+        .replace(
+          /college scheme 50%:|\(apprentice\)|\(electrician\)|\bcollege\b|\bthe\b|\bgroup\b|\bof\b|\band\b|&/g,
+          ' '
+        )
+        .replace(/[^a-z0-9 ]/g, ' ')
+        .split(/\s+/)
+        .filter((w) => w.length > 2);
+    const words = strip(org);
+    if (words.length === 0) return [];
+    // Exact name first (every word both ways), then names that merely contain the org's words.
+    const scored = promoCodes
+      .map((p) => {
+        const nw = strip(p.name || '');
+        const contains = words.every((w) => nw.some((x) => x.startsWith(w)));
+        if (!contains) return null;
+        const exact = nw.every((x) => words.some((w) => x.startsWith(w)));
+        return { p, exact };
+      })
+      .filter((x): x is { p: (typeof promoCodes)[number]; exact: boolean } => x !== null)
+      .sort((a, b) => Number(b.exact) - Number(a.exact));
+    const hits = scored.map((x) => x.p);
+    const learners = hits.filter((p) => p.plan_id === 'apprentice').map((p) => p.code);
+    const electricians = hits.filter((p) => p.plan_id === 'electrician').map((p) => p.code);
+    return learners.slice(0, 3).map((code) => ({
+      code,
+      ecode:
+        electricians.find((e) => e === `${code.replace(/50$/, '')}ELEC50`) ?? electricians[0] ?? '',
+    }));
+  }, [orgName, promoCodes]);
 
   /*
     The state of free access across every account. This is what a bulk grant
@@ -221,10 +310,23 @@ export default function AdminBulkCreate() {
     admin sees the outcome before pressing the button, not after.
   */
   const parsed = useMemo(() => {
-    const tokens = raw
-      .split(/[\s,;]+/)
-      .map((t) => t.trim().toLowerCase())
-      .filter(Boolean);
+    // A line may carry a name for an address that has none of its own:
+    // "Russell <info@centre.co.uk>". Everything else splits into bare tokens.
+    const tokens: string[] = [];
+    const names: Record<string, string> = {};
+    for (const line of raw.split(/\n/)) {
+      const named = line.match(/^\s*([^<>]+?)\s*<\s*([^<>\s]+)\s*>\s*$/);
+      if (named) {
+        const email = named[2].trim().toLowerCase();
+        names[email] = named[1].trim();
+        tokens.push(email);
+        continue;
+      }
+      for (const t of line.split(/[\s,;]+/)) {
+        const v = t.trim().toLowerCase();
+        if (v) tokens.push(v);
+      }
+    }
     const valid: string[] = [];
     const existing: string[] = [];
     const invalid: string[] = [];
@@ -243,7 +345,7 @@ export default function AdminBulkCreate() {
       if (existingEmails.has(t)) existing.push(t);
       else valid.push(t);
     }
-    return { valid, existing, invalid, dupes, total: tokens.length };
+    return { valid, existing, invalid, dupes, total: tokens.length, names };
   }, [raw, existingEmails]);
 
   const selectedCollege = colleges?.find((c) => c.id === collegeId) ?? null;
@@ -252,14 +354,18 @@ export default function AdminBulkCreate() {
   // the admin can still overtype it (or type one with no college attached).
   const pickCollege = (id: string) => {
     setCollegeId(id);
+    // Attached to a college hub = students, so give them the Apprentice view.
+    if (id) setAppRole('apprentice');
     const c = colleges?.find((x) => x.id === id);
     if (c && (!orgName.trim() || orgName === selectedCollege?.name)) setOrgName(c.name);
   };
 
-  const emailReady = !sendAccessEmail || orgName.trim().length > 0;
+  const emailReady =
+    !sendAccessEmail || (orgName.trim().length > 0 && !learnerCodeIssue && !electricianCodeIssue);
+  const nExisting = includeExisting ? parsed.existing.length : 0;
 
   const handleCreate = async () => {
-    if (parsed.valid.length === 0) {
+    if (parsed.valid.length === 0 && nExisting === 0) {
       toast({ title: 'Nothing to create', variant: 'destructive' });
       return;
     }
@@ -280,15 +386,27 @@ export default function AdminBulkCreate() {
       const { data, error } = await supabase.functions.invoke('admin-bulk-create-users', {
         body: {
           emails: parsed.valid,
+          names: parsed.names,
+          includeExisting,
+          existing: includeExisting
+            ? parsed.existing
+                .filter((e) => idByEmail.has(e))
+                .map((e) => ({ id: idByEmail.get(e)!, email: e }))
+            : [],
           password,
           grantAccess,
+          role: appRole || null,
           freeAccessReason: reason,
           collegeId: collegeId || undefined,
           accessEmail: sendAccessEmail
             ? {
                 orgName: orgName.trim(),
-                requester: requester.trim() || null,
+                requester: offered ? null : requester.trim() || null,
                 learnerCode: learnerCode.trim() || null,
+                electricianCode: electricianCode.trim() || null,
+                offered,
+                employer,
+                intro: intro.trim() || null,
               }
             : null,
         },
@@ -320,7 +438,7 @@ export default function AdminBulkCreate() {
         ? ` · ${res.summary.emailed ?? 0} emailed${(res.summary.emailFailed ?? 0) > 0 ? ` · ${res.summary.emailFailed} email failed` : ''}`
         : '';
       toast({
-        title: `${res.summary.created} created`,
+        title: `${res.summary.created} created${res.summary.updated ? ` · ${res.summary.updated} updated` : ''}`,
         description: `${res.summary.skipped} skipped · ${res.summary.failed} failed${emailBit}`,
         variant:
           res.summary.failed > 0 || (res.summary.emailFailed ?? 0) > 0 ? 'destructive' : 'success',
@@ -333,6 +451,78 @@ export default function AdminBulkCreate() {
       });
     } finally {
       setIsCreating(false);
+    }
+  };
+
+  const emailPayload = () => ({
+    emails: parsed.valid.slice(0, 1),
+    names: parsed.names,
+    includeExisting,
+    existing:
+      parsed.valid.length === 0 && includeExisting
+        ? parsed.existing
+            .filter((e) => idByEmail.has(e))
+            .slice(0, 1)
+            .map((e) => ({ id: idByEmail.get(e)!, email: e }))
+        : [],
+    password,
+    grantAccess,
+    role: appRole || null,
+    freeAccessReason: reason,
+    accessEmail: {
+      orgName: orgName.trim(),
+      requester: offered ? null : requester.trim() || null,
+      learnerCode: learnerCode.trim() || null,
+      electricianCode: electricianCode.trim() || null,
+      offered,
+      employer,
+      intro: intro.trim() || null,
+    },
+  });
+
+  /* Render the first person's email exactly as it would go out, create nothing. */
+  const previewEmail = async () => {
+    setBusy('preview');
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-bulk-create-users', {
+        body: { ...emailPayload(), preview: true },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.message || data.error);
+      setPreview(data.preview);
+    } catch (e) {
+      toast({
+        title: 'Preview failed',
+        description: e instanceof Error ? e.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  /* Send the first person's email to founder@ instead, so you see it in a real inbox. */
+  const sendTest = async () => {
+    setBusy('test');
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-bulk-create-users', {
+        body: { ...emailPayload(), test: true },
+      });
+      if (error) throw error;
+      if (data?.error) throw new Error(data.message || data.error);
+      toast({
+        title: 'Test sent to founder@elec-mate.com',
+        description: `As it would go to ${data.sample}. Nothing was created.`,
+        variant: 'success',
+      });
+    } catch (e) {
+      toast({
+        title: 'Test failed',
+        description: e instanceof Error ? e.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    } finally {
+      setBusy(null);
     }
   };
 
@@ -364,15 +554,34 @@ export default function AdminBulkCreate() {
   };
 
   const n = parsed.valid.length;
-  const ready = n > 0 && password.length >= 8 && emailReady && !isCreating;
+  const ready = (n > 0 || nExisting > 0) && password.length >= 8 && emailReady && !isCreating;
+  const canPreview =
+    sendAccessEmail && orgName.trim().length > 0 && (n > 0 || nExisting > 0) && !busy;
 
   const summaryLine =
-    n === 0 ? (
+    n === 0 && nExisting === 0 ? (
       <span>Paste addresses above to begin.</span>
+    ) : n === 0 ? (
+      <span>
+        <span className="font-semibold">
+          {nExisting} existing {nExisting === 1 ? 'account' : 'accounts'}
+        </span>
+        <span> · {grantAccess ? 'free access switched on' : 'no access change'}</span>
+        <span>
+          {' '}
+          ·{' '}
+          {sendAccessEmail
+            ? orgName.trim()
+              ? `emailed for ${orgName.trim()}, password untouched`
+              : 'email needs the college or organisation name'
+            : 'no email'}
+        </span>
+      </span>
     ) : (
       <>
         <span className="font-semibold">
           {n} {n === 1 ? 'account' : 'accounts'}
+          {nExisting > 0 ? ` + ${nExisting} existing updated` : ''}
         </span>
         <span> · {grantAccess ? 'free access' : 'no free access'}</span>
         {selectedCollege && <span> · in {selectedCollege.name}</span>}
@@ -402,10 +611,12 @@ export default function AdminBulkCreate() {
         <>
           <Loader2 className="h-4 w-4 animate-spin" /> Creating {n}…
         </>
-      ) : n === 0 ? (
+      ) : n === 0 && nExisting === 0 ? (
         'Paste addresses to begin'
+      ) : n === 0 ? (
+        `Update ${nExisting} existing ${nExisting === 1 ? 'account' : 'accounts'}`
       ) : (
-        `Create ${n} ${n === 1 ? 'account' : 'accounts'}`
+        `Create ${n} ${n === 1 ? 'account' : 'accounts'}${nExisting > 0 ? ` + update ${nExisting}` : ''}`
       )}
     </button>
   );
@@ -443,7 +654,7 @@ export default function AdminBulkCreate() {
             value={raw}
             onChange={(e) => setRaw(e.target.value)}
             placeholder={
-              'jordan@example.com\nsam@example.com, alex@example.com\n…paste a whole list, any separators'
+              'jordan@example.com\nsam@example.com, alex@example.com\nRussell <info@centre.co.uk>   ← a name for a shared inbox\n…paste a whole list, any separators'
             }
             spellCheck={false}
             autoCapitalize="none"
@@ -491,10 +702,26 @@ export default function AdminBulkCreate() {
             </div>
           )}
           {parsed.existing.length > 0 && (
-            <div className="mt-3 text-[12px] leading-[18px] text-white">
-              <span className="font-semibold">Already have an account, will be left alone:</span>{' '}
-              {parsed.existing.slice(0, 8).join(', ')}
-              {parsed.existing.length > 8 ? ` and ${parsed.existing.length - 8} more` : ''}
+            <div className="mt-3 border-t border-white/[0.1] pt-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-[13px] font-medium text-white">
+                    {parsed.existing.length === 1
+                      ? '1 already has an account'
+                      : `${parsed.existing.length} already have accounts`}
+                  </div>
+                  <div className="mt-0.5 text-[12px] leading-4 text-white">
+                    {includeExisting
+                      ? 'They get free access and the email too. Their password is untouched.'
+                      : 'Left alone: no access change, no email.'}
+                  </div>
+                </div>
+                <Switch checked={includeExisting} onCheckedChange={setIncludeExisting} />
+              </div>
+              <div className="mt-2 text-[12px] leading-[18px] text-white">
+                {parsed.existing.slice(0, 8).join(', ')}
+                {parsed.existing.length > 8 ? ` and ${parsed.existing.length - 8} more` : ''}
+              </div>
             </div>
           )}
           {parsed.invalid.length > 0 && (
@@ -584,6 +811,37 @@ export default function AdminBulkCreate() {
               )}
             </div>
 
+            <div className="border-t border-white/[0.1] pt-4">
+              <div className="text-[13px] font-medium text-white">What they see on first login</div>
+              <div className="mt-0.5 text-[12px] leading-4 text-white">
+                Skips the "choose your role" screen so the first login goes straight in.
+              </div>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {(
+                  [
+                    ['electrician', 'Electrician view', 'tutors and staff'],
+                    ['apprentice', 'Apprentice view', 'a cohort of learners'],
+                    ['', 'Let them choose', 'shows the role screen'],
+                  ] as const
+                ).map(([v, label, hint]) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => setAppRole(v)}
+                    className={cn(
+                      'h-9 touch-manipulation rounded-full border px-3 text-[12px] font-medium transition-colors',
+                      appRole === v
+                        ? 'border-elec-yellow bg-elec-yellow text-black'
+                        : 'border-white/[0.12] bg-white/[0.04] text-white hover:bg-white/[0.08]'
+                    )}
+                    title={hint}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="mt-auto border-t border-white/[0.1] pt-4 text-[12px] leading-[18px] text-white">
               They sign in at app.elec-mate.com with their email and this password, then change it
               under Settings → Security. The mobile app works with the same details.
@@ -636,14 +894,31 @@ export default function AdminBulkCreate() {
               </div>
               {sendAccessEmail && (
                 <div className="mt-3 space-y-3">
+                  <div className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.1] px-3 py-2">
+                    <div className="min-w-0">
+                      <div className="text-[13px] font-medium text-white">
+                        {employer ? 'Employer, not a college' : 'College or training provider'}
+                      </div>
+                      <div className="mt-0.5 text-[12px] leading-4 text-white">
+                        {employer
+                          ? 'Owner or manager looking at it for their own electricians. Employer wording, 30% / 40% codes, shows on Admin → Employers.'
+                          : 'Tutor wording, 50% codes, shows on Admin → Colleges. Switch for a contractor.'}
+                      </div>
+                    </div>
+                    <Switch checked={employer} onCheckedChange={setEmployer} />
+                  </div>
                   <div>
                     <label className="mb-1 block text-[12px] font-medium text-white">
-                      College or organisation
+                      {employer ? 'Company' : 'College or organisation'}
                     </label>
                     <input
                       value={orgName}
                       onChange={(e) => setOrgName(e.target.value)}
-                      placeholder="e.g. Newcastle and Stafford Colleges Group"
+                      placeholder={
+                        employer
+                          ? 'e.g. DW Hargreaves Electrical Contractors'
+                          : 'e.g. Newcastle and Stafford Colleges Group'
+                      }
                       className={inputCn}
                       aria-label="College or organisation name for the email"
                     />
@@ -654,10 +929,11 @@ export default function AdminBulkCreate() {
                         Who asked
                       </label>
                       <input
-                        value={requester}
+                        value={offered ? '' : requester}
                         onChange={(e) => setRequester(e.target.value)}
-                        placeholder="e.g. Sam"
-                        className={inputCn}
+                        placeholder={offered ? 'nobody, offered' : 'e.g. Sam'}
+                        disabled={offered}
+                        className={cn(inputCn, offered && 'opacity-40')}
                         aria-label="Who asked for the accounts"
                       />
                     </div>
@@ -672,6 +948,113 @@ export default function AdminBulkCreate() {
                         className={cn(inputCn, 'font-mono uppercase')}
                         aria-label="Learner discount code"
                       />
+                      {learnerCodeIssue && (
+                        <div className="mt-1 text-[12px]" style={{ color: SERIOUS }}>
+                          {learnerCodeIssue}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-[12px] font-medium text-white">
+                      Electrician code
+                    </label>
+                    <input
+                      value={electricianCode}
+                      onChange={(e) => setElectricianCode(e.target.value.toUpperCase())}
+                      placeholder="e.g. NSCGELEC50 — for qualified electricians on their courses"
+                      className={cn(inputCn, 'font-mono uppercase')}
+                      aria-label="Electrician discount code"
+                    />
+                    {electricianCodeIssue && (
+                      <div className="mt-1 text-[12px]" style={{ color: SERIOUS }}>
+                        {electricianCodeIssue}
+                      </div>
+                    )}
+                  </div>
+                  {codeSuggestions.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-[12px] text-white">Live codes for this name:</span>
+                      {codeSuggestions.map((sug) => {
+                        const on =
+                          learnerCode.trim().toUpperCase() === sug.code &&
+                          electricianCode.trim().toUpperCase() === sug.ecode;
+                        return (
+                          <button
+                            key={sug.code}
+                            type="button"
+                            onClick={() => {
+                              setLearnerCode(sug.code);
+                              setElectricianCode(sug.ecode);
+                            }}
+                            className={cn(
+                              'h-9 touch-manipulation rounded-full border px-3 font-mono text-[12px] font-medium transition-colors',
+                              on
+                                ? 'border-elec-yellow bg-elec-yellow text-black'
+                                : 'border-white/[0.12] bg-white/[0.04] text-white hover:bg-white/[0.08]'
+                            )}
+                          >
+                            {sug.code}
+                            {sug.ecode ? ` + ${sug.ecode}` : ''}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                  <div className="flex flex-wrap gap-2 border-t border-white/[0.1] pt-3">
+                    <button
+                      type="button"
+                      onClick={previewEmail}
+                      disabled={!canPreview}
+                      className="flex h-10 touch-manipulation items-center gap-1.5 rounded-full bg-white/[0.06] px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] active:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      {busy === 'preview' ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                      Preview the email
+                    </button>
+                    <button
+                      type="button"
+                      onClick={sendTest}
+                      disabled={!canPreview}
+                      className="flex h-10 touch-manipulation items-center gap-1.5 rounded-full bg-white/[0.06] px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.1] active:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      {busy === 'test' ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                      Send me a test
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between gap-3 border-t border-white/[0.1] pt-3">
+                    <div>
+                      <div className="text-[13px] font-medium text-white">
+                        Nobody asked, I'm offering it
+                      </div>
+                      <div className="mt-0.5 text-[12px] leading-4 text-white">
+                        Opens with "I'd sooner you saw it for yourself" instead of naming a
+                        requester.
+                      </div>
+                    </div>
+                    <Switch checked={offered} onCheckedChange={setOffered} />
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-[12px] font-medium text-white">
+                      Opening line (optional)
+                    </label>
+                    <input
+                      value={intro}
+                      onChange={(e) => setIntro(e.target.value)}
+                      placeholder="e.g. Good to talk on Friday with Tom and Warren"
+                      className={inputCn}
+                      aria-label="Custom opening line"
+                    />
+                    <div className="mt-1 text-[12px] text-white">
+                      Replaces the generated opening. The email continues ", so I've set you up with
+                      full access…"
                     </div>
                   </div>
                 </div>
@@ -680,7 +1063,9 @@ export default function AdminBulkCreate() {
 
             <div className="mt-auto border-t border-white/[0.1] pt-4 text-[12px] leading-[18px] text-white">
               {sendAccessEmail
-                ? `"${requester.trim() || 'Sam'} asked for accounts for the electrical team at ${orgName.trim() || '…'}", and "You asked" on ${requester.trim() || 'Sam'}'s own copy. ${learnerCode.trim() ? `Learners get the 50% line with ${learnerCode.trim()}.` : 'Add a learner code to include the 50% line.'}`
+                ? offered
+                  ? `"I said I'd sooner you saw it for yourself than took my word for it, so I've set you up…" — no request is claimed. ${learnerCode.trim() ? `Codes in the email: ${learnerCode.trim()}${electricianCode.trim() ? ` + ${electricianCode.trim()}` : ' only — add the electrician code too'}.` : 'Add the learner and electrician codes to include the 50% lines.'}`
+                  : `"${requester.trim() || 'Sam'} asked for accounts for the electrical team at ${orgName.trim() || '…'}", and "You asked" on ${requester.trim() || 'Sam'}'s own copy. ${learnerCode.trim() ? `Codes in the email: ${learnerCode.trim()}${electricianCode.trim() ? ` + ${electricianCode.trim()}` : ' only — add the electrician code too'}.` : 'Add the learner and electrician codes to include the 50% lines.'}`
                 : 'No email goes out. Copy or download the logins once the batch is created.'}
             </div>
           </div>
@@ -708,7 +1093,7 @@ export default function AdminBulkCreate() {
         <Panel>
           <SectionHead
             title="Done"
-            meta={`${result.summary.created} created · ${result.summary.skipped} skipped · ${result.summary.failed} failed${
+            meta={`${result.summary.created} created${result.summary.updated ? ` · ${result.summary.updated} updated` : ''} · ${result.summary.skipped} skipped · ${result.summary.failed} failed${
               typeof result.summary.emailed === 'number'
                 ? ` · ${result.summary.emailed} emailed`
                 : ''
@@ -767,6 +1152,33 @@ export default function AdminBulkCreate() {
                       emailed ? 'Created · emailed' : mailFail ? 'Created · not emailed' : 'Created'
                     }
                     color={mailFail ? SERIOUS : GOOD}
+                  />
+                </div>
+              );
+            })}
+            {(result.updated ?? []).map((email) => {
+              const emailed = result.emailed?.includes(email);
+              const mailFail = result.emailFailed?.find((f) => f.email === email);
+              return (
+                <div
+                  key={`u-${email}`}
+                  className="flex min-h-11 items-center justify-between gap-3 py-2 text-[13px] text-white"
+                >
+                  <span className="min-w-0 truncate">
+                    <span className="font-mono">{email}</span>
+                    {mailFail && (
+                      <span className="ml-2 text-[12px]">email failed: {mailFail.reason}</span>
+                    )}
+                  </span>
+                  <StateDot
+                    label={
+                      emailed
+                        ? 'Existing · access on · emailed'
+                        : mailFail
+                          ? 'Existing · access on · not emailed'
+                          : 'Existing · access on'
+                    }
+                    color={mailFail ? SERIOUS : BLUE}
                   />
                 </div>
               );
@@ -1110,7 +1522,9 @@ export default function AdminBulkCreate() {
         <AlertDialogContent className="rounded-2xl border-white/[0.1] bg-[hsl(0_0%_10%)] text-white">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">
-              Create {n} {n === 1 ? 'account' : 'accounts'}?
+              {n > 0
+                ? `Create ${n} ${n === 1 ? 'account' : 'accounts'}${nExisting > 0 ? ` and update ${nExisting}` : ''}?`
+                : `Update ${nExisting} existing ${nExisting === 1 ? 'account' : 'accounts'}?`}
             </AlertDialogTitle>
             <AlertDialogDescription className="space-y-1 text-white">
               <span className="block">
@@ -1122,19 +1536,30 @@ export default function AdminBulkCreate() {
                   ? 'Free access from the first login.'
                   : 'No free access. They may hit the paywall.'}
                 {selectedCollege ? ` Attached to ${selectedCollege.name}.` : ''}
+                {appRole === 'electrician'
+                  ? ' Straight into the Electrician view, no role screen.'
+                  : appRole === 'apprentice'
+                    ? ' Straight into the Apprentice view, no role screen.'
+                    : ' They pick their role on first login.'}
               </span>
               <span className="block">
                 {sendAccessEmail
                   ? `Each person gets the branded login email for ${orgName.trim()}${
-                      requester.trim() ? `, "${requester.trim()} asked"` : ''
-                    }${learnerCode.trim() ? `, code ${learnerCode.trim()}` : ''}. You're bcc'd.`
+                      offered
+                        ? ', offered'
+                        : requester.trim()
+                          ? `, "${requester.trim()} asked"`
+                          : ''
+                    }${learnerCode.trim() ? `, code${electricianCode.trim() ? 's' : ''} ${[learnerCode.trim(), electricianCode.trim()].filter(Boolean).join(' + ')}` : ''}. You're bcc'd.`
                   : 'No email is sent. Copy the logins afterwards.'}
               </span>
               {parsed.existing.length > 0 && (
                 <span className="block">
                   {parsed.existing.length} {parsed.existing.length === 1 ? 'address' : 'addresses'}{' '}
-                  already {parsed.existing.length === 1 ? 'has' : 'have'} an account and will be
-                  left alone.
+                  already {parsed.existing.length === 1 ? 'has' : 'have'} an account
+                  {includeExisting
+                    ? ': switched to free access and emailed, password untouched.'
+                    : ' and will be left alone.'}
                 </span>
               )}
               <span className="block">This cannot be undone in bulk.</span>
@@ -1153,6 +1578,29 @@ export default function AdminBulkCreate() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <Sheet open={!!preview} onOpenChange={(o) => !o && setPreview(null)}>
+        <SheetContent
+          side="bottom"
+          className="max-h-[92vh] overflow-hidden border-white/[0.1] bg-[hsl(0_0%_7%)] p-0 text-white"
+        >
+          <SheetHeader className="border-b border-white/[0.1] px-5 pb-3 pt-4 text-left">
+            <SheetTitle className="text-[15px] font-semibold text-white">
+              {preview?.subject}
+            </SheetTitle>
+            <div className="text-[12px] text-white">
+              To {preview?.to} · from Andrew at Elec-Mate · exactly as it will send
+            </div>
+          </SheetHeader>
+          {preview && (
+            <iframe
+              title="Email preview"
+              srcDoc={preview.html}
+              sandbox=""
+              className="h-[calc(92vh-72px)] w-full bg-[#F4F6F9]"
+            />
+          )}
+        </SheetContent>
+      </Sheet>
     </PageFrame>
   );
 }

@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.6 · Subsection 1 — Solar PV Integration
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *   · "Electrical. Different types of cables; their specifications and
+ *     application."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { PvCellCrossSection } from '@/components/study-centre/diagrams/renewablePv';
+import { ResidentialPvSld } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Solar PV Integration - MOET Module 3.6.1';
@@ -135,7 +174,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Engineering Recommendation G99 (which replaced G59 in 2019) applies to generating equipment connecting to the distribution network above 3.68 kW per phase. It requires formal application to the DNO, technical assessment, and approval before connection. G98 (which replaced G83) covers smaller installations up to 3.68 kW per phase under a 'fit and notify' arrangement. Both standards specify protection settings, power quality limits, and anti-islanding requirements.",
+      "Engineering Recommendation G99 (which replaced G59 for connections on or after 27 April 2019) applies to generating equipment above the G98 threshold. G99 defines that threshold in current, not power: G98 covers a Power Generating Module with a nominal current up to and including 16 A per phase, and for Fully Type Tested equipment it is the AGGREGATE Registered Capacity that must be 16 A per phase or less. The familiar 3.68 kW figure is simply 16 A x 230 V — useful shorthand, but the amps and the word 'aggregate' are what the document actually says. It requires formal application to the DNO, technical assessment, and approval before connection. G98 (which replaced G83) covers smaller installations up to 3.68 kW per phase under a 'fit and notify' arrangement. Both standards specify protection settings, power quality limits, and anti-islanding requirements.",
   },
   {
     id: 6,
@@ -243,7 +282,7 @@ const faqs = [
   {
     question: 'What is the difference between G98 and G99 for PV installations?',
     answer:
-      "G98 (formerly G83) covers small-scale generation up to 3.68 kW per phase (single phase: 3.68 kW, three phase: 11.04 kW). It operates on a 'fit and notify' basis — the installer completes the installation and notifies the DNO within 28 days. G99 (formerly G59) covers generation above 3.68 kW per phase and requires formal application to the DNO before installation. The DNO assesses the network impact and may impose conditions such as export limitation, protection settings, or network reinforcement. Both standards require compliant inverters with anti-islanding protection.",
+      "G98 (formerly G83) covers a Power Generating Module with a nominal current up to and including 16 A per phase — about 3.68 kW single phase, 11.04 kW across three phases. The limit is on the AGGREGATE Registered Capacity, so adding battery storage to an existing PV array can push a previously G98 installation over the line even though neither item alone exceeds it. It operates on a 'fit and notify' basis — the installer completes the installation and notifies the DNO within 28 days. G99 (formerly G59) covers generation above 3.68 kW per phase and requires formal application to the DNO before installation. The DNO assesses the network impact and may impose conditions such as export limitation, protection settings, or network reinforcement. Both standards require compliant inverters with anti-islanding protection.",
   },
   {
     question: 'How often should PV systems be inspected and tested?',
@@ -262,123 +301,57 @@ const faqs = [
   },
 ];
 
-/* ================================================================== */
-/*  Component                                                          */
-/* ================================================================== */
 const MOETModule3Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* ---- Sticky header ---- */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* ---- Main article ---- */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* ---- Header ---- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Solar PV Integration
-          </h1>
-          <p className="text-white">
-            Photovoltaic systems, grid connection and maintenance for electrical technicians
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.6 · Subsection 1"
+        title="Solar PV Integration"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Photovoltaic systems, grid connection and maintenance for electrical technicians.
           </p>
-        </header>
 
-        {/* ---- Summary boxes ---- */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>PV effect:</strong> Semiconductor cells convert sunlight directly to DC
-                electricity
-              </li>
-              <li className="pl-1">
-                <strong>Inverter:</strong> Converts DC to grid-synchronised AC with anti-islanding
-              </li>
-              <li className="pl-1">
-                <strong>Hazard:</strong> DC circuits energised whenever daylight present (300-600 V
-                DC)
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671 Section 712, G98/G99, MCS MIS 3002
-              </li>
+          <TLDR
+            points={[
+              'PV effect: Semiconductor cells convert sunlight directly to DC electricity.',
+              'Inverter: Converts DC to grid-synchronised AC with anti-islanding.',
+              'Hazard: DC circuits energised whenever daylight present (300-600 V DC).',
+              'Standards: BS 7671 Section 712, G98/G99, MCS MIS 3002.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>Inspection: annual visual, 3-5 year full electrical test.</li>
+              <li>Diagnostics: thermal imaging, I-V curve tracing, inverter logs.</li>
+              <li>Safety: DC-rated isolators, fire-resistant cabling, dual-supply labels.</li>
+              <li>ST1426: maps to emerging technologies KSBs.</li>
             </ul>
-          </div>
+          </ConceptBlock>
 
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Inspection:</strong> Annual visual, 3-5 year full electrical test
-              </li>
-              <li className="pl-1">
-                <strong>Diagnostics:</strong> Thermal imaging, I-V curve tracing, inverter logs
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> DC-rated isolators, fire-resistant cabling, dual-supply
-                labels
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to emerging technologies KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* ---- Learning outcomes ---- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the photovoltaic effect and PV cell technologies (mono, poly, thin-film)',
               'Describe PV system architectures: string inverter, microinverter and optimiser topologies',
               'Apply BS 7671 Section 712 requirements for PV installations',
               'Distinguish between G98 and G99 DNO connection requirements',
               'Carry out PV system inspection, testing and fault-finding procedures',
               'Identify the maintenance requirements for maximising PV system performance and safety',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>PV cell technology and module construction</ContentEyebrow>
 
-        {/* ---- Section 01 ---- */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            PV Cell Technology and Module Construction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="How a PV cell converts sunlight into electricity">
             <p>
               Solar photovoltaic technology converts sunlight directly into electrical energy
               through the photovoltaic effect. When photons from sunlight strike a semiconductor
@@ -392,257 +365,213 @@ const MOETModule3Section6_1 = () => {
               and temperature coefficients. A technician who understands the technology can diagnose
               faults more effectively and advise building operators on performance expectations.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PV Cell Technologies Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Efficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Characteristics
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monocrystalline</td>
-                      <td className="border border-white/10 px-3 py-2">20-22%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single crystal, uniform dark, highest output per m², premium cost
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polycrystalline</td>
-                      <td className="border border-white/10 px-3 py-2">15-17%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple crystals, blue speckled, good value, slightly lower output
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thin-film (CdTe/CIGS)</td>
-                      <td className="border border-white/10 px-3 py-2">10-13%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Deposited layers, flexible options, better in low light, lower cost per m²
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Half-cut cell</td>
-                      <td className="border border-white/10 px-3 py-2">20-22%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cells cut in half — reduced resistive losses, better shade tolerance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <PvCellCrossSection caption="The photovoltaic effect: a photon striking the p-n junction creates an electron-hole pair, and the built-in electric field separates the charge carriers to produce a DC voltage." />
+
+          <ConceptBlock title="PV cell technologies comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Technology</th>
+                    <th className="py-2 pr-4 font-medium text-white">Efficiency</th>
+                    <th className="py-2 font-medium text-white">Characteristics</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Monocrystalline</td>
+                    <td className="py-2 pr-4">20-22%</td>
+                    <td className="py-2">
+                      Single crystal, uniform dark, highest output per m², premium cost
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Polycrystalline</td>
+                    <td className="py-2 pr-4">15-17%</td>
+                    <td className="py-2">
+                      Multiple crystals, blue speckled, good value, slightly lower output
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Thin-film (CdTe/CIGS)</td>
+                    <td className="py-2 pr-4">10-13%</td>
+                    <td className="py-2">
+                      Deposited layers, flexible options, better in low light, lower cost per m²
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Half-cut cell</td>
+                    <td className="py-2 pr-4">20-22%</td>
+                    <td className="py-2">
+                      Cells cut in half — reduced resistive losses, better shade tolerance
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Module Construction</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Front glass:</strong> Tempered low-iron glass (3.2 mm typical) —
-                  anti-reflective coated for maximum light transmission
-                </li>
-                <li className="pl-1">
-                  <strong>Encapsulant:</strong> EVA (ethylene vinyl acetate) sheets above and below
-                  the cells — protects cells and provides electrical insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Cells:</strong> Series-connected cell strings with bypass diodes
-                  (typically 3 per module) to allow current to bypass shaded sections
-                </li>
-                <li className="pl-1">
-                  <strong>Backsheet:</strong> Polymer layer (or glass in glass-glass modules)
-                  providing weather protection and electrical insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Frame:</strong> Anodised aluminium providing structural support and
-                  mounting interface
-                </li>
-                <li className="pl-1">
-                  <strong>Junction box:</strong> IP65-rated box containing bypass diodes and cable
-                  connections with MC4 connectors
-                </li>
-              </ul>
-            </div>
-            <p className="text-sm text-elec-yellow/70">
+          </ConceptBlock>
+
+          <ConceptBlock title="Module construction">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>
+                <strong>Front glass:</strong> Tempered low-iron glass (3.2 mm typical) —
+                anti-reflective coated for maximum light transmission.
+              </li>
+              <li>
+                <strong>Encapsulant:</strong> EVA (ethylene vinyl acetate) sheets above and below
+                the cells — protects cells and provides electrical insulation.
+              </li>
+              <li>
+                <strong>Cells:</strong> Series-connected cell strings with bypass diodes (typically
+                3 per module) to allow current to bypass shaded sections.
+              </li>
+              <li>
+                <strong>Backsheet:</strong> Polymer layer (or glass in glass-glass modules)
+                providing weather protection and electrical insulation.
+              </li>
+              <li>
+                <strong>Frame:</strong> Anodised aluminium providing structural support and mounting
+                interface.
+              </li>
+              <li>
+                <strong>Junction box:</strong> IP65-rated box containing bypass diodes and cable
+                connections with MC4 connectors.
+              </li>
+            </ul>
+            <p className="text-sm text-elec-yellow">
               <strong>Key point:</strong> A typical 400 W module produces approximately 40 V
               open-circuit and 10 A short-circuit in standard test conditions (STC: 1000 W/m²
               irradiance, 25 degrees C cell temperature, AM1.5 spectrum). Connecting 10 modules in
               series creates a string voltage of approximately 400 V DC — a potentially lethal
               voltage that is present whenever there is daylight.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 1 */}
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* ---- Section 02 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            System Architectures and Inverter Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>System architectures and inverter technologies</ContentEyebrow>
+
+          <ConceptBlock title="The inverter: the most technologically complex component">
             <p>
               The inverter is the most technologically complex component in a PV system and the
               component most likely to require maintenance or replacement during the system
               lifetime. Understanding the different inverter topologies and their implications for
               performance and maintenance is essential for electrical maintenance technicians.
             </p>
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  String Inverter Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The most common topology for domestic and small commercial installations. Multiple
-                  PV modules are connected in series (a 'string') to achieve the required DC input
-                  voltage for the inverter. One or two strings connect to a single wall-mounted
-                  inverter.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Cost-effective for unshaded roofs with uniform orientation
-                  </li>
-                  <li className="pl-1">
-                    Single point of failure — inverter fault disables entire array
-                  </li>
-                  <li className="pl-1">
-                    String performance limited by the weakest module (series connection)
-                  </li>
-                  <li className="pl-1">
-                    High DC string voltage (300-600 V) requires careful cable management
-                  </li>
-                  <li className="pl-1">
-                    MPPT operates at string level — shading affects entire string
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Microinverter Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  A small inverter is fitted to each individual PV module, converting DC to AC at
-                  the module level. All module outputs connect in parallel to the AC distribution
-                  board.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Module-level MPPT — each module operates independently at its maximum power
-                    point
-                  </li>
-                  <li className="pl-1">
-                    Excellent shade tolerance — shading one module does not affect others
-                  </li>
-                  <li className="pl-1">
-                    No high-voltage DC on the roof — only module-level DC (30-40 V) and 230 V AC
-                  </li>
-                  <li className="pl-1">
-                    Module-level monitoring identifies individual underperforming modules
-                  </li>
-                  <li className="pl-1">
-                    Higher cost per watt; more components with potential failure points
-                  </li>
-                  <li className="pl-1">Maintenance requires roof access to each microinverter</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  DC Optimiser Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Power optimisers fitted to each module provide module-level MPPT and voltage
-                  regulation, feeding a centralised string inverter. A hybrid approach combining
-                  benefits of both topologies.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Module-level MPPT with centralised DC-to-AC conversion</li>
-                  <li className="pl-1">
-                    Rapid shutdown capability for firefighter safety (reduces DC voltage to safe
-                    level)
-                  </li>
-                  <li className="pl-1">
-                    Module-level monitoring via the string inverter interface
-                  </li>
-                  <li className="pl-1">
-                    Fixed string voltage output regardless of irradiance conditions
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <p className="text-sm text-elec-yellow/70">
+          </ConceptBlock>
+
+          <ConceptBlock title="String inverter systems">
+            <p>
+              The most common topology for domestic and small commercial installations. Multiple PV
+              modules are connected in series (a &apos;string&apos;) to achieve the required DC
+              input voltage for the inverter. One or two strings connect to a single wall-mounted
+              inverter.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow">
+              <li>Cost-effective for unshaded roofs with uniform orientation.</li>
+              <li>Single point of failure — inverter fault disables entire array.</li>
+              <li>String performance limited by the weakest module (series connection).</li>
+              <li>High DC string voltage (300-600 V) requires careful cable management.</li>
+              <li>MPPT operates at string level — shading affects entire string.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Microinverter systems">
+            <p>
+              A small inverter is fitted to each individual PV module, converting DC to AC at the
+              module level. All module outputs connect in parallel to the AC distribution board.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow">
+              <li>
+                Module-level MPPT — each module operates independently at its maximum power point.
+              </li>
+              <li>Excellent shade tolerance — shading one module does not affect others.</li>
+              <li>No high-voltage DC on the roof — only module-level DC (30-40 V) and 230 V AC.</li>
+              <li>Module-level monitoring identifies individual underperforming modules.</li>
+              <li>Higher cost per watt; more components with potential failure points.</li>
+              <li>Maintenance requires roof access to each microinverter.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="DC optimiser systems">
+            <p>
+              Power optimisers fitted to each module provide module-level MPPT and voltage
+              regulation, feeding a centralised string inverter. A hybrid approach combining
+              benefits of both topologies.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow">
+              <li>Module-level MPPT with centralised DC-to-AC conversion.</li>
+              <li>
+                Rapid shutdown capability for firefighter safety (reduces DC voltage to safe level).
+              </li>
+              <li>Module-level monitoring via the string inverter interface.</li>
+              <li>Fixed string voltage output regardless of irradiance conditions.</li>
+            </ul>
+            <p className="text-sm text-elec-yellow">
               <strong>Key point:</strong> All grid-connected inverters must incorporate
               anti-islanding protection compliant with G98 or G99 engineering recommendations. The
               inverter must disconnect from the grid within 0.5 seconds of detecting loss of mains
               supply.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 2 */}
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ResidentialPvSld caption="A residential PV system: the hybrid inverter ties the array (and any battery) together on the DC side and feeds AC into the consumer unit, with surplus exported through the smart meter." />
 
-        {/* ---- Section 03 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            BS 7671 Section 712 and DNO Connection Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 Section 712 and DNO connection requirements</ContentEyebrow>
+
+          <ConceptBlock title="Complying with both general requirements and Section 712">
             <p>
               PV installations must comply with both BS 7671 general requirements and the additional
               requirements of Section 712 specific to PV systems. The maintenance technician must
               understand these requirements to carry out periodic inspection and testing correctly
               and to identify non-compliant installations.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key BS 7671 Section 712 Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>712.411:</strong> Where protection by automatic disconnection of supply
-                  cannot be achieved on the DC side, protection by double or reinforced insulation
-                  (Class II) or by electrical separation shall be used
-                </li>
-                <li className="pl-1">
-                  <strong>712.512.1:</strong> A PV installation shall be subdivided into PV string
-                  circuits, PV array circuits and PV installation circuits for correct overcurrent
-                  protection
-                </li>
-                <li className="pl-1">
-                  <strong>712.514:</strong> Labelling at the origin of the installation (consumer
-                  unit/distribution board) and at the meter position warning of the presence of a
-                  dual supply — 'DUAL SUPPLY — SOLAR PV'
-                </li>
-                <li className="pl-1">
-                  <strong>712.522:</strong> PV DC cables within a building shall be either
-                  fire-resistant (to BS 8434 or BS 8519) or installed in fire-resistant
-                  trunking/conduit
-                </li>
-                <li className="pl-1">
-                  <strong>712.537.2:</strong> A DC isolator shall be provided adjacent to the
-                  inverter, operable from floor level, allowing isolation of the PV array from the
-                  inverter
-                </li>
-                <li className="pl-1">
-                  <strong>712.411.203:</strong> On the DC side, earth fault protection shall be
-                  provided by an insulation monitoring device (IMD) or equivalent within the
-                  inverter
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Critical: Anti-Islanding and DNO Safety
-              </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Key BS 7671 Section 712 requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>
+                <strong>712.411:</strong> Where protection by automatic disconnection of supply
+                cannot be achieved on the DC side, protection by double or reinforced insulation
+                (Class II) or by electrical separation shall be used.
+              </li>
+              <li>
+                <strong>712.512.1:</strong> A PV installation shall be subdivided into PV string
+                circuits, PV array circuits and PV installation circuits for correct overcurrent
+                protection.
+              </li>
+              <li>
+                <strong>712.514:</strong> Labelling at the origin of the installation (consumer
+                unit/distribution board) and at the meter position warning of the presence of a dual
+                supply — &apos;DUAL SUPPLY — SOLAR PV&apos;.
+              </li>
+              <li>
+                <strong>712.522:</strong> PV DC cables within a building shall be either
+                fire-resistant (to BS 8434 or BS 8519) or installed in fire-resistant
+                trunking/conduit.
+              </li>
+              <li>
+                <strong>712.537.2:</strong> A DC isolator shall be provided adjacent to the
+                inverter, operable from floor level, allowing isolation of the PV array from the
+                inverter.
+              </li>
+              <li>
+                <strong>712.411.203:</strong> On the DC side, earth fault protection shall be
+                provided by an insulation monitoring device (IMD) or equivalent within the inverter.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Critical: anti-islanding and DNO safety">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
               <p className="text-sm text-white">
                 Grid-connected PV systems must disconnect from the network when the grid supply
                 fails. Without anti-islanding protection, a PV system could export power into a
@@ -653,81 +582,63 @@ const MOETModule3Section6_1 = () => {
                 and G99 define the protection settings and response times.
               </p>
             </div>
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                G98 vs G99 Connection Requirements
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        G98 (formerly G83)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        G99 (formerly G59)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacity</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 3.68 kW per phase</td>
-                      <td className="border border-white/10 px-3 py-2">Above 3.68 kW per phase</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Process</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fit and notify (within 28 days)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Apply and approval required before install
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DNO assessment</td>
-                      <td className="border border-white/10 px-3 py-2">Not required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Network impact assessment required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Export limitation</td>
-                      <td className="border border-white/10 px-3 py-2">Rarely required</td>
-                      <td className="border border-white/10 px-3 py-2">May be imposed by DNO</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protection testing</td>
-                      <td className="border border-white/10 px-3 py-2">Type tested (inverter)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Commissioning witness test may be required
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="G98 vs G99 connection requirements">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">G98 (formerly G83)</th>
+                    <th className="py-2 font-medium text-white">G99 (formerly G59)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Capacity</td>
+                    <td className="py-2 pr-4">Aggregate up to 16 A/phase (~3.68 kW)</td>
+                    <td className="py-2">Above 16 A/phase aggregate</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Process</td>
+                    <td className="py-2 pr-4">Fit and notify (within 28 days)</td>
+                    <td className="py-2">Apply and approval required before install</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">DNO assessment</td>
+                    <td className="py-2 pr-4">Not required</td>
+                    <td className="py-2">Network impact assessment required</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Export limitation</td>
+                    <td className="py-2 pr-4">Rarely required</td>
+                    <td className="py-2">May be imposed by DNO</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Protection testing</td>
+                    <td className="py-2 pr-4">Type tested (inverter)</td>
+                    <td className="py-2">Commissioning witness test may be required</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-sm text-elec-yellow">
               <strong>Key point:</strong> The MCS (Microgeneration Certification Scheme)
               installation standard MIS 3002 provides the detailed design and installation
               requirements for PV systems. MCS registration is mandatory for SEG (Smart Export
               Guarantee) eligibility and is increasingly required by building insurers and warranty
               providers.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 3 */}
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* ---- Section 04 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            PV Maintenance, Testing and Fault-Finding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>PV maintenance, testing and fault-finding</ContentEyebrow>
+
+          <ConceptBlock title="Systematic inspection, testing and fault-finding">
             <p>
               PV systems require regular maintenance to maintain performance and safety. While PV
               has no moving parts, environmental exposure, thermal cycling, and electrical stress
@@ -735,124 +646,84 @@ const MOETModule3Section6_1 = () => {
               inspection, testing, and fault-finding to identify issues before they become safety
               hazards or cause significant performance losses.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Visual Inspection Checklist
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Module front glass: cracks, delamination, snail trails, soiling
-                  </li>
-                  <li className="pl-1">Module backsheet: yellowing, cracking, burn marks</li>
-                  <li className="pl-1">Frame: corrosion, loose fixings, impact damage</li>
-                  <li className="pl-1">Mounting system: roof penetration seals, rail fixings</li>
-                  <li className="pl-1">
-                    DC cabling: UV degradation, rodent damage, connector condition
-                  </li>
-                  <li className="pl-1">Isolators: operation, weathering, label legibility</li>
-                  <li className="pl-1">
-                    Inverter: fan operation, display/LED status, dust ingress
-                  </li>
-                  <li className="pl-1">Labels: dual supply warnings at origin and meter</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Electrical Testing</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Open-circuit voltage (Voc) per string — compare with calculated expected value
-                  </li>
-                  <li className="pl-1">
-                    Short-circuit current (Isc) per string — compare with module datasheet
-                  </li>
-                  <li className="pl-1">
-                    Insulation resistance: DC side (500 V DC test), AC side (500 V DC test)
-                  </li>
-                  <li className="pl-1">
-                    Earth continuity of exposed-conductive-parts (frames, mounting)
-                  </li>
-                  <li className="pl-1">
-                    I-V curve tracing: identifies underperforming modules in a string
-                  </li>
-                  <li className="pl-1">
-                    Thermal imaging: hotspots, bypass diode activation, connection faults
-                  </li>
-                  <li className="pl-1">
-                    Inverter performance data: compare actual yield with expected yield
-                  </li>
-                </ul>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Visual inspection checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>Module front glass: cracks, delamination, snail trails, soiling.</li>
+              <li>Module backsheet: yellowing, cracking, burn marks.</li>
+              <li>Frame: corrosion, loose fixings, impact damage.</li>
+              <li>Mounting system: roof penetration seals, rail fixings.</li>
+              <li>DC cabling: UV degradation, rodent damage, connector condition.</li>
+              <li>Isolators: operation, weathering, label legibility.</li>
+              <li>Inverter: fan operation, display/LED status, dust ingress.</li>
+              <li>Labels: dual supply warnings at origin and meter.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Electrical testing">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>
+                Open-circuit voltage (Voc) per string — compare with calculated expected value.
+              </li>
+              <li>Short-circuit current (Isc) per string — compare with module datasheet.</li>
+              <li>Insulation resistance: DC side (500 V DC test), AC side (500 V DC test).</li>
+              <li>Earth continuity of exposed-conductive-parts (frames, mounting).</li>
+              <li>I-V curve tracing: identifies underperforming modules in a string.</li>
+              <li>Thermal imaging: hotspots, bypass diode activation, connection faults.</li>
+              <li>Inverter performance data: compare actual yield with expected yield.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common PV faults and diagnostic approach">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Symptom</th>
+                    <th className="py-2 pr-4 font-medium text-white">Possible cause</th>
+                    <th className="py-2 font-medium text-white">Diagnostic method</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Zero output</td>
+                    <td className="py-2 pr-4">Inverter fault, DC isolator open, earth fault</td>
+                    <td className="py-2">
+                      Inverter display/logs, DC voltage check, insulation resistance
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Reduced output</td>
+                    <td className="py-2 pr-4">
+                      Soiling, shading, module degradation, bypass diode
+                    </td>
+                    <td className="py-2">Thermal imaging, I-V curve, Voc comparison</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Inverter earth fault</td>
+                    <td className="py-2 pr-4">Damaged DC cable insulation, water ingress to JB</td>
+                    <td className="py-2">String-by-string insulation resistance testing</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Hotspot on module</td>
+                    <td className="py-2 pr-4">Cell micro-crack, solder joint failure, PID</td>
+                    <td className="py-2">Thermal imaging, electroluminescence imaging</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Inverter tripping</td>
+                    <td className="py-2 pr-4">
+                      Grid voltage/frequency out of range, islanding detected
+                    </td>
+                    <td className="py-2">Inverter event logs, grid voltage/frequency monitoring</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common PV Faults and Diagnostic Approach
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptom</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Possible Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Diagnostic Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zero output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter fault, DC isolator open, earth fault
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter display/logs, DC voltage check, insulation resistance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reduced output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Soiling, shading, module degradation, bypass diode
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal imaging, I-V curve, Voc comparison
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inverter earth fault</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Damaged DC cable insulation, water ingress to JB
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        String-by-string insulation resistance testing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hotspot on module</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cell micro-crack, solder joint failure, PID
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal imaging, electroluminescence imaging
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inverter tripping</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid voltage/frequency out of range, islanding detected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inverter event logs, grid voltage/frequency monitoring
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Safety Warning: DC Arc Flash
-              </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Safety warning: DC arc flash">
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
               <p className="text-sm text-white">
                 DC arcs from PV systems do not self-extinguish at current zero like AC arcs. A DC
                 arc from a faulty connector or damaged cable can sustain temperatures exceeding 3000
@@ -869,19 +740,15 @@ const MOETModule3Section6_1 = () => {
               Practical competence in PV inspection and testing is assessed through workplace
               evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 4 */}
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* ---- Section 05 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            PV System Performance Monitoring and Degradation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>PV system performance monitoring and degradation</ContentEyebrow>
+
+          <ConceptBlock title="Maximising return on investment and catching degradation early">
             <p>
               Long-term PV system performance monitoring is essential for maximising the return on
               investment and identifying degradation before it becomes a safety issue. The
@@ -897,65 +764,61 @@ const MOETModule3Section6_1 = () => {
               installation errors, or environmental damage -- can reduce output far more rapidly and
               may indicate safety issues.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Performance Assessment Methods
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Specific yield comparison:</strong> Compare actual annual yield (kWh/kWp)
-                  against expected yield for the location and orientation (typically 800-1,000
-                  kWh/kWp in the UK)
-                </li>
-                <li className="pl-1">
-                  <strong>Performance ratio:</strong> The ratio of actual energy output to the
-                  theoretical maximum -- a healthy system achieves 75-85%
-                </li>
-                <li className="pl-1">
-                  <strong>Inverter monitoring:</strong> Most inverters log daily and monthly yields
-                  -- compare trends year-on-year to detect gradual degradation
-                </li>
-                <li className="pl-1">
-                  <strong>String comparison:</strong> In multi-string systems, compare string
-                  performance -- one underperforming string indicates a module or wiring fault
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal imaging:</strong> Identify hotspots, bypass diode activation and
-                  connection faults during peak irradiance
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common Degradation Mechanisms
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>PID (Potential Induced Degradation):</strong> Leakage currents through
-                  encapsulant degrade cell performance -- more severe in humid conditions
-                </li>
-                <li className="pl-1">
-                  <strong>LID (Light Induced Degradation):</strong> Initial 1-3% output loss in the
-                  first hours of exposure -- a normal characteristic of crystalline silicon
-                </li>
-                <li className="pl-1">
-                  <strong>Snail trails:</strong> Silver-coloured discolouration along cell
-                  micro-cracks -- cosmetic initially but indicates moisture ingress risk
-                </li>
-                <li className="pl-1">
-                  <strong>Delamination:</strong> Separation of encapsulant from glass or cells --
-                  allows moisture ingress causing corrosion and earth faults
-                </li>
-                <li className="pl-1">
-                  <strong>Hotspots:</strong> Localised heating caused by cell damage, shading or
-                  connection failure -- fire risk if severe
-                </li>
-                <li className="pl-1">
-                  <strong>Connector degradation:</strong> MC4 connectors exposed to UV and thermal
-                  cycling -- arcing risk from corroded or loose connections
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Performance assessment methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>
+                <strong>Specific yield comparison:</strong> Compare actual annual yield (kWh/kWp)
+                against expected yield for the location and orientation (typically 800-1,000 kWh/kWp
+                in the UK).
+              </li>
+              <li>
+                <strong>Performance ratio:</strong> The ratio of actual energy output to the
+                theoretical maximum -- a healthy system achieves 75-85%.
+              </li>
+              <li>
+                <strong>Inverter monitoring:</strong> Most inverters log daily and monthly yields --
+                compare trends year-on-year to detect gradual degradation.
+              </li>
+              <li>
+                <strong>String comparison:</strong> In multi-string systems, compare string
+                performance -- one underperforming string indicates a module or wiring fault.
+              </li>
+              <li>
+                <strong>Thermal imaging:</strong> Identify hotspots, bypass diode activation and
+                connection faults during peak irradiance.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common degradation mechanisms">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow">
+              <li>
+                <strong>PID (Potential Induced Degradation):</strong> Leakage currents through
+                encapsulant degrade cell performance -- more severe in humid conditions.
+              </li>
+              <li>
+                <strong>LID (Light Induced Degradation):</strong> Initial 1-3% output loss in the
+                first hours of exposure -- a normal characteristic of crystalline silicon.
+              </li>
+              <li>
+                <strong>Snail trails:</strong> Silver-coloured discolouration along cell
+                micro-cracks -- cosmetic initially but indicates moisture ingress risk.
+              </li>
+              <li>
+                <strong>Delamination:</strong> Separation of encapsulant from glass or cells --
+                allows moisture ingress causing corrosion and earth faults.
+              </li>
+              <li>
+                <strong>Hotspots:</strong> Localised heating caused by cell damage, shading or
+                connection failure -- fire risk if severe.
+              </li>
+              <li>
+                <strong>Connector degradation:</strong> MC4 connectors exposed to UV and thermal
+                cycling -- arcing risk from corroded or loose connections.
+              </li>
+            </ul>
             <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
               knowledge of PV system operation and maintenance. This includes understanding
@@ -963,91 +826,73 @@ const MOETModule3Section6_1 = () => {
               faults. Practical competence in PV inspection supports the emerging technologies
               knowledge requirement of the standard.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* ---- FAQs ---- */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=Yxt72aDjFgY"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="How Solar Panels Work — Generating Electricity"
 
-        {/* ---- Quick Reference ---- */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">PV System Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>PV cell: ~0.5-0.6 V per cell</li>
-                  <li>Module: ~40 V open circuit (400 W)</li>
-                  <li>String: 300-600 V DC (lethal in daylight)</li>
-                  <li>Mono: 20-22% efficiency</li>
-                  <li>Poly: 15-17% efficiency</li>
-                  <li>Degradation: ~0.5%/year normal</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Standards and Safety</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Section 712 (PV installations)</li>
-                  <li>G98: up to 3.68 kW/phase (fit and notify)</li>
-                  <li>G99: above 3.68 kW/phase (apply first)</li>
-                  <li>MCS MIS 3002 installation standard</li>
-                  <li>DC isolator adjacent to inverter</li>
-                  <li>Fire-resistant DC cable inside buildings</li>
-                  <li>Dual-supply labels at origin and meter</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="22:35"
+
+            topic="From the photovoltaic effect through to a working array"
+
+            caption="Thorough. Covers the cell physics behind the cross-section diagram above, then builds up to the array."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'PV cell: ~0.5-0.6 V per cell. Module: ~40 V open circuit (400 W). String: 300-600 V DC — lethal in daylight.',
+              'Monocrystalline: 20-22% efficiency. Polycrystalline: 15-17% efficiency. Degradation: ~0.5%/year normal.',
+              'BS 7671 Section 712 governs PV installations. G98: aggregate up to 16 A/phase, about 3.68 kW (fit and notify). G99: above that (apply to the DNO first).',
+              'MCS MIS 3002 is the installation standard. A DC isolator must sit adjacent to the inverter.',
+              'Fire-resistant DC cable is required inside buildings. Dual-supply labels are required at origin and meter.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section 3.6 hub
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Wind and Other Renewables
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* ---- Quiz ---- */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* ---- Navigation ---- */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-2">
-              Next: Wind and Other Renewables
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

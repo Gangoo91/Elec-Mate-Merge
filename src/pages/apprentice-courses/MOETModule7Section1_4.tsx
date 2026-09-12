@@ -1,8 +1,38 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 1 · Subsection 4 — Identifying Knowledge Gaps
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the
+ * End-Point Assessment knowledge test rather than a specific piece of
+ * engineering knowledge, so no ST1426 knowledge/skill/behaviour statement is
+ * quoted here — none of the verified KSB statements checked for this
+ * conversion describe exam or assessment-preparation technique.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. Two InlineCheck
+ * placements (quickCheckQuestions[2] after section 2, [1] after section 3)
+ * are kept exactly where the original placed them, even though [2] reads as
+ * more closely tied to section 1's traffic-light content — not reordered.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Identifying Knowledge Gaps - MOET Module 7 Section 1.4';
@@ -218,108 +248,64 @@ const faqs = [
 ];
 
 const MOETModule7Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Identifying Knowledge Gaps
-          </h1>
-          <p className="text-white">
-            Systematic self-assessment and targeted revision planning for efficient EPA preparation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.1 · Subsection 4"
+        title="Identifying Knowledge Gaps"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Systematic self-assessment and targeted revision planning for efficient EPA preparation.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Diagnose:</strong> Use practice tests to identify weak topics
-              </li>
-              <li className="pl-1">
-                <strong>Rate:</strong> Traffic-light system — green, amber, red
-              </li>
-              <li className="pl-1">
-                <strong>Plan:</strong> 70% weak areas, 30% maintaining strong areas
-              </li>
-              <li className="pl-1">
-                <strong>Review:</strong> Reassess every 2-3 weeks and adjust
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>High weighting:</strong> H&S and installations — prioritise gaps here
-              </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> Map gaps to specific MOET module sections
-              </li>
-              <li className="pl-1">
-                <strong>Workplace:</strong> Use job experience to reinforce study
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Gaps map directly to KSB requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Diagnose: use practice tests to identify weak topics.',
+              'Rate: traffic-light system — green, amber, red.',
+              'Plan: 70% weak areas, 30% maintaining strong areas.',
+              'Review: reassess every 2-3 weeks and adjust.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply self-assessment techniques to identify your specific knowledge gaps',
               'Use practice test data to track scores by topic area over time',
               'Create a traffic-light confidence rating for each module area',
               'Develop focused revision plans that prioritise weak areas efficiently',
               'Map knowledge gaps to specific MOET module sections for targeted study',
               'Establish regular reassessment checkpoints to measure progress',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>High weighting:</strong> H&amp;S and installations — prioritise gaps here.
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> map gaps to specific MOET module sections.
+              </li>
+              <li>
+                <strong>Workplace:</strong> use job experience to reinforce study.
+              </li>
+              <li>
+                <strong>ST1426:</strong> gaps map directly to KSB requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Self-Assessment Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Self-assessment techniques</ContentEyebrow>
+
+          <ConceptBlock title="Self-assessment techniques">
             <p>
               Effective EPA preparation starts with honest self-assessment. You need to know where
               you stand before you can plan where to go. Self-assessment is not about judging
@@ -327,400 +313,344 @@ const MOETModule7Section1_4 = () => {
               Without it, you risk spending hours on topics you already know while neglecting areas
               that need attention.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Self-Assessment Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Diagnostic test:</strong> Complete a practice test covering all modules
-                  without preparation — this reveals your true baseline
-                </li>
-                <li className="pl-1">
-                  <strong>Topic checklist review:</strong> Go through the ST1426 standard topic by
-                  topic and honestly rate your confidence
-                </li>
-                <li className="pl-1">
-                  <strong>Teaching test:</strong> Try to explain key concepts from each module to
-                  someone else — gaps become obvious
-                </li>
-                <li className="pl-1">
-                  <strong>Flashcard sort:</strong> Create flashcards for key concepts and sort them
-                  into "know well", "unsure", and "don't know"
-                </li>
-                <li className="pl-1">
-                  <strong>Workplace reflection:</strong> Consider which tasks at work you feel
-                  confident with and which you still find challenging
-                </li>
-              </ul>
+          <ConceptBlock title="Self-assessment methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Diagnostic test:</strong> complete a practice test covering all modules
+                without preparation — this reveals your true baseline.
+              </li>
+              <li>
+                <strong>Topic checklist review:</strong> go through the ST1426 standard topic by
+                topic and honestly rate your confidence.
+              </li>
+              <li>
+                <strong>Teaching test:</strong> try to explain key concepts from each module to
+                someone else — gaps become obvious.
+              </li>
+              <li>
+                <strong>Flashcard sort:</strong> create flashcards for key concepts and sort them
+                into &quot;know well&quot;, &quot;unsure&quot;, and &quot;don&apos;t know&quot;.
+              </li>
+              <li>
+                <strong>Workplace reflection:</strong> consider which tasks at work you feel
+                confident with and which you still find challenging.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Traffic-light confidence rating">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Rating</th>
+                    <th className="py-2 pr-4 font-medium text-white">Meaning</th>
+                    <th className="py-2 font-medium text-white">Action required</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium text-green-400">Green</td>
+                    <td className="py-2 pr-4">Confident — consistently score 80%+ on this topic</td>
+                    <td className="py-2">Periodic review to maintain knowledge</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium text-yellow-400">Amber</td>
+                    <td className="py-2 pr-4">
+                      Partial — some understanding but inconsistent 50-80%
+                    </td>
+                    <td className="py-2">Focused study on specific sub-topics</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium text-red-400">Red</td>
+                    <td className="py-2 pr-4">Significant gap — scoring below 50%</td>
+                    <td className="py-2">In-depth study from module content + practice</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Traffic-Light Confidence Rating
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-green-400 font-medium">
-                        Green
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Confident — consistently score 80%+ on this topic
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic review to maintain knowledge
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400 font-medium">
-                        Amber
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Partial — some understanding but inconsistent 50-80%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Focused study on specific sub-topics
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 text-red-400 font-medium">
-                        Red
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Significant gap — scoring below 50%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        In-depth study from module content + practice
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Honesty is essential. Overrating your knowledge wastes
+            <p>
+              <strong>Key point:</strong> honesty is essential. Overrating your knowledge wastes
               time and leads to surprises in the real exam. Underrating is less harmful but may
               cause unnecessary anxiety. Let the data from practice tests guide your ratings
               objectively.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Tracking Scores by Topic
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Tracking scores by topic</ContentEyebrow>
+
+          <ConceptBlock title="Tracking scores by topic">
             <p>
               Raw test scores are useful but limited. A score of 65% tells you that you passed the
               practice test but nothing about which topics need attention. Breaking your score down
               by topic transforms a single number into an actionable revision map. This is the most
               powerful diagnostic tool in your preparation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Topic Tracking Template
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Topic Area</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test 1</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test 2</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test 3</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Trend</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Health &amp; Safety</td>
-                      <td className="border border-white/10 px-3 py-2">7/8</td>
-                      <td className="border border-white/10 px-3 py-2">8/10</td>
-                      <td className="border border-white/10 px-3 py-2">9/10</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Improving</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical Science</td>
-                      <td className="border border-white/10 px-3 py-2">4/7</td>
-                      <td className="border border-white/10 px-3 py-2">3/6</td>
-                      <td className="border border-white/10 px-3 py-2">5/8</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">
-                        Fluctuating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor Control</td>
-                      <td className="border border-white/10 px-3 py-2">2/6</td>
-                      <td className="border border-white/10 px-3 py-2">2/5</td>
-                      <td className="border border-white/10 px-3 py-2">3/6</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Needs attention
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Topic tracking template">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Topic area</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test 1</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test 2</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test 3</th>
+                    <th className="py-2 font-medium text-white">Trend</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Health &amp; Safety</td>
+                    <td className="py-2 pr-4">7/8</td>
+                    <td className="py-2 pr-4">8/10</td>
+                    <td className="py-2 pr-4">9/10</td>
+                    <td className="py-2 text-green-400">Improving</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Electrical Science</td>
+                    <td className="py-2 pr-4">4/7</td>
+                    <td className="py-2 pr-4">3/6</td>
+                    <td className="py-2 pr-4">5/8</td>
+                    <td className="py-2 text-yellow-400">Fluctuating</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Motor Control</td>
+                    <td className="py-2 pr-4">2/6</td>
+                    <td className="py-2 pr-4">2/5</td>
+                    <td className="py-2 pr-4">3/6</td>
+                    <td className="py-2 text-red-400">Needs attention</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Three or more data points per topic are needed to identify
+            <p>
+              <strong>Key point:</strong> three or more data points per topic are needed to identify
               reliable patterns. One low score might be a bad day; consistent low scores indicate a
               genuine gap.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Creating Effective Study Plans
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Creating effective study plans</ContentEyebrow>
+
+          <ConceptBlock title="Creating effective study plans">
             <p>
               A study plan turns diagnostic information into action. Without a plan, good intentions
               often lead to unfocused studying — reading a bit of everything without making
               meaningful progress on your weakest areas. A structured plan ensures every hour of
               study time counts.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Study Plan Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>EPA date:</strong> Work backwards from your target EPA date to set
-                  deadlines
-                </li>
-                <li className="pl-1">
-                  <strong>Priority topics:</strong> List your red and amber topics in order of EPA
-                  weighting
-                </li>
-                <li className="pl-1">
-                  <strong>Weekly schedule:</strong> Allocate specific days/times for specific topics
-                </li>
-                <li className="pl-1">
-                  <strong>Resources:</strong> Identify which MOET module sections and supporting
-                  materials you will use
-                </li>
-                <li className="pl-1">
-                  <strong>Practice test schedule:</strong> Plan one mock test per week in the final
-                  month
-                </li>
-                <li className="pl-1">
-                  <strong>Review checkpoints:</strong> Schedule fortnightly reviews to assess
-                  progress and adjust
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Study plan components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>EPA date:</strong> work backwards from your target EPA date to set
+                deadlines.
+              </li>
+              <li>
+                <strong>Priority topics:</strong> list your red and amber topics in order of EPA
+                weighting.
+              </li>
+              <li>
+                <strong>Weekly schedule:</strong> allocate specific days/times for specific topics.
+              </li>
+              <li>
+                <strong>Resources:</strong> identify which MOET module sections and supporting
+                materials you will use.
+              </li>
+              <li>
+                <strong>Practice test schedule:</strong> plan one mock test per week in the final
+                month.
+              </li>
+              <li>
+                <strong>Review checkpoints:</strong> schedule fortnightly reviews to assess progress
+                and adjust.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sample 4-Week Study Plan Structure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Week 1:</strong> Focus on highest-priority red topic; diagnostic test at
-                  end of week
-                </li>
-                <li className="pl-1">
-                  <strong>Week 2:</strong> Focus on second red topic + review week 1 topic; practice
-                  questions on both
-                </li>
-                <li className="pl-1">
-                  <strong>Week 3:</strong> Address amber topics; full mock test; review and adjust
-                  plan
-                </li>
-                <li className="pl-1">
-                  <strong>Week 4:</strong> Mixed revision all topics; final mock test; light review
-                  of key facts
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A study plan is a living document. Review it regularly and
+          <ConceptBlock title="Sample 4-week study plan structure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Week 1:</strong> focus on highest-priority red topic; diagnostic test at end
+                of week.
+              </li>
+              <li>
+                <strong>Week 2:</strong> focus on second red topic + review week 1 topic; practice
+                questions on both.
+              </li>
+              <li>
+                <strong>Week 3:</strong> address amber topics; full mock test; review and adjust
+                plan.
+              </li>
+              <li>
+                <strong>Week 4:</strong> mixed revision all topics; final mock test; light review of
+                key facts.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> a study plan is a living document. Review it regularly and
               adjust based on your progress. If a topic moves from red to green faster than
               expected, reallocate that time to another weak area.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Using MOET Modules for Targeted Review
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Using MOET modules for targeted review</ContentEyebrow>
+
+          <ConceptBlock title="Using MOET modules for targeted review">
             <p>
               The MOET course modules are structured to align with the ST1426 apprenticeship
               standard, making them the ideal resource for targeted gap-filling. When your practice
               test analysis identifies a weak area, you can go directly to the relevant module
               section and study the content in depth.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Gap-to-Module Mapping</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Knowledge Gap</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">MOET Module</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Sections</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe isolation, PTW, LOTO
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Module 1</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 1.1-1.3</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ohm's law, power, AC theory
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Module 2</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 2.1-2.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        BS 7671, testing, fault finding
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Module 3</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 3.1-3.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor starters, VSD, PLC</td>
-                      <td className="border border-white/10 px-3 py-2">Module 4</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 4.1-4.7</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PPM, CBM, CMMS, KPIs</td>
-                      <td className="border border-white/10 px-3 py-2">Module 5</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 5.1-5.6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drawings, schematics, data
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Module 6</td>
-                      <td className="border border-white/10 px-3 py-2">Sections 6.1-6.4</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Gap-to-module mapping">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Knowledge gap</th>
+                    <th className="py-2 pr-4 font-medium text-white">MOET module</th>
+                    <th className="py-2 font-medium text-white">Key sections</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safe isolation, PTW, LOTO</td>
+                    <td className="py-2 pr-4">Module 1</td>
+                    <td className="py-2">Sections 1.1-1.3</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ohm&apos;s law, power, AC theory</td>
+                    <td className="py-2 pr-4">Module 2</td>
+                    <td className="py-2">Sections 2.1-2.5</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BS 7671, testing, fault finding</td>
+                    <td className="py-2 pr-4">Module 3</td>
+                    <td className="py-2">Sections 3.1-3.6</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Motor starters, VSD, PLC</td>
+                    <td className="py-2 pr-4">Module 4</td>
+                    <td className="py-2">Sections 4.1-4.7</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PPM, CBM, CMMS, KPIs</td>
+                    <td className="py-2 pr-4">Module 5</td>
+                    <td className="py-2">Sections 5.1-5.6</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Drawings, schematics, data</td>
+                    <td className="py-2 pr-4">Module 6</td>
+                    <td className="py-2">Sections 6.1-6.4</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Targeted Review Process
-              </h3>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify the gap:</strong> Use practice test data to pinpoint the specific
-                  topic
-                </li>
-                <li className="pl-1">
-                  <strong>Locate the content:</strong> Find the relevant MOET module section
-                </li>
-                <li className="pl-1">
-                  <strong>Study actively:</strong> Read, take notes, and connect to your workplace
-                  experience
-                </li>
-                <li className="pl-1">
-                  <strong>Test yourself:</strong> Use the section's InlineCheck questions and
-                  end-of-section quiz
-                </li>
-                <li className="pl-1">
-                  <strong>Practice questions:</strong> Attempt practice questions specifically on
-                  that topic
-                </li>
-                <li className="pl-1">
-                  <strong>Verify closure:</strong> If you consistently answer correctly, move on to
-                  the next gap
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock
+            title="Effective targeted review process"
+            onSite="The ability to identify your own development needs and take action to address them is itself a professional behaviour assessed in the EPA. Your study plan demonstrates initiative and commitment to continuous improvement."
+          >
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify the gap:</strong> use practice test data to pinpoint the specific
+                topic.
+              </li>
+              <li>
+                <strong>Locate the content:</strong> find the relevant MOET module section.
+              </li>
+              <li>
+                <strong>Study actively:</strong> read, take notes, and connect to your workplace
+                experience.
+              </li>
+              <li>
+                <strong>Test yourself:</strong> use the section&apos;s InlineCheck questions and
+                end-of-section quiz.
+              </li>
+              <li>
+                <strong>Practice questions:</strong> attempt practice questions specifically on that
+                topic.
+              </li>
+              <li>
+                <strong>Verify closure:</strong> if you consistently answer correctly, move on to
+                the next gap.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to identify your own development needs and
-              take action to address them is itself a professional behaviour assessed in the EPA.
-              Your study plan demonstrates initiative and commitment to continuous improvement.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge — Identifying Knowledge Gaps"
-            questions={quizQuestions}
+          <KeyTakeaways
+            points={[
+              'Honesty in self-rating is essential — let practice test data guide your ratings, not gut feeling.',
+              'Three or more data points per topic are needed before you can trust a pattern.',
+              'A study plan is a living document — review it regularly and reallocate time as gaps close.',
+              'Roughly 70% of revision time on weak areas, 30% maintaining strong ones, gives the best return.',
+              'Identifying your own development needs and acting on them is itself assessed as a professional behaviour in the EPA.',
+            ]}
           />
-        </section>
 
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Feedback and Explanations
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1-5">
-              Next: Exam Techniques and Strategies
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Test Your Knowledge — Identifying Knowledge Gaps"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section1-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Feedback and Explanations
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section1-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Exam Techniques and Strategies
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

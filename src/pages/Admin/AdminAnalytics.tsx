@@ -31,6 +31,8 @@ import {
   CartesianGrid,
 } from 'recharts';
 
+// Admin-made accounts (Bulk create: tutors, cohorts, demo) are not signups.
+const NOT_ADMIN_MADE = 'created_via.is.null,created_via.neq.admin_bulk';
 type DateRangeKey = 'today' | '7d' | '30d' | '90d';
 
 const DATE_RANGES: { key: DateRangeKey; label: string; days: number }[] = [
@@ -107,12 +109,14 @@ export default function AdminAnalytics() {
       const { count: trialCount } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
+        .or(NOT_ADMIN_MADE)
         .eq('is_trial', true)
         .not('trial_end', 'is', null);
 
       const { count: paidCount } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
+        .or(NOT_ADMIN_MADE)
         .eq('subscribed', true)
         .eq('is_trial', false);
 
@@ -143,12 +147,14 @@ export default function AdminAnalytics() {
       const { count: finishedTrials } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
+        .or(NOT_ADMIN_MADE)
         .not('trial_end', 'is', null)
         .lt('trial_end', nowIso);
 
       const { count: convertedTrials } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
+        .or(NOT_ADMIN_MADE)
         .not('trial_end', 'is', null)
         .lt('trial_end', nowIso)
         .eq('subscribed', true)
@@ -206,32 +212,38 @@ export default function AdminAnalytics() {
         loggedInRes,
         featureUsersRes,
       ] = await Promise.all([
-        supabase.from('profiles').select('*', { count: 'exact', head: true }),
+        supabase.from('profiles').select('*', { count: 'exact', head: true }).or(NOT_ADMIN_MADE),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', today.toISOString()),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', yesterday.toISOString())
           .lt('created_at', today.toISOString()),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', weekAgo.toISOString()),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', twoWeeksAgo.toISOString())
           .lt('created_at', weekAgo.toISOString()),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', monthAgo.toISOString()),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .eq('subscribed', true),
         supabase
           .from('user_presence')
@@ -241,11 +253,27 @@ export default function AdminAnalytics() {
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .eq('business_ai_enabled', true),
-        supabase.from('reports').select('*', { count: 'exact', head: true }),
+        /*
+          🔴 Counted through an RPC, because RLS hides the platform.
+        
+          `reports` has no admin SELECT policy — only "Users can view
+          own reports" and "QS can view team reports". Counting it from
+          the browser as an admin therefore counts YOUR OWN
+          certificates: this tile read 290 (237 of Andrew's own plus 53
+          from his QS team) while the platform had 1,588. A believable
+          number, which is why it went unnoticed.
+        
+          Filtering `deleted_at` client-side does nothing here — the
+          policy already excludes soft-deleted rows. Only a
+          SECURITY DEFINER read sees the whole table.
+        */
+        supabase.rpc('admin_platform_counts' as never),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', rangeStart.toISOString()),
         supabase
           .from('user_activity_summary')
@@ -273,6 +301,7 @@ export default function AdminAnalytics() {
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
+            .or(NOT_ADMIN_MADE)
             .gte('created_at', start.toISOString())
             .lte('created_at', end.toISOString())
         )
@@ -318,6 +347,7 @@ export default function AdminAnalytics() {
       const prevMonthSignupsRes = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true })
+        .or(NOT_ADMIN_MADE)
         .gte('created_at', prevMonthStart.toISOString())
         .lt('created_at', prevMonthEnd.toISOString());
 
@@ -350,7 +380,10 @@ export default function AdminAnalytics() {
           ? ((subscribedRes.count || 0) / totalUsersRes.count) * 100
           : 0,
         aiUsers: aiUsersRes.count || 0,
-        certificates: certsRes.count || 0,
+        // The RPC returns a single row; `count` no longer exists on it.
+        certificates:
+          (certsRes.data as unknown as Array<{ reports_live: number }> | null)?.[0]
+            ?.reports_live ?? 0,
         retention: totalUsersRes.count ? ((activeRes.count || 0) / totalUsersRes.count) * 100 : 0,
         rangeSignups: rangeSignupsRes.count || 0,
         funnelSignedUp: totalUsersRes.count || 0,
@@ -738,7 +771,9 @@ export default function AdminAnalytics() {
                   subtitle="All time"
                   trailing={
                     <span className="text-[11px] text-white tabular-nums">
-                      {analytics.certificates}
+                      {/* Grouped, like every other figure on this page —
+                          it rendered as a bare "1588". */}
+                      {analytics.certificates.toLocaleString('en-GB')}
                     </span>
                   }
                 />

@@ -206,7 +206,7 @@ const ZsValuesCalculator = () => {
 
     return {
       meta: {
-        title: 'Maximum Zs Values Calculator',
+        title: 'Maximum Zs Values',
         subtitle: 'Maximum earth fault loop impedance lookup against a measured circuit Zs',
         standard: `BS 7671:2018+A4:2026 — ${result.tableRef}`,
       },

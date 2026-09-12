@@ -165,7 +165,7 @@ const ReferralsTab: React.FC = () => {
               <span className="font-mono text-[11px] text-white flex-1 truncate text-left">
                 {referralUrl || 'Loading…'}
               </span>
-              <span className="text-[12px] font-medium text-elec-yellow/90 shrink-0">
+              <span className="text-[12px] font-medium text-elec-yellow shrink-0">
                 Copy
               </span>
             </button>
@@ -241,7 +241,7 @@ const ReferralsTab: React.FC = () => {
               {tierConfig?.label ?? 'Bronze'}
             </span>
             {nextTierConfig && (
-              <span className="text-[11.5px] text-white/65">
+              <span className="text-[11.5px] text-white">
                 Next: {nextTierConfig.label} at {nextTierConfig.threshold} subs
               </span>
             )}
@@ -268,7 +268,7 @@ const ReferralsTab: React.FC = () => {
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <div className="mt-1.5 flex items-center justify-between text-[11.5px] text-white/65 tabular-nums">
+              <div className="mt-1.5 flex items-center justify-between text-[11.5px] text-white tabular-nums">
                 <span>
                   {successfulReferrals} of {nextTierThreshold}
                 </span>

@@ -1,8 +1,38 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 5 · Subsection 3 — Final Revision and Confidence Building
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page describes exam/assessment preparation technique and mental
+ * readiness for the EPA — study skills, not a knowledge, skill or behaviour
+ * drawn from the standard's content. No KSB quote applies and none is
+ * included.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Final Revision and Confidence Building - MOET Module 7 Section 5.3';
@@ -186,10 +216,10 @@ const quizQuestions = [
     id: 10,
     question: 'Positive self-talk before the EPA means:',
     options: [
-      "Convincing yourself you will pass effortlessly without any preparation",
-      "Ignoring any weaknesses and pretending you are fully expert in every area",
-      "Replacing negative thoughts with realistic positive ones grounded in your preparation and sign-off",
-      "Telling others you are certain to fail so expectations are kept low",
+      'Convincing yourself you will pass effortlessly without any preparation',
+      'Ignoring any weaknesses and pretending you are fully expert in every area',
+      'Replacing negative thoughts with realistic positive ones grounded in your preparation and sign-off',
+      'Telling others you are certain to fail so expectations are kept low',
     ],
     correctAnswer: 2,
     explanation:
@@ -252,122 +282,70 @@ const faqs = [
 ];
 
 const MOETModule7Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Final Revision and Confidence Building
-          </h1>
-          <p className="text-white">
-            Structured preparation strategies and mental readiness techniques for EPA success
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.5 · Subsection 3"
+        title="Final Revision and Confidence Building"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Structured preparation strategies and mental readiness techniques for EPA success.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Plan:</strong> Structured revision over 3-4 weeks, not cramming
-              </li>
-              <li className="pl-1">
-                <strong>Focus:</strong> Target weak areas and high-probability topics
-              </li>
-              <li className="pl-1">
-                <strong>Practise:</strong> Mock discussions, practical run-throughs
-              </li>
-              <li className="pl-1">
-                <strong>Confidence:</strong> Trust your preparation and sign-off
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>All components:</strong> Revise for observation, discussion and knowledge
-              </li>
-              <li className="pl-1">
-                <strong>Portfolio mastery:</strong> Know every piece of evidence inside out
-              </li>
-              <li className="pl-1">
-                <strong>Practical:</strong> Safe isolation and testing must be automatic
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Focus on the KSBs most likely to be assessed
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Plan: Structured revision over 3-4 weeks, not cramming.',
+              'Focus: Target weak areas and high-probability topics.',
+              'Practise: Mock discussions, practical run-throughs.',
+              'Confidence: Trust your preparation and sign-off.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Create a structured revision plan covering all EPA components',
               'Use mock assessments effectively to identify and address weaknesses',
               'Manage assessment anxiety through preparation and mental strategies',
               'Review your portfolio to ensure you can discuss every piece of evidence confidently',
               'Refresh core practical skills for the observation component',
               'Build genuine confidence based on your preparation and competence',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>All components:</strong> revise for observation, discussion and knowledge.
+              </li>
+              <li>
+                <strong>Portfolio mastery:</strong> know every piece of evidence inside out.
+              </li>
+              <li>
+                <strong>Practical:</strong> safe isolation and testing must be automatic.
+              </li>
+              <li>
+                <strong>ST1426:</strong> focus on the KSBs most likely to be assessed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Creating Your Revision Plan
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Creating your revision plan</ContentEyebrow>
+
+          <ConceptBlock title="Consolidating, not re-learning">
             <p>
               Effective revision is planned, structured and balanced. It covers all EPA components,
               prioritises your weaker areas, and includes both knowledge review and practical skills
               practice. Starting 3-4 weeks before the EPA gives you enough time without creating
               exhausting intensity.
             </p>
-
             <p>
               The biggest mistake apprentices make is treating revision as re-learning. You have
               spent months — often years — developing your knowledge, skills and behaviours. Final
@@ -375,251 +353,207 @@ const MOETModule7Section5_3 = () => {
               become rusty, and building familiarity with the assessment format. It is not the time
               to learn entirely new material.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sample 4-Week Revision Plan
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Week</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Focus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activities</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Week 1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-assessment and planning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review portfolio, identify weak areas, create detailed plan
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Week 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Knowledge and practical focus
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical revision, practical skills practice, first mock
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Week 3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discussion and weak areas
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mock discussion, address feedback, target weak areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Week 4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consolidation and confidence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light review, final portfolio check, rest and mental prep
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Sample 4-week revision plan">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Week</th>
+                    <th className="py-2 pr-4 font-medium text-white">Focus</th>
+                    <th className="py-2 font-medium text-white">Activities</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Week 1</td>
+                    <td className="py-2 pr-4 align-top">Self-assessment and planning</td>
+                    <td className="py-2">
+                      Review portfolio, identify weak areas, create detailed plan
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Week 2</td>
+                    <td className="py-2 pr-4 align-top">Knowledge and practical focus</td>
+                    <td className="py-2">
+                      Technical revision, practical skills practice, first mock
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Week 3</td>
+                    <td className="py-2 pr-4 align-top">Discussion and weak areas</td>
+                    <td className="py-2">Mock discussion, address feedback, target weak areas</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Week 4</td>
+                    <td className="py-2 pr-4 align-top">Consolidation and confidence</td>
+                    <td className="py-2">
+                      Light review, final portfolio check, rest and mental prep
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Revision Plan Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Start with self-assessment:</strong> Before you can revise effectively,
-                  you need to know where your gaps are — review the KSBs, rate your confidence on
-                  each, and prioritise accordingly
-                </li>
-                <li className="pl-1">
-                  <strong>Cover all components:</strong> Do not just revise knowledge — include
-                  practical skills, portfolio review, and discussion practice in your plan
-                </li>
-                <li className="pl-1">
-                  <strong>Prioritise weakness:</strong> Spend more time on areas where you are less
-                  confident, not on topics you already know well
-                </li>
-                <li className="pl-1">
-                  <strong>Build in rest:</strong> Burnout before the EPA is counterproductive —
-                  include rest days and light sessions to maintain your energy
-                </li>
-                <li className="pl-1">
-                  <strong>Track progress:</strong> Note what you have covered, what improved after
-                  practice, and what still needs attention
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Revision plan principles"
+            onSite="The revision plan is a guide, not a rigid schedule. If a mock assessment reveals a weakness, adjust the plan to spend more time on that area. Flexibility within structure is the key to effective preparation."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Start with self-assessment:</strong> before you can revise effectively, you
+                need to know where your gaps are — review the KSBs, rate your confidence on each,
+                and prioritise accordingly.
+              </li>
+              <li>
+                <strong>Cover all components:</strong> do not just revise knowledge — include
+                practical skills, portfolio review, and discussion practice in your plan.
+              </li>
+              <li>
+                <strong>Prioritise weakness:</strong> spend more time on areas where you are less
+                confident, not on topics you already know well.
+              </li>
+              <li>
+                <strong>Build in rest:</strong> burnout before the EPA is counterproductive —
+                include rest days and light sessions to maintain your energy.
+              </li>
+              <li>
+                <strong>Track progress:</strong> note what you have covered, what improved after
+                practice, and what still needs attention.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Avoid the Cramming Trap</p>
-              <p className="text-sm text-white">
-                Research consistently shows that distributed practice (spreading revision over
-                weeks) is far more effective than massed practice (cramming everything into the
-                final days). Cramming creates the illusion of familiarity without genuine
-                understanding. You may recognise terms when you see them but struggle to explain
-                them under pressure. Start early and revise regularly — your future self will thank
+          <CommonMistake
+            title="Avoid the cramming trap"
+            whatHappens={
+              <>
+                Research consistently shows that massed practice (cramming everything into the final
+                days) creates the illusion of familiarity without genuine understanding. You may
+                recognise terms when you see them but struggle to explain them under pressure.
+              </>
+            }
+            doInstead={
+              <>
+                Use distributed practice — spread your revision over weeks rather than massing it
+                into the final days. Start early and revise regularly — your future self will thank
                 you.
-              </p>
-            </div>
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The revision plan is a guide, not a rigid schedule. If a
-              mock assessment reveals a weakness, adjust the plan to spend more time on that area.
-              Flexibility within structure is the key to effective preparation.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Mock Assessments and Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Mock assessments and practice</ContentEyebrow>
+
+          <ConceptBlock title="The closest you can get to the real EPA">
             <p>
               Mock assessments are the closest you can get to the real EPA without the pressure.
               They help you experience the format, identify weak spots, and build familiarity with
               the process. Most training providers offer mock assessments — take every opportunity
               to participate.
             </p>
-
             <p>
               The value of mocks extends beyond simple practice. They expose you to the type of
               probing questions an assessor asks, help you manage your time during practical tasks,
               and — crucially — they prove to you that you can perform under assessment conditions.
               A successful mock is powerful evidence that you are ready.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Making the Most of Mock Assessments
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Treat them seriously:</strong> Approach mock assessments as if they were
-                  the real thing — this develops good habits and realistic practice
-                </li>
-                <li className="pl-1">
-                  <strong>Request feedback:</strong> Ask for specific, constructive feedback — not
-                  just "that was good" but "here is what you could improve"
-                </li>
-                <li className="pl-1">
-                  <strong>Act on feedback:</strong> Identify the specific improvements suggested and
-                  practise them before the real assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Mock with different people:</strong> If possible, practise with different
-                  questioners — each will probe different areas and challenge you in different ways
-                </li>
-                <li className="pl-1">
-                  <strong>Record yourself:</strong> If comfortable, record a mock discussion and
-                  review it — you will notice habits you were not aware of
-                </li>
-                <li className="pl-1">
-                  <strong>Simulate real conditions:</strong> Use the same time limits, the same type
-                  of environment, and the same rules as the real assessment
-                </li>
-              </ul>
+          <ConceptBlock
+            title="Making the most of mock assessments"
+            onSite="The purpose of mock assessment is to make the real thing feel familiar. The more you practise the format, the less nervous you will be on the day. Familiarity breeds confidence."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Treat them seriously:</strong> approach mock assessments as if they were the
+                real thing — this develops good habits and realistic practice.
+              </li>
+              <li>
+                <strong>Request feedback:</strong> ask for specific, constructive feedback — not
+                just &quot;that was good&quot; but &quot;here is what you could improve&quot;.
+              </li>
+              <li>
+                <strong>Act on feedback:</strong> identify the specific improvements suggested and
+                practise them before the real assessment.
+              </li>
+              <li>
+                <strong>Mock with different people:</strong> if possible, practise with different
+                questioners — each will probe different areas and challenge you in different ways.
+              </li>
+              <li>
+                <strong>Record yourself:</strong> if comfortable, record a mock discussion and
+                review it — you will notice habits you were not aware of.
+              </li>
+              <li>
+                <strong>Simulate real conditions:</strong> use the same time limits, the same type
+                of environment, and the same rules as the real assessment.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Types of mock practice">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Mock type</th>
+                    <th className="py-2 pr-4 font-medium text-white">What it develops</th>
+                    <th className="py-2 font-medium text-white">How to arrange</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Mock practical observation</td>
+                    <td className="py-2 pr-4 align-top">
+                      Working method, safety habits, time management
+                    </td>
+                    <td className="py-2">Training provider or workplace supervisor</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Mock professional discussion</td>
+                    <td className="py-2 pr-4 align-top">
+                      Articulation, portfolio knowledge, handling questions
+                    </td>
+                    <td className="py-2">Training provider, mentor or colleague</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Self-directed portfolio review</td>
+                    <td className="py-2 pr-4 align-top">
+                      Evidence familiarity, explanation fluency
+                    </td>
+                    <td className="py-2">Individual — talk through each piece aloud</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Peer practice</td>
+                    <td className="py-2 pr-4 align-top">
+                      Confidence, varied questioning, mutual support
+                    </td>
+                    <td className="py-2">Fellow apprentices preparing for EPA</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Types of Mock Practice</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Mock Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Develops
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How to Arrange</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mock practical observation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Working method, safety habits, time management
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Training provider or workplace supervisor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mock professional discussion
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Articulation, portfolio knowledge, handling questions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Training provider, mentor or colleague
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-directed portfolio review
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evidence familiarity, explanation fluency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual — talk through each piece aloud
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Peer practice</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Confidence, varied questioning, mutual support
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fellow apprentices preparing for EPA
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The purpose of mock assessment is to make the real thing
-              feel familiar. The more you practise the format, the less nervous you will be on the
-              day. Familiarity breeds confidence.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>Managing assessment anxiety</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Managing Assessment Anxiety
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Manage it, do not try to eliminate it">
             <p>
               Assessment anxiety is a normal human response to being evaluated. Almost everyone
               experiences it to some degree. The goal is not to eliminate it but to manage it so
               that it helps rather than hinders your performance. Moderate anxiety actually improves
               focus and performance — it is excessive anxiety that causes problems.
             </p>
-
             <p>
               Understanding why you feel anxious is the first step. Anxiety is your brain preparing
               you for something important — it raises your alertness and sharpens your focus. The
@@ -627,116 +561,99 @@ const MOETModule7Section5_3 = () => {
               difficulty concentrating. The techniques below help you keep anxiety at a productive
               level rather than letting it spiral.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Anxiety Management Techniques
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Preparation:</strong> The single most effective anxiety reducer — knowing
-                  you have prepared thoroughly provides genuine confidence
-                </li>
-                <li className="pl-1">
-                  <strong>Breathing:</strong> Slow, deep breathing (4 seconds in, hold for 4, out
-                  for 6) calms your nervous system quickly
-                </li>
-                <li className="pl-1">
-                  <strong>Routine:</strong> Maintain your normal routine before the assessment —
-                  normal breakfast, normal journey, normal clothing (plus PPE)
-                </li>
-                <li className="pl-1">
-                  <strong>Positive reframing:</strong> Reframe anxiety as excitement — "I am
-                  nervous" becomes "I am ready and this matters to me"
-                </li>
-                <li className="pl-1">
-                  <strong>Perspective:</strong> The EPA is important but it is not life or death. If
-                  you do not succeed the first time, you can retake. This perspective reduces
-                  catastrophic thinking
-                </li>
-                <li className="pl-1">
-                  <strong>Physical preparation:</strong> Adequate sleep, healthy food, moderate
-                  exercise, and limited caffeine in the days before the assessment
-                </li>
-              </ul>
+          <ConceptBlock
+            title="Practical anxiety management techniques"
+            onSite="Anxiety is energy. Well-managed, it sharpens your focus and keeps you alert. Poorly managed, it overwhelms your thinking. The difference is preparation, perspective and simple breathing techniques."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preparation:</strong> the single most effective anxiety reducer — knowing
+                you have prepared thoroughly provides genuine confidence.
+              </li>
+              <li>
+                <strong>Breathing:</strong> slow, deep breathing (4 seconds in, hold for 4, out for
+                6) calms your nervous system quickly.
+              </li>
+              <li>
+                <strong>Routine:</strong> maintain your normal routine before the assessment —
+                normal breakfast, normal journey, normal clothing (plus PPE).
+              </li>
+              <li>
+                <strong>Positive reframing:</strong> reframe anxiety as excitement — &quot;I am
+                nervous&quot; becomes &quot;I am ready and this matters to me&quot;.
+              </li>
+              <li>
+                <strong>Perspective:</strong> the EPA is important but it is not life or death. If
+                you do not succeed the first time, you can retake. This perspective reduces
+                catastrophic thinking.
+              </li>
+              <li>
+                <strong>Physical preparation:</strong> adequate sleep, healthy food, moderate
+                exercise, and limited caffeine in the days before the assessment.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Recognising and countering negative thoughts">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Negative thought</th>
+                    <th className="py-2 font-medium text-white">Evidence-based counter</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">&quot;I am going to fail&quot;</td>
+                    <td className="py-2">
+                      &quot;I have been signed off by my employer and provider — they believe I am
+                      ready&quot;
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">&quot;I do not know enough&quot;</td>
+                    <td className="py-2">
+                      &quot;I passed the Level 3 Diploma and have a portfolio full of evidence&quot;
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">
+                      &quot;I will freeze under pressure&quot;
+                    </td>
+                    <td className="py-2">
+                      &quot;I performed well in mock assessments under similar conditions&quot;
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">
+                      &quot;Everyone else is more prepared&quot;
+                    </td>
+                    <td className="py-2">
+                      &quot;I have prepared thoroughly and can only control my own readiness&quot;
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">&quot;One mistake and it is over&quot;</td>
+                    <td className="py-2">
+                      &quot;Assessors look at overall competence, not perfection — mistakes
+                      happen&quot;
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recognising and Countering Negative Thoughts
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Negative Thought
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Evidence-Based Counter
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">"I am going to fail"</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "I have been signed off by my employer and provider — they believe I am
-                        ready"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">"I do not know enough"</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "I passed the Level 3 Diploma and have a portfolio full of evidence"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        "I will freeze under pressure"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "I performed well in mock assessments under similar conditions"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Everyone else is more prepared"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "I have prepared thoroughly and can only control my own readiness"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        "One mistake and it is over"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Assessors look at overall competence, not perfection — mistakes happen"
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Anxiety is energy. Well-managed, it sharpens your focus
-              and keeps you alert. Poorly managed, it overwhelms your thinking. The difference is
-              preparation, perspective and simple breathing techniques.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ContentEyebrow>Building genuine confidence</ContentEyebrow>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Building Genuine Confidence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Confidence built on real achievement">
             <p>
               Genuine confidence for the EPA comes from three sources: thorough preparation (you
               know your material), positive evidence (you have been signed off, completed
@@ -744,82 +661,66 @@ const MOETModule7Section5_3 = () => {
               received positive feedback). This is not false confidence — it is confidence built on
               real achievement.
             </p>
-
             <p>
-              Many apprentices experience what psychologists call "imposter syndrome" — the feeling
-              that you are not really competent, that you have just been lucky, and that the EPA
-              will expose your inadequacy. This is almost always unfounded. The evidence tells a
-              different story: you have completed a demanding programme, passed rigorous
+              Many apprentices experience what psychologists call &quot;imposter syndrome&quot; —
+              the feeling that you are not really competent, that you have just been lucky, and that
+              the EPA will expose your inadequacy. This is almost always unfounded. The evidence
+              tells a different story: you have completed a demanding programme, passed rigorous
               qualifications, and been assessed as ready by two independent parties.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Confidence-Building Evidence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gateway sign-off:</strong> Both your employer and training provider have
-                  confirmed you are ready — they know you better than you think
-                </li>
-                <li className="pl-1">
-                  <strong>Qualifications:</strong> You have passed the Level 3 Diploma and Level 2
-                  English and maths — evidence of your ability
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio:</strong> You have a portfolio full of evidence of real
-                  workplace competence — this is genuine proof of your skills
-                </li>
-                <li className="pl-1">
-                  <strong>Mock assessments:</strong> Successful mock performance demonstrates you
-                  can perform under assessment conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Workplace experience:</strong> You have been doing this work for months or
-                  years — the EPA is not asking you to do anything new
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Confidence-building evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gateway sign-off:</strong> both your employer and training provider have
+                confirmed you are ready — they know you better than you think.
+              </li>
+              <li>
+                <strong>Qualifications:</strong> you have passed the Level 3 Diploma and Level 2
+                English and maths — evidence of your ability.
+              </li>
+              <li>
+                <strong>Portfolio:</strong> you have a portfolio full of evidence of real workplace
+                competence — this is genuine proof of your skills.
+              </li>
+              <li>
+                <strong>Mock assessments:</strong> successful mock performance demonstrates you can
+                perform under assessment conditions.
+              </li>
+              <li>
+                <strong>Workplace experience:</strong> you have been doing this work for months or
+                years — the EPA is not asking you to do anything new.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Imposter Syndrome Is Normal
-              </p>
-              <p className="text-sm text-white">
-                Research shows that imposter syndrome is more common among competent people than
-                incompetent ones. The fact that you worry about being good enough often means you
-                are setting high standards for yourself — which is exactly the attitude that has
-                brought you this far. If you were not good enough, you would not have been signed
-                off. Trust the process and trust the evidence.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Remember — the EPA is assessing competences you have
-              already developed. The practical observation asks you to do tasks you do at work
-              regularly. The professional discussion asks you to talk about experiences you have
-              already had. The assessor is there to verify what you already know and can do, not to
-              catch you out. You are more ready than you think.
+          <ConceptBlock
+            title="Imposter syndrome is normal"
+            onSite="Remember — the EPA is assessing competences you have already developed. The practical observation asks you to do tasks you do at work regularly. The professional discussion asks you to talk about experiences you have already had. The assessor is there to verify what you already know and can do, not to catch you out. You are more ready than you think."
+          >
+            <p>
+              Research shows that imposter syndrome is more common among competent people than
+              incompetent ones. The fact that you worry about being good enough often means you are
+              setting high standards for yourself — which is exactly the attitude that has brought
+              you this far. If you were not good enough, you would not have been signed off. Trust
+              the process and trust the evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            The Final Days: Consolidation, Not Cramming
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The final days: consolidation, not cramming</ContentEyebrow>
+
+          <ConceptBlock title="A taper, not an acceleration">
             <p>
               The final 3-5 days before the EPA should feel like a taper, not an acceleration. Think
               of it like an athlete preparing for a competition: the heavy training has already been
               done, and the final days are about staying sharp, resting well, and arriving at the
               assessment in the best possible physical and mental condition.
             </p>
-
             <p>
               This is where many apprentices make their biggest mistake. Driven by anxiety, they try
               to cram everything into the final days, exhaust themselves, and arrive at the EPA
@@ -828,146 +729,122 @@ const MOETModule7Section5_3 = () => {
               meaningfully change your knowledge, but poor sleep and high stress will meaningfully
               damage your performance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Final Days Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Light review:</strong> Brief, focused review of key topics — skim your
-                  notes, not re-read textbooks
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio final check:</strong> Ensure everything is in order and you know
-                  where each piece of evidence is
-                </li>
-                <li className="pl-1">
-                  <strong>Brief practical practice:</strong> A short hands-on session to keep your
-                  skills fresh, not an intensive workshop
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare logistics:</strong> Pack your bag, check your tools, plan your
-                  route, set your alarm
-                </li>
-                <li className="pl-1">
-                  <strong>Rest well:</strong> Prioritise sleep — a well-rested brain performs
-                  dramatically better than a tired one
-                </li>
-                <li className="pl-1">
-                  <strong>Normal routine:</strong> Eat normally, maintain your regular schedule, do
-                  activities that relax you
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Night Before</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Prepare everything you need: portfolio, PPE, tools, test equipment, identification
-                </li>
-                <li className="pl-1">
-                  Set two alarms with enough time for your normal morning routine
-                </li>
-                <li className="pl-1">
-                  Do something you enjoy in the evening — a film, a meal, time with family
-                </li>
-                <li className="pl-1">
-                  Avoid intensive last-minute revision — it creates anxiety without adding knowledge
-                </li>
-                <li className="pl-1">
-                  Go to bed at your normal time — disrupting your sleep pattern adds unnecessary
-                  stress
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The night before the EPA is not the time for a
-              breakthrough revision session. Everything you need to know, you already know. Prepare
-              your equipment, relax, sleep well, and arrive at the assessment fresh and focused. You
-              have done the work — now trust it.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                Start structured revision 3-4 weeks before the EPA, not the night before
+          <ConceptBlock title="Final days checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Light review:</strong> brief, focused review of key topics — skim your
+                notes, not re-read textbooks.
               </li>
-              <li className="pl-1">
-                Use your portfolio as your primary revision guide — know every piece of evidence
+              <li>
+                <strong>Portfolio final check:</strong> ensure everything is in order and you know
+                where each piece of evidence is.
               </li>
-              <li className="pl-1">Prioritise weak areas over topics you already know well</li>
-              <li className="pl-1">
-                Complete at least one mock professional discussion and one mock practical
+              <li>
+                <strong>Brief practical practice:</strong> a short hands-on session to keep your
+                skills fresh, not an intensive workshop.
               </li>
-              <li className="pl-1">
-                Manage anxiety through preparation, breathing techniques and positive self-talk
+              <li>
+                <strong>Prepare logistics:</strong> pack your bag, check your tools, plan your
+                route, set your alarm.
               </li>
-              <li className="pl-1">
-                Build confidence on evidence: sign-off, qualifications, portfolio, mock results
+              <li>
+                <strong>Rest well:</strong> prioritise sleep — a well-rested brain performs
+                dramatically better than a tired one.
               </li>
-              <li className="pl-1">
-                The final days should be light consolidation and rest, not intensive cramming
+              <li>
+                <strong>Normal routine:</strong> eat normally, maintain your regular schedule, do
+                activities that relax you.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Revision and Confidence" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="The night before"
+            onSite="The night before the EPA is not the time for a breakthrough revision session. Everything you need to know, you already know. Prepare your equipment, relax, sleep well, and arrive at the assessment fresh and focused. You have done the work — now trust it."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Gateway Requirements
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5-4">
-              Next: EPA Day
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Prepare everything you need: portfolio, PPE, tools, test equipment, identification.
+              </li>
+              <li>Set two alarms with enough time for your normal morning routine.</li>
+              <li>Do something you enjoy in the evening — a film, a meal, time with family.</li>
+              <li>
+                Avoid intensive last-minute revision — it creates anxiety without adding knowledge.
+              </li>
+              <li>
+                Go to bed at your normal time — disrupting your sleep pattern adds unnecessary
+                stress.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <VideoCard
+            url="https://www.youtube.com/watch?v=L9mRkaaRmwM"
+
+            title="Getting Over Anxiety"
+
+            channel="Craig Wiltshire"
+
+            duration="4:10"
+
+            topic="Nerves before an assessment, talked about honestly"
+
+            caption="On this page because assessment anxiety is common and rarely discussed. Two people talking about it plainly is more use than being told to stay calm."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Start structured revision 3-4 weeks before the EPA, not the night before.',
+              'Use your portfolio as your primary revision guide — know every piece of evidence.',
+              'Prioritise weak areas over topics you already know well.',
+              'Complete at least one mock professional discussion and one mock practical.',
+              'Manage anxiety through preparation, breathing techniques and positive self-talk.',
+              'Build confidence on evidence: sign-off, qualifications, portfolio, mock results.',
+              'The final days should be light consolidation and rest, not intensive cramming.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Revision and Confidence" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Gateway Requirements
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">EPA Day</div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

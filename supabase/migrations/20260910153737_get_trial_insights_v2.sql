@@ -1,31 +1,3 @@
--- Trial insights for the admin Trials page.
---
--- `get_trial_cohort` already returns one row per trial with its own-window
--- metrics, which is what the list needs. This is the other half: the shapes you
--- can only see across the cohort, and which the page previously had none of.
---
---   curve   day-of-trial return rate, split by outcome. The one finding on this
---           page with a real effect size: converters come back on day 1 at
---           roughly twice the rate of trials that expire, and the gap widens
---           every day after. Roughly four trials in ten never open the app again
---           after the day they signed up (see `returned` — do NOT read that
---           figure off the curve's day-1 point, which answers a different
---           question and comes out much higher).
---   bands   conversion by trial score, in six 15-point bands. Monotonic above
---           band 2 and the top band converts ~8x the bottom, so the score the
---           list sorts by is worth sorting by.
---   weekly  trials started per week and how they ended — the trend line.
---   contact whether a trial was ever emailed. Coverage, not causation: the
---           uncontacted group is mostly recent, so the raw rates are confounded
---           and the UI reports it as reach.
---   ttfv    how many trials ever took a first real action (a tracked feature
---           use, a certificate or a quote), split by outcome.
---   contacts  per-trial last contact, so the worklist can avoid emailing the
---             same person twice in a day.
---
--- One RPC rather than an edge function: it is a read of tables this database
--- already holds, and admin gating is the same `admin_role` check the rest of
--- the admin RPCs use.
 create or replace function public.get_trial_insights()
 returns jsonb
 language plpgsql
@@ -44,14 +16,10 @@ begin
     select p.id,
            p.created_at as t_start,
            p.trial_end  as t_end,
-           -- A live store trial carries subscribed = true for its whole run, so
-           -- the flag alone cannot say who converted: the window must have shut.
            case when p.trial_end > now() then 'live'
                 when coalesce(p.subscribed, false) then 'converted'
                 else 'expired' end as status,
            greatest(1, (date(p.trial_end) - date(p.created_at)) + 1) as len_days,
-           -- How much of the window we have actually had the chance to observe.
-           -- Without this a trial signed up yesterday counts as a day-6 no-show.
            greatest(1, least((date(p.trial_end) - date(p.created_at)) + 1,
                              (current_date - date(p.created_at)) + 1)) as observed_days
     from profiles p
@@ -62,8 +30,6 @@ begin
            count(distinct date(e.created_at))                          as active_days,
            count(*) filter (where e.event_type = 'session_start')      as sessions,
            count(*) filter (where e.event_type = 'feature_use')        as feature_uses,
-           -- 30-second dedup, matching get_trial_cohort, so concurrent tabs do
-           -- not multiply the time.
            (count(distinct floor(extract(epoch from e.created_at) / 30))
               filter (where e.event_type = 'session_heartbeat')) * 30  as secs
     from user_events e
@@ -71,8 +37,7 @@ begin
     where e.created_at >= t.t_start and e.created_at <= t.t_end
     group by 1
   ),
-  -- Deleted work is not work. 14 of the 67 in-window certificates are binned,
-  -- and each was adding up to 12.5 points to a trial score.
+  -- Deleted work is not work. See the note on get_trial_cohort.
   rp as (
     select r.user_id, count(*) as n from reports r join t on t.id = r.user_id
     where r.created_at between t.t_start and t.t_end and r.deleted_at is null group by 1
@@ -81,9 +46,6 @@ begin
     select q.user_id, count(*) as n from quotes q join t on t.id = q.user_id
     where q.created_at between t.t_start and t.t_end and q.deleted_at is null group by 1
   ),
-  -- Same weights as calculateTrialScore in src/hooks/useTrialCohort.ts. Kept in
-  -- step deliberately: the bands below are only meaningful if the score they
-  -- band is the score the list shows.
   scored as (
     select t.*,
            coalesce(rp.n, 0) + coalesce(qt.n, 0) as produced,
@@ -153,11 +115,6 @@ begin
            count(*) filter (where status = 'live')::int       as live
     from scored group by 1
   ),
-  -- "First real action", not "first event". The first user_event fires at
-  -- signup itself (a page_view on the account-creation redirect), so timing
-  -- against it measured nothing: both medians came out at 0.003 minutes. This
-  -- counts the first tracked feature use, certificate or quote inside the
-  -- window instead.
   first_ev as (
     select s.id, s.status, s.t_start,
            least(
@@ -205,12 +162,8 @@ begin
     from scored group by 1
   ),
   contacts as (
-    select e.user_id,
-           max(e.sent_at)  as last_at,
-           count(*)::int   as sends
-    from trial_emails_sent e
-    join scored s on s.id = e.user_id
-    group by 1
+    select e.user_id, max(e.sent_at) as last_at, count(*)::int as sends
+    from trial_emails_sent e join scored s on s.id = e.user_id group by 1
   )
   select jsonb_build_object(
     'weekly',       (select coalesce(jsonb_agg(to_jsonb(w) order by w.week), '[]'::jsonb) from weekly w),

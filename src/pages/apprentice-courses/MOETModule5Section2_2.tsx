@@ -1,8 +1,51 @@
-import { ArrowLeft, Cable, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 2 — Input/Output Devices
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Types of diagrams used to represent circuits;
+ *                 symbols and abbreviations used to represent components in
+ *                 electrical schematics."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Input/Output Devices - MOET Module 5 Section 2.2';
@@ -109,12 +152,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What is the resolution of a 12-bit analogue input module?',
-    options: [
-      '4096 steps',
-      '1024 steps',
-      '256 steps',
-      '65536 steps',
-    ],
+    options: ['4096 steps', '1024 steps', '256 steps', '65536 steps'],
     correctAnswer: 0,
     explanation:
       'A 12-bit analogue-to-digital converter provides 2^12 = 4096 discrete steps across the input range. For a 0-10 V input, this gives a resolution of approximately 2.4 mV per step. Higher resolution (16-bit = 65536 steps) is available for applications requiring greater precision.',
@@ -190,12 +228,7 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the typical current rating per point of a PLC digital output relay module?',
-    options: [
-      '10 mA',
-      '100 mA',
-      '2 A',
-      '30 A',
-    ],
+    options: ['10 mA', '100 mA', '2 A', '30 A'],
     correctAnswer: 2,
     explanation:
       'Most PLC relay output modules are rated at approximately 2 A per point for resistive loads. For inductive loads the rating is typically lower (0.5-1 A). Loads requiring higher currents must be switched via an interposing relay or contactor controlled by the PLC output.',
@@ -258,227 +291,184 @@ const faqs = [
 ];
 
 const MOETModule5Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cable className="h-4 w-4" />
-            <span>Module 5.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Input/Output Devices
-          </h1>
-          <p className="text-white">
-            Digital and analogue I/O modules, wiring methods and interfacing for PLC systems
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 2"
+        title="Input/Output Devices"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Digital and analogue I/O modules, wiring methods and interfacing for PLC systems — what
+            connects the field to the program, and how to fault-find it.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Digital I/O:</strong> ON/OFF signals — switches, sensors, contactors
-              </li>
-              <li className="pl-1">
-                <strong>Analogue I/O:</strong> Variable signals — 4-20 mA, 0-10 V, thermocouples
-              </li>
-              <li className="pl-1">
-                <strong>Sink/Source:</strong> Current direction convention for wiring sensors
-              </li>
-              <li className="pl-1">
-                <strong>Isolation:</strong> Opto-couplers protect PLC from field transients
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault finding:</strong> Check LED status, measure field signals
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Match module type, address and configuration
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Verify scaling, range and signal integrity
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> I/O diagnosis is a core maintenance competency
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Digital I/O: ON/OFF signals — switches, sensors, contactors.',
+              'Analogue I/O: Variable signals — 4-20 mA, 0-10 V, thermocouples.',
+              'Sink/Source: Current direction convention for wiring sensors.',
+              'Isolation: Opto-couplers protect PLC from field transients.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'PLC hardware and architecture',
+
+                gist: 'The scan cycle, I/O modules and where the program lives. Most PLC timing behaviour follows from the scan.',
+
+                where: '5.2.1',
+              },
+
+              {
+                term: 'Temperature and pressure sensors',
+
+                gist: 'Thermocouples, RTDs and pressure transmitters — what each measures and the signal it produces.',
+
+                where: '5.1.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between digital and analogue I/O modules and their applications',
               'Explain sink and source wiring configurations for PNP and NPN sensors',
               'Describe the 4-20 mA current loop and its advantages over voltage signalling',
               'Identify the role of optical isolation in protecting PLC circuitry',
               'Select appropriate output types (relay, transistor, triac) for different loads',
               'Apply fault-finding techniques to diagnose I/O module problems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault finding:</strong> Check LED status, measure field signals.
+              </li>
+              <li>
+                <strong>Replacement:</strong> Match module type, address and configuration.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Verify scaling, range and signal integrity.
+              </li>
+              <li>
+                <strong>ST1426:</strong> I/O diagnosis is a core maintenance competency.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Digital Inputs and Outputs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Digital inputs and outputs</ContentEyebrow>
+
+          <ConceptBlock title="The most common type of I/O in any PLC system">
             <p>
               Digital (discrete) I/O is the most common type in any PLC system. A digital input
               reads a simple ON or OFF state from a field device, while a digital output switches a
               load ON or OFF. Despite their simplicity, correct wiring and configuration of digital
               I/O is critical for safe and reliable operation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Digital Input Devices
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Push buttons:</strong> Start, stop, acknowledge — momentary or maintained
-                  contact
-                </li>
-                <li className="pl-1">
-                  <strong>Limit switches:</strong> Detect mechanical position of machine components
-                </li>
-                <li className="pl-1">
-                  <strong>Proximity sensors:</strong> Inductive (metal), capacitive (non-metal),
-                  photoelectric (beam)
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure switches:</strong> Detect threshold pressure in pneumatic or
-                  hydraulic systems
-                </li>
-                <li className="pl-1">
-                  <strong>Level switches:</strong> Float switches, conductivity probes for tank
-                  levels
-                </li>
-                <li className="pl-1">
-                  <strong>Safety devices:</strong> E-stops, guard switches, light curtains (to
-                  safety relay/PLC)
-                </li>
-              </ul>
+          <ConceptBlock title="Common digital input devices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Push buttons:</strong> Start, stop, acknowledge — momentary or maintained
+                contact.
+              </li>
+              <li>
+                <strong>Limit switches:</strong> Detect mechanical position of machine components.
+              </li>
+              <li>
+                <strong>Proximity sensors:</strong> Inductive (metal), capacitive (non-metal),
+                photoelectric (beam).
+              </li>
+              <li>
+                <strong>Pressure switches:</strong> Detect threshold pressure in pneumatic or
+                hydraulic systems.
+              </li>
+              <li>
+                <strong>Level switches:</strong> Float switches, conductivity probes for tank
+                levels.
+              </li>
+              <li>
+                <strong>Safety devices:</strong> E-stops, guard switches, light curtains (to safety
+                relay/PLC).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common digital output devices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Contactors:</strong> Switching motors, heaters and other high-power loads.
+              </li>
+              <li>
+                <strong>Solenoid valves:</strong> Pneumatic and hydraulic directional control.
+              </li>
+              <li>
+                <strong>Indicator lamps:</strong> Status indication on control panels.
+              </li>
+              <li>
+                <strong>Audible alarms:</strong> Sirens, horns and buzzers.
+              </li>
+              <li>
+                <strong>Interposing relays:</strong> Switching loads beyond the module current
+                rating.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Digital output module types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Output type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Load type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Switching speed</th>
+                    <th className="py-2 font-medium text-white">Typical rating</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Relay</td>
+                    <td className="py-2 pr-4">AC or DC</td>
+                    <td className="py-2 pr-4">~10 ms</td>
+                    <td className="py-2">2 A per point</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Transistor (PNP/NPN)</td>
+                    <td className="py-2 pr-4">DC only</td>
+                    <td className="py-2 pr-4">~1 ms</td>
+                    <td className="py-2">0.5 A per point</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Triac</td>
+                    <td className="py-2 pr-4">AC only</td>
+                    <td className="py-2 pr-4">~1 ms</td>
+                    <td className="py-2">1 A per point</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Digital Output Devices
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Contactors:</strong> Switching motors, heaters and other high-power loads
-                </li>
-                <li className="pl-1">
-                  <strong>Solenoid valves:</strong> Pneumatic and hydraulic directional control
-                </li>
-                <li className="pl-1">
-                  <strong>Indicator lamps:</strong> Status indication on control panels
-                </li>
-                <li className="pl-1">
-                  <strong>Audible alarms:</strong> Sirens, horns and buzzers
-                </li>
-                <li className="pl-1">
-                  <strong>Interposing relays:</strong> Switching loads beyond the module current
-                  rating
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Digital Output Module Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Output Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Load Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Switching Speed
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Relay</td>
-                      <td className="border border-white/10 px-3 py-2">AC or DC</td>
-                      <td className="border border-white/10 px-3 py-2">~10 ms</td>
-                      <td className="border border-white/10 px-3 py-2">2 A per point</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transistor (PNP/NPN)</td>
-                      <td className="border border-white/10 px-3 py-2">DC only</td>
-                      <td className="border border-white/10 px-3 py-2">~1 ms</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 A per point</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Triac</td>
-                      <td className="border border-white/10 px-3 py-2">AC only</td>
-                      <td className="border border-white/10 px-3 py-2">~1 ms</td>
-                      <td className="border border-white/10 px-3 py-2">1 A per point</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Analogue inputs and outputs</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Analogue Inputs and Outputs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Interfacing with continuously variable process signals">
             <p>
               Analogue I/O allows the PLC to interface with continuously variable process signals.
               Analogue inputs convert real-world measurements (temperature, pressure, flow, level)
@@ -486,153 +476,132 @@ const MOETModule5Section2_2 = () => {
               back into variable signals to control devices such as variable-speed drives, control
               valves and chart recorders.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Analogue Signal Types
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>4-20 mA:</strong> Industry standard current loop; live zero at 4 mA
-                  provides wire-break detection
-                </li>
-                <li className="pl-1">
-                  <strong>0-10 V DC:</strong> Voltage signal; simpler wiring but more susceptible to
-                  cable losses
-                </li>
-                <li className="pl-1">
-                  <strong>0-20 mA:</strong> Current loop without live zero; less common in new
-                  installations
-                </li>
-                <li className="pl-1">
-                  <strong>Thermocouple:</strong> Millivolt signal from temperature-dependent
-                  junction; requires specialised input
-                </li>
-                <li className="pl-1">
-                  <strong>RTD (Pt100/Pt1000):</strong> Resistance change with temperature; requires
-                  excitation current from module
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common analogue signal types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>4-20 mA:</strong> Industry standard current loop; live zero at 4 mA provides
+                wire-break detection.
+              </li>
+              <li>
+                <strong>0-10 V DC:</strong> Voltage signal; simpler wiring but more susceptible to
+                cable losses.
+              </li>
+              <li>
+                <strong>0-20 mA:</strong> Current loop without live zero; less common in new
+                installations.
+              </li>
+              <li>
+                <strong>Thermocouple:</strong> Millivolt signal from temperature-dependent junction;
+                requires specialised input.
+              </li>
+              <li>
+                <strong>RTD (Pt100/Pt1000):</strong> Resistance change with temperature; requires
+                excitation current from module.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Live Zero: The 4 mA Advantage
-              </p>
-              <p className="text-sm text-white">
-                The 4-20 mA standard uses 4 mA to represent 0% and 20 mA to represent 100% of the
-                measured range. This 'live zero' is a critical safety feature: if the signal drops
-                below 4 mA (typically below 3.6 mA), the PLC can detect a fault condition — a broken
-                wire, failed transmitter or disconnected sensor. A 0-20 mA or 0-10 V signal cannot
-                distinguish between a genuine zero reading and a fault.
-              </p>
-            </div>
+          <ConceptBlock title="Live zero: the 4 mA advantage">
+            <p>
+              The 4-20 mA standard uses 4 mA to represent 0% and 20 mA to represent 100% of the
+              measured range. This &apos;live zero&apos; is a critical safety feature: if the signal
+              drops below 4 mA (typically below 3.6 mA), the PLC can detect a fault condition — a
+              broken wire, failed transmitter or disconnected sensor. A 0-20 mA or 0-10 V signal
+              cannot distinguish between a genuine zero reading and a fault.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Analogue Input Specifications
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Resolution:</strong> Number of bits in the ADC — 12-bit (4096 steps),
-                  16-bit (65536 steps)
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> How close the reading is to the true value, expressed
-                  as percentage of span
-                </li>
-                <li className="pl-1">
-                  <strong>Conversion time:</strong> Time to convert one analogue sample to digital —
-                  affects scan time
-                </li>
-                <li className="pl-1">
-                  <strong>Input impedance:</strong> Must be appropriate for the signal type (high
-                  for voltage, low for current)
-                </li>
-                <li className="pl-1">
-                  <strong>Common mode rejection:</strong> Ability to reject noise common to both
-                  input wires
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Analogue input specifications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Resolution:</strong> Number of bits in the ADC — 12-bit (4096 steps), 16-bit
+                (65536 steps).
+              </li>
+              <li>
+                <strong>Accuracy:</strong> How close the reading is to the true value, expressed as
+                percentage of span.
+              </li>
+              <li>
+                <strong>Conversion time:</strong> Time to convert one analogue sample to digital —
+                affects scan time.
+              </li>
+              <li>
+                <strong>Input impedance:</strong> Must be appropriate for the signal type (high for
+                voltage, low for current).
+              </li>
+              <li>
+                <strong>Common mode rejection:</strong> Ability to reject noise common to both input
+                wires.
+              </li>
+            </ul>
+            <p>
               <strong>Scaling example:</strong> A pressure transmitter outputs 4-20 mA for 0-10 bar.
               On a 12-bit input (0-4095 raw counts), 4 mA = 819 counts and 20 mA = 4095 counts. The
               PLC program scales this: Pressure = (Raw - 819) x 10 / (4095 - 819) bar.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sink and Source Wiring Configurations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Sink and source wiring configurations</ContentEyebrow>
+
+          <ConceptBlock title="The direction of current flow decides sensor compatibility">
             <p>
               Understanding sink and source wiring is essential for correctly connecting sensors and
               actuators to PLC I/O modules. The terms describe the direction of current flow
               relative to the I/O module and determine which type of sensor (PNP or NPN) is
               compatible.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Sourcing (PNP) Configuration
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">PNP sensor provides current to the PLC input</li>
-                  <li className="pl-1">
-                    Current flows from +24 V through the sensor to the PLC input
-                  </li>
-                  <li className="pl-1">PLC input module sinks current to the 0 V rail</li>
-                  <li className="pl-1">European standard practice for new installations</li>
-                  <li className="pl-1">Wire colours: brown (+24 V), blue (0 V), black (signal)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Sinking (NPN) Configuration
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">NPN sensor sinks current from the PLC input to 0 V</li>
-                  <li className="pl-1">
-                    Current flows from the PLC input through the sensor to 0 V
-                  </li>
-                  <li className="pl-1">PLC input module sources current from the +24 V supply</li>
-                  <li className="pl-1">Common in Asian and some legacy installations</li>
-                  <li className="pl-1">Requires sourcing-type input module</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Sourcing (PNP) configuration">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>PNP sensor provides current to the PLC input.</li>
+              <li>Current flows from +24 V through the sensor to the PLC input.</li>
+              <li>PLC input module sinks current to the 0 V rail.</li>
+              <li>European standard practice for new installations.</li>
+              <li>Wire colours: brown (+24 V), blue (0 V), black (signal).</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Wiring Mistake</p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="Sinking (NPN) configuration">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>NPN sensor sinks current from the PLC input to 0 V.</li>
+              <li>Current flows from the PLC input through the sensor to 0 V.</li>
+              <li>PLC input module sources current from the +24 V supply.</li>
+              <li>Common in Asian and some legacy installations.</li>
+              <li>Requires sourcing-type input module.</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Connecting the wrong sensor type to the wrong input module"
+            whatHappens={
+              <>
                 Connecting a PNP sensor to an NPN (sourcing) input module — or vice versa — will
                 result in the input not functioning or, worse, damage to the sensor or module.
+              </>
+            }
+            doInstead={
+              <>
                 Always check the sensor data sheet and the I/O module specification to confirm
                 compatibility before wiring. Many modern PLC input modules are configurable for
                 either sink or source operation.
-              </p>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Optical Isolation and Signal Conditioning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Optical isolation and signal conditioning</ContentEyebrow>
+
+          <ConceptBlock title="Defending the PLC from harsh electrical conditions">
             <p>
               Industrial environments subject PLC I/O to harsh electrical conditions: voltage
               transients from motor switching, electromagnetic interference from variable-speed
@@ -640,231 +609,200 @@ const MOETModule5Section2_2 = () => {
               Optical isolation and signal conditioning are the primary defences against these
               hazards.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Optical Isolation (Opto-coupling)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>How it works:</strong> An LED inside the module converts the electrical
-                  input signal to light; a phototransistor on the other side converts it back to an
-                  electrical signal for the PLC backplane
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation voltage:</strong> Typically 1500-2500 V AC between field side
-                  and backplane
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> Prevents voltage spikes, ground loops and noise on
-                  field wiring from reaching the CPU
-                </li>
-                <li className="pl-1">
-                  <strong>Present in:</strong> Virtually all modern digital I/O modules as standard
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Optical isolation (opto-coupling)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>How it works:</strong> An LED inside the module converts the electrical
+                input signal to light; a phototransistor on the other side converts it back to an
+                electrical signal for the PLC backplane.
+              </li>
+              <li>
+                <strong>Isolation voltage:</strong> Typically 1500-2500 V AC between field side and
+                backplane.
+              </li>
+              <li>
+                <strong>Protection:</strong> Prevents voltage spikes, ground loops and noise on
+                field wiring from reaching the CPU.
+              </li>
+              <li>
+                <strong>Present in:</strong> Virtually all modern digital I/O modules as standard.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Conditioning for Analogue Inputs
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Filtering:</strong> Low-pass filters remove high-frequency noise from the
-                  analogue signal
-                </li>
-                <li className="pl-1">
-                  <strong>Amplification:</strong> Weak signals (millivolt thermocouples) are
-                  amplified to the ADC input range
-                </li>
-                <li className="pl-1">
-                  <strong>Linearisation:</strong> Non-linear sensor outputs (e.g., thermocouples)
-                  are corrected to produce a linear reading
-                </li>
-                <li className="pl-1">
-                  <strong>Cold junction compensation:</strong> Thermocouple modules compensate for
-                  the reference junction temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Excitation:</strong> RTD modules provide a constant excitation current and
-                  measure the resulting voltage
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Signal conditioning for analogue inputs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Filtering:</strong> Low-pass filters remove high-frequency noise from the
+                analogue signal.
+              </li>
+              <li>
+                <strong>Amplification:</strong> Weak signals (millivolt thermocouples) are amplified
+                to the ADC input range.
+              </li>
+              <li>
+                <strong>Linearisation:</strong> Non-linear sensor outputs (e.g., thermocouples) are
+                corrected to produce a linear reading.
+              </li>
+              <li>
+                <strong>Cold junction compensation:</strong> Thermocouple modules compensate for the
+                reference junction temperature.
+              </li>
+              <li>
+                <strong>Excitation:</strong> RTD modules provide a constant excitation current and
+                measure the resulting voltage.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When replacing an analogue input module, always
               check that the module configuration (signal type, range, filtering) matches the
               original. Incorrect configuration can produce wildly inaccurate readings without any
               obvious fault indication on the module LEDs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            I/O Fault Diagnosis and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>I/O fault diagnosis and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="A systematic approach finds the fault fast">
             <p>
               Diagnosing I/O faults is one of the most frequent tasks for a maintenance technician
               working with PLC systems. A systematic approach — working from the field device
               through the wiring to the module and into the PLC program — will identify the fault
               location efficiently.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Systematic I/O Fault-Finding
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1 — LED check:</strong> Observe the module status LEDs. Input LED on
-                  = signal present at module
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2 — Software check:</strong> Monitor the I/O address online. Does the
-                  PLC see the signal?
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3 — Field measurement:</strong> Use a multimeter to verify the signal
-                  at the module terminals
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4 — Wiring check:</strong> Trace the signal from the field device to
-                  the module terminals
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5 — Device check:</strong> Test or substitute the field device to
-                  confirm it is functioning
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6 — Module check:</strong> Swap the suspect module with a known good
-                  spare (same type)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Systematic I/O fault-finding">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — LED check:</strong> Observe the module status LEDs. Input LED on =
+                signal present at module.
+              </li>
+              <li>
+                <strong>Step 2 — Software check:</strong> Monitor the I/O address online. Does the
+                PLC see the signal?
+              </li>
+              <li>
+                <strong>Step 3 — Field measurement:</strong> Use a multimeter to verify the signal
+                at the module terminals.
+              </li>
+              <li>
+                <strong>Step 4 — Wiring check:</strong> Trace the signal from the field device to
+                the module terminals.
+              </li>
+              <li>
+                <strong>Step 5 — Device check:</strong> Test or substitute the field device to
+                confirm it is functioning.
+              </li>
+              <li>
+                <strong>Step 6 — Module check:</strong> Swap the suspect module with a known good
+                spare (same type).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Input Faults
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Broken wire to field device</li>
-                  <li className="pl-1">Failed sensor or switch</li>
-                  <li className="pl-1">Loose terminal connection</li>
-                  <li className="pl-1">Incorrect wiring (sink/source mismatch)</li>
-                  <li className="pl-1">Failed input channel on module</li>
-                  <li className="pl-1">Fuse blown on input group</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Output Faults
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Welded relay contacts (stuck ON)</li>
-                  <li className="pl-1">Worn relay contacts (intermittent)</li>
-                  <li className="pl-1">Blown output fuse</li>
-                  <li className="pl-1">Failed load device (e.g., coil open-circuit)</li>
-                  <li className="pl-1">Short circuit on output wiring</li>
-                  <li className="pl-1">Transistor output destroyed by over-current</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Common input faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Broken wire to field device.</li>
+              <li>Failed sensor or switch.</li>
+              <li>Loose terminal connection.</li>
+              <li>Incorrect wiring (sink/source mismatch).</li>
+              <li>Failed input channel on module.</li>
+              <li>Fuse blown on input group.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate the
-              ability to systematically diagnose faults in control systems. Always record your
-              findings and the corrective action taken in the maintenance log. This supports both
-              continuous improvement and compliance with quality management systems.
+          <ConceptBlock title="Common output faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Welded relay contacts (stuck ON).</li>
+              <li>Worn relay contacts (intermittent).</li>
+              <li>Blown output fuse.</li>
+              <li>Failed load device (e.g. coil open-circuit).</li>
+              <li>Short circuit on output wiring.</li>
+              <li>Transistor output destroyed by over-current.</li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians must demonstrate the ability to systematically
+              diagnose faults in control systems. Always record your findings and the corrective
+              action taken in the maintenance log. This supports both continuous improvement and
+              compliance with quality management systems.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=n594CkrP6xE"
 
-        <hr className="border-white/5 my-12" />
+            title="How Relays Work"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Analogue Signal Ranges</p>
-                <ul className="space-y-0.5">
-                  <li>4-20 mA — Standard current loop (live zero)</li>
-                  <li>0-10 V DC — Common voltage signal</li>
-                  <li>Pt100 RTD — 100 ohms at 0 degrees C</li>
-                  <li>Type K thermocouple — -200 to +1372 degrees C</li>
-                  <li>12-bit ADC = 4096 steps resolution</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">I/O Fault-Finding Steps</p>
-                <ul className="space-y-0.5">
-                  <li>1. Check module status LEDs</li>
-                  <li>2. Monitor address in PLC software</li>
-                  <li>3. Measure signal at terminals</li>
-                  <li>4. Trace and test field wiring</li>
-                  <li>5. Test or substitute field device</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="14:01"
+
+            topic="The relay as the bridge between a control signal and a load"
+
+            caption="Worth watching before the I/O page — a PLC output card is doing electrically what this relay does mechanically."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Analogue signal ranges: 4-20 mA (standard current loop, live zero); 0-10 V DC (common voltage signal); Pt100 RTD 100 ohms at 0 degrees C; Type K thermocouple -200 to +1372 degrees C; 12-bit ADC = 4096 steps.',
+              'I/O fault-finding steps: check module status LEDs, monitor the address in PLC software, measure the signal at the terminals, trace and test field wiring, test or substitute the field device.',
+              'Digital I/O reads or switches ON/OFF states; analogue I/O reads or produces a continuously variable signal — the distinction drives wiring, testing and what a fault looks like.',
+              'Relay outputs switch AC or DC at around 2 A but take ~10 ms; transistor outputs are DC-only, faster (~1 ms) and wear-free; triac outputs are AC-only.',
+              'PNP (sourcing) sensors are the European standard, sinking current into the PLC input to 0 V; NPN (sinking) sensors need a sourcing input module — mismatching the two stops the input working or damages it.',
+              'Optical isolation gives 1500-2500 V AC separation between field wiring and the PLC backplane, protecting the CPU from voltage spikes and ground loops.',
+              'Analogue conditioning includes filtering, amplification, linearisation, cold junction compensation and excitation current — each fixes a different weakness of the raw sensor signal.',
+              'A methodical fault-finding order (LEDs, software monitor, field measurement, wiring, device, module swap) finds the fault location efficiently and avoids guesswork.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  PLC Hardware and Architecture
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Ladder Logic Basics
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: PLC Hardware and Architecture
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-3">
-              Next: Ladder Logic Basics
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

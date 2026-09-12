@@ -226,14 +226,14 @@ const StarDeltaCalculator = () => {
       impedanceType === 'equal'
         ? [
             {
-              label: isStarToDelta ? 'Input (Star)' : 'Input (Delta)',
-              value: `${result.inputZ?.toFixed(2)}`,
-              unit: 'Ω',
-            },
-            {
               label: isStarToDelta ? 'Output (Delta)' : 'Output (Star)',
               value: `${result.outputZ?.toFixed(2)}`,
               unit: 'Ω',
+            },
+            {
+              label: 'Line current',
+              value: `${result.lineCurrent?.toFixed(2)}`,
+              unit: 'A',
             },
           ]
         : [
@@ -244,42 +244,18 @@ const StarDeltaCalculator = () => {
             },
           ];
 
+    // Only the newly-derived figures — inputs already appear under "Inputs",
+    // and the primary converted value(s) already appear in the headline.
     const resultRows =
       impedanceType === 'equal'
         ? [
-            {
-              label: isStarToDelta ? 'Input (Star)' : 'Input (Delta)',
-              value: `${result.inputZ?.toFixed(2)} Ω`,
-            },
-            {
-              label: isStarToDelta ? 'Output (Delta)' : 'Output (Star)',
-              value: `${result.outputZ?.toFixed(2)} Ω`,
-            },
-            { label: 'Line voltage', value: `${result.lineVoltage} V` },
-            { label: 'Line current', value: `${result.lineCurrent?.toFixed(2)} A` },
             { label: 'Phase voltage (input)', value: `${result.phaseVoltageIn?.toFixed(1)} V` },
             { label: 'Phase voltage (output)', value: `${result.phaseVoltageOut?.toFixed(1)} V` },
           ]
         : [
             {
-              label: isStarToDelta ? 'Za (Star)' : 'Zab (Delta)',
-              value: `${result.inputZa?.toFixed(2)} Ω`,
-            },
-            {
-              label: isStarToDelta ? 'Zab (Delta)' : 'Za (Star)',
-              value: `${result.outputZab?.toFixed(2)} Ω`,
-            },
-            {
-              label: isStarToDelta ? 'Zb (Star)' : 'Zbc (Delta)',
-              value: `${result.inputZb?.toFixed(2)} Ω`,
-            },
-            {
               label: isStarToDelta ? 'Zbc (Delta)' : 'Zb (Star)',
               value: `${result.outputZbc?.toFixed(2)} Ω`,
-            },
-            {
-              label: isStarToDelta ? 'Zc (Star)' : 'Zca (Delta)',
-              value: `${result.inputZc?.toFixed(2)} Ω`,
             },
             {
               label: isStarToDelta ? 'Zca (Delta)' : 'Zc (Star)',

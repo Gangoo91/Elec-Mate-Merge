@@ -29,6 +29,7 @@ import {
   SectionHeader,
   type Tone,
 } from '@/components/college/primitives';
+import { inputCn, labelCn, textareaCn } from '@/components/settings/formStyles';
 
 type DocTypeKey = 'ecs_card' | 'qualification' | 'training' | 'driving_licence' | 'insurance';
 
@@ -704,7 +705,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
             className={cn(
               'border-2 border-dashed rounded-xl p-6 text-center transition-all touch-manipulation',
               isDragActive
-                ? 'border-elec-yellow bg-elec-yellow/10'
+                ? 'border-elec-yellow bg-white/[0.06]'
                 : 'border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08]'
             )}
           >
@@ -723,7 +724,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
 
           <button
             onClick={() => setIsCameraOpen(true)}
-            className="border-2 border-dashed rounded-xl p-6 text-center transition-all border-white/[0.12] bg-white/[0.04] hover:border-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
+            className="border-2 border-dashed rounded-xl p-6 text-center transition-all border-white/[0.12] bg-white/[0.04] hover:border-elec-yellow hover:bg-white/[0.06] touch-manipulation"
           >
             <p className="text-sm font-medium text-white">Take photo</p>
             <p className="text-xs text-white mt-1">Use camera for best results</p>
@@ -736,7 +737,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
               <img
                 src={uploadPreview}
                 alt="Preview"
-                className="w-full rounded-xl border border-white/[0.08]"
+                className="w-full rounded-xl border border-elec-yellow/35"
               />
               <button
                 onClick={handleRetry}
@@ -785,52 +786,52 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
           )}
 
           {(isEditMode || verificationResult?.status === 'needs_review') && (
-            <div className="space-y-3 p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+            <div className="border-t border-white/[0.1] pt-4 space-y-4">
               <Eyebrow>Verify or correct details</Eyebrow>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="col-span-2 space-y-1.5">
-                  <Label className="text-xs text-white">Document name</Label>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+                <div className="col-span-2">
+                  <Label className={labelCn}>Document name</Label>
                   <Input
                     value={documentName}
                     onChange={(e) => setDocumentName(e.target.value)}
                     placeholder="e.g. City & Guilds 2391"
-                    className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl text-white placeholder:text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Issuing body</Label>
+                <div>
+                  <Label className={labelCn}>Issuing body</Label>
                   <Input
                     value={issuingBody}
                     onChange={(e) => setIssuingBody(e.target.value)}
                     placeholder="e.g. JIB"
-                    className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl text-white placeholder:text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Document / card number</Label>
+                <div>
+                  <Label className={labelCn}>Document / card number</Label>
                   <Input
                     value={documentNumber}
                     onChange={(e) => setDocumentNumber(e.target.value)}
                     placeholder="e.g. 1234-5678-9012"
-                    className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl text-white placeholder:text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Issue date</Label>
+                <div>
+                  <Label className={labelCn}>Issue date</Label>
                   <Input
                     type="date"
                     value={issueDate}
                     onChange={(e) => setIssueDate(e.target.value)}
-                    className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
-                <div className="space-y-1.5">
-                  <Label className="text-xs text-white">Expiry date</Label>
+                <div>
+                  <Label className={labelCn}>Expiry date</Label>
                   <Input
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
-                    className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
               </div>
@@ -856,7 +857,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
   const uploadFooter = (
     <div className="flex gap-3">
       <button
-        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation disabled:opacity-60"
         onClick={() => setIsUploadDialogOpen(false)}
         disabled={isUploading || isVerifying}
       >
@@ -865,7 +866,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
 
       {!verificationResult ? (
         <button
-          className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+          className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
           onClick={handleUploadAndVerify}
           disabled={!uploadFile || isUploading || isVerifying}
         >
@@ -874,13 +875,13 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
       ) : verificationResult.status === 'rejected' ? (
         <>
           <button
-            className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
+            className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation"
             onClick={handleRetry}
           >
             Try again
           </button>
           <button
-            className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+            className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
             onClick={handleSaveCorrections}
             disabled={isVerifying}
           >
@@ -889,7 +890,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
         </>
       ) : verificationResult.status === 'needs_review' ? (
         <button
-          className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+          className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
           onClick={handleSaveCorrections}
           disabled={isVerifying}
         >
@@ -909,7 +910,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
   return (
     <div className="space-y-6 sm:space-y-8 pb-6">
       {/* Verification progress hero */}
-      <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-elec-yellow/20 p-5 sm:p-6">
+      <div className="relative overflow-hidden rounded-2xl bg-white/[0.05] border border-elec-yellow/20 p-5 sm:p-6">
         <div className="flex items-center gap-5">
           <div className="relative w-20 h-20 shrink-0">
             <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
@@ -1057,7 +1058,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
                               'flex items-center gap-3 p-3 rounded-xl',
                               isProcessing
                                 ? 'bg-blue-500/10 border border-blue-500/20'
-                                : 'bg-white/[0.04] border border-white/[0.06]'
+                                : 'bg-white/[0.04] border border-elec-yellow/35'
                             )}
                           >
                             <Dot tone={isProcessing ? 'blue' : status.tone} />
@@ -1113,7 +1114,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
 
       {/* Upload drawer / dialog */}
       <Sheet open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Upload document" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -1139,7 +1140,7 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
 
       {/* Appeal dialog */}
       <Dialog open={isRejectionDialogOpen} onOpenChange={setIsRejectionDialogOpen}>
-        <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl">
+        <DialogContent className="bg-elec-dark border-elec-yellow/35 rounded-2xl">
           <DialogHeader>
             <DialogTitle className="text-white">Appeal rejection</DialogTitle>
             <DialogDescription className="text-white">
@@ -1159,19 +1160,19 @@ const DocumentUploader = ({ onNavigate: _onNavigate }: DocumentUploaderProps) =>
               </div>
 
               <div>
-                <Label className="text-sm text-white">Additional information (optional)</Label>
+                <Label className={labelCn}>Additional information (optional)</Label>
                 <Textarea
                   value={appealNotes}
                   onChange={(e) => setAppealNotes(e.target.value)}
                   placeholder="Provide any additional context that might help our review team…"
-                  className="mt-1.5 bg-white/[0.04] border-white/[0.06] rounded-xl text-white placeholder:text-white"
+                  className={textareaCn}
                   rows={4}
                 />
               </div>
 
               <div className="flex gap-3">
                 <button
-                  className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
+                  className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation"
                   onClick={() => setIsRejectionDialogOpen(false)}
                 >
                   Cancel

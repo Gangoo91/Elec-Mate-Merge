@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+import { useLearningWin } from '@/hooks/useLearningWin';
+import PostActionSharePrompt from '@/components/referrals/PostActionSharePrompt';
 
 interface Question {
   id: number;
@@ -45,6 +48,18 @@ const ExamResults: React.FC<ExamResultsProps> = ({
   };
 
   const results = calculateResults();
+
+  // Peak satisfaction, and the one moment in the study centre where asking for
+  // a review or a referral is not an interruption. Both prompts existed already
+  // but were wired only to certificates, quotes and invoices — an apprentice
+  // could pass every paper in the app and never be asked.
+  const { recordWin, showReferralPrompt } = useLearningWin();
+  const recordedRef = useRef(false);
+  useEffect(() => {
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+    recordWin({ kind: 'mock', percentage: results.percentage });
+  }, [recordWin, results.percentage]);
 
   return (
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-6">
@@ -114,6 +129,8 @@ const ExamResults: React.FC<ExamResultsProps> = ({
           </div>
         ))}
       </div>
+
+      {showReferralPrompt && <PostActionSharePrompt trigger="post_mock" />}
 
       <Button
         className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"

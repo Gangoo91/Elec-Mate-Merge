@@ -17,14 +17,17 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+  textareaCn,
+} from '@/components/settings/formStyles';
 import { useAuth } from '@/contexts/AuthContext';
 import { useElecIdProfile } from '@/hooks/useElecIdProfile';
 import {
@@ -57,6 +60,29 @@ interface ElecIdOverviewProps {
 }
 
 type VerificationTier = 'basic' | 'verified' | 'premium';
+
+const JOB_TITLE_OPTIONS = UK_JOB_TITLES.map((title) => ({
+  value: title.value,
+  label: title.label,
+}));
+
+const ECS_CARD_OPTIONS = ECS_CARD_TYPES.map((card) => ({
+  value: card.value,
+  label: card.label,
+}));
+
+const RATE_TYPE_OPTIONS = [
+  { value: 'hourly', label: '/hour' },
+  { value: 'daily', label: '/day' },
+  { value: 'weekly', label: '/week' },
+  { value: 'yearly', label: '/year' },
+];
+
+const VISIBILITY_OPTIONS = [
+  { value: 'public', label: 'Public' },
+  { value: 'employers_only', label: 'Employers only' },
+  { value: 'private', label: 'Private' },
+] as const;
 
 const TIER_META: Record<VerificationTier, { label: string; tone: Tone; description: string }> = {
   basic: { label: 'Basic', tone: 'cyan', description: 'Profile created' },
@@ -382,80 +408,47 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     if (onNavigate) onNavigate(tabId);
   };
 
-  const jobTitlesByCategory = UK_JOB_TITLES.reduce(
-    (acc, title) => {
-      if (!acc[title.category]) acc[title.category] = [];
-      acc[title.category].push(title);
-      return acc;
-    },
-    {} as Record<string, typeof UK_JOB_TITLES>
-  );
-
   const EditFormContent = () => (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Label className="text-white text-sm">Job title</Label>
-        <Select
+      <div>
+        <Label className={labelCn}>Job title</Label>
+        <MobileSelectPicker
           value={editFormData.jobTitle}
           onValueChange={(value) => setEditFormData({ ...editFormData, jobTitle: value })}
-        >
-          <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white">
-            <SelectValue placeholder="Select job title" />
-          </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] max-h-60">
-            {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
-              <React.Fragment key={category}>
-                <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">{category}</div>
-                {titles.map((title) => (
-                  <SelectItem key={title.value} value={title.value}>
-                    {title.label}
-                  </SelectItem>
-                ))}
-              </React.Fragment>
-            ))}
-          </SelectContent>
-        </Select>
+          options={JOB_TITLE_OPTIONS}
+          placeholder="Select job title"
+          triggerClassName={selectTriggerCn}
+        />
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-white text-sm">ECS card type</Label>
-        <Select
+      <div>
+        <Label className={labelCn}>ECS card type</Label>
+        <MobileSelectPicker
           value={editFormData.ecsCardType}
           onValueChange={(value) => setEditFormData({ ...editFormData, ecsCardType: value })}
-        >
-          <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white">
-            <SelectValue placeholder="Select card type" />
-          </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-            {ECS_CARD_TYPES.map((card) => (
-              <SelectItem key={card.value} value={card.value}>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded" style={{ backgroundColor: card.color }} />
-                  {card.label}
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={ECS_CARD_OPTIONS}
+          placeholder="Select card type"
+          triggerClassName={selectTriggerCn}
+        />
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-white text-sm">ECS card expiry date</Label>
+      <div>
+        <Label className={labelCn}>ECS card expiry date</Label>
         <Input
           type="date"
           value={editFormData.ecsCardExpiry}
           onChange={(e) => setEditFormData({ ...editFormData, ecsCardExpiry: e.target.value })}
-          className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white"
+          className={inputCn}
         />
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-white text-sm">
+      <div>
+        <Label className={labelCn}>
           Your rate <span className="text-white">(shown in Talent Pool)</span>
         </Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white">£</span>
+            <span className="absolute left-1 top-1/2 -translate-y-1/2 text-white">£</span>
             <Input
               type="number"
               inputMode="decimal"
@@ -463,35 +456,33 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               value={editFormData.rateAmount}
               onChange={(e) => setEditFormData({ ...editFormData, rateAmount: e.target.value })}
               placeholder="Amount"
-              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl pl-8 text-white placeholder:text-white"
+              className={cn(inputCn, 'pl-5')}
             />
           </div>
-          <Select
+          <MobileSelectPicker
             value={editFormData.rateType}
-            onValueChange={(value) => setEditFormData({ ...editFormData, rateType: value })}
-          >
-            <SelectTrigger className="w-28 h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
-              <SelectItem value="hourly">/hour</SelectItem>
-              <SelectItem value="daily">/day</SelectItem>
-              <SelectItem value="weekly">/week</SelectItem>
-              <SelectItem value="yearly">/year</SelectItem>
-            </SelectContent>
-          </Select>
+            onValueChange={(value) =>
+              setEditFormData({
+                ...editFormData,
+                rateType: value as typeof editFormData.rateType,
+              })
+            }
+            options={RATE_TYPE_OPTIONS}
+            placeholder="/day"
+            triggerClassName={cn(selectTriggerCn, 'w-28')}
+          />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-white text-sm">
+      <div>
+        <Label className={labelCn}>
           Professional bio <span className="text-white">(optional)</span>
         </Label>
         <Textarea
           value={editFormData.bio}
           onChange={(e) => setEditFormData({ ...editFormData, bio: e.target.value })}
           placeholder="Brief description of your experience and specialisations…"
-          className="bg-white/[0.04] border-white/[0.06] rounded-xl min-h-[100px] resize-none text-white placeholder:text-white"
+          className={cn(textareaCn, 'min-h-[100px]')}
         />
       </div>
     </div>
@@ -521,25 +512,25 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     <div className="space-y-6 sm:space-y-8">
       {/* Edit drawer / dialog */}
       <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent className="bg-elec-dark flex flex-col" title="{userName}">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
           <div className="px-5 pb-2">
             <h3 className="text-lg font-semibold text-white">Edit profile</h3>
-            <p className="text-sm text-white/65">Update your Elec-ID information</p>
+            <p className="text-sm text-white">Update your Elec-ID information</p>
           </div>
           <div className="flex-1 overflow-y-auto px-5 pb-4">{EditFormContent()}</div>
           <div className="p-5 border-t border-white/[0.06]">
             <div className="flex gap-3">
               <button
-                className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
+                className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation"
                 onClick={() => setIsEditSheetOpen(false)}
               >
                 Cancel
               </button>
               <button
-                className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+                className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
                 onClick={handleSaveEdit}
                 disabled={isSaving}
               >
@@ -555,7 +546,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl"
+        className="relative overflow-hidden bg-white/[0.05] border border-elec-yellow/35 rounded-2xl"
       >
         <div className="absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
 
@@ -570,7 +561,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </div>
             <button
               onClick={handleOpenEdit}
-              className="shrink-0 h-11 px-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-[12px] font-medium text-elec-yellow hover:bg-white/[0.08] touch-manipulation"
+              className="shrink-0 h-11 px-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35 text-[12px] font-medium text-elec-yellow hover:bg-white/[0.08] touch-manipulation"
             >
               Edit →
             </button>
@@ -582,10 +573,10 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 <img
                   src={photoUrl || elecIdData.photoUrl || ''}
                   alt="Profile"
-                  className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl object-cover border border-white/[0.08]"
+                  className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl object-cover border border-elec-yellow/35"
                 />
               ) : (
-                <div className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl bg-elec-yellow flex items-center justify-center border border-white/[0.08]">
+                <div className="w-[88px] h-[110px] sm:w-[104px] sm:h-[132px] rounded-2xl bg-elec-yellow flex items-center justify-center border border-elec-yellow/35">
                   <span className="text-black font-semibold text-2xl sm:text-3xl">
                     {userInitials}
                   </span>
@@ -645,12 +636,12 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 >
                   {tierMeta.label}
                 </span>
-                <span className="text-xs text-white/65 truncate">{tierMeta.description}</span>
+                <span className="text-xs text-white truncate">{tierMeta.description}</span>
               </div>
 
               <button
                 onClick={copyElecId}
-                className="group w-full text-left rounded-xl bg-white/[0.04] border border-white/[0.06] px-4 py-3 touch-manipulation hover:bg-white/[0.08] transition-colors"
+                className="group w-full text-left rounded-xl bg-white/[0.04] border border-elec-yellow/35 px-4 py-3 touch-manipulation hover:bg-white/[0.08] transition-colors"
               >
                 <Eyebrow>Your Elec-ID number</Eyebrow>
                 <div className="mt-1 flex items-center justify-between gap-2">
@@ -665,7 +656,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </div>
           </div>
 
-          <div className="mt-5 flex items-center justify-between gap-3 text-[11px] text-white/65">
+          <div className="mt-5 flex items-center justify-between gap-3 text-[11px] text-white">
             <div className="flex items-center gap-2">
               <Dot tone="emerald" />
               <span>Active · Verified by Elec-Mate</span>
@@ -713,9 +704,9 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           />
 
           {verificationTier !== 'premium' && (
-            <div className="px-5 sm:px-6 py-4 bg-[hsl(0_0%_12%)]">
+            <div className="px-5 sm:px-6 py-4 bg-white/[0.05]">
               <div className="flex items-center justify-between text-xs mb-2">
-                <span className="text-white/65">
+                <span className="text-white">
                   Progress to {verificationTier === 'basic' ? 'Verified' : 'Premium'}
                 </span>
                 <span className="font-semibold text-elec-yellow tabular-nums">
@@ -747,27 +738,25 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           />
 
           {availableForHire && !isOptedOut && (
-            <div className="px-5 sm:px-6 py-4 bg-[hsl(0_0%_12%)]">
-              <Select
-                value={profileVisibility}
-                onValueChange={handleVisibilityChange}
-                disabled={isSaving}
-              >
-                <SelectTrigger className="h-11 text-sm bg-white/[0.04] border-white/[0.06] rounded-xl w-full touch-manipulation text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] z-50">
-                  <SelectItem value="public" className="text-sm py-3 touch-manipulation">
-                    Public
-                  </SelectItem>
-                  <SelectItem value="employers_only" className="text-sm py-3 touch-manipulation">
-                    Employers only
-                  </SelectItem>
-                  <SelectItem value="private" className="text-sm py-3 touch-manipulation">
-                    Private
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="px-5 sm:px-6 py-4 bg-white/[0.05]">
+              <div className="flex gap-2">
+                {VISIBILITY_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleVisibilityChange(option.value)}
+                    disabled={isSaving}
+                    className={cn(
+                      chipBase,
+                      profileVisibility === option.value ? chipOn : chipOff,
+                      isSaving && 'opacity-60'
+                    )}
+                    aria-pressed={profileVisibility === option.value}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -810,7 +799,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
       )}
 
       <Dialog open={isOptOutDialogOpen} onOpenChange={setIsOptOutDialogOpen}>
-        <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
+        <DialogContent className="bg-elec-dark border-elec-yellow/35 rounded-2xl max-w-md">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">Disable Elec-ID?</DialogTitle>
             <DialogDescription className="text-white">
@@ -819,7 +808,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 pt-4">
-            <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+            <div className="p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
               <p className="text-sm text-white font-medium mb-2">What happens</p>
               <ul className="space-y-1.5 text-sm text-white">
                 <li>· Hidden from employer searches</li>
@@ -829,7 +818,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             </div>
             <div className="flex gap-3">
               <button
-                className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation"
+                className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation"
                 onClick={() => setIsOptOutDialogOpen(false)}
               >
                 Cancel
@@ -851,7 +840,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.12 }}
-        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
+        className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-5 sm:p-6"
       >
         <div className="flex items-center gap-5">
           <div className="relative w-20 h-20 shrink-0">
@@ -907,7 +896,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             {completeness.missingItems.slice(0, 3).map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-xs text-white"
+                className="flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35 text-xs text-white"
               >
                 <Dot tone="yellow" />
                 <span className="truncate flex-1">{item}</span>
@@ -1040,7 +1029,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-2xl p-5 sm:p-6"
+          className="bg-white/[0.05] border border-elec-yellow/20 rounded-2xl p-5 sm:p-6"
         >
           <Eyebrow>Your profile is live</Eyebrow>
           <p className="mt-1 text-sm text-white">
@@ -1048,7 +1037,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           </p>
 
           <div className="mt-4 flex items-center gap-2">
-            <div className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-black/30 border border-white/[0.06]">
+            <div className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-black/30 border border-elec-yellow/35">
               <p className="text-xs text-white font-mono truncate">
                 elec-mate.com/verify/
                 <span className="text-elec-yellow font-semibold">
@@ -1072,7 +1061,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
           <button
             onClick={() => onNavigate?.('share')}
-            className="mt-3 w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] text-white text-xs font-medium transition-all touch-manipulation"
+            className="mt-3 w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-white/[0.04] border border-elec-yellow/35 hover:bg-white/[0.08] text-white text-xs font-medium transition-all touch-manipulation"
           >
             Create QR code or timed share link →
           </button>

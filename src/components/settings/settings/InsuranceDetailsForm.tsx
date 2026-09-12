@@ -1,12 +1,7 @@
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Input } from '@/components/ui/input';
+import { inputCn, labelCn, selectTriggerCn } from '@/components/settings/formStyles';
 
 interface InsuranceDetailsFormProps {
   provider: string;
@@ -47,30 +42,22 @@ export function InsuranceDetailsForm({
   return (
     <div className="space-y-4">
       <div className="space-y-1.5">
-        <Label htmlFor="insuranceProvider" className="text-white font-medium text-[13px]">
+        <Label className={labelCn}>
           Insurance provider <span className="text-red-400">*</span>
         </Label>
-        <Select value={provider} onValueChange={onProviderChange}>
-          <SelectTrigger
-            id="insuranceProvider"
-            className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
-          >
-            <SelectValue placeholder="Select a provider" />
-          </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-            {UK_INSURANCE_PROVIDERS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <MobileSelectPicker
+          value={provider}
+          onValueChange={onProviderChange}
+          options={UK_INSURANCE_PROVIDERS}
+          placeholder="Select a provider"
+          triggerClassName={selectTriggerCn}
+        />
       </div>
 
       {showFields && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
           <div className="space-y-1.5">
-            <Label htmlFor="insurancePolicyNumber" className="text-white font-medium text-[13px]">
+            <Label htmlFor="insurancePolicyNumber" className={labelCn}>
               Policy number <span className="text-red-400">*</span>
             </Label>
             <Input
@@ -78,12 +65,12 @@ export function InsuranceDetailsForm({
               value={policyNumber}
               onChange={(e) => onPolicyNumberChange(e.target.value)}
               placeholder="Enter policy number"
-              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className={inputCn}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="insuranceCoverage" className="text-white font-medium text-[13px]">
+            <Label htmlFor="insuranceCoverage" className={labelCn}>
               Coverage amount (£)
             </Label>
             <Input
@@ -92,12 +79,12 @@ export function InsuranceDetailsForm({
               onChange={(e) => onCoverageChange(e.target.value)}
               placeholder="e.g., 1000000"
               inputMode="numeric"
-              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className={inputCn}
             />
           </div>
 
           <div className="md:col-span-2 space-y-1.5">
-            <Label htmlFor="insuranceExpiry" className="text-white font-medium text-[13px]">
+            <Label htmlFor="insuranceExpiry" className={labelCn}>
               Expiry date
             </Label>
             <Input
@@ -105,7 +92,7 @@ export function InsuranceDetailsForm({
               type="date"
               value={expiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className={inputCn}
             />
           </div>
         </div>

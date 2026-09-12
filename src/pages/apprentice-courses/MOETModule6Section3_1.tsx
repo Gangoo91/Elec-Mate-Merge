@@ -1,8 +1,38 @@
-import { ArrowLeft, FileText, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 3 · Subsection 1 — Recording Work Completed
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Recording Work Completed - MOET Module 6 Section 3.1';
@@ -254,117 +284,64 @@ const faqs = [
 ];
 
 const MOETModule6Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <FileText className="h-4 w-4" />
-            <span>Module 6.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Recording Work Completed
-          </h1>
-          <p className="text-white">
-            Logbooks, CMMS entries and asset history documentation for electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.3 · Subsection 1"
+        title="Recording Work Completed"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Logbooks, CMMS entries and asset history documentation for electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Logbooks:</strong> Chronological record of all maintenance activities on an
-                asset
-              </li>
-              <li className="pl-1">
-                <strong>CMMS:</strong> Computerised system for planning, tracking and recording
-                maintenance
-              </li>
-              <li className="pl-1">
-                <strong>Work orders:</strong> Planned, scheduled, in progress, completed, closed
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> BS 7671 Reg 132.13 requires maintained records
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Asset identification:</strong> Unique asset numbers and equipment tags
-              </li>
-              <li className="pl-1">
-                <strong>Fault records:</strong> Symptom, root cause, corrective action, parts used
-              </li>
-              <li className="pl-1">
-                <strong>Test results:</strong> Insulation resistance, continuity, RCD trip times
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to documentation and reporting KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Logbooks: chronological record of all maintenance activities on an asset.',
+              'CMMS: computerised system for planning, tracking and recording maintenance.',
+              'Work orders: planned, scheduled, in progress, completed, closed.',
+              'Compliance: BS 7671 Reg 132.13 requires maintained records.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and importance of accurate maintenance work recording',
               'Complete logbook entries with all required information fields',
               'Use CMMS systems to create, update and close work orders',
               'Record asset history data that supports future maintenance decisions',
               'Apply BS 7671 and ST1426 requirements for maintenance documentation',
               'Identify the consequences of poor or incomplete work recording',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Asset identification:</strong> Unique asset numbers and equipment tags.
+              </li>
+              <li>
+                <strong>Fault records:</strong> Symptom, root cause, corrective action, parts used.
+              </li>
+              <li>
+                <strong>Test results:</strong> Insulation resistance, continuity, RCD trip times.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to documentation and reporting KSBs.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Recording Work Matters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Why Recording Work Matters</ContentEyebrow>
+
+          <ConceptBlock title="Why Recording Work Matters">
             <p>
               Every maintenance task you complete generates information that has value far beyond
               the immediate job. Accurate, timely recording of completed work creates the
@@ -381,58 +358,50 @@ const MOETModule6Section3_1 = () => {
               are recorded each time, a clear deterioration trend becomes visible — enabling
               proactive intervention before a catastrophic failure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Value of Good Records
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety:</strong> Records of isolation, testing and commissioning protect
-                  both the technician and future workers on the same equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> When shifts change or technicians move on, records
-                  ensure knowledge is retained
-                </li>
-                <li className="pl-1">
-                  <strong>Compliance:</strong> EAWR 1989, BS 7671 and PUWER 1998 all require
-                  evidence of proper maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Cost control:</strong> Accurate records of parts used, time spent and
-                  recurring faults support budgeting and procurement
-                </li>
-                <li className="pl-1">
-                  <strong>Legal protection:</strong> In the event of an incident, records
-                  demonstrate that maintenance was carried out competently
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The Value of Good Records">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety:</strong> Records of isolation, testing and commissioning protect
+                both the technician and future workers on the same equipment.
+              </li>
+              <li>
+                <strong>Continuity:</strong> When shifts change or technicians move on, records
+                ensure knowledge is retained.
+              </li>
+              <li>
+                <strong>Compliance:</strong> EAWR 1989, BS 7671 and PUWER 1998 all require evidence
+                of proper maintenance.
+              </li>
+              <li>
+                <strong>Cost control:</strong> Accurate records of parts used, time spent and
+                recurring faults support budgeting and procurement.
+              </li>
+              <li>
+                <strong>Legal protection:</strong> In the event of an incident, records demonstrate
+                that maintenance was carried out competently.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Real-World Consequence</p>
-              <p className="text-sm text-white">
-                In HSE prosecutions following workplace electrical incidents, one of the first
-                documents requested is the maintenance record. Organisations that cannot produce
-                complete, accurate maintenance records face significantly harsher penalties. The
-                absence of records is treated as evidence that maintenance was not carried out —
-                even if it was. The legal principle is clear: if it is not recorded, it did not
-                happen.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Real-World Consequence">
+            <p>
+              In HSE prosecutions following workplace electrical incidents, one of the first
+              documents requested is the maintenance record. Organisations that cannot produce
+              complete, accurate maintenance records face significantly harsher penalties. The
+              absence of records is treated as evidence that maintenance was not carried out — even
+              if it was. The legal principle is clear: if it is not recorded, it did not happen.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Maintenance Logbooks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Maintenance Logbooks</ContentEyebrow>
+
+          <ConceptBlock title="Maintenance Logbooks">
             <p>
               A maintenance logbook is a chronological record of all maintenance activities carried
               out on an asset, system, or within a defined area (such as a switchroom or
@@ -440,103 +409,78 @@ const MOETModule6Section3_1 = () => {
               every intervention is recorded with sufficient detail for another competent person to
               understand what was done.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What to Record in a Logbook Entry
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Date and time:</strong> When the work was carried out (start and finish
-                  times for longer tasks)
-                </li>
-                <li className="pl-1">
-                  <strong>Asset identification:</strong> Unique asset number, equipment tag, or
-                  circuit reference
-                </li>
-                <li className="pl-1">
-                  <strong>Type of maintenance:</strong> Planned preventive, corrective, emergency,
-                  modification, or inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Description of work:</strong> Clear, factual account of what was done
-                </li>
-                <li className="pl-1">
-                  <strong>Findings:</strong> What was observed, including measurements, test results
-                  and condition assessments
-                </li>
-                <li className="pl-1">
-                  <strong>Parts and materials:</strong> Specific items used, including part numbers
-                  and quantities
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding actions:</strong> Any follow-up work required, with priority
-                  indication
-                </li>
-                <li className="pl-1">
-                  <strong>Technician identification:</strong> Name, signature, and
-                  employee/contractor number
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What to Record in a Logbook Entry">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date and time:</strong> When the work was carried out (start and finish
+                times for longer tasks).
+              </li>
+              <li>
+                <strong>Asset identification:</strong> Unique asset number, equipment tag, or
+                circuit reference.
+              </li>
+              <li>
+                <strong>Type of maintenance:</strong> Planned preventive, corrective, emergency,
+                modification, or inspection.
+              </li>
+              <li>
+                <strong>Description of work:</strong> Clear, factual account of what was done.
+              </li>
+              <li>
+                <strong>Findings:</strong> What was observed, including measurements, test results
+                and condition assessments.
+              </li>
+              <li>
+                <strong>Parts and materials:</strong> Specific items used, including part numbers
+                and quantities.
+              </li>
+              <li>
+                <strong>Outstanding actions:</strong> Any follow-up work required, with priority
+                indication.
+              </li>
+              <li>
+                <strong>Technician identification:</strong> Name, signature, and employee/contractor
+                number.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example Logbook Entry — Good vs Poor
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Poor Entry</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Good Entry</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Description</td>
-                      <td className="border border-white/10 px-3 py-2">"Checked motor. OK."</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "PM inspection on AHU-3 supply fan motor (Asset M-0147). IR test
-                        phase-to-earth: L1=185 MΩ, L2=192 MΩ, L3=178 MΩ at 500 V. Bearings — no
-                        excess vibration or noise. Terminal connections tight. Condition:
-                        satisfactory."
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Value</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No baseline, no evidence, no traceability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clear baseline readings, specific asset ID, enables trend comparison
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Example Logbook Entry — Good vs Poor"
+            headers={['Aspect', 'Poor Entry', 'Good Entry']}
+            rows={[
+              [
+                'Description',
+                '"Checked motor. OK."',
+                '"PM inspection on AHU-3 supply fan motor (Asset M-0147). IR test phase-to-earth: L1=185 MΩ, L2=192 MΩ, L3=178 MΩ at 500 V. Bearings — no excess vibration or noise. Terminal connections tight. Condition: satisfactory."',
+              ],
+              [
+                'Value',
+                'No baseline, no evidence, no traceability',
+                'Clear baseline readings, specific asset ID, enables trend comparison',
+              ],
+            ]}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Recording promptly">
+            <p>
               <strong>Key point:</strong> Logbook entries should be made as soon as practicable
               after completing the work. Waiting until the end of the shift or the following day
               leads to forgotten details and inaccurate records. If working in a clean area where
               paper is impractical, note key details on your phone or a pocket notebook and transfer
               them promptly.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CMMS Work Order Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>CMMS Work Order Management</ContentEyebrow>
+
+          <ConceptBlock title="CMMS Work Order Management">
             <p>
               A Computerised Maintenance Management System (CMMS) is the central platform for
               planning, scheduling, tracking and recording maintenance activities across an
@@ -544,424 +488,257 @@ const MOETModule6Section3_1 = () => {
               receiving work orders, updating task progress, recording findings, and closing
               completed jobs.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Work Order Lifecycle
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">01</span>
-                    <div>
-                      <p className="text-sm font-medium">Planned</p>
-                      <p className="text-sm text-white">
-                        Work identified and approved — resources, parts and procedures defined
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">02</span>
-                    <div>
-                      <p className="text-sm font-medium">Scheduled</p>
-                      <p className="text-sm text-white">
-                        Assigned to a specific date, shift, and technician
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">03</span>
-                    <div>
-                      <p className="text-sm font-medium">In Progress</p>
-                      <p className="text-sm text-white">
-                        Technician has started the work — status updated in real time
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">04</span>
-                    <div>
-                      <p className="text-sm font-medium">Completed</p>
-                      <p className="text-sm text-white">
-                        Work finished, findings recorded, awaiting supervisor review
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">05</span>
-                    <div>
-                      <p className="text-sm font-medium">Closed</p>
-                      <p className="text-sm text-white">
-                        Reviewed, approved and archived — becomes part of the asset history
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Work Order Lifecycle">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Planned.</strong> Work identified and approved — resources, parts and
+                procedures defined.
+              </li>
+              <li>
+                <strong>Scheduled.</strong> Assigned to a specific date, shift, and technician.
+              </li>
+              <li>
+                <strong>In Progress.</strong> Technician has started the work — status updated in
+                real time.
+              </li>
+              <li>
+                <strong>Completed.</strong> Work finished, findings recorded, awaiting supervisor
+                review.
+              </li>
+              <li>
+                <strong>Closed.</strong> Reviewed, approved and archived — becomes part of the asset
+                history.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common CMMS Platforms
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Platform</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Sector</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Features</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SAP PM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large industrial, manufacturing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enterprise integration, asset hierarchy, cost tracking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IBM Maximo</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Utilities, transport, healthcare
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Asset lifecycle management, spatial tracking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fiix / eMaint</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SMEs, facilities management
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cloud-based, mobile-friendly, quick deployment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Planon / Concept</td>
-                      <td className="border border-white/10 px-3 py-2">Commercial property, FM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrated workplace management, BIM integration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Common CMMS Platforms"
+            headers={['Platform', 'Typical Sector', 'Key Features']}
+            rows={[
+              [
+                'SAP PM',
+                'Large industrial, manufacturing',
+                'Enterprise integration, asset hierarchy, cost tracking',
+              ],
+              [
+                'IBM Maximo',
+                'Utilities, transport, healthcare',
+                'Asset lifecycle management, spatial tracking',
+              ],
+              [
+                'Fiix / eMaint',
+                'SMEs, facilities management',
+                'Cloud-based, mobile-friendly, quick deployment',
+              ],
+              [
+                'Planon / Concept',
+                'Commercial property, FM',
+                'Integrated workplace management, BIM integration',
+              ],
+            ]}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="The same principles, whatever the system">
+            <p>
               <strong>Tip:</strong> Regardless of which CMMS your employer uses, the principles of
               good work recording are the same. Focus on capturing complete, accurate information —
               the specific fields and screens will vary between systems, but the data requirements
               are universal.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Asset History and Trend Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Asset History and Trend Analysis</ContentEyebrow>
+
+          <ConceptBlock title="Asset History and Trend Analysis">
             <p>
               Every work order you complete and every logbook entry you make contributes to the
               asset's maintenance history. Over time, this history becomes the most valuable dataset
               in the maintenance management system. It reveals patterns, predicts failures, and
               informs decisions about repair, refurbishment, or replacement.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  What Asset History Reveals
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Recurring fault patterns indicating underlying issues</li>
-                  <li className="pl-1">Deterioration trends in test results over time</li>
-                  <li className="pl-1">
-                    Mean time between failures (MTBF) for reliability analysis
-                  </li>
-                  <li className="pl-1">
-                    Total cost of ownership to support replace-vs-repair decisions
-                  </li>
-                  <li className="pl-1">Effectiveness of preventive maintenance programmes</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Maintenance Examples
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Declining insulation resistance readings on a motor over 3 years
-                  </li>
-                  <li className="pl-1">
-                    Repeated contactor failures on a specific production line
-                  </li>
-                  <li className="pl-1">Increasing RCD trip times approaching the 300 ms limit</li>
-                  <li className="pl-1">
-                    Thermal imaging trend showing rising connection temperatures
-                  </li>
-                  <li className="pl-1">
-                    Transformer oil analysis showing progressive moisture ingress
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="What Asset History Reveals">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Recurring fault patterns indicating underlying issues.</li>
+              <li>Deterioration trends in test results over time.</li>
+              <li>Mean time between failures (MTBF) for reliability analysis.</li>
+              <li>Total cost of ownership to support replace-vs-repair decisions.</li>
+              <li>Effectiveness of preventive maintenance programmes.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Recording Test Results for Trend Analysis
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When recording electrical test results, always include the specific values — not
-                just pass/fail. A pass today might be a marginal result that indicates an asset
-                heading towards failure.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Record This</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Not Just This</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "IR L1-E: 45 MΩ at 500 V DC"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">"IR test: pass"</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD trip time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "30 mA RCD trip: 28 ms at I∆n"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">"RCD: OK"</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault loop impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Zs: 0.82 Ω (max permitted 1.09 Ω)"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">"Zs: satisfactory"</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <ConceptBlock title="Electrical Maintenance Examples">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Declining insulation resistance readings on a motor over 3 years.</li>
+              <li>Repeated contactor failures on a specific production line.</li>
+              <li>Increasing RCD trip times approaching the 300 ms limit.</li>
+              <li>Thermal imaging trend showing rising connection temperatures.</li>
+              <li>Transformer oil analysis showing progressive moisture ingress.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Recording Test Results for Trend Analysis">
+            <p>
+              When recording electrical test results, always include the specific values — not just
+              pass/fail. A pass today might be a marginal result that indicates an asset heading
+              towards failure.
+            </p>
+          </ConceptBlock>
+
+          <AppendixTable
+            caption="Recording Test Results for Trend Analysis"
+            headers={['Test', 'Record This', 'Not Just This']}
+            rows={[
+              ['Insulation resistance', '"IR L1-E: 45 MΩ at 500 V DC"', '"IR test: pass"'],
+              ['RCD trip time', '"30 mA RCD trip: 28 ms at I∆n"', '"RCD: OK"'],
+              [
+                'Earth fault loop impedance',
+                '"Zs: 0.82 Ω (max permitted 1.09 Ω)"',
+                '"Zs: satisfactory"',
+              ],
+            ]}
+          />
+
+          <ConceptBlock title="Supporting your EPA evidence">
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard specifically
               requires you to demonstrate the ability to record maintenance activities accurately
               and use records to support maintenance planning. Your ability to create clear, useful
               asset history records directly supports your EPA evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Regulatory Requirements and Best Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Regulatory Requirements and Best Practice</ContentEyebrow>
+
+          <ConceptBlock title="Regulatory Requirements and Best Practice">
             <p>
               Maintenance recording is not optional — it is a statutory and regulatory requirement
               underpinned by multiple pieces of legislation and industry standards. Understanding
               these requirements ensures your records meet the standard expected during audits,
               inspections, and investigations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Regulation / Standard
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recording Requirement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        EAWR 1989 Reg 4(2)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Systems must be maintained to prevent danger — records demonstrate
-                        compliance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        BS 7671 Reg 132.13
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Records including diagrams shall be maintained and updated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        PUWER 1998 Reg 5
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work equipment must be maintained — maintenance log to be kept up to date
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        HASAWA 1974 s.2
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General duty to ensure safe systems of work — records provide evidence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">ST1426</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technicians must accurately record and report maintenance activities
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <AppendixTable
+            caption="Regulatory Requirements and Best Practice"
+            headers={['Regulation / Standard', 'Recording Requirement']}
+            rows={[
+              [
+                'EAWR 1989 Reg 4(2)',
+                'Systems must be maintained to prevent danger — records demonstrate compliance',
+              ],
+              ['BS 7671 Reg 132.13', 'Records including diagrams shall be maintained and updated'],
+              [
+                'PUWER 1998 Reg 5',
+                'Work equipment must be maintained — maintenance log to be kept up to date',
+              ],
+              [
+                'HASAWA 1974 s.2',
+                'General duty to ensure safe systems of work — records provide evidence',
+              ],
+              ['ST1426', 'Technicians must accurately record and report maintenance activities'],
+            ]}
+          />
+
+          <ConceptBlock title="Best Practice Summary">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Record promptly:</strong> Complete records as soon as practicable after the
+                work.
+              </li>
+              <li>
+                <strong>Be specific:</strong> Use asset numbers, measurements, and precise
+                descriptions.
+              </li>
+              <li>
+                <strong>Be honest:</strong> Record what you actually found and did — never embellish
+                or falsify.
+              </li>
+              <li>
+                <strong>Include negatives:</strong> Record findings even when no defect was found —
+                this is still valuable data.
+              </li>
+              <li>
+                <strong>Flag follow-ups:</strong> Clearly identify any outstanding actions with
+                priority and recommended timescale.
+              </li>
+              <li>
+                <strong>Use the system:</strong> Enter data into the CMMS rather than relying on
+                personal notes.
+              </li>
+              <li>
+                <strong>Sign your work:</strong> Take ownership of your records with clear
+                identification.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Work order lifecycle: Planned — work identified and approved.',
+              'Scheduled — assigned date, time and technician.',
+              'In Progress — work underway.',
+              'Completed — work done, awaiting review.',
+              'Closed — reviewed, approved, archived.',
+              'EAWR 1989 — Reg 4(2) maintenance duty.',
+              'BS 7671 — Reg 132.13 record keeping.',
+              'PUWER 1998 — Reg 5 maintenance records.',
+              'HASAWA 1974 — s.2 general duty.',
+              'ST1426 — Documentation and reporting KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Maintenance records and reporting
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Fault Reports and Corrective Actions
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Best Practice Summary</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Record promptly:</strong> Complete records as soon as practicable after
-                  the work
-                </li>
-                <li className="pl-1">
-                  <strong>Be specific:</strong> Use asset numbers, measurements, and precise
-                  descriptions
-                </li>
-                <li className="pl-1">
-                  <strong>Be honest:</strong> Record what you actually found and did — never
-                  embellish or falsify
-                </li>
-                <li className="pl-1">
-                  <strong>Include negatives:</strong> Record findings even when no defect was found
-                  — this is still valuable data
-                </li>
-                <li className="pl-1">
-                  <strong>Flag follow-ups:</strong> Clearly identify any outstanding actions with
-                  priority and recommended timescale
-                </li>
-                <li className="pl-1">
-                  <strong>Use the system:</strong> Enter data into the CMMS rather than relying on
-                  personal notes
-                </li>
-                <li className="pl-1">
-                  <strong>Sign your work:</strong> Take ownership of your records with clear
-                  identification
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Work Order Lifecycle</p>
-                <ul className="space-y-0.5">
-                  <li>1. Planned — work identified and approved</li>
-                  <li>2. Scheduled — assigned date, time and technician</li>
-                  <li>3. In Progress — work underway</li>
-                  <li>4. Completed — work done, awaiting review</li>
-                  <li>5. Closed — reviewed, approved, archived</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>EAWR 1989 — Reg 4(2) maintenance duty</li>
-                  <li>BS 7671 — Reg 132.13 record keeping</li>
-                  <li>PUWER 1998 — Reg 5 maintenance records</li>
-                  <li>HASAWA 1974 — s.2 general duty</li>
-                  <li>ST1426 — Documentation and reporting KSBs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-2">
-              Next: Fault Reports
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

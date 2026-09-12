@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.4 · Subsection 2 — Electricity at Work Regulations 1989
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Health and safety regulations – key features and impact on role."
+ *              · "Electrical. Electrical isolation and deisolation
+ *                 requirements: lockout tagout and testing for dead."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Content preserved from the original page; structure, shell and reading
+ * measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electricity at Work Regulations 1989 - MOET Module 1 Section 4.2';
@@ -86,12 +126,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How many regulations are contained in the Electricity at Work Regulations 1989?',
-    options: [
-      '47 regulations',
-      '16 regulations',
-      '25 regulations',
-      '33 regulations',
-    ],
+    options: ['47 regulations', '16 regulations', '25 regulations', '33 regulations'],
     correctAnswer: 3,
     explanation:
       'The EAWR 1989 contain 33 regulations. Regulations 1–3 cover citation, interpretation, and persons on whom duties are imposed. Regulations 4–16 contain the substantive safety requirements. Regulations 17–28 were revoked (they related to mines). Regulations 29–33 contain the defence of due diligence and other miscellaneous provisions.',
@@ -263,118 +298,64 @@ const faqs = [
 ];
 
 const MOETModule1Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electricity at Work Regulations 1989
-          </h1>
-          <p className="text-white">
-            The principal regulations governing electrical safety in the workplace
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.4 · Subsection 2"
+        title="Electricity at Work Regulations 1989"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            The principal regulations governing electrical safety in the workplace.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EAWR:</strong> 33 regulations — criminal law, made under HSWA 1974
-              </li>
-              <li className="pl-1">
-                <strong>Reg 4:</strong> Systems must prevent danger — construction, maintenance,
-                work
-              </li>
-              <li className="pl-1">
-                <strong>Regs 12–14:</strong> Dead working preferred; live working only with triple
-                justification
-              </li>
-              <li className="pl-1">
-                <strong>Reg 16:</strong> Competence — technical knowledge, experience, or
-                supervision
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'EAWR: 33 regulations — criminal law, made under HSWA 1974',
+              'Reg 4: Systems must prevent danger — construction, maintenance, work',
+              'Regs 12–14: Dead working preferred; live working only with triple justification',
+              'Reg 16: Competence — technical knowledge, experience, or supervision',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical Maintenance Context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Reg 4(2):</strong> Duty to maintain systems — your core function
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Reg 13:</strong> Precautions for dead working (isolate, lock, prove dead)
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Reg 15:</strong> Adequate working space, access, lighting
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> EAWR knowledge is a core regulatory requirement
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the structure and scope of the EAWR 1989 (33 regulations)',
               'Distinguish between absolute duties and SFARP-qualified duties',
               'Describe the requirements of Regulation 4 (systems, maintenance, work activities)',
               'Apply Regulations 12, 13 and 14 to dead working and live working decisions',
               'Explain the competence requirements of Regulation 16',
               'Understand the defence of due diligence under Regulation 29',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Overview and structure</ContentEyebrow>
 
-        {/* Section 01: Overview and Structure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Overview and Structure of the EAWR 1989
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Overview and Structure of the EAWR 1989">
             <p>
               The Electricity at Work Regulations 1989 (EAWR) are the principal statutory instrument
               governing electrical safety in the workplace. They were made under Section 15 of the
@@ -388,83 +369,75 @@ const MOETModule1Section4_2 = () => {
               complied with regardless of cost. This reflects the severity of the dangers posed by
               electricity: contact with conductors at mains voltage (230 V) can be instantly fatal.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Structure of the 33 Regulations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulations 1–3:</strong> Citation and commencement, interpretation
-                  (definitions), persons on whom duties are imposed
-                </li>
-                <li className="pl-1">
-                  <strong>Regulations 4–16:</strong> The substantive safety requirements — systems,
-                  equipment strength, adverse conditions, insulation, earthing, connections, excess
-                  current protection, switching off, isolation, dead working precautions, live
-                  working, working space, and competence
-                </li>
-                <li className="pl-1">
-                  <strong>Regulations 17–28:</strong> Originally applied to mines — now revoked and
-                  replaced by the Electricity at Work Regulations 1989 (Mines) Regulations
-                </li>
-                <li className="pl-1">
-                  <strong>Regulations 29–33:</strong> Defence of due diligence, exemption
-                  certificates, extension outside Great Britain, disapplication of duties, and
-                  revocations
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Structure of the 33 Regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Regulations 1–3:</strong> Citation and commencement, interpretation
+                (definitions), persons on whom duties are imposed
+              </li>
+              <li>
+                <strong>Regulations 4–16:</strong> The substantive safety requirements — systems,
+                equipment strength, adverse conditions, insulation, earthing, connections, excess
+                current protection, switching off, isolation, dead working precautions, live
+                working, working space, and competence
+              </li>
+              <li>
+                <strong>Regulations 17–28:</strong> Originally applied to mines — now revoked and
+                replaced by the Electricity at Work Regulations 1989 (Mines) Regulations
+              </li>
+              <li>
+                <strong>Regulations 29–33:</strong> Defence of due diligence, exemption
+                certificates, extension outside Great Britain, disapplication of duties, and
+                revocations
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Definitions (Regulation 2)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>"Danger"</strong> — risk of injury from electric shock, burn, explosion,
-                  arcing, or fire or explosion initiated by electrical energy
-                </li>
-                <li className="pl-1">
-                  <strong>"Electrical equipment"</strong> — anything used, intended to be used, or
-                  installed for use to generate, provide, transmit, transform, rectify, convert,
-                  conduct, distribute, control, store, measure or use electrical energy
-                </li>
-                <li className="pl-1">
-                  <strong>"System"</strong> — an electrical system in which all the electrical
-                  equipment is, or may be, electrically connected to a common source of electrical
-                  energy
-                </li>
-                <li className="pl-1">
-                  <strong>"Circuit conductor"</strong> — any conductor in a system which is intended
-                  to carry electric current in normal conditions
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key Definitions (Regulation 2)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>&quot;Danger&quot;</strong> — risk of injury from electric shock, burn,
+                explosion, arcing, or fire or explosion initiated by electrical energy
+              </li>
+              <li>
+                <strong>&quot;Electrical equipment&quot;</strong> — anything used, intended to be
+                used, or installed for use to generate, provide, transmit, transform, rectify,
+                convert, conduct, distribute, control, store, measure or use electrical energy
+              </li>
+              <li>
+                <strong>&quot;System&quot;</strong> — an electrical system in which all the
+                electrical equipment is, or may be, electrically connected to a common source of
+                electrical energy
+              </li>
+              <li>
+                <strong>&quot;Circuit conductor&quot;</strong> — any conductor in a system which is
+                intended to carry electric current in normal conditions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Criminal Law — Not Advisory</p>
-              <p className="text-sm text-white">
-                The EAWR 1989 are criminal law regulations. Breach is a criminal offence prosecuted
-                by the HSE in the magistrates' court or Crown Court. They are not advisory, not
-                guidance, and not optional. Unlike BS 7671 (which is a British Standard), the EAWR
-                have the full force of law. A maintenance technician who works on a live conductor
-                without meeting the conditions of Regulation 14 is committing a criminal offence —
-                regardless of whether an injury occurs.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Criminal Law — Not Advisory">
+            <p>
+              The EAWR 1989 are criminal law regulations. Breach is a criminal offence prosecuted by
+              the HSE in the magistrates&apos; court or Crown Court. They are not advisory, not
+              guidance, and not optional. Unlike BS 7671 (which is a British Standard), the EAWR
+              have the full force of law. A maintenance technician who works on a live conductor
+              without meeting the conditions of Regulation 14 is committing a criminal offence —
+              regardless of whether an injury occurs.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Regulation 4 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Regulation 4 — Systems, Maintenance, Work Activities and Protective Equipment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>
+            Regulation 4 — systems, maintenance, work activities and protective equipment
+          </ContentEyebrow>
+
+          <ConceptBlock title="Regulation 4 — Systems, Maintenance, Work Activities and Protective Equipment">
             <p>
               Regulation 4 is the most wide-ranging regulation in the EAWR and is central to
               electrical maintenance. It contains four sub-regulations, each imposing duties
@@ -472,192 +445,177 @@ const MOETModule1Section4_2 = () => {
               Regulation 4(2) — the duty to maintain — is of particular significance because it
               defines the legal basis for your work.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 4(1) — Construction
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "All systems shall at all times be of such construction as to prevent,{' '}
-                  <strong>so far as is reasonably practicable</strong>, danger."
-                </p>
-                <p className="text-sm text-white">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(1)"
+            clause="All systems shall at all times be of such construction as to prevent, so far as is reasonably practicable, danger."
+            meaning={
+              <>
+                <p>
                   This requires electrical systems to be designed and built to a standard that
                   prevents danger. It applies to the original construction and to any modifications.
                   For maintenance technicians, this means any alterations or additions you make to
                   an existing system must maintain the level of safety of the original construction
                   — or improve upon it.
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 4(1)"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 4(2) — Maintenance
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "As may be necessary to prevent danger, all systems shall be maintained so as to
-                  prevent, <strong>so far as is reasonably practicable</strong>, danger."
-                </p>
-                <p className="text-sm text-white mb-3">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(2)"
+            clause="As may be necessary to prevent danger, all systems shall be maintained so as to prevent, so far as is reasonably practicable, danger."
+            meaning={
+              <>
+                <p>
                   This is the legal foundation of electrical maintenance. It requires that systems
                   are kept in a condition that prevents danger through appropriate maintenance
                   activities.
                 </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Applies to all electrical systems at all voltages</li>
-                  <li className="pl-1">
+                <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                  <li>Applies to all electrical systems at all voltages</li>
+                  <li>
                     Does not prescribe specific maintenance intervals — the duty holder must
-                    determine what is "necessary to prevent danger"
+                    determine what is &quot;necessary to prevent danger&quot;
                   </li>
-                  <li className="pl-1">Includes inspection, testing, repair, and replacement</li>
-                  <li className="pl-1">
-                    The HSE memorandum of guidance states that records of maintenance are "an
-                    important tool" though not specifically required by the regulation itself
+                  <li>Includes inspection, testing, repair, and replacement</li>
+                  <li>
+                    The HSE memorandum of guidance states that records of maintenance are &quot;an
+                    important tool&quot; though not specifically required by the regulation itself
                   </li>
-                  <li className="pl-1">
+                  <li>
                     Failure to maintain a system that subsequently causes injury is a criminal
                     offence
                   </li>
                 </ul>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 4(2)"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 4(3) — Work Activities
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Every work activity, including operation, use and maintenance of a system and
-                  work near a system, shall be carried out in such a manner as not to give rise,{' '}
-                  <strong>so far as is reasonably practicable</strong>, to danger."
-                </p>
-                <p className="text-sm text-white">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(3)"
+            clause="Every work activity, including operation, use and maintenance of a system and work near a system, shall be carried out in such a manner as not to give rise, so far as is reasonably practicable, to danger."
+            meaning={
+              <>
+                <p>
                   This regulation governs how work is carried out. It requires safe systems of work
                   — which is the legal basis for permit to work systems, safe isolation procedures,
                   and method statements. It applies to maintenance work, operational switching, and
                   any activity near an electrical system.
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 4(3)"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 4(4) — Protective Equipment
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Any equipment provided under these Regulations for the purpose of protecting
-                  persons at work on or near electrical equipment shall be suitable for the use for
-                  which it is provided, be maintained in a condition suitable for that use, and be
-                  properly used."
-                </p>
-                <p className="text-sm text-white">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(4)"
+            clause="Any equipment provided under these Regulations for the purpose of protecting persons at work on or near electrical equipment shall be suitable for the use for which it is provided, be maintained in a condition suitable for that use, and be properly used."
+            meaning={
+              <>
+                <p>
                   This covers all protective equipment — insulated tools, voltage indicators,
                   lock-off devices, insulating mats, arc flash PPE, and barriers. The equipment must
                   be suitable, maintained, and properly used. Using a GS38 non-compliant voltage
                   indicator, or using insulated tools with damaged insulation, breaches Regulation
                   4(4).
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 4(4)"
+          />
+
+          <ConceptBlock title="Other Key Regulations (5–11)">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Reg</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Subject</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key Requirement</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Duty Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">5</td>
+                    <td className="border border-white/10 px-3 py-2">Strength and capability</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Equipment must not be used where its ratings may be exceeded
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Absolute</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">6</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Adverse/hazardous environments
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Equipment must be protected against weather, temperature, contamination
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">SFARP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">7</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Insulation, protection, placing
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Conductors must be insulated, protected or placed to prevent danger
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">SFARP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">8</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Earthing / other precautions
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Precautions to prevent danger from exposed metalwork becoming live
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">SFARP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">9</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Integrity of referenced conductors
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Earth and neutral conductors must be reliable
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Absolute</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">10</td>
+                    <td className="border border-white/10 px-3 py-2">Connections</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      All joints and connections must be mechanically and electrically suitable
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Absolute</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">11</td>
+                    <td className="border border-white/10 px-3 py-2">Excess current protection</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Efficient means of protecting from excess current
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">SFARP</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Other Key Regulations (5–11)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Reg</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Subject</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Strength and capability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment must not be used where its ratings may be exceeded
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Absolute</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adverse/hazardous environments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment must be protected against weather, temperature, contamination
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SFARP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation, protection, placing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Conductors must be insulated, protected or placed to prevent danger
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SFARP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earthing / other precautions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Precautions to prevent danger from exposed metalwork becoming live
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SFARP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrity of referenced conductors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth and neutral conductors must be reliable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Absolute</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                      <td className="border border-white/10 px-3 py-2">Connections</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All joints and connections must be mechanically and electrically suitable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Absolute</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excess current protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Efficient means of protecting from excess current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SFARP</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: Dead Working and Live Working */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Dead Working (Regs 12–13) and Live Working (Reg 14)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Dead working (Regs 12–13) and live working (Reg 14)</ContentEyebrow>
+
+          <ConceptBlock title="Dead Working (Regs 12–13) and Live Working (Reg 14)">
             <p>
               Regulations 12, 13 and 14 form the critical decision framework for electrical
               maintenance work. They establish the fundamental principle that{' '}
@@ -665,506 +623,430 @@ const MOETModule1Section4_2 = () => {
               permitted only when strict conditions are met. This is the most important set of
               regulations for any maintenance technician to understand.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 12 — Working Dead
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Where work is to be done on or near electrical equipment which is or has been
-                  live, the equipment must be made dead before the work proceeds — unless it is
-                  unreasonable in all the circumstances for it to be dead."
-                </p>
-                <p className="text-sm text-white">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 12"
+            clause="Where work is to be done on or near electrical equipment which is or has been live, the equipment must be made dead before the work proceeds — unless it is unreasonable in all the circumstances for it to be dead."
+            meaning={
+              <>
+                <p>
                   This establishes the legal presumption: work shall be carried out on dead
                   equipment. The equipment must be disconnected from every source of electrical
                   energy. Simply switching off is not sufficient — the circuit must be isolated and
-                  proved dead. The phrase "or has been live" is important: it covers stored energy
-                  in capacitors, batteries, and induced voltages.
+                  proved dead. The phrase &quot;or has been live&quot; is important: it covers
+                  stored energy in capacitors, batteries, and induced voltages.
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 12"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 13 — Precautions for Dead Working
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Adequate precautions shall be taken to prevent electrical equipment, which has
-                  been made dead in order to prevent danger while work is carried out on or near
-                  that equipment, from becoming live during that work."
-                </p>
-                <p className="text-sm text-white mb-3">
-                  HSG85 interprets "adequate precautions" as the following sequence:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 13"
+            clause="Adequate precautions shall be taken to prevent electrical equipment, which has been made dead in order to prevent danger while work is carried out on or near that equipment, from becoming live during that work."
+            meaning={
+              <>
+                <p>HSG85 interprets &quot;adequate precautions&quot; as the following sequence:</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Step 1 — Identify:</strong> Identify the circuit to be worked on from
                     drawings, labels, and tracing
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Step 2 — Isolate:</strong> Disconnect from all points of supply using a
                     suitable means of isolation (not a plug or fuse alone)
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Step 3 — Secure:</strong> Lock off the isolation device using a unique
                     lock, apply warning labels. Use a multi-lock hasp where multiple persons need
                     protection
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Step 4 — Prove dead:</strong> Use an approved voltage indicator (GS38
                     compliant), test the indicator on a known live source (proving unit) before and
                     after use, then test between all conductors and between each conductor and earth
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Step 5 — Earth (where necessary):</strong> Apply temporary earths for HV
                     systems, long cable runs, or where there is a risk of induced voltages or stored
                     charge
                   </li>
                 </ul>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 13"
+          />
 
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">
-                  Regulation 14 — Live Working
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Live working is only permitted when <strong>all three conditions</strong> are
-                  simultaneously satisfied:
-                </p>
-                <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Condition 1 — Unreasonable to make dead:</strong> It must be
-                    unreasonable in all the circumstances for the conductor to be dead. Mere
-                    inconvenience is not sufficient — there must be a genuine technical or
-                    operational reason why the circuit cannot be isolated (e.g., diagnostic
-                    fault-finding requiring measurement of live parameters, or maintaining
-                    continuous supply to life safety systems)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Condition 2 — Reasonable to work live:</strong> It must be reasonable in
-                    all the circumstances for the person to work on or near the live conductor. The
-                    risk assessment must demonstrate that the work can be done safely while live —
-                    the task complexity, the voltages involved, and the working conditions must all
-                    be considered
-                  </li>
-                  <li className="pl-1">
-                    <strong>Condition 3 — Suitable precautions:</strong> Suitable precautions
-                    (including, where necessary, the provision of suitable protective equipment)
-                    must be taken to prevent injury. This includes insulated tools, barriers, arc
-                    flash PPE, accompaniment, insulating mats, and restricted access
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When Is It "Unreasonable" to Make Dead?
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Diagnostic measurements requiring the circuit to be energised
-                  </li>
-                  <li className="pl-1">Testing protection devices under load conditions</li>
-                  <li className="pl-1">
-                    Maintaining supply to critical life safety systems where no alternative supply
-                    exists
-                  </li>
-                  <li className="pl-1">Verifying correct phase rotation on a live supply</li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  Note: Customer inconvenience, loss of production, or cost of overtime are
-                  generally NOT sufficient justification. The test is "unreasonable in all the
-                  circumstances" — a high threshold.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When Is It NOT Reasonable?
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Connecting or disconnecting conductors in live switchgear
-                  </li>
-                  <li className="pl-1">Any work that involves breaking the insulation envelope</li>
-                  <li className="pl-1">
-                    Work in confined spaces where escape from an arc flash is impossible
-                  </li>
-                  <li className="pl-1">
-                    Work by persons without adequate training and competence for live working
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The burden of proof lies with the person who decided to
-              work live. If an incident occurs during live working, the prosecution does not need to
-              prove that dead working was possible — the defendant must prove that all three
-              conditions of Regulation 14 were met.
+          <ConceptBlock
+            title="Regulation 14 — Live Working"
+            onSite="Key point: the burden of proof lies with the person who decided to work live. If an incident occurs during live working, the prosecution does not need to prove that dead working was possible — the defendant must prove that all three conditions of Regulation 14 were met."
+          >
+            <p>
+              Live working is only permitted when <strong>all three conditions</strong> are
+              simultaneously satisfied:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Condition 1 — Unreasonable to make dead:</strong> It must be unreasonable in
+                all the circumstances for the conductor to be dead. Mere inconvenience is not
+                sufficient — there must be a genuine technical or operational reason why the circuit
+                cannot be isolated (e.g., diagnostic fault-finding requiring measurement of live
+                parameters, or maintaining continuous supply to life safety systems)
+              </li>
+              <li>
+                <strong>Condition 2 — Reasonable to work live:</strong> It must be reasonable in all
+                the circumstances for the person to work on or near the live conductor. The risk
+                assessment must demonstrate that the work can be done safely while live — the task
+                complexity, the voltages involved, and the working conditions must all be considered
+              </li>
+              <li>
+                <strong>Condition 3 — Suitable precautions:</strong> Suitable precautions
+                (including, where necessary, the provision of suitable protective equipment) must be
+                taken to prevent injury. This includes insulated tools, barriers, arc flash PPE,
+                accompaniment, insulating mats, and restricted access
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title='When is it "unreasonable" to make dead?'>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Diagnostic measurements requiring the circuit to be energised</li>
+              <li>Testing protection devices under load conditions</li>
+              <li>
+                Maintaining supply to critical life safety systems where no alternative supply
+                exists
+              </li>
+              <li>Verifying correct phase rotation on a live supply</li>
+            </ul>
+            <p>
+              Note: Customer inconvenience, loss of production, or cost of overtime are generally
+              NOT sufficient justification. The test is &quot;unreasonable in all the
+              circumstances&quot; — a high threshold.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04: Competence, Working Space, and Due Diligence */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Competence (Reg 16), Working Space (Reg 15) and Due Diligence (Reg 29)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="When is it NOT reasonable?">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Connecting or disconnecting conductors in live switchgear</li>
+              <li>Any work that involves breaking the insulation envelope</li>
+              <li>Work in confined spaces where escape from an arc flash is impossible</li>
+              <li>Work by persons without adequate training and competence for live working</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>
+            Competence (Reg 16), working space (Reg 15) and due diligence (Reg 29)
+          </ContentEyebrow>
+
+          <ConceptBlock title="Competence (Reg 16), Working Space (Reg 15) and Due Diligence (Reg 29)">
             <p>
               Regulations 15, 16 and 29 address three critical aspects of safe electrical work: the
               physical environment, the competence of the person, and the legal defence available
               when absolute duties cannot be met. Together with Regulations 12–14, they complete the
               framework for safe electrical maintenance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 15 — Working Space, Access and Lighting
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "For the purposes of enabling injury to be prevented, adequate working space,
-                  adequate means of access, and adequate lighting shall be provided at all
-                  electrical equipment on which or near which work is being done in circumstances
-                  which may give rise to danger."
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 15"
+            clause="For the purposes of enabling injury to be prevented, adequate working space, adequate means of access, and adequate lighting shall be provided at all electrical equipment on which or near which work is being done in circumstances which may give rise to danger."
+            meaning={
+              <>
+                <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                  <li>
                     Working space must allow safe access, escape in an emergency, and room to use
                     tools safely
                   </li>
-                  <li className="pl-1">
+                  <li>
                     Switchrooms must not be used as storage areas — clear access to all equipment
                     must be maintained
                   </li>
-                  <li className="pl-1">
+                  <li>
                     Lighting must be sufficient to see labels, conductors, and terminations clearly
                     — temporary task lighting may be necessary
                   </li>
-                  <li className="pl-1">
+                  <li>
                     Access routes must allow safe evacuation in the event of an arc flash or other
                     incident
                   </li>
                 </ul>
-                <p className="text-sm text-white mt-2">
+                <p>
                   A common breach: switchrooms filled with boxes, stored materials, or cleaning
                   equipment blocking access to distribution boards. Report this immediately — it
                   breaches Regulation 15.
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 15"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 16 — Competence
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "No person shall be engaged in any work activity where technical knowledge or
-                  experience is necessary to prevent danger or, where appropriate, injury, unless he
-                  possesses such knowledge or experience, or is under such degree of supervision as
-                  may be appropriate having regard to the nature of the work."
-                </p>
-                <p className="text-sm text-white mb-3">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 16"
+            clause="No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience, or is under such degree of supervision as may be appropriate having regard to the nature of the work."
+            meaning={
+              <>
+                <p>
                   Regulation 16 does not mandate specific qualifications, memberships, or card
                   schemes. It requires a combination of:
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>
                     <strong>Technical knowledge:</strong> Understanding of electrical principles,
                     the specific installation, the hazards involved, and the precautions required
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Experience:</strong> Practical hands-on experience of the type of work
                     being carried out
                   </li>
-                  <li className="pl-1">
+                  <li>
                     <strong>Supervision:</strong> Where knowledge or experience is lacking (e.g.,
                     apprentices), appropriate supervision must be provided to make up the deficit
                   </li>
                 </ul>
-                <p className="text-sm text-elec-yellow/70 mt-3">
+                <p>
                   <strong>For apprentices:</strong> You are not yet fully competent under Regulation
                   16. Your employer must provide appropriate supervision — the level of supervision
                   should reduce as your knowledge and experience increase. You must never work
                   unsupervised on tasks beyond your current level of competence.
                 </p>
-              </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 16"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 29 — Defence of Due Diligence
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "In any proceedings for an offence consisting of a contravention of regulations
-                  4(4), 5, 8, 9, 10, 11, 12, 13, 14, 15 or 16, it shall be a defence for any person
-                  to prove that he took all reasonable steps and exercised all due diligence to
-                  avoid the commission of that offence."
-                </p>
-                <p className="text-sm text-white mb-3">
+          <RegsCallout
+            source="EAWR 1989 — Regulation 29"
+            clause="In any proceedings for an offence consisting of a contravention of regulations 4(4), 5, 8, 9, 10, 11, 12, 13, 14, 15 or 16, it shall be a defence for any person to prove that he took all reasonable steps and exercised all due diligence to avoid the commission of that offence."
+            meaning={
+              <>
+                <p>
                   This defence is necessary because many EAWR regulations impose absolute duties.
                   Without Regulation 29, a person could be convicted even if they took every
                   reasonable precaution. The defence requires proof that:
                 </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">All reasonable steps were taken to comply</li>
-                  <li className="pl-1">
+                <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                  <li>All reasonable steps were taken to comply</li>
+                  <li>
                     All due diligence was exercised — genuine effort, not merely going through the
                     motions
                   </li>
-                  <li className="pl-1">
-                    The burden of proof is on the defendant, on the balance of probabilities
-                  </li>
+                  <li>The burden of proof is on the defendant, on the balance of probabilities</li>
                 </ul>
-              </div>
-            </div>
+              </>
+            }
+            cite="Reference: Electricity at Work Regulations 1989, Regulation 29"
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Relationship to the HSWA 1974
-              </p>
-              <p className="text-sm text-white">
-                The EAWR 1989 sit beneath the HSWA 1974 in the legislative hierarchy. The general
-                duties of the HSWA (Sections 2–8) continue to apply alongside the specific
-                requirements of the EAWR. Where the EAWR impose a more specific requirement (e.g.,
-                Regulation 14 on live working), compliance with the EAWR will normally satisfy the
-                corresponding HSWA duty. However, the reverse is not true — compliance with the
-                general HSWA duties does not automatically satisfy the specific EAWR requirements.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 note:</strong> The EAWR 1989 are the most directly relevant statutory
-              regulations for your role as a maintenance technician. Your End Point Assessment will
-              expect you to demonstrate knowledge of the key regulations (especially 4, 12, 13, 14,
-              15 and 16) and how they apply to your daily work.
+          <ConceptBlock title="Relationship to the HSWA 1974">
+            <p>
+              The EAWR 1989 sit beneath the HSWA 1974 in the legislative hierarchy. The general
+              duties of the HSWA (Sections 2–8) continue to apply alongside the specific
+              requirements of the EAWR. Where the EAWR impose a more specific requirement (e.g.,
+              Regulation 14 on live working), compliance with the EAWR will normally satisfy the
+              corresponding HSWA duty. However, the reverse is not true — compliance with the
+              general HSWA duties does not automatically satisfy the specific EAWR requirements.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Relevance to your ST1426 assessment">
+            <p>
+              <em>
+                The EAWR 1989 are the most directly relevant statutory regulations for your role as
+                a maintenance technician. Your End Point Assessment will expect you to demonstrate
+                knowledge of the key regulations (especially 4, 12, 13, 14, 15 and 16) and how they
+                apply to your daily work.
+              </em>
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05: Practical Application */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Application for Maintenance Technicians
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Practical application for maintenance technicians</ContentEyebrow>
+
+          <ConceptBlock title="Practical Application for Maintenance Technicians">
             <p>
               The EAWR 1989 are not abstract legal requirements — they govern every task you carry
               out as a maintenance technician. Understanding how each regulation applies in practice
               will help you work safely and demonstrate compliance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Daily Application of Key Regulations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Task
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Regulations
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Practical Requirements
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replacing a contactor in a motor starter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">4(2), 12, 13, 16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolate, lock off, prove dead, competent person
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic inspection and testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">4(2), 4(4), 14, 15, 16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calibrated instruments, live testing precautions, adequate space
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal imaging survey</td>
-                      <td className="border border-white/10 px-3 py-2">4(3), 14, 15, 16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Live working justified (requires loaded circuits), precautions, competence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency lighting battery replacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">4(2), 5, 10, 12, 13</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolate circuit, correct battery type (Reg 5), secure connections (Reg 10)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault-finding on a motor drive
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">4(3), 12/14, 15, 16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dead first, live only if diagnostic need; stored energy from DC bus
-                        capacitors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Daily Application of Key Regulations">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Maintenance Task</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key Regulations</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Practical Requirements
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Replacing a contactor in a motor starter
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">4(2), 12, 13, 16</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Isolate, lock off, prove dead, competent person
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Periodic inspection and testing
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">4(2), 4(4), 14, 15, 16</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Calibrated instruments, live testing precautions, adequate space
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Thermal imaging survey</td>
+                    <td className="border border-white/10 px-3 py-2">4(3), 14, 15, 16</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Live working justified (requires loaded circuits), precautions, competence
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Emergency lighting battery replacement
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">4(2), 5, 10, 12, 13</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Isolate circuit, correct battery type (Reg 5), secure connections (Reg 10)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fault-finding on a motor drive
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">4(3), 12/14, 15, 16</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Dead first, live only if diagnostic need; stored energy from DC bus capacitors
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Compliance Failures
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Working live "because it's quicker" — not a valid Reg 14 justification
-                  </li>
-                  <li className="pl-1">Using a non-GS38-compliant multimeter to prove dead</li>
-                  <li className="pl-1">
-                    Failing to lock off — relying on someone "watching" the isolator
-                  </li>
-                  <li className="pl-1">
-                    Not testing the voltage indicator before and after proving dead
-                  </li>
-                  <li className="pl-1">Switchrooms used as storage — Regulation 15 breach</li>
-                  <li className="pl-1">
-                    Unsupervised apprentices carrying out isolation — Regulation 16 breach
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Records and Documentation
-                </h3>
-                <p className="text-sm text-white">
-                  The EAWR 1989 do not specifically require records to be kept. However, the HSE
-                  memorandum of guidance strongly recommends maintaining records of: maintenance
-                  activities (Reg 4(2)), competence assessments (Reg 16), live working risk
-                  assessments (Reg 14), and test instrument calibration (Reg 4(4)). In the event of
-                  an incident, the absence of records makes it significantly harder to mount a
-                  defence of due diligence under Regulation 29.
-                </p>
-              </div>
+          <ConceptBlock title="Common Compliance Failures">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Working live &quot;because it&apos;s quicker&quot; — not a valid Reg 14
+                justification
+              </li>
+              <li>Using a non-GS38-compliant multimeter to prove dead</li>
+              <li>Failing to lock off — relying on someone &quot;watching&quot; the isolator</li>
+              <li>Not testing the voltage indicator before and after proving dead</li>
+              <li>Switchrooms used as storage — Regulation 15 breach</li>
+              <li>Unsupervised apprentices carrying out isolation — Regulation 16 breach</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Records and Documentation">
+            <p>
+              The EAWR 1989 do not specifically require records to be kept. However, the HSE
+              memorandum of guidance strongly recommends maintaining records of: maintenance
+              activities (Reg 4(2)), competence assessments (Reg 16), live working risk assessments
+              (Reg 14), and test instrument calibration (Reg 4(4)). In the event of an incident, the
+              absence of records makes it significantly harder to mount a defence of due diligence
+              under Regulation 29.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Remember: the EAWR apply to ALL voltages">
+            <p>
+              A common misconception is that the EAWR only apply to mains voltage or high voltage
+              systems. They apply to <strong>all</strong> electrical systems — including 12 V
+              battery systems, 24 V control circuits, ELV fire alarm wiring, and even static
+              electricity where it could cause an ignition hazard. The level of precaution varies
+              with the risk, but the duty to prevent danger is universal.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <VideoCard
+            url="https://www.youtube.com/watch?v=BXRtfUYJYRg"
+
+            title="Electricity at Work Regulations — Webinar"
+
+            channel="SparkyNinja"
+
+            duration="2:50:58"
+
+            topic="The EAWR walked through regulation by regulation"
+
+            caption="Nearly three hours, so not a sit-down-and-watch — but it is the most thorough treatment of EAWR in the library, and worth dipping into by regulation as you work through this page."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Reg 4 — Systems, maintenance, work, protective equipment',
+              'Reg 5 — Strength and capability',
+              'Reg 12 — Equipment to be made dead',
+              'Reg 13 — Precautions for dead working',
+              'Reg 14 — Live working (three conditions)',
+              'Reg 15 — Working space, access, lighting',
+              'Reg 16 — Competence',
+              'Reg 29 — Defence of due diligence',
+              'Safe isolation sequence (Reg 13): 1. Identify — correct circuit from drawings/labels',
+              '2. Isolate — disconnect from all supplies',
+              '3. Secure — lock off, warning labels',
+              '4. Prove dead — GS38 indicator, test before/after',
+              '5. Earth — temporary earths where necessary',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Health and Safety at Work Act 1974
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  BS 7671 Wiring Regulations
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Remember: The EAWR Apply to ALL Voltages
-              </p>
-              <p className="text-sm text-white">
-                A common misconception is that the EAWR only apply to mains voltage or high voltage
-                systems. They apply to <strong>all</strong> electrical systems — including 12 V
-                battery systems, 24 V control circuits, ELV fire alarm wiring, and even static
-                electricity where it could cause an ignition hazard. The level of precaution varies
-                with the risk, but the duty to prevent danger is universal.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 4 — Systems, maintenance, work, protective equipment</li>
-                  <li>Reg 5 — Strength and capability</li>
-                  <li>Reg 12 — Equipment to be made dead</li>
-                  <li>Reg 13 — Precautions for dead working</li>
-                  <li>Reg 14 — Live working (three conditions)</li>
-                  <li>Reg 15 — Working space, access, lighting</li>
-                  <li>Reg 16 — Competence</li>
-                  <li>Reg 29 — Defence of due diligence</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safe Isolation Sequence (Reg 13)</p>
-                <ul className="space-y-0.5">
-                  <li>1. Identify — correct circuit from drawings/labels</li>
-                  <li>2. Isolate — disconnect from all supplies</li>
-                  <li>3. Secure — lock off, warning labels</li>
-                  <li>4. Prove dead — GS38 indicator, test before/after</li>
-                  <li>5. Earth — temporary earths where necessary</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-3">
-              Next: BS 7671 Wiring Regulations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

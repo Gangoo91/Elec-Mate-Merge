@@ -70,6 +70,27 @@ for (const k of EXPECTED) {
   check(`${k} present`, typeof keys[k] === 'string' && keys[k] !== '');
 }
 
+// The cover masthead reads em_scheme_logo_light whatever ground it is on, so
+// that key has to follow the masthead's variant. A light company logo turns the
+// band dark; sending the standard dark-ink lockup there is ELE-1669 on the one
+// page the client actually looks at.
+console.log('\n3b. the cover masthead gets the lockup its own band needs');
+const brandedLogos = { schemeLogoLight: 'STANDARD.png', schemeLogoDark: 'REVERSED.png' };
+const onWhite = coverPayloadKeys({
+  cover: coverPalette('house', '', '#fbbf24', 'dark'),
+  ...brandedLogos,
+});
+check('white masthead -> STANDARD lockup',
+  onWhite.em_scheme_logo_light === 'STANDARD.png', String(onWhite.em_scheme_logo_light));
+const onDark = coverPayloadKeys({
+  cover: coverPalette('house', '', '#fbbf24', 'light'),
+  ...brandedLogos,
+});
+check('dark masthead -> REVERSED lockup (was the standard one, invisible)',
+  onDark.em_scheme_logo_light === 'REVERSED.png', String(onDark.em_scheme_logo_light));
+check('the reversed key still carries the reversed asset',
+  onDark.em_scheme_logo_dark === 'REVERSED.png', String(onDark.em_scheme_logo_dark));
+
 console.log('\n4. the hop that was silently broken — spread, then read back off form data');
 const formData: Record<string, unknown> = { certificateNumber: 'X', ...branding, ...keys };
 const readBack = coverKeysFromFormData(formData);

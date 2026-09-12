@@ -10,13 +10,7 @@ import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { QRCodeSVG } from 'qrcode.react';
 import { Switch } from '@/components/ui/switch';
@@ -28,6 +22,13 @@ import {
   SectionHeader,
   EmptyState,
 } from '@/components/college/primitives';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/settings/formStyles';
 
 interface ShareLink {
   id: string;
@@ -341,24 +342,19 @@ const ElecIdShare = () => {
 
   const CreateLinkFormContent = () => (
     <div className="space-y-5">
-      <div className="space-y-2">
-        <Label className="text-sm text-white">Link expiry</Label>
-        <Select value={selectedExpiry} onValueChange={setSelectedExpiry}>
-          <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white touch-manipulation">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] z-[200]">
-            {expiryOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value} className="py-3 touch-manipulation">
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div>
+        <Label className={labelCn}>Link expiry</Label>
+        <MobileSelectPicker
+          value={selectedExpiry}
+          onValueChange={setSelectedExpiry}
+          options={expiryOptions}
+          placeholder="Select expiry"
+          triggerClassName={selectTriggerCn}
+        />
       </div>
 
-      <div className="space-y-3">
-        <Label className="text-sm text-white">Sections to include</Label>
+      <div className="border-t border-white/[0.1] pt-4">
+        <Label className={labelCn}>Sections to include</Label>
         <div className="grid grid-cols-2 gap-2">
           {sectionOptions.map((section) => {
             const isSelected = selectedSections.includes(section.id);
@@ -368,18 +364,14 @@ const ElecIdShare = () => {
                 type="button"
                 onClick={() => toggleSection(section.id)}
                 className={cn(
-                  'p-4 rounded-xl border-2 text-left transition-all touch-manipulation',
-                  isSelected
-                    ? 'bg-elec-yellow/10 border-elec-yellow/40'
-                    : 'bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08]'
+                  chipBase,
+                  'h-auto flex-none px-4 py-3 text-left',
+                  isSelected ? chipOn : chipOff
                 )}
+                aria-pressed={isSelected}
               >
-                <div className={cn('text-sm font-medium', isSelected ? 'text-white' : 'text-white')}>
-                  {section.label}
-                </div>
-                {isSelected && (
-                  <p className="text-[11px] text-elec-yellow mt-1">Included</p>
-                )}
+                <div className="text-sm font-medium">{section.label}</div>
+                {isSelected && <p className="text-[11px] mt-1">Included</p>}
               </button>
             );
           })}
@@ -391,14 +383,14 @@ const ElecIdShare = () => {
   const linkFooter = (
     <div className="flex gap-3">
       <button
-        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation disabled:opacity-60"
         onClick={() => setIsCreateLinkOpen(false)}
         disabled={isCreatingLink}
       >
         Cancel
       </button>
       <button
-        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
         onClick={handleCreateLink}
         disabled={selectedSections.length === 0 || isCreatingLink}
       >
@@ -413,7 +405,7 @@ const ElecIdShare = () => {
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7"
+        className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-6 sm:p-7"
       >
         <Eyebrow>Work record</Eyebrow>
         <div className="mt-3 flex items-start justify-between gap-4">
@@ -421,7 +413,7 @@ const ElecIdShare = () => {
             <p className="text-[15px] font-semibold text-white">
               Show my live certificate counts publicly
             </p>
-            <p className="mt-1.5 text-[12.5px] text-white/70 leading-relaxed">
+            <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">
               Adds a "Work record" to your public profile: how many certificates you've issued
               through Elec-Mate in the last 12 months, by type, and the year you started. Counts
               only — never clients, addresses or job details. It's proof a photocopied card can't
@@ -438,7 +430,7 @@ const ElecIdShare = () => {
 
       {/* Create-link sheet/dialog */}
       <Sheet open={isCreateLinkOpen} onOpenChange={setIsCreateLinkOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Create share link" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -474,7 +466,7 @@ const ElecIdShare = () => {
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7"
+        className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-6 sm:p-7"
       >
         <Eyebrow>Your public QR</Eyebrow>
         <div className="mt-4 flex flex-col items-center">
@@ -499,7 +491,7 @@ const ElecIdShare = () => {
 
           <button
             onClick={() => handleCopyLink(shareUrl)}
-            className="w-full max-w-sm flex items-center gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] transition-all mb-4"
+            className="w-full max-w-sm flex items-center gap-2 p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35 touch-manipulation active:bg-white/[0.08] transition-all mb-4"
           >
             <span className="font-mono text-xs text-white flex-1 truncate text-left">
               {shareUrl}
@@ -511,7 +503,7 @@ const ElecIdShare = () => {
             <button
               onClick={handleDownloadQr}
               disabled={isDownloadingQr}
-              className="h-11 rounded-xl border border-white/[0.06] bg-white/[0.04] text-white font-medium touch-manipulation disabled:opacity-60"
+              className="h-11 rounded-xl border border-elec-yellow/35 bg-white/[0.04] text-white font-medium touch-manipulation disabled:opacity-60"
             >
               {isDownloadingQr ? 'Downloading…' : 'Download'}
             </button>
@@ -570,7 +562,7 @@ const ElecIdShare = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ delay: index * 0.04 }}
-                  className="p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                  className="p-4 rounded-2xl bg-white/[0.05] border border-elec-yellow/35"
                 >
                   <div className="flex items-center justify-between gap-3 mb-2">
                     <span className="font-mono text-xs text-white truncate flex-1">

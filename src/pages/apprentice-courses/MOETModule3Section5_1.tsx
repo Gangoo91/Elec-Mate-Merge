@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.5 · Subsection 1 — Uninterruptible Power Supply (UPS)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Uninterruptible Power Supply (UPS) - MOET Module 3.5.1';
@@ -257,110 +293,64 @@ const faqs = [
 ];
 
 const MOETModule3Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Uninterruptible Power Supply (UPS)
-          </h1>
-          <p className="text-white">
-            UPS topologies, sizing, battery types, bypass systems and maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.5 · Subsection 1"
+        title="Uninterruptible Power Supply (UPS)"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            UPS topologies, sizing, battery types, bypass systems and maintenance.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Offline:</strong> Simplest — load on raw mains, 5-12 ms transfer time
+          <TLDR
+            points={[
+              'Offline: Simplest — load on raw mains, 5-12 ms transfer time.',
+              'Line-interactive: AVR regulates voltage without battery use.',
+              'Online double-conversion: Zero transfer time — highest protection.',
+              'Batteries: VRLA (3-5 yr) or Li-ion (10-15 yr) — temperature critical.',
+            ]}
+          />
+
+          <ConceptBlock title="Regulatory context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS EN 62040:</strong> UPS systems — performance and testing.
               </li>
-              <li className="pl-1">
-                <strong>Line-interactive:</strong> AVR regulates voltage without battery use
+              <li>
+                <strong>BS 7671:</strong> Installation requirements for UPS systems.
               </li>
-              <li className="pl-1">
-                <strong>Online double-conversion:</strong> Zero transfer time — highest protection
+              <li>
+                <strong>EAWR 1989:</strong> Safe working on UPS and battery systems.
               </li>
-              <li className="pl-1">
-                <strong>Batteries:</strong> VRLA (3-5 yr) or Li-ion (10-15 yr) — temperature
-                critical
+              <li>
+                <strong>ST1426:</strong> Maintain and test auxiliary power systems.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Regulatory Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS EN 62040:</strong> UPS systems — performance and testing
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Installation requirements for UPS systems
-              </li>
-              <li className="pl-1">
-                <strong>EAWR 1989:</strong> Safe working on UPS and battery systems
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maintain and test auxiliary power systems
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe offline, line-interactive and online double-conversion UPS topologies',
               'Explain UPS sizing in terms of kVA/kW rating and autonomy',
               'Compare VRLA and lithium-ion battery technologies for UPS applications',
               'Describe bypass systems including automatic and maintenance bypass',
               'Outline a UPS preventive maintenance programme including battery testing',
               'Identify common UPS failure modes and monitoring requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>UPS topologies</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            UPS Topologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Three topologies, progressively higher protection at increasing cost and complexity">
             <p>
               An Uninterruptible Power Supply (UPS) provides conditioned, continuous electrical
               power to critical loads during mains supply disturbances including outages, voltage
@@ -368,84 +358,54 @@ const MOETModule3Section5_1 = () => {
               principal UPS topologies — offline, line-interactive and online double-conversion —
               offer progressively higher levels of protection at increasing cost and complexity.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Offline (Standby) UPS</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Load powered directly from mains during normal operation</li>
-                <li className="pl-1">Basic surge suppression and filtering on the mains path</li>
-                <li className="pl-1">
-                  Inverter activates only when mains fails — transfer time 5-12 ms
-                </li>
-                <li className="pl-1">Simplest topology, lowest cost, smallest physical size</li>
-                <li className="pl-1">
-                  Suitable for desktop PCs, home networking, non-critical loads
-                </li>
-                <li className="pl-1">
-                  Does not condition the mains supply — passes through disturbances
-                </li>
-                <li className="pl-1">Typical ratings: 300 VA to 1.5 kVA</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Offline (standby) UPS">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Load powered directly from mains during normal operation.</li>
+              <li>Basic surge suppression and filtering on the mains path.</li>
+              <li>Inverter activates only when mains fails — transfer time 5-12 ms.</li>
+              <li>Simplest topology, lowest cost, smallest physical size.</li>
+              <li>Suitable for desktop PCs, home networking, non-critical loads.</li>
+              <li>Does not condition the mains supply — passes through disturbances.</li>
+              <li>Typical ratings: 300 VA to 1.5 kVA.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Line-Interactive UPS</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Load powered from mains through an autotransformer (AVR)</li>
-                <li className="pl-1">
-                  AVR regulates voltage sags and surges without battery discharge
-                </li>
-                <li className="pl-1">
-                  Transfer to battery if mains falls outside AVR correction range — 2-4 ms
-                </li>
-                <li className="pl-1">Better protection than offline at moderate cost increase</li>
-                <li className="pl-1">Suitable for network equipment, small servers, telecoms</li>
-                <li className="pl-1">Typical ratings: 500 VA to 5 kVA</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Line-interactive UPS">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Load powered from mains through an autotransformer (AVR).</li>
+              <li>AVR regulates voltage sags and surges without battery discharge.</li>
+              <li>Transfer to battery if mains falls outside AVR correction range — 2-4 ms.</li>
+              <li>Better protection than offline at moderate cost increase.</li>
+              <li>Suitable for network equipment, small servers, telecoms.</li>
+              <li>Typical ratings: 500 VA to 5 kVA.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Online Double-Conversion UPS
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Load always powered from the inverter — zero transfer time</li>
-                <li className="pl-1">
-                  Rectifier converts mains AC to DC, charges batteries and feeds inverter
-                </li>
-                <li className="pl-1">Inverter converts DC back to clean, regulated AC</li>
-                <li className="pl-1">Complete isolation of load from mains disturbances</li>
-                <li className="pl-1">
-                  Highest level of protection — the gold standard for critical loads
-                </li>
-                <li className="pl-1">Higher cost, higher heat output, larger physical size</li>
-                <li className="pl-1">
-                  Suitable for data centres, hospitals, financial systems, process control
-                </li>
-                <li className="pl-1">
-                  Typical ratings: 1 kVA to 1+ MVA (modular and parallel systems)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Online double-conversion UPS"
+            onSite="Key point: the topology selection depends on the criticality of the load, the quality of the mains supply, the budget, and the acceptable level of risk. For truly critical loads where any power disturbance is unacceptable, online double-conversion is the only choice."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Load always powered from the inverter — zero transfer time.</li>
+              <li>Rectifier converts mains AC to DC, charges batteries and feeds inverter.</li>
+              <li>Inverter converts DC back to clean, regulated AC.</li>
+              <li>Complete isolation of load from mains disturbances.</li>
+              <li>Highest level of protection — the gold standard for critical loads.</li>
+              <li>Higher cost, higher heat output, larger physical size.</li>
+              <li>Suitable for data centres, hospitals, financial systems, process control.</li>
+              <li>Typical ratings: 1 kVA to 1+ MVA (modular and parallel systems).</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The topology selection depends on the criticality of the
-              load, the quality of the mains supply, the budget, and the acceptable level of risk.
-              For truly critical loads where any power disturbance is unacceptable, online
-              double-conversion is the only choice.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            UPS Sizing and Battery Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Sizing and battery systems</ContentEyebrow>
+
+          <ConceptBlock title="Correct sizing ensures the system supports the load and provides adequate autonomy">
             <p>
               Correct UPS sizing ensures that the system can support the connected load and provide
               adequate autonomy during a mains failure. Undersizing leads to overload and potential
@@ -453,319 +413,276 @@ const MOETModule3Section5_1 = () => {
               selection and management is critical as batteries are the most failure-prone component
               in a UPS system.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Sizing Parameters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Load survey:</strong> Measure or calculate the total load in kVA and kW
-                  (including power factor)
-                </li>
-                <li className="pl-1">
-                  <strong>Growth margin:</strong> Add 20-30% for future load growth
-                </li>
-                <li className="pl-1">
-                  <strong>Autonomy:</strong> Define the required battery runtime (e.g., 5, 10, 15 or
-                  30 minutes)
-                </li>
-                <li className="pl-1">
-                  <strong>Redundancy:</strong> N+1 or 2N configurations for high-availability
-                  installations
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency:</strong> Consider UPS efficiency (typically 92-97% for modern
-                  online systems)
-                </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Temperature, altitude and humidity affect battery
-                  performance
-                </li>
-              </ul>
+          <ConceptBlock title="Sizing parameters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Load survey:</strong> Measure or calculate the total load in kVA and kW
+                (including power factor).
+              </li>
+              <li>
+                <strong>Growth margin:</strong> Add 20-30% for future load growth.
+              </li>
+              <li>
+                <strong>Autonomy:</strong> Define the required battery runtime (e.g., 5, 10, 15 or
+                30 minutes).
+              </li>
+              <li>
+                <strong>Redundancy:</strong> N+1 or 2N configurations for high-availability
+                installations.
+              </li>
+              <li>
+                <strong>Efficiency:</strong> Consider UPS efficiency (typically 92-97% for modern
+                online systems).
+              </li>
+              <li>
+                <strong>Environment:</strong> Temperature, altitude and humidity affect battery
+                performance.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="UPS battery types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Design life</th>
+                    <th className="py-2 pr-4 font-medium text-white">Advantages</th>
+                    <th className="py-2 font-medium text-white">Disadvantages</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">VRLA (AGM)</td>
+                    <td className="py-2 pr-4">3-5 yr / 10-12 yr</td>
+                    <td className="py-2 pr-4">Maintenance-free, low cost, proven</td>
+                    <td className="py-2">Heavy, temperature-sensitive, shorter life</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">VRLA (Gel)</td>
+                    <td className="py-2 pr-4">10-12 yr</td>
+                    <td className="py-2 pr-4">Better deep-discharge tolerance</td>
+                    <td className="py-2">More expensive, lower charge rate</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Lithium-ion</td>
+                    <td className="py-2 pr-4">10-15+ yr</td>
+                    <td className="py-2 pr-4">Lighter, longer life, faster recharge</td>
+                    <td className="py-2">Higher cost, requires BMS, disposal regulations</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Nickel-cadmium</td>
+                    <td className="py-2 pr-4">15-25 yr</td>
+                    <td className="py-2 pr-4">Extremely robust, wide temperature range</td>
+                    <td className="py-2">Very expensive, cadmium toxicity, being phased out</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">UPS Battery Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Design Life</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Disadvantages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRLA (AGM)</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 yr / 10-12 yr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintenance-free, low cost, proven
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heavy, temperature-sensitive, shorter life
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VRLA (Gel)</td>
-                      <td className="border border-white/10 px-3 py-2">10-12 yr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Better deep-discharge tolerance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        More expensive, lower charge rate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lithium-ion</td>
-                      <td className="border border-white/10 px-3 py-2">10-15+ yr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lighter, longer life, faster recharge
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher cost, requires BMS, disposal regulations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Nickel-cadmium</td>
-                      <td className="border border-white/10 px-3 py-2">15-25 yr</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extremely robust, wide temperature range
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very expensive, cadmium toxicity, being phased out
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Temperature Effect on Battery Life
-              </p>
-              <p className="text-sm text-white">
-                Battery life is critically dependent on operating temperature. The Arrhenius
-                equation governs the relationship: for every 10°C increase above the recommended
-                20°C, VRLA battery life is approximately halved. A battery room at 30°C will reduce
-                a 5-year battery to approximately 2.5 years. At 40°C, life drops to approximately
-                1.25 years. Maintaining correct battery room temperature through ventilation or air
-                conditioning is one of the most cost-effective maintenance investments.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Always record battery room temperature during
-              routine inspections. If the temperature consistently exceeds 25°C, escalate to
-              facilities management for HVAC review. The cost of cooling is far less than premature
-              battery replacement.
+          <ConceptBlock
+            title="Temperature effect on battery life"
+            onSite="Maintenance tip: always record battery room temperature during routine inspections. If the temperature consistently exceeds 25°C, escalate to facilities management for HVAC review. The cost of cooling is far less than premature battery replacement."
+          >
+            <p>
+              Battery life is critically dependent on operating temperature. The Arrhenius equation
+              governs the relationship: for every 10°C increase above the recommended 20°C, VRLA
+              battery life is approximately halved. A battery room at 30°C will reduce a 5-year
+              battery to approximately 2.5 years. At 40°C, life drops to approximately 1.25 years.
+              Maintaining correct battery room temperature through ventilation or air conditioning
+              is one of the most cost-effective maintenance investments.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Bypass Systems and Monitoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Bypass systems and monitoring</ContentEyebrow>
+
+          <ConceptBlock title="Bypass provides an alternative power path; monitoring gives real-time visibility">
             <p>
               Bypass systems are a critical safety feature of UPS installations, providing an
               alternative power path for the load when the UPS must be taken out of service for
               maintenance, or in the event of a UPS failure. Monitoring systems provide real-time
               visibility of UPS status, enabling proactive maintenance and rapid fault response.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Bypass Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Internal automatic bypass (static switch):</strong> Solid-state switch
-                  that transfers the load to mains if the inverter fails or is overloaded. Transfer
-                  is near-instantaneous (less than 1 ms). Part of the UPS electronics
-                </li>
-                <li className="pl-1">
-                  <strong>Internal maintenance bypass:</strong> Manual switch within the UPS that
-                  allows the load to be transferred to mains so the UPS can be serviced without
-                  disconnecting the load. Present in most commercial UPS systems
-                </li>
-                <li className="pl-1">
-                  <strong>External maintenance bypass (wrap-around):</strong> An external panel with
-                  a make-before-break switch that allows the entire UPS to be completely isolated
-                  while maintaining power to the load. Essential for safe battery replacement and
-                  major maintenance
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Bypass types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Internal automatic bypass (static switch):</strong> Solid-state switch that
+                transfers the load to mains if the inverter fails or is overloaded. Transfer is
+                near-instantaneous (less than 1 ms). Part of the UPS electronics.
+              </li>
+              <li>
+                <strong>Internal maintenance bypass:</strong> Manual switch within the UPS that
+                allows the load to be transferred to mains so the UPS can be serviced without
+                disconnecting the load. Present in most commercial UPS systems.
+              </li>
+              <li>
+                <strong>External maintenance bypass (wrap-around):</strong> An external panel with a
+                make-before-break switch that allows the entire UPS to be completely isolated while
+                maintaining power to the load. Essential for safe battery replacement and major
+                maintenance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                UPS Monitoring Parameters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Input:</strong> Voltage, current, frequency, power factor
-                </li>
-                <li className="pl-1">
-                  <strong>Output:</strong> Voltage, current, frequency, load percentage, power
-                  factor
-                </li>
-                <li className="pl-1">
-                  <strong>Battery:</strong> Voltage, current (charge/discharge), temperature,
-                  estimated remaining time
-                </li>
-                <li className="pl-1">
-                  <strong>Alarms:</strong> Mains failure, battery low, overload, bypass active,
-                  over-temperature, fan failure
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> SNMP, Modbus, dry contacts, email alerts, BMS
-                  integration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="UPS monitoring parameters"
+            onSite="Key point: never place the load on bypass and leave it unmonitored. While on bypass, the load is powered by raw, unprotected mains — a mains failure will cause an immediate loss of power to the critical load. Bypass operation should be planned, time-limited, and supervised."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Input:</strong> Voltage, current, frequency, power factor.
+              </li>
+              <li>
+                <strong>Output:</strong> Voltage, current, frequency, load percentage, power factor.
+              </li>
+              <li>
+                <strong>Battery:</strong> Voltage, current (charge/discharge), temperature,
+                estimated remaining time.
+              </li>
+              <li>
+                <strong>Alarms:</strong> Mains failure, battery low, overload, bypass active,
+                over-temperature, fan failure.
+              </li>
+              <li>
+                <strong>Communication:</strong> SNMP, Modbus, dry contacts, email alerts, BMS
+                integration.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never place the load on bypass and leave it unmonitored.
-              While on bypass, the load is powered by raw, unprotected mains — a mains failure will
-              cause an immediate loss of power to the critical load. Bypass operation should be
-              planned, time-limited, and supervised.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance and Common Failure Modes
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Maintenance and failure modes</ContentEyebrow>
+
+          <ConceptBlock title="A UPS that has not been maintained may fail at the moment it is needed most">
             <p>
               UPS preventive maintenance is essential to ensure reliability when a mains failure
               occurs. A UPS that has not been maintained may fail at the very moment it is needed
               most. The maintenance programme must cover batteries, power electronics, cooling,
               connections and firmware/software.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preventive Maintenance Schedule
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Monthly:</strong> Visual inspection, check display parameters, check
-                  alarms, verify room temperature, check fan operation
-                </li>
-                <li className="pl-1">
-                  <strong>Quarterly:</strong> Record all operating parameters, check battery float
-                  voltages, thermal imaging of connections
-                </li>
-                <li className="pl-1">
-                  <strong>Annually:</strong> Full battery impedance test, load bank test (or
-                  mains-fail simulation), check capacitor condition, clean air filters, firmware
-                  updates, verify bypass operation
-                </li>
-                <li className="pl-1">
-                  <strong>3-5 yearly:</strong> Battery replacement (standard VRLA), capacitor
-                  replacement assessment, full service by manufacturer/specialist
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Preventive maintenance schedule">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Monthly:</strong> Visual inspection, check display parameters, check alarms,
+                verify room temperature, check fan operation.
+              </li>
+              <li>
+                <strong>Quarterly:</strong> Record all operating parameters, check battery float
+                voltages, thermal imaging of connections.
+              </li>
+              <li>
+                <strong>Annually:</strong> Full battery impedance test, load bank test (or
+                mains-fail simulation), check capacitor condition, clean air filters, firmware
+                updates, verify bypass operation.
+              </li>
+              <li>
+                <strong>3-5 yearly:</strong> Battery replacement (standard VRLA), capacitor
+                replacement assessment, full service by manufacturer/specialist.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Failure Modes</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Battery failure:</strong> The most common cause of UPS failure. Batteries
-                  degrade with age and temperature. A single failed cell can reduce autonomy or
-                  prevent operation
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitor failure:</strong> Electrolytic capacitors dry out over time,
-                  causing increased ripple, overheating and potential failure of power electronics
-                </li>
-                <li className="pl-1">
-                  <strong>Fan failure:</strong> Cooling fan failure leads to over-temperature
-                  condition and potential thermal shutdown
-                </li>
-                <li className="pl-1">
-                  <strong>Control board failure:</strong> Firmware bugs, component ageing or power
-                  surges can cause control board malfunction
-                </li>
-                <li className="pl-1">
-                  <strong>Loose connections:</strong> High-current connections can loosen over time
-                  due to thermal cycling, causing hot spots and potential arcing
-                </li>
-                <li className="pl-1">
-                  <strong>Overload:</strong> Additional loads connected without updating the UPS
-                  capacity assessment
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in maintaining UPS systems as part of auxiliary power systems. You must be able to
-              carry out routine inspections, identify common faults, and understand when to escalate
-              to a specialist.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Common failure modes"
+            onSite="ST1426 link: the maintenance technician standard requires competence in maintaining UPS systems as part of auxiliary power systems. You must be able to carry out routine inspections, identify common faults, and understand when to escalate to a specialist."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-2">
-              Next: Battery Technologies
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Battery failure:</strong> The most common cause of UPS failure. Batteries
+                degrade with age and temperature. A single failed cell can reduce autonomy or
+                prevent operation.
+              </li>
+              <li>
+                <strong>Capacitor failure:</strong> Electrolytic capacitors dry out over time,
+                causing increased ripple, overheating and potential failure of power electronics.
+              </li>
+              <li>
+                <strong>Fan failure:</strong> Cooling fan failure leads to over-temperature
+                condition and potential thermal shutdown.
+              </li>
+              <li>
+                <strong>Control board failure:</strong> Firmware bugs, component ageing or power
+                surges can cause control board malfunction.
+              </li>
+              <li>
+                <strong>Loose connections:</strong> High-current connections can loosen over time
+                due to thermal cycling, causing hot spots and potential arcing.
+              </li>
+              <li>
+                <strong>Overload:</strong> Additional loads connected without updating the UPS
+                capacity assessment.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Offline UPS: load on raw mains, inverter only activates on mains failure, 5-12 ms transfer time — lowest cost and protection.',
+              'Line-interactive UPS: an autotransformer (AVR) corrects voltage sags and surges without switching to battery, 2-4 ms transfer time if it does switch.',
+              'Online double-conversion UPS: the load is always on the inverter, so transfer time is zero — the standard for data centres, hospitals and process control.',
+              'Standard VRLA batteries last 3-5 years, long-life VRLA 10-12 years, lithium-ion 10-15+ years — every 10°C above 20°C roughly halves VRLA life.',
+              'Bypass has three forms: internal automatic (static switch, under 1 ms), internal maintenance bypass, and an external wrap-around bypass that isolates the whole UPS.',
+              'UPS monitoring communicates over SNMP, reporting input/output voltage, frequency, load, battery status and alarms to a BMS or NMS.',
+              'Battery failure is the leading cause of UPS failure — annual impedance testing and trending is the key predictive maintenance tool.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section 3.5 hub
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Battery Technologies
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

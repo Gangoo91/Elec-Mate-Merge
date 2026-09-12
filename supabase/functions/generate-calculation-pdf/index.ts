@@ -80,11 +80,28 @@ const GLYPH_FALLBACKS: [RegExp, string][] = [
   [/\u2026/g, '...'],
 ];
 
+/**
+ * Float precision is a per-calculator mistake, so it is caught centrally.
+ *
+ * Ohm's Law shipped "3.4328358208955225 Ω" onto a customer's document because
+ * its builder interpolated a raw division. There are 72 report builders and no
+ * amount of review makes that class of slip impossible, so any run of digits
+ * carrying more than four decimal places is rounded here — the last line of
+ * defence before a number reaches a client.
+ *
+ * Deliberately conservative: it only touches a decimal run of 6+ places, so
+ * genuine values (2.5 mm², 0.4 s, 1.15, 3.4328) pass through untouched, and it
+ * rounds rather than truncates.
+ */
+const tidyFloats = (text: string): string =>
+  text.replace(/\d+\.\d{6,}/g, (n) => String(Number(Number(n).toFixed(4))));
+
 /** Strings arrive from the browser — trim, cap, and coerce. Liquid escapes on
  *  output, so this is about size and shape rather than injection. */
 const str = (v: unknown, max = LIMIT.str): string => {
   let out = typeof v === 'string' ? v.trim() : v == null ? '' : String(v);
   for (const [re, sub] of GLYPH_FALLBACKS) out = out.replace(re, sub);
+  out = tidyFloats(out);
   return out.slice(0, max);
 };
 
@@ -101,7 +118,15 @@ function sanitiseReport(input: Record<string, unknown>) {
 
   return {
     meta: {
-      title: str(meta.title, 120) || 'Calculation',
+      /**
+       * A calculator is a tool; the document is a report. 34 of the wired
+       * calculators pass their own tool name ("Diversity Factor Calculator"),
+       * which on a client's desk reads as a screenshot of software rather than
+       * a piece of work. The eyebrow already says CALCULATION REPORT, so the
+       * trailing noun is stripped here — centrally, so no calculator has to
+       * remember, and a new one cannot reintroduce it.
+       */
+      title: str(meta.title, 120).replace(/\s+(Calculator|Tool)$/i, '') || 'Calculation',
       subtitle: str(meta.subtitle, 200),
       standard: str(meta.standard, 120),
       reference: str(meta.reference, 60),
@@ -263,11 +288,58 @@ serve(async (req) => {
 
     log('Generated', { documentId, title: report.meta.title });
 
+    // ── Persist ──────────────────────────────────────────────────────
+    // PDFMonkey's download_url is an S3 PRESIGNED link and expires, so a saved
+    // report — or one forwarded to a client — would eventually 404. The bytes
+    // are copied into our own bucket and a row is kept, which turns a one-shot
+    // download into a record the electrician can reopen.
+    //
+    // Deliberately non-fatal: the PDF already exists and the user is waiting
+    // for it. A storage outage should cost them the saved copy, not the
+    // document they asked for.
+    const filename = fileNameFor(report.meta.title);
+    let savedPath: string | null = null;
+    let reportId: string | null = null;
+    try {
+      const pdfRes = await fetch(downloadUrl);
+      if (!pdfRes.ok) throw new Error(`fetch ${pdfRes.status}`);
+      const bytes = new Uint8Array(await pdfRes.arrayBuffer());
+      const path = `${user.id}/${Date.now()}-${filename}`;
+
+      const { error: upErr } = await service.storage
+        .from('calculation-reports')
+        .upload(path, bytes, { contentType: 'application/pdf', upsert: false });
+      if (upErr) throw new Error(upErr.message);
+      savedPath = path;
+
+      const { data: row, error: rowErr } = await service
+        .from('calculation_reports')
+        .insert({
+          user_id: user.id,
+          title: report.meta.title,
+          subtitle: report.meta.subtitle || null,
+          calculator_slug: str(body.calculatorSlug, 60) || null,
+          storage_path: path,
+          payload,
+        })
+        .select('id')
+        .single();
+      if (rowErr) throw new Error(rowErr.message);
+      reportId = row?.id ?? null;
+      log('Saved', { reportId, path });
+    } catch (err) {
+      log('WARN: could not save a copy of the report', {
+        message: err instanceof Error ? err.message : String(err),
+      });
+    }
+
     return json({
       success: true,
       url: downloadUrl,
-      filename: fileNameFor(report.meta.title),
+      filename,
       document_id: documentId,
+      report_id: reportId,
+      storage_path: savedPath,
     });
   } catch (error) {
     await captureException(error, {

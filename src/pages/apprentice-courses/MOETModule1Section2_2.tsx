@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.2 · Subsection 2 — Safe Use of Tools and Test Equipment
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical isolation and deisolation
+ *                 requirements: lockout tagout and testing for dead."
+ *              · "Work environment hazards and risks. Risk assessments."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safe Use of Tools and Test Equipment - MOET Module 1.2.2';
@@ -14,15 +54,10 @@ const quickCheckQuestions = [
     id: 'gs38-probes',
     question:
       'Under GS38, what is the maximum exposed metal tip length permitted on a test probe for use on low voltage systems?',
-    options: [
-      '4 mm',
-      '10 mm',
-      '20 mm',
-      '2 mm',
-    ],
+    options: ['4 mm', '10 mm', '20 mm', '2 mm'],
     correctIndex: 0,
     explanation:
-      'GS38 specifies that test probes must have a maximum of 4 mm exposed metal tip (or 2 mm for some applications), with the remainder insulated to prevent accidental contact with adjacent live parts. The short tip length reduces the risk of bridging between terminals or creating a short circuit during testing.',
+      'GS38 specifies that test probes must have an exposed metal tip not exceeding 4 mm, measured across any surface of the tip, with the remainder insulated to prevent accidental contact with adjacent live parts. The short tip length reduces the risk of bridging between terminals or creating a short circuit during testing.',
   },
   {
     id: 'proving-unit-purpose',
@@ -41,12 +76,7 @@ const quickCheckQuestions = [
     id: 'insulated-tools',
     question:
       'What standard must VDE-rated insulated hand tools comply with for electrical work up to 1000 V AC?',
-    options: [
-      'BS EN 60900',
-      'BS 7671',
-      'BS EN 61010',
-      'BS EN 60529',
-    ],
+    options: ['BS EN 60900', 'BS 7671', 'BS EN 61010', 'BS EN 60529'],
     correctIndex: 0,
     explanation:
       'VDE-rated insulated hand tools must comply with BS EN 60900 (IEC 60900), which specifies requirements for hand-operated insulated tools for work on or near live parts at voltages up to 1000 V AC or 1500 V DC. Tools meeting this standard are individually tested to 10,000 V AC and rated for continuous use at 1000 V AC.',
@@ -118,7 +148,7 @@ const quizQuestions = [
     ],
     correctAnswer: 0,
     explanation:
-      'Insulation resistance testers apply a DC test voltage: 250 V DC for SELV/PELV circuits, 500 V DC for circuits up to 500 V (including standard 230 V and 400 V installations), and 1000 V DC for circuits between 500 V and 1000 V. The test voltage must match the circuit voltage rating per BS 7671 Table 6.1.',
+      'Insulation resistance testers apply a DC test voltage: 250 V DC for SELV/PELV circuits, 500 V DC for circuits up to 500 V (including standard 230 V and 400 V installations), and 1000 V DC for circuits between 500 V and 1000 V. The test voltage must match the circuit voltage rating per BS 7671 Table 64.',
   },
   {
     id: 5,
@@ -163,12 +193,7 @@ const quizQuestions = [
     id: 8,
     question:
       'VDE 1000 V rated insulated tools are individually tested at what voltage during manufacture?',
-    options: [
-      '10,000 V AC',
-      '5,000 V AC',
-      '1,000 V AC',
-      '2,500 V AC',
-    ],
+    options: ['10,000 V AC', '5,000 V AC', '1,000 V AC', '2,500 V AC'],
     correctAnswer: 0,
     explanation:
       "VDE-rated insulated tools complying with BS EN 60900 are individually tested at 10,000 V AC during manufacture (10 times the rated working voltage). This provides a substantial safety margin. The tools are then marked with the '1000 V' rating and the distinctive red/yellow insulation colour coding that identifies them as electrically rated.",
@@ -204,12 +229,7 @@ const quizQuestions = [
     id: 11,
     question:
       'A 110 V centre-tapped supply (CTE) used on construction sites provides a maximum shock voltage of:',
-    options: [
-      '110 V',
-      '25 V',
-      '230 V',
-      '55 V',
-    ],
+    options: ['110 V', '25 V', '230 V', '55 V'],
     correctAnswer: 3,
     explanation:
       'A 110 V centre-tapped earth (CTE) transformer provides a maximum voltage to earth of 55 V (half of 110 V), because the centre tap of the secondary winding is earthed. This means that a single fault to earth will only expose the user to 55 V — significantly reducing the shock risk compared to a 230 V supply. This is why 110 V CTE is the standard for portable tools on UK construction sites.',
@@ -258,115 +278,64 @@ const faqs = [
 ];
 
 const MOETModule1Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safe Use of Tools and Test Equipment
-          </h1>
-          <p className="text-white">
-            Selection, inspection, use and maintenance of electrical tools and instruments
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.2 · Subsection 2"
+        title="Safe Use of Tools and Test Equipment"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Selection, inspection, use and maintenance of electrical tools and instruments.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>GS38:</strong> Prove-test-prove procedure; fused leads, 4 mm tips
-              </li>
-              <li className="pl-1">
-                <strong>Tools:</strong> VDE 1000 V rated, BS EN 60900 compliant
-              </li>
-              <li className="pl-1">
-                <strong>Calibration:</strong> Annual by UKAS-accredited laboratory
-              </li>
-              <li className="pl-1">
-                <strong>Inspection:</strong> Pre-use visual check every time
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Test Instruments
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'GS38: Prove-test-prove procedure; fused leads, 4 mm tips',
+              'Tools: VDE 1000 V rated, BS EN 60900 compliant',
+              'Calibration: Annual by UKAS-accredited laboratory',
+              'Inspection: Pre-use visual check every time',
+            ]}
+          />
+
+          <ConceptBlock title="Test instruments at a glance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Voltage indicator:</strong> Two-pole, GS38 compliant
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Multimeter:</strong> BS EN 61010, CAT III/IV rated
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Insulation tester:</strong> 250/500/1000 V DC test voltages
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Loop tester:</strong> Earth fault loop impedance (Zs)
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply GS38 requirements for test probes, leads and voltage indicators',
               'Explain the prove-test-prove procedure using a proving unit',
               'Select the correct test instrument for common electrical measurements',
               'Carry out pre-use inspection of power tools and hand tools',
               'Describe calibration requirements and record-keeping for test equipment',
               'Identify common faults and safety hazards with electrical tools',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>GS38 requirements</ContentEyebrow>
 
-        {/* Section 01: GS38 Requirements */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            GS38 — Test Probes, Leads and Voltage Indicators
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="GS38 — Test Probes, Leads and Voltage Indicators">
             <p>
               HSE Guidance Note GS38 (Fourth Edition) provides essential safety guidance on the
               selection and use of electrical test equipment for work on low voltage systems. It is
@@ -378,147 +347,107 @@ const MOETModule1Section2_2 = () => {
             <p>
               The guidance applies to all test equipment used for determining whether electrical
               systems are safe to work on — most critically, voltage indicators used for the
-              'proving dead' stage of safe isolation. The core principle is the three-stage
-              'prove-test-prove' procedure.
+              &apos;proving dead&apos; stage of safe isolation. The core principle is the
+              three-stage &apos;prove-test-prove&apos; procedure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Prove-Test-Prove Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1 — Prove:</strong> Test the voltage indicator on a known live source
-                  (proving unit or known live supply) to confirm it is working correctly and
-                  indicating voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2 — Test:</strong> Use the proven voltage indicator to test the
-                  isolated circuit between all conductors: L-N, L-E, N-E (single phase) or L1-L2,
-                  L2-L3, L3-L1, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E (three phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3 — Re-prove:</strong> Test the voltage indicator again on the same
-                  known live source to confirm it is still working correctly after the dead test
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The Prove-Test-Prove Procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Prove:</strong> Test the voltage indicator on a known live source
+                (proving unit or known live supply) to confirm it is working correctly and
+                indicating voltage
+              </li>
+              <li>
+                <strong>Step 2 — Test:</strong> Use the proven voltage indicator to test the
+                isolated circuit between all conductors: L-N, L-E, N-E (single phase) or L1-L2,
+                L2-L3, L3-L1, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E (three phase)
+              </li>
+              <li>
+                <strong>Step 3 — Re-prove:</strong> Test the voltage indicator again on the same
+                known live source to confirm it is still working correctly after the dead test
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Why Re-Proving Is Critical</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Skipping the re-proving step"
+            whatHappens={
+              <p>
                 The re-proving step confirms that the voltage indicator did not fail between the
                 initial proving and the dead test. If the instrument failed during testing, it could
-                show 'no voltage' on a live circuit — giving a false sense of safety. A failed
-                instrument that is not re-proved has been the direct cause of fatal electrocutions
-                where electricians began work on what they believed to be a dead circuit.
+                show &apos;no voltage&apos; on a live circuit — giving a false sense of safety. A
+                failed instrument that is not re-proved has been the direct cause of fatal
+                electrocutions where electricians began work on what they believed to be a dead
+                circuit.
               </p>
-            </div>
+            }
+            doInstead={
+              <>
+                Always complete step 3 — re-prove the indicator on the same known live source
+                immediately after testing for dead, every time, with no exceptions.
+              </>
+            }
+          />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                GS38 Requirements for Test Equipment
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        GS38 Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test probes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum 4 mm exposed metal tip; finger guards; insulated shaft
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevents accidental bridging between terminals and finger contact with live
-                        parts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Test leads</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fused (not exceeding 500 mA); adequate insulation; coloured for
-                        identification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fuses protect against fault current if probe slips; insulation prevents
-                        tracking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage indicator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-pole preferred; clear indication; suitable voltage range; robust
-                        construction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Definitive voltage reading between two points; not dependent on body
-                        capacitance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Proving unit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provides a known voltage to verify voltage indicator function
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enables prove-test-prove without needing access to a known live supply
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="GS38 Requirements for Test Equipment"
+            headers={['Component', 'GS38 Requirement', 'Reason']}
+            rows={[
+              [
+                'Test probes',
+                'Maximum 4 mm exposed metal tip; finger guards; insulated shaft',
+                'Prevents accidental bridging between terminals and finger contact with live parts',
+              ],
+              [
+                'Test leads',
+                'Fused (not exceeding 500 mA); adequate insulation; coloured for identification',
+                'Fuses protect against fault current if probe slips; insulation prevents tracking',
+              ],
+              [
+                'Voltage indicator',
+                'Two-pole preferred; clear indication; suitable voltage range; robust construction',
+                'Definitive voltage reading between two points; not dependent on body capacitance',
+              ],
+              [
+                'Proving unit',
+                'Provides a known voltage to verify voltage indicator function',
+                'Enables prove-test-prove without needing access to a known live supply',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Voltage Indicator
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Two-pole indicator (recommended):</strong> Tests between two points (e.g.,
-                  Fluke T150, Martindale VI-13700). Provides definitive voltage readings. GS38
-                  preferred type
-                </li>
-                <li className="pl-1">
-                  <strong>Single-pole indicator (neon screwdriver):</strong> Relies on body
-                  capacitance. Can give false readings. NOT recommended as sole means of testing
-                  dead by GS38
-                </li>
-                <li className="pl-1">
-                  <strong>Non-contact voltage detector (proximity pen):</strong> Detects the
-                  electric field around a conductor without contact. Useful as a preliminary check
-                  but NOT reliable for confirming dead — must not be used as the sole means of
-                  testing
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Types of Voltage Indicator"
+            onSite="Always carry your own GS38-compliant test leads and proving unit. Never rely on borrowed or unfamiliar equipment. Inspect your test leads before every use — check for damaged insulation, bent tips, and signs of arcing or overheating."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Two-pole indicator (recommended):</strong> Tests between two points (e.g.,
+                Fluke T150, Martindale VI-13700). Provides definitive voltage readings. GS38
+                preferred type
+              </li>
+              <li>
+                <strong>Single-pole indicator (neon screwdriver):</strong> Relies on body
+                capacitance. Can give false readings. NOT recommended as sole means of testing dead
+                by GS38
+              </li>
+              <li>
+                <strong>Non-contact voltage detector (proximity pen):</strong> Detects the electric
+                field around a conductor without contact. Useful as a preliminary check but NOT
+                reliable for confirming dead — must not be used as the sole means of testing
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always carry your own GS38-compliant test leads and
-              proving unit. Never rely on borrowed or unfamiliar equipment. Inspect your test leads
-              before every use — check for damaged insulation, bent tips, and signs of arcing or
-              overheating.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02: Test Instruments */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Types of Electrical Test Instrument
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Test instruments</ContentEyebrow>
+
+          <ConceptBlock title="Types of Electrical Test Instrument">
             <p>
               Electrical maintenance technicians use a range of test instruments to verify safety,
               diagnose faults and confirm compliance with BS 7671. Each instrument has specific
@@ -526,172 +455,118 @@ const MOETModule1Section2_2 = () => {
               using it incorrectly can lead to inaccurate readings, equipment damage or personal
               injury.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Electrical Test Instruments
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Instrument</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Primary Function
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Safety Considerations
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Multimeter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage, current, resistance, continuity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61010</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CAT III/IV rating for distribution work; fused inputs; auto-ranging
-                        preferred
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clamp meter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-contact current measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61010</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must clamp around a single conductor only; jaw must close fully
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance tester
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measures insulation resistance (MΩ)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61557-2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit MUST be dead and disconnected; high test voltage (250-1000 V DC)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault loop impedance tester
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measures Zs (earth fault loop)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61557-3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests on energised circuit; trip hazard on RCD-protected circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verifies RCD trip time and current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61557-6</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests on energised circuit; will cause RCD to trip — warn occupants
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuity tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-resistance measurement (R1+R2, R2)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61557-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit MUST be dead; null leads before testing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Common Electrical Test Instruments"
+            headers={['Instrument', 'Primary Function', 'Key Standard', 'Safety Considerations']}
+            rows={[
+              [
+                'Multimeter',
+                'Voltage, current, resistance, continuity',
+                'BS EN 61010',
+                'CAT III/IV rating for distribution work; fused inputs; auto-ranging preferred',
+              ],
+              [
+                'Clamp meter',
+                'Non-contact current measurement',
+                'BS EN 61010',
+                'Must clamp around a single conductor only; jaw must close fully',
+              ],
+              [
+                'Insulation resistance tester',
+                'Measures insulation resistance (MΩ)',
+                'BS EN 61557-2',
+                'Circuit MUST be dead and disconnected; high test voltage (250-1000 V DC)',
+              ],
+              [
+                'Earth fault loop impedance tester',
+                'Measures Zs (earth fault loop)',
+                'BS EN 61557-3',
+                'Tests on energised circuit; trip hazard on RCD-protected circuits',
+              ],
+              [
+                'RCD tester',
+                'Verifies RCD trip time and current',
+                'BS EN 61557-6',
+                'Tests on energised circuit; will cause RCD to trip — warn occupants',
+              ],
+              [
+                'Continuity tester',
+                'Low-resistance measurement (R1+R2, R2)',
+                'BS EN 61557-4',
+                'Circuit MUST be dead; null leads before testing',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Measurement Category (CAT) Ratings
-              </p>
-              <p className="text-sm text-white mb-3">
-                BS EN 61010 defines measurement categories based on the location in the electrical
-                installation and the level of transient overvoltage expected. Using a meter with an
-                insufficient CAT rating can result in the meter exploding under fault conditions.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>CAT I:</strong> Protected electronic circuits — low-energy secondary
-                  circuits
-                </li>
-                <li className="pl-1">
-                  <strong>CAT II:</strong> Single-phase socket outlets and portable equipment —
-                  appliance level
-                </li>
-                <li className="pl-1">
-                  <strong>CAT III:</strong> Distribution level — sub-distribution boards, busbar
-                  trunking, fixed wiring
-                </li>
-                <li className="pl-1">
-                  <strong>CAT IV:</strong> Origin of installation — main intake, service heads,
-                  meters
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Faults with Test Instruments
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Flat batteries:</strong> Can cause inaccurate readings, particularly on
-                  digital meters which may display incorrect values rather than a clear 'low
-                  battery' warning
-                </li>
-                <li className="pl-1">
-                  <strong>Damaged test leads:</strong> Broken conductors inside apparently intact
-                  insulation — the lead appears fine but has high resistance or an open circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong function selected:</strong> Measuring voltage with the meter on
-                  current (ampere) range can blow the internal fuse or damage the meter
-                </li>
-                <li className="pl-1">
-                  <strong>Out of calibration:</strong> Readings drift over time — an uncalibrated
-                  meter may pass a circuit that should fail, or fail one that complies
-                </li>
-                <li className="pl-1">
-                  <strong>Incorrect CAT rating:</strong> A CAT II meter used at a distribution board
-                  (CAT III environment) may not withstand transient overvoltages
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> A multifunction installation tester (MFT) combines many of
-              these instruments into one device — continuity, insulation resistance, loop impedance
-              and RCD testing. However, a separate two-pole voltage indicator is still required for
-              safe isolation proving, as the MFT is not designed for this purpose.
+          <ConceptBlock title="Measurement Category (CAT) Ratings">
+            <p>
+              BS EN 61010 defines measurement categories based on the location in the electrical
+              installation and the level of transient overvoltage expected. Using a meter with an
+              insufficient CAT rating can result in the meter exploding under fault conditions.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CAT I:</strong> Protected electronic circuits — low-energy secondary
+                circuits
+              </li>
+              <li>
+                <strong>CAT II:</strong> Single-phase socket outlets and portable equipment —
+                appliance level
+              </li>
+              <li>
+                <strong>CAT III:</strong> Distribution level — sub-distribution boards, busbar
+                trunking, fixed wiring
+              </li>
+              <li>
+                <strong>CAT IV:</strong> Origin of installation — main intake, service heads, meters
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Common Faults with Test Instruments">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Flat batteries:</strong> Can cause inaccurate readings, particularly on
+                digital meters which may display incorrect values rather than a clear &apos;low
+                battery&apos; warning
+              </li>
+              <li>
+                <strong>Damaged test leads:</strong> Broken conductors inside apparently intact
+                insulation — the lead appears fine but has high resistance or an open circuit
+              </li>
+              <li>
+                <strong>Wrong function selected:</strong> Measuring voltage with the meter on
+                current (ampere) range can blow the internal fuse or damage the meter
+              </li>
+              <li>
+                <strong>Out of calibration:</strong> Readings drift over time — an uncalibrated
+                meter may pass a circuit that should fail, or fail one that complies
+              </li>
+              <li>
+                <strong>Incorrect CAT rating:</strong> A CAT II meter used at a distribution board
+                (CAT III environment) may not withstand transient overvoltages
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03: Insulated Hand Tools */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Insulated Hand Tools and Power Tools
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="A multifunction tester is not a substitute for a voltage indicator">
+            <p>
+              A multifunction installation tester (MFT) combines many of these instruments into one
+              device — continuity, insulation resistance, loop impedance and RCD testing. However, a
+              separate two-pole voltage indicator is still required for safe isolation proving, as
+              the MFT is not designed for this purpose.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Insulated hand tools</ContentEyebrow>
+
+          <ConceptBlock title="Insulated Hand Tools and Power Tools">
             <p>
               Insulated hand tools are a critical line of defence against electric shock when
               working on or near live or recently de-energised electrical equipment. VDE-rated tools
@@ -699,164 +574,139 @@ const MOETModule1Section2_2 = () => {
               system. Power tools used on electrical installations must be suitable for the working
               environment and regularly inspected.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VDE 1000 V Insulated Tools (BS EN 60900)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Standard:</strong> BS EN 60900 (IEC 60900) — hand-operated insulated tools
-                  for live working up to 1000 V AC / 1500 V DC
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> Each tool individually tested at 10,000 V AC during
-                  manufacture
-                </li>
-                <li className="pl-1">
-                  <strong>Identification:</strong> Distinctive red/yellow two-tone insulation, '1000
-                  V' marking, and the VDE triangle mark
-                </li>
-                <li className="pl-1">
-                  <strong>Types available:</strong> Screwdrivers, pliers (combination, side-cutting,
-                  long-nose), cable cutters, spanners, socket sets, torque wrenches, wire strippers,
-                  cable knives
-                </li>
-                <li className="pl-1">
-                  <strong>Inspection:</strong> Check for cracks, chips, cuts or wear in the
-                  insulation before each use. Retire any tool with visible insulation damage
-                </li>
-                <li className="pl-1">
-                  <strong>Storage:</strong> Store in a clean, dry tool roll or case. Do not throw
-                  into a toolbox where they can be damaged by other tools
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="VDE 1000 V Insulated Tools (BS EN 60900)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standard:</strong> BS EN 60900 (IEC 60900) — hand-operated insulated tools
+                for live working up to 1000 V AC / 1500 V DC
+              </li>
+              <li>
+                <strong>Testing:</strong> Each tool individually tested at 10,000 V AC during
+                manufacture
+              </li>
+              <li>
+                <strong>Identification:</strong> Distinctive red/yellow two-tone insulation,
+                &apos;1000 V&apos; marking, and the VDE triangle mark
+              </li>
+              <li>
+                <strong>Types available:</strong> Screwdrivers, pliers (combination, side-cutting,
+                long-nose), cable cutters, spanners, socket sets, torque wrenches, wire strippers,
+                cable knives
+              </li>
+              <li>
+                <strong>Inspection:</strong> Check for cracks, chips, cuts or wear in the insulation
+                before each use. Retire any tool with visible insulation damage
+              </li>
+              <li>
+                <strong>Storage:</strong> Store in a clean, dry tool roll or case. Do not throw into
+                a toolbox where they can be damaged by other tools
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Power Tool Classification
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Class I:</strong> Metal casing, earthed via CPC. Requires intact earth
-                    for safety
-                  </li>
-                  <li className="pl-1">
-                    <strong>Class II:</strong> Double-insulated (double square symbol). No earth
-                    required
-                  </li>
-                  <li className="pl-1">
-                    <strong>Class III:</strong> Operates on SELV (safety extra-low voltage).
-                    Supplied from a safety isolating transformer
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  110 V Construction Site Tools
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Supply:</strong> 110 V centre-tapped earth (CTE) transformer
-                  </li>
-                  <li className="pl-1">
-                    <strong>Max shock voltage:</strong> 55 V to earth (half of 110 V)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Identification:</strong> Yellow casing and yellow 16 A plug (BS EN
-                    60309)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Requirement:</strong> BS 7375 specifies 110 V CTE for all portable tools
-                    on UK construction sites
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Power Tool Classification">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Class I:</strong> Metal casing, earthed via CPC. Requires intact earth for
+                safety
+              </li>
+              <li>
+                <strong>Class II:</strong> Double-insulated (double square symbol). No earth
+                required
+              </li>
+              <li>
+                <strong>Class III:</strong> Operates on SELV (safety extra-low voltage). Supplied
+                from a safety isolating transformer
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PAT Testing — Portable Appliance Testing
-              </p>
-              <p className="text-sm text-white mb-3">
-                PAT testing is a process of routine inspection and testing of electrical equipment
-                to ensure it is safe for continued use. While there is no specific legal requirement
-                for PAT testing, the EAWR 1989 (Reg 4(2)) requires that equipment is maintained to
-                prevent danger, and PAT testing is the established means of demonstrating
-                compliance.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Plug, flex, casing, strain relief, ventilation
-                  — carried out at every formal inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Earth continuity (Class I):</strong> Test between the earth pin of the
-                  plug and any accessible metal part — pass: ≤0.1 Ω for power tools
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Test between live/neutral connected
-                  together and earth — pass: ≥1 MΩ
-                </li>
-                <li className="pl-1">
-                  <strong>Functional test:</strong> Operate the tool and check for correct function,
-                  unusual noise, vibration or heat
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency:</strong> Depends on equipment type and environment — IET Code
-                  of Practice recommends risk-based intervals
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="110 V Construction Site Tools">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Supply:</strong> 110 V centre-tapped earth (CTE) transformer
+              </li>
+              <li>
+                <strong>Max shock voltage:</strong> 55 V to earth (half of 110 V)
+              </li>
+              <li>
+                <strong>Identification:</strong> Yellow casing and yellow 16 A plug (BS EN 60309)
+              </li>
+              <li>
+                <strong>Requirement:</strong> BS 7375 specifies 110 V CTE for all portable tools on
+                UK construction sites
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tool Storage and Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Storage:</strong> Keep tools clean and dry. Store insulated tools in
-                  purpose-made rolls or cases to protect insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Cleaning:</strong> Wipe insulated tools with a damp cloth only — never use
-                  solvents which can degrade the insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Sharpening:</strong> Cable strippers and knives should be kept sharp —
-                  blunt tools require more force and increase the risk of slipping
-                </li>
-                <li className="pl-1">
-                  <strong>Replacement:</strong> Replace any tool with damaged insulation, worn jaws,
-                  cracked handles or any other defect that could compromise safety
-                </li>
-                <li className="pl-1">
-                  <strong>Personal responsibility:</strong> Your tools are your personal safety
-                  equipment. Maintain them to the same standard as PPE
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires you to
-              select and use the correct tools and equipment for the task, carry out pre-use
-              inspections, and maintain tools in a safe and serviceable condition. This is assessed
-              through practical observation and professional discussion.
+          <ConceptBlock title="PAT Testing — Portable Appliance Testing">
+            <p>
+              PAT testing is a process of routine inspection and testing of electrical equipment to
+              ensure it is safe for continued use. While there is no specific legal requirement for
+              PAT testing, the EAWR 1989 (Reg 4(2)) requires that equipment is maintained to prevent
+              danger, and PAT testing is the established means of demonstrating compliance.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection:</strong> Plug, flex, casing, strain relief, ventilation —
+                carried out at every formal inspection
+              </li>
+              <li>
+                <strong>Earth continuity (Class I):</strong> Test between the earth pin of the plug
+                and any accessible metal part — pass: ≤0.1 Ω for power tools
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> Test between live/neutral connected together
+                and earth — pass: ≥1 MΩ
+              </li>
+              <li>
+                <strong>Functional test:</strong> Operate the tool and check for correct function,
+                unusual noise, vibration or heat
+              </li>
+              <li>
+                <strong>Frequency:</strong> Depends on equipment type and environment — IET Code of
+                Practice recommends risk-based intervals
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock
+            title="Tool Storage and Maintenance"
+            onSite="The maintenance technician standard requires you to select and use the correct tools and equipment for the task, carry out pre-use inspections, and maintain tools in a safe and serviceable condition. This is assessed through practical observation and professional discussion."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Storage:</strong> Keep tools clean and dry. Store insulated tools in
+                purpose-made rolls or cases to protect insulation
+              </li>
+              <li>
+                <strong>Cleaning:</strong> Wipe insulated tools with a damp cloth only — never use
+                solvents which can degrade the insulation
+              </li>
+              <li>
+                <strong>Sharpening:</strong> Cable strippers and knives should be kept sharp — blunt
+                tools require more force and increase the risk of slipping
+              </li>
+              <li>
+                <strong>Replacement:</strong> Replace any tool with damaged insulation, worn jaws,
+                cracked handles or any other defect that could compromise safety
+              </li>
+              <li>
+                <strong>Personal responsibility:</strong> Your tools are your personal safety
+                equipment. Maintain them to the same standard as PPE
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Calibration and Record-Keeping */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Calibration, Pre-Use Inspection and Record-Keeping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Calibration and records</ContentEyebrow>
+
+          <ConceptBlock title="Calibration, Pre-Use Inspection and Record-Keeping">
             <p>
               The accuracy and reliability of electrical test instruments directly affect safety
               decisions and compliance with BS 7671. An instrument that reads incorrectly could lead
@@ -864,202 +714,158 @@ const MOETModule1Section2_2 = () => {
               not reflect the true condition of the installation. Calibration, regular inspection
               and proper record-keeping are therefore essential professional practices.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calibration Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency:</strong> Typically annually, or as specified by the
-                  manufacturer and company policy
-                </li>
-                <li className="pl-1">
-                  <strong>Standard:</strong> Calibration should be traceable to national standards
-                  via a UKAS-accredited laboratory
-                </li>
-                <li className="pl-1">
-                  <strong>Certificate:</strong> A calibration certificate should be issued detailing
-                  the tests performed, results and uncertainties
-                </li>
-                <li className="pl-1">
-                  <strong>Label:</strong> Instruments should be labelled with the calibration date
-                  and next due date
-                </li>
-                <li className="pl-1">
-                  <strong>Out of tolerance:</strong> If calibration reveals the instrument was out
-                  of tolerance, all results obtained since the last valid calibration must be
-                  reviewed
-                </li>
-                <li className="pl-1">
-                  <strong>Interim checks:</strong> Between formal calibrations, regular checks
-                  against known references help identify drift
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Calibration Requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency:</strong> Typically annually, or as specified by the manufacturer
+                and company policy
+              </li>
+              <li>
+                <strong>Standard:</strong> Calibration should be traceable to national standards via
+                a UKAS-accredited laboratory
+              </li>
+              <li>
+                <strong>Certificate:</strong> A calibration certificate should be issued detailing
+                the tests performed, results and uncertainties
+              </li>
+              <li>
+                <strong>Label:</strong> Instruments should be labelled with the calibration date and
+                next due date
+              </li>
+              <li>
+                <strong>Out of tolerance:</strong> If calibration reveals the instrument was out of
+                tolerance, all results obtained since the last valid calibration must be reviewed
+              </li>
+              <li>
+                <strong>Interim checks:</strong> Between formal calibrations, regular checks against
+                known references help identify drift
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Use Inspection Checklist — Test Instruments
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Calibration label in date</li>
-                <li className="pl-1">
-                  Casing undamaged — no cracks, missing parts or ingress of moisture
-                </li>
-                <li className="pl-1">
-                  Battery level adequate (check indicator or test known reference)
-                </li>
-                <li className="pl-1">
-                  Test leads undamaged — insulation intact, no exposed conductors, probes not bent
-                </li>
-                <li className="pl-1">Fuses in test leads intact (carry spares)</li>
-                <li className="pl-1">Probe tips within specification (4 mm max exposed)</li>
-                <li className="pl-1">Finger guards present and secure on probes</li>
-                <li className="pl-1">Function selection correct for the measurement to be taken</li>
-                <li className="pl-1">
-                  Zero/null the instrument where applicable (continuity testing)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Pre-Use Inspection Checklist — Test Instruments">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Calibration label in date</li>
+              <li>Casing undamaged — no cracks, missing parts or ingress of moisture</li>
+              <li>Battery level adequate (check indicator or test known reference)</li>
+              <li>
+                Test leads undamaged — insulation intact, no exposed conductors, probes not bent
+              </li>
+              <li>Fuses in test leads intact (carry spares)</li>
+              <li>Probe tips within specification (4 mm max exposed)</li>
+              <li>Finger guards present and secure on probes</li>
+              <li>Function selection correct for the measurement to be taken</li>
+              <li>Zero/null the instrument where applicable (continuity testing)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Record-Keeping and Traceability
-              </p>
-              <p className="text-sm text-white">
-                BS 7671 requires that test results are recorded on the appropriate certification
-                documents (Electrical Installation Certificate, Minor Works Certificate, or
-                Electrical Installation Condition Report). The serial number of the test instrument
-                used should be recorded on the certificate, providing traceability between the
-                result and the calibrated instrument. If the instrument is subsequently found to be
-                out of calibration, all affected certificates can be identified and the results
-                verified.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common Pre-Use Inspection Failures
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The following defects are frequently found during audits and have contributed to
-                incidents:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Non-compliant test leads:</strong> Using standard (non-GS38) leads with
-                  long exposed tips and no finger guards
-                </li>
-                <li className="pl-1">
-                  <strong>Missing or blown fuses in leads:</strong> Some users replace blown fuses
-                  with wire or foil — creating a direct short-circuit hazard
-                </li>
-                <li className="pl-1">
-                  <strong>Expired calibration:</strong> Instruments used months or years beyond
-                  their calibration due date
-                </li>
-                <li className="pl-1">
-                  <strong>No proving unit carried:</strong> Relying on 'finding a known live socket'
-                  rather than carrying a dedicated proving unit
-                </li>
-                <li className="pl-1">
-                  <strong>Damaged insulation on leads:</strong> Taped-up or heat-shrunk repairs to
-                  test leads — leads should be replaced, not repaired
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Your test instruments and leads are safety-critical
-              equipment. Treat them with the same respect as PPE — inspect before every use,
-              maintain them properly, keep calibration current, and replace them when they are
-              damaged or worn. A professional electrician is only as reliable as their instruments.
+          <ConceptBlock title="Record-Keeping and Traceability">
+            <p>
+              BS 7671 requires that test results are recorded on the appropriate certification
+              documents (Electrical Installation Certificate, Minor Works Certificate, or Electrical
+              Installation Condition Report). The serial number of the test instrument used should
+              be recorded on the certificate, providing traceability between the result and the
+              calibrated instrument. If the instrument is subsequently found to be out of
+              calibration, all affected certificates can be identified and the results verified.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">GS38 Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Two-pole voltage indicator preferred</li>
-                  <li>Prove-test-prove procedure</li>
-                  <li>4 mm max exposed tip on probes</li>
-                  <li>Fused leads (≤500 mA)</li>
-                  <li>Finger guards on probes</li>
+          <CommonMistake
+            title="Common pre-use inspection failures"
+            whatHappens={
+              <>
+                <p>
+                  The following defects are frequently found during audits and have contributed to
+                  incidents:
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                  <li>
+                    <strong>Non-compliant test leads:</strong> Using standard (non-GS38) leads with
+                    long exposed tips and no finger guards
+                  </li>
+                  <li>
+                    <strong>Missing or blown fuses in leads:</strong> Some users replace blown fuses
+                    with wire or foil — creating a direct short-circuit hazard
+                  </li>
+                  <li>
+                    <strong>Expired calibration:</strong> Instruments used months or years beyond
+                    their calibration due date
+                  </li>
+                  <li>
+                    <strong>No proving unit carried:</strong> Relying on &apos;finding a known live
+                    socket&apos; rather than carrying a dedicated proving unit
+                  </li>
+                  <li>
+                    <strong>Damaged insulation on leads:</strong> Taped-up or heat-shrunk repairs to
+                    test leads — leads should be replaced, not repaired
+                  </li>
                 </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>GS38 — Electrical test equipment guidance</li>
-                  <li>BS EN 60900 — Insulated hand tools</li>
-                  <li>BS EN 61010 — Test instrument safety</li>
-                  <li>BS EN 61557 — Installation testing instruments</li>
-                  <li>ST1426 — Maintenance technician KSBs</li>
-                </ul>
-              </div>
+              </>
+            }
+            doInstead={
+              <>
+                Your test instruments and leads are safety-critical equipment. Treat them with the
+                same respect as PPE — inspect before every use, maintain them properly, keep
+                calibration current, and replace them when they are damaged or worn. A professional
+                electrician is only as reliable as their instruments.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Quick reference"
+            points={[
+              'GS38 essentials: two-pole voltage indicator preferred, the prove-test-prove procedure, 4 mm max exposed tip on probes, fused leads (≤500 mA), finger guards on probes.',
+              'Key references: GS38 — electrical test equipment guidance; BS EN 60900 — insulated hand tools; BS EN 61010 — test instrument safety; BS EN 61557 — installation testing instruments; ST1426 — maintenance technician KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Safe use of tools and test equipment knowledge check"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Dangers of Electricity
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Personal Protective Equipment
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Dangers of Electricity
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-3">
-              Next: PPE
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

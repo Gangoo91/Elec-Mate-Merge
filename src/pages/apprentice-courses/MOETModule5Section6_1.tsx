@@ -1,8 +1,44 @@
-import { ArrowLeft, Network, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 6 · Subsection 1 — Fieldbus and Profibus Systems
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only a statement that already appears verbatim in the brief's
+ * verified lists for other modules — and that genuinely fits this page's
+ * content — is used here.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * page had no "Quick Reference" block (unlike its sibling pages), so
+ * KeyTakeaways here condenses facts already stated in the body prose rather
+ * than a separate summary box.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fieldbus and Profibus Systems - MOET Module 5 Section 6.1';
@@ -53,9 +89,9 @@ const quickCheckQuestions = [
     id: 'gsd-file-purpose',
     question: 'What is a GSD file and why is it needed during Profibus commissioning?',
     options: [
-      "A General Specification Datasheet listing the recommended spare parts for the device",
+      'A General Specification Datasheet listing the recommended spare parts for the device',
       "A General Station Description file of the device's parameters, used by the PLC or DCS",
-      "A Global System Diagnostic log that records every single fault the device has reported",
+      'A Global System Diagnostic log that records every single fault the device has reported',
       "A Generic Setup Data file that stores the commissioning engineer's preferred settings",
     ],
     correctIndex: 1,
@@ -188,12 +224,7 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the maximum cable length for a Profibus DP segment at 1.5 Mbit/s?',
-    options: [
-      '1200 metres',
-      '400 metres',
-      '200 metres',
-      '100 metres',
-    ],
+    options: ['1200 metres', '400 metres', '200 metres', '100 metres'],
     correctAnswer: 2,
     explanation:
       'At 1.5 Mbit/s (the most common industrial speed), the maximum segment length is 200 metres using Type A cable. Longer distances require repeaters. At lower speeds the cable can be longer (e.g., 1200 m at 93.75 kbit/s), and at higher speeds it must be shorter (100 m at 12 Mbit/s).',
@@ -257,124 +288,72 @@ const faqs = [
 ];
 
 const MOETModule5Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Network className="h-4 w-4" />
-            <span>Module 5.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fieldbus and Profibus Systems
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.6 · Subsection 1"
+        title="Fieldbus and Profibus Systems"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Digital serial communication networks replacing analogue wiring in process and factory
-            automation
+            automation.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fieldbus</strong> replaces individual 4-20 mA wiring with a shared digital
-                cable carrying multiple device signals
-              </li>
-              <li className="pl-1">
-                <strong>Profibus DP</strong> uses RS-485 at up to 12 Mbit/s for fast I/O exchange
-                with drives and remote I/O
-              </li>
-              <li className="pl-1">
-                <strong>Profibus PA</strong> uses MBP at 31.25 kbit/s for intrinsically safe process
-                instrumentation
-              </li>
-              <li className="pl-1">
-                <strong>Termination</strong>, correct cabling, and GSD files are critical for
-                reliable operation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Using Profibus analysers to measure signal quality
-                and identify failing devices
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Importing GSD files, setting station addresses,
-                verifying bus communication
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Matching device type, GSD version, address, and
-                connector wiring
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to industrial networking and communication knowledge
-                requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Fieldbus replaces individual 4-20 mA wiring with a shared digital cable carrying multiple device signals.',
+              'Profibus DP uses RS-485 at up to 12 Mbit/s for fast I/O exchange with drives and remote I/O.',
+              'Profibus PA uses MBP at 31.25 kbit/s for intrinsically safe process instrumentation.',
+              'Termination, correct cabling, and GSD files are critical for reliable operation.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the concept of fieldbus communication and its advantages over analogue wiring',
               'Describe Profibus DP and PA protocols, physical layers, and typical applications',
               'Identify network components: cables, connectors, terminators, repeaters, and couplers',
               'Configure devices using GSD files and station address assignment',
               'Troubleshoot common Profibus faults using dedicated analysers',
               'Compare Profibus with Foundation Fieldbus, DeviceNet, and HART',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> using Profibus analysers to measure signal quality
+                and identify failing devices.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> importing GSD files, setting station addresses,
+                verifying bus communication.
+              </li>
+              <li>
+                <strong>Replacement:</strong> matching device type, GSD version, address, and
+                connector wiring.
+              </li>
+              <li>
+                <strong>ST1426:</strong> maps to industrial networking and communication knowledge
+                requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fieldbus Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Fieldbus fundamentals</ContentEyebrow>
+
+          <ConceptBlock
+            title="Fieldbus fundamentals"
+            onSite="When working on a fieldbus installation for the first time, always obtain the network documentation showing the bus topology, device list with addresses, cable routing, and termination locations. Without this, systematic fault-finding is extremely difficult."
+          >
             <p>
               Traditional process instrumentation uses individual 4-20 mA analogue signals — one
               pair of wires per instrument running back to the control room. For a plant with
@@ -383,90 +362,74 @@ const MOETModule5Section6_1 = () => {
               communication network where multiple devices share a single cable, dramatically
               reducing wiring, installation cost, and commissioning time.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Benefits Beyond Wiring Reduction
-              </p>
-              <p className="text-sm text-white mb-3">
-                Fieldbus communication provides substantial advantages over traditional analogue
-                wiring for both new installations and plant upgrades:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Diagnostic data:</strong> Intelligent field devices report their health
-                  status, fault codes, and configuration back to the control system
-                </li>
-                <li className="pl-1">
-                  <strong>Remote configuration:</strong> Change ranges, engineering units, damping,
-                  and alarm limits from the control room without visiting the device
-                </li>
-                <li className="pl-1">
-                  <strong>Multi-variable transmission:</strong> A single device can report multiple
-                  process variables (e.g., a Coriolis meter reports mass flow, density, and
-                  temperature)
-                </li>
-                <li className="pl-1">
-                  <strong>Higher data integrity:</strong> Digital signals are less susceptible to
-                  noise and earth loops than analogue signals
-                </li>
-                <li className="pl-1">
-                  <strong>Reduced I/O cards:</strong> One fieldbus interface card replaces multiple
-                  analogue input cards
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Major Fieldbus Standards
-              </p>
-              <p className="text-sm text-white mb-3">
-                Several fieldbus standards exist for different applications and industries, all
-                defined under the IEC 61158 umbrella:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Profibus (IEC 61158 Type 3):</strong> The most widely installed fieldbus
-                  in Europe and process industries worldwide
-                </li>
-                <li className="pl-1">
-                  <strong>Foundation Fieldbus (IEC 61158 Type 1):</strong> Strong in the Americas
-                  and the Middle East, supports distributed control in field devices
-                </li>
-                <li className="pl-1">
-                  <strong>DeviceNet (based on CAN):</strong> Common in factory automation,
-                  particularly in Rockwell Automation ecosystems
-                </li>
-                <li className="pl-1">
-                  <strong>AS-Interface:</strong> A simple, low-cost solution for connecting binary
-                  sensors and actuators at the lowest field level
-                </li>
-                <li className="pl-1">
-                  <strong>Modbus RTU/ASCII (RS-485):</strong> An older but still widely used serial
-                  protocol for simple device communication
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> When working on a fieldbus installation for the
-              first time, always obtain the network documentation showing the bus topology, device
-              list with addresses, cable routing, and termination locations. Without this,
-              systematic fault-finding is extremely difficult.
+          <ConceptBlock title="Benefits beyond wiring reduction">
+            <p>
+              Fieldbus communication provides substantial advantages over traditional analogue
+              wiring for both new installations and plant upgrades:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Diagnostic data:</strong> intelligent field devices report their health
+                status, fault codes, and configuration back to the control system.
+              </li>
+              <li>
+                <strong>Remote configuration:</strong> change ranges, engineering units, damping,
+                and alarm limits from the control room without visiting the device.
+              </li>
+              <li>
+                <strong>Multi-variable transmission:</strong> a single device can report multiple
+                process variables (e.g., a Coriolis meter reports mass flow, density, and
+                temperature).
+              </li>
+              <li>
+                <strong>Higher data integrity:</strong> digital signals are less susceptible to
+                noise and earth loops than analogue signals.
+              </li>
+              <li>
+                <strong>Reduced I/O cards:</strong> one fieldbus interface card replaces multiple
+                analogue input cards.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Major fieldbus standards">
+            <p>
+              Several fieldbus standards exist for different applications and industries, all
+              defined under the IEC 61158 umbrella:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Profibus (IEC 61158 Type 3):</strong> the most widely installed fieldbus in
+                Europe and process industries worldwide.
+              </li>
+              <li>
+                <strong>Foundation Fieldbus (IEC 61158 Type 1):</strong> strong in the Americas and
+                the Middle East, supports distributed control in field devices.
+              </li>
+              <li>
+                <strong>DeviceNet (based on CAN):</strong> common in factory automation,
+                particularly in Rockwell Automation ecosystems.
+              </li>
+              <li>
+                <strong>AS-Interface:</strong> a simple, low-cost solution for connecting binary
+                sensors and actuators at the lowest field level.
+              </li>
+              <li>
+                <strong>Modbus RTU/ASCII (RS-485):</strong> an older but still widely used serial
+                protocol for simple device communication.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Profibus DP — Decentralised Periphery
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Profibus DP — decentralised periphery</ContentEyebrow>
+
+          <ConceptBlock title="Profibus DP — decentralised periphery">
             <p>
               Profibus DP is designed for fast, cyclic data exchange between controllers and
               distributed I/O modules, variable speed drives, and intelligent field devices. It uses
@@ -474,140 +437,108 @@ const MOETModule5Section6_1 = () => {
               controller (PLC or DCS) polls slave devices in a cyclic manner, exchanging I/O data in
               each scan cycle.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Master-Slave Architecture
-              </p>
-              <p className="text-sm text-white mb-3">
-                The Profibus DP network operates on a master-slave principle with two classes of
-                master:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Class 1 Master (controller):</strong> The PLC or DCS that cyclically polls
-                  each slave for its I/O data — this is the main controller running the process
-                </li>
-                <li className="pl-1">
-                  <strong>Class 2 Master (engineering tool):</strong> An engineering workstation or
-                  diagnostic tool that accesses devices for configuration, parameterisation, and
-                  diagnostics
-                </li>
-                <li className="pl-1">
-                  <strong>Slave devices:</strong> Remote I/O modules, drives, transmitters, valve
-                  positioners — each with a unique station address (1 to 126)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Profibus DP Speed vs Cable Length
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Baud Rate</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Max Segment Length
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">93.75 kbit/s</td>
-                      <td className="border border-white/10 px-3 py-2">1200 m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Long distances, slow processes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">187.5 kbit/s</td>
-                      <td className="border border-white/10 px-3 py-2">1000 m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process automation backbone
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">500 kbit/s</td>
-                      <td className="border border-white/10 px-3 py-2">400 m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium-speed applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5 Mbit/s</td>
-                      <td className="border border-white/10 px-3 py-2">200 m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common industrial speed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12 Mbit/s</td>
-                      <td className="border border-white/10 px-3 py-2">100 m</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-speed drives, motion
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Repeaters can extend the total network length. Up to 32 stations per segment; 127
-                total with repeaters.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                GSD Files and Commissioning
-              </p>
-              <p className="text-sm text-white mb-3">
-                Each Profibus device type has a GSD (General Station Description) file provided by
-                the manufacturer. This file must be imported into the master's configuration tool
-                before the device can be used:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  The GSD file describes the device's supported data types, diagnostic capabilities,
-                  and communication parameters
-                </li>
-                <li className="pl-1">
-                  Station addresses (1-126) are set via DIP switches, rotary selectors, or software
-                  during commissioning
-                </li>
-                <li className="pl-1">
-                  Each device must have a unique address — duplicate addresses cause bus collisions
-                  and communication failures
-                </li>
-                <li className="pl-1">
-                  Always use the correct GSD version for the firmware installed on the device
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When replacing a Profibus slave device, ensure the new
-              device has the same (or compatible) GSD file, set the correct station address, and
-              verify the module configuration matches the master's expectations. A mismatch will
-              prevent communication.
+          <ConceptBlock title="Master-slave architecture">
+            <p>
+              The Profibus DP network operates on a master-slave principle with two classes of
+              master:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Class 1 Master (controller):</strong> the PLC or DCS that cyclically polls
+                each slave for its I/O data — this is the main controller running the process.
+              </li>
+              <li>
+                <strong>Class 2 Master (engineering tool):</strong> an engineering workstation or
+                diagnostic tool that accesses devices for configuration, parameterisation, and
+                diagnostics.
+              </li>
+              <li>
+                <strong>Slave devices:</strong> remote I/O modules, drives, transmitters, valve
+                positioners — each with a unique station address (1 to 126).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Profibus DP speed vs cable length">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Baud rate</th>
+                    <th className="py-2 pr-4 font-medium text-white">Max segment length</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">93.75 kbit/s</td>
+                    <td className="py-2 pr-4">1200 m</td>
+                    <td className="py-2">Long distances, slow processes</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">187.5 kbit/s</td>
+                    <td className="py-2 pr-4">1000 m</td>
+                    <td className="py-2">Process automation backbone</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">500 kbit/s</td>
+                    <td className="py-2 pr-4">400 m</td>
+                    <td className="py-2">Medium-speed applications</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">1.5 Mbit/s</td>
+                    <td className="py-2 pr-4">200 m</td>
+                    <td className="py-2">Most common industrial speed</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">12 Mbit/s</td>
+                    <td className="py-2 pr-4">100 m</td>
+                    <td className="py-2">High-speed drives, motion</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[13px]">
+              Repeaters can extend the total network length. Up to 32 stations per segment; 127
+              total with repeaters.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Profibus PA — Process Automation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="GSD files and commissioning"
+            onSite="When replacing a Profibus slave device, ensure the new device has the same (or compatible) GSD file, set the correct station address, and verify the module configuration matches the master's expectations. A mismatch will prevent communication."
+          >
+            <p>
+              Each Profibus device type has a GSD (General Station Description) file provided by the
+              manufacturer. This file must be imported into the master&apos;s configuration tool
+              before the device can be used:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                The GSD file describes the device&apos;s supported data types, diagnostic
+                capabilities, and communication parameters.
+              </li>
+              <li>
+                Station addresses (1-126) are set via DIP switches, rotary selectors, or software
+                during commissioning.
+              </li>
+              <li>
+                Each device must have a unique address — duplicate addresses cause bus collisions
+                and communication failures.
+              </li>
+              <li>Always use the correct GSD version for the firmware installed on the device.</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Profibus PA — process automation</ContentEyebrow>
+
+          <ConceptBlock title="Profibus PA — process automation">
             <p>
               Profibus PA is designed specifically for process instrumentation in potentially
               hazardous (explosive) areas. It uses MBP (Manchester Bus Powered) technology at 31.25
@@ -615,317 +546,258 @@ const MOETModule5Section6_1 = () => {
               intrinsically safe operation in Ex zones — a fundamental requirement for chemical
               plants, refineries, and gas processing facilities.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Physical Layer Differences
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">MBP signalling at 31.25 kbit/s (fixed speed)</li>
-                  <li className="pl-1">Power and data on the same two wires</li>
-                  <li className="pl-1">Bus-powered devices (typically 10-15 mA per device)</li>
-                  <li className="pl-1">Trunk and spur topology with field junction boxes</li>
-                  <li className="pl-1">Maximum trunk length depends on Ex certification</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">DP/PA Integration</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">PA segments connect to DP backbone via couplers or links</li>
-                  <li className="pl-1">DP/PA coupler — transparent protocol conversion</li>
-                  <li className="pl-1">DP/PA link — adds buffering and diagnostics</li>
-                  <li className="pl-1">Segment power supply provides bus power to PA devices</li>
-                  <li className="pl-1">Each PA segment is a separate intrinsic safety entity</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Physical layer differences">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>MBP signalling at 31.25 kbit/s (fixed speed).</li>
+              <li>Power and data on the same two wires.</li>
+              <li>Bus-powered devices (typically 10-15 mA per device).</li>
+              <li>Trunk and spur topology with field junction boxes.</li>
+              <li>Maximum trunk length depends on Ex certification.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Hazardous Area Consideration
-              </p>
-              <p className="text-sm text-white">
-                Profibus PA installations in hazardous areas must comply with the ATEX Directive (in
-                the UK, the Equipment and Protective Systems Intended for Use in Potentially
-                Explosive Atmospheres Regulations). The entity concept is used to verify that the
-                total cable capacitance, inductance, and number of devices on each PA segment remain
-                within the certified limits. Exceeding these limits invalidates the intrinsic safety
-                certification and creates an explosion risk.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="DP/PA integration">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>PA segments connect to DP backbone via couplers or links.</li>
+              <li>DP/PA coupler — transparent protocol conversion.</li>
+              <li>DP/PA link — adds buffering and diagnostics.</li>
+              <li>Segment power supply provides bus power to PA devices.</li>
+              <li>Each PA segment is a separate intrinsic safety entity.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Hazardous area consideration">
+            <p>
+              Profibus PA installations in hazardous areas must comply with the ATEX Directive (in
+              the UK, the Equipment and Protective Systems Intended for Use in Potentially Explosive
+              Atmospheres Regulations). The entity concept is used to verify that the total cable
+              capacitance, inductance, and number of devices on each PA segment remain within the
+              certified limits. Exceeding these limits invalidates the intrinsic safety
+              certification and creates an explosion risk.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Network Installation and Cabling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Network installation and cabling</ContentEyebrow>
+
+          <ConceptBlock
+            title="Network installation and cabling"
+            onSite="Keep a Profibus connector removal tool in your kit. The DB9 connectors have a specific A/B wiring orientation that must be maintained. When replacing a connector, always photograph the existing wiring before disconnecting, and verify the termination switch position matches the network documentation."
+          >
             <p>
               Correct installation is critical for reliable Profibus operation. The majority of
               Profibus faults in the field are caused by cabling and installation errors rather than
               device failures. Following the cabling standards precisely prevents the vast majority
               of communication problems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Profibus DP Cabling Rules
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable type:</strong> Purple Type A shielded twisted pair, 150 ohm
-                  impedance (IEC 61158)
-                </li>
-                <li className="pl-1">
-                  <strong>Topology:</strong> Linear bus — devices connect via T-connectors or spur
-                  cables (maximum 6.6 m spurs)
-                </li>
-                <li className="pl-1">
-                  <strong>Termination:</strong> Active termination resistors (390/220/390 ohm
-                  network) at both physical ends of each segment — and nowhere else
-                </li>
-                <li className="pl-1">
-                  <strong>Shielding:</strong> Continuous cable shield with proper earthing at one
-                  point per segment to avoid earth loops
-                </li>
-                <li className="pl-1">
-                  <strong>Connectors:</strong> Use genuine Profibus connectors (DB9 or M12) with
-                  built-in termination switches
-                </li>
-                <li className="pl-1">
-                  <strong>Separation:</strong> Maintain at least 200 mm separation from power
-                  cables; cross at 90 degrees where necessary
-                </li>
-              </ul>
+          <ConceptBlock title="Profibus DP cabling rules">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable type:</strong> purple Type A shielded twisted pair, 150 ohm impedance
+                (IEC 61158).
+              </li>
+              <li>
+                <strong>Topology:</strong> linear bus — devices connect via T-connectors or spur
+                cables (maximum 6.6 m spurs).
+              </li>
+              <li>
+                <strong>Termination:</strong> active termination resistors (390/220/390 ohm network)
+                at both physical ends of each segment — and nowhere else.
+              </li>
+              <li>
+                <strong>Shielding:</strong> continuous cable shield with proper earthing at one
+                point per segment to avoid earth loops.
+              </li>
+              <li>
+                <strong>Connectors:</strong> use genuine Profibus connectors (DB9 or M12) with
+                built-in termination switches.
+              </li>
+              <li>
+                <strong>Separation:</strong> maintain at least 200 mm separation from power cables;
+                cross at 90 degrees where necessary.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common installation errors">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Error</th>
+                    <th className="py-2 pr-4 font-medium text-white">Symptom</th>
+                    <th className="py-2 font-medium text-white">How to detect</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Missing termination</td>
+                    <td className="py-2 pr-4">Intermittent comms failures</td>
+                    <td className="py-2">Analyser shows reflections</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Extra termination (middle of bus)</td>
+                    <td className="py-2 pr-4">Low signal levels</td>
+                    <td className="py-2">Analyser shows reduced amplitude</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Swapped A/B data lines</td>
+                    <td className="py-2 pr-4">Device does not communicate</td>
+                    <td className="py-2">Check wiring at connector</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Duplicate address</td>
+                    <td className="py-2 pr-4">Both devices intermittently fail</td>
+                    <td className="py-2">Live list shows conflicts</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Damaged cable</td>
+                    <td className="py-2 pr-4">Reduced signal amplitude</td>
+                    <td className="py-2">TDR or analyser waveform</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Shield discontinuity</td>
+                    <td className="py-2 pr-4">Noise-related errors</td>
+                    <td className="py-2">Continuity test on screen</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Installation Errors
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Error</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptom</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">How to Detect</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Missing termination</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Intermittent comms failures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Analyser shows reflections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extra termination (middle of bus)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Low signal levels</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Analyser shows reduced amplitude
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Swapped A/B data lines</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Device does not communicate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check wiring at connector
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Duplicate address</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both devices intermittently fail
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Live list shows conflicts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Damaged cable</td>
-                      <td className="border border-white/10 px-3 py-2">Reduced signal amplitude</td>
-                      <td className="border border-white/10 px-3 py-2">TDR or analyser waveform</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Shield discontinuity</td>
-                      <td className="border border-white/10 px-3 py-2">Noise-related errors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuity test on screen
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Keep a Profibus connector removal tool in your kit.
-              The DB9 connectors have a specific A/B wiring orientation that must be maintained.
-              When replacing a connector, always photograph the existing wiring before
-              disconnecting, and verify the termination switch position matches the network
-              documentation.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ContentEyebrow>Troubleshooting with Profibus analysers</ContentEyebrow>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Troubleshooting with Profibus Analysers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Troubleshooting with Profibus analysers"
+            onSite="Under ST1426, maintenance technicians are expected to understand fieldbus communication principles, identify fieldbus components, carry out basic fault-finding using appropriate test equipment, and replace faulty devices following correct procedures for the bus type and hazardous area classification."
+          >
             <p>
               Systematic troubleshooting of Profibus networks requires dedicated test equipment. A
               standard multimeter can confirm voltage and continuity, but cannot assess signal
               quality, timing, or protocol-level errors. Profibus analysers are purpose-built tools
               that every maintenance technician working with fieldbus should be familiar with.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What a Profibus Analyser Measures
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Signal amplitude:</strong> Peak-to-peak voltage of the bus signal (should
-                  be greater than 4V for DP, typically 6-7V)
-                </li>
-                <li className="pl-1">
-                  <strong>Signal symmetry:</strong> The positive and negative halves of the waveform
-                  should be balanced
-                </li>
-                <li className="pl-1">
-                  <strong>Noise level:</strong> Interference on the bus measured between valid
-                  telegrams
-                </li>
-                <li className="pl-1">
-                  <strong>Rise/fall times:</strong> Signal edges must meet timing specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Live list:</strong> All active devices, their communication status, retry
-                  counts, and diagnostic flags
-                </li>
-                <li className="pl-1">
-                  <strong>Topology map:</strong> Physical layout of devices on the bus showing cable
-                  lengths
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What a Profibus analyser measures">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Signal amplitude:</strong> peak-to-peak voltage of the bus signal (should be
+                greater than 4V for DP, typically 6-7V).
+              </li>
+              <li>
+                <strong>Signal symmetry:</strong> the positive and negative halves of the waveform
+                should be balanced.
+              </li>
+              <li>
+                <strong>Noise level:</strong> interference on the bus measured between valid
+                telegrams.
+              </li>
+              <li>
+                <strong>Rise/fall times:</strong> signal edges must meet timing specifications.
+              </li>
+              <li>
+                <strong>Live list:</strong> all active devices, their communication status, retry
+                counts, and diagnostic flags.
+              </li>
+              <li>
+                <strong>Topology map:</strong> physical layout of devices on the bus showing cable
+                lengths.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Preventive Maintenance
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Annual bus health check with analyser</li>
-                  <li className="pl-1">Trend signal quality over time</li>
-                  <li className="pl-1">Identify degrading connections early</li>
-                  <li className="pl-1">Document baseline readings for comparison</li>
-                  <li className="pl-1">Check all termination switches during inspections</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Popular Analyser Tools
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Procentec ProfiTrace — portable bus analysis</li>
-                  <li className="pl-1">Softing BC-600-PB — comprehensive diagnostics</li>
-                  <li className="pl-1">Siemens Diagnostic Repeater — permanent monitoring</li>
-                  <li className="pl-1">Indu-Sol PB-Qone — signal quality testing</li>
-                  <li className="pl-1">Endress+Hauser FieldCare — device configuration</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Preventive maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Annual bus health check with analyser.</li>
+              <li>Trend signal quality over time.</li>
+              <li>Identify degrading connections early.</li>
+              <li>Document baseline readings for comparison.</li>
+              <li>Check all termination switches during inspections.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Consideration</p>
-              <p className="text-sm text-white">
-                Before connecting test equipment to a live Profibus PA segment in a hazardous area,
-                verify that the test equipment is certified for use in the relevant Ex zone.
-                Connecting uncertified equipment to an intrinsically safe bus segment can compromise
-                the safety integrity of the entire segment, creating an explosion risk. Always check
-                the test equipment's ATEX or IECEx certification before use.
-              </p>
-            </div>
+          <ConceptBlock title="Popular analyser tools">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Procentec ProfiTrace — portable bus analysis.</li>
+              <li>Softing BC-600-PB — comprehensive diagnostics.</li>
+              <li>Siemens Diagnostic Repeater — permanent monitoring.</li>
+              <li>Indu-Sol PB-Qone — signal quality testing.</li>
+              <li>Endress+Hauser FieldCare — device configuration.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand fieldbus communication principles, identify fieldbus components, carry out
-              basic fault-finding using appropriate test equipment, and replace faulty devices
-              following correct procedures for the bus type and hazardous area classification.
+          <ConceptBlock title="Safety consideration">
+            <p>
+              Before connecting test equipment to a live Profibus PA segment in a hazardous area,
+              verify that the test equipment is certified for use in the relevant Ex zone.
+              Connecting uncertified equipment to an intrinsically safe bus segment can compromise
+              the safety integrity of the entire segment, creating an explosion risk. Always check
+              the test equipment&apos;s ATEX or IECEx certification before use.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Fieldbus replaces individual analogue wiring with a shared digital cable carrying multiple device signals, diagnostics and remote configuration.',
+              'Profibus DP: RS-485, up to 12 Mbit/s, purple Type A shielded twisted pair, 150 ohm, up to 32 stations per segment (127 with repeaters).',
+              'Profibus PA: MBP at a fixed 31.25 kbit/s, power and data on two wires, for intrinsically safe operation in Ex zones.',
+              'A GSD file is required for the master to configure each device; station addresses (1-126) must be unique.',
+              'Termination resistors belong only at both physical ends of a segment — nowhere else.',
+              'A dedicated Profibus analyser, not a multimeter, is the correct tool for signal-quality and protocol-level fault-finding.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6-2">
-              Next: Industrial Ethernet
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section6')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Networking and Industrial Communication
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section6-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Industrial Ethernet
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

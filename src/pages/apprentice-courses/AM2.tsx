@@ -1,17 +1,84 @@
-import { BookOpen, Shield, Wrench, TestTube, Search, Monitor, Trophy, Award } from 'lucide-react';
+import {
+  BookOpen,
+  Shield,
+  Wrench,
+  TestTube,
+  Search,
+  Monitor,
+  Trophy,
+  Award,
+  BookMarked,
+} from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const modules = [
-  { moduleNumber: 1, title: 'Introduction to the AM2', description: 'Purpose, structure, marking criteria and common reasons candidates fail.', icon: BookOpen, duration: '2h', link: 'module1' },
-  { moduleNumber: 2, title: 'Health, safety and documentation', description: 'Safe isolation, RAMS, drawings and paperwork under exam pressure.', icon: Shield, duration: '2h', link: 'module2' },
-  { moduleNumber: 3, title: 'Installation tasks', description: 'Cable selection, power and lighting circuits, containment and time management.', icon: Wrench, duration: '3h', link: 'module3' },
-  { moduleNumber: 4, title: 'Inspection and testing', description: 'Test sequence, instruments, certification and reporting non-compliances.', icon: TestTube, duration: '3h', link: 'module4' },
-  { moduleNumber: 5, title: 'Fault diagnosis and rectification', description: 'Logical fault-finding, test equipment use and re-testing procedures.', icon: Search, duration: '2h', link: 'module5' },
-  { moduleNumber: 6, title: 'Online knowledge test', description: 'Test format, core topics, time management and exam techniques.', icon: Monitor, duration: '1.5h', link: 'module6' },
-  { moduleNumber: 7, title: 'Exam strategy and success tips', description: 'Time management, coping with pressure and avoiding common mistakes.', icon: Trophy, duration: '1.5h', link: 'module7' },
-  { moduleNumber: 8, title: 'Full mock AM2 assessment', description: 'Simulated knowledge test with 30 questions from a 400-question bank.', icon: Award, duration: '1.5h', link: 'module8', isExam: true },
+  {
+    moduleNumber: 1,
+    title: 'Introduction to the AM2',
+    description: 'Purpose, structure, marking criteria and common reasons candidates fail.',
+    icon: BookOpen,
+    duration: '2h',
+    link: 'module1',
+  },
+  {
+    moduleNumber: 2,
+    title: 'Health, safety and documentation',
+    description: 'Safe isolation, RAMS, drawings and paperwork under exam pressure.',
+    icon: Shield,
+    duration: '2h',
+    link: 'module2',
+  },
+  {
+    moduleNumber: 3,
+    title: 'Installation tasks',
+    description: 'Cable selection, power and lighting circuits, containment and time management.',
+    icon: Wrench,
+    duration: '3h',
+    link: 'module3',
+  },
+  {
+    moduleNumber: 4,
+    title: 'Inspection and testing',
+    description: 'Test sequence, instruments, certification and reporting non-compliances.',
+    icon: TestTube,
+    duration: '3h',
+    link: 'module4',
+  },
+  {
+    moduleNumber: 5,
+    title: 'Fault diagnosis and rectification',
+    description: 'Logical fault-finding, test equipment use and re-testing procedures.',
+    icon: Search,
+    duration: '2h',
+    link: 'module5',
+  },
+  {
+    moduleNumber: 6,
+    title: 'Online knowledge test',
+    description: 'Test format, core topics, time management and exam techniques.',
+    icon: Monitor,
+    duration: '1.5h',
+    link: 'module6',
+  },
+  {
+    moduleNumber: 7,
+    title: 'Exam strategy and success tips',
+    description: 'Time management, coping with pressure and avoiding common mistakes.',
+    icon: Trophy,
+    duration: '1.5h',
+    link: 'module7',
+  },
+  {
+    moduleNumber: 8,
+    title: 'Full mock AM2 assessment',
+    description: 'Simulated knowledge test with 30 questions from a 400-question bank.',
+    icon: Award,
+    duration: '1.5h',
+    link: 'module8',
+    isExam: true,
+  },
 ];
 
 export default function AM2() {
@@ -47,6 +114,15 @@ export default function AM2() {
           index={index}
         />
       ))}
+      <ModuleCard
+        to="/study-centre/glossary?course=am2"
+        moduleNumber={modules.length + 1}
+        title="Glossary"
+        description="Every abbreviation this course uses, defined in plain English — shared across the study centre so a term means the same thing wherever you meet it."
+        icon={BookMarked}
+        duration="Reference"
+        index={modules.length}
+      />
     </CourseShell>
   );
 }

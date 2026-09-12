@@ -70,7 +70,9 @@ const LegacyStudentRedirect = () => {
 const PublicBooking = lazyWithRetry(() => import('@/pages/public/PublicBooking'));
 const AgreementSignPage = lazyWithRetry(() => import('@/pages/public/AgreementSignPage'));
 const PublicElecIdView = lazyWithRetry(() => import('@/pages/public/PublicElecIdView'));
-const SupervisorVerificationPage = lazyWithRetry(() => import('@/pages/public/SupervisorVerificationPage'));
+const SupervisorVerificationPage = lazyWithRetry(
+  () => import('@/pages/public/SupervisorVerificationPage')
+);
 const PhotoSharePage = lazyWithRetry(() => import('@/pages/public/PhotoSharePage'));
 const ScopeSharePage = lazyWithRetry(() => import('@/pages/public/ScopeSharePage'));
 const CompletionSignOffPage = lazyWithRetry(() => import('@/pages/public/CompletionSignOffPage'));
@@ -116,9 +118,13 @@ const AdminPageAnalytics = lazyWithRetry(() => import('@/pages/Admin/AdminPageAn
 const AdminVerificationQueue = lazyWithRetry(() => import('@/pages/Admin/AdminVerificationQueue'));
 const AdminRevenue = lazyWithRetry(() => import('@/pages/Admin/AdminRevenue'));
 const AdminMate = lazyWithRetry(() => import('@/pages/Admin/AdminMate'));
+const AdminColleges = lazyWithRetry(() => import('@/pages/Admin/AdminColleges'));
+const AdminEmployers = lazyWithRetry(() => import('@/pages/Admin/AdminEmployers'));
 const AdminMateUser = lazyWithRetry(() => import('@/pages/Admin/AdminMateUser'));
 const AdminEmailLogs = lazyWithRetry(() => import('@/pages/Admin/AdminEmailLogs'));
-const AdminEmployerModeration = lazyWithRetry(() => import('@/pages/Admin/AdminEmployerModeration'));
+const AdminEmployerModeration = lazyWithRetry(
+  () => import('@/pages/Admin/AdminEmployerModeration')
+);
 const AdminDataExport = lazyWithRetry(() => import('@/pages/Admin/AdminDataExport'));
 const AdminBulkCreate = lazyWithRetry(() => import('@/pages/Admin/AdminBulkCreate'));
 const AdminPricingModeration = lazyWithRetry(() => import('@/pages/Admin/AdminPricingModeration'));
@@ -127,7 +133,9 @@ const AdminFounders = lazyWithRetry(() => import('@/pages/Admin/AdminFounders'))
 const AdminTrials = lazyWithRetry(() => import('@/pages/Admin/AdminTrials'));
 const AdminWinback = lazyWithRetry(() => import('@/pages/Admin/AdminWinback'));
 const AdminIncompleteSignup = lazyWithRetry(() => import('@/pages/Admin/AdminIncompleteSignup'));
-const AdminApprenticeCampaigns = lazyWithRetry(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
+const AdminApprenticeCampaigns = lazyWithRetry(
+  () => import('@/pages/Admin/AdminApprenticeCampaigns')
+);
 const AdminOutreach = lazyWithRetry(() => import('@/pages/Admin/AdminOutreach'));
 const AdminBusinessOutreach = lazyWithRetry(() => import('@/pages/Admin/AdminBusinessOutreach'));
 const AdminColdOutreach = lazyWithRetry(() => import('@/pages/Admin/AdminColdOutreach'));
@@ -153,7 +161,9 @@ const OfstedEifPage = lazyWithRetry(() => import('@/pages/college/OfstedEifPage'
 const ComplianceHubPage = lazyWithRetry(() => import('@/pages/college/ComplianceHubPage'));
 const SarDraftPage = lazyWithRetry(() => import('@/pages/college/SarDraftPage'));
 const QipTrackerPage = lazyWithRetry(() => import('@/pages/college/QipTrackerPage'));
-const InspectionRehearsalPage = lazyWithRetry(() => import('@/pages/college/InspectionRehearsalPage'));
+const InspectionRehearsalPage = lazyWithRetry(
+  () => import('@/pages/college/InspectionRehearsalPage')
+);
 const AcDetailPage = lazyWithRetry(() => import('@/pages/college/AcDetailPage'));
 const ReportsPage = lazyWithRetry(() => import('@/pages/college/ReportsPage'));
 const EvidenceTimelinePage = lazyWithRetry(() => import('@/pages/college/EvidenceTimelinePage'));
@@ -168,28 +178,42 @@ const AiNotebookPage = lazyWithRetry(() => import('@/pages/college/AiNotebookPag
 const CohortEpaPage = lazyWithRetry(() => import('@/pages/college/CohortEpaPage'));
 const TutorQuizzesPage = lazyWithRetry(() => import('@/pages/college/TutorQuizzesPage'));
 const TutorQuizDetailPage = lazyWithRetry(() => import('@/pages/college/TutorQuizDetailPage'));
-const CurriculumSettingsPage = lazyWithRetry(() => import('@/pages/college/CurriculumSettingsPage'));
-const OperationalSettingsPage = lazyWithRetry(() => import('@/pages/college/OperationalSettingsPage'));
+const CurriculumSettingsPage = lazyWithRetry(
+  () => import('@/pages/college/CurriculumSettingsPage')
+);
+const OperationalSettingsPage = lazyWithRetry(
+  () => import('@/pages/college/OperationalSettingsPage')
+);
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazyWithRetry(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazyWithRetry(() => import('@/pages/legal/TermsOfService'));
 const CookiePolicy = lazyWithRetry(() => import('@/pages/legal/CookiePolicy'));
 const AcceptableUse = lazyWithRetry(() => import('@/pages/legal/AcceptableUse'));
-const DataProcessingAgreement = lazyWithRetry(() => import('@/pages/legal/DataProcessingAgreement'));
+const DataProcessingAgreement = lazyWithRetry(
+  () => import('@/pages/legal/DataProcessingAgreement')
+);
 const Support = lazyWithRetry(() => import('@/pages/legal/Support'));
 const RegulationSearchPage = lazyWithRetry(() => import('@/pages/tools/RegulationSearchPage'));
 const QuizPage = lazyWithRetry(() => import('@/pages/QuizPage'));
 
 // SEO Landing Pages (public, outside ProtectedRoute)
 const EICRCertificatePage = lazyWithRetry(() => import('@/pages/seo/EICRCertificatePage'));
-const CableSizingCalculatorPage = lazyWithRetry(() => import('@/pages/seo/CableSizingCalculatorPage'));
-const VoltageDropCalculatorPage = lazyWithRetry(() => import('@/pages/seo/VoltageDropCalculatorPage'));
-const MinorWorksCertificatePage = lazyWithRetry(() => import('@/pages/seo/MinorWorksCertificatePage'));
+const CableSizingCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/CableSizingCalculatorPage')
+);
+const VoltageDropCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/VoltageDropCalculatorPage')
+);
+const MinorWorksCertificatePage = lazyWithRetry(
+  () => import('@/pages/seo/MinorWorksCertificatePage')
+);
 const ElectricalTestingCalculatorsPage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalTestingCalculatorsPage')
 );
 const AIElectricianToolsPage = lazyWithRetry(() => import('@/pages/seo/AIElectricianToolsPage'));
-const EighteenthEditionCoursePage = lazyWithRetry(() => import('@/pages/seo/EighteenthEditionCoursePage'));
+const EighteenthEditionCoursePage = lazyWithRetry(
+  () => import('@/pages/seo/EighteenthEditionCoursePage')
+);
 const ApprenticeTrainingPage = lazyWithRetry(() => import('@/pages/seo/ApprenticeTrainingPage'));
 
 // SEO Landing Pages (public, outside ProtectedRoute)
@@ -197,20 +221,30 @@ const EarthLoopImpedanceCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/EarthLoopImpedanceCalculatorPage')
 );
 const MaxDemandCalculatorPage = lazyWithRetry(() => import('@/pages/seo/MaxDemandCalculatorPage'));
-const ConduitFillCalculatorPage = lazyWithRetry(() => import('@/pages/seo/ConduitFillCalculatorPage'));
+const ConduitFillCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/ConduitFillCalculatorPage')
+);
 const RCDTestingGuidePage = lazyWithRetry(() => import('@/pages/seo/RCDTestingGuidePage'));
 const EICCertificatePage = lazyWithRetry(() => import('@/pages/seo/EICCertificatePage'));
 const PATTestingPage = lazyWithRetry(() => import('@/pages/seo/PATTestingPage'));
-const EVChargerCertificatePage = lazyWithRetry(() => import('@/pages/seo/EVChargerCertificatePage'));
+const EVChargerCertificatePage = lazyWithRetry(
+  () => import('@/pages/seo/EVChargerCertificatePage')
+);
 const AM2ExamPreparationPage = lazyWithRetry(() => import('@/pages/seo/AM2ExamPreparationPage'));
-const InspectionTestingCoursePage = lazyWithRetry(() => import('@/pages/seo/InspectionTestingCoursePage'));
-const BS7671ObservationCodesPage = lazyWithRetry(() => import('@/pages/seo/BS7671ObservationCodesPage'));
+const InspectionTestingCoursePage = lazyWithRetry(
+  () => import('@/pages/seo/InspectionTestingCoursePage')
+);
+const BS7671ObservationCodesPage = lazyWithRetry(
+  () => import('@/pages/seo/BS7671ObservationCodesPage')
+);
 
 // SEO Landing Pages — Batch 2 (20 new pages)
 const EmergencyLightingCertificatePage = lazyWithRetry(
   () => import('@/pages/seo/EmergencyLightingCertificatePage')
 );
-const FireAlarmCertificatePage = lazyWithRetry(() => import('@/pages/seo/FireAlarmCertificatePage'));
+const FireAlarmCertificatePage = lazyWithRetry(
+  () => import('@/pages/seo/FireAlarmCertificatePage')
+);
 const SolarPVCertificatePage = lazyWithRetry(() => import('@/pages/seo/SolarPVCertificatePage'));
 const ProspectiveFaultCurrentCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/ProspectiveFaultCurrentCalculatorPage')
@@ -218,24 +252,46 @@ const ProspectiveFaultCurrentCalculatorPage = lazyWithRetry(
 const AdiabaticEquationCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/AdiabaticEquationCalculatorPage')
 );
-const PowerFactorCalculatorPage = lazyWithRetry(() => import('@/pages/seo/PowerFactorCalculatorPage'));
-const RingCircuitCalculatorPage = lazyWithRetry(() => import('@/pages/seo/RingCircuitCalculatorPage'));
-const TrunkingFillCalculatorPage = lazyWithRetry(() => import('@/pages/seo/TrunkingFillCalculatorPage'));
-const ElectricalQuotingAppPage = lazyWithRetry(() => import('@/pages/seo/ElectricalQuotingAppPage'));
-const ElectricianInvoiceAppPage = lazyWithRetry(() => import('@/pages/seo/ElectricianInvoiceAppPage'));
+const PowerFactorCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/PowerFactorCalculatorPage')
+);
+const RingCircuitCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/RingCircuitCalculatorPage')
+);
+const TrunkingFillCalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/TrunkingFillCalculatorPage')
+);
+const ElectricalQuotingAppPage = lazyWithRetry(
+  () => import('@/pages/seo/ElectricalQuotingAppPage')
+);
+const ElectricianInvoiceAppPage = lazyWithRetry(
+  () => import('@/pages/seo/ElectricianInvoiceAppPage')
+);
 const CityGuilds2391Page = lazyWithRetry(() => import('@/pages/seo/CityGuilds2391Page'));
 const Level2ElectricalPage = lazyWithRetry(() => import('@/pages/seo/Level2ElectricalPage'));
 const Level3ElectricalPage = lazyWithRetry(() => import('@/pages/seo/Level3ElectricalPage'));
 const EPAPreparationPage = lazyWithRetry(() => import('@/pages/seo/EPAPreparationPage'));
-const ApprenticePortfolioGuidePage = lazyWithRetry(() => import('@/pages/seo/ApprenticePortfolioGuidePage'));
+const ApprenticePortfolioGuidePage = lazyWithRetry(
+  () => import('@/pages/seo/ApprenticePortfolioGuidePage')
+);
 const RAMSGeneratorPage = lazyWithRetry(() => import('@/pages/seo/RAMSGeneratorPage'));
-const PartPBuildingRegulationsPage = lazyWithRetry(() => import('@/pages/seo/PartPBuildingRegulationsPage'));
-const EarthingArrangementsPage = lazyWithRetry(() => import('@/pages/seo/EarthingArrangementsPage'));
-const ConsumerUnitRegulationsPage = lazyWithRetry(() => import('@/pages/seo/ConsumerUnitRegulationsPage'));
-const TestingSequenceGuidePage = lazyWithRetry(() => import('@/pages/seo/TestingSequenceGuidePage'));
+const PartPBuildingRegulationsPage = lazyWithRetry(
+  () => import('@/pages/seo/PartPBuildingRegulationsPage')
+);
+const EarthingArrangementsPage = lazyWithRetry(
+  () => import('@/pages/seo/EarthingArrangementsPage')
+);
+const ConsumerUnitRegulationsPage = lazyWithRetry(
+  () => import('@/pages/seo/ConsumerUnitRegulationsPage')
+);
+const TestingSequenceGuidePage = lazyWithRetry(
+  () => import('@/pages/seo/TestingSequenceGuidePage')
+);
 const HowToSizeCablesPage = lazyWithRetry(() => import('@/pages/seo/HowToSizeCablesPage'));
 const HowToFillInEICRPage = lazyWithRetry(() => import('@/pages/seo/HowToFillInEICRPage'));
-const HowToDoSafeIsolationPage = lazyWithRetry(() => import('@/pages/seo/HowToDoSafeIsolationPage'));
+const HowToDoSafeIsolationPage = lazyWithRetry(
+  () => import('@/pages/seo/HowToDoSafeIsolationPage')
+);
 const HowToTestInsulationResistancePage = lazyWithRetry(
   () => import('@/pages/seo/HowToTestInsulationResistancePage')
 );
@@ -251,14 +307,22 @@ const IPAFTrainingPage = lazyWithRetry(() => import('@/pages/seo/IPAFTrainingPag
 const JobProfitabilityCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/JobProfitabilityCalculatorPage')
 );
-const ManualHandlingCoursePage = lazyWithRetry(() => import('@/pages/seo/ManualHandlingCoursePage'));
+const ManualHandlingCoursePage = lazyWithRetry(
+  () => import('@/pages/seo/ManualHandlingCoursePage')
+);
 const PASMATrainingPage = lazyWithRetry(() => import('@/pages/seo/PASMATrainingPage'));
 const ThreePhasePowerCalculatorPage = lazyWithRetry(
   () => import('@/pages/seo/ThreePhasePowerCalculatorPage')
 );
-const LoftConversionElectricsPage = lazyWithRetry(() => import('@/pages/seo/LoftConversionElectricsPage'));
-const GarageElectricsGuidePage = lazyWithRetry(() => import('@/pages/seo/GarageElectricsGuidePage'));
-const GardenOfficeElectricsPage = lazyWithRetry(() => import('@/pages/seo/GardenOfficeElectricsPage'));
+const LoftConversionElectricsPage = lazyWithRetry(
+  () => import('@/pages/seo/LoftConversionElectricsPage')
+);
+const GarageElectricsGuidePage = lazyWithRetry(
+  () => import('@/pages/seo/GarageElectricsGuidePage')
+);
+const GardenOfficeElectricsPage = lazyWithRetry(
+  () => import('@/pages/seo/GardenOfficeElectricsPage')
+);
 const BatteryStorageGuidePage = lazyWithRetry(() => import('@/pages/seo/BatteryStorageGuidePage'));
 const SmartHomeWiringPage = lazyWithRetry(() => import('@/pages/seo/SmartHomeWiringPage'));
 const OutdoorSocketsGuidePage = lazyWithRetry(() => import('@/pages/seo/OutdoorSocketsGuidePage'));
@@ -272,21 +336,31 @@ const AIForElectricalApprenticesPage = lazyWithRetry(
   () => import('@/pages/seo/AIForElectricalApprenticesPage')
 );
 const AIvsManualDesignPage = lazyWithRetry(() => import('@/pages/seo/AIvsManualDesignPage'));
-const AIElectricalFaultFindingPage = lazyWithRetry(() => import('@/pages/seo/AIElectricalFaultFindingPage'));
+const AIElectricalFaultFindingPage = lazyWithRetry(
+  () => import('@/pages/seo/AIElectricalFaultFindingPage')
+);
 const ExpensesManagerPage = lazyWithRetry(() => import('@/pages/seo/ExpensesManagerPage'));
 const StaffManagementToolPage = lazyWithRetry(() => import('@/pages/seo/StaffManagementToolPage'));
 const ScheduleManagerPage = lazyWithRetry(() => import('@/pages/seo/ScheduleManagerPage'));
-const EquipmentROICalculatorPage = lazyWithRetry(() => import('@/pages/seo/EquipmentROICalculatorPage'));
+const EquipmentROICalculatorPage = lazyWithRetry(
+  () => import('@/pages/seo/EquipmentROICalculatorPage')
+);
 const ElectricianVanSetupPage = lazyWithRetry(() => import('@/pages/seo/ElectricianVanSetupPage'));
 const ElectricianToolListPage = lazyWithRetry(() => import('@/pages/seo/ElectricianToolListPage'));
-const ElectricalSurveyCostPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSurveyCostPage'));
+const ElectricalSurveyCostPage = lazyWithRetry(
+  () => import('@/pages/seo/ElectricalSurveyCostPage')
+);
 const ElectricalComplianceCertificatePage = lazyWithRetry(
   () => import('@/pages/seo/ElectricalComplianceCertificatePage')
 );
 const PartialRewireGuidePage = lazyWithRetry(() => import('@/pages/seo/PartialRewireGuidePage'));
-const ElectricalWorkInBathroomPage = lazyWithRetry(() => import('@/pages/seo/ElectricalWorkInBathroomPage'));
+const ElectricalWorkInBathroomPage = lazyWithRetry(
+  () => import('@/pages/seo/ElectricalWorkInBathroomPage')
+);
 const HowToWireAPlugPage = lazyWithRetry(() => import('@/pages/seo/HowToWireAPlugPage'));
-const ElectricalSymbolsChartPage = lazyWithRetry(() => import('@/pages/seo/ElectricalSymbolsChartPage'));
+const ElectricalSymbolsChartPage = lazyWithRetry(
+  () => import('@/pages/seo/ElectricalSymbolsChartPage')
+);
 
 // Lazy-loaded route modules (with retry for chunk failures)
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
@@ -1610,6 +1684,22 @@ const AppRouter = () => {
                 element={
                   <LazyRoute>
                     <AdminRevenue />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="colleges"
+                element={
+                  <LazyRoute>
+                    <AdminColleges />
+                  </LazyRoute>
+                }
+              />
+              <Route
+                path="employers"
+                element={
+                  <LazyRoute>
+                    <AdminEmployers />
                   </LazyRoute>
                 }
               />

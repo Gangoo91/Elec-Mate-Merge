@@ -1,8 +1,50 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 3 · Subsection 2 — Guarding and Interlocking Devices
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. This page is safety-focused (guarding and interlocking), so the
+ * statements below are taken verbatim from the brief's Module 1 health-and-
+ * safety list rather than the electrical-theory lists used elsewhere in
+ * Module 5.
+ *   Knowledge  · "Work environment hazards and risks. Risk assessments."
+ *   Skills     · "Identify environmental and health and safety  hazards and
+ *                 risks and apply control measures."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Accuracy note: BS EN ISO 14119, BS EN ISO 14120, BS EN ISO 13855, ISO 12100,
+ * the Machinery Directive 2006/42/EC and PUWER 1998 citations are standard,
+ * uncontested machinery-safety references and are kept exactly as written.
+ * No GS38, thermography, test-interval or C&G-qualification claims appear on
+ * this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Guarding and Interlocking Devices - MOET Module 5 Section 3.2';
@@ -26,12 +68,7 @@ const quickCheckQuestions = [
   {
     id: 'iso14119',
     question: 'Which standard covers interlocking devices associated with guards?',
-    options: [
-      'BS EN ISO 14119',
-      'BS EN 60204-1',
-      'BS 7671',
-      'IEC 61131-3',
-    ],
+    options: ['BS EN ISO 14119', 'BS EN 60204-1', 'BS 7671', 'IEC 61131-3'],
     correctIndex: 0,
     explanation:
       'BS EN ISO 14119 specifies principles for the design and selection of interlocking devices associated with guards. It covers device types, coding levels, fault resistance and defeat prevention.',
@@ -81,12 +118,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of guard physically prevents access to the danger zone at all times?',
-    options: [
-      'Adjustable guard',
-      'Interlocking guard',
-      'Fixed guard',
-      'Self-adjusting guard',
-    ],
+    options: ['Adjustable guard', 'Interlocking guard', 'Fixed guard', 'Self-adjusting guard'],
     correctAnswer: 2,
     explanation:
       'A fixed guard is permanently attached and requires tools for removal, providing a continuous barrier. It cannot be opened for normal operation and is the simplest and most reliable guard type.',
@@ -256,192 +288,128 @@ const faqs = [
 ];
 
 const MOETModule5Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Guarding and Interlocking Devices
-          </h1>
-          <p className="text-white">
-            Machine guarding principles, interlocking methods and safety distance calculation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.3 · Subsection 2"
+        title="Guarding and Interlocking Devices"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Machine guarding principles, interlocking methods and safety distance calculation — how
+            a machine is stopped from hurting the person opening it up.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> Eliminate by design, then guard, then interlock, then
-                PPE
-              </li>
-              <li className="pl-1">
-                <strong>Guard types:</strong> Fixed, interlocking, guard-locking, adjustable,
-                self-adjusting
-              </li>
-              <li className="pl-1">
-                <strong>Interlock technologies:</strong> Tongue, RFID, magnetic, hinge-operated,
-                trapped-key
-              </li>
-              <li className="pl-1">
-                <strong>Safety distance:</strong> S = (K x T) + C per BS EN ISO 13855
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Inspection:</strong> Daily visual checks, weekly/monthly functional tests
-              </li>
-              <li className="pl-1">
-                <strong>Defeat prevention:</strong> Coded actuators, tamper-resistant fixings
-              </li>
-              <li className="pl-1">
-                <strong>Guard locking:</strong> Run-down hazards require locked guards until safe
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Test, verify and maintain guarding systems
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Hierarchy: Eliminate by design, then guard, then interlock, then PPE.',
+              'Guard types: Fixed, interlocking, guard-locking, adjustable, self-adjusting.',
+              'Interlock technologies: Tongue, RFID, magnetic, hinge-operated, trapped-key.',
+              'Safety distance: S = (K x T) + C per BS EN ISO 13855.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the hierarchy of safeguarding measures and where guarding fits within it',
               'Identify guard types: fixed, movable, interlocking, adjustable and self-adjusting',
               'Describe interlocking device types including tongue, RFID-coded and magnetic',
               'Explain guard locking principles and their application for run-down hazards',
               'Understand trapped-key interlock systems and sequential access control',
               'Calculate safety distances using BS EN ISO 13855 for guard positioning',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inspection:</strong> Daily visual checks, weekly/monthly functional tests.
+              </li>
+              <li>
+                <strong>Defeat prevention:</strong> Coded actuators, tamper-resistant fixings.
+              </li>
+              <li>
+                <strong>Guard locking:</strong> Run-down hazards require locked guards until safe.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Test, verify and maintain guarding systems.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Hierarchy of Safeguarding Measures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Hierarchy of safeguarding measures</ContentEyebrow>
+
+          <ConceptBlock title="Eliminate first; guard only what cannot be eliminated">
             <p>
               The Machinery Directive 2006/42/EC and BS EN ISO 12100 establish a hierarchy for risk
               reduction on machinery. The first priority is always inherently safe design —
               eliminating hazards through the design process itself. Where hazards cannot be
               eliminated, safeguarding measures are applied in a strict order of preference.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Risk Reduction Hierarchy (ISO 12100)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1 — Inherently safe design:</strong> Eliminate hazards by design
-                  (e.g., reduce forces, speeds, energies; use inherently safe materials and
-                  substances)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2 — Safeguarding measures:</strong> Fixed guards (simplest, most
-                  reliable), interlocking guards (allow necessary access), protective devices (light
-                  curtains, safety mats, two-hand controls)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3 — Information for use:</strong> Warning signs, labels, markings,
-                  operating instructions and training. This is the last resort — information alone
-                  does not reduce risk
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Risk reduction hierarchy (ISO 12100)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Inherently safe design:</strong> Eliminate hazards by design (e.g.
+                reduce forces, speeds, energies; use inherently safe materials and substances).
+              </li>
+              <li>
+                <strong>Step 2 — Safeguarding measures:</strong> Fixed guards (simplest, most
+                reliable), interlocking guards (allow necessary access), protective devices (light
+                curtains, safety mats, two-hand controls).
+              </li>
+              <li>
+                <strong>Step 3 — Information for use:</strong> Warning signs, labels, markings,
+                operating instructions and training. This is the last resort — information alone
+                does not reduce risk.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Guards (BS EN ISO 14120)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fixed guards:</strong> Permanently attached using fasteners requiring
-                  tools for removal. Provide continuous protection but do not allow access for
-                  routine operations
-                </li>
-                <li className="pl-1">
-                  <strong>Movable (interlocking) guards:</strong> Can be opened without tools. Must
-                  be fitted with interlocking devices that stop the machine when the guard is opened
-                </li>
-                <li className="pl-1">
-                  <strong>Adjustable guards:</strong> Allow the opening to be adjusted to suit
-                  different workpiece sizes while maintaining protection (common on drilling
-                  machines and saws)
-                </li>
-                <li className="pl-1">
-                  <strong>Self-adjusting guards:</strong> Automatically adjust to the workpiece
-                  dimensions as it is fed into the machine (common on woodworking machines)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Types of guards (BS EN ISO 14120)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fixed guards:</strong> Permanently attached using fasteners requiring tools
+                for removal. Provide continuous protection but do not allow access for routine
+                operations.
+              </li>
+              <li>
+                <strong>Movable (interlocking) guards:</strong> Can be opened without tools. Must be
+                fitted with interlocking devices that stop the machine when the guard is opened.
+              </li>
+              <li>
+                <strong>Adjustable guards:</strong> Allow the opening to be adjusted to suit
+                different workpiece sizes while maintaining protection (common on drilling machines
+                and saws).
+              </li>
+              <li>
+                <strong>Self-adjusting guards:</strong> Automatically adjust to the workpiece
+                dimensions as it is fed into the machine (common on woodworking machines).
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> Guards must be designed so they cannot be easily defeated,
               remain in place during normal use, and do not create additional hazards such as sharp
               edges, trapping points or restricted visibility that could cause an operator to remove
               them.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Interlocking Device Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Interlocking device types</ContentEyebrow>
+
+          <ConceptBlock title="Linking guard position to the control system">
             <p>
               An interlocking device is a mechanical, electrical or electronic device that links the
               position of a guard to the control system of the machine. When the guard is opened,
@@ -449,85 +417,72 @@ const MOETModule5Section3_2 = () => {
               starting. BS EN ISO 14119 classifies interlocking devices and specifies requirements
               for their design and selection.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Tongue-Operated Switches
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  A shaped metal tongue (actuator) inserts into the switch head when the guard is
-                  closed. Opening the guard withdraws the tongue, causing the safety contacts to
-                  open.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Available with coded tongues to prevent defeat</li>
-                  <li className="pl-1">Robust and widely used on hinged/sliding guards</li>
-                  <li className="pl-1">Positive-opening contacts per IEC 60947-5-1</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  RFID-Coded Safety Sensors
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Non-contact guard monitoring using radio-frequency identification. Each
-                  sensor-actuator pair has a unique RFID code.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Substitution virtually impossible</li>
-                  <li className="pl-1">High tolerance to misalignment and vibration</li>
-                  <li className="pl-1">Sealed construction for harsh environments</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Tongue-operated switches">
+            <p>
+              A shaped metal tongue (actuator) inserts into the switch head when the guard is
+              closed. Opening the guard withdraws the tongue, causing the safety contacts to open.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Available with coded tongues to prevent defeat.</li>
+              <li>Robust and widely used on hinged/sliding guards.</li>
+              <li>Positive-opening contacts per IEC 60947-5-1.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Magnetic Safety Switches
-                </h3>
-                <p className="text-sm text-white">
-                  Use magnetically coded actuators detected by Reed contacts or Hall-effect sensors.
-                  Non-contact operation with sealed construction suitable for washdown environments.
-                  Available in various coding levels from simple to high-coded for tamper
-                  resistance.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Hinge-Operated Switches
-                </h3>
-                <p className="text-sm text-white">
-                  Integrate directly into the guard hinge, monitoring door position without
-                  requiring a separate actuator. Compact installation, but limited to hinged guards.
-                  The switch body forms part of the hinge mechanism, making tampering difficult.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="RFID-coded safety sensors">
+            <p>
+              Non-contact guard monitoring using radio-frequency identification. Each
+              sensor-actuator pair has a unique RFID code.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Substitution virtually impossible.</li>
+              <li>High tolerance to misalignment and vibration.</li>
+              <li>Sealed construction for harsh environments.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Defeat Prevention</p>
-              <p className="text-sm text-white">
-                BS EN ISO 14119 requires that interlocking devices are resistant to defeat
-                (tampering). Defeat includes using alternative objects, removing actuators, or
-                modifying the switch. Higher coding levels (Type 3 and Type 4) provide greater
-                resistance. During maintenance inspections, always check for signs of tampering —
-                taped switches, missing actuators, modified wiring or bypassed contacts.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Magnetic safety switches">
+            <p>
+              Use magnetically coded actuators detected by Reed contacts or Hall-effect sensors.
+              Non-contact operation with sealed construction suitable for washdown environments.
+              Available in various coding levels from simple to high-coded for tamper resistance.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Hinge-operated switches">
+            <p>
+              Integrate directly into the guard hinge, monitoring door position without requiring a
+              separate actuator. Compact installation, but limited to hinged guards. The switch body
+              forms part of the hinge mechanism, making tampering difficult.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Guard Locking and Run-Down Hazards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="Interlocks defeated by tampering"
+            whatHappens={
+              <>
+                Defeat includes using alternative objects, removing actuators, or modifying the
+                switch — practices BS EN ISO 14119 requires interlocking devices to be resistant to.
+              </>
+            }
+            doInstead={
+              <>
+                Higher coding levels (Type 3 and Type 4) provide greater resistance. During
+                maintenance inspections, always check for signs of tampering — taped switches,
+                missing actuators, modified wiring or bypassed contacts.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Guard locking and run-down hazards</ContentEyebrow>
+
+          <ConceptBlock title="When stopping the machine is not enough">
             <p>
               Standard interlocking stops the machine when the guard is opened, but some machines
               have run-down hazards — parts that continue to move after power is removed. Examples
@@ -535,295 +490,261 @@ const MOETModule5Section3_2 = () => {
               heated elements that take time to cool. In these cases, guard locking (interlocking
               with guard locking) is required.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Guard Locking Principles
-              </p>
-              <p className="text-sm text-white mb-3">
-                Guard locks use a solenoid-operated bolt that engages with the guard door. The bolt
-                is released only when a safe condition is confirmed — typically by monitoring
-                machine speed or a timed delay sufficient for moving parts to stop.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Spring-to-lock:</strong> The bolt is held locked by a spring and released
-                  by energising the solenoid. Fail-safe — the guard remains locked on power loss
-                </li>
-                <li className="pl-1">
-                  <strong>Solenoid-to-lock:</strong> The bolt is engaged by energising the solenoid.
-                  The guard can be opened if power is lost — used where trapped personnel must be
-                  able to escape
-                </li>
-                <li className="pl-1">
-                  <strong>Holding force:</strong> Must be sufficient to prevent the guard being
-                  forced open. Typical values range from 1000 N to 2600 N
-                </li>
-                <li className="pl-1">
-                  <strong>Escape release:</strong> An auxiliary mechanical release inside the
-                  guarded area allows trapped personnel to escape
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Guard locking principles">
+            <p>
+              Guard locks use a solenoid-operated bolt that engages with the guard door. The bolt is
+              released only when a safe condition is confirmed — typically by monitoring machine
+              speed or a timed delay sufficient for moving parts to stop.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Spring-to-lock:</strong> The bolt is held locked by a spring and released by
+                energising the solenoid. Fail-safe — the guard remains locked on power loss.
+              </li>
+              <li>
+                <strong>Solenoid-to-lock:</strong> The bolt is engaged by energising the solenoid.
+                The guard can be opened if power is lost — used where trapped personnel must be able
+                to escape.
+              </li>
+              <li>
+                <strong>Holding force:</strong> Must be sufficient to prevent the guard being forced
+                open. Typical values range from 1000 N to 2600 N.
+              </li>
+              <li>
+                <strong>Escape release:</strong> An auxiliary mechanical release inside the guarded
+                area allows trapped personnel to escape.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS EN ISO 14119 Clause 7 Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Guard locking devices must incorporate fault detection for the locking element
-                </li>
-                <li className="pl-1">
-                  The mechanical strength of the locking bolt must be rated for the application
-                </li>
-                <li className="pl-1">
-                  Resistance to defeat must match the overall interlock coding level
-                </li>
-                <li className="pl-1">
-                  Auxiliary release mechanisms must be provided where personnel could become trapped
-                </li>
-                <li className="pl-1">
-                  The unlock condition must be clearly defined and monitored (speed zero, time
-                  elapsed, temperature within limits)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="BS EN ISO 14119 Clause 7 requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Guard locking devices must incorporate fault detection for the locking element.
+              </li>
+              <li>
+                The mechanical strength of the locking bolt must be rated for the application.
+              </li>
+              <li>Resistance to defeat must match the overall interlock coding level.</li>
+              <li>
+                Auxiliary release mechanisms must be provided where personnel could become trapped.
+              </li>
+              <li>
+                The unlock condition must be clearly defined and monitored (speed zero, time
+                elapsed, temperature within limits).
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When testing guard-locking interlocks, verify that
               the guard cannot be opened during the run-down period and that the unlock occurs
               reliably when the safe condition is reached. Check the bolt mechanism for wear, ensure
               the solenoid operates correctly, and verify the escape release functions from inside
               the enclosure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Trapped-Key Interlock Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Trapped-key interlock systems</ContentEyebrow>
+
+          <ConceptBlock title="A purely mechanical way to enforce a safe sequence">
             <p>
               Trapped-key interlocks provide a purely mechanical means of enforcing a safe sequence
               of operations. The system consists of a series of locks, each trapping or releasing a
               key. The key released from one lock is required to operate the next, creating a chain
               of actions that must be performed in the correct order.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Trapped-Key Sequence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Turn the key in the machine isolator to the OFF position
-                  — this traps one key and releases a transfer key
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Use the transfer key to release the guard lock — the
-                  guard can now be opened
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> The guard lock traps the transfer key — the machine
-                  cannot be restarted until the guard is closed and relocked
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Close and relock the guard — the transfer key is released
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Return the transfer key to the isolator lock — the
-                  isolator can now be turned ON
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Typical trapped-key sequence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Turn the key in the machine isolator to the OFF position —
+                this traps one key and releases a transfer key.
+              </li>
+              <li>
+                <strong>Step 2:</strong> Use the transfer key to release the guard lock — the guard
+                can now be opened.
+              </li>
+              <li>
+                <strong>Step 3:</strong> The guard lock traps the transfer key — the machine cannot
+                be restarted until the guard is closed and relocked.
+              </li>
+              <li>
+                <strong>Step 4:</strong> Close and relock the guard — the transfer key is released.
+              </li>
+              <li>
+                <strong>Step 5:</strong> Return the transfer key to the isolator lock — the isolator
+                can now be turned ON.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Applications and Manufacturers
-              </p>
-              <p className="text-sm text-white mb-3">
-                Trapped-key systems are inherently tamper-resistant and do not rely on electrical
-                circuits, making them suitable for:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">High-voltage switchgear access control</li>
-                <li className="pl-1">Robotic cell entry procedures</li>
-                <li className="pl-1">Conveyor systems with multiple access points</li>
-                <li className="pl-1">Multi-zone isolation on complex machinery</li>
-                <li className="pl-1">Any application requiring strict procedural enforcement</li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                Major manufacturers include <strong>Castell</strong>, <strong>Kirk</strong> and{' '}
-                <strong>Fortress</strong>, each offering proprietary key profiles to prevent
-                cross-system defeat. Trapped-key systems can be combined with electrical interlocks
-                for additional safety layers.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Applications and manufacturers">
+            <p>
+              Trapped-key systems are inherently tamper-resistant and do not rely on electrical
+              circuits, making them suitable for:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>High-voltage switchgear access control.</li>
+              <li>Robotic cell entry procedures.</li>
+              <li>Conveyor systems with multiple access points.</li>
+              <li>Multi-zone isolation on complex machinery.</li>
+              <li>Any application requiring strict procedural enforcement.</li>
+            </ul>
+            <p>
+              Major manufacturers include <strong>Castell</strong>, <strong>Kirk</strong> and{' '}
+              <strong>Fortress</strong>, each offering proprietary key profiles to prevent
+              cross-system defeat. Trapped-key systems can be combined with electrical interlocks
+              for additional safety layers.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Safety Distance Calculation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety distance calculation</ContentEyebrow>
+
+          <ConceptBlock title="The machine must be stopped before a hand can reach it">
             <p>
               When positioning guards and safety devices, the minimum distance from the hazard zone
               must be calculated to ensure the machine has stopped before an operator can reach the
               danger point. BS EN ISO 13855 provides the formula and the standard approach speeds
               used in the calculation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety Distance Formula
-              </p>
-              <p className="text-sm text-white mb-3">
-                <strong>S = (K x T) + C</strong>
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>S</strong> = Minimum safety distance in mm
-                </li>
-                <li className="pl-1">
-                  <strong>K</strong> = Approach speed in mm/s (2000 mm/s for hand approach, 1600
-                  mm/s for body approach)
-                </li>
-                <li className="pl-1">
-                  <strong>T</strong> = Overall stopping/response time in seconds (safety device +
-                  control system + machine)
-                </li>
-                <li className="pl-1">
-                  <strong>C</strong> = Additional distance accounting for reach-through capability
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Worked Example</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light curtain response time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20 ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety relay response time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">15 ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Machine stopping time</td>
-                      <td className="border border-white/10 px-3 py-2">200 ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Total T</td>
-                      <td className="border border-white/10 px-3 py-2">0.235 s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">K (body approach)</td>
-                      <td className="border border-white/10 px-3 py-2">1600 mm/s</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">C (14 mm resolution)</td>
-                      <td className="border border-white/10 px-3 py-2">850 mm</td>
-                    </tr>
-                    <tr className="bg-white/5">
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        S = (1600 x 0.235) + 850
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        1226 mm minimum
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                If this distance cannot be achieved, the machine stopping time must be reduced or a
-                different safeguarding approach used.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> All component response times must be measured and documented —
-              they cannot be assumed. The machine stopping time is the most variable element and
-              must be measured under worst-case conditions (maximum speed, maximum load, worn
-              brakes).
+          <ConceptBlock title="Safety distance formula">
+            <p>
+              <strong>S = (K x T) + C</strong>
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S</strong> = Minimum safety distance in mm.
+              </li>
+              <li>
+                <strong>K</strong> = Approach speed in mm/s (2000 mm/s for hand approach, 1600 mm/s
+                for body approach).
+              </li>
+              <li>
+                <strong>T</strong> = Overall stopping/response time in seconds (safety device +
+                control system + machine).
+              </li>
+              <li>
+                <strong>C</strong> = Additional distance accounting for reach-through capability.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Worked example">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Parameter</th>
+                    <th className="py-2 font-medium text-white">Value</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Light curtain response time</td>
+                    <td className="py-2">20 ms</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safety relay response time</td>
+                    <td className="py-2">15 ms</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Machine stopping time</td>
+                    <td className="py-2">200 ms</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Total T</td>
+                    <td className="py-2">0.235 s</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">K (body approach)</td>
+                    <td className="py-2">1600 mm/s</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">C (14 mm resolution)</td>
+                    <td className="py-2">850 mm</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">S = (1600 x 0.235) + 850</td>
+                    <td className="py-2 font-medium">1226 mm minimum</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[13px]">
+              If this distance cannot be achieved, the machine stopping time must be reduced or a
+              different safeguarding approach used.
+            </p>
+            <p className="italic">
+              All component response times must be measured and documented — they cannot be assumed.
+              The machine stopping time is the most variable element and must be measured under
+              worst-case conditions (maximum speed, maximum load, worn brakes).
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'The hierarchy is: eliminate by design, then safeguard (fixed guards first, then interlocking guards, then protective devices), then information/training as a last resort.',
+              'Fixed guards are the simplest and most reliable, requiring tools to remove; interlocking guards must stop the machine the instant they are opened.',
+              'Coded actuators (tongue, RFID, magnetic) resist substitution — higher coding levels (Type 3/4) give greater tamper resistance; check for taped switches or missing actuators on inspection.',
+              'Guard locking is required wherever run-down hazards exist (flywheels, spindles, centrifuges) — spring-to-lock stays locked on power loss, solenoid-to-lock releases on power loss for escape.',
+              'A trapped-key sequence enforces a strict mechanical order — each key released from one lock is needed to open the next — with no reliance on electrical circuits.',
+              'Safety distance: S = (K x T) + C — K is 2000 mm/s hand or 1600 mm/s body approach speed, T is the total measured stopping/response time, C accounts for reach-through.',
+              'Every component response time feeding the safety-distance calculation must be measured under worst-case conditions, never assumed from a datasheet figure alone.',
+              'PUWER 1998 Regulation 5 places the duty on the employer to keep guards and interlocks maintained in an efficient state — inspection and documentation are not optional.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Emergency Stop Circuits
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-3">
-              Next: Safety Relays and Controllers
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Emergency Stop Circuits
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Safety Relays and Controllers
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

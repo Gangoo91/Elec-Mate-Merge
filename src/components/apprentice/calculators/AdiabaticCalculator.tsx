@@ -286,6 +286,8 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
+    const zsMode = result.zsMode && result.zsValue !== undefined && result.voltage !== undefined;
+    const filteredNotes = result.complianceNotes?.filter((n) => n.trim());
     return {
       meta: {
         title: 'Adiabatic Equation',
@@ -305,28 +307,52 @@ const AdiabaticCalculator = ({ onResult }: AdiabaticCalculatorProps = {}) => {
         {
           heading: 'Inputs',
           rows: [
-            { label: 'Fault current', value: `${result.usedFaultCurrent.toFixed(0)} A` },
+            ...(zsMode
+              ? [
+                  { label: 'Earth fault loop impedance (Zs)', value: `${result.zsValue} Ω` },
+                  { label: 'Supply voltage (Uo)', value: `${result.voltage} V` },
+                ]
+              : [
+                  {
+                    label: 'Prospective fault current (I)',
+                    value: `${result.usedFaultCurrent.toFixed(0)} A`,
+                  },
+                ]),
             { label: 'Disconnection time', value: `${result.disconnectionTime} s` },
             { label: 'Conductor material', value: result.material },
-            { label: 'k factor', value: String(result.k), note: `${result.material}, ${result.maxTemp}` },
-            ...(result.zsMode && result.zsValue
-              ? [{ label: 'Zs used', value: `${result.zsValue} Ω` }]
-              : []),
-            ...(result.voltage ? [{ label: 'Voltage', value: `${result.voltage} V` }] : []),
+            {
+              label: 'Insulation / max temp',
+              value: INSULATION_LABEL[result.maxTemp] ?? result.maxTemp,
+            },
           ],
         },
         {
-          heading: 'Result',
+          heading: 'How it was calculated',
           rows: [
-            { label: 'Minimum CSA (S = √(I²t)/k)', value: `${result.minimumCsa.toFixed(2)} mm²` },
-            { label: 'Next standard size', value: `${result.roundedCsa} mm²` },
-            { label: 'Safety margin', value: `${result.safetyMargin.toFixed(1)}%` },
+            ...(zsMode
+              ? [
+                  {
+                    label: 'Fault current from Zs (I = Uo ÷ Zs)',
+                    value: `${result.usedFaultCurrent.toFixed(0)} A`,
+                  },
+                ]
+              : []),
+            { label: 'k factor (BS 7671 Table 54.3)', value: String(result.k) },
+            {
+              label: 'Working',
+              value: `S = I × √t ÷ k = ${result.usedFaultCurrent.toFixed(0)} × √${result.disconnectionTime} ÷ ${result.k} = ${result.minimumCsa.toFixed(2)} mm²`,
+            },
+            {
+              label: 'Safety margin over minimum',
+              value: `${result.safetyMargin.toFixed(1)}%`,
+            },
           ],
         },
       ],
-      notes: result.complianceNotes?.length
-        ? result.complianceNotes
-        : ['Calculated using the adiabatic equation, BS 7671 Reg 543.1.3.'],
+      notes:
+        filteredNotes && filteredNotes.length > 0
+          ? filteredNotes
+          : ['Calculated using the adiabatic equation, BS 7671 Reg 543.1.3.'],
     };
   };
 

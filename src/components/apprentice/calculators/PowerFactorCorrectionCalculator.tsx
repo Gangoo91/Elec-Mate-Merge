@@ -472,6 +472,16 @@ const PowerFactorCorrectionCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
+    // The electrician reads TWO different pairs of figures off site instruments
+    // depending on inputMethod. The report previously always labelled "Real
+    // power" and "Current power factor" as Inputs, even in kVA/kVAR mode where
+    // those two are derived (kW = √(kVA²-kVAR²)) and the meter readings that
+    // were actually typed — Apparent power, Reactive power — never appeared.
+    const usingKwPf = inputMethod === 'kw-pf';
+    const supplyRow = {
+      label: 'Supply',
+      value: `${supplyVoltage} V, ${phases === '3' ? 'three-phase' : 'single-phase'}`,
+    };
     return {
       meta: {
         title: 'Power Factor Correction',
@@ -482,22 +492,35 @@ const PowerFactorCorrectionCalculator = () => {
         { label: 'Required correction', value: result.requiredKVAR.toFixed(1), unit: 'kVAR' },
         { label: 'Capacitor bank', value: `${result.capacitorBankSize}`, unit: 'kVAR' },
         ...(result.annualTotalSavings > 0
-          ? [{ label: 'Annual savings (estimate)', value: `£${result.annualTotalSavings.toFixed(2)}` }]
+          ? [{ label: 'Annual savings (estimate)', value: `£${result.annualTotalSavings.toFixed(0)}` }]
           : []),
       ],
       sections: [
         {
           heading: 'Inputs',
-          rows: [
-            { label: 'Real power', value: `${result.currentKW.toFixed(1)} kW` },
-            { label: 'Current power factor', value: result.currentPF.toFixed(2) },
-            { label: 'Target power factor', value: result.targetPF.toFixed(2) },
-            { label: 'Supply', value: `${supplyVoltage} V, ${phases === '3' ? 'three-phase' : 'single-phase'}` },
-          ],
+          rows: usingKwPf
+            ? [
+                { label: 'Real power', value: `${result.currentKW.toFixed(1)} kW` },
+                { label: 'Current power factor', value: result.currentPF.toFixed(2) },
+                { label: 'Target power factor', value: result.targetPF.toFixed(2) },
+                supplyRow,
+              ]
+            : [
+                { label: 'Apparent power', value: `${result.currentKVA.toFixed(1)} kVA` },
+                { label: 'Reactive power', value: `${result.currentKVAR.toFixed(1)} kVAR` },
+                { label: 'Target power factor', value: result.targetPF.toFixed(2) },
+                supplyRow,
+              ],
         },
         {
           heading: 'Result',
           rows: [
+            ...(usingKwPf
+              ? []
+              : [
+                  { label: 'Real power (derived)', value: `${result.currentKW.toFixed(1)} kW` },
+                  { label: 'Current power factor (derived)', value: result.currentPF.toFixed(2) },
+                ]),
             { label: 'Current kVA', value: `${result.currentKVA.toFixed(1)} kVA` },
             { label: 'Target kVA', value: `${result.targetKVA.toFixed(1)} kVA` },
             { label: 'kVA reduction', value: `${result.percentageReduction.toFixed(1)}%` },
@@ -505,10 +528,10 @@ const PowerFactorCorrectionCalculator = () => {
             { label: 'Current after', value: `${result.currentAfter.toFixed(1)} A` },
             { label: 'Current saved', value: `${result.currentSaved.toFixed(1)} A` },
             ...(result.annualReactiveSavings > 0
-              ? [{ label: 'Reactive power savings (estimate)', value: `£${result.annualReactiveSavings.toFixed(2)}/year` }]
+              ? [{ label: 'Reactive power savings (estimate)', value: `£${result.annualReactiveSavings.toFixed(0)}/year` }]
               : []),
             ...(result.annualMDSavings > 0
-              ? [{ label: 'Max demand savings (estimate)', value: `£${result.annualMDSavings.toFixed(2)}/year` }]
+              ? [{ label: 'Max demand savings (estimate)', value: `£${result.annualMDSavings.toFixed(0)}/year` }]
               : []),
           ],
         },

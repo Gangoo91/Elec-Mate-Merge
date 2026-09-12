@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.4 · Subsection 6 — Other Industry-Specific
+ * Guidance
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Health and safety regulations – key features and impact on
+ *                 role."
+ *              · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Content preserved from the original page; structure, shell and reading
+ * measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Other Industry-Specific Guidance - MOET Module 1 Section 4.6';
@@ -73,13 +113,13 @@ const quizQuestions = [
     question: 'GS38 specifies that voltage indicator probes for use on LV systems must have:',
     options: [
       'Bare metal tips at least 20 mm long to ensure reliable electrical contact',
-      'Fused leads, finger guards and a maximum exposed tip of about 2 mm',
+      'Fused leads, finger guards and a maximum exposed tip of 4 mm',
       'A single combined lead so that only one connection point is required',
       'An audible buzzer used in place of any form of visual voltage indication',
     ],
     correctAnswer: 1,
     explanation:
-      'GS38 requires voltage indicator probes to have: fused leads (to protect against short-circuit currents), finger guards (to prevent accidental contact with live parts), a maximum of 2 mm (or 4 mm) exposed tip, high-value resistors to limit the current that could flow through the body, and robust, insulated construction. These requirements prevent electric shock and arc flash during testing.',
+      'GS38 requires voltage indicator probes to have: fused leads (to protect against short-circuit currents), finger guards (to prevent accidental contact with live parts), an exposed metal tip not exceeding 4 mm measured across any surface of the tip, high-value resistors to limit the current that could flow through the body, and robust, insulated construction. These requirements prevent electric shock and arc flash during testing.',
   },
   {
     id: 2,
@@ -261,426 +301,331 @@ const faqs = [
 ];
 
 const MOETModule1Section4_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.4.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Other Industry-Specific Guidance
-          </h1>
-          <p className="text-white">
-            HSE guidance notes, CDM, DSEAR, and professional body publications
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.4 · Subsection 6"
+        title="Other Industry-Specific Guidance"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            HSE guidance notes, CDM, DSEAR, and professional body publications.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>GS38:</strong> Test equipment requirements for LV systems
-              </li>
-              <li className="pl-1">
-                <strong>HSG85:</strong> Safe working practices for electrical work
-              </li>
-              <li className="pl-1">
-                <strong>CDM 2015:</strong> Construction health and safety management
-              </li>
-              <li className="pl-1">
-                <strong>DSEAR/ATEX:</strong> Explosive atmospheres and hazardous zones
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'GS38: Test equipment requirements for LV systems',
+              'HSG85: Safe working practices for electrical work',
+              'CDM 2015: Construction health and safety management',
+              'DSEAR/ATEX: Explosive atmospheres and hazardous zones',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical Maintenance Context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>HSG230:</strong> Keeping electrical switchgear safe
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>GS6:</strong> Overhead power line safety for MEWPs/cranes
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ENA/DSR:</strong> Distribution network safety rules
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Broad regulatory awareness for diverse work contexts
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the key HSE Guidance Notes relevant to electrical maintenance (GS38, GS6, HSG85, HSG47, HSG230)',
               'Explain the purpose and structure of CDM 2015 and its application to electrical work',
               'Describe the Management of Health and Safety at Work Regulations 1999 requirements',
               'Understand DSEAR and ATEX zone classifications for hazardous areas',
               'Explain the role of ENA technical standards and the Distribution Safety Rules',
               'Identify professional body guidance from the IET and ECA relevant to maintenance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>HSE guidance notes (GS, HSG and INDG series)</ContentEyebrow>
 
-        {/* Section 01: HSE Guidance Notes */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            HSE Guidance Notes (GS, HSG and INDG Series)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="HSE Guidance Notes (GS, HSG and INDG Series)">
             <p>
               The Health and Safety Executive publishes a range of guidance notes to help duty
               holders understand and comply with health and safety legislation. These are not law —
-              they do not have the statutory force of regulations. However, they represent the HSE's
-              view of what constitutes good practice, and departing from them without equivalent
-              alternative measures may be used as evidence of non-compliance in legal proceedings.
+              they do not have the statutory force of regulations. However, they represent the
+              HSE&apos;s view of what constitutes good practice, and departing from them without
+              equivalent alternative measures may be used as evidence of non-compliance in legal
+              proceedings.
             </p>
             <p>
               For electrical maintenance technicians, several guidance notes are directly relevant
               to your daily work. Knowing which guidance applies to your activities — and where to
               find it — is an important part of your professional competence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  GS38 — Electrical Test Equipment for Use on Low Voltage Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  GS38 is arguably the most important guidance note for electrical maintenance
-                  technicians. It specifies the requirements for voltage indicators, test lamps, and
-                  test probes used on low voltage systems (up to 1000 V AC).
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Fused probes:</strong> Test leads must incorporate fuses (typically 500
-                    mA HRC) to protect against short-circuit currents if a probe slips and bridges
-                    two live parts
-                  </li>
-                  <li className="pl-1">
-                    <strong>Finger guards:</strong> Probes must have finger barriers to prevent
-                    accidental contact with exposed metal tips — fingers must not be able to reach
-                    the live part
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tip exposure:</strong> Maximum 2 mm exposed tip for measurement probes;
-                    4 mm for voltage indicators designed for shrouded contacts
-                  </li>
-                  <li className="pl-1">
-                    <strong>Robust construction:</strong> Leads must be adequately insulated,
-                    flexible but not prone to damage, and firmly attached to the instrument
-                  </li>
-                  <li className="pl-1">
-                    <strong>Two-pole testers:</strong> GS38 strongly recommends two-pole voltage
-                    indicators (not neon screwdrivers or indicator lights) for proving dead
-                  </li>
-                  <li className="pl-1">
-                    <strong>Category rating:</strong> Instruments must be rated for the measurement
-                    category of the circuit (CAT III for distribution, CAT IV for origin of supply)
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  <strong>Critical point:</strong> Using test equipment that does not comply with
-                  GS38 is likely to breach EAWR Regulation 4(4) (suitability of protective
-                  equipment) and PUWER Regulation 4 (suitability of work equipment). Many electrical
-                  fatalities have involved non-compliant test equipment.
-                </p>
-              </div>
+          <ConceptBlock
+            title="GS38 — Electrical Test Equipment for Use on Low Voltage Systems"
+            onSite="Critical point: using test equipment that does not comply with GS38 is likely to breach EAWR Regulation 4(4) (suitability of protective equipment) and PUWER Regulation 4 (suitability of work equipment). Many electrical fatalities have involved non-compliant test equipment."
+          >
+            <p>
+              GS38 is arguably the most important guidance note for electrical maintenance
+              technicians. It specifies the requirements for voltage indicators, test lamps, and
+              test probes used on low voltage systems (up to 1000 V AC).
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fused probes:</strong> Test leads must incorporate fuses (typically 500 mA
+                HRC) to protect against short-circuit currents if a probe slips and bridges two live
+                parts
+              </li>
+              <li>
+                <strong>Finger guards:</strong> Probes must have finger barriers to prevent
+                accidental contact with exposed metal tips — fingers must not be able to reach the
+                live part
+              </li>
+              <li>
+                <strong>Tip exposure:</strong> Exposed metal tip not exceeding 4 mm, measured across
+                any surface of the tip — GS38 sets one figure for all probes and clips
+              </li>
+              <li>
+                <strong>Robust construction:</strong> Leads must be adequately insulated, flexible
+                but not prone to damage, and firmly attached to the instrument
+              </li>
+              <li>
+                <strong>Two-pole testers:</strong> GS38 strongly recommends two-pole voltage
+                indicators (not neon screwdrivers or indicator lights) for proving dead
+              </li>
+              <li>
+                <strong>Category rating:</strong> Instruments must be rated for the measurement
+                category of the circuit (CAT III for distribution, CAT IV for origin of supply)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  HSG85 — Electricity at Work: Safe Working Practices
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  HSG85 is the HSE's primary guidance on the practical application of the
-                  Electricity at Work Regulations 1989. It covers:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Safe isolation procedures — step-by-step practical guidance
-                  </li>
-                  <li className="pl-1">
-                    Permit to work systems — design, implementation and management
-                  </li>
-                  <li className="pl-1">
-                    Live working controls — risk assessment, precautions, documentation
-                  </li>
-                  <li className="pl-1">
-                    Competence requirements — what constitutes a "competent person"
-                  </li>
-                  <li className="pl-1">
-                    Portable electrical equipment — in-service inspection and testing
-                  </li>
-                  <li className="pl-1">Accompanying persons and emergency procedures</li>
-                </ul>
-              </div>
+          <ConceptBlock title="HSG85 — Electricity at Work: Safe Working Practices">
+            <p>
+              HSG85 is the HSE&apos;s primary guidance on the practical application of the
+              Electricity at Work Regulations 1989. It covers:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Safe isolation procedures — step-by-step practical guidance</li>
+              <li>Permit to work systems — design, implementation and management</li>
+              <li>Live working controls — risk assessment, precautions, documentation</li>
+              <li>Competence requirements — what constitutes a &quot;competent person&quot;</li>
+              <li>Portable electrical equipment — in-service inspection and testing</li>
+              <li>Accompanying persons and emergency procedures</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Other Key HSE Publications
-                </h3>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Reference</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Title</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">
-                          Relevance to Electrical Maintenance
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">GS6</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Avoidance of Danger from Overhead Electric Power Lines
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Working near overhead lines with MEWPs, cranes, scaffold
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">HSG47</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Avoiding Danger from Underground Services
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Excavating near underground cables, CAT scanning
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">HSG230</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Keeping Electrical Switchgear Safe
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Switchgear maintenance, thermal imaging, scheduling
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">HSG65</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Managing for Health and Safety
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Plan-Do-Check-Act framework for safety management
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">INDG231</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Electrical Safety and You
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Basic guidance leaflet on electrical safety at work
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">INDG163</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Five Steps to Risk Assessment
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Fundamental risk assessment methodology
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <ConceptBlock title="Other Key HSE Publications">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Reference</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Title</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Relevance to Electrical Maintenance
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">GS6</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Avoidance of Danger from Overhead Electric Power Lines
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Working near overhead lines with MEWPs, cranes, scaffold
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">HSG47</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Avoiding Danger from Underground Services
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Excavating near underground cables, CAT scanning
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">HSG230</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Keeping Electrical Switchgear Safe
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Switchgear maintenance, thermal imaging, scheduling
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">HSG65</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Managing for Health and Safety
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Plan-Do-Check-Act framework for safety management
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">INDG231</td>
+                    <td className="border border-white/10 px-3 py-2">Electrical Safety and You</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Basic guidance leaflet on electrical safety at work
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">INDG163</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Five Steps to Risk Assessment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fundamental risk assessment methodology
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: CDM 2015 and Management Regulations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+          <SectionRule />
+
+          <ContentEyebrow>
             CDM 2015 and the Management of Health and Safety at Work Regulations 1999
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          </ContentEyebrow>
+
+          <ConceptBlock title="CDM 2015 and the Management of Health and Safety at Work Regulations 1999">
             <p>
               Two sets of regulations frequently apply alongside the EAWR for electrical maintenance
               work: the Construction (Design and Management) Regulations 2015 (CDM) and the
-              Management of Health and Safety at Work Regulations 1999 (the "Management
-              Regulations"). Both are made under the HSWA 1974 and impose additional duties on
+              Management of Health and Safety at Work Regulations 1999 (the &quot;Management
+              Regulations&quot;). Both are made under the HSWA 1974 and impose additional duties on
               employers, clients, designers and contractors.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  CDM 2015 — Overview
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  CDM 2015 applies to all "construction work" — which is broadly defined to include
-                  the installation, commissioning, maintenance, repair, alteration, renewal, and
-                  dismantling of mechanical, electrical, gas and other services in or on a
-                  structure. Most electrical maintenance work on buildings qualifies.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Client:</strong> The person for whom the project is carried out. Must
-                    make suitable arrangements for managing the project, ensure welfare facilities,
-                    appoint PC and PD (where applicable)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Principal Designer (PD):</strong> Plans, manages and monitors the
-                    pre-construction phase to eliminate or reduce health and safety risks in the
-                    design. Prepares the health and safety file
-                  </li>
-                  <li className="pl-1">
-                    <strong>Principal Contractor (PC):</strong> Plans, manages and monitors the
-                    construction phase. Co-ordinates health and safety between contractors. Produces
-                    the construction phase plan
-                  </li>
-                  <li className="pl-1">
-                    <strong>Designers:</strong> Must eliminate, reduce or control foreseeable risks
-                    in their designs — including electrical installation design
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contractors:</strong> Must plan, manage and monitor their own work,
-                    co-operate with others, comply with site rules, and report anything likely to
-                    endanger anyone
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="CDM 2015 — Overview">
+            <p>
+              CDM 2015 applies to all &quot;construction work&quot; — which is broadly defined to
+              include the installation, commissioning, maintenance, repair, alteration, renewal, and
+              dismantling of mechanical, electrical, gas and other services in or on a structure.
+              Most electrical maintenance work on buildings qualifies.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Client:</strong> The person for whom the project is carried out. Must make
+                suitable arrangements for managing the project, ensure welfare facilities, appoint
+                PC and PD (where applicable)
+              </li>
+              <li>
+                <strong>Principal Designer (PD):</strong> Plans, manages and monitors the
+                pre-construction phase to eliminate or reduce health and safety risks in the design.
+                Prepares the health and safety file
+              </li>
+              <li>
+                <strong>Principal Contractor (PC):</strong> Plans, manages and monitors the
+                construction phase. Co-ordinates health and safety between contractors. Produces the
+                construction phase plan
+              </li>
+              <li>
+                <strong>Designers:</strong> Must eliminate, reduce or control foreseeable risks in
+                their designs — including electrical installation design
+              </li>
+              <li>
+                <strong>Contractors:</strong> Must plan, manage and monitor their own work,
+                co-operate with others, comply with site rules, and report anything likely to
+                endanger anyone
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="my-6 p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  CDM 2015 — Application to Electrical Maintenance
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Notification:</strong> Projects lasting more than 30 working days with
-                    more than 20 workers simultaneously, or exceeding 500 person-days, must be
-                    notified to the HSE (F10)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Construction Phase Plan:</strong> Required for all projects where CDM
-                    applies — sets out the arrangements for managing health and safety during the
-                    work
-                  </li>
-                  <li className="pl-1">
-                    <strong>Health and Safety File:</strong> Must be compiled for the client —
-                    containing as-built drawings, maintenance information, and residual risk
-                    information for future maintenance
-                  </li>
-                  <li className="pl-1">
-                    <strong>Welfare:</strong> Adequate welfare facilities (toilets, washing, rest,
-                    changing) must be provided for all construction workers
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  <strong>Key point:</strong> Even a single maintenance electrician carrying out an
-                  electrical alteration on a building is subject to CDM 2015. The level of paperwork
-                  scales with the risk and size of the project, but the duties apply to all
-                  construction work.
-                </p>
-              </div>
+          <ConceptBlock
+            title="CDM 2015 — Application to Electrical Maintenance"
+            onSite="Key point: even a single maintenance electrician carrying out an electrical alteration on a building is subject to CDM 2015. The level of paperwork scales with the risk and size of the project, but the duties apply to all construction work."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Notification:</strong> Projects lasting more than 30 working days with more
+                than 20 workers simultaneously, or exceeding 500 person-days, must be notified to
+                the HSE (F10)
+              </li>
+              <li>
+                <strong>Construction Phase Plan:</strong> Required for all projects where CDM
+                applies — sets out the arrangements for managing health and safety during the work
+              </li>
+              <li>
+                <strong>Health and Safety File:</strong> Must be compiled for the client —
+                containing as-built drawings, maintenance information, and residual risk information
+                for future maintenance
+              </li>
+              <li>
+                <strong>Welfare:</strong> Adequate welfare facilities (toilets, washing, rest,
+                changing) must be provided for all construction workers
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Management of Health and Safety at Work Regulations 1999
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  The Management Regulations (sometimes called "MHSWR" or simply "the Management
-                  Regs") provide the overarching framework for health and safety management. Key
-                  requirements include:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Regulation 3 — Risk assessment:</strong> Every employer must carry out a
-                    suitable and sufficient assessment of the risks to employees and non-employees.
-                    This is the legal foundation for all risk assessments in the workplace
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 4 — Principles of prevention:</strong> The employer must
-                    implement preventive and protective measures based on the principles in Schedule
-                    1 (which mirror the hierarchy of controls)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 5 — Health and safety arrangements:</strong> Employers must
-                    have effective arrangements for planning, organisation, control, monitoring and
-                    review of safety measures
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 7 — Competent persons:</strong> Employers must appoint one or
-                    more competent persons to assist with health and safety
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 10 — Information:</strong> Employees must be provided with
-                    comprehensible and relevant information on risks and safety measures
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 13 — Training:</strong> Adequate training on recruitment, on
-                    exposure to new/changed risks, and periodically as required
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation 14 — Employees' duties:</strong> Employees must use equipment
-                    correctly and inform the employer of dangerous situations or shortcomings in
-                    safety arrangements
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Management of Health and Safety at Work Regulations 1999">
+            <p>
+              The Management Regulations (sometimes called &quot;MHSWR&quot; or simply &quot;the
+              Management Regs&quot;) provide the overarching framework for health and safety
+              management. Key requirements include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Regulation 3 — Risk assessment:</strong> Every employer must carry out a
+                suitable and sufficient assessment of the risks to employees and non-employees. This
+                is the legal foundation for all risk assessments in the workplace
+              </li>
+              <li>
+                <strong>Regulation 4 — Principles of prevention:</strong> The employer must
+                implement preventive and protective measures based on the principles in Schedule 1
+                (which mirror the hierarchy of controls)
+              </li>
+              <li>
+                <strong>Regulation 5 — Health and safety arrangements:</strong> Employers must have
+                effective arrangements for planning, organisation, control, monitoring and review of
+                safety measures
+              </li>
+              <li>
+                <strong>Regulation 7 — Competent persons:</strong> Employers must appoint one or
+                more competent persons to assist with health and safety
+              </li>
+              <li>
+                <strong>Regulation 10 — Information:</strong> Employees must be provided with
+                comprehensible and relevant information on risks and safety measures
+              </li>
+              <li>
+                <strong>Regulation 13 — Training:</strong> Adequate training on recruitment, on
+                exposure to new/changed risks, and periodically as required
+              </li>
+              <li>
+                <strong>Regulation 14 — Employees&apos; duties:</strong> Employees must use
+                equipment correctly and inform the employer of dangerous situations or shortcomings
+                in safety arrangements
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03: DSEAR and ATEX */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            DSEAR, ATEX Zones and Hazardous Area Classification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>DSEAR, ATEX zones and hazardous area classification</ContentEyebrow>
+
+          <ConceptBlock title="DSEAR, ATEX Zones and Hazardous Area Classification">
             <p>
               The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) require
               employers to control the risks from fire, explosion and similar events arising from
@@ -688,410 +633,354 @@ const MOETModule1Section4_6 = () => {
               is critical whenever you work in or near areas where flammable gases, vapours, mists
               or combustible dusts may be present.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DSEAR Key Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Risk assessment:</strong> Assess the risks from dangerous substances and
-                  the measures needed to control them
-                </li>
-                <li className="pl-1">
-                  <strong>Hazardous area classification:</strong> Classify areas where explosive
-                  atmospheres may occur into zones
-                </li>
-                <li className="pl-1">
-                  <strong>Elimination or reduction:</strong> Eliminate or reduce the amount of
-                  dangerous substance, or reduce the likelihood of an explosive atmosphere forming
-                </li>
-                <li className="pl-1">
-                  <strong>Ignition sources:</strong> Control ignition sources — including electrical
-                  equipment, static electricity, hot surfaces, and mechanical sparks
-                </li>
-                <li className="pl-1">
-                  <strong>Mitigation:</strong> Provide mitigation measures (explosion relief,
-                  suppression, containment) to reduce the effects of any explosion
-                </li>
-                <li className="pl-1">
-                  <strong>Information and training:</strong> Provide employees with information on
-                  dangerous substances and the precautions to take
-                </li>
-              </ul>
+          <ConceptBlock title="DSEAR Key Requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Risk assessment:</strong> Assess the risks from dangerous substances and the
+                measures needed to control them
+              </li>
+              <li>
+                <strong>Hazardous area classification:</strong> Classify areas where explosive
+                atmospheres may occur into zones
+              </li>
+              <li>
+                <strong>Elimination or reduction:</strong> Eliminate or reduce the amount of
+                dangerous substance, or reduce the likelihood of an explosive atmosphere forming
+              </li>
+              <li>
+                <strong>Ignition sources:</strong> Control ignition sources — including electrical
+                equipment, static electricity, hot surfaces, and mechanical sparks
+              </li>
+              <li>
+                <strong>Mitigation:</strong> Provide mitigation measures (explosion relief,
+                suppression, containment) to reduce the effects of any explosion
+              </li>
+              <li>
+                <strong>Information and training:</strong> Provide employees with information on
+                dangerous substances and the precautions to take
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ATEX Zone Classifications">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Zone</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Substance</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Equipment Required
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 0</td>
+                    <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Explosive atmosphere present continuously or for long periods
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 1 Ex equipment (very high protection)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 1</td>
+                    <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Likely to occur occasionally in normal operation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 2 Ex equipment (high protection)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 2</td>
+                    <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Not likely in normal operation; may occur for short periods
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 3 Ex equipment (normal protection)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 20</td>
+                    <td className="border border-white/10 px-3 py-2">Dust</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Explosive dust cloud continuously or for long periods
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 1 Ex equipment (very high protection)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 21</td>
+                    <td className="border border-white/10 px-3 py-2">Dust</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Likely to occur occasionally in normal operation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 2 Ex equipment (high protection)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Zone 22</td>
+                    <td className="border border-white/10 px-3 py-2">Dust</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Not likely in normal operation; may occur for short periods
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Category 3 Ex equipment (normal protection)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ATEX Zone Classifications
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Zone</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Substance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Condition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Equipment Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 0</td>
-                      <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Explosive atmosphere present continuously or for long periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 1 Ex equipment (very high protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 1</td>
-                      <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Likely to occur occasionally in normal operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 2 Ex equipment (high protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 2</td>
-                      <td className="border border-white/10 px-3 py-2">Gas/vapour</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not likely in normal operation; may occur for short periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 3 Ex equipment (normal protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 20</td>
-                      <td className="border border-white/10 px-3 py-2">Dust</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Explosive dust cloud continuously or for long periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 1 Ex equipment (very high protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 21</td>
-                      <td className="border border-white/10 px-3 py-2">Dust</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Likely to occur occasionally in normal operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 2 Ex equipment (high protection)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone 22</td>
-                      <td className="border border-white/10 px-3 py-2">Dust</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not likely in normal operation; may occur for short periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Category 3 Ex equipment (normal protection)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <ConceptBlock title="Electrical Maintenance in Hazardous Areas">
+            <p>
+              Maintenance of electrical equipment in hazardous areas requires specialist knowledge
+              and additional precautions. You must never use standard (non-Ex-rated) test
+              instruments in a classified zone. All electrical work must maintain the integrity of
+              the explosion protection — replacing an Ex-rated component with a standard component
+              removes the protection and creates an explosion risk. If you are asked to work in a
+              hazardous area, ensure you have received appropriate training (CompEx or equivalent)
+              and understand the specific zone classification and equipment protection types.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Electrical Maintenance in Hazardous Areas
-              </p>
-              <p className="text-sm text-white">
-                Maintenance of electrical equipment in hazardous areas requires specialist knowledge
-                and additional precautions. You must never use standard (non-Ex-rated) test
-                instruments in a classified zone. All electrical work must maintain the integrity of
-                the explosion protection — replacing an Ex-rated component with a standard component
-                removes the protection and creates an explosion risk. If you are asked to work in a
-                hazardous area, ensure you have received appropriate training (CompEx or equivalent)
-                and understand the specific zone classification and equipment protection types.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04: ENA Standards and Professional Body Guidance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            ENA Standards, Distribution Safety Rules and Professional Body Guidance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>
+            ENA standards, Distribution Safety Rules and professional body guidance
+          </ContentEyebrow>
+
+          <ConceptBlock title="ENA Standards, Distribution Safety Rules and Professional Body Guidance">
             <p>
               Beyond HSE guidance and statutory regulations, electrical maintenance technicians must
               be aware of industry-specific standards from the Energy Networks Association (ENA) and
               guidance from professional bodies such as the Institution of Engineering and
-              Technology (IET) and the Electrical Contractors' Association (ECA).
+              Technology (IET) and the Electrical Contractors&apos; Association (ECA).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  ENA Technical Standards
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The Energy Networks Association publishes Engineering Recommendations and
-                  technical standards that govern the interface between customer installations and
-                  the electricity distribution network.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>G98:</strong> Requirements for micro-generation equipment connected in
-                    parallel with public low voltage distribution networks (up to 16 A per phase)
-                  </li>
-                  <li className="pl-1">
-                    <strong>G99:</strong> Requirements for generation equipment connected to the
-                    distribution network above the G98 threshold
-                  </li>
-                  <li className="pl-1">
-                    <strong>G12:</strong> Requirements for the application of protective multiple
-                    earthing to low voltage networks
-                  </li>
-                  <li className="pl-1">
-                    <strong>P28/P29:</strong> Voltage fluctuations, harmonics and power quality
-                    standards
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Distribution Safety Rules (DSR)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The Distribution Safety Rules are the safety rules that govern work on electricity
-                  distribution networks. They are produced by the ENA and adopted by each
-                  distribution network operator (DNO).
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Prescribe the procedures for isolation, earthing, and proving dead on
-                    distribution equipment
-                  </li>
-                  <li className="pl-1">
-                    Define the roles of Senior Authorised Person (SAP), Authorised Person, and
-                    Competent Person
-                  </li>
-                  <li className="pl-1">
-                    Govern the permit to work system for distribution network work
-                  </li>
-                  <li className="pl-1">Set out the safety procedures for switching operations</li>
-                  <li className="pl-1">
-                    Require formal authorisation and appointment of all persons working on the
-                    network
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  <strong>When do DSR apply?</strong> If you work on or near DNO-owned equipment
-                  (substations, HV switchgear, distribution transformers, service cables), the DSR
-                  apply. This is distinct from customer-owned equipment where the employer's own
-                  safety rules apply.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Site-Specific Rules
-                </h3>
-                <p className="text-sm text-white">
-                  Many industrial, commercial and institutional clients have their own site-specific
-                  safety rules that supplement national legislation and standards. These may
-                  include: enhanced permit to work procedures, specific PPE requirements (e.g., arc
-                  flash clothing ratings), restricted working hours, mandatory site inductions,
-                  buddy systems, and specific reporting procedures. As a maintenance technician, you
-                  must identify and comply with site-specific rules at every location where you
-                  work.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">IET Publications</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Guidance Notes 1–8:</strong> Practical interpretation of BS 7671
-                    requirements (GN3 on Inspection and Testing is essential)
-                  </li>
-                  <li className="pl-1">
-                    <strong>On-Site Guide:</strong> Field reference for BS 7671 application
-                  </li>
-                  <li className="pl-1">
-                    <strong>Code of Practice for In-Service Inspection and Testing:</strong>{' '}
-                    Guidance on PAT testing and in-service equipment management
-                  </li>
-                  <li className="pl-1">
-                    <strong>Code of Practice for EV Charging:</strong> Guidance on Section 722
-                    installations
-                  </li>
-                  <li className="pl-1">
-                    <strong>Code of Practice for Grid-Connected Solar PV:</strong> Guidance on
-                    Section 712 installations
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  ECA and Other Bodies
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>ECA:</strong> Technical guidance for electrical contractors, business
-                    management, and compliance
-                  </li>
-                  <li className="pl-1">
-                    <strong>NICEIC/NAPIT/ELECSA:</strong> Competent person scheme requirements and
-                    technical bulletins
-                  </li>
-                  <li className="pl-1">
-                    <strong>JIB:</strong> Joint Industry Board — grading, terms and conditions for
-                    electrical operatives
-                  </li>
-                  <li className="pl-1">
-                    <strong>CIBSE:</strong> Guidance on building services design, including lighting
-                    and power standards
-                  </li>
-                  <li className="pl-1">
-                    <strong>BSRIA:</strong> Practical guidance on commissioning and building
-                    services maintenance
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Industry Codes of Practice
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Various industry bodies publish codes of practice that, while not statutory,
-                represent accepted good practice in specific sectors:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS 5839:</strong> Fire detection and alarm systems — Part 1 (non-domestic)
-                  and Part 6 (domestic)
-                </li>
-                <li className="pl-1">
-                  <strong>BS 5266:</strong> Emergency lighting — Part 1 (Code of Practice)
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 62305:</strong> Protection against lightning
-                </li>
-                <li className="pl-1">
-                  <strong>BS EN 50110:</strong> Operation of electrical installations (European
-                  standard)
-                </li>
-                <li className="pl-1">
-                  <strong>IEC 60079 series:</strong> Equipment for explosive atmospheres (technical
-                  standards for Ex equipment)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 note:</strong> The maintenance technician standard requires you to
-              demonstrate awareness of the broader regulatory and standards landscape — not just the
-              core regulations (HSWA, EAWR) but also the guidance, standards and codes of practice
-              that apply to your specific work context. In your EPA, you may be asked to identify
-              which guidance or standard applies to a specific maintenance scenario.
+          <ConceptBlock title="ENA Technical Standards">
+            <p>
+              The Energy Networks Association publishes Engineering Recommendations and technical
+              standards that govern the interface between customer installations and the electricity
+              distribution network.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>G98:</strong> Requirements for micro-generation equipment connected in
+                parallel with public low voltage distribution networks (up to 16 A per phase)
+              </li>
+              <li>
+                <strong>G99:</strong> Requirements for generation equipment connected to the
+                distribution network above the G98 threshold
+              </li>
+              <li>
+                <strong>G12:</strong> Requirements for the application of protective multiple
+                earthing to low voltage networks
+              </li>
+              <li>
+                <strong>P28/P29:</strong> Voltage fluctuations, harmonics and power quality
+                standards
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock
+            title="Distribution Safety Rules (DSR)"
+            onSite="When do DSR apply? If you work on or near DNO-owned equipment (substations, HV switchgear, distribution transformers, service cables), the DSR apply. This is distinct from customer-owned equipment where the employer's own safety rules apply."
+          >
+            <p>
+              The Distribution Safety Rules are the safety rules that govern work on electricity
+              distribution networks. They are produced by the ENA and adopted by each distribution
+              network operator (DNO).
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Prescribe the procedures for isolation, earthing, and proving dead on distribution
+                equipment
+              </li>
+              <li>
+                Define the roles of Senior Authorised Person (SAP), Authorised Person, and Competent
+                Person
+              </li>
+              <li>Govern the permit to work system for distribution network work</li>
+              <li>Set out the safety procedures for switching operations</li>
+              <li>
+                Require formal authorisation and appointment of all persons working on the network
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Site-Specific Rules">
+            <p>
+              Many industrial, commercial and institutional clients have their own site-specific
+              safety rules that supplement national legislation and standards. These may include:
+              enhanced permit to work procedures, specific PPE requirements (e.g., arc flash
+              clothing ratings), restricted working hours, mandatory site inductions, buddy systems,
+              and specific reporting procedures. As a maintenance technician, you must identify and
+              comply with site-specific rules at every location where you work.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="IET Publications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Guidance Notes 1–8:</strong> Practical interpretation of BS 7671
+                requirements (GN3 on Inspection and Testing is essential)
+              </li>
+              <li>
+                <strong>On-Site Guide:</strong> Field reference for BS 7671 application
+              </li>
+              <li>
+                <strong>Code of Practice for In-Service Inspection and Testing:</strong> Guidance on
+                PAT testing and in-service equipment management
+              </li>
+              <li>
+                <strong>Code of Practice for EV Charging:</strong> Guidance on Section 722
+                installations
+              </li>
+              <li>
+                <strong>Code of Practice for Grid-Connected Solar PV:</strong> Guidance on Section
+                712 installations
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="ECA and Other Bodies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ECA:</strong> Technical guidance for electrical contractors, business
+                management, and compliance
+              </li>
+              <li>
+                <strong>NICEIC/NAPIT/ELECSA:</strong> Competent person scheme requirements and
+                technical bulletins
+              </li>
+              <li>
+                <strong>JIB:</strong> Joint Industry Board — grading, terms and conditions for
+                electrical operatives
+              </li>
+              <li>
+                <strong>CIBSE:</strong> Guidance on building services design, including lighting and
+                power standards
+              </li>
+              <li>
+                <strong>BSRIA:</strong> Practical guidance on commissioning and building services
+                maintenance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key HSE Guidance</p>
-                <ul className="space-y-0.5">
-                  <li>GS38 — Test equipment for LV systems</li>
-                  <li>GS6 — Overhead power line safety</li>
-                  <li>HSG85 — Safe working practices (electrical)</li>
-                  <li>HSG47 — Underground services</li>
-                  <li>HSG230 — Keeping switchgear safe</li>
-                  <li>INDG231 — Electrical safety and you</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Other Regulations and Standards</p>
-                <ul className="space-y-0.5">
-                  <li>CDM 2015 — Construction safety management</li>
-                  <li>Management Regs 1999 — Risk assessment, competent persons</li>
-                  <li>DSEAR 2002 — Explosive atmospheres</li>
-                  <li>ATEX — Zone classification (0/1/2, 20/21/22)</li>
-                  <li>DSR — Distribution Safety Rules</li>
-                  <li>ENA — G98, G99, G12 technical standards</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Industry Codes of Practice">
+            <p>
+              Various industry bodies publish codes of practice that, while not statutory, represent
+              accepted good practice in specific sectors:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 5839:</strong> Fire detection and alarm systems — Part 1 (non-domestic)
+                and Part 6 (domestic)
+              </li>
+              <li>
+                <strong>BS 5266:</strong> Emergency lighting — Part 1 (Code of Practice)
+              </li>
+              <li>
+                <strong>BS EN 62305:</strong> Protection against lightning
+              </li>
+              <li>
+                <strong>BS EN 50110:</strong> Operation of electrical installations (European
+                standard)
+              </li>
+              <li>
+                <strong>IEC 60079 series:</strong> Equipment for explosive atmospheres (technical
+                standards for Ex equipment)
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Relevance to your ST1426 assessment">
+            <p>
+              <em>
+                The maintenance technician standard requires you to demonstrate awareness of the
+                broader regulatory and standards landscape — not just the core regulations (HSWA,
+                EAWR) but also the guidance, standards and codes of practice that apply to your
+                specific work context. In your EPA, you may be asked to identify which guidance or
+                standard applies to a specific maintenance scenario.
+              </em>
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'GS38 — Test equipment for LV systems',
+              'GS6 — Overhead power line safety',
+              'HSG85 — Safe working practices (electrical)',
+              'HSG47 — Underground services',
+              'HSG230 — Keeping switchgear safe',
+              'INDG231 — Electrical safety and you',
+              'CDM 2015 — Construction safety management',
+              'Management Regs 1999 — Risk assessment, competent persons',
+              'DSEAR 2002 — Explosive atmospheres',
+              'ATEX — Zone classification (0/1/2, 20/21/22)',
+              'DSR — Distribution Safety Rules',
+              'ENA — G98, G99, G12 technical standards',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  LOLER — Lifting Operations and Lifting Equipment Regulations 1998
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next section <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Module 1 · Section 5
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

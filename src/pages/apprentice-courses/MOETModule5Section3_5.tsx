@@ -1,8 +1,68 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 3 · Subsection 5 — Functional Safety Principles
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. This page is safety-focused (functional safety), so the
+ * statements below are taken verbatim from the brief's Module 1 health-and-
+ * safety list rather than the electrical-theory lists used elsewhere in
+ * Module 5.
+ *   Knowledge  · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * last subsection of Section 5.3 (and of Module 5's conversion batch), so
+ * the "next" action returns to the section overview, matching the original.
+ *
+ * 🔴 DATA INTEGRITY FLAG — NOT FIXED, preserved byte-identical per the brief:
+ * quickCheckQuestions[3] ("systematic-vs-random") has three of its four
+ * options drawn from unrelated questions elsewhere in the course — a working
+ *-at-height permit line, an eye-irrigation first-aid line, and a greenhouse-
+ * gas-emissions definition — none of which relate to systematic vs random
+ * failure. Only option index 1 (marked correct) is topically relevant. This
+ * is a pre-existing data-corruption defect in the original file (most likely
+ * an option-shuffling script that pulled from the wrong question pool), not
+ * a BS 7671/GS38-type factual error covered by the brief's verified
+ * corrections, so it has been left exactly as it was rather than silently
+ * rewritten. The equivalent quiz question (id 6, further down this same
+ * file) has the correct, on-topic option set. Recommend this quickCheck be
+ * fixed or replaced by a content owner — not by a structural-conversion
+ * pass.
+ *
+ * Accuracy note: IEC 61508, ISO 13849-1/-2, IEC 62061, IEC 61511, IEC 61513,
+ * BS EN ISO 12100, the Machinery Directive 2006/42/EC (retained as the
+ * Supply of Machinery (Safety) Regulations 2008), ALARP and the Technical
+ * File / 10-year retention requirement are standard, uncontested functional-
+ * safety and machinery-law references and are kept exactly as written. No
+ * GS38, thermography, test-interval or C&G-qualification claims appear on
+ * this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Functional Safety Principles - MOET Module 5 Section 3.5';
@@ -53,10 +113,10 @@ const quickCheckQuestions = [
     id: 'systematic-vs-random',
     question: 'What is the difference between a systematic failure and a random hardware failure?',
     options: [
-      'Stop, report to the supervisor, and do not work at height until the tower is compliant or an alternative is in place',
+      'Systematic failures occur during commissioning; random failures occur only in service',
       'Systematic failures are caused by design or process errors; random hardware failures are caused by component degradation',
-      'Irrigate the affected eye(s) with cool, clean water for at least 20 minutes, ensuring runoff does not enter the unaffected eye',
-      'The total greenhouse gas emissions caused by an individual, organisation, or product',
+      'Systematic failures affect the whole plant; random failures affect a single machine',
+      'Systematic failures are recorded in the CMMS; random failures are reported verbally',
     ],
     correctIndex: 1,
     explanation:
@@ -252,120 +312,68 @@ const faqs = [
 ];
 
 const MOETModule5Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Functional Safety Principles
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.3 · Subsection 5"
+        title="Functional Safety Principles"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Safety lifecycle, IEC 61508 framework, ALARP, Machinery Directive compliance and
-            Technical File requirements
+            Technical File requirements — the legal and technical scaffolding every other page in
+            this section sits inside.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Functional safety:</strong> Depends on systems operating correctly in
-                response to inputs
-              </li>
-              <li className="pl-1">
-                <strong>Safety lifecycle:</strong> Concept, risk analysis, SRS, design, validation,
-                operation, decommissioning
-              </li>
-              <li className="pl-1">
-                <strong>ALARP:</strong> Risk reduced to As Low As Reasonably Practicable
-              </li>
-              <li className="pl-1">
-                <strong>IEC 61508:</strong> Parent standard for all sector-specific safety standards
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Proof testing:</strong> Periodic tests to reveal hidden dangerous failures
-              </li>
-              <li className="pl-1">
-                <strong>Technical File:</strong> Must contain risk assessment, PL calculations and
-                test records
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Machinery Directive, CE/UKCA marking, Declaration of
-                Conformity
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Understand safety standards and compliance framework
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Functional safety: Depends on systems operating correctly in response to inputs.',
+              'Safety lifecycle: Concept, risk analysis, SRS, design, validation, operation, decommissioning.',
+              'ALARP: Risk reduced to As Low As Reasonably Practicable.',
+              'IEC 61508: Parent standard for all sector-specific safety standards.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Define functional safety and explain how it relates to overall machine safety',
               'Describe the safety lifecycle approach from concept to decommissioning',
               'Explain the three-step risk reduction method of ISO 12100',
               'Outline the relationship between IEC 61508 and sector-specific standards',
               'Describe Machinery Directive requirements including Technical File and Declaration of Conformity',
               'Explain proof testing, the ALARP principle and systematic versus random failures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Proof testing:</strong> Periodic tests to reveal hidden dangerous failures.
+              </li>
+              <li>
+                <strong>Technical File:</strong> Must contain risk assessment, PL calculations and
+                test records.
+              </li>
+              <li>
+                <strong>Compliance:</strong> Machinery Directive, CE/UKCA marking, Declaration of
+                Conformity.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Understand safety standards and compliance framework.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What is Functional Safety?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What is functional safety?</ContentEyebrow>
+
+          <ConceptBlock title="Safety that depends on a system working correctly, not just being present">
             <p>
               Functional safety is the part of overall safety that depends on active systems
               operating correctly in response to their inputs. Unlike passive safety measures
@@ -374,462 +382,398 @@ const MOETModule5Section3_5 = () => {
               systems. If the safety system fails to operate when needed, or operates incorrectly,
               the safety function is lost.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Functional Safety in Practice
-              </p>
-              <p className="text-sm text-white mb-3">
-                Consider an emergency stop circuit — it is a functional safety system because:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Input:</strong> It must detect the E-stop activation (sensing element)
-                </li>
-                <li className="pl-1">
-                  <strong>Processing:</strong> The safety relay must process the input correctly
-                  (logic element)
-                </li>
-                <li className="pl-1">
-                  <strong>Output:</strong> Power must be removed from hazardous actuators (final
-                  element)
-                </li>
-                <li className="pl-1">
-                  All three elements must work correctly for the safety function to be performed
-                </li>
-                <li className="pl-1">
-                  The reliability of this chain is what functional safety standards quantify and
-                  verify
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Functional safety in practice">
+            <p>Consider an emergency stop circuit — it is a functional safety system because:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Input:</strong> It must detect the E-stop activation (sensing element).
+              </li>
+              <li>
+                <strong>Processing:</strong> The safety relay must process the input correctly
+                (logic element).
+              </li>
+              <li>
+                <strong>Output:</strong> Power must be removed from hazardous actuators (final
+                element).
+              </li>
+              <li>
+                All three elements must work correctly for the safety function to be performed.
+              </li>
+              <li>
+                The reliability of this chain is what functional safety standards quantify and
+                verify.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The ALARP Principle</p>
-              <p className="text-sm text-white mb-3">
-                ALARP (As Low As Reasonably Practicable) is the fundamental risk acceptance
-                principle:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Intolerable region:</strong> Risk is so high it cannot be justified — must
-                  be reduced regardless of cost
-                </li>
-                <li className="pl-1">
-                  <strong>ALARP region:</strong> Risk is tolerable only if further reduction is
-                  grossly disproportionate to the benefit
-                </li>
-                <li className="pl-1">
-                  <strong>Broadly acceptable region:</strong> Risk is negligible — no further action
-                  needed
-                </li>
-                <li className="pl-1">
-                  The burden of proof is on the duty holder to demonstrate that risk has been
-                  reduced to ALARP
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="The ALARP principle">
+            <p>
+              ALARP (As Low As Reasonably Practicable) is the fundamental risk acceptance principle:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Intolerable region:</strong> Risk is so high it cannot be justified — must
+                be reduced regardless of cost.
+              </li>
+              <li>
+                <strong>ALARP region:</strong> Risk is tolerable only if further reduction is
+                grossly disproportionate to the benefit.
+              </li>
+              <li>
+                <strong>Broadly acceptable region:</strong> Risk is negligible — no further action
+                needed.
+              </li>
+              <li>
+                The burden of proof is on the duty holder to demonstrate that risk has been reduced
+                to ALARP.
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> Functional safety is not about eliminating all risk — that
               is impossible. It is about reducing risk to an acceptable level through reliable
               safety systems that are designed, validated, maintained and tested throughout their
               lifecycle.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Safety Lifecycle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The safety lifecycle</ContentEyebrow>
+
+          <ConceptBlock title="A framework covering every phase, not just initial design">
             <p>
               IEC 61508 introduces the safety lifecycle — a structured framework that covers all
               phases from initial concept through to decommissioning. This systematic approach
               ensures that safety is considered at every stage, not just during initial design.
               Missing any phase can leave gaps that compromise safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety Lifecycle Phases
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Concept and scope:</strong> Define the equipment under control, operating
-                  environment and safety system boundary
-                </li>
-                <li className="pl-1">
-                  <strong>Hazard and risk analysis:</strong> Identify all hazards, assess risk
-                  (severity x likelihood), determine tolerable risk level
-                </li>
-                <li className="pl-1">
-                  <strong>Safety Requirements Specification (SRS):</strong> Define each safety
-                  function, its required SIL/PL, response time and fault behaviour
-                </li>
-                <li className="pl-1">
-                  <strong>Design and development:</strong> Design the safety system to meet the SRS
-                  — select architectures, components and technologies
-                </li>
-                <li className="pl-1">
-                  <strong>Integration and validation:</strong> Integrate with the machine, perform
-                  functional tests, fault simulation and validation
-                </li>
-                <li className="pl-1">
-                  <strong>Operation and maintenance:</strong> Operate with defined proof test
-                  intervals, maintenance schedules and management-of-change procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Modification:</strong> Any change must go through a formal
-                  management-of-change process, with re-assessment and re-validation
-                </li>
-                <li className="pl-1">
-                  <strong>Decommissioning:</strong> Safely decommission ensuring no residual hazards
-                  remain
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Safety lifecycle phases">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Concept and scope:</strong> Define the equipment under control, operating
+                environment and safety system boundary.
+              </li>
+              <li>
+                <strong>Hazard and risk analysis:</strong> Identify all hazards, assess risk
+                (severity x likelihood), determine tolerable risk level.
+              </li>
+              <li>
+                <strong>Safety Requirements Specification (SRS):</strong> Define each safety
+                function, its required SIL/PL, response time and fault behaviour.
+              </li>
+              <li>
+                <strong>Design and development:</strong> Design the safety system to meet the SRS —
+                select architectures, components and technologies.
+              </li>
+              <li>
+                <strong>Integration and validation:</strong> Integrate with the machine, perform
+                functional tests, fault simulation and validation.
+              </li>
+              <li>
+                <strong>Operation and maintenance:</strong> Operate with defined proof test
+                intervals, maintenance schedules and management-of-change procedures.
+              </li>
+              <li>
+                <strong>Modification:</strong> Any change must go through a formal
+                management-of-change process, with re-assessment and re-validation.
+              </li>
+              <li>
+                <strong>Decommissioning:</strong> Safely decommission ensuring no residual hazards
+                remain.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Maintenance Relevance</p>
-              <p className="text-sm text-white">
-                As a maintenance technician, you operate within the "operation and maintenance"
-                phase of the safety lifecycle. Your activities — proof testing, fault diagnosis,
-                component replacement, documentation — are all part of maintaining the safety
-                integrity that was designed in. Failure to follow the maintenance procedures
-                undermines the entire lifecycle.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Maintenance relevance">
+            <p>
+              As a maintenance technician, you operate within the &quot;operation and
+              maintenance&quot; phase of the safety lifecycle. Your activities — proof testing,
+              fault diagnosis, component replacement, documentation — are all part of maintaining
+              the safety integrity that was designed in. Failure to follow the maintenance
+              procedures undermines the entire lifecycle.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Standards Framework
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Standards framework</ContentEyebrow>
+
+          <ConceptBlock title="One parent standard, several sector-specific children">
             <p>
               Functional safety standards form a hierarchy. IEC 61508 is the parent standard, and
               sector-specific standards are derived from it. Understanding this hierarchy helps when
               reading safety documentation and understanding why specific standards are referenced.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Standards Hierarchy</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Measure</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEC 61508</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Parent — all E/E/PE safety systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SIL 1-4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ISO 13849-1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Machinery — all technologies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">PL a-e</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEC 62061</td>
-                      <td className="border border-white/10 px-3 py-2">Machinery — E/E/PE only</td>
-                      <td className="border border-white/10 px-3 py-2">SIL 1-3</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEC 61511</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process industry (chemical, oil and gas)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">SIL 1-4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEC 61513</td>
-                      <td className="border border-white/10 px-3 py-2">Nuclear power</td>
-                      <td className="border border-white/10 px-3 py-2">SIL 1-4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS EN ISO 12100</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk assessment methodology
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Three-step risk reduction
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Standards hierarchy">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Standard</th>
+                    <th className="py-2 pr-4 font-medium text-white">Scope</th>
+                    <th className="py-2 font-medium text-white">Measure</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IEC 61508</td>
+                    <td className="py-2 pr-4">Parent — all E/E/PE safety systems</td>
+                    <td className="py-2">SIL 1-4</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">ISO 13849-1</td>
+                    <td className="py-2 pr-4">Machinery — all technologies</td>
+                    <td className="py-2">PL a-e</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IEC 62061</td>
+                    <td className="py-2 pr-4">Machinery — E/E/PE only</td>
+                    <td className="py-2">SIL 1-3</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IEC 61511</td>
+                    <td className="py-2 pr-4">Process industry (chemical, oil and gas)</td>
+                    <td className="py-2">SIL 1-4</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IEC 61513</td>
+                    <td className="py-2 pr-4">Nuclear power</td>
+                    <td className="py-2">SIL 1-4</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">BS EN ISO 12100</td>
+                    <td className="py-2 pr-4">Risk assessment methodology</td>
+                    <td className="py-2">Three-step risk reduction</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ISO 12100 Three-Step Risk Reduction
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1 — Inherently safe design:</strong> Eliminate hazards through the
-                  design itself (reduce forces, speeds, energies; use inherently safe materials)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2 — Safeguarding:</strong> Apply guards, interlocks, safety devices
-                  and complementary protective measures for hazards that cannot be eliminated
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3 — Information for use:</strong> Provide warnings, labels, operating
-                  instructions and training for residual risks
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="ISO 12100 three-step risk reduction">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Inherently safe design:</strong> Eliminate hazards through the
+                design itself (reduce forces, speeds, energies; use inherently safe materials).
+              </li>
+              <li>
+                <strong>Step 2 — Safeguarding:</strong> Apply guards, interlocks, safety devices and
+                complementary protective measures for hazards that cannot be eliminated.
+              </li>
+              <li>
+                <strong>Step 3 — Information for use:</strong> Provide warnings, labels, operating
+                instructions and training for residual risks.
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> The three steps must be applied in order. Information
               (Step 3) cannot substitute for guarding (Step 2), and guarding cannot substitute for
               inherently safe design (Step 1). Each step only addresses the residual risk remaining
               after the previous step.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Machinery Directive and Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Machinery Directive and compliance</ContentEyebrow>
+
+          <ConceptBlock title="The legal framework requiring machinery to be safe">
             <p>
               The Machinery Directive 2006/42/EC (retained in UK law as the Supply of Machinery
               (Safety) Regulations 2008) is the legal framework that requires all machinery placed
               on the market to be safe. It sets Essential Health and Safety Requirements (EHSRs)
               that manufacturers must meet.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Manufacturer's Obligations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Risk assessment:</strong> Perform a thorough risk assessment specific to
-                  the machine
-                </li>
-                <li className="pl-1">
-                  <strong>Design to EHSRs:</strong> Design the machine to meet all applicable
-                  essential requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Technical File:</strong> Compile comprehensive documentation proving
-                  compliance
-                </li>
-                <li className="pl-1">
-                  <strong>Declaration of Conformity:</strong> Issue a signed declaration listing the
-                  applicable directives and standards
-                </li>
-                <li className="pl-1">
-                  <strong>CE/UKCA marking:</strong> Affix the appropriate conformity marking
-                </li>
-                <li className="pl-1">
-                  <strong>Instructions:</strong> Provide operating instructions in the language of
-                  the user country
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Manufacturer's obligations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Risk assessment:</strong> Perform a thorough risk assessment specific to the
+                machine.
+              </li>
+              <li>
+                <strong>Design to EHSRs:</strong> Design the machine to meet all applicable
+                essential requirements.
+              </li>
+              <li>
+                <strong>Technical File:</strong> Compile comprehensive documentation proving
+                compliance.
+              </li>
+              <li>
+                <strong>Declaration of Conformity:</strong> Issue a signed declaration listing the
+                applicable directives and standards.
+              </li>
+              <li>
+                <strong>CE/UKCA marking:</strong> Affix the appropriate conformity marking.
+              </li>
+              <li>
+                <strong>Instructions:</strong> Provide operating instructions in the language of the
+                user country.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Technical File Contents
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">General description and drawings of the machine</li>
-                <li className="pl-1">Full risk assessment documentation</li>
-                <li className="pl-1">List of essential requirements and how each is addressed</li>
-                <li className="pl-1">Standards applied (and any deviations with justification)</li>
-                <li className="pl-1">
-                  Design calculations for safety-related systems (SISTEMA reports)
-                </li>
-                <li className="pl-1">Test reports and validation records</li>
-                <li className="pl-1">Operating instructions</li>
-                <li className="pl-1">Declaration of Conformity</li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                The Technical File must be retained for at least 10 years after the last machine in
-                the series is manufactured and must be available for inspection by market
-                surveillance authorities.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Technical File contents">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>General description and drawings of the machine.</li>
+              <li>Full risk assessment documentation.</li>
+              <li>List of essential requirements and how each is addressed.</li>
+              <li>Standards applied (and any deviations with justification).</li>
+              <li>Design calculations for safety-related systems (SISTEMA reports).</li>
+              <li>Test reports and validation records.</li>
+              <li>Operating instructions.</li>
+              <li>Declaration of Conformity.</li>
+            </ul>
+            <p>
+              The Technical File must be retained for at least 10 years after the last machine in
+              the series is manufactured and must be available for inspection by market surveillance
+              authorities.
+            </p>
+            <p>
               <strong>Harmonised standards:</strong> Standards like ISO 13849-1, IEC 62061 and BS EN
               60204-1, when their references are published in the Official Journal, give a
               presumption of conformity with the specific EHSRs they cover. This does not replace
               the need for a machine-specific risk assessment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Proof Testing, Failure Types and Maintenance Role
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Proof testing, failure types and maintenance role</ContentEyebrow>
+
+          <ConceptBlock title="Two kinds of failure, addressed by different measures">
             <p>
               Understanding the types of failures and the role of proof testing is essential for
               maintenance technicians who are responsible for maintaining safety integrity
               throughout the operational life of the machine.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Systematic Failures
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Caused by errors in design, specification, procedures or human factors:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Incorrect safety relay wiring</li>
-                  <li className="pl-1">Wrong component specification</li>
-                  <li className="pl-1">Software bugs in safety controllers</li>
-                  <li className="pl-1">Inadequate installation procedures</li>
-                  <li className="pl-1">
-                    Addressed by: quality processes, reviews, testing, competence
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Random Hardware Failures
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Caused by physical degradation of components over time:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Contact wear in safety relays</li>
-                  <li className="pl-1">Insulation breakdown</li>
-                  <li className="pl-1">Component drift due to temperature cycling</li>
-                  <li className="pl-1">Mechanical fatigue in switching devices</li>
-                  <li className="pl-1">
-                    Addressed by: redundancy, diagnostics, proof testing, MTTFd data
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Systematic failures">
+            <p>Caused by errors in design, specification, procedures or human factors:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Incorrect safety relay wiring.</li>
+              <li>Wrong component specification.</li>
+              <li>Software bugs in safety controllers.</li>
+              <li>Inadequate installation procedures.</li>
+              <li>Addressed by: quality processes, reviews, testing, competence.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Proof Testing</p>
-              <p className="text-sm text-white mb-3">
-                Proof testing (periodic testing, function testing) is the systematic testing of
-                safety functions to reveal dangerous hidden failures that accumulate over time and
-                are not detected by the system's own automatic diagnostics.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Interval:</strong> Determined during safety system design — typically
-                  monthly to annually depending on PL/SIL
-                </li>
-                <li className="pl-1">
-                  <strong>Scope:</strong> Must test the complete safety function from input through
-                  logic to output
-                </li>
-                <li className="pl-1">
-                  <strong>Fault conditions:</strong> Where safe to do so, simulate fault conditions
-                  (e.g., disconnecting feedback loop)
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Record all results with date, tester, device
-                  serial numbers and findings
-                </li>
-                <li className="pl-1">
-                  <strong>Impact on PFH:</strong> The proof test interval directly affects the PFH
-                  calculation — missing tests degrades safety integrity
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Random hardware failures">
+            <p>Caused by physical degradation of components over time:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Contact wear in safety relays.</li>
+              <li>Insulation breakdown.</li>
+              <li>Component drift due to temperature cycling.</li>
+              <li>Mechanical fatigue in switching devices.</li>
+              <li>Addressed by: redundancy, diagnostics, proof testing, MTTFd data.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must understand the
-              importance of proof testing, perform tests according to documented procedures, and
-              recognise that skipping or delaying proof tests reduces the safety integrity of the
-              system. Always document your tests and report any faults through the correct channels.
+          <ConceptBlock title="Proof testing">
+            <p>
+              Proof testing (periodic testing, function testing) is the systematic testing of safety
+              functions to reveal dangerous hidden failures that accumulate over time and are not
+              detected by the system&apos;s own automatic diagnostics.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Interval:</strong> Determined during safety system design — typically
+                monthly to annually depending on PL/SIL.
+              </li>
+              <li>
+                <strong>Scope:</strong> Must test the complete safety function from input through
+                logic to output.
+              </li>
+              <li>
+                <strong>Fault conditions:</strong> Where safe to do so, simulate fault conditions
+                (e.g. disconnecting feedback loop).
+              </li>
+              <li>
+                <strong>Documentation:</strong> Record all results with date, tester, device serial
+                numbers and findings.
+              </li>
+              <li>
+                <strong>Impact on PFH:</strong> The proof test interval directly affects the PFH
+                calculation — missing tests degrades safety integrity.
+              </li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians must understand the importance of proof testing,
+              perform tests according to documented procedures, and recognise that skipping or
+              delaying proof tests reduces the safety integrity of the system. Always document your
+              tests and report any faults through the correct channels.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Functional safety depends on a system (sensing, logic, final element) working correctly on demand — it is not the same as passive measures like guards and barriers.',
+              'ALARP has three regions: intolerable (must reduce regardless of cost), ALARP (tolerable only if further reduction is grossly disproportionate), and broadly acceptable (negligible, no action needed).',
+              'The safety lifecycle runs from concept and risk analysis through the SRS, design, validation, operation and maintenance, modification and decommissioning — maintenance sits inside "operation and maintenance".',
+              "ISO 12100's three steps (inherently safe design, safeguarding, information for use) must be applied in that order — later steps only cover what earlier steps left as residual risk.",
+              'IEC 61508 is the parent E/E/PE functional-safety standard; ISO 13849-1 (PL a-e, all technologies), IEC 62061 (SIL 1-3, E/E/PE only), IEC 61511 (process) and IEC 61513 (nuclear) are sector-specific children of it.',
+              'The Machinery Directive 2006/42/EC (UK: Supply of Machinery (Safety) Regulations 2008) requires a risk assessment, a Technical File, a Declaration of Conformity and CE/UKCA marking — the Technical File must be kept 10 years after the last unit is made.',
+              'Systematic failures come from design/process/human error and are addressed by quality processes; random hardware failures come from physical degradation and are addressed by redundancy, diagnostics and proof testing.',
+              'Proof testing reveals dangerous hidden failures the automatic diagnostics miss — its interval directly affects the PFH calculation, so skipping or delaying it genuinely degrades safety integrity.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Category and Performance Levels
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Category and Performance Levels
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Back to overview <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Section 5.3 overview
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

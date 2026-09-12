@@ -1,8 +1,46 @@
-import { ArrowLeft, Wrench, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 5.2 · Subsection 2 — Selection and Use of Hand
+ * Tools
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Selection and Use of Hand Tools - MOET Module 2 Section 5.2';
@@ -43,10 +81,10 @@ const quickCheckQuestions = [
     question:
       'Why are torque-controlled screwdrivers and torque wrenches important for electrical connections?',
     options: [
-      "They allow terminals to be tightened much faster than a conventional screwdriver",
+      'They allow terminals to be tightened much faster than a conventional screwdriver',
       "They remove the need to refer to the manufacturer's installation instructions",
-      "They tighten terminals to the specified torque, avoiding loose or over-tight joints",
-      "They provide insulation protection equivalent to a VDE-rated tool",
+      'They tighten terminals to the specified torque, avoiding loose or over-tight joints',
+      'They provide insulation protection equivalent to a VDE-rated tool',
     ],
     correctIndex: 2,
     explanation:
@@ -154,7 +192,7 @@ const quizQuestions = [
     options: [
       'A pair of VDE-rated side cutters used on each armour wire in turn',
       'A standard automatic cable stripper set to its deepest cutting setting',
-      'A sharp electrician\'s cable knife drawn firmly around the armour',
+      "A sharp electrician's cable knife drawn firmly around the armour",
       'An SWA stripping tool or rotary cutter that cuts the armour without nicking insulation',
     ],
     correctAnswer: 3,
@@ -258,110 +296,52 @@ const faqs = [
 ];
 
 const MOETModule2Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Wrench className="h-4 w-4" />
-            <span>Module 2.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Selection and Use of Hand Tools
-          </h1>
-          <p className="text-white">
-            Essential hand tools, safe selection and proper techniques for electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.5 · Subsection 2"
+        title="Selection and Use of Hand Tools"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Essential hand tools, safe selection and proper techniques for electrical maintenance —
+            the tools that get used every day, and the standards that decide which ones are safe to
+            pick up near live parts.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>VDE tools:</strong> BS EN 60900 rated to 1,000 V AC — essential for
-                electrical work
-              </li>
-              <li className="pl-1">
-                <strong>Cable prep:</strong> Strippers, SWA cutters, crimpers — right tool for each
-                cable type
-              </li>
-              <li className="pl-1">
-                <strong>Torque:</strong> Correct terminal tightening prevents fires and failures
-              </li>
-              <li className="pl-1">
-                <strong>Inspection:</strong> Check every tool before every use
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safety:</strong> Correct tools prevent electric shock and injury
-              </li>
-              <li className="pl-1">
-                <strong>Quality:</strong> Proper tools produce reliable, lasting connections
-              </li>
-              <li className="pl-1">
-                <strong>Efficiency:</strong> Right tool = faster, better work
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to safe working practices and engineering skills KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'VDE tools: BS EN 60900 rated to 1,000 V AC — essential for electrical work',
+              'Cable prep: strippers, SWA cutters, crimpers — right tool for each cable type',
+              'Torque: correct terminal tightening prevents fires and failures',
+              'Inspection: check every tool before every use',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               "Identify the essential hand tools in an electrician's toolkit and their correct applications",
               'Understand BS EN 60900 requirements for VDE-insulated tools and when they must be used',
               'Select the correct cable stripping, cutting and preparation tools for different cable types',
               'Apply correct crimping techniques using ratcheted tools and appropriate dies',
               'Use torque-controlled screwdrivers and wrenches for reliable electrical connections',
               'Implement pre-use tool inspection as a fundamental safety practice',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>VDE-insulated tools and safety standards</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            VDE-Insulated Tools and Safety Standards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="VDE-Insulated Tools and Safety Standards"
+            onSite="Never assume a circuit is dead — always verify with a proven voltage indicator (GS38 compliant) before and after isolation. Even with verified isolation, using VDE-insulated tools provides a critical second layer of protection against unexpected re-energisation, induced voltages, or incorrect circuit identification. Defence in depth is the principle: isolation is the primary protection, insulated tools are the backup."
+          >
             <p>
               The most fundamental requirement for any hand tool used in electrical work is
               appropriate insulation. When there is any possibility of contact with live conductors
@@ -376,150 +356,120 @@ const MOETModule2Section5_2 = () => {
               cannot be easily removed. Each tool bears the double-triangle symbol with "1000V" to
               indicate compliance.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Essential VDE Tool Kit</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Tool</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Sizes</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Primary Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat screwdrivers</td>
-                      <td className="border border-white/10 px-3 py-2">3.0, 4.0, 5.5 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Terminal screws, switchgear
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pozidriv screwdrivers</td>
-                      <td className="border border-white/10 px-3 py-2">PZ1, PZ2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accessory face plates, MCB screws
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Side cutters</td>
-                      <td className="border border-white/10 px-3 py-2">160 mm, 180 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cutting cables up to 4 mm²
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Long-nose pliers</td>
-                      <td className="border border-white/10 px-3 py-2">160 mm, 200 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Forming conductor loops, gripping
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Combination pliers</td>
-                      <td className="border border-white/10 px-3 py-2">180 mm, 200 mm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gripping, twisting, light cutting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable knife</td>
-                      <td className="border border-white/10 px-3 py-2">Hooked blade</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stripping cable outer sheaths
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Critical Safety Point</p>
-              <p className="text-sm text-white">
-                Never assume a circuit is dead — always verify with a proven voltage indicator (GS38
-                compliant) before and after isolation. Even with verified isolation, using
-                VDE-insulated tools provides a critical second layer of protection against
-                unexpected re-energisation, induced voltages, or incorrect circuit identification.
-                Defence in depth is the principle: isolation is the primary protection, insulated
-                tools are the backup.
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Essential VDE tool kit
               </p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Tool</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Typical sizes</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Primary use</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Flat screwdrivers</td>
+                    <td className="border border-white/10 px-3 py-2">3.0, 4.0, 5.5 mm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Terminal screws, switchgear
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Pozidriv screwdrivers</td>
+                    <td className="border border-white/10 px-3 py-2">PZ1, PZ2</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Accessory face plates, MCB screws
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Side cutters</td>
+                    <td className="border border-white/10 px-3 py-2">160 mm, 180 mm</td>
+                    <td className="border border-white/10 px-3 py-2">Cutting cables up to 4 mm²</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Long-nose pliers</td>
+                    <td className="border border-white/10 px-3 py-2">160 mm, 200 mm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Forming conductor loops, gripping
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Combination pliers</td>
+                    <td className="border border-white/10 px-3 py-2">180 mm, 200 mm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Gripping, twisting, light cutting
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Cable knife</td>
+                    <td className="border border-white/10 px-3 py-2">Hooked blade</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Stripping cable outer sheaths
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cable Preparation Tools
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cable preparation tools</ContentEyebrow>
+
+          <ConceptBlock title="Cable Preparation Tools">
             <p>
               Preparing cables for termination is one of the most frequent tasks in electrical
               maintenance. The quality of the cable preparation directly affects the quality and
               reliability of the connection. Using the correct tool for each cable type ensures
               clean, damage-free preparation that results in sound terminations.
             </p>
+            <p>
+              <strong>Cable strippers.</strong> Automatic cable strippers grip the cable, cut
+              through the insulation to a preset depth, and pull the insulation off in one action.
+              They are adjustable for different cable sizes (typically 0.5 mm² to 6 mm²) and produce
+              consistent, clean strips without conductor damage. For flat twin-and-earth cable, a
+              jokari-style stripper removes the outer sheath without damaging the inner insulation.
+              Always adjust the cutting depth on a scrap piece of cable before working on the actual
+              installation.
+            </p>
+            <p>
+              <strong>SWA stripping tools.</strong> Steel wire armoured cable requires a specialist
+              approach. An SWA stripping tool typically consists of a rotary cutter that scores the
+              outer PVC sheath without cutting the armour wires, allowing the sheath to be removed.
+              The armour wires are then cut individually with SWA cutters or heavy-duty side
+              cutters, bent back over the gland, and the inner bedding sheath is stripped to expose
+              the insulated cores. This is a multi-step process that requires practice to master.
+            </p>
+            <p>
+              <strong>Cable knives.</strong> A VDE-rated cable knife with a hooked blade is used for
+              stripping the outer sheath of larger cables and for general cable preparation. The
+              hooked blade prevents the knife from slipping off the cable and cutting the
+              electrician. When using a cable knife, always cut away from the body, keep fingers
+              clear of the blade path, and use a controlled, shallow cutting depth to avoid damaging
+              inner insulation layers.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Strippers</h3>
-                <p className="text-sm text-white">
-                  Automatic cable strippers grip the cable, cut through the insulation to a preset
-                  depth, and pull the insulation off in one action. They are adjustable for
-                  different cable sizes (typically 0.5 mm² to 6 mm²) and produce consistent, clean
-                  strips without conductor damage. For flat twin-and-earth cable, a jokari-style
-                  stripper removes the outer sheath without damaging the inner insulation. Always
-                  adjust the cutting depth on a scrap piece of cable before working on the actual
-                  installation.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  SWA Stripping Tools
-                </h3>
-                <p className="text-sm text-white">
-                  Steel wire armoured cable requires a specialist approach. An SWA stripping tool
-                  typically consists of a rotary cutter that scores the outer PVC sheath without
-                  cutting the armour wires, allowing the sheath to be removed. The armour wires are
-                  then cut individually with SWA cutters or heavy-duty side cutters, bent back over
-                  the gland, and the inner bedding sheath is stripped to expose the insulated cores.
-                  This is a multi-step process that requires practice to master.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cable Knives</h3>
-                <p className="text-sm text-white">
-                  A VDE-rated cable knife with a hooked blade is used for stripping the outer sheath
-                  of larger cables and for general cable preparation. The hooked blade prevents the
-                  knife from slipping off the cable and cutting the electrician. When using a cable
-                  knife, always cut away from the body, keep fingers clear of the blade path, and
-                  use a controlled, shallow cutting depth to avoid damaging inner insulation layers.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Bootlace ferrules for fine-stranded cable">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Best practice:</strong> For fine-stranded flexible cables, always fit a
               bootlace ferrule after stripping. This consolidates the strands, prevents them from
               splaying, and ensures all strands make proper contact in the terminal. Use the correct
               ferrule size and a proper ratcheted crimping tool.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Crimping and Termination Tools
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Crimping and termination tools</ContentEyebrow>
+
+          <ConceptBlock title="Crimping and Termination Tools">
             <p>
               Reliable electrical connections are the foundation of a safe installation. Crimped
               connections, when made correctly with the right tools, provide gas-tight,
@@ -527,58 +477,54 @@ const MOETModule2Section5_2 = () => {
               crimping tool must match the crimp type (bootlace ferrule, ring terminal, pin
               terminal, butt connector) and the conductor size.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crimping Tool Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Tool Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Feature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bootlace ferrule crimper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fine-stranded flexible cables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Self-adjusting or sized dies
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ratcheted crimp tool</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulated terminals (ring, fork, butt)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ratchet ensures full crimp cycle
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hydraulic crimper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large cable lugs (25 mm²+)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High force for large conductors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Coaxial crimp tool</td>
-                      <td className="border border-white/10 px-3 py-2">BNC, F-type connectors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specific dies for connector type
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Crimping tool types
+              </p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Tool type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Application</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key feature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Bootlace ferrule crimper</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fine-stranded flexible cables
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Self-adjusting or sized dies
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Ratcheted crimp tool</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Insulated terminals (ring, fork, butt)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Ratchet ensures full crimp cycle
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Hydraulic crimper</td>
+                    <td className="border border-white/10 px-3 py-2">Large cable lugs (25 mm²+)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      High force for large conductors
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Coaxial crimp tool</td>
+                    <td className="border border-white/10 px-3 py-2">BNC, F-type connectors</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Specific dies for connector type
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               The ratchet mechanism on a quality crimping tool is a critical safety feature. It
               prevents the handles from opening until the crimp cycle is fully complete, ensuring
@@ -586,37 +532,38 @@ const MOETModule2Section5_2 = () => {
               operator may release the handles prematurely, resulting in an under-crimped connection
               that appears secure but has high resistance and low mechanical strength.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Crimping Errors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Common crimping errors"
+            whatHappens={
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                <li>
                   Wrong die size — over-compression severs strands; under-compression gives poor
                   contact
                 </li>
-                <li className="pl-1">
-                  Conductor not fully inserted into the ferrule or terminal barrel
-                </li>
-                <li className="pl-1">
-                  Insulation trapped in the crimp barrel — prevents conductor contact
-                </li>
-                <li className="pl-1">Using pliers instead of a crimping tool — never acceptable</li>
-                <li className="pl-1">
-                  Mixing manufacturers — crimp tool and terminals should be a matched system
-                </li>
+                <li>Conductor not fully inserted into the ferrule or terminal barrel</li>
+                <li>Insulation trapped in the crimp barrel — prevents conductor contact</li>
+                <li>Using pliers instead of a crimping tool — never acceptable</li>
+                <li>Mixing manufacturers — crimp tool and terminals should be a matched system</li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead={
+              <>
+                Match the die to the conductor and terminal, insert the conductor fully, keep
+                insulation clear of the barrel, use a proper crimping tool every time, and keep the
+                crimp tool and terminals to one matched system.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Torque Tools and Connection Integrity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Torque tools and connection integrity</ContentEyebrow>
+
+          <ConceptBlock title="Torque Tools and Connection Integrity">
             <p>
               BS 7671 Regulation 526.1 requires that every connection shall be durable, provide
               adequate current-carrying capacity, and provide adequate mechanical strength.
@@ -630,143 +577,123 @@ const MOETModule2Section5_2 = () => {
               (expansion and contraction), which increases resistance further — a positive feedback
               loop that eventually leads to arcing, melting, and fire.
             </p>
+            <p>
+              <strong>Torque screwdrivers.</strong> Available as preset (fixed torque) or adjustable
+              types. The tool clicks or slips when the set torque is reached, preventing
+              over-tightening. Common torque values for electrical terminals range from 0.4 Nm for
+              small lighting terminals to 2.5 Nm for 32 A MCB terminals, up to 50 Nm or more for
+              large busbar connections. Always refer to the manufacturer's data sheet for the
+              specific torque value — it varies between manufacturers and product ranges.
+            </p>
+            <p>
+              <strong>Torque wrenches.</strong> Used for larger connections — busbar bolts, cable
+              gland locknuts, and large terminal connections. A click-type torque wrench gives an
+              audible and tactile indication when the set torque is reached. Torque wrenches must be
+              calibrated regularly (typically annually) and stored correctly (returned to minimum
+              setting after use to relieve the spring).
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Torque Screwdrivers
-                </h3>
-                <p className="text-sm text-white">
-                  Available as preset (fixed torque) or adjustable types. The tool clicks or slips
-                  when the set torque is reached, preventing over-tightening. Common torque values
-                  for electrical terminals range from 0.4 Nm for small lighting terminals to 2.5 Nm
-                  for 32 A MCB terminals, up to 50 Nm or more for large busbar connections. Always
-                  refer to the manufacturer's data sheet for the specific torque value — it varies
-                  between manufacturers and product ranges.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Torque Wrenches</h3>
-                <p className="text-sm text-white">
-                  Used for larger connections — busbar bolts, cable gland locknuts, and large
-                  terminal connections. A click-type torque wrench gives an audible and tactile
-                  indication when the set torque is reached. Torque wrenches must be calibrated
-                  regularly (typically annually) and stored correctly (returned to minimum setting
-                  after use to relieve the spring).
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Thermal imaging finds what a torque check misses later">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Maintenance context:</strong> During periodic inspection and testing, thermal
               imaging of distribution boards under load is an excellent way to identify connections
               that have loosened over time. Hot spots visible on thermal images typically indicate
               high-resistance connections that need to be re-torqued. Always record thermal images
               as part of the inspection report.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            General-Purpose and Specialist Hand Tools
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>General-purpose and specialist hand tools</ContentEyebrow>
+
+          <ConceptBlock title="General-Purpose and Specialist Hand Tools">
             <p>
               Beyond the core electrical tools, a maintenance technician needs a range of
               general-purpose and specialist hand tools for the diverse tasks encountered in
               maintenance and installation work. Selecting the right tool for each task is not just
               about efficiency — it is about safety and quality.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Additional Essential Tools
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Additional essential tools
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Tool</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Junior hacksaw</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cutting conduit, mini-trunking, small sections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Half-round file</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Deburring conduit ends, enlarging knock-outs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spirit level (torpedo)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ensuring enclosures and containment are level
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tape measure (5 m)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measuring cable routes, accessory positions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inspection mirror</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Viewing concealed connections and wiring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fish tape / draw rods</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drawing cables through conduit and voids
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Adjustable spanner</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable glands, conduit fittings, locknuts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Allen keys (hex keys)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel fixings, busbar connections, some terminals
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Tool</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Application</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Junior hacksaw</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cutting conduit, mini-trunking, small sections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Half-round file</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Deburring conduit ends, enlarging knock-outs
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Spirit level (torpedo)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Ensuring enclosures and containment are level
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Tape measure (5 m)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Measuring cable routes, accessory positions
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Inspection mirror</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Viewing concealed connections and wiring
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Fish tape / draw rods</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Drawing cables through conduit and voids
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Adjustable spanner</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cable glands, conduit fittings, locknuts
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Allen keys (hex keys)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Panel fixings, busbar connections, some terminals
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Use Tool Inspection Checklist
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Pre-use tool inspection checklist
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  VDE insulation — no cracks, cuts, abrasion, contamination or heat damage
-                </li>
-                <li className="pl-1">Handles — secure, not cracked or split, comfortable grip</li>
-                <li className="pl-1">Cutting edges — sharp, not chipped or rolled</li>
-                <li className="pl-1">Plier joints — smooth operation, no excessive play</li>
-                <li className="pl-1">Screwdriver tips — not worn, rounded or damaged</li>
-                <li className="pl-1">
-                  Torque tools — within calibration date, mechanism functioning correctly
-                </li>
-                <li className="pl-1">Markings — VDE symbol and rating still legible</li>
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>VDE insulation — no cracks, cuts, abrasion, contamination or heat damage</li>
+                <li>Handles — secure, not cracked or split, comfortable grip</li>
+                <li>Cutting edges — sharp, not chipped or rolled</li>
+                <li>Plier joints — smooth operation, no excessive play</li>
+                <li>Screwdriver tips — not worn, rounded or damaged</li>
+                <li>Torque tools — within calibration date, mechanism functioning correctly</li>
+                <li>Markings — VDE symbol and rating still legible</li>
               </ul>
             </div>
-
             <p>
               Tool storage is an important consideration. A well-organised tool bag or case protects
               tools from damage during transport, keeps them clean and dry, and ensures the right
@@ -774,83 +701,74 @@ const MOETModule2Section5_2 = () => {
               pouch system that keeps VDE tools separate from general tools and prevents cutting
               edges from being damaged by contact with other tools.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=TvFbyzcXJV8"
 
-        <hr className="border-white/5 my-12" />
+            title="Torque Screwdrivers — Why Electricians Use Them"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Core VDE Tool Kit</p>
-                <ul className="space-y-0.5">
-                  <li>Flat screwdrivers — 3.0, 4.0, 5.5 mm</li>
-                  <li>Pozidriv — PZ1, PZ2</li>
-                  <li>Side cutters — 160/180 mm</li>
-                  <li>Long-nose pliers — 160/200 mm</li>
-                  <li>Combination pliers — 180/200 mm</li>
-                  <li>Cable knife — hooked blade</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS EN 60900 — Insulated hand tools (1,000 V)</li>
-                  <li>GS38 — Electrical test equipment safety</li>
-                  <li>BS 7671 Reg 526.1 — Connection requirements</li>
-                  <li>PUWER 1998 — Work equipment regulations</li>
-                  <li>BS 7671 Chapter 13 — Fundamental principles</li>
-                </ul>
-              </div>
+            channel="Toolbox Talk For Electricians"
+
+            duration="2:14"
+
+            topic="Why a terminal tightened by feel is a fire waiting to happen"
+
+            caption="Two minutes, and it is the single hand-tool habit that prevents the loose-connection fires covered in 1.6.1."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'VDE-insulated tools must comply with BS EN 60900 — individually tested at 10,000 V AC, rated 1,000 V AC / 1,500 V DC, marked with the double-triangle "1000V" symbol.',
+              'Match the tool to the cable: automatic strippers for general cable, SWA stripping tools or rotary cutters for armoured cable, VDE-rated hooked cable knives for outer sheaths.',
+              'BS 7671 Regulation 526.1 requires every connection to be durable, provide adequate current-carrying capacity, and provide adequate mechanical strength — torque tools deliver that consistently.',
+              'A ratcheted crimping tool with the correct die is not optional — an unratcheted tool or the wrong die produces a high-resistance or mechanically weak joint.',
+              'Inspect every tool before every use: VDE insulation, handles, cutting edges, plier joints, screwdriver tips, torque calibration date, and markings.',
+              'Key references: BS EN 60900 — insulated hand tools (1,000 V); GS38 — electrical test equipment safety; BS 7671 Regulation 526.1 — connections; PUWER 1998; BS 7671 Chapter 13.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Conductors and Insulation Materials
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Selection and Use of Power Tools
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Conductors and Insulation
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-3">
-              Next: Selection and Use of Power Tools
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

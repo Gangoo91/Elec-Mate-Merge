@@ -12,10 +12,11 @@
  */
 
 import { CalculationPdfButton } from '@/components/calculators/CalculationPdfButton';
-import { useCalcReport } from '@/lib/calculator-report-context';
+import { useCalcReport, useCalcReportSlug } from '@/lib/calculator-report-context';
 
 export function CalculatorReportAction() {
   const report = useCalcReport();
+  const calculatorSlug = useCalcReportSlug();
   if (!report) return null;
-  return <CalculationPdfButton report={report} />;
+  return <CalculationPdfButton report={report} calculatorSlug={calculatorSlug} />;
 }

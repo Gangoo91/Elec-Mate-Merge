@@ -56,7 +56,17 @@ function statusLabel(status: HealthCheck['status']): string {
   }
 }
 
+/*
+  Counts stop at "k" and it does not scale.
+
+  With `user_events` finally reporting the real 2,257,609 this printed
+  "2257.6k", which is a number you have to decode rather than read. Millions
+  get an M, and the thousands step drops its decimal above 100k where the
+  tenth is noise.
+*/
 function formatCount(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 100_000) return `${Math.round(n / 1000)}k`;
   if (n >= 1_000) return `${(n / 1000).toFixed(1)}k`;
   return String(n);
 }
@@ -261,14 +271,30 @@ export default function AdminSystem() {
   const { data: dbStats } = useQuery({
     queryKey: ['admin-db-stats'],
     queryFn: async () => {
-      const [profilesRes, messagesRes, offersRes, presenceRes, reportsRes, eventsRes] =
+      const [profilesRes, messagesRes, offersRes, presenceRes, reportsRes] =
         await Promise.all([
           supabase.from('profiles').select('*', { count: 'exact', head: true }),
           supabase.from('global_chat_messages').select('*', { count: 'exact', head: true }),
           supabase.from('promo_offers').select('*', { count: 'exact', head: true }),
           supabase.from('user_presence').select('*', { count: 'exact', head: true }),
-          supabase.from('reports').select('*', { count: 'exact', head: true }),
-          supabase.from('user_events').select('*', { count: 'exact', head: true }),
+          /*
+            🔴 Counted through an RPC, because RLS hides the platform.
+          
+            `reports` has no admin SELECT policy — only "Users can view
+            own reports" and "QS can view team reports". Counting it from
+            the browser as an admin therefore counts YOUR OWN
+            certificates: this tile read 290 (237 of Andrew's own plus 53
+            from his QS team) while the platform had 1,588. A believable
+            number, which is why it went unnoticed.
+          
+            Filtering `deleted_at` client-side does nothing here — the
+            policy already excludes soft-deleted rows. Only a
+            SECURITY DEFINER read sees the whole table.
+          */
+          supabase.rpc('admin_platform_counts' as never),
+          // The `user_events` head-count that used to sit here is gone: it
+          // scanned 2.26M rows on every page load to produce a number that was
+          // wrong anyway (see `events` below).
         ]);
 
       return {
@@ -276,8 +302,19 @@ export default function AdminSystem() {
         messages: messagesRes.count || 0,
         offers: offersRes.count || 0,
         presence: presenceRes.count || 0,
-        reports: reportsRes.count || 0,
-        events: eventsRes.count || 0,
+        reports:
+          (reportsRes.data as unknown as Array<{ reports_live: number }> | null)?.[0]
+            ?.reports_live ?? 0,
+        /*
+          Also off the RPC. `user_events` has one SELECT policy — "Users can
+          read own events" — so this tile read 412,730 (Andrew's own) against a
+          platform total of 2,257,609. No admin policy was added for it: 2.26M
+          rows of telemetry is a lot of access to grant for what is only ever
+          a count, and admin_platform_counts() already returns it.
+        */
+        events:
+          (reportsRes.data as unknown as Array<{ user_events: number }> | null)?.[0]
+            ?.user_events ?? 0,
       };
     },
   });

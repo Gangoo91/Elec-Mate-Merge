@@ -72,7 +72,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
       >
-        <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+        <div className="relative overflow-hidden bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-6 sm:p-8">
           <div className="absolute inset-x-0 top-0 h-px bg-white/[0.06]" />
           <Eyebrow>Elec-ID · CV</Eyebrow>
           <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-[1.05]">
@@ -90,7 +90,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-elec-yellow/35 rounded-2xl overflow-hidden">
           {[
             {
               title: 'Import from Elec-ID',
@@ -105,7 +105,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
               description: 'Download professionally formatted PDF files instantly',
             },
           ].map((feat) => (
-            <div key={feat.title} className="bg-[hsl(0_0%_12%)] p-5">
+            <div key={feat.title} className="bg-white/[0.05] p-5">
               <Eyebrow>{feat.title}</Eyebrow>
               <p className="mt-2 text-sm text-white">{feat.description}</p>
             </div>
@@ -124,16 +124,16 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
         onAction={handleCreateCV}
       />
 
-      <p className="text-sm text-white/65">
+      <p className="text-sm text-white">
         {sortedCVs.length} CV{sortedCVs.length !== 1 ? 's' : ''}
         {hasElecIdProfile && ' · Synced with Elec-ID'}
       </p>
 
       {hasElecIdProfile && (
-        <div className="bg-[hsl(0_0%_12%)] border border-emerald-500/20 rounded-2xl px-5 py-4 flex items-center justify-between">
+        <div className="bg-white/[0.05] border border-emerald-500/20 rounded-2xl px-5 py-4 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-emerald-400">Elec-ID connected</p>
-            <p className="text-xs text-white/65">Skills and certifications sync automatically</p>
+            <p className="text-xs text-white">Skills and certifications sync automatically</p>
           </div>
           <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
             Linked

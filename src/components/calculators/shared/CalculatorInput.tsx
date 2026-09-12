@@ -34,6 +34,16 @@ interface CalculatorInputProps extends Omit<InputHTMLAttributes<HTMLInputElement
  * 16px makes iOS zoom the viewport when the field is focused.
  */
 const FIELD =
+  // 🔴 `input-underline` is NOT cosmetic and must not be dropped. index.css
+  // forces `input::placeholder { color: #fff !important }` globally, which
+  // beats every utility class — so without this hook the placeholder renders
+  // the SAME pure white as a real value. Every calculator looked pre-filled:
+  // Ohm's Law showed "230 / 10 / 23 / 2300", the user pressed Calculate and got
+  // "Empty: Voltage, Current, Resistance and 1 more", and the digits could not
+  // be deleted because there was nothing there. `.input-underline` is the
+  // documented exemption that dims a placeholder to 0.35, and it is the first
+  // class in the house input pattern in CLAUDE.md.
+  'input-underline ' +
   'h-11 w-full rounded-none border-0 border-b border-white/[0.15] bg-transparent px-1 ' +
   'text-base md:text-base font-medium text-white placeholder:text-white/25 ' +
   'caret-elec-yellow transition-colors hover:border-white/[0.3] ' +

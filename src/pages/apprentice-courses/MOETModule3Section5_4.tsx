@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.5 · Subsection 4 — Transfer Switches and
+ * Changeover Systems
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Transfer Switches and Changeover Systems - MOET Module 3.5.4';
@@ -254,116 +290,64 @@ const faqs = [
 ];
 
 const MOETModule3Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Transfer Switches and Changeover Systems
-          </h1>
-          <p className="text-white">
-            Automatic transfer switches and changeover procedures for standby power systems
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.5 · Subsection 4"
+        title="Transfer Switches and Changeover Systems"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Automatic transfer switches and changeover procedures for standby power systems.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>ATS:</strong> Automatic mains failure detection and load transfer
+          <TLDR
+            points={[
+              'ATS: Automatic mains failure detection and load transfer.',
+              'Types: Open transition (break-before-make), closed transition (make-before-break).',
+              'Interlock: Prevents paralleling of unsynchronised sources.',
+              'Standards: BS 7671 Section 551, IEC 60947-6-1.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Testing:</strong> Monthly simulated failure, annual full-load transfer.
               </li>
-              <li className="pl-1">
-                <strong>Types:</strong> Open transition (break-before-make), closed transition
-                (make-before-break)
+              <li>
+                <strong>Interlocks:</strong> Verify mechanical and electrical interlock every visit.
               </li>
-              <li className="pl-1">
-                <strong>Interlock:</strong> Prevents paralleling of unsynchronised sources
+              <li>
+                <strong>Bypass:</strong> Allows ATS isolation without load interruption.
               </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671 Section 551, IEC 60947-6-1
+              <li>
+                <strong>ST1426:</strong> Maps to auxiliary systems maintenance KSBs.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Testing:</strong> Monthly simulated failure, annual full-load transfer
-              </li>
-              <li className="pl-1">
-                <strong>Interlocks:</strong> Verify mechanical and electrical interlock every visit
-              </li>
-              <li className="pl-1">
-                <strong>Bypass:</strong> Allows ATS isolation without load interruption
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to auxiliary systems maintenance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principles of automatic transfer switches',
               'Distinguish between open-transition and closed-transition transfer methods',
               'Describe the interlock requirements preventing source paralleling',
               'Carry out monthly and annual ATS testing procedures',
               'Identify common ATS faults and systematic fault-finding techniques',
               'Apply BS 7671 Section 551 requirements for generator changeover systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>ATS operating principles</ContentEyebrow>
 
-        {/* Section 01: ATS Operating Principles */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            ATS Operating Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The critical link between the normal mains supply and a standby generator">
             <p>
               An automatic transfer switch is the critical link between the normal mains supply and
               a standby generator. It monitors the mains supply continuously, detects failure
@@ -379,84 +363,71 @@ const MOETModule3Section5_4 = () => {
               achieved through adjustable time delays and voltage/frequency thresholds programmed
               into the ATS controller.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">ATS Transfer Sequence</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Mains failure detected (voltage below threshold on any
-                  phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Time delay (3-10 s adjustable) to filter transient
-                  disturbances
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Generator start signal sent if mains not restored
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Generator runs up to stable voltage and frequency
-                  (typically 10-15 s)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> ATS verifies generator output is within acceptable
-                  parameters
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Mains contactor opens, generator contactor closes (open
-                  transition)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Load supplied from generator; ATS monitors mains for
-                  restoration
-                </li>
-                <li className="pl-1">
-                  <strong>Step 8:</strong> Mains restored — retransfer delay (5-30 min) to confirm
-                  stability
-                </li>
-                <li className="pl-1">
-                  <strong>Step 9:</strong> Retransfer: generator contactor opens, mains contactor
-                  closes
-                </li>
-                <li className="pl-1">
-                  <strong>Step 10:</strong> Generator cooldown period (typically 5 min), then
-                  shutdown
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="ATS transfer sequence"
+            onSite="Key point: the interlock is the single most important safety feature of the ATS. Every maintenance visit must include verification that both mechanical and electrical interlocks operate correctly."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Mains failure detected (voltage below threshold on any
+                phase).
+              </li>
+              <li>
+                <strong>Step 2:</strong> Time delay (3-10 s adjustable) to filter transient
+                disturbances.
+              </li>
+              <li>
+                <strong>Step 3:</strong> Generator start signal sent if mains not restored.
+              </li>
+              <li>
+                <strong>Step 4:</strong> Generator runs up to stable voltage and frequency
+                (typically 10-15 s).
+              </li>
+              <li>
+                <strong>Step 5:</strong> ATS verifies generator output is within acceptable
+                parameters.
+              </li>
+              <li>
+                <strong>Step 6:</strong> Mains contactor opens, generator contactor closes (open
+                transition).
+              </li>
+              <li>
+                <strong>Step 7:</strong> Load supplied from generator; ATS monitors mains for
+                restoration.
+              </li>
+              <li>
+                <strong>Step 8:</strong> Mains restored — retransfer delay (5-30 min) to confirm
+                stability.
+              </li>
+              <li>
+                <strong>Step 9:</strong> Retransfer: generator contactor opens, mains contactor
+                closes.
+              </li>
+              <li>
+                <strong>Step 10:</strong> Generator cooldown period (typically 5 min), then
+                shutdown.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Critical Safety: Source Interlock
-              </p>
-              <p className="text-sm text-white">
-                The ATS must never allow both the mains and generator contactors to be closed
-                simultaneously (unless the system is specifically designed for closed-transition
-                transfer with synchronising controls). Simultaneous closure would parallel two
-                unsynchronised AC sources, causing massive circulating fault currents that could
-                destroy the generator, trip upstream protection, and endanger lives. The interlock
-                system uses both mechanical linkage (physical prevention) and electrical
-                interlocking (auxiliary contacts in the control circuit) to achieve this.
-              </p>
-            </div>
+          <CommonMistake
+            title="Source interlock"
+            whatHappens="The ATS must never allow both the mains and generator contactors to be closed simultaneously (unless the system is specifically designed for closed-transition transfer with synchronising controls). Simultaneous closure would parallel two unsynchronised AC sources, causing massive circulating fault currents that could destroy the generator, trip upstream protection, and endanger lives."
+            doInstead="The interlock system uses both mechanical linkage (physical prevention) and electrical interlocking (auxiliary contacts in the control circuit) to achieve this."
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The interlock is the single most important safety feature
-              of the ATS. Every maintenance visit must include verification that both mechanical and
-              electrical interlocks operate correctly.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02: Transfer Methods */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Transfer Methods: Open and Closed Transition
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Transfer methods: open and closed transition</ContentEyebrow>
+
+          <ConceptBlock
+            title="Open transition creates a brief interruption; closed transition provides seamless changeover"
+            onSite="Key point: most commercial and industrial installations use open-transition transfer with UPS support for critical loads. Closed-transition transfer is specified for installations where even the brief interruption of open transition is unacceptable and where the additional complexity and cost of synchronisation is justified."
+          >
             <p>
               The method of transferring load between sources directly affects the power quality
               experienced by the connected equipment. Open-transition transfer creates a brief
@@ -464,91 +435,64 @@ const MOETModule3Section5_4 = () => {
               depends on the criticality of the loads and the acceptable level of supply
               interruption.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Transfer Method Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Open Transition
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Closed Transition
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Interruption</td>
-                      <td className="border border-white/10 px-3 py-2">100-500 ms break</td>
-                      <td className="border border-white/10 px-3 py-2">Zero (make-before-break)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Paralleling</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Never — sources separated
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Brief parallel (under 100 ms)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Synchronisation</td>
-                      <td className="border border-white/10 px-3 py-2">Not required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Required — voltage, frequency, phase
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Complexity</td>
-                      <td className="border border-white/10 px-3 py-2">Simple</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex (synch relay, check-sync)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Application</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General loads, motor loads
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Data centres, hospitals, critical IT
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Transfer method comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">Open transition</th>
+                    <th className="py-2 font-medium text-white">Closed transition</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Interruption</td>
+                    <td className="py-2 pr-4">100-500 ms break</td>
+                    <td className="py-2">Zero (make-before-break)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Paralleling</td>
+                    <td className="py-2 pr-4">Never — sources separated</td>
+                    <td className="py-2">Brief parallel (under 100 ms)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Synchronisation</td>
+                    <td className="py-2 pr-4">Not required</td>
+                    <td className="py-2">Required — voltage, frequency, phase</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Complexity</td>
+                    <td className="py-2 pr-4">Simple</td>
+                    <td className="py-2">Complex (synch relay, check-sync)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Cost</td>
+                    <td className="py-2 pr-4">Lower</td>
+                    <td className="py-2">Higher</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Application</td>
+                    <td className="py-2 pr-4">General loads, motor loads</td>
+                    <td className="py-2">Data centres, hospitals, critical IT</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Most commercial and industrial installations use
-              open-transition transfer with UPS support for critical loads. Closed-transition
-              transfer is specified for installations where even the brief interruption of open
-              transition is unacceptable and where the additional complexity and cost of
-              synchronisation is justified.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: ATS Maintenance and Testing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            ATS Maintenance and Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>ATS maintenance and testing</ContentEyebrow>
+
+          <ConceptBlock
+            title="An ATS that is not regularly tested may fail at the critical moment when it is needed"
+            onSite="Key point: never skip the interlock verification during testing. A failed interlock is an invisible hazard — the ATS will appear to work normally until the one occasion when a fault condition causes both contactors to attempt to close simultaneously."
+          >
             <p>
               An ATS that is not regularly tested may fail at the critical moment when it is needed.
               Unlike most electrical equipment that operates continuously, an ATS may sit dormant
@@ -556,72 +500,53 @@ const MOETModule3Section5_4 = () => {
               verify that every component of the transfer sequence — from mains failure detection
               through to generator shutdown — operates correctly.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Monthly Test Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Simulate mains failure using the test switch on the ATS (do not isolate the actual
-                  mains)
-                </li>
-                <li className="pl-1">
-                  Verify the generator receives start signal and runs up to stable output
-                </li>
-                <li className="pl-1">Confirm the ATS transfers the load to the generator</li>
-                <li className="pl-1">Record voltage and frequency from both sources</li>
-                <li className="pl-1">
-                  Record all timing parameters and compare with commissioning data
-                </li>
-                <li className="pl-1">
-                  Restore the test switch — verify retransfer occurs after the programmed delay
-                </li>
-                <li className="pl-1">
-                  Confirm the generator enters cooldown and shuts down automatically
-                </li>
-                <li className="pl-1">Check all alarm and indication lamps operate correctly</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Monthly test procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Simulate mains failure using the test switch on the ATS (do not isolate the actual
+                mains).
+              </li>
+              <li>Verify the generator receives start signal and runs up to stable output.</li>
+              <li>Confirm the ATS transfers the load to the generator.</li>
+              <li>Record voltage and frequency from both sources.</li>
+              <li>Record all timing parameters and compare with commissioning data.</li>
+              <li>
+                Restore the test switch — verify retransfer occurs after the programmed delay.
+              </li>
+              <li>Confirm the generator enters cooldown and shuts down automatically.</li>
+              <li>Check all alarm and indication lamps operate correctly.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Annual Maintenance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Full-load transfer test (coordinate with building management for planned outage)
-                </li>
-                <li className="pl-1">Thermographic survey of all power connections and contacts</li>
-                <li className="pl-1">
-                  Inspect and clean main contacts (silvered contacts — use approved cleaner only)
-                </li>
-                <li className="pl-1">Verify mechanical interlock operation by manual test</li>
-                <li className="pl-1">Check electrical interlock auxiliary contacts</li>
-                <li className="pl-1">Retorque all power and control terminations</li>
-                <li className="pl-1">Exercise the bypass-isolation switch (if fitted)</li>
-                <li className="pl-1">Verify all protection settings match commissioning data</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Annual maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Full-load transfer test (coordinate with building management for planned outage).
+              </li>
+              <li>Thermographic survey of all power connections and contacts.</li>
+              <li>
+                Inspect and clean main contacts (silvered contacts — use approved cleaner only).
+              </li>
+              <li>Verify mechanical interlock operation by manual test.</li>
+              <li>Check electrical interlock auxiliary contacts.</li>
+              <li>Retorque all power and control terminations.</li>
+              <li>Exercise the bypass-isolation switch (if fitted).</li>
+              <li>Verify all protection settings match commissioning data.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never skip the interlock verification during testing. A
-              failed interlock is an invisible hazard — the ATS will appear to work normally until
-              the one occasion when a fault condition causes both contactors to attempt to close
-              simultaneously.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04: Bypass-Isolation and System Configuration */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Bypass-Isolation and System Configuration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Bypass-isolation and system configuration</ContentEyebrow>
+
+          <ConceptBlock
+            title="A bypass-isolation facility keeps the load powered while the ATS itself is maintained"
+            onSite="Under ST1426, maintenance technicians must understand standby power systems including ATS operation, testing and maintenance. This is part of the electrical plant, equipment and systems knowledge area. Practical competence in ATS testing is assessed through workplace observation."
+          >
             <p>
               In critical power installations, the ATS itself must be maintainable without shutting
               down the load. A bypass-isolation facility provides this capability by allowing the
@@ -629,51 +554,39 @@ const MOETModule3Section5_4 = () => {
               completely isolated from the circuit. Understanding the bypass procedure is essential
               for maintenance technicians working on critical power systems.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Bypass Procedure</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Confirm load is on normal mains supply</li>
-                  <li className="pl-1">Close the bypass switch (load now on mains via bypass)</li>
-                  <li className="pl-1">Open the ATS mains contactor</li>
-                  <li className="pl-1">Open the ATS isolation switches</li>
-                  <li className="pl-1">ATS is now fully isolated — safe to maintain</li>
-                  <li className="pl-1">Reverse procedure to restore ATS to service</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Configuration Considerations
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Three-pole vs four-pole switching (earthing arrangement)</li>
-                  <li className="pl-1">Load shedding tiers for generator capacity management</li>
-                  <li className="pl-1">Multiple ATS for different load priority groups</li>
-                  <li className="pl-1">Integration with building management systems (BMS)</li>
-                  <li className="pl-1">Remote monitoring and alarm reporting</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Bypass procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Confirm load is on normal mains supply.</li>
+              <li>Close the bypass switch (load now on mains via bypass).</li>
+              <li>Open the ATS mains contactor.</li>
+              <li>Open the ATS isolation switches.</li>
+              <li>ATS is now fully isolated — safe to maintain.</li>
+              <li>Reverse procedure to restore ATS to service.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must understand standby
-              power systems including ATS operation, testing and maintenance. This is part of the
-              electrical plant, equipment and systems knowledge area. Practical competence in ATS
-              testing is assessed through workplace observation.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock title="Configuration considerations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Three-pole vs four-pole switching (earthing arrangement).</li>
+              <li>Load shedding tiers for generator capacity management.</li>
+              <li>Multiple ATS for different load priority groups.</li>
+              <li>Integration with building management systems (BMS).</li>
+              <li>Remote monitoring and alarm reporting.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: ATS Fault-Finding and Commissioning Verification */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            ATS Fault-Finding and Commissioning Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>ATS fault-finding and commissioning verification</ContentEyebrow>
+
+          <ConceptBlock
+            title="Systematic fault-finding is essential when an ATS fails to operate correctly"
+            onSite="Under ST1426, maintenance technicians must demonstrate competence in maintaining auxiliary power systems including transfer switches. This includes understanding the complete transfer sequence, carrying out monthly and annual testing, and systematic fault-finding when problems are identified. Practical workplace observation of ATS testing forms part of the end-point assessment evidence."
+          >
             <p>
               Systematic fault-finding is essential when an ATS fails to operate correctly. Because
               the ATS is a safety-critical system that must work during genuine emergencies, faults
@@ -688,167 +601,112 @@ const MOETModule3Section5_4 = () => {
               thresholds, interlock operation, and load shedding sequences. Commissioning data forms
               the baseline against which all future test results are compared.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Systematic Fault-Finding Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Check the ATS controller display for fault codes and
-                  alarm indications — most modern ATS units provide diagnostic information
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Verify the generator has started and reached stable
-                  voltage and frequency — an ATS cannot transfer to a source that is not ready
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Check the control circuit supply — fuses, MCBs and
-                  control transformer feeding the ATS logic
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Verify contactor coil voltage — measure at the coil
-                  terminals to confirm the control circuit is commanding the transfer
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Inspect the mechanical interlock — look for physical
-                  jamming, broken linkages or misalignment preventing contactor operation
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Check electrical interlock auxiliary contacts — verify
-                  they are making and breaking correctly in the control circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Review the mains failure detection settings — voltage
-                  thresholds and time delays may have drifted from commissioning values
-                </li>
-              </ul>
+          <ConceptBlock title="Systematic fault-finding procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Check the ATS controller display for fault codes and alarm
+                indications — most modern ATS units provide diagnostic information.
+              </li>
+              <li>
+                <strong>Step 2:</strong> Verify the generator has started and reached stable voltage
+                and frequency — an ATS cannot transfer to a source that is not ready.
+              </li>
+              <li>
+                <strong>Step 3:</strong> Check the control circuit supply — fuses, MCBs and control
+                transformer feeding the ATS logic.
+              </li>
+              <li>
+                <strong>Step 4:</strong> Verify contactor coil voltage — measure at the coil
+                terminals to confirm the control circuit is commanding the transfer.
+              </li>
+              <li>
+                <strong>Step 5:</strong> Inspect the mechanical interlock — look for physical
+                jamming, broken linkages or misalignment preventing contactor operation.
+              </li>
+              <li>
+                <strong>Step 6:</strong> Check electrical interlock auxiliary contacts — verify they
+                are making and breaking correctly in the control circuit.
+              </li>
+              <li>
+                <strong>Step 7:</strong> Review the mains failure detection settings — voltage
+                thresholds and time delays may have drifted from commissioning values.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Commissioning verification checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Record all voltage and frequency thresholds for mains failure detection.</li>
+              <li>
+                Verify time delays: mains failure to start signal, transfer delay, retransfer delay,
+                cooldown period.
+              </li>
+              <li>
+                Confirm mechanical and electrical interlock operation under simulated fault
+                conditions.
+              </li>
+              <li>Perform full-load transfer and retransfer, recording voltage transients.</li>
+              <li>Verify load shedding sequence operates correctly on generator transfer.</li>
+              <li>Test the bypass-isolation procedure if fitted.</li>
+              <li>
+                Record all commissioning data as the baseline for future maintenance comparisons.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'An ATS monitors the mains, detects failure, starts the generator and transfers the load automatically — the interlock preventing simultaneous closure of both contactors is its single most important safety feature.',
+              'Open-transition (break-before-make) transfer gives a 100-500 ms interruption and needs no synchronisation; closed-transition (make-before-break) gives zero interruption but briefly parallels synchronised sources.',
+              'The full automatic sequence runs from mains-failure detection through a 3-10 s time delay, generator start and run-up, transfer, to a 5-30 min retransfer delay and cooldown on mains return.',
+              'Test monthly by simulating a mains failure and recording all timings and voltage/frequency readings; test a full-load transfer and the bypass-isolation facility at least annually.',
+              'A bypass-isolation facility lets the ATS be isolated and maintained without interrupting the load — essential for critical installations.',
+              'Three-pole vs four-pole switching depends on the earthing arrangement — a four-pole ATS switches the neutral to stop circulating currents where the generator has its own earth electrode.',
+              'Systematic fault-finding starts with the generator output and control circuit before moving to the mechanical and electrical interlock — most ATS failures are control-circuit faults, not mechanical ones.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Emergency Generators
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Critical Load Management
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Commissioning Verification Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Record all voltage and frequency thresholds for mains failure detection
-                </li>
-                <li className="pl-1">
-                  Verify time delays: mains failure to start signal, transfer delay, retransfer
-                  delay, cooldown period
-                </li>
-                <li className="pl-1">
-                  Confirm mechanical and electrical interlock operation under simulated fault
-                  conditions
-                </li>
-                <li className="pl-1">
-                  Perform full-load transfer and retransfer, recording voltage transients
-                </li>
-                <li className="pl-1">
-                  Verify load shedding sequence operates correctly on generator transfer
-                </li>
-                <li className="pl-1">Test the bypass-isolation procedure if fitted</li>
-                <li className="pl-1">
-                  Record all commissioning data as the baseline for future maintenance comparisons
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              competence in maintaining auxiliary power systems including transfer switches. This
-              includes understanding the complete transfer sequence, carrying out monthly and annual
-              testing, and systematic fault-finding when problems are identified. Practical
-              workplace observation of ATS testing forms part of the end-point assessment evidence.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">ATS Transfer Sequence</p>
-                <ul className="space-y-0.5">
-                  <li>Mains failure detected (voltage threshold)</li>
-                  <li>Time delay 3-10 s (filter transients)</li>
-                  <li>Generator start signal sent</li>
-                  <li>Generator runs up (10-15 s)</li>
-                  <li>ATS verifies gen output acceptable</li>
-                  <li>Load transferred to generator</li>
-                  <li>Retransfer delay 5-30 min on mains return</li>
-                  <li>Generator cooldown then shutdown</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Maintenance Points</p>
-                <ul className="space-y-0.5">
-                  <li>Monthly -- simulated mains failure test</li>
-                  <li>Annual -- full-load transfer test</li>
-                  <li>Interlock verification every visit</li>
-                  <li>Open transition: 100-500 ms break</li>
-                  <li>Closed transition: zero interruption</li>
-                  <li>3-pole vs 4-pole: depends on earthing</li>
-                  <li>Bypass-isolation for ATS maintenance</li>
-                  <li>BS 7671 Section 551 compliance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Emergency Generators
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-5">
-              Next: Critical Load Management
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

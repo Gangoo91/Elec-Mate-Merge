@@ -4,36 +4,35 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '7.3.1',
-      title: 'Building a work-based portfolio',
-      description: 'Structuring and organising a comprehensive work-based evidence portfolio',
-      icon: Briefcase,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section3-1',
-    },
-    {
-      number: '7.3.2',
-      title: 'Collecting witness statements',
-      description: 'Obtaining and formatting witness statements from supervisors and colleagues',
-      icon: FileText,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section3-2',
-    },
-    {
-      number: '7.3.3',
-      title: 'Logging on-the-job activities',
-      description: 'Recording work activities, projects and learning experiences',
-      icon: Calendar,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section3-3',
-    },
-    {
-      number: '7.3.4',
-      title: 'Mapping evidence to standards',
-      description: 'Linking portfolio evidence to apprenticeship standards and learning outcomes',
-      icon: MapPin,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section3-4',
-    },
-  ];
-
+  {
+    number: '7.3.1',
+    title: 'Building a work-based portfolio',
+    description: 'Structuring and organising a comprehensive work-based evidence portfolio',
+    icon: Briefcase,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section3-1',
+  },
+  {
+    number: '7.3.2',
+    title: 'Collecting witness statements',
+    description: 'Obtaining and formatting witness statements from supervisors and colleagues',
+    icon: FileText,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section3-2',
+  },
+  {
+    number: '7.3.3',
+    title: 'Logging on-the-job activities',
+    description: 'Recording work activities, projects and learning experiences',
+    icon: Calendar,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section3-3',
+  },
+  {
+    number: '7.3.4',
+    title: 'Mapping evidence to standards',
+    description: 'Linking portfolio evidence to apprenticeship standards and learning outcomes',
+    icon: MapPin,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section3-4',
+  },
+];
 
 const MOETModule7Section3 = () => {
   useSEO(

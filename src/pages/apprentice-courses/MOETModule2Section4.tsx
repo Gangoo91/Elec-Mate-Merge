@@ -4,50 +4,49 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '2.4.1',
-      title: 'Fuses and circuit breakers',
-      description: 'Overcurrent protection devices, selection and operation',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-1',
-    },
-    {
-      number: '2.4.2',
-      title: 'RCDs and RCBOs',
-      description: 'Residual current devices and combined protection units',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-2',
-    },
-    {
-      number: '2.4.3',
-      title: 'Overcurrent and short-circuit protection',
-      description: 'Protection coordination and fault current calculations',
-      icon: AlertTriangle,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-3',
-    },
-    {
-      number: '2.4.4',
-      title: 'Earthing systems (TN, TT, IT)',
-      description: 'Types of earthing arrangements and their applications',
-      icon: Activity,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-4',
-    },
-    {
-      number: '2.4.5',
-      title: 'Bonding requirements',
-      description: 'Equipotential bonding principles and implementation',
-      icon: Link2,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-5',
-    },
-    {
-      number: '2.4.6',
-      title: 'Surge protection devices',
-      description: 'Lightning and surge protection systems',
-      icon: Bolt,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section4-6',
-    },
-  ];
-
+  {
+    number: '2.4.1',
+    title: 'Fuses and circuit breakers',
+    description: 'Overcurrent protection devices, selection and operation',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-1',
+  },
+  {
+    number: '2.4.2',
+    title: 'RCDs and RCBOs',
+    description: 'Residual current devices and combined protection units',
+    icon: Shield,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-2',
+  },
+  {
+    number: '2.4.3',
+    title: 'Overcurrent and short-circuit protection',
+    description: 'Protection coordination and fault current calculations',
+    icon: AlertTriangle,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-3',
+  },
+  {
+    number: '2.4.4',
+    title: 'Earthing systems (TN, TT, IT)',
+    description: 'Types of earthing arrangements and their applications',
+    icon: Activity,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-4',
+  },
+  {
+    number: '2.4.5',
+    title: 'Bonding requirements',
+    description: 'Equipotential bonding principles and implementation',
+    icon: Link2,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-5',
+  },
+  {
+    number: '2.4.6',
+    title: 'Surge protection devices',
+    description: 'Lightning and surge protection systems',
+    icon: Bolt,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section4-6',
+  },
+];
 
 const MOETModule2Section4 = () => {
   useSEO(

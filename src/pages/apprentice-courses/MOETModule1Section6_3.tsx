@@ -1,8 +1,43 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.6 · Subsection 3 — Evacuation Procedures
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Emergency incident and response procedures."
+ *              · "Health and safety regulations – key features and impact on role."
+ *   Skills     · "Follow emergency incident and response procedures."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Evacuation Procedures - MOET Module 1 Section 6.3';
@@ -14,10 +49,10 @@ const quickCheckQuestions = [
     id: 'evacuation-types',
     question: 'What is the difference between a simultaneous evacuation and a phased evacuation?',
     options: [
-      'The natural upward movement of air through a tall building due to temperature and pressure differences, which can accelerate the vertical spread of smoke and fire',
-      'The client (often via the contract administrator) — the client must satisfy themselves the project is being managed safely',
+      'Simultaneous evacuation uses the fire alarm; phased evacuation relies on voice announcements only',
+      'Simultaneous evacuation applies to staff; phased evacuation applies to visitors and contractors',
       'In simultaneous evacuation, everyone leaves at once; in phased evacuation, the fire floor evacuates first, then adjacent floors',
-      'To carry out a suitable and sufficient assessment of the risks to employees and others affected by the undertaking',
+      'Simultaneous evacuation is used at night; phased evacuation is used during working hours',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +88,10 @@ const quickCheckQuestions = [
     id: 'emergency-lighting',
     question: 'How often should emergency lighting be functionally tested under BS 5266-1?',
     options: [
-      'The site manager — single point of contact upward to the contracts manager',
+      'Weekly for a brief functional test and six-monthly for a full rated duration test',
       'Monthly for a brief functional test and annually for a full rated duration test',
-      'To combine overcurrent and residual current protection in one device',
-      'To estimate seasonal heating or cooling energy requirements based on external temperature data',
+      'Quarterly for a brief functional test and every three years for a full duration test',
+      'Annually for both the brief functional test and the full rated duration test',
     ],
     correctIndex: 1,
     explanation:
@@ -95,9 +130,9 @@ const quizQuestions = [
     id: 3,
     question: 'A two-stage fire alarm system uses:',
     options: [
-      "A single continuous tone that sounds throughout the building immediately",
-      "A silent pager system that alerts only the nominated fire wardens",
-      "A voice message repeated until the fire brigade arrives on site",
+      'A single continuous tone that sounds throughout the building immediately',
+      'A silent pager system that alerts only the nominated fire wardens',
+      'A voice message repeated until the fire brigade arrives on site',
       "An 'alert' signal (intermittent) for staff followed by an 'evacuate' signal (continuous) for all occupants",
     ],
     correctAnswer: 3,
@@ -159,12 +194,7 @@ const quizQuestions = [
   {
     id: 8,
     question: 'Emergency lighting must provide illumination on escape routes for a minimum of:',
-    options: [
-      '3 hours (in most cases)',
-      '24 hours',
-      '30 minutes',
-      '1 hour',
-    ],
+    options: ['3 hours (in most cases)', '24 hours', '30 minutes', '1 hour'],
     correctAnswer: 0,
     explanation:
       'BS 5266-1 requires emergency lighting to provide a minimum duration of 3 hours in most premises (1 hour is permitted in some premises where immediate evacuation is possible and the building will not be reoccupied until the system is fully recharged). The 3-hour duration allows for evacuation, fire brigade operations and safe re-entry.',
@@ -253,117 +283,51 @@ const faqs = [
 ];
 
 const MOETModule1Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Evacuation Procedures
-          </h1>
-          <p className="text-white">
-            Emergency plans, evacuation types, fire warden duties and escape route management
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.6 · Subsection 3"
+        title="Evacuation Procedures"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Emergency plans, evacuation types, fire warden duties and escape route management.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Types:</strong> Simultaneous, phased, progressive horizontal, invacuation
-              </li>
-              <li className="pl-1">
-                <strong>Alarms:</strong> Single-stage (instant evacuate) or two-stage (alert then
-                evacuate)
-              </li>
-              <li className="pl-1">
-                <strong>PEEPs:</strong> Individual plans for persons needing evacuation assistance
-              </li>
-              <li className="pl-1">
-                <strong>Drills:</strong> At least annually, timed, recorded and reviewed
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Contractor awareness:</strong> Check escape routes at every new site
-              </li>
-              <li className="pl-1">
-                <strong>Emergency lighting:</strong> Monthly functional, annual duration test (BS
-                5266)
-              </li>
-              <li className="pl-1">
-                <strong>Exit signage:</strong> Green running man to BS ISO 7010 / BS 5499
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to emergency procedures KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Types: Simultaneous, phased, progressive horizontal, invacuation',
+              'Alarms: Single-stage (instant evacuate) or two-stage (alert then evacuate)',
+              'PEEPs: Individual plans for persons needing evacuation assistance',
+              'Drills: At least annually, timed, recorded and reviewed',
+              'Contractor awareness: Check escape routes at every new site',
+              'Emergency lighting: Monthly functional, annual duration test (BS 5266)',
+              'Exit signage: Green running man to BS ISO 7010 / BS 5499',
+              'ST1426: Maps to emergency procedures KSBs',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the different types of evacuation: simultaneous, phased, progressive and invacuation',
               'Describe the operation of single-stage and two-stage fire alarm systems',
               'Identify the responsibilities of fire wardens during an evacuation',
               'Explain the purpose and content of a Personal Emergency Evacuation Plan (PEEP)',
               'State the requirements for emergency lighting testing under BS 5266-1',
               'Apply contractor site induction requirements for fire safety procedures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Emergency plans and evacuation types</ContentEyebrow>
 
-        {/* Section 01: Emergency Plans and Evacuation Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Emergency Plans and Evacuation Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Emergency Plans and Evacuation Types">
             <p>
               Every workplace must have an emergency plan that sets out the procedures for dealing
               with fire and other emergencies. The Regulatory Reform (Fire Safety) Order 2005
@@ -373,126 +337,83 @@ const MOETModule1Section6_3 = () => {
               sites, you must understand all evacuation types and adapt to each building's specific
               procedures.
             </p>
-
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Simultaneous Evacuation
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The simplest and most common evacuation strategy. When the alarm sounds, everyone
-                  in the building evacuates immediately to the assembly point. This is suitable for:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Small to medium-sized buildings</li>
-                  <li className="pl-1">Single-storey premises</li>
-                  <li className="pl-1">Buildings with simple layouts and adequate exit capacity</li>
-                  <li className="pl-1">
-                    Premises where all occupants can evacuate within a few minutes
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Phased Evacuation</h3>
-                <p className="text-sm text-white mb-2">
-                  Used in tall buildings and large complex premises where simultaneous evacuation
-                  would cause dangerous overcrowding of stairways. The evacuation is carried out in
-                  stages:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Phase 1:</strong> The fire floor evacuates immediately on hearing the
-                    continuous alarm
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phase 2:</strong> The floors immediately above and below evacuate next
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phase 3:</strong> Remaining floors evacuate in sequence, directed by the
-                    fire control team
-                  </li>
-                  <li className="pl-1">
-                    Requires a two-stage alarm system and trained fire wardens on every floor
-                  </li>
-                  <li className="pl-1">
-                    Building must have adequate compartmentation to allow phased evacuation safely
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Progressive Horizontal Evacuation
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Used in hospitals, care homes and similar premises where occupants cannot easily
-                  use stairs. People are moved horizontally through fire compartment walls to an
-                  adjacent safe compartment:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Occupants move to the adjacent fire compartment on the same floor
-                  </li>
-                  <li className="pl-1">
-                    Each compartment provides protection for at least 30 minutes (typically 60)
-                  </li>
-                  <li className="pl-1">
-                    Vertical evacuation (via stairs or lifts) only if the fire spreads beyond the
-                    compartment
-                  </li>
-                  <li className="pl-1">
-                    Critical that fire compartment walls are fully intact — maintenance electricians
-                    must fire-stop all penetrations
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Invacuation (Stay Put / Shelter in Place)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Invacuation means keeping people inside the building rather than evacuating. This
-                  is used when external hazards make leaving the building more dangerous than
-                  staying inside:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Chemical or toxic substance release outside the building</li>
-                  <li className="pl-1">
-                    Security threats (terrorism, violent incidents) in the surrounding area
-                  </li>
-                  <li className="pl-1">
-                    Severe weather events (storms, flooding) where leaving would be hazardous
-                  </li>
-                  <li className="pl-1">
-                    Occupants move to a designated safe area within the building
-                  </li>
-                  <li className="pl-1">
-                    Windows and ventilation sealed to prevent external contaminants entering
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+            <p>
+              <strong>Simultaneous Evacuation.</strong> The simplest and most common evacuation
+              strategy. When the alarm sounds, everyone in the building evacuates immediately to the
+              assembly point. This is suitable for:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Small to medium-sized buildings</li>
+              <li>Single-storey premises</li>
+              <li>Buildings with simple layouts and adequate exit capacity</li>
+              <li>Premises where all occupants can evacuate within a few minutes</li>
+            </ul>
+            <p>
+              <strong>Phased Evacuation.</strong> Used in tall buildings and large complex premises
+              where simultaneous evacuation would cause dangerous overcrowding of stairways. The
+              evacuation is carried out in stages:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase 1:</strong> The fire floor evacuates immediately on hearing the
+                continuous alarm
+              </li>
+              <li>
+                <strong>Phase 2:</strong> The floors immediately above and below evacuate next
+              </li>
+              <li>
+                <strong>Phase 3:</strong> Remaining floors evacuate in sequence, directed by the
+                fire control team
+              </li>
+              <li>Requires a two-stage alarm system and trained fire wardens on every floor</li>
+              <li>
+                Building must have adequate compartmentation to allow phased evacuation safely
+              </li>
+            </ul>
+            <p>
+              <strong>Progressive Horizontal Evacuation.</strong> Used in hospitals, care homes and
+              similar premises where occupants cannot easily use stairs. People are moved
+              horizontally through fire compartment walls to an adjacent safe compartment:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Occupants move to the adjacent fire compartment on the same floor</li>
+              <li>Each compartment provides protection for at least 30 minutes (typically 60)</li>
+              <li>
+                Vertical evacuation (via stairs or lifts) only if the fire spreads beyond the
+                compartment
+              </li>
+              <li>
+                Critical that fire compartment walls are fully intact — maintenance electricians
+                must fire-stop all penetrations
+              </li>
+            </ul>
+            <p>
+              <strong>Invacuation (Stay Put / Shelter in Place).</strong> Invacuation means keeping
+              people inside the building rather than evacuating. This is used when external hazards
+              make leaving the building more dangerous than staying inside:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Chemical or toxic substance release outside the building</li>
+              <li>Security threats (terrorism, violent incidents) in the surrounding area</li>
+              <li>Severe weather events (storms, flooding) where leaving would be hazardous</li>
+              <li>Occupants move to a designated safe area within the building</li>
+              <li>Windows and ventilation sealed to prevent external contaminants entering</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> As a contractor working in different buildings, always
               check which evacuation type is in use during your site induction. Do not assume it is
               a simultaneous evacuation — many large buildings use phased or progressive strategies
               that require you to listen for specific alarm tones and follow different procedures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Alarm Systems and Signalling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Alarm Systems and Signalling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Alarm systems and signalling</ContentEyebrow>
+
+          <ConceptBlock title="Alarm Systems and Signalling">
             <p>
               The fire alarm system is the primary means of alerting building occupants to a fire.
               Different buildings use different types of alarm system depending on their size,
@@ -500,116 +421,104 @@ const MOETModule1Section6_3 = () => {
               test and maintain these systems — but you also need to understand them as a building
               occupant for your own safety.
             </p>
-
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Alarm Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Single-stage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuous alarm sounds immediately throughout the building; all occupants
-                        evacuate at once
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small to medium buildings; simultaneous evacuation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Two-stage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alert signal (intermittent/pulsing) for staff to investigate; evacuate
-                        signal (continuous) if confirmed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium to large buildings with trained fire wardens
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Voice alarm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recorded or live voice messages give specific instructions (which floors to
-                        evacuate, which exits to use)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large complex buildings, shopping centres, transport hubs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Staff alarm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discreet notification (pager, coded announcement) alerts staff without
-                        alarming the public
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retail, hotels, entertainment venues
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Alarm Type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Single-stage</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Continuous alarm sounds immediately throughout the building; all occupants
+                      evacuate at once
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Small to medium buildings; simultaneous evacuation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Two-stage</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Alert signal (intermittent/pulsing) for staff to investigate; evacuate signal
+                      (continuous) if confirmed
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Medium to large buildings with trained fire wardens
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Voice alarm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Recorded or live voice messages give specific instructions (which floors to
+                      evacuate, which exits to use)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large complex buildings, shopping centres, transport hubs
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Staff alarm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Discreet notification (pager, coded announcement) alerts staff without
+                      alarming the public
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Retail, hotels, entertainment venues
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Two-Stage Alarm Details
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Alert stage:</strong> Intermittent or pulsing tone lasting typically 2-5
-                    minutes
-                  </li>
-                  <li className="pl-1">Fire wardens investigate the source of the alarm</li>
-                  <li className="pl-1">
-                    If the fire is confirmed, the warden breaks a second call point or the panel
-                    escalates automatically
-                  </li>
-                  <li className="pl-1">
-                    <strong>Evacuate stage:</strong> Continuous alarm signals full evacuation
-                  </li>
-                  <li className="pl-1">
-                    If the alert is not investigated within the set time, the system automatically
-                    escalates to full evacuation
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Voice Alarm Systems (BS 5839-8)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Pre-recorded messages for different scenarios (fire on specific floor, evacuate
-                    via specific exit)
-                  </li>
-                  <li className="pl-1">
-                    Live microphone facility for the fire control team to give real-time
-                    instructions
-                  </li>
-                  <li className="pl-1">
-                    Zoned messaging — different messages to different areas of the building
-                  </li>
-                  <li className="pl-1">
-                    Proven to be more effective than bells/sounders at achieving evacuation
-                    compliance
-                  </li>
-                  <li className="pl-1">
-                    Must be intelligible — background noise levels and acoustic design are critical
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Alarm Testing</p>
+          <ConceptBlock title="Two-Stage Alarms and Voice Alarm Systems">
+            <p>
+              <strong>Two-Stage Alarm Details</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Alert stage:</strong> Intermittent or pulsing tone lasting typically 2-5
+                minutes
+              </li>
+              <li>Fire wardens investigate the source of the alarm</li>
+              <li>
+                If the fire is confirmed, the warden breaks a second call point or the panel
+                escalates automatically
+              </li>
+              <li>
+                <strong>Evacuate stage:</strong> Continuous alarm signals full evacuation
+              </li>
+              <li>
+                If the alert is not investigated within the set time, the system automatically
+                escalates to full evacuation
+              </li>
+            </ul>
+            <p>
+              <strong>Voice Alarm Systems (BS 5839-8)</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Pre-recorded messages for different scenarios (fire on specific floor, evacuate via
+                specific exit)
+              </li>
+              <li>
+                Live microphone facility for the fire control team to give real-time instructions
+              </li>
+              <li>Zoned messaging — different messages to different areas of the building</li>
+              <li>
+                Proven to be more effective than bells/sounders at achieving evacuation compliance
+              </li>
+              <li>
+                Must be intelligible — background noise levels and acoustic design are critical
+              </li>
+            </ul>
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
+              <p className="mb-2 text-sm font-medium text-orange-400">Alarm Testing</p>
               <p className="text-sm text-white">
                 BS 5839-1 requires the fire alarm to be tested weekly by activating a different
                 manual call point each week (rotating around the building so every MCP is tested
@@ -619,25 +528,21 @@ const MOETModule1Section6_3 = () => {
                 book.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> As a maintenance electrician, you may be the person
               carrying out weekly fire alarm tests. Use a call point key (not the break glass
               element) to activate the test, confirm all sounders operate, and record the test.
               Always notify building occupants before testing so they do not evacuate unnecessarily.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 03: PEEPs, Fire Wardens and Visitor Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            PEEPs, Fire Wardens and Visitor Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>PEEPs, fire wardens and visitor management</ContentEyebrow>
+
+          <ConceptBlock title="Personal Emergency Evacuation Plans (PEEPs)">
             <p>
               Effective evacuation depends on trained personnel, individual support for vulnerable
               persons, and robust management of visitors and contractors. The Equality Act 2010
@@ -646,157 +551,124 @@ const MOETModule1Section6_3 = () => {
               (visitor/contractor on site) and potentially someone who assists others during an
               emergency.
             </p>
+            <p>
+              A PEEP is an individual evacuation plan for any person who may need assistance to
+              evacuate safely. PEEPs should be:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Person-specific:</strong> Tailored to the individual's needs, abilities and
+                the building layout
+              </li>
+              <li>
+                <strong>Agreed with the individual:</strong> Discussed, not imposed — the person
+                knows their own needs best
+              </li>
+              <li>
+                <strong>Documented:</strong> Written plan kept on file and copies given to all
+                relevant persons
+              </li>
+              <li>
+                <strong>Communicated:</strong> Fire wardens, colleagues and reception staff must
+                know who has a PEEP and what it involves
+              </li>
+              <li>
+                <strong>Practised:</strong> Included in evacuation drills to test effectiveness
+              </li>
+              <li>
+                <strong>Reviewed:</strong> Updated whenever the person's circumstances change, the
+                building layout changes, or after a drill
+              </li>
+            </ul>
+            <p>
+              <strong>Who May Need a PEEP?</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mobility impairment:</strong> Wheelchair users, persons with walking
+                difficulties, persons using crutches or walking frames
+              </li>
+              <li>
+                <strong>Visual impairment:</strong> Persons who cannot see exit signs or may be
+                disoriented by smoke
+              </li>
+              <li>
+                <strong>Hearing impairment:</strong> Persons who may not hear the fire alarm
+                (vibrating pagers or flashing beacons may be needed)
+              </li>
+              <li>
+                <strong>Temporary conditions:</strong> Broken leg, recent surgery, pregnancy
+                (particularly late stage)
+              </li>
+              <li>
+                <strong>Cognitive conditions:</strong> Persons who may not understand or respond
+                appropriately to alarms
+              </li>
+              <li>
+                <strong>Visitors:</strong> A generic evacuation assistance plan (GEAP) should be in
+                place for visitors with disabilities
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Personal Emergency Evacuation Plans (PEEPs)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                A PEEP is an individual evacuation plan for any person who may need assistance to
-                evacuate safely. PEEPs should be:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Person-specific:</strong> Tailored to the individual's needs, abilities
-                  and the building layout
-                </li>
-                <li className="pl-1">
-                  <strong>Agreed with the individual:</strong> Discussed, not imposed — the person
-                  knows their own needs best
-                </li>
-                <li className="pl-1">
-                  <strong>Documented:</strong> Written plan kept on file and copies given to all
-                  relevant persons
-                </li>
-                <li className="pl-1">
-                  <strong>Communicated:</strong> Fire wardens, colleagues and reception staff must
-                  know who has a PEEP and what it involves
-                </li>
-                <li className="pl-1">
-                  <strong>Practised:</strong> Included in evacuation drills to test effectiveness
-                </li>
-                <li className="pl-1">
-                  <strong>Reviewed:</strong> Updated whenever the person's circumstances change, the
-                  building layout changes, or after a drill
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Who May Need a PEEP?</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mobility impairment:</strong> Wheelchair users, persons with walking
-                  difficulties, persons using crutches or walking frames
-                </li>
-                <li className="pl-1">
-                  <strong>Visual impairment:</strong> Persons who cannot see exit signs or may be
-                  disoriented by smoke
-                </li>
-                <li className="pl-1">
-                  <strong>Hearing impairment:</strong> Persons who may not hear the fire alarm
-                  (vibrating pagers or flashing beacons may be needed)
-                </li>
-                <li className="pl-1">
-                  <strong>Temporary conditions:</strong> Broken leg, recent surgery, pregnancy
-                  (particularly late stage)
-                </li>
-                <li className="pl-1">
-                  <strong>Cognitive conditions:</strong> Persons who may not understand or respond
-                  appropriately to alarms
-                </li>
-                <li className="pl-1">
-                  <strong>Visitors:</strong> A generic evacuation assistance plan (GEAP) should be
-                  in place for visitors with disabilities
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Fire Warden Responsibilities
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Fire wardens (also called fire marshals) are trained employees who play a critical
-                role during evacuation. Each fire warden is assigned a specific zone or floor. Their
-                duties during an evacuation include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Investigate:</strong> In two-stage systems, investigate the alarm source
-                  during the alert phase
-                </li>
-                <li className="pl-1">
-                  <strong>Sweep:</strong> Systematically check every room, toilet, storage area and
-                  office in their zone
-                </li>
-                <li className="pl-1">
-                  <strong>Direct:</strong> Guide occupants to the nearest safe exit route and
-                  assembly point
-                </li>
-                <li className="pl-1">
-                  <strong>Assist:</strong> Help anyone with a PEEP to evacuate according to their
-                  plan
-                </li>
-                <li className="pl-1">
-                  <strong>Close:</strong> Close all doors behind them as they leave (doors are fire
-                  barriers when closed)
-                </li>
-                <li className="pl-1">
-                  <strong>Report:</strong> Report to the chief fire warden at the assembly point,
-                  confirming their zone is clear or identifying anyone missing
-                </li>
-                <li className="pl-1">
-                  <strong>Do NOT re-enter:</strong> Never go back into the building once the sweep
-                  is complete
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Visitor Management</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    All visitors must sign in on arrival and sign out on departure
-                  </li>
-                  <li className="pl-1">
-                    Visitors should receive a brief fire safety induction (escape routes, assembly
-                    point, alarm sound)
-                  </li>
-                  <li className="pl-1">
-                    Visitors should be escorted or given clear directions to exit routes
-                  </li>
-                  <li className="pl-1">
-                    The visitor log must be taken to the assembly point for roll call
-                  </li>
-                  <li className="pl-1">
-                    Contractor sign-in boards should be separate from visitor logs for clarity
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Disabled Persons Evacuation
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Refuge areas: protected spaces on stairway landings with communication points
-                  </li>
-                  <li className="pl-1">
-                    Evacuation chairs: lightweight chairs for carrying persons down stairs
-                  </li>
-                  <li className="pl-1">
-                    Evacuation lifts: BS EN 81-72 compliant lifts under fire service control
-                  </li>
-                  <li className="pl-1">
-                    Buddy systems: trained colleagues designated to assist specific individuals
-                  </li>
-                  <li className="pl-1">Visual/vibrating alarms for hearing-impaired persons</li>
-                </ul>
-              </div>
-            </div>
-
+          <ConceptBlock title="Fire Warden Responsibilities">
+            <p>
+              Fire wardens (also called fire marshals) are trained employees who play a critical
+              role during evacuation. Each fire warden is assigned a specific zone or floor. Their
+              duties during an evacuation include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Investigate:</strong> In two-stage systems, investigate the alarm source
+                during the alert phase
+              </li>
+              <li>
+                <strong>Sweep:</strong> Systematically check every room, toilet, storage area and
+                office in their zone
+              </li>
+              <li>
+                <strong>Direct:</strong> Guide occupants to the nearest safe exit route and assembly
+                point
+              </li>
+              <li>
+                <strong>Assist:</strong> Help anyone with a PEEP to evacuate according to their plan
+              </li>
+              <li>
+                <strong>Close:</strong> Close all doors behind them as they leave (doors are fire
+                barriers when closed)
+              </li>
+              <li>
+                <strong>Report:</strong> Report to the chief fire warden at the assembly point,
+                confirming their zone is clear or identifying anyone missing
+              </li>
+              <li>
+                <strong>Do NOT re-enter:</strong> Never go back into the building once the sweep is
+                complete
+              </li>
+            </ul>
+            <p>
+              <strong>Visitor Management</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>All visitors must sign in on arrival and sign out on departure</li>
+              <li>
+                Visitors should receive a brief fire safety induction (escape routes, assembly
+                point, alarm sound)
+              </li>
+              <li>Visitors should be escorted or given clear directions to exit routes</li>
+              <li>The visitor log must be taken to the assembly point for roll call</li>
+              <li>Contractor sign-in boards should be separate from visitor logs for clarity</li>
+            </ul>
+            <p>
+              <strong>Disabled Persons Evacuation</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Refuge areas: protected spaces on stairway landings with communication points</li>
+              <li>Evacuation chairs: lightweight chairs for carrying persons down stairs</li>
+              <li>Evacuation lifts: BS EN 81-72 compliant lifts under fire service control</li>
+              <li>Buddy systems: trained colleagues designated to assist specific individuals</li>
+              <li>Visual/vibrating alarms for hearing-impaired persons</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Contractor note:</strong> As a maintenance electrician visiting different
               sites, you are effectively a visitor. Ensure you sign in, receive the fire safety
@@ -804,18 +676,15 @@ const MOETModule1Section6_3 = () => {
               you have any condition that might affect your evacuation, inform your host so
               arrangements can be made.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04: Training, Drills and Escape Route Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Training, Drills and Escape Route Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Training, drills and escape route maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Fire Evacuation Drills">
             <p>
               Fire evacuation procedures are only effective if everyone knows what to do. Regular
               training, realistic drills and diligent maintenance of escape routes are essential
@@ -823,235 +692,192 @@ const MOETModule1Section6_3 = () => {
               role — ensuring your own fire safety awareness and maintaining the systems (emergency
               lighting, signage, fire doors) that support safe evacuation.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency:</strong> At least annually for most premises; every 6 months for
+                higher-risk premises (sleeping accommodation, hazardous processes, high staff
+                turnover)
+              </li>
+              <li>
+                <strong>Unannounced:</strong> After the initial drill (which may be announced),
+                subsequent drills should be unannounced to test genuine response
+              </li>
+              <li>
+                <strong>Timing:</strong> Vary the time of day, day of the week, and simulate
+                different scenarios (blocked exit, night shift, during maintenance work)
+              </li>
+              <li>
+                <strong>Recording:</strong> Document the date, time, alarm activation time,
+                evacuation time, number of occupants, any issues identified, and corrective actions
+              </li>
+              <li>
+                <strong>Review:</strong> After each drill, hold a debrief with fire wardens.
+                Identify what worked well and what needs improvement
+              </li>
+              <li>
+                <strong>Target times:</strong> Typical target evacuation times are 2.5 minutes for
+                single-storey buildings, 5 minutes for multi-storey, though this depends on building
+                size and complexity
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Evacuation Drills
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency:</strong> At least annually for most premises; every 6 months
-                  for higher-risk premises (sleeping accommodation, hazardous processes, high staff
-                  turnover)
-                </li>
-                <li className="pl-1">
-                  <strong>Unannounced:</strong> After the initial drill (which may be announced),
-                  subsequent drills should be unannounced to test genuine response
-                </li>
-                <li className="pl-1">
-                  <strong>Timing:</strong> Vary the time of day, day of the week, and simulate
-                  different scenarios (blocked exit, night shift, during maintenance work)
-                </li>
-                <li className="pl-1">
-                  <strong>Recording:</strong> Document the date, time, alarm activation time,
-                  evacuation time, number of occupants, any issues identified, and corrective
-                  actions
-                </li>
-                <li className="pl-1">
-                  <strong>Review:</strong> After each drill, hold a debrief with fire wardens.
-                  Identify what worked well and what needs improvement
-                </li>
-                <li className="pl-1">
-                  <strong>Target times:</strong> Typical target evacuation times are 2.5 minutes for
-                  single-storey buildings, 5 minutes for multi-storey, though this depends on
-                  building size and complexity
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Maintaining Escape Routes">
+            <p>
+              Escape routes must be kept clear and usable at all times. This is a legal requirement
+              under the RRFSO 2005. Common problems include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Obstructions:</strong> Materials stored in corridors, stairways or in front
+                of exits. Maintenance equipment, cable drums and toolboxes are common culprits —
+                ensure your work does not block escape routes
+              </li>
+              <li>
+                <strong>Locked exits:</strong> Final exit doors must be operable from the inside
+                without a key. Electromagnetic locks must release on fire alarm activation.
+                Padlocked fire exits are a serious offence
+              </li>
+              <li>
+                <strong>Fire door issues:</strong> Doors wedged open (use electromagnetic holders
+                instead), damaged intumescent strips, faulty self-closers, excessive gaps (max 3 mm
+                at sides, 8 mm at threshold)
+              </li>
+              <li>
+                <strong>Signage failures:</strong> Non-illuminated or obscured exit signs, incorrect
+                directional arrows, missing signs at changes of direction
+              </li>
+              <li>
+                <strong>Emergency lighting failures:</strong> Failed luminaires, depleted batteries,
+                obstructed light fittings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Maintaining Escape Routes
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Escape routes must be kept clear and usable at all times. This is a legal
-                requirement under the RRFSO 2005. Common problems include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Obstructions:</strong> Materials stored in corridors, stairways or in
-                  front of exits. Maintenance equipment, cable drums and toolboxes are common
-                  culprits — ensure your work does not block escape routes
-                </li>
-                <li className="pl-1">
-                  <strong>Locked exits:</strong> Final exit doors must be operable from the inside
-                  without a key. Electromagnetic locks must release on fire alarm activation.
-                  Padlocked fire exits are a serious offence
-                </li>
-                <li className="pl-1">
-                  <strong>Fire door issues:</strong> Doors wedged open (use electromagnetic holders
-                  instead), damaged intumescent strips, faulty self-closers, excessive gaps (max 3
-                  mm at sides, 8 mm at threshold)
-                </li>
-                <li className="pl-1">
-                  <strong>Signage failures:</strong> Non-illuminated or obscured exit signs,
-                  incorrect directional arrows, missing signs at changes of direction
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting failures:</strong> Failed luminaires, depleted
-                  batteries, obstructed light fittings
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Emergency Lighting — BS 5266-1">
+            <p>
+              Emergency lighting provides illumination when the normal mains supply fails, enabling
+              safe evacuation. As a maintenance electrician, you may be responsible for installing,
+              testing and maintaining these systems.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Types:</strong> Maintained (always on) or non-maintained (only when mains
+                fails). Self-contained (individual batteries) or central battery system
+              </li>
+              <li>
+                <strong>Locations:</strong> All escape routes, exit doors, stairways, changes of
+                direction, intersections, external exits, near fire alarm call points, near
+                firefighting equipment, lift cars, toilets over 8 m², high-risk task areas
+              </li>
+              <li>
+                <strong>Illumination:</strong> Minimum 1 lux along the centre line of an escape
+                route, 0.5 lux across the full width
+              </li>
+              <li>
+                <strong>Duration:</strong> Minimum 3 hours for most premises (1 hour where immediate
+                evacuation is possible)
+              </li>
+              <li>
+                <strong>Monthly test:</strong> Brief functional test — simulate mains failure and
+                confirm each luminaire illuminates. Record results
+              </li>
+              <li>
+                <strong>Annual test:</strong> Full rated duration test (3 hours) — verify each
+                luminaire operates for its full duration. Replace any that fail
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Emergency Lighting — BS 5266-1
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Emergency lighting provides illumination when the normal mains supply fails,
-                enabling safe evacuation. As a maintenance electrician, you may be responsible for
-                installing, testing and maintaining these systems.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Types:</strong> Maintained (always on) or non-maintained (only when mains
-                  fails). Self-contained (individual batteries) or central battery system
-                </li>
-                <li className="pl-1">
-                  <strong>Locations:</strong> All escape routes, exit doors, stairways, changes of
-                  direction, intersections, external exits, near fire alarm call points, near
-                  firefighting equipment, lift cars, toilets over 8 m², high-risk task areas
-                </li>
-                <li className="pl-1">
-                  <strong>Illumination:</strong> Minimum 1 lux along the centre line of an escape
-                  route, 0.5 lux across the full width
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Minimum 3 hours for most premises (1 hour where
-                  immediate evacuation is possible)
-                </li>
-                <li className="pl-1">
-                  <strong>Monthly test:</strong> Brief functional test — simulate mains failure and
-                  confirm each luminaire illuminates. Record results
-                </li>
-                <li className="pl-1">
-                  <strong>Annual test:</strong> Full rated duration test (3 hours) — verify each
-                  luminaire operates for its full duration. Replace any that fail
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Exit Signage — BS 5499 / BS ISO 7010
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Green background with white running man pictogram and directional arrow
-                </li>
-                <li className="pl-1">Must be visible from every point on the escape route</li>
-                <li className="pl-1">
-                  Illuminated signs (internally lit) for buildings where normal lighting may fail
-                </li>
-                <li className="pl-1">
-                  Photoluminescent signs acceptable where adequate ambient light charges them
-                </li>
-                <li className="pl-1">
-                  Signs required at every exit, change of direction, and intersection
-                </li>
-                <li className="pl-1">
-                  Maximum viewing distance depends on sign size (100 mm letter height = 30 m viewing
-                  distance)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="Exit Signage — BS 5499 / BS ISO 7010">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Green background with white running man pictogram and directional arrow</li>
+              <li>Must be visible from every point on the escape route</li>
+              <li>
+                Illuminated signs (internally lit) for buildings where normal lighting may fail
+              </li>
+              <li>Photoluminescent signs acceptable where adequate ambient light charges them</li>
+              <li>Signs required at every exit, change of direction, and intersection</li>
+              <li>
+                Maximum viewing distance depends on sign size (100 mm letter height = 30 m viewing
+                distance)
+              </li>
+            </ul>
+            <p className="italic text-white">
               <strong>Note:</strong> During your maintenance work, always check the condition of
               emergency lighting, exit signage and fire doors in the areas where you are working. If
               you notice failures (blown luminaires, damaged signs, faulty door closers), report
               them to the building manager. Under the RRFSO 2005, everyone on site has a duty to
               cooperate with fire safety measures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Contractor and Multi-Site Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Contractor and Multi-Site Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Contractor and multi-site considerations</ContentEyebrow>
+
+          <ConceptBlock title="Contractor Site Induction — Fire Safety Essentials">
             <p>
               Electrical maintenance technicians frequently work as contractors, visiting multiple
               different sites each week. Each building has its own emergency procedures, alarm
               systems, escape routes and assembly points. Complacency is a serious risk — you must
               treat every site as unfamiliar and take the time to learn the specific procedures.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Escape routes:</strong> Walk the escape routes from your work area to the
+                nearest exits. Identify at least two independent routes
+              </li>
+              <li>
+                <strong>Assembly point:</strong> Know the exact location — not just "outside" but
+                the specific designated area
+              </li>
+              <li>
+                <strong>Alarm sound:</strong> Listen to the alarm during the induction or weekly
+                test. In two-stage systems, know the difference between alert and evacuate
+              </li>
+              <li>
+                <strong>Call points:</strong> Locate the nearest manual call point to your work area
+              </li>
+              <li>
+                <strong>Extinguishers:</strong> Note the type and location of the nearest fire
+                extinguisher
+              </li>
+              <li>
+                <strong>Fire warden:</strong> Know who the local fire warden is for the area you are
+                working in
+              </li>
+              <li>
+                <strong>Sign in/out:</strong> Always sign the contractor register on arrival and
+                departure so you can be accounted for
+              </li>
+              <li>
+                <strong>Permit to work:</strong> If your work involves hot work, ensure the building
+                fire risk assessment accounts for this
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contractor Site Induction — Fire Safety Essentials
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Escape routes:</strong> Walk the escape routes from your work area to the
-                  nearest exits. Identify at least two independent routes
-                </li>
-                <li className="pl-1">
-                  <strong>Assembly point:</strong> Know the exact location — not just "outside" but
-                  the specific designated area
-                </li>
-                <li className="pl-1">
-                  <strong>Alarm sound:</strong> Listen to the alarm during the induction or weekly
-                  test. In two-stage systems, know the difference between alert and evacuate
-                </li>
-                <li className="pl-1">
-                  <strong>Call points:</strong> Locate the nearest manual call point to your work
-                  area
-                </li>
-                <li className="pl-1">
-                  <strong>Extinguishers:</strong> Note the type and location of the nearest fire
-                  extinguisher
-                </li>
-                <li className="pl-1">
-                  <strong>Fire warden:</strong> Know who the local fire warden is for the area you
-                  are working in
-                </li>
-                <li className="pl-1">
-                  <strong>Sign in/out:</strong> Always sign the contractor register on arrival and
-                  departure so you can be accounted for
-                </li>
-                <li className="pl-1">
-                  <strong>Permit to work:</strong> If your work involves hot work, ensure the
-                  building fire risk assessment accounts for this
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Working in Occupied Buildings
-                </h3>
-                <p className="text-sm text-white">
-                  When carrying out maintenance in occupied buildings, your work must not compromise
-                  the escape routes or fire safety systems. Cable installation that temporarily
-                  blocks a corridor, dust from cutting that triggers false alarms, or isolation of
-                  fire alarm circuits all require careful planning and coordination with the
-                  building manager. If you need to impair any fire safety system (even temporarily),
-                  a fire impairment notice must be issued and compensatory measures put in place.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multi-Site Awareness
-                </h3>
-                <p className="text-sm text-white">
-                  Maintain a personal record of fire safety information for every site you regularly
-                  visit. Include the assembly point location, alarm type, nearest exits from your
-                  typical work areas, and emergency contact numbers. Review this information each
-                  time you attend site — building layouts, procedures and personnel can change. If
-                  you arrive on site and notice changes to escape routes (new construction, blocked
-                  exits), report this immediately.
-                </p>
-              </div>
-            </div>
-
+          <ConceptBlock title="Working in Occupied Buildings and Multi-Site Awareness">
+            <p>
+              <strong>Working in Occupied Buildings.</strong> When carrying out maintenance in
+              occupied buildings, your work must not compromise the escape routes or fire safety
+              systems. Cable installation that temporarily blocks a corridor, dust from cutting that
+              triggers false alarms, or isolation of fire alarm circuits all require careful
+              planning and coordination with the building manager. If you need to impair any fire
+              safety system (even temporarily), a fire impairment notice must be issued and
+              compensatory measures put in place.
+            </p>
+            <p>
+              <strong>Multi-Site Awareness.</strong> Maintain a personal record of fire safety
+              information for every site you regularly visit. Include the assembly point location,
+              alarm type, nearest exits from your typical work areas, and emergency contact numbers.
+              Review this information each time you attend site — building layouts, procedures and
+              personnel can change. If you arrive on site and notice changes to escape routes (new
+              construction, blocked exits), report this immediately.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard requires you to
               comply with site-specific emergency procedures and demonstrate awareness of evacuation
@@ -1059,90 +885,64 @@ const MOETModule1Section6_3 = () => {
               workplace observations — ensure you can demonstrate that you routinely check fire
               safety arrangements when attending different sites.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Simultaneous — everyone at once, small/medium buildings',
+              'Phased — fire floor first, then adjacent, then rest',
+              'Progressive horizontal — to adjacent compartment',
+              'Invacuation — shelter in place, external threat',
+              'Fire wardens sweep and report at assembly point',
+              'PEEPs for any person needing assistance',
+              'RRFSO 2005 — Emergency procedures duty',
+              'BS 5839-1 — Fire alarm testing (weekly MCPs)',
+              'BS 5266-1 — Emergency lighting (monthly/annual test)',
+              'BS 5499 / BS ISO 7010 — Exit signage',
+              'Equality Act 2010 — Reasonable adjustments',
+              'ST1426 — Emergency procedures KSBs',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Evacuation Types</p>
-                <ul className="space-y-0.5">
-                  <li>Simultaneous — everyone at once, small/medium buildings</li>
-                  <li>Phased — fire floor first, then adjacent, then rest</li>
-                  <li>Progressive horizontal — to adjacent compartment</li>
-                  <li>Invacuation — shelter in place, external threat</li>
-                  <li>Fire wardens sweep and report at assembly point</li>
-                  <li>PEEPs for any person needing assistance</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>RRFSO 2005 — Emergency procedures duty</li>
-                  <li>BS 5839-1 — Fire alarm testing (weekly MCPs)</li>
-                  <li>BS 5266-1 — Emergency lighting (monthly/annual test)</li>
-                  <li>BS 5499 / BS ISO 7010 — Exit signage</li>
-                  <li>Equality Act 2010 — Reasonable adjustments</li>
-                  <li>ST1426 — Emergency procedures KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  First Aid for Electrical Incidents
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Reporting Incidents, Accidents and Near Misses
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: First Aid
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6-4">
-              Next: Reporting Incidents
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

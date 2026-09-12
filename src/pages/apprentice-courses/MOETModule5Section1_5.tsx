@@ -1,8 +1,52 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 1 · Subsection 5 — Signal Conditioning
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Functions and applications of electrical
+ *                 circuits."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * last subsection of Section 5.1, so the "next" action returns to the
+ * section overview, matching the original page's own navigation.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Signal Conditioning - MOET Module 5 Section 1.5';
@@ -254,119 +298,68 @@ const faqs = [
 ];
 
 const MOETModule5Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 5.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Signal Conditioning
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.1 · Subsection 5"
+        title="Signal Conditioning"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Amplification, filtering, linearisation and signal conversion for industrial
-            instrumentation
+            instrumentation — the processing between a raw sensor signal and a clean reading the
+            control system can trust.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Convert raw sensor signals into clean, standardised
-                outputs
-              </li>
-              <li className="pl-1">
-                <strong>Key functions:</strong> Amplification, filtering, linearisation, isolation
-              </li>
-              <li className="pl-1">
-                <strong>Standard signal:</strong> 4-20 mA (live zero at 4 mA for fault detection)
-              </li>
-              <li className="pl-1">
-                <strong>Noise control:</strong> Screened cables, twisted pairs, galvanic isolation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Check loop current, supply voltage, isolation
-                integrity
-              </li>
-              <li className="pl-1">
-                <strong>Calibration:</strong> Zero, span and linearity adjustments at the
-                conditioner
-              </li>
-              <li className="pl-1">
-                <strong>HART:</strong> Digital communication on existing 4-20 mA wiring
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to instrumentation and control system KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Purpose: Convert raw sensor signals into clean, standardised outputs.',
+              'Key functions: Amplification, filtering, linearisation, isolation.',
+              'Standard signal: 4-20 mA (live zero at 4 mA for fault detection).',
+              'Noise control: Screened cables, twisted pairs, galvanic isolation.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and functions of signal conditioning in instrumentation systems',
               'Describe the 4-20 mA standard including live zero and two-wire loop operation',
               'Identify amplification, filtering and linearisation techniques for common sensors',
               'Explain galvanic isolation and its role in preventing earth loops',
               'Describe noise reduction methods including screened cables and proper earthing',
               'Outline the HART protocol and its use in modern instrument maintenance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Check loop current, supply voltage, isolation
+                integrity.
+              </li>
+              <li>
+                <strong>Calibration:</strong> Zero, span and linearity adjustments at the
+                conditioner.
+              </li>
+              <li>
+                <strong>HART:</strong> Digital communication on existing 4-20 mA wiring.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to instrumentation and control system KSBs.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is Signal Conditioning?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What is signal conditioning?</ContentEyebrow>
+
+          <ConceptBlock title="Turning a raw sensor signal into something the system can trust">
             <p>
               In any instrumentation and control system, the raw signal produced by a sensor is
               rarely in a form that a PLC, DCS or indicator can directly use. Thermocouples produce
@@ -382,108 +375,85 @@ const MOETModule5Section1_5 = () => {
               conditioning chain rather than in the sensor itself. Systematic fault-finding requires
               understanding each stage of the signal path from sensor to control system.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Signal Conditioning Functions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Amplification:</strong> Increasing signal strength from
-                  millivolts/microvolts to a usable level (typically 1-10 V or 4-20 mA)
-                </li>
-                <li className="pl-1">
-                  <strong>Filtering:</strong> Removing unwanted noise and interference from the
-                  signal
-                </li>
-                <li className="pl-1">
-                  <strong>Linearisation:</strong> Correcting for non-linear sensor characteristics
-                  (e.g., thermocouple voltage vs temperature)
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation:</strong> Electrically separating field circuits from control
-                  circuits to prevent earth loops and protect equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Conversion:</strong> Changing signal type (e.g., voltage to current,
-                  resistance to voltage, analogue to digital)
-                </li>
-                <li className="pl-1">
-                  <strong>Excitation:</strong> Providing the power supply or reference signal needed
-                  by passive sensors (e.g., bridge excitation for strain gauges)
-                </li>
-              </ul>
+          <ConceptBlock title="Key signal conditioning functions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Amplification:</strong> Increasing signal strength from
+                millivolts/microvolts to a usable level (typically 1-10 V or 4-20 mA).
+              </li>
+              <li>
+                <strong>Filtering:</strong> Removing unwanted noise and interference from the
+                signal.
+              </li>
+              <li>
+                <strong>Linearisation:</strong> Correcting for non-linear sensor characteristics
+                (e.g. thermocouple voltage vs temperature).
+              </li>
+              <li>
+                <strong>Isolation:</strong> Electrically separating field circuits from control
+                circuits to prevent earth loops and protect equipment.
+              </li>
+              <li>
+                <strong>Conversion:</strong> Changing signal type (e.g. voltage to current,
+                resistance to voltage, analogue to digital).
+              </li>
+              <li>
+                <strong>Excitation:</strong> Providing the power supply or reference signal needed
+                by passive sensors (e.g. bridge excitation for strain gauges).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Signal conditioning in the measurement chain">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Stage</th>
+                    <th className="py-2 pr-4 font-medium text-white">Component</th>
+                    <th className="py-2 font-medium text-white">Example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">1. Sensing</td>
+                    <td className="py-2 pr-4">Sensor/transducer</td>
+                    <td className="py-2">Thermocouple produces 0-50 mV</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">2. Conditioning</td>
+                    <td className="py-2 pr-4">Transmitter / signal conditioner</td>
+                    <td className="py-2">Amplifies, linearises, converts to 4-20 mA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">3. Transmission</td>
+                    <td className="py-2 pr-4">Cable / network</td>
+                    <td className="py-2">Screened twisted pair cable to marshalling cabinet</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">4. Input</td>
+                    <td className="py-2 pr-4">PLC/DCS analogue input card</td>
+                    <td className="py-2">Converts 4-20 mA to digital value</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">5. Processing</td>
+                    <td className="py-2 pr-4">PLC/DCS program</td>
+                    <td className="py-2">Scales, alarms, control calculations</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Conditioning in the Measurement Chain
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1. Sensing</td>
-                      <td className="border border-white/10 px-3 py-2">Sensor/transducer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermocouple produces 0-50 mV
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2. Conditioning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transmitter / signal conditioner
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Amplifies, linearises, converts to 4-20 mA
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3. Transmission</td>
-                      <td className="border border-white/10 px-3 py-2">Cable / network</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Screened twisted pair cable to marshalling cabinet
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4. Input</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PLC/DCS analogue input card
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Converts 4-20 mA to digital value
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5. Processing</td>
-                      <td className="border border-white/10 px-3 py-2">PLC/DCS program</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Scales, alarms, control calculations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The 4-20 mA Current Loop Standard
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The 4-20 mA current loop standard</ContentEyebrow>
+
+          <ConceptBlock title="The dominant analogue signal standard in industry">
             <p>
               The 4-20 mA current loop is the dominant analogue signal standard in industrial
               instrumentation. It was developed to address the limitations of voltage-based signals
@@ -491,474 +461,465 @@ const MOETModule5Section1_5 = () => {
               standard is fundamental for any maintenance technician working with process
               instruments.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Why 4-20 mA?</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Immunity to cable resistance:</strong> Current is the same at every
-                    point in a series loop, so cable length and resistance do not affect accuracy
-                  </li>
-                  <li className="pl-1">
-                    <strong>Live zero (4 mA):</strong> A broken wire or failed transmitter produces
-                    0 mA, which is clearly distinguishable from a genuine 0% reading (4 mA)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Two-wire operation:</strong> The transmitter draws its operating power
-                    from the same two wires that carry the signal, reducing cabling costs
-                  </li>
-                  <li className="pl-1">
-                    <strong>Noise immunity:</strong> Current signals are less affected by
-                    electromagnetic interference than voltage signals
-                  </li>
-                  <li className="pl-1">
-                    <strong>Long distance:</strong> Signal integrity maintained over cable runs of
-                    1,000 m or more with adequate loop supply voltage
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Why 4-20 mA?">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Immunity to cable resistance:</strong> Current is the same at every point in
+                a series loop, so cable length and resistance do not affect accuracy.
+              </li>
+              <li>
+                <strong>Live zero (4 mA):</strong> A broken wire or failed transmitter produces 0
+                mA, which is clearly distinguishable from a genuine 0% reading (4 mA).
+              </li>
+              <li>
+                <strong>Two-wire operation:</strong> The transmitter draws its operating power from
+                the same two wires that carry the signal, reducing cabling costs.
+              </li>
+              <li>
+                <strong>Noise immunity:</strong> Current signals are less affected by
+                electromagnetic interference than voltage signals.
+              </li>
+              <li>
+                <strong>Long distance:</strong> Signal integrity maintained over cable runs of 1,000
+                m or more with adequate loop supply voltage.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Loop Calculations</h3>
-                <p className="text-sm text-white mb-3">
-                  Converting between milliamps and percentage of range is a core maintenance skill.
-                  The formulas are:
-                </p>
-                <div className="bg-white/5 p-3 rounded text-sm font-mono text-elec-yellow/90 mb-3">
-                  <p>Percentage = (mA - 4) / 16 x 100</p>
-                  <p>mA = (Percentage / 100 x 16) + 4</p>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Percentage</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Current (mA)</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">0%</td>
-                        <td className="border border-white/10 px-3 py-2">4.00</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Bottom of range (live zero)
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">25%</td>
-                        <td className="border border-white/10 px-3 py-2">8.00</td>
-                        <td className="border border-white/10 px-3 py-2">Quarter scale</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">50%</td>
-                        <td className="border border-white/10 px-3 py-2">12.00</td>
-                        <td className="border border-white/10 px-3 py-2">Mid scale</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">75%</td>
-                        <td className="border border-white/10 px-3 py-2">16.00</td>
-                        <td className="border border-white/10 px-3 py-2">Three-quarter scale</td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">100%</td>
-                        <td className="border border-white/10 px-3 py-2">20.00</td>
-                        <td className="border border-white/10 px-3 py-2">Full scale</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Two-Wire vs Four-Wire Transmitters
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  <strong>Two-wire:</strong> The transmitter is powered by the loop current. It
-                  modulates the current between 4 and 20 mA to represent the process variable. Only
-                  two wires are needed. Most modern process transmitters are two-wire.
-                </p>
-                <p className="text-sm text-white">
-                  <strong>Four-wire:</strong> The transmitter has a separate power supply (typically
-                  24 V DC or 230 V AC). The 4-20 mA output is isolated from the power supply.
-                  Four-wire transmitters can source current independently and are used where higher
-                  power is needed (e.g., for valve positioners or complex analysers).
-                </p>
-              </div>
+          <ConceptBlock title="Loop calculations">
+            <p>
+              Converting between milliamps and percentage of range is a core maintenance skill. The
+              formulas are:
+            </p>
+            <p className="font-mono text-[13px] text-elec-yellow/90">
+              Percentage = (mA - 4) / 16 x 100
+              <br />
+              mA = (Percentage / 100 x 16) + 4
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Percentage</th>
+                    <th className="py-2 pr-4 font-medium text-white">Current (mA)</th>
+                    <th className="py-2 font-medium text-white">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">0%</td>
+                    <td className="py-2 pr-4">4.00</td>
+                    <td className="py-2">Bottom of range (live zero)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">25%</td>
+                    <td className="py-2 pr-4">8.00</td>
+                    <td className="py-2">Quarter scale</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">50%</td>
+                    <td className="py-2 pr-4">12.00</td>
+                    <td className="py-2">Mid scale</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">75%</td>
+                    <td className="py-2 pr-4">16.00</td>
+                    <td className="py-2">Three-quarter scale</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">100%</td>
+                    <td className="py-2 pr-4">20.00</td>
+                    <td className="py-2">Full scale</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Two-wire vs four-wire transmitters">
+            <p>
+              <strong>Two-wire:</strong> The transmitter is powered by the loop current. It
+              modulates the current between 4 and 20 mA to represent the process variable. Only two
+              wires are needed. Most modern process transmitters are two-wire.
+            </p>
+            <p>
+              <strong>Four-wire:</strong> The transmitter has a separate power supply (typically 24
+              V DC or 230 V AC). The 4-20 mA output is isolated from the power supply. Four-wire
+              transmitters can source current independently and are used where higher power is
+              needed (e.g. for valve positioners or complex analysers).
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Amplification, Filtering and Linearisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Amplification, filtering and linearisation</ContentEyebrow>
+
+          <ConceptBlock title="Three distinct jobs, one goal: an accurate reading">
             <p>
               The three most common signal conditioning operations are amplification (increasing
               signal strength), filtering (removing noise) and linearisation (correcting non-linear
               sensor characteristics). Each serves a distinct purpose in producing an accurate,
               clean measurement.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Amplification</h3>
-                <p className="text-sm text-white mb-2">
-                  Most sensors produce very small signals. A thermocouple typically outputs 0-50 mV,
-                  a strain gauge bridge may produce only 0-30 mV, and a pH electrode generates
-                  high-impedance millivolt signals. These must be amplified to a usable level before
-                  transmission.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Instrumentation amplifiers:</strong> High CMRR, differential input,
-                    precise gain — the standard for measurement applications
-                  </li>
-                  <li className="pl-1">
-                    <strong>Operational amplifiers (op-amps):</strong> Used in simpler circuits for
-                    buffering, scaling and offset adjustment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Programmable gain amplifiers:</strong> Gain can be changed by the
-                    control system to accommodate different sensor ranges
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Amplification">
+            <p>
+              Most sensors produce very small signals. A thermocouple typically outputs 0-50 mV, a
+              strain gauge bridge may produce only 0-30 mV, and a pH electrode generates
+              high-impedance millivolt signals. These must be amplified to a usable level before
+              transmission.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Instrumentation amplifiers:</strong> High CMRR, differential input, precise
+                gain — the standard for measurement applications.
+              </li>
+              <li>
+                <strong>Operational amplifiers (op-amps):</strong> Used in simpler circuits for
+                buffering, scaling and offset adjustment.
+              </li>
+              <li>
+                <strong>Programmable gain amplifiers:</strong> Gain can be changed by the control
+                system to accommodate different sensor ranges.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Filtering</h3>
-                <p className="text-sm text-white mb-2">
-                  Electrical noise is the enemy of accurate measurement. Industrial environments are
-                  filled with sources of electromagnetic interference: variable speed drives,
-                  contactors, welding equipment, power cables and radio transmitters. Filters remove
-                  unwanted frequency components from the signal.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Low-pass filters:</strong> Pass low frequencies (the process signal),
-                    block high frequencies (noise) — most common in instrumentation
-                  </li>
-                  <li className="pl-1">
-                    <strong>High-pass filters:</strong> Pass high frequencies, block low frequencies
-                    — used for vibration analysis and AC coupling
-                  </li>
-                  <li className="pl-1">
-                    <strong>Band-pass filters:</strong> Pass a specific frequency range — used in
-                    flow meters and ultrasonic applications
-                  </li>
-                  <li className="pl-1">
-                    <strong>Notch filters:</strong> Block a specific frequency — commonly used to
-                    reject 50 Hz mains interference
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Filtering">
+            <p>
+              Electrical noise is the enemy of accurate measurement. Industrial environments are
+              filled with sources of electromagnetic interference: variable speed drives,
+              contactors, welding equipment, power cables and radio transmitters. Filters remove
+              unwanted frequency components from the signal.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Low-pass filters:</strong> Pass low frequencies (the process signal), block
+                high frequencies (noise) — most common in instrumentation.
+              </li>
+              <li>
+                <strong>High-pass filters:</strong> Pass high frequencies, block low frequencies —
+                used for vibration analysis and AC coupling.
+              </li>
+              <li>
+                <strong>Band-pass filters:</strong> Pass a specific frequency range — used in flow
+                meters and ultrasonic applications.
+              </li>
+              <li>
+                <strong>Notch filters:</strong> Block a specific frequency — commonly used to reject
+                50 Hz mains interference.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Linearisation</h3>
-                <p className="text-sm text-white mb-2">
-                  Many sensors have inherently non-linear output characteristics. Without
-                  linearisation, the displayed reading would not be proportional to the actual
-                  process variable.
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="text-sm text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-white/5">
-                        <th className="border border-white/10 px-3 py-2 text-left">Sensor</th>
-                        <th className="border border-white/10 px-3 py-2 text-left">
-                          Non-Linearity
-                        </th>
-                        <th className="border border-white/10 px-3 py-2 text-left">
-                          Linearisation Method
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">Thermocouple</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Voltage vs temperature is non-linear
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Lookup table or polynomial correction in the transmitter
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">Orifice plate</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Flow is proportional to square root of DP
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Square root extraction in the transmitter or PLC
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-3 py-2">Thermistor (NTC)</td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Resistance decreases exponentially with temperature
-                        </td>
-                        <td className="border border-white/10 px-3 py-2">
-                          Steinhart-Hart equation in software
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+          <ConceptBlock title="Linearisation">
+            <p>
+              Many sensors have inherently non-linear output characteristics. Without linearisation,
+              the displayed reading would not be proportional to the actual process variable.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Sensor</th>
+                    <th className="py-2 pr-4 font-medium text-white">Non-linearity</th>
+                    <th className="py-2 font-medium text-white">Linearisation method</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Thermocouple</td>
+                    <td className="py-2 pr-4">Voltage vs temperature is non-linear</td>
+                    <td className="py-2">
+                      Lookup table or polynomial correction in the transmitter
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Orifice plate</td>
+                    <td className="py-2 pr-4">Flow is proportional to square root of DP</td>
+                    <td className="py-2">Square root extraction in the transmitter or PLC</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Thermistor (NTC)</td>
+                    <td className="py-2 pr-4">
+                      Resistance decreases exponentially with temperature
+                    </td>
+                    <td className="py-2">Steinhart-Hart equation in software</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Galvanic Isolation and Noise Reduction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Galvanic isolation and noise reduction</ContentEyebrow>
+
+          <ConceptBlock title="An electrical break that still lets the signal through">
             <p>
               In industrial installations, signal circuits can be exposed to significant electrical
               interference, ground potential differences and fault voltages. Galvanic isolation and
               proper noise reduction techniques are essential for reliable measurement.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Galvanic Isolation</h3>
-                <p className="text-sm text-white mb-2">
-                  Galvanic isolation creates a complete electrical break between two circuits while
-                  still allowing the signal to pass through. Common isolation methods include:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Opto-couplers:</strong> An LED illuminates a phototransistor across an
-                    insulating gap — widely used in digital signal isolation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Isolation transformers:</strong> Magnetic coupling transfers the signal
-                    across an insulating barrier — used for analogue and power isolation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Capacitive isolation:</strong> High-frequency signal capacitively
-                    coupled across a barrier — used in some modern digital isolators
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Galvanic isolation">
+            <p>
+              Galvanic isolation creates a complete electrical break between two circuits while
+              still allowing the signal to pass through. Common isolation methods include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Opto-couplers:</strong> An LED illuminates a phototransistor across an
+                insulating gap — widely used in digital signal isolation.
+              </li>
+              <li>
+                <strong>Isolation transformers:</strong> Magnetic coupling transfers the signal
+                across an insulating barrier — used for analogue and power isolation.
+              </li>
+              <li>
+                <strong>Capacitive isolation:</strong> High-frequency signal capacitively coupled
+                across a barrier — used in some modern digital isolators.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cabling Best Practice for Noise Reduction
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Screened twisted-pair cable:</strong> Standard for all analogue
-                    instrument signals — twisting rejects magnetic interference, screening rejects
-                    electrostatic interference
-                  </li>
-                  <li className="pl-1">
-                    <strong>Single-point screen earthing:</strong> Earth the cable screen at the
-                    control room end only to prevent earth loop currents through the screen
-                  </li>
-                  <li className="pl-1">
-                    <strong>Separation from power cables:</strong> Minimum 300 mm separation; cross
-                    at right angles where crossings are unavoidable
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dedicated cable containment:</strong> Instrument cables in separate
-                    trunking or tray from power cables
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ferrite cores:</strong> Can be fitted around cables to suppress
-                    high-frequency conducted interference
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Cabling best practice for noise reduction">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Screened twisted-pair cable:</strong> Standard for all analogue instrument
+                signals — twisting rejects magnetic interference, screening rejects electrostatic
+                interference.
+              </li>
+              <li>
+                <strong>Single-point screen earthing:</strong> Earth the cable screen at the control
+                room end only to prevent earth loop currents through the screen.
+              </li>
+              <li>
+                <strong>Separation from power cables:</strong> Minimum 300 mm separation; cross at
+                right angles where crossings are unavoidable.
+              </li>
+              <li>
+                <strong>Dedicated cable containment:</strong> Instrument cables in separate trunking
+                or tray from power cables.
+              </li>
+              <li>
+                <strong>Ferrite cores:</strong> Can be fitted around cables to suppress
+                high-frequency conducted interference.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <p className="text-sm font-medium text-red-400 mb-2">Common Earth Loop Problems</p>
-                <p className="text-sm text-white">
-                  Earth loops are one of the most frequent causes of erratic instrument readings in
-                  industrial installations. They occur when the instrument circuit has more than one
-                  connection to earth, creating a loop through which 50 Hz mains-frequency currents
-                  can flow. The resulting voltage drop adds to the measurement signal, causing
-                  offset errors or fluctuating readings. Prevention is always better than cure —
-                  design the earthing scheme correctly from the start and use isolated signal
-                  conditioners where multiple earth connections are unavoidable.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <CommonMistake
+            title="Common earth loop problems"
+            whatHappens={
+              <>
+                Earth loops are one of the most frequent causes of erratic instrument readings in
+                industrial installations. They occur when the instrument circuit has more than one
+                connection to earth, creating a loop through which 50 Hz mains-frequency currents
+                can flow. The resulting voltage drop adds to the measurement signal, causing offset
+                errors or fluctuating readings.
+              </>
+            }
+            doInstead={
+              <>
+                Prevention is always better than cure — design the earthing scheme correctly from
+                the start and use isolated signal conditioners where multiple earth connections are
+                unavoidable.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            HART Protocol and Smart Transmitters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>HART protocol and smart transmitters</ContentEyebrow>
+
+          <ConceptBlock title="A digital conversation riding on the analogue loop">
             <p>
               The HART (Highway Addressable Remote Transducer) protocol represents a significant
               advance in signal conditioning technology. It allows digital communication to be
               superimposed on a standard 4-20 mA analogue signal, enabling configuration,
               diagnostics and additional data transfer without additional wiring.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">How HART Works</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>FSK modulation:</strong> Digital data is transmitted as two frequencies
-                    (1,200 Hz for logic 1, 2,200 Hz for logic 0) superimposed on the 4-20 mA signal
-                  </li>
-                  <li className="pl-1">
-                    <strong>Zero average:</strong> The FSK signal has an average value of zero, so
-                    it does not affect the analogue reading
-                  </li>
-                  <li className="pl-1">
-                    <strong>Simultaneous operation:</strong> The 4-20 mA analogue signal carries the
-                    primary process variable while HART carries configuration, diagnostics and
-                    additional variables
-                  </li>
-                  <li className="pl-1">
-                    <strong>Multi-drop capable:</strong> Up to 15 devices on one pair of wires (in
-                    digital-only mode, where the analogue signal is fixed at 4 mA)
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="How HART works">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>FSK modulation:</strong> Digital data is transmitted as two frequencies
+                (1,200 Hz for logic 1, 2,200 Hz for logic 0) superimposed on the 4-20 mA signal.
+              </li>
+              <li>
+                <strong>Zero average:</strong> The FSK signal has an average value of zero, so it
+                does not affect the analogue reading.
+              </li>
+              <li>
+                <strong>Simultaneous operation:</strong> The 4-20 mA analogue signal carries the
+                primary process variable while HART carries configuration, diagnostics and
+                additional variables.
+              </li>
+              <li>
+                <strong>Multi-drop capable:</strong> Up to 15 devices on one pair of wires (in
+                digital-only mode, where the analogue signal is fixed at 4 mA).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Smart Transmitter Capabilities
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Modern smart transmitters combine the sensor, signal conditioning and digital
-                  communication in a single device. They offer significant advantages for
-                  maintenance:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Remote configuration:</strong> Range, damping, units and alarm levels
-                    can be changed from the control room or with a handheld communicator
-                  </li>
-                  <li className="pl-1">
-                    <strong>Self-diagnostics:</strong> The transmitter continuously monitors its own
-                    health and reports faults
-                  </li>
-                  <li className="pl-1">
-                    <strong>Multi-variable:</strong> A single pressure transmitter can report
-                    pressure, temperature and calculated flow rate
-                  </li>
-                  <li className="pl-1">
-                    <strong>Digital calibration:</strong> Sensor trim and output trim can be
-                    performed through the HART interface
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Smart transmitter capabilities">
+            <p>
+              Modern smart transmitters combine the sensor, signal conditioning and digital
+              communication in a single device. They offer significant advantages for maintenance:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Remote configuration:</strong> Range, damping, units and alarm levels can be
+                changed from the control room or with a handheld communicator.
+              </li>
+              <li>
+                <strong>Self-diagnostics:</strong> The transmitter continuously monitors its own
+                health and reports faults.
+              </li>
+              <li>
+                <strong>Multi-variable:</strong> A single pressure transmitter can report pressure,
+                temperature and calculated flow rate.
+              </li>
+              <li>
+                <strong>Digital calibration:</strong> Sensor trim and output trim can be performed
+                through the HART interface.
+              </li>
+            </ul>
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard requires knowledge
               of instrumentation principles including signal conditioning, current loops and digital
               communication protocols. Practical skills include the ability to check, calibrate and
               troubleshoot instrument loops using appropriate test equipment and communicators.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="A level transmitter that reads 30 per cent when the tank is empty"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            situation={
+              <>
+                <p>
+                  A 0–5 m hydrostatic level transmitter on a coolant tank feeds a 4-20 mA loop into
+                  a PLC analogue input. Operations report the HMI showing roughly 30 per cent level
+                  on a tank they have just drained and opened up.
+                </p>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">4-20 mA Quick Conversions</p>
-                <ul className="space-y-0.5">
-                  <li>4 mA = 0% (live zero)</li>
-                  <li>8 mA = 25%</li>
-                  <li>12 mA = 50%</li>
-                  <li>16 mA = 75%</li>
-                  <li>20 mA = 100%</li>
-                  <li>0 mA = Fault (broken wire)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Noise Reduction Checklist</p>
-                <ul className="space-y-0.5">
-                  <li>Use screened twisted-pair cable</li>
-                  <li>Earth screen at one end only</li>
-                  <li>300 mm min separation from power cables</li>
-                  <li>Cross power cables at 90 degrees</li>
-                  <li>Use galvanic isolation where needed</li>
-                  <li>Separate instrument and power trunking</li>
-                </ul>
-              </div>
+                <p>
+                  The transmitter is a two-wire device powered from the loop. The panel is 60 m from
+                  the tank.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Measure the loop current first, because that separates the instrument from
+                  everything downstream. Break the loop at the marshalling terminal and read in
+                  series, or use the test socket if one is fitted. An empty tank should give 4 mA.
+                </p>
+
+                <p>
+                  If the loop reads 4 mA and the HMI still says 30 per cent, the fault is in
+                  scaling, not in the field. Check the analogue input card’s raw count against its
+                  engineering-unit conversion — a card configured for 0-20 mA rather than 4-20 mA
+                  will show roughly 20 per cent at true zero, and one left on a 0-10 V range will
+                  read further out again.
+                </p>
+
+                <p>
+                  If the loop reads about 8.8 mA with the tank empty, the transmitter itself is
+                  offset. Check the zero against a vented reference: a hydrostatic cell that has had
+                  its impulse line left full, or whose vent is blocked, holds a static head it
+                  reports as level.
+                </p>
+
+                <p>
+                  Do not adjust span until zero is right. Span is a multiplier — correcting it first
+                  only hides the offset at one point in the range.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                The number on the HMI is the end of a chain: sensing element, transmitter, loop
+                wiring, input card, scaling. Each stage can be wrong on its own and the screen looks
+                the same. Measuring the current where it leaves the field splits that chain in half
+                in about two minutes, and it tells you which half to spend the rest of the shift on.
+                Guessing from the HMI alone is how people end up recalibrating a perfectly good
+                transmitter.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              '4-20 mA quick conversions: 4 mA = 0% (live zero), 8 mA = 25%, 12 mA = 50%, 16 mA = 75%, 20 mA = 100%, 0 mA = fault (broken wire).',
+              'Noise reduction checklist: screened twisted-pair cable; screen earthed at one end only; minimum 300 mm separation from power cables, crossed at 90 degrees where unavoidable; galvanic isolation where needed; separate instrument and power trunking.',
+              'Signal conditioning covers amplification, filtering, linearisation, isolation, conversion and excitation — most instrument faults are signal-chain problems, not sensor failures.',
+              'Two-wire transmitters are powered by the loop itself; four-wire transmitters have a separate supply and an isolated 4-20 mA output.',
+              'Low-pass filters remove high-frequency noise while preserving the slow process signal; notch filters specifically reject 50 Hz mains interference.',
+              'Thermocouple voltage, orifice-plate DP and NTC thermistor resistance are all non-linear — each needs its own linearisation method (lookup table, square root extraction, Steinhart-Hart equation).',
+              'Galvanic isolation (opto-couplers, isolation transformers, capacitive isolation) breaks the electrical connection between field and control circuits while still passing the signal.',
+              'Earth loops — more than one earth connection in a circuit — are a leading cause of erratic readings; design the earthing scheme correctly and isolate where multiple earths are unavoidable.',
+              'HART superimposes a zero-average FSK digital signal on the 4-20 mA loop, so configuration and diagnostics travel alongside the analogue reading without disturbing it.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Flow and Level Measurement
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Back to overview <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Section 5.1 overview
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Flow and Level Measurement
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

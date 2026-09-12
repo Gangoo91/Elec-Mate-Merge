@@ -320,14 +320,18 @@ export function Panel({
   className,
   tone,
   padded = true,
+  id,
 }: {
   children: ReactNode;
   className?: string;
   tone?: 'accent';
   padded?: boolean;
+  /** Scroll anchor, for a KPI tile that jumps to the block it describes. */
+  id?: string;
 }) {
   return (
     <section
+      id={id}
       className={cn(
         'relative -mx-4 overflow-hidden rounded-none border-y border-white/[0.14] sm:mx-0 sm:rounded-2xl sm:border-x',
         'bg-gradient-to-br from-white/[0.11] via-white/[0.065] to-white/[0.04]',

@@ -1,8 +1,47 @@
-import { ArrowLeft, Monitor, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 5 — PLC Programming Software
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *   Skills     · "Record information."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'PLC Programming Software - MOET Module 5 Section 2.5';
@@ -252,117 +291,65 @@ const faqs = [
 ];
 
 const MOETModule5Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Monitor className="h-4 w-4" />
-            <span>Module 5.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            PLC Programming Software
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 5"
+        title="PLC Programming Software"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Software packages, development environments and IEC 61131-3 programming methods for PLC
-            systems
+            systems — what to expect from the tool, whichever brand you meet on site.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>IEC 61131-3:</strong> Five standard programming languages (LD, FBD, ST, IL,
-                SFC)
-              </li>
-              <li className="pl-1">
-                <strong>Vendor-specific:</strong> TIA Portal, Studio 5000, GX Works, Sysmac Studio
-              </li>
-              <li className="pl-1">
-                <strong>Online mode:</strong> Real-time monitoring for maintenance diagnosis
-              </li>
-              <li className="pl-1">
-                <strong>Backup:</strong> Always keep current versioned copies of all programmes
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Diagnostics:</strong> Online monitoring is the primary fault-finding tool
-              </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> Trace addresses across the entire programme
-              </li>
-              <li className="pl-1">
-                <strong>Backup/restore:</strong> Critical for recovery from PLC failure
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Using PLC software as a diagnostic tool
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'IEC 61131-3: Five standard programming languages (LD, FBD, ST, IL, SFC).',
+              'Vendor-specific: TIA Portal, Studio 5000, GX Works, Sysmac Studio.',
+              'Online mode: Real-time monitoring for maintenance diagnosis.',
+              'Backup: Always keep current versioned copies of all programmes.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the five IEC 61131-3 programming languages and their applications',
               'Navigate PLC software for online monitoring and diagnostics',
               'Explain the difference between upload and download operations',
               'Use cross-referencing to trace addresses throughout a programme',
               'Perform programme backup and restore procedures correctly',
               'Understand the role of hardware configuration in PLC systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Diagnostics:</strong> Online monitoring is the primary fault-finding tool.
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> Trace addresses across the entire programme.
+              </li>
+              <li>
+                <strong>Backup/restore:</strong> Critical for recovery from PLC failure.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Using PLC software as a diagnostic tool.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            IEC 61131-3 Programming Languages
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>IEC 61131-3 programming languages</ContentEyebrow>
+
+          <ConceptBlock title="The same five languages, whatever brand is on the panel">
             <p>
               IEC 61131-3 is the international standard that defines five programming languages for
               programmable controllers. While each PLC manufacturer implements these languages in
@@ -370,66 +357,53 @@ const MOETModule5Section2_5 = () => {
               across all platforms. Understanding these languages gives you transferable knowledge
               that applies regardless of the PLC brand you encounter on site.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Language</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Suited For
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Relevance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ladder Diagram (LD)</td>
-                      <td className="border border-white/10 px-3 py-2">Graphical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discrete logic, motor control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common — primary skill
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Function Block (FBD)</td>
-                      <td className="border border-white/10 px-3 py-2">Graphical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process control, PID, analogue
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Frequently encountered</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Structured Text (ST)</td>
-                      <td className="border border-white/10 px-3 py-2">Text</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calculations, data handling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increasingly common</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Instruction List (IL)</td>
-                      <td className="border border-white/10 px-3 py-2">Text</td>
-                      <td className="border border-white/10 px-3 py-2">Legacy systems only</td>
-                      <td className="border border-white/10 px-3 py-2">Deprecated — older sites</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SFC</td>
-                      <td className="border border-white/10 px-3 py-2">Graphical</td>
-                      <td className="border border-white/10 px-3 py-2">Sequential processes</td>
-                      <td className="border border-white/10 px-3 py-2">Batch and process plants</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="The five IEC 61131-3 languages">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Language</th>
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Best suited for</th>
+                    <th className="py-2 font-medium text-white">Maintenance relevance</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ladder Diagram (LD)</td>
+                    <td className="py-2 pr-4">Graphical</td>
+                    <td className="py-2 pr-4">Discrete logic, motor control</td>
+                    <td className="py-2">Most common — primary skill</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Function Block (FBD)</td>
+                    <td className="py-2 pr-4">Graphical</td>
+                    <td className="py-2 pr-4">Process control, PID, analogue</td>
+                    <td className="py-2">Frequently encountered</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Structured Text (ST)</td>
+                    <td className="py-2 pr-4">Text</td>
+                    <td className="py-2 pr-4">Calculations, data handling</td>
+                    <td className="py-2">Increasingly common</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Instruction List (IL)</td>
+                    <td className="py-2 pr-4">Text</td>
+                    <td className="py-2 pr-4">Legacy systems only</td>
+                    <td className="py-2">Deprecated — older sites</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">SFC</td>
+                    <td className="py-2 pr-4">Graphical</td>
+                    <td className="py-2 pr-4">Sequential processes</td>
+                    <td className="py-2">Batch and process plants</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               Most industrial programmes use a combination of languages within the same project.
               Ladder logic handles the discrete control (motor start/stop, interlocking), FBD
@@ -438,25 +412,21 @@ const MOETModule5Section2_5 = () => {
               batch processes. As a maintenance technician, you will most frequently work with
               ladder logic, but encountering FBD and ST sections is increasingly common.
             </p>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Maintenance tip:</strong> Even if you cannot write Structured Text, you should
               be able to recognise common constructs (IF-THEN-ELSE, FOR loops) and identify the
               variables involved. When you encounter ST in online monitoring, the current variable
               values are displayed alongside the code, allowing you to follow the logic flow.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Manufacturer Software Platforms
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Manufacturer software platforms</ContentEyebrow>
+
+          <ConceptBlock title="Standard concepts, proprietary tools">
             <p>
               Each PLC manufacturer provides proprietary programming software. While the IEC 61131-3
               languages are standardised in concept, the software interfaces, project structures,
@@ -464,62 +434,54 @@ const MOETModule5Section2_5 = () => {
               a maintenance technician, you may need to work with several different platforms
               depending on the equipment installed on your site.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Major PLC Software Platforms
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Siemens TIA Portal:</strong> S7-1200, S7-1500, ET 200SP, WinCC HMI.
-                  Integrated engineering with hardware config, programming, HMI design, and drive
-                  commissioning in one environment.
-                </li>
-                <li className="pl-1">
-                  <strong>Rockwell Studio 5000:</strong> CompactLogix, ControlLogix. Tag-based
-                  programming with extensive add-on instruction library. Formerly RSLogix 5000.
-                </li>
-                <li className="pl-1">
-                  <strong>Mitsubishi GX Works 3:</strong> iQ-R, iQ-F series. GX Works 2 for older FX
-                  and Q series. Strong presence in packaging and discrete manufacturing in the UK.
-                </li>
-                <li className="pl-1">
-                  <strong>Omron Sysmac Studio:</strong> NX/NJ series controllers. Integrated motion,
-                  safety, and vision in one platform. Uses EtherCAT for field communication.
-                </li>
-                <li className="pl-1">
-                  <strong>Schneider EcoStruxure Control Expert:</strong> Modicon M340, M580.
-                  Previously Unity Pro. Common in process and infrastructure applications.
-                </li>
-                <li className="pl-1">
-                  <strong>CODESYS:</strong> Multi-vendor platform used by Beckhoff, WAGO, Festo, and
-                  many others. Learning CODESYS gives transferable skills across brands.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Major PLC software platforms">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Siemens TIA Portal:</strong> S7-1200, S7-1500, ET 200SP, WinCC HMI.
+                Integrated engineering with hardware config, programming, HMI design, and drive
+                commissioning in one environment.
+              </li>
+              <li>
+                <strong>Rockwell Studio 5000:</strong> CompactLogix, ControlLogix. Tag-based
+                programming with extensive add-on instruction library. Formerly RSLogix 5000.
+              </li>
+              <li>
+                <strong>Mitsubishi GX Works 3:</strong> iQ-R, iQ-F series. GX Works 2 for older FX
+                and Q series. Strong presence in packaging and discrete manufacturing in the UK.
+              </li>
+              <li>
+                <strong>Omron Sysmac Studio:</strong> NX/NJ series controllers. Integrated motion,
+                safety, and vision in one platform. Uses EtherCAT for field communication.
+              </li>
+              <li>
+                <strong>Schneider EcoStruxure Control Expert:</strong> Modicon M340, M580.
+                Previously Unity Pro. Common in process and infrastructure applications.
+              </li>
+              <li>
+                <strong>CODESYS:</strong> Multi-vendor platform used by Beckhoff, WAGO, Festo, and
+                many others. Learning CODESYS gives transferable skills across brands.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Software Licensing</p>
-              <p className="text-sm text-white">
-                PLC software licences can be expensive. Some manufacturers offer free versions for
-                basic PLC models (e.g., Siemens TIA Portal Basic for S7-1200, Mitsubishi GX Works 3
-                for FX5U). Check whether your site has the correct licences installed and
-                maintained. Using unlicensed software can result in limited functionality or legal
-                issues.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Software licensing">
+            <p>
+              PLC software licences can be expensive. Some manufacturers offer free versions for
+              basic PLC models (e.g. Siemens TIA Portal Basic for S7-1200, Mitsubishi GX Works 3 for
+              FX5U). Check whether your site has the correct licences installed and maintained.
+              Using unlicensed software can result in limited functionality or legal issues.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Online Monitoring and Diagnostics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Online monitoring and diagnostics</ContentEyebrow>
+
+          <ConceptBlock title="The single most valuable feature for maintenance">
             <p>
               Online monitoring is the single most valuable feature of PLC software for maintenance
               technicians. It provides real-time observation of programme execution, I/O states,
@@ -527,66 +489,70 @@ const MOETModule5Section2_5 = () => {
               into a transparent diagnostic tool that shows you exactly what is happening inside the
               control system.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Online Features</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Live logic display:</strong> See active contacts, energised coils, and
-                  power flow through ladder rungs in real time
-                </li>
-                <li className="pl-1">
-                  <strong>Watch tables:</strong> Create custom lists of specific variables to
-                  monitor timer values, counter states, analogue readings, and data registers
-                </li>
-                <li className="pl-1">
-                  <strong>Cross-reference:</strong> Find every location in the programme where a
-                  specific address or tag is referenced
-                </li>
-                <li className="pl-1">
-                  <strong>Force table:</strong> View and manage manually forced I/O points —
-                  critical for safety
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostic buffer:</strong> Read the timestamped fault history log to
-                  understand what happened and when
-                </li>
-                <li className="pl-1">
-                  <strong>Programme comparison:</strong> Compare the running programme against a
-                  backup to detect unauthorised changes
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key online features">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Live logic display:</strong> See active contacts, energised coils, and power
+                flow through ladder rungs in real time.
+              </li>
+              <li>
+                <strong>Watch tables:</strong> Create custom lists of specific variables to monitor
+                timer values, counter states, analogue readings, and data registers.
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> Find every location in the programme where a
+                specific address or tag is referenced.
+              </li>
+              <li>
+                <strong>Force table:</strong> View and manage manually forced I/O points — critical
+                for safety.
+              </li>
+              <li>
+                <strong>Diagnostic buffer:</strong> Read the timestamped fault history log to
+                understand what happened and when.
+              </li>
+              <li>
+                <strong>Programme comparison:</strong> Compare the running programme against a
+                backup to detect unauthorised changes.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Warning</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Making programme changes without authorisation"
+            whatHappens={
+              <>
+                Even apparently minor changes can cause unexpected and potentially dangerous machine
+                behaviour if made to a running PLC without proper controls.
+              </>
+            }
+            doInstead={
+              <>
                 Never make programme changes to a running PLC without a documented risk assessment,
-                proper authorisation, and safe working procedures in place. Even apparently minor
-                changes can cause unexpected and potentially dangerous machine behaviour. Online
-                monitoring for diagnostics is safe; online editing requires formal
-                management-of-change procedures.
-              </p>
-            </div>
+                proper authorisation, and safe working procedures in place. Online monitoring for
+                diagnostics is safe; online editing requires formal management-of-change procedures.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Before disconnecting from a PLC session, always
-              check the force table to ensure no forces are active. A forgotten force can bypass
-              safety interlocks and has been the root cause of serious industrial accidents. Make
-              checking for forces part of your standard PLC disconnection procedure.
+          <ConceptBlock title="Maintenance tip: check the force table before disconnecting">
+            <p>
+              Before disconnecting from a PLC session, always check the force table to ensure no
+              forces are active. A forgotten force can bypass safety interlocks and has been the
+              root cause of serious industrial accidents. Make checking for forces part of your
+              standard PLC disconnection procedure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Backup, Restore and Configuration Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Backup, restore and configuration management</ContentEyebrow>
+
+          <ConceptBlock title="A current backup turns a disaster into an inconvenience">
             <p>
               Maintaining current, verified programme backups is one of the most critical
               maintenance responsibilities. Without a backup, a PLC CPU failure, memory corruption,
@@ -594,223 +560,195 @@ const MOETModule5Section2_5 = () => {
               painstakingly recreated — often from scratch if documentation is poor. A current
               backup can reduce recovery time from days to hours or even minutes.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Backup Best Practice</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Timing:</strong> Back up after every programme change, no matter how small
-                </li>
-                <li className="pl-1">
-                  <strong>Storage:</strong> Maintain copies in at least two separate locations
-                  (e.g., company server and local portable media)
-                </li>
-                <li className="pl-1">
-                  <strong>Versioning:</strong> Include date, version number, programmer name, and
-                  description of changes in the file name or project notes
-                </li>
-                <li className="pl-1">
-                  <strong>Completeness:</strong> Back up the entire project — programme, hardware
-                  configuration, HMI screens, drive parameters, network configuration
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Periodically verify that backups can be
-                  successfully restored by doing a test restore (to a spare PLC or simulator, never
-                  to the production unit without cause)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Backup best practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Timing:</strong> Back up after every programme change, no matter how small.
+              </li>
+              <li>
+                <strong>Storage:</strong> Maintain copies in at least two separate locations (e.g.
+                company server and local portable media).
+              </li>
+              <li>
+                <strong>Versioning:</strong> Include date, version number, programmer name, and
+                description of changes in the file name or project notes.
+              </li>
+              <li>
+                <strong>Completeness:</strong> Back up the entire project — programme, hardware
+                configuration, HMI screens, drive parameters, network configuration.
+              </li>
+              <li>
+                <strong>Verification:</strong> Periodically verify that backups can be successfully
+                restored by doing a test restore (to a spare PLC or simulator, never to the
+                production unit without cause).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Hardware Configuration</p>
-              <p className="text-sm text-white mb-3">
-                The hardware configuration defines the physical PLC system within the software:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rack layout:</strong> Which modules are in which slots
-                </li>
-                <li className="pl-1">
-                  <strong>Module parameters:</strong> Input filtering, output behaviour, diagnostic
-                  settings
-                </li>
-                <li className="pl-1">
-                  <strong>I/O addresses:</strong> How physical terminals map to programme addresses
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Network addresses, protocol settings, device
-                  assignments
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                A mismatch between the hardware configuration and the physical modules installed
-                causes fault conditions. When replacing a module, ensure it is the exact same type
-                and revision — or update the hardware configuration accordingly.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Hardware configuration">
+            <p>The hardware configuration defines the physical PLC system within the software:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rack layout:</strong> Which modules are in which slots.
+              </li>
+              <li>
+                <strong>Module parameters:</strong> Input filtering, output behaviour, diagnostic
+                settings.
+              </li>
+              <li>
+                <strong>I/O addresses:</strong> How physical terminals map to programme addresses.
+              </li>
+              <li>
+                <strong>Communication:</strong> Network addresses, protocol settings, device
+                assignments.
+              </li>
+            </ul>
+            <p>
+              A mismatch between the hardware configuration and the physical modules installed
+              causes fault conditions. When replacing a module, ensure it is the exact same type and
+              revision — or update the hardware configuration accordingly.
+            </p>
+            <p>
               <strong>ST1426:</strong> Configuration management and backup/restore procedures are
               core maintenance competencies. Technicians must be able to upload, compare, and
               restore PLC programmes as part of planned and reactive maintenance activities.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Communication and Connectivity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Communication and connectivity</ContentEyebrow>
+
+          <ConceptBlock title="Getting connected is the first step in any online session">
             <p>
               Connecting the programming laptop to the PLC is the first step in any online
               diagnostic session. The communication method depends on the PLC manufacturer, model,
               and the available interfaces. Modern PLCs predominantly use Ethernet, but older
               systems may require serial, USB, or proprietary cables. Understanding the
-              communication options for your site's PLCs ensures you can connect quickly when a
+              communication options for your site&apos;s PLCs ensures you can connect quickly when a
               fault occurs.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Connection Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable/Adaptor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ethernet (TCP/IP)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard RJ45 patch cable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Modern PLCs (S7-1200/1500, CompactLogix)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">USB</td>
-                      <td className="border border-white/10 px-3 py-2">USB-A to USB-Mini/Micro</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small PLCs (Mitsubishi FX5U, some Siemens)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Serial RS-232</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        USB-to-serial adaptor + cable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Older PLCs (Mitsubishi FX, older Omron)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MPI/Profibus</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        USB-MPI/DP adaptor (Siemens)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Siemens S7-300/400 legacy systems
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Connection types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Connection type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Cable/adaptor</th>
+                    <th className="py-2 font-medium text-white">Typical use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ethernet (TCP/IP)</td>
+                    <td className="py-2 pr-4">Standard RJ45 patch cable</td>
+                    <td className="py-2">Modern PLCs (S7-1200/1500, CompactLogix)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">USB</td>
+                    <td className="py-2 pr-4">USB-A to USB-Mini/Micro</td>
+                    <td className="py-2">Small PLCs (Mitsubishi FX5U, some Siemens)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Serial RS-232</td>
+                    <td className="py-2 pr-4">USB-to-serial adaptor + cable</td>
+                    <td className="py-2">Older PLCs (Mitsubishi FX, older Omron)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">MPI/Profibus</td>
+                    <td className="py-2 pr-4">USB-MPI/DP adaptor (Siemens)</td>
+                    <td className="py-2">Siemens S7-300/400 legacy systems</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Connection Troubleshooting
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cannot find PLC:</strong> Check IP address settings — the laptop must be
-                  on the same subnet as the PLC
-                </li>
-                <li className="pl-1">
-                  <strong>Connection drops:</strong> Check cable quality, ensure no firewall is
-                  blocking the PLC communication ports
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong driver:</strong> Ensure the correct communication driver is
-                  installed and selected in the software
-                </li>
-                <li className="pl-1">
-                  <strong>Access protection:</strong> Some PLCs have password protection — you need
-                  the correct credentials
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to be
-              competent in connecting to PLCs using the appropriate software and communication
-              methods, performing online diagnostics, managing programme backups, and documenting
-              their findings. These skills are fundamental to efficient maintenance of modern
-              automated plant and machinery.
+          <ConceptBlock title="Connection troubleshooting">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cannot find PLC:</strong> Check IP address settings — the laptop must be on
+                the same subnet as the PLC.
+              </li>
+              <li>
+                <strong>Connection drops:</strong> Check cable quality, ensure no firewall is
+                blocking the PLC communication ports.
+              </li>
+              <li>
+                <strong>Wrong driver:</strong> Ensure the correct communication driver is installed
+                and selected in the software.
+              </li>
+              <li>
+                <strong>Access protection:</strong> Some PLCs have password protection — you need
+                the correct credentials.
+              </li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to be competent in connecting to
+              PLCs using the appropriate software and communication methods, performing online
+              diagnostics, managing programme backups, and documenting their findings. These skills
+              are fundamental to efficient maintenance of modern automated plant and machinery.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'IEC 61131-3 defines five languages: Ladder Diagram (discrete logic), Function Block Diagram (analogue/PID), Structured Text (calculations), Instruction List (deprecated) and Sequential Function Chart (step sequences).',
+              'Upload reads the programme from the PLC to the laptop (backup/comparison); download writes from laptop to PLC (commissioning/restore) — always verify the direction before executing.',
+              'The force table lists every I/O point manually overridden, bypassing programme logic including safety interlocks — check it every time you connect and before you disconnect.',
+              'Never edit a running PLC programme without a documented risk assessment, authorisation and safe working procedure; online monitoring for diagnosis is safe, online editing is not routine.',
+              'Back up after every change, in at least two locations, with date/version/author/change notes, covering the whole project — programme, hardware config, HMI, drive parameters, network settings.',
+              'A comparison mismatch between the running programme and the backup means someone changed the programme since the last backup — investigate, document, and update the backup.',
+              'The hardware configuration (rack layout, module parameters, I/O addresses, comms settings) must match the physical modules exactly, or the PLC raises a fault condition.',
+              'Each manufacturer needs its own software (TIA Portal, Studio 5000, GX Works, Sysmac Studio, EcoStruxure Control Expert) except CODESYS, a multi-vendor platform used by several smaller brands.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Timers, Counters and Sequencing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-6">
-              Next: Troubleshooting PLC Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Timers, Counters and Sequencing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Troubleshooting PLC Systems
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

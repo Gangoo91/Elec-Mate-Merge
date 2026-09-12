@@ -234,12 +234,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 13,
     question:
       'Which regulation within EAWR 1989 specifically addresses working on or near live conductors?',
-    options: [
-      'Regulation 4',
-      'Regulation 14',
-      'Regulation 12',
-      'Regulation 16',
-    ],
+    options: ['Regulation 4', 'Regulation 14', 'Regulation 12', 'Regulation 16'],
     correctAnswer: 1,
     explanation:
       'Regulation 14 of EAWR 1989 states that no person shall be engaged in work on or near a live conductor unless: (a) it is unreasonable in all circumstances for it to be dead, (b) it is reasonable in all the circumstances for the person to be at work on or near it while live, and (c) suitable precautions are taken to prevent injury.',
@@ -324,12 +319,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 18,
     question:
       'What does BS 7671 require regarding the maximum disconnection time for a 230 V final circuit not exceeding 32 A?',
-    options: [
-      '5 seconds',
-      '0.2 seconds',
-      '0.4 seconds',
-      '1 second',
-    ],
+    options: ['5 seconds', '0.2 seconds', '0.4 seconds', '1 second'],
     correctAnswer: 2,
     explanation:
       'BS 7671 Table 41.1 requires a maximum disconnection time of 0.4 seconds for final circuits not exceeding 63 A in a TN system at 230 V. This ensures rapid disconnection of the supply in the event of a fault to limit the duration of electric shock to a safe level.',
@@ -384,12 +374,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 21,
     question:
       'A 415 V three-phase motor draws a line current of 25 A at a power factor of 0.85. What is the total power consumed?',
-    options: [
-      '10.375 kW',
-      '15.27 kW',
-      '17.97 kW',
-      '25.5 kW',
-    ],
+    options: ['10.375 kW', '15.27 kW', '17.97 kW', '25.5 kW'],
     correctAnswer: 1,
     explanation:
       'Three-phase power is calculated using P = root(3) x V_L x I_L x pf. So P = 1.732 x 415 x 25 x 0.85 = 15,270 W or approximately 15.27 kW. This formula applies to balanced three-phase loads and is essential knowledge for maintenance technicians sizing cables and protective devices.',
@@ -420,12 +405,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 23,
     question:
       'A circuit has three resistors in parallel: 10 ohm, 20 ohm, and 30 ohm. What is the total resistance of the parallel combination?',
-    options: [
-      '20 ohm',
-      '60 ohm',
-      '6.67 ohm',
-      '5.45 ohm',
-    ],
+    options: ['20 ohm', '60 ohm', '6.67 ohm', '5.45 ohm'],
     correctAnswer: 3,
     explanation:
       'For resistors in parallel: 1/R_total = 1/R1 + 1/R2 + 1/R3 = 1/10 + 1/20 + 1/30 = 6/60 + 3/60 + 2/60 = 11/60. Therefore R_total = 60/11 = 5.45 ohm. The total resistance of a parallel combination is always less than the smallest individual resistance.',
@@ -456,12 +436,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 25,
     question:
       'A 230 V single-phase heater has a resistance of 26.5 ohm. What current does it draw?',
-    options: [
-      '6.10 A',
-      '8.68 A',
-      '10.00 A',
-      '12.20 A',
-    ],
+    options: ['6.10 A', '8.68 A', '10.00 A', '12.20 A'],
     correctAnswer: 1,
     explanation:
       "Using Ohm's Law: I = V / R = 230 / 26.5 = 8.68 A. Ohm's Law (V = IR) is the most fundamental relationship in electrical engineering and is used constantly in maintenance work for calculating expected currents, checking measured values, and sizing components.",
@@ -512,12 +487,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 28,
     question:
       'A single-phase transformer has a primary winding of 1000 turns and a secondary winding of 50 turns. If the primary voltage is 11 kV, what is the secondary voltage?',
-    options: [
-      '550 V',
-      '230 V',
-      '415 V',
-      '110 V',
-    ],
+    options: ['550 V', '230 V', '415 V', '110 V'],
     correctAnswer: 0,
     explanation:
       'Using the transformer turns ratio: V2/V1 = N2/N1. Therefore V2 = V1 x (N2/N1) = 11000 x (50/1000) = 550 V. Transformer ratios are fundamental to understanding power distribution in industrial settings, from the incoming HV supply through to utilisation voltage.',
@@ -583,12 +553,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 32,
     question:
       'What is the impedance of a series RL circuit with resistance of 30 ohm and inductive reactance of 40 ohm?',
-    options: [
-      '50 ohm',
-      '70 ohm',
-      '10 ohm',
-      '35 ohm',
-    ],
+    options: ['50 ohm', '70 ohm', '10 ohm', '35 ohm'],
     correctAnswer: 0,
     explanation:
       'Impedance in a series RL circuit is calculated using Z = root(R² + X_L²) = root(30² + 40²) = root(900 + 1600) = root(2500) = 50 ohm. This is a Pythagorean relationship because resistance and reactance are 90 degrees apart in the impedance triangle.',
@@ -600,12 +565,7 @@ export const questionsPart1: StandardMockQuestion[] = [
   {
     id: 33,
     question: 'What is the frequency of the UK mains electrical supply?',
-    options: [
-      '60 Hz',
-      '50 Hz',
-      '55 Hz',
-      '45 Hz',
-    ],
+    options: ['60 Hz', '50 Hz', '55 Hz', '45 Hz'],
     correctAnswer: 1,
     explanation:
       'The UK mains frequency is 50 Hz (50 cycles per second), as specified in the Electricity Safety, Quality and Continuity Regulations 2002 (ESQCR). The frequency is maintained within tight limits by the National Grid. Motor speeds, transformer design, and protective relay settings are all dependent on the supply frequency.',
@@ -620,12 +580,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 34,
     question:
       'What is the synchronous speed of a 4-pole induction motor connected to a 50 Hz supply?',
-    options: [
-      '3000 rpm',
-      '750 rpm',
-      '1500 rpm',
-      '1000 rpm',
-    ],
+    options: ['3000 rpm', '750 rpm', '1500 rpm', '1000 rpm'],
     correctAnswer: 2,
     explanation:
       'Synchronous speed n_s = (120 x f) / p, where f is frequency and p is the number of poles. n_s = (120 x 50) / 4 = 1500 rpm. The actual rotor speed of an induction motor will be slightly less than synchronous speed due to slip, which is necessary for torque production. A typical 4-pole motor might run at 1450-1480 rpm.',
@@ -691,7 +646,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the purpose of a residual current device (RCD) in an electrical installation?',
     options: [
-      'To disconnect the supply when the load current exceeds the cable\'s rating, as a fuse or thermal overload device does',
+      "To disconnect the supply when the load current exceeds the cable's rating, as a fuse or thermal overload device does",
       'To detect a short circuit between the line and neutral conductors, and to interrupt the resulting fault current',
       'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
       'To limit the prospective fault current at the origin of the installation, holding it to a safe value',
@@ -726,12 +681,7 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 40,
     question:
       'A three-phase delta-connected motor has a line voltage of 400 V. What is the voltage across each motor winding?',
-    options: [
-      '400 V',
-      '230 V',
-      '692 V',
-      '133 V',
-    ],
+    options: ['400 V', '230 V', '692 V', '133 V'],
     correctAnswer: 0,
     explanation:
       'In a delta connection, each winding is connected directly between two line conductors, so the voltage across each winding equals the line voltage. Therefore V_phase = V_line = 400 V. In contrast, in a star connection, V_phase = V_line / root(3) = 230 V. Understanding this is critical when checking motor winding connections during maintenance.',

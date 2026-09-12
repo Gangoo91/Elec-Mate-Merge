@@ -1,14 +1,61 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.6 · Subsection 5 — Electric Vehicle Charging
+ * Infrastructure
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Different types of cables; their specifications and
+ *     application."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * This is the last page of Module 3 — the "next" link moves on to Module 4.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import {
+  EvDedicatedCircuitSld,
+  ThreePhaseEvSld,
+} from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electric Vehicle Charging Infrastructure - MOET Module 3.6.5';
 const DESCRIPTION =
   'Comprehensive guide to EV charging infrastructure for electrical maintenance technicians: charging modes and types, BS 7671 Section 722, cable sizing, earthing requirements, smart charging, load management, DNO notification, vehicle-to-grid technology and maintenance under ST1426.';
 
+/* ------------------------------------------------------------------ */
+/*  Quick-check questions (4) — shown after each content section       */
+/* ------------------------------------------------------------------ */
 const quickCheckQuestions = [
   {
     id: 'ev-charging-modes',
@@ -65,6 +112,9 @@ const quickCheckQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Quiz questions (12) — end-of-page assessment                       */
+/* ------------------------------------------------------------------ */
 const quizQuestions = [
   {
     id: 1,
@@ -214,10 +264,10 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Building Regulations 2022 (Part S), new buildings in England must:',
     options: [
-      "Provide charge points or cable routes: one per new dwelling with parking, and one per five non-residential spaces",
-      "Install at least one DC rapid charger in every new dwelling regardless of whether it has associated parking",
-      "Fit solar panels sized to fully power any EV charge points that are provided within the new building",
-      "Provide a three-phase supply to every single new home so that 22 kW charging is always made available",
+      'Provide charge points or cable routes: one per new dwelling with parking, and one per five non-residential spaces',
+      'Install at least one DC rapid charger in every new dwelling regardless of whether it has associated parking',
+      'Fit solar panels sized to fully power any EV charge points that are provided within the new building',
+      'Provide a three-phase supply to every single new home so that 22 kW charging is always made available',
     ],
     correctAnswer: 0,
     explanation:
@@ -225,6 +275,9 @@ const quizQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  FAQs (5)                                                           */
+/* ------------------------------------------------------------------ */
 const faqs = [
   {
     question: 'Do I need specific qualifications to install EV chargers?',
@@ -254,109 +307,85 @@ const faqs = [
 ];
 
 const MOETModule3Section6_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.6.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electric Vehicle Charging Infrastructure
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.6 · Subsection 5"
+        title="Electric Vehicle Charging Infrastructure"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             EV charging systems, installation requirements and maintenance for electrical
-            technicians
+            technicians.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Modes:</strong> Mode 2 (ICCD), Mode 3 (dedicated EVSE), Mode 4 (DC rapid)
-              </li>
-              <li className="pl-1">
-                <strong>Connectors:</strong> Type 2 (AC standard), CCS (DC rapid), CHAdeMO (legacy)
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671 Section 722, IEC 61851, Building Regs Part S
-              </li>
-              <li className="pl-1">
-                <strong>Smart:</strong> Mandatory smart functionality for new domestic/workplace
-                chargers
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Growth:</strong> EV charger installations exceeding 500,000 in UK
-              </li>
-              <li className="pl-1">
-                <strong>PME earthing:</strong> Earth electrode often required for outdoor charging
-              </li>
-              <li className="pl-1">
-                <strong>Load management:</strong> Dynamic power sharing for multi-charger sites
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Emerging technologies knowledge required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Modes: Mode 2 (ICCD), Mode 3 (dedicated EVSE), Mode 4 (DC rapid).',
+              'Connectors: Type 2 (AC standard), CCS (DC rapid), CHAdeMO (legacy).',
+              'Standards: BS 7671 Section 722, IEC 61851, Building Regs Part S.',
+              'Smart: Mandatory smart functionality for new domestic/workplace chargers.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Growth: EV charger installations exceeding 500,000 in UK.</li>
+              <li>PME earthing: Earth electrode often required for outdoor charging.</li>
+              <li>Load management: Dynamic power sharing for multi-charger sites.</li>
+              <li>ST1426: Emerging technologies knowledge required.</li>
+            </ul>
+          </ConceptBlock>
+
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Switchgear and earthing arrangements',
+
+                gist: 'HV and LV switchgear types, and how TN-C-S, TN-S and TT arrangements differ at the service position.',
+
+                where: '3.1.1',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Describe the four IEC 61851 charging modes and connector types for EV charging',
               'Apply BS 7671 Section 722 requirements including RCD selection and PME earthing',
               'Explain smart charging requirements under the 2021 Smart Charge Points Regulations',
               'Design load management solutions for multi-charger installations',
               'Carry out EV charger inspection, testing and maintenance procedures',
               'Understand Vehicle-to-Grid technology and its implications for electrical installations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Charging modes, connectors and power levels</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Charging Modes, Connectors and Power Levels
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="From trickle charging to ultra-rapid">
             <p>
               Electric vehicle charging encompasses a range of technologies from slow overnight
               domestic charging to ultra-rapid motorway charging. Understanding the different
@@ -375,139 +404,129 @@ const MOETModule3Section6_5 = () => {
               roughly 10% of current total generation.
             </p>
             <p>
-              From the technician's perspective, the critical distinction is between AC charging
-              (Modes 2 and 3) and DC charging (Mode 4). In AC charging, the vehicle's onboard
-              charger performs the AC-to-DC conversion, which limits the charge rate to the onboard
-              charger's capacity (typically 3.6-11 kW for domestic vehicles, up to 22 kW for some
-              premium models). In DC charging, an external charger performs the conversion and
-              delivers DC directly to the battery, enabling charge rates of 50-350 kW. The
-              electrical installation requirements differ substantially between these two approaches
-              — DC rapid chargers require three-phase supplies, larger cable cross-sections, and
-              more sophisticated protection arrangements.
+              From the technician&apos;s perspective, the critical distinction is between AC
+              charging (Modes 2 and 3) and DC charging (Mode 4). In AC charging, the vehicle&apos;s
+              onboard charger performs the AC-to-DC conversion, which limits the charge rate to the
+              onboard charger&apos;s capacity (typically 3.6-11 kW for domestic vehicles, up to 22
+              kW for some premium models). In DC charging, an external charger performs the
+              conversion and delivers DC directly to the battery, enabling charge rates of 50-350
+              kW. The electrical installation requirements differ substantially between these two
+              approaches — DC rapid chargers require three-phase supplies, larger cable
+              cross-sections, and more sophisticated protection arrangements.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Charging Modes and Power Levels
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Supply</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 2</td>
-                      <td className="border border-white/10 px-3 py-2">Domestic socket + ICCD</td>
-                      <td className="border border-white/10 px-3 py-2">2.3 kW (10 A) max</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency/occasional only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 3 (single-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Dedicated EVSE, Type 2</td>
-                      <td className="border border-white/10 px-3 py-2">3.6-7.4 kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Home, workplace (standard)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 3 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Dedicated EVSE, Type 2</td>
-                      <td className="border border-white/10 px-3 py-2">11-22 kW</td>
-                      <td className="border border-white/10 px-3 py-2">Workplace, destination</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mode 4 (DC rapid)</td>
-                      <td className="border border-white/10 px-3 py-2">External DC charger, CCS</td>
-                      <td className="border border-white/10 px-3 py-2">50-350 kW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motorway, en-route, fleet
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Charging modes and power levels">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Mode</th>
+                    <th className="py-2 pr-4 font-medium text-white">Supply</th>
+                    <th className="py-2 pr-4 font-medium text-white">Power</th>
+                    <th className="py-2 font-medium text-white">Typical use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Mode 2</td>
+                    <td className="py-2 pr-4">Domestic socket + ICCD</td>
+                    <td className="py-2 pr-4">2.3 kW (10 A) max</td>
+                    <td className="py-2">Emergency/occasional only</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Mode 3 (single-phase)</td>
+                    <td className="py-2 pr-4">Dedicated EVSE, Type 2</td>
+                    <td className="py-2 pr-4">3.6-7.4 kW</td>
+                    <td className="py-2">Home, workplace (standard)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Mode 3 (three-phase)</td>
+                    <td className="py-2 pr-4">Dedicated EVSE, Type 2</td>
+                    <td className="py-2 pr-4">11-22 kW</td>
+                    <td className="py-2">Workplace, destination</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Mode 4 (DC rapid)</td>
+                    <td className="py-2 pr-4">External DC charger, CCS</td>
+                    <td className="py-2 pr-4">50-350 kW</td>
+                    <td className="py-2">Motorway, en-route, fleet</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connector Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Type 2 (Mennekes):</strong> 7-pin AC connector — the UK/European standard
-                  for Mode 3 charging. Supports single and three-phase. The control pilot (CP) and
-                  proximity pilot (PP) pins enable communication between the EVSE and vehicle.
-                </li>
-                <li className="pl-1">
-                  <strong>CCS (Combined Charging System):</strong> Type 2 AC pins plus two DC pins —
-                  the dominant DC rapid charging standard. Up to 350 kW. Also known as Combo 2 in
-                  Europe.
-                </li>
-                <li className="pl-1">
-                  <strong>CHAdeMO:</strong> Japanese DC rapid charging standard (up to 100 kW).
-                  Being phased out in favour of CCS. Used on older Nissan Leaf and Mitsubishi
-                  Outlander PHEV.
-                </li>
-                <li className="pl-1">
-                  <strong>Type 1 (J1772):</strong> 5-pin AC connector used on some older/imported
-                  vehicles. Declining in the UK market.
-                </li>
-              </ul>
+          </ConceptBlock>
+
+          <ThreePhaseEvSld caption="A three-phase 22 kW point draws around 32 A per phase — a 4-pole Type A RCBO (plus RDC-PD for smooth DC detection) switches all three lines and neutral, and an integrated OPDD handles the open-PEN requirement on a PME supply." />
+
+          <ConceptBlock title="Connector types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Type 2 (Mennekes):</strong> 7-pin AC connector — the UK/European standard
+                for Mode 3 charging. Supports single and three-phase. The control pilot (CP) and
+                proximity pilot (PP) pins enable communication between the EVSE and vehicle.
+              </li>
+              <li>
+                <strong>CCS (Combined Charging System):</strong> Type 2 AC pins plus two DC pins —
+                the dominant DC rapid charging standard. Up to 350 kW. Also known as Combo 2 in
+                Europe.
+              </li>
+              <li>
+                <strong>CHAdeMO:</strong> Japanese DC rapid charging standard (up to 100 kW). Being
+                phased out in favour of CCS. Used on older Nissan Leaf and Mitsubishi Outlander
+                PHEV.
+              </li>
+              <li>
+                <strong>Type 1 (J1772):</strong> 5-pin AC connector used on some older/imported
+                vehicles. Declining in the UK market.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Control pilot signal — the communication backbone">
+            <p>
+              The control pilot (CP) is a 1 kHz pulse-width modulated (PWM) signal defined in IEC
+              61851-1 that forms the fundamental communication link between the EVSE and the
+              vehicle. The EVSE generates a ±12 V square wave, and the PWM duty cycle encodes the
+              maximum available current.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Pilot voltage</th>
+                    <th className="py-2 pr-4 font-medium text-white">State</th>
+                    <th className="py-2 font-medium text-white">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">+12 V (DC)</td>
+                    <td className="py-2 pr-4">A</td>
+                    <td className="py-2">No vehicle connected</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">+9 V (PWM)</td>
+                    <td className="py-2 pr-4">B</td>
+                    <td className="py-2">Vehicle connected, not ready</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">+6 V (PWM)</td>
+                    <td className="py-2 pr-4">C</td>
+                    <td className="py-2">Vehicle connected, charging</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">+3 V (PWM)</td>
+                    <td className="py-2 pr-4">D</td>
+                    <td className="py-2">Ventilation required</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control Pilot Signal — The Communication Backbone
-              </p>
-              <p className="text-sm text-white mb-2">
-                The control pilot (CP) is a 1 kHz pulse-width modulated (PWM) signal defined in IEC
-                61851-1 that forms the fundamental communication link between the EVSE and the
-                vehicle. The EVSE generates a ±12 V square wave, and the PWM duty cycle encodes the
-                maximum available current.
-              </p>
-              <div className="overflow-x-auto mt-2">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Pilot Voltage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">State</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+12 V (DC)</td>
-                      <td className="border border-white/10 px-3 py-2">A</td>
-                      <td className="border border-white/10 px-3 py-2">No vehicle connected</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+9 V (PWM)</td>
-                      <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vehicle connected, not ready
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+6 V (PWM)</td>
-                      <td className="border border-white/10 px-3 py-2">C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vehicle connected, charging
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">+3 V (PWM)</td>
-                      <td className="border border-white/10 px-3 py-2">D</td>
-                      <td className="border border-white/10 px-3 py-2">Ventilation required</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety: Continuous Loading</p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Safety: continuous loading">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
               <p className="text-sm text-white">
                 EV charging is a continuous load — the charger draws its rated current for extended
                 periods (often 4-8 hours overnight). Unlike most domestic loads that cycle on and
@@ -524,18 +543,15 @@ const MOETModule3Section6_5 = () => {
               and local network loading — especially when multiple chargers are installed on the
               same street or estate.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            BS 7671 Section 722 and Installation Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 Section 722 and installation requirements</ContentEyebrow>
+
+          <ConceptBlock title="Requirements that supplement the general wiring regulations">
             <p>
               BS 7671 Section 722 contains specific requirements for EV charging installations that
               supplement the general wiring regulations. These requirements address the unique
@@ -549,123 +565,110 @@ const MOETModule3Section6_5 = () => {
               requirements, particularly around RCD selection and PME earthing. One of the most
               significant changes was the explicit requirement for Type B or Type B+ RCD protection
               where the EVSE does not incorporate its own DC fault detection. This is because the
-              power electronics in the vehicle's onboard charger can generate DC fault currents that
-              a standard Type A RCD cannot detect — potentially leaving an earth fault unprotected.
-              The IET Code of Practice for Electric Vehicle Charging Equipment Installation (now in
-              its 4th Edition) provides essential supplementary guidance for implementing Section
-              722.
+              power electronics in the vehicle&apos;s onboard charger can generate DC fault currents
+              that a standard Type A RCD cannot detect — potentially leaving an earth fault
+              unprotected. The IET Code of Practice for Electric Vehicle Charging Equipment
+              Installation (now in its 4th Edition) provides essential supplementary guidance for
+              implementing Section 722.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Section 722 Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>722.311:</strong> The supply cable shall be rated for the maximum demand
-                  of the EVSE with no diversity applied (continuous load)
-                </li>
-                <li className="pl-1">
-                  <strong>722.411.4.1:</strong> RCD protection: minimum 30 mA Type A RCD. Where the
-                  EVSE does not incorporate DC fault detection, a Type B or Type B+ (Type A with 6
-                  mA DC detection) RCD is required
-                </li>
-                <li className="pl-1">
-                  <strong>722.411.4:</strong> PME earthing restrictions for outdoor charging — earth
-                  electrode (TT) or EVSE with integral open-PEN protection
-                </li>
-                <li className="pl-1">
-                  <strong>722.531.3:</strong> Each charge point shall be supplied by a dedicated
-                  circuit
-                </li>
-                <li className="pl-1">
-                  <strong>722.55:</strong> EVSE shall comply with BS EN 61851-1 and the connector
-                  with BS EN 62196
-                </li>
-                <li className="pl-1">
-                  <strong>722.514:</strong> Appropriate labelling at the distribution board and at
-                  the EVSE
-                </li>
-              </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Key Section 722 requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>722.311:</strong> The supply cable shall be rated for the maximum demand of
+                the EVSE with no diversity applied (continuous load).
+              </li>
+              <li>
+                <strong>722.411.4.1:</strong> RCD protection: minimum 30 mA Type A RCD. Where the
+                EVSE does not incorporate DC fault detection, a Type B or Type B+ (Type A with 6 mA
+                DC detection) RCD is required.
+              </li>
+              <li>
+                <strong>722.411.4:</strong> PME earthing restrictions for outdoor charging — earth
+                electrode (TT) or EVSE with integral open-PEN protection.
+              </li>
+              <li>
+                <strong>722.531.3:</strong> Each charge point shall be supplied by a dedicated
+                circuit.
+              </li>
+              <li>
+                <strong>722.55:</strong> EVSE shall comply with BS EN 61851-1 and the connector with
+                BS EN 62196.
+              </li>
+              <li>
+                <strong>722.514:</strong> Appropriate labelling at the distribution board and at the
+                EVSE.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <EvDedicatedCircuitSld caption="A single-phase domestic point: a dedicated Type A RCBO plus RDC-DD feeds a 6 mm² T+E/SWA cable to the EV charge point (Section 722) — sized for the full 7.4 kW continuous demand with no diversity." />
+
+          <ConceptBlock title="RCD selection guide for EV charging">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">EVSE type</th>
+                    <th className="py-2 pr-4 font-medium text-white">DC fault detection</th>
+                    <th className="py-2 pr-4 font-medium text-white">Required RCD</th>
+                    <th className="py-2 font-medium text-white">Typical cost</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">EVSE with integral DC detection</td>
+                    <td className="py-2 pr-4">Built in (6 mA DC)</td>
+                    <td className="py-2 pr-4">Type A 30 mA</td>
+                    <td className="py-2">GBP 20-40</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">EVSE without DC detection</td>
+                    <td className="py-2 pr-4">None</td>
+                    <td className="py-2 pr-4">Type B or Type B+</td>
+                    <td className="py-2">GBP 150-300</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Three-phase EVSE</td>
+                    <td className="py-2 pr-4">Varies by model</td>
+                    <td className="py-2 pr-4">Type B (if no integral DC detection)</td>
+                    <td className="py-2">GBP 200-350</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                RCD Selection Guide for EV Charging
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">EVSE Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        DC Fault Detection
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Required RCD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Cost</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        EVSE with integral DC detection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Built in (6 mA DC)</td>
-                      <td className="border border-white/10 px-3 py-2">Type A 30 mA</td>
-                      <td className="border border-white/10 px-3 py-2">GBP 20-40</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        EVSE without DC detection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                      <td className="border border-white/10 px-3 py-2">Type B or Type B+</td>
-                      <td className="border border-white/10 px-3 py-2">GBP 150-300</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase EVSE</td>
-                      <td className="border border-white/10 px-3 py-2">Varies by model</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type B (if no integral DC detection)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">GBP 200-350</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                PME Earthing Solution
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The PME earthing issue is one of the most important installation considerations for
-                EV charging. In a TN-C-S (PME) system, an open-PEN fault can cause exposed metalwork
-                to rise to dangerous voltage. For outdoor EV charging, where a person touching the
-                vehicle has good contact with true earth, this presents an increased risk of fatal
-                electric shock.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Option 1:</strong> Install an earth electrode (earth rod) for the EV
-                  circuit, creating TT earthing with RCD protection. The main installation remains
-                  on PME. The earth rod must achieve adequate resistance (typically below 200 ohms
-                  for 30 mA RCD).
-                </li>
-                <li className="pl-1">
-                  <strong>Option 2:</strong> Use an EVSE with manufacturer-confirmed integral
-                  open-PEN protection (PEN fault detection that disconnects the supply within safe
-                  limits).
-                </li>
-                <li className="pl-1">
-                  <strong>Option 3:</strong> Where the EVSE is indoors (e.g., in an integral
-                  garage), the PME earth may be acceptable subject to risk assessment, as the
-                  reduced contact with true earth lowers the shock risk.
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-300 mb-2">
-                Inspection Note: Common Installation Defects
-              </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="PME earthing solution">
+            <p>
+              The PME earthing issue is one of the most important installation considerations for EV
+              charging. In a TN-C-S (PME) system, an open-PEN fault can cause exposed metalwork to
+              rise to dangerous voltage. For outdoor EV charging, where a person touching the
+              vehicle has good contact with true earth, this presents an increased risk of fatal
+              electric shock.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Option 1:</strong> Install an earth electrode (earth rod) for the EV
+                circuit, creating TT earthing with RCD protection. The main installation remains on
+                PME. The earth rod must achieve adequate resistance (typically below 200 ohms for 30
+                mA RCD).
+              </li>
+              <li>
+                <strong>Option 2:</strong> Use an EVSE with manufacturer-confirmed integral open-PEN
+                protection (PEN fault detection that disconnects the supply within safe limits).
+              </li>
+              <li>
+                <strong>Option 3:</strong> Where the EVSE is indoors (e.g., in an integral garage),
+                the PME earth may be acceptable subject to risk assessment, as the reduced contact
+                with true earth lowers the shock risk.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Inspection note: common installation defects">
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
               <p className="text-sm text-white">
                 During periodic inspection of EV charging circuits, the maintenance technician
                 should be alert to common defects: incorrect RCD type (Type AC instead of Type A
@@ -682,18 +685,15 @@ const MOETModule3Section6_5 = () => {
               Section 722 requirements. It is essential reading for anyone installing or maintaining
               EV charging equipment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Smart Charging and Load Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Smart charging and load management</ContentEyebrow>
+
+          <ConceptBlock title="Smart charging is not optional">
             <p>
               Smart charging is not optional — the Electric Vehicles (Smart Charge Points)
               Regulations 2021 mandate that all new domestic and workplace charge points must have
@@ -713,89 +713,77 @@ const MOETModule3Section6_5 = () => {
               must connect to cloud platforms via WiFi, Ethernet, or 4G/5G, and firmware updates
               must be managed.
             </p>
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Smart Charge Point Requirements (2021 Regulations)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Must be capable of sending and receiving data (WiFi, cellular, or Ethernet)
-                  </li>
-                  <li className="pl-1">
-                    Must support scheduled/delayed charging (shift to off-peak)
-                  </li>
-                  <li className="pl-1">
-                    Must have a randomised delay of up to 10 minutes at installation (preventing
-                    synchronised start)
-                  </li>
-                  <li className="pl-1">Must respond to demand-side response signals</li>
-                  <li className="pl-1">Must support remote firmware updates</li>
-                  <li className="pl-1">Must meet cybersecurity requirements (ETSI EN 303 645)</li>
-                  <li className="pl-1">Must default to off-peak charging schedule</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Load Management Solutions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Static load management:</strong> Fixed maximum power allocation per
-                    charger (simple but inefficient)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dynamic load management:</strong> CT clamp on mains monitors total site
-                    demand; charger output adjusts in real-time
-                  </li>
-                  <li className="pl-1">
-                    <strong>Sequential charging:</strong> Chargers take turns at full power
-                    (suitable for overnight fleet charging)
-                  </li>
-                  <li className="pl-1">
-                    <strong>First-come priority:</strong> First vehicle connected gets full power;
-                    subsequent vehicles share remaining capacity
-                  </li>
-                  <li className="pl-1">
-                    <strong>Equal sharing:</strong> Available capacity divided equally among all
-                    connected vehicles
-                  </li>
-                  <li className="pl-1">
-                    <strong>Priority-based:</strong> Certain chargers (e.g., emergency vehicles,
-                    disabled bays) get priority allocation
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Worked Example: Workplace Load Management
-              </h3>
-              <p className="text-sm text-white mb-2">
-                A workplace has a 100 A three-phase supply (69 kW at 400 V) with an existing maximum
-                demand of 45 kW. The available headroom is 24 kW. The client wants to install 10 x 7
-                kW chargers (70 kW total installed capacity).
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Without load management:</strong> Only 3 chargers could operate
-                  simultaneously (21 kW) within the 24 kW headroom — a DNO supply upgrade would be
-                  needed at significant cost
-                </li>
-                <li className="pl-1">
-                  <strong>With dynamic load management:</strong> All 10 chargers are installed, but
-                  the system monitors total site demand via a CT clamp and limits total EV charging
-                  to the available headroom. If 10 vehicles connect, each receives 2.4 kW
-                  (sufficient for 8-hour overnight charge). As building load drops in the evening,
-                  more capacity is released to the chargers
-                </li>
-                <li className="pl-1">
-                  <strong>Result:</strong> All vehicles are charged by morning without exceeding the
-                  supply capacity and without a DNO upgrade — saving GBP 10,000-30,000+ in
-                  infrastructure costs
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Smart charge point requirements (2021 Regulations)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Must be capable of sending and receiving data (WiFi, cellular, or Ethernet).</li>
+              <li>Must support scheduled/delayed charging (shift to off-peak).</li>
+              <li>
+                Must have a randomised delay of up to 10 minutes at installation (preventing
+                synchronised start).
+              </li>
+              <li>Must respond to demand-side response signals.</li>
+              <li>Must support remote firmware updates.</li>
+              <li>Must meet cybersecurity requirements (ETSI EN 303 645).</li>
+              <li>Must default to off-peak charging schedule.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Load management solutions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Static load management:</strong> Fixed maximum power allocation per charger
+                (simple but inefficient).
+              </li>
+              <li>
+                <strong>Dynamic load management:</strong> CT clamp on mains monitors total site
+                demand; charger output adjusts in real-time.
+              </li>
+              <li>
+                <strong>Sequential charging:</strong> Chargers take turns at full power (suitable
+                for overnight fleet charging).
+              </li>
+              <li>
+                <strong>First-come priority:</strong> First vehicle connected gets full power;
+                subsequent vehicles share remaining capacity.
+              </li>
+              <li>
+                <strong>Equal sharing:</strong> Available capacity divided equally among all
+                connected vehicles.
+              </li>
+              <li>
+                <strong>Priority-based:</strong> Certain chargers (e.g., emergency vehicles,
+                disabled bays) get priority allocation.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Worked example: workplace load management">
+            <p>
+              A workplace has a 100 A three-phase supply (69 kW at 400 V) with an existing maximum
+              demand of 45 kW. The available headroom is 24 kW. The client wants to install 10 x 7
+              kW chargers (70 kW total installed capacity).
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Without load management:</strong> Only 3 chargers could operate
+                simultaneously (21 kW) within the 24 kW headroom — a DNO supply upgrade would be
+                needed at significant cost.
+              </li>
+              <li>
+                <strong>With dynamic load management:</strong> All 10 chargers are installed, but
+                the system monitors total site demand via a CT clamp and limits total EV charging to
+                the available headroom. If 10 vehicles connect, each receives 2.4 kW (sufficient for
+                8-hour overnight charge). As building load drops in the evening, more capacity is
+                released to the chargers.
+              </li>
+              <li>
+                <strong>Result:</strong> All vehicles are charged by morning without exceeding the
+                supply capacity and without a DNO upgrade — saving GBP 10,000-30,000+ in
+                infrastructure costs.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Load management is often the difference between needing a
               DNO supply upgrade (GBP 3,000-30,000+) and working within the existing supply
@@ -803,18 +791,15 @@ const MOETModule3Section6_5 = () => {
               controller can support significantly more chargers than the supply could handle with
               dumb chargers.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance, V2G and Future Developments
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Maintenance, V2G and future developments</ContentEyebrow>
+
+          <ConceptBlock title="Wear, corrosion and environmental exposure">
             <p>
               EV charging infrastructure requires regular maintenance to ensure safety, reliability,
               and compliance. As chargers operate in exposed outdoor environments with high
@@ -833,147 +818,122 @@ const MOETModule3Section6_5 = () => {
               common maintenance issues that have no equivalent in conventional fixed electrical
               installations.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  EVSE Maintenance Checklist
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Cable condition: UV degradation, cuts, kinks, rodent damage
-                  </li>
-                  <li className="pl-1">
-                    Connector pins: corrosion, carbon deposits, mechanical wear
-                  </li>
-                  <li className="pl-1">Enclosure: water ingress, impact damage, ventilation</li>
-                  <li className="pl-1">RCD trip test: 30 mA, verify trip time within limits</li>
-                  <li className="pl-1">Earth continuity: main earth and earth electrode (TT)</li>
-                  <li className="pl-1">Insulation resistance: 500 V DC test</li>
-                  <li className="pl-1">Smart features: communication, firmware, scheduling</li>
-                  <li className="pl-1">Labels: condition, legibility, compliance</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Future EV Charging Technologies
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>V2G:</strong> Bidirectional charging enabling EV batteries to provide
-                    grid services
-                  </li>
-                  <li className="pl-1">
-                    <strong>V2H:</strong> Vehicle-to-home — EV powers household during outages
-                  </li>
-                  <li className="pl-1">
-                    <strong>Wireless charging:</strong> Inductive charging pads in parking spaces
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ultra-rapid:</strong> 350 kW+ DC charging (10-80% in 15-20 minutes)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Battery swapping:</strong> Automated battery exchange stations
-                  </li>
-                  <li className="pl-1">
-                    <strong>Solar canopy:</strong> PV-integrated car park charging structures
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Vehicle-to-Grid (V2G) Implications
-              </h3>
-              <p className="text-sm text-white mb-2">
-                V2G transforms the EV from a passive load into an active distributed energy
-                resource. The implications for electrical installations are significant:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Bidirectional charger required (not standard — additional cost and complexity)
-                </li>
-                <li className="pl-1">G98/G99 compliance required for grid export capability</li>
-                <li className="pl-1">
-                  Anti-islanding protection mandatory (same as PV and battery storage)
-                </li>
-                <li className="pl-1">Export metering required for revenue settlement</li>
-                <li className="pl-1">DNO notification of generation capability</li>
-                <li className="pl-1">
-                  Battery degradation management (limiting V2G cycles to protect battery health)
-                </li>
-                <li className="pl-1">
-                  Cybersecurity for bidirectional energy flow and grid services commands
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Maintenance Frequency Guide
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">EVSE Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Visual Inspection
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Test
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Firmware Check</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic</td>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">Automatic (OTA)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Workplace</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Public (AC)</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Public (DC Rapid)</td>
-                      <td className="border border-white/10 px-3 py-2">Weekly</td>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              knowledge of EV charging technology as part of the emerging technologies module. With
-              EV charger installations growing exponentially and Building Regulations Part S
-              requiring EV provision in new buildings, EV charging maintenance will become a core
-              competency for electrical maintenance technicians. Technicians who develop expertise
-              in EV charging installation and maintenance will be well-positioned in a rapidly
-              growing market.
+          </ConceptBlock>
+
+          <ConceptBlock title="EVSE maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Cable condition: UV degradation, cuts, kinks, rodent damage.</li>
+              <li>Connector pins: corrosion, carbon deposits, mechanical wear.</li>
+              <li>Enclosure: water ingress, impact damage, ventilation.</li>
+              <li>RCD trip test: 30 mA, verify trip time within limits.</li>
+              <li>Earth continuity: main earth and earth electrode (TT).</li>
+              <li>Insulation resistance: 500 V DC test.</li>
+              <li>Smart features: communication, firmware, scheduling.</li>
+              <li>Labels: condition, legibility, compliance.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Future EV charging technologies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V2G:</strong> Bidirectional charging enabling EV batteries to provide grid
+                services.
+              </li>
+              <li>
+                <strong>V2H:</strong> Vehicle-to-home — EV powers household during outages.
+              </li>
+              <li>
+                <strong>Wireless charging:</strong> Inductive charging pads in parking spaces.
+              </li>
+              <li>
+                <strong>Ultra-rapid:</strong> 350 kW+ DC charging (10-80% in 15-20 minutes).
+              </li>
+              <li>
+                <strong>Battery swapping:</strong> Automated battery exchange stations.
+              </li>
+              <li>
+                <strong>Solar canopy:</strong> PV-integrated car park charging structures.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Vehicle-to-grid (V2G) implications">
+            <p>
+              V2G transforms the EV from a passive load into an active distributed energy resource.
+              The implications for electrical installations are significant:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Bidirectional charger required (not standard — additional cost and complexity).
+              </li>
+              <li>G98/G99 compliance required for grid export capability.</li>
+              <li>Anti-islanding protection mandatory (same as PV and battery storage).</li>
+              <li>Export metering required for revenue settlement.</li>
+              <li>DNO notification of generation capability.</li>
+              <li>
+                Battery degradation management (limiting V2G cycles to protect battery health).
+              </li>
+              <li>Cybersecurity for bidirectional energy flow and grid services commands.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Maintenance frequency guide">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">EVSE location</th>
+                    <th className="py-2 pr-4 font-medium text-white">Visual inspection</th>
+                    <th className="py-2 pr-4 font-medium text-white">Electrical test</th>
+                    <th className="py-2 font-medium text-white">Firmware check</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Domestic</td>
+                    <td className="py-2 pr-4">Annually</td>
+                    <td className="py-2 pr-4">Annually</td>
+                    <td className="py-2">Automatic (OTA)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Workplace</td>
+                    <td className="py-2 pr-4">Monthly</td>
+                    <td className="py-2 pr-4">Quarterly</td>
+                    <td className="py-2">Quarterly</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Public (AC)</td>
+                    <td className="py-2 pr-4">Monthly</td>
+                    <td className="py-2 pr-4">Quarterly</td>
+                    <td className="py-2">Monthly</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Public (DC Rapid)</td>
+                    <td className="py-2 pr-4">Weekly</td>
+                    <td className="py-2 pr-4">Quarterly</td>
+                    <td className="py-2">Monthly</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Building Regulations Part S and the Growing EV Market
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <p className="text-sm text-white italic">
+            <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate knowledge
+            of EV charging technology as part of the emerging technologies module. With EV charger
+            installations growing exponentially and Building Regulations Part S requiring EV
+            provision in new buildings, EV charging maintenance will become a core competency for
+            electrical maintenance technicians. Technicians who develop expertise in EV charging
+            installation and maintenance will be well-positioned in a rapidly growing market.
+          </p>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Building Regulations Part S and the growing EV market</ContentEyebrow>
+
+          <ConceptBlock title="A landmark requirement for new buildings in England">
             <p>
               The Building Regulations 2022 (Approved Document S) represent a landmark requirement
               for EV charging infrastructure in new buildings across England. Similar provisions
@@ -991,184 +951,146 @@ const MOETModule3Section6_5 = () => {
               routes and dozens of active charge points — each requiring commissioning, periodic
               inspection, and ongoing maintenance.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Part S Requirements Summary
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>New residential:</strong> At least one charge point per dwelling with
-                  associated parking — minimum 7 kW, Mode 3, smart-enabled
-                </li>
-                <li className="pl-1">
-                  <strong>New non-residential:</strong> One charge point per five parking spaces
-                  plus cable routes to every remaining space (buildings with more than 10 spaces)
-                </li>
-                <li className="pl-1">
-                  <strong>Major renovations:</strong> Non-residential buildings with more than 10
-                  spaces undergoing major renovation must provide at least one charge point
-                </li>
-                <li className="pl-1">
-                  <strong>Cable routes:</strong> Where charge points are not installed immediately,
-                  cable routes (ducting, containment) must be provided to enable future installation
-                </li>
-                <li className="pl-1">
-                  <strong>Smart functionality:</strong> All charge points must comply with the
-                  Electric Vehicles (Smart Charge Points) Regulations 2021
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Impact on the Maintenance Technician
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Volume:</strong> Hundreds of thousands of new charge points installed
-                  annually, all requiring periodic inspection and testing under BS 7671
-                </li>
-                <li className="pl-1">
-                  <strong>Diversity:</strong> Multiple manufacturers, models, and firmware versions
-                  across different sites — maintenance technicians need broad product knowledge
-                </li>
-                <li className="pl-1">
-                  <strong>Smart systems:</strong> Charge point management platforms require
-                  IT/networking skills alongside traditional electrical competence
-                </li>
-                <li className="pl-1">
-                  <strong>Load management:</strong> Multi-charger sites with dynamic load management
-                  need commissioning verification and ongoing functional testing
-                </li>
-                <li className="pl-1">
-                  <strong>Career opportunity:</strong> EV charging maintenance is a rapidly growing
-                  specialism — technicians with this expertise are in high demand
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Case Study: New-Build Office Development
-              </h3>
-              <p className="text-sm text-white mb-2">
-                A new office building in Manchester has a 200-space car park. Under Part S
-                requirements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Active charge points:</strong> 40 (one per five spaces), each 7 kW Mode 3
-                  with smart functionality — total installed capacity 280 kW
-                </li>
-                <li className="pl-1">
-                  <strong>Cable routes:</strong> Ducting and containment to all remaining 160 spaces
-                  for future charge point installation
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical infrastructure:</strong> Three-phase supply upgrade, dedicated
-                  EV distribution board, dynamic load management system with CT monitoring on the
-                  main incomer
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance contract:</strong> Monthly visual inspection, quarterly
-                  electrical testing, firmware management via cloud platform, 24/7 fault monitoring
-                  with 4-hour response SLA
-                </li>
-                <li className="pl-1">
-                  <strong>Annual maintenance cost:</strong> Approximately GBP 15,000-25,000 per year
-                  for 40 chargers — a significant recurring revenue stream for electrical
-                  maintenance contractors
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Part S requirements summary">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>New residential:</strong> At least one charge point per dwelling with
+                associated parking — minimum 7 kW, Mode 3, smart-enabled.
+              </li>
+              <li>
+                <strong>New non-residential:</strong> One charge point per five parking spaces plus
+                cable routes to every remaining space (buildings with more than 10 spaces).
+              </li>
+              <li>
+                <strong>Major renovations:</strong> Non-residential buildings with more than 10
+                spaces undergoing major renovation must provide at least one charge point.
+              </li>
+              <li>
+                <strong>Cable routes:</strong> Where charge points are not installed immediately,
+                cable routes (ducting, containment) must be provided to enable future installation.
+              </li>
+              <li>
+                <strong>Smart functionality:</strong> All charge points must comply with the
+                Electric Vehicles (Smart Charge Points) Regulations 2021.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Impact on the maintenance technician">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Volume:</strong> Hundreds of thousands of new charge points installed
+                annually, all requiring periodic inspection and testing under BS 7671.
+              </li>
+              <li>
+                <strong>Diversity:</strong> Multiple manufacturers, models, and firmware versions
+                across different sites — maintenance technicians need broad product knowledge.
+              </li>
+              <li>
+                <strong>Smart systems:</strong> Charge point management platforms require
+                IT/networking skills alongside traditional electrical competence.
+              </li>
+              <li>
+                <strong>Load management:</strong> Multi-charger sites with dynamic load management
+                need commissioning verification and ongoing functional testing.
+              </li>
+              <li>
+                <strong>Career opportunity:</strong> EV charging maintenance is a rapidly growing
+                specialism — technicians with this expertise are in high demand.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Case study: new-build office development">
+            <p>
+              A new office building in Manchester has a 200-space car park. Under Part S
+              requirements:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Active charge points:</strong> 40 (one per five spaces), each 7 kW Mode 3
+                with smart functionality — total installed capacity 280 kW.
+              </li>
+              <li>
+                <strong>Cable routes:</strong> Ducting and containment to all remaining 160 spaces
+                for future charge point installation.
+              </li>
+              <li>
+                <strong>Electrical infrastructure:</strong> Three-phase supply upgrade, dedicated EV
+                distribution board, dynamic load management system with CT monitoring on the main
+                incomer.
+              </li>
+              <li>
+                <strong>Maintenance contract:</strong> Monthly visual inspection, quarterly
+                electrical testing, firmware management via cloud platform, 24/7 fault monitoring
+                with 4-hour response SLA.
+              </li>
+              <li>
+                <strong>Annual maintenance cost:</strong> Approximately GBP 15,000-25,000 per year
+                for 40 chargers — a significant recurring revenue stream for electrical maintenance
+                contractors.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Part S ensures that EV charging is not an afterthought but
               a fundamental building service. The maintenance technician who understands EV charging
               installation standards, smart charging systems, and load management will be equipped
               for one of the fastest-growing areas in electrical maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* ---- FAQs ---- */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Mode 2: domestic socket + ICCD (2.3 kW max). Mode 3: dedicated EVSE + Type 2 (3.6-22 kW).',
+              'Mode 4: DC rapid + CCS/CHAdeMO (50-350 kW). Type 2 (Mennekes): 7-pin AC standard.',
+              'CCS: Type 2 + DC pins (dominant rapid). Control pilot: 1 kHz PWM, duty cycle = max current.',
+              'BS 7671 Section 722: EV charging requirements. IEC 61851: EV charging modes. IEC 62196: connector types.',
+              'Part S (2022, England): EV provision in new builds. Smart Charge Points Regs 2021: mandatory smart.',
+              '722.411.4: PME earthing restrictions. 722.311: no diversity (continuous load).',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* ---- Quick Reference ---- */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Charging Modes and Connectors</p>
-                <ul className="space-y-0.5">
-                  <li>Mode 2: domestic socket + ICCD (2.3 kW max)</li>
-                  <li>Mode 3: dedicated EVSE + Type 2 (3.6-22 kW)</li>
-                  <li>Mode 4: DC rapid + CCS/CHAdeMO (50-350 kW)</li>
-                  <li>Type 2 (Mennekes): 7-pin AC standard</li>
-                  <li>CCS: Type 2 + DC pins (dominant rapid)</li>
-                  <li>Control pilot: 1 kHz PWM, duty = max current</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Standards and Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Section 722: EV charging requirements</li>
-                  <li>IEC 61851: EV charging modes</li>
-                  <li>IEC 62196: connector types</li>
-                  <li>Part S (2022): EV provision in new builds</li>
-                  <li>Smart Charge Points Regs 2021: mandatory smart</li>
-                  <li>722.411.4: PME earthing restrictions</li>
-                  <li>722.311: no diversity (continuous load)</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Smart Grids and Smart Meters
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next module <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Module 4 · Maintenance techniques and fault diagnosis
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* ---- Quiz ---- */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Smart Grids and Smart Meters
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

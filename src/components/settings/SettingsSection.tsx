@@ -1,6 +1,5 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Eyebrow } from '@/components/college/primitives';
 
 interface SettingsSectionProps {
   title: string;
@@ -12,9 +11,8 @@ interface SettingsSectionProps {
 }
 
 /**
- * Editorial section wrapper — replaces the old iconed card header.
- * Title + optional description sit above the children, which should
- * be a college-primitive ListCard or grid.
+ * Section wrapper: a hub-style volt heading over the children. Title carries
+ * the hierarchy; the optional eyebrow is a small category word above it.
  */
 const SettingsSection: React.FC<SettingsSectionProps> = ({
   title,
@@ -23,26 +21,22 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
   children,
   className,
   action,
-}) => {
-  return (
-    <section className={cn('space-y-3', className)}>
-      <div className="flex items-end justify-between gap-4">
-        <div className="min-w-0">
-          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h3 className="mt-1 text-base sm:text-lg font-semibold text-white tracking-tight">
-            {title}
-          </h3>
-          {description && (
-            <p className="mt-1 text-[12.5px] text-white leading-relaxed max-w-2xl">
-              {description}
-            </p>
-          )}
-        </div>
-        {action && <div className="shrink-0">{action}</div>}
+}) => (
+  <section className={cn('space-y-3', className)}>
+    <div className="flex items-end justify-between gap-4">
+      <div className="min-w-0">
+        {eyebrow && (
+          <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{eyebrow}</div>
+        )}
+        <h3 className="mt-1 text-[15px] font-semibold tracking-tight text-elec-yellow">{title}</h3>
+        {description && (
+          <p className="mt-1 max-w-2xl text-[12.5px] leading-relaxed text-white">{description}</p>
+        )}
       </div>
-      {children}
-    </section>
-  );
-};
+      {action && <div className="shrink-0">{action}</div>}
+    </div>
+    {children}
+  </section>
+);
 
 export default SettingsSection;

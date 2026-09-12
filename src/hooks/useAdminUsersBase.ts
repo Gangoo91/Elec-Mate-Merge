@@ -28,6 +28,10 @@ export interface AdminUser {
   username?: string | null;
   subscription_start?: string | null;
   elec_id_enabled?: boolean;
+  /** null = signed up themselves; 'admin_bulk' = made on Bulk create (tutor, cohort, demo). */
+  created_via?: string | null;
+  /** For tutor/college staff accounts: the college or provider they belong to. */
+  college_org?: string | null;
 }
 
 export const ADMIN_USERS_QUERY_KEY = ['admin-users-base'];

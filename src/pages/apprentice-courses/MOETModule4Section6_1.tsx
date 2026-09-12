@@ -1,8 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 6.1 · Subsection 1 — Identifying Underlying Failures
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Common electrical plant, equipment, and
+ *                systems failure modes."
+ *              · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *   Behaviour · "Continuous improvement (CI) systems and techniques."
+ *
+ * Numeric/technical detail (e.g. the "halves every 10°C" insulation-life
+ * rule of thumb) is copied verbatim from the original page; the
+ * bs7671_facets RAG holds regulation rules, not this kind of engineering
+ * heuristic, so it could not be checked against it.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Identifying Underlying Failures - MOET Module 4.6.1';
@@ -266,118 +309,69 @@ const faqs = [
 ];
 
 const MOETModule4Section6_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.6.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Identifying Underlying Failures
-          </h1>
-          <p className="text-white">
-            Techniques for identifying root causes rather than symptoms in electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.6 · Subsection 1"
+        title="Identifying Underlying Failures"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Techniques for identifying root causes rather than symptoms in electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>RCA:</strong> Systematic process to find why failures occur, not just what
-                failed
-              </li>
-              <li className="pl-1">
-                <strong>Categories:</strong> Technical, human-factor, and organisational failures
-              </li>
-              <li className="pl-1">
-                <strong>Approach:</strong> Preserve evidence, gather data, analyse systematically
-              </li>
-              <li className="pl-1">
-                <strong>Goal:</strong> Prevent recurrence, not just repair the immediate fault
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'RCA: Systematic process to find why failures occur, not just what failed',
+              'Categories: Technical, human-factor, and organisational failures',
+              'Approach: Preserve evidence, gather data, analyse systematically',
+              'Goal: Prevent recurrence, not just repair the immediate fault',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Symptoms vs causes:</strong> Tripping breakers, blown fuses, overheating
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Common root causes:</strong> Poor workmanship, inadequate maintenance,
                 design deficiency
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Evidence:</strong> As-found condition, operational history, maintenance
                 records
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to fault diagnosis and continuous improvement KSBs
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between symptoms, contributing factors and root causes of equipment failures',
               'Categorise failures as technical, human-factor or organisational in origin',
               'Explain the concept of latent failures and the Swiss cheese model of accident causation',
               'Describe the systematic steps for beginning a root cause investigation',
               'Apply evidence preservation and as-found documentation techniques',
               'Reference ST1426 requirements for fault diagnosis and continuous improvement',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>What is root cause analysis?</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is Root Cause Analysis?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="What Is Root Cause Analysis?"
+            onSite="The danger of symptom treatment: Treating symptoms without identifying root causes is one of the most common — and most dangerous — practices in electrical maintenance. Replacing a fuse with a higher-rated one, resetting a tripping breaker without investigation, or bypassing a faulty interlock to keep production running are all examples of symptom treatment that can lead to catastrophic consequences. Each of these actions masks the underlying fault and removes a layer of protection that exists for a reason."
+          >
             <p>
               Root cause analysis (RCA) is a structured, systematic approach to investigating
               failures and incidents that seeks to identify the fundamental underlying reasons — the
@@ -402,97 +396,42 @@ const MOETModule4Section6_1 = () => {
               technician finds the fault, identifies why it occurred, and recommends actions to
               prevent it happening again.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Symptoms vs Root Causes — Electrical Examples
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Symptom (What You See)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Possible Root Cause (Why It Happened)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor overload trips repeatedly
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bearing failure causing increased mechanical load; supply voltage imbalance
-                        causing overcurrent in one phase
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable overheating at termination
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insufficient torque on terminal screws during installation (human factor);
-                        incorrect cable size for the load (design deficiency)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD nuisance tripping</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accumulated earth leakage from ageing equipment on the circuit; moisture
-                        ingress into a junction box
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformer oil discolouration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Internal winding insulation breakdown due to sustained overloading beyond
-                        design rating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frequent lamp failures in a lighting circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supply overvoltage from an incorrectly set transformer tap; excessive
-                        vibration from nearby plant
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Symptoms vs Root Causes — Electrical Examples"
+            headers={['Symptom (What You See)', 'Possible Root Cause (Why It Happened)']}
+            rows={[
+              [
+                'Motor overload trips repeatedly',
+                'Bearing failure causing increased mechanical load; supply voltage imbalance causing overcurrent in one phase',
+              ],
+              [
+                'Cable overheating at termination',
+                'Insufficient torque on terminal screws during installation (human factor); incorrect cable size for the load (design deficiency)',
+              ],
+              [
+                'RCD nuisance tripping',
+                'Accumulated earth leakage from ageing equipment on the circuit; moisture ingress into a junction box',
+              ],
+              [
+                'Transformer oil discolouration',
+                'Internal winding insulation breakdown due to sustained overloading beyond design rating',
+              ],
+              [
+                'Frequent lamp failures in a lighting circuit',
+                'Supply overvoltage from an incorrectly set transformer tap; excessive vibration from nearby plant',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Danger of Symptom Treatment
-              </p>
-              <p className="text-sm text-white">
-                Treating symptoms without identifying root causes is one of the most common — and
-                most dangerous — practices in electrical maintenance. Replacing a fuse with a
-                higher-rated one, resetting a tripping breaker without investigation, or bypassing a
-                faulty interlock to keep production running are all examples of symptom treatment
-                that can lead to catastrophic consequences. Each of these actions masks the
-                underlying fault and removes a layer of protection that exists for a reason.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Categories of Failure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Categories of failure</ContentEyebrow>
+
+          <ConceptBlock title="Categories of Failure">
             <p>
               Understanding the different categories of failure is essential for directing the
               investigation towards the right areas. Failures in electrical systems can be broadly
@@ -500,120 +439,104 @@ const MOETModule4Section6_1 = () => {
               organisational failures. In practice, most significant failures involve elements from
               all three categories, which is why a thorough investigation must consider all of them.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Technical Failures</h3>
-                <p className="text-sm text-white mb-3">
-                  Technical failures relate to the physical degradation, design limitations, or
-                  material defects of equipment and components. These are often the most visible and
-                  easily identified category, but they should not be treated as the final answer
-                  without investigating why the technical failure occurred.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Wear and degradation:</strong> Insulation ageing, contact erosion,
-                    bearing wear, corrosion of connections — all are natural deterioration processes
-                    that should be managed through planned maintenance
-                  </li>
-                  <li className="pl-1">
-                    <strong>Design deficiency:</strong> Under-rated components, inadequate cooling,
-                    poor accessibility for maintenance, insufficient protection coordination
-                  </li>
-                  <li className="pl-1">
-                    <strong>Material defect:</strong> Manufacturing faults in components,
-                    substandard materials, counterfeit products entering the supply chain
-                  </li>
-                  <li className="pl-1">
-                    <strong>Environmental factors:</strong> Excessive heat, moisture, dust,
-                    vibration, chemical exposure beyond the equipment's design envelope
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Human-Factor Failures
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Human-factor failures result from the actions, decisions, or omissions of people
-                  involved in the design, installation, operation, or maintenance of the equipment.
-                  HSE research consistently identifies human factors as the largest contributor to
-                  maintenance-related incidents in the electrical sector.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Errors of commission:</strong> Incorrect actions — wrong torque setting,
-                    incorrect cable termination method, connecting to the wrong terminal
-                  </li>
-                  <li className="pl-1">
-                    <strong>Errors of omission:</strong> Missed steps — failure to tighten a
-                    connection, forgetting to replace a cover, not recording a test result
-                  </li>
-                  <li className="pl-1">
-                    <strong>Violations:</strong> Deliberate deviation from procedures — bypassing an
-                    interlock, working live without authorisation, skipping a test step
-                  </li>
-                  <li className="pl-1">
-                    <strong>Competence gaps:</strong> Insufficient training, lack of experience with
-                    specific equipment types, unfamiliarity with updated standards
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Organisational Failures
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Organisational failures are systemic weaknesses in management systems, policies,
-                  and culture that create the conditions in which technical and human-factor
-                  failures can occur. They are the deepest level of root cause and often the most
-                  difficult to identify — but also the most impactful to correct.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Inadequate maintenance strategy:</strong> No planned preventive
-                    maintenance programme, reactive-only approach, insufficient budget allocation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Poor procedures:</strong> Outdated work instructions, ambiguous method
-                    statements, no standard operating procedures for critical tasks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Training deficiencies:</strong> No structured training programme, no
-                    competence assessment, reliance on informal knowledge transfer
-                  </li>
-                  <li className="pl-1">
-                    <strong>Communication failures:</strong> Poor shift handover, inadequate safety
-                    briefings, no feedback mechanism for reporting concerns
-                  </li>
-                  <li className="pl-1">
-                    <strong>Resource pressures:</strong> Understaffing, time pressure to complete
-                    work, cost-cutting on spares or tools
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When you identify a technical failure, always ask "why did
-              this technical failure occur?" — the answer often leads to a human-factor or
-              organisational root cause that, if addressed, will prevent not just this failure but
-              similar failures across the site.
+          <ConceptBlock title="Technical failures">
+            <p>
+              Technical failures relate to the physical degradation, design limitations, or material
+              defects of equipment and components. These are often the most visible and easily
+              identified category, but they should not be treated as the final answer without
+              investigating why the technical failure occurred.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wear and degradation:</strong> Insulation ageing, contact erosion, bearing
+                wear, corrosion of connections — all are natural deterioration processes that should
+                be managed through planned maintenance
+              </li>
+              <li>
+                <strong>Design deficiency:</strong> Under-rated components, inadequate cooling, poor
+                accessibility for maintenance, insufficient protection coordination
+              </li>
+              <li>
+                <strong>Material defect:</strong> Manufacturing faults in components, substandard
+                materials, counterfeit products entering the supply chain
+              </li>
+              <li>
+                <strong>Environmental factors:</strong> Excessive heat, moisture, dust, vibration,
+                chemical exposure beyond the equipment&apos;s design envelope
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Human-factor failures">
+            <p>
+              Human-factor failures result from the actions, decisions, or omissions of people
+              involved in the design, installation, operation, or maintenance of the equipment. HSE
+              research consistently identifies human factors as the largest contributor to
+              maintenance-related incidents in the electrical sector.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Errors of commission:</strong> Incorrect actions — wrong torque setting,
+                incorrect cable termination method, connecting to the wrong terminal
+              </li>
+              <li>
+                <strong>Errors of omission:</strong> Missed steps — failure to tighten a connection,
+                forgetting to replace a cover, not recording a test result
+              </li>
+              <li>
+                <strong>Violations:</strong> Deliberate deviation from procedures — bypassing an
+                interlock, working live without authorisation, skipping a test step
+              </li>
+              <li>
+                <strong>Competence gaps:</strong> Insufficient training, lack of experience with
+                specific equipment types, unfamiliarity with updated standards
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Latent Failures and the Swiss Cheese Model
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Organisational failures"
+            onSite='Key point: When you identify a technical failure, always ask "why did this technical failure occur?" — the answer often leads to a human-factor or organisational root cause that, if addressed, will prevent not just this failure but similar failures across the site.'
+          >
+            <p>
+              Organisational failures are systemic weaknesses in management systems, policies, and
+              culture that create the conditions in which technical and human-factor failures can
+              occur. They are the deepest level of root cause and often the most difficult to
+              identify — but also the most impactful to correct.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inadequate maintenance strategy:</strong> No planned preventive maintenance
+                programme, reactive-only approach, insufficient budget allocation
+              </li>
+              <li>
+                <strong>Poor procedures:</strong> Outdated work instructions, ambiguous method
+                statements, no standard operating procedures for critical tasks
+              </li>
+              <li>
+                <strong>Training deficiencies:</strong> No structured training programme, no
+                competence assessment, reliance on informal knowledge transfer
+              </li>
+              <li>
+                <strong>Communication failures:</strong> Poor shift handover, inadequate safety
+                briefings, no feedback mechanism for reporting concerns
+              </li>
+              <li>
+                <strong>Resource pressures:</strong> Understaffing, time pressure to complete work,
+                cost-cutting on spares or tools
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Latent failures and the Swiss cheese model</ContentEyebrow>
+
+          <ConceptBlock title="Latent Failures and the Swiss Cheese Model">
             <p>
               One of the most important concepts in root cause analysis is the distinction between
               active failures and latent failures. Active failures are the immediate, visible
@@ -623,9 +546,9 @@ const MOETModule4Section6_1 = () => {
               apparent when they combine with other factors to produce a failure event.
             </p>
             <p>
-              Professor James Reason's Swiss cheese model provides a powerful visual metaphor for
-              understanding how failures occur in complex systems. Imagine multiple slices of Swiss
-              cheese stacked together, where each slice represents a layer of defence — design
+              Professor James Reason&apos;s Swiss cheese model provides a powerful visual metaphor
+              for understanding how failures occur in complex systems. Imagine multiple slices of
+              Swiss cheese stacked together, where each slice represents a layer of defence — design
               standards, protective devices, maintenance procedures, training, supervision, and so
               on. Each slice has holes (weaknesses or gaps), but because the holes in different
               slices are in different positions, the layers of defence normally prevent a hazard
@@ -633,96 +556,78 @@ const MOETModule4Section6_1 = () => {
               or design, the holes in all slices align simultaneously, allowing a hazard pathway
               through all layers of defence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Layers of Defence in Electrical Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design layer:</strong> Equipment rated for the application, protection
-                  coordination, redundancy in critical systems
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance layer:</strong> Planned preventive maintenance, condition
-                  monitoring, periodic testing and inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Procedural layer:</strong> Safe systems of work, permit to work systems,
-                  method statements and risk assessments
-                </li>
-                <li className="pl-1">
-                  <strong>Training layer:</strong> Competent persons, ongoing CPD, assessed skills
-                  and knowledge
-                </li>
-                <li className="pl-1">
-                  <strong>Supervision layer:</strong> Quality checks on completed work, independent
-                  verification of critical tasks
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device layer:</strong> Circuit breakers, RCDs, fuses,
-                  interlocks, emergency stops — the last line of defence
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Layers of defence in electrical maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design layer:</strong> Equipment rated for the application, protection
+                coordination, redundancy in critical systems
+              </li>
+              <li>
+                <strong>Maintenance layer:</strong> Planned preventive maintenance, condition
+                monitoring, periodic testing and inspection
+              </li>
+              <li>
+                <strong>Procedural layer:</strong> Safe systems of work, permit to work systems,
+                method statements and risk assessments
+              </li>
+              <li>
+                <strong>Training layer:</strong> Competent persons, ongoing CPD, assessed skills and
+                knowledge
+              </li>
+              <li>
+                <strong>Supervision layer:</strong> Quality checks on completed work, independent
+                verification of critical tasks
+              </li>
+              <li>
+                <strong>Protective device layer:</strong> Circuit breakers, RCDs, fuses, interlocks,
+                emergency stops — the last line of defence
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example: How Latent Failures Combine
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Consider a scenario where a maintenance technician receives an electric shock from a
-                distribution board that should have been isolated:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Latent failure 1 (Design):</strong> The distribution board circuit
-                  directory was never updated after a modification two years ago, so circuit
-                  identification is incorrect
-                </li>
-                <li className="pl-1">
-                  <strong>Latent failure 2 (Procedure):</strong> The site isolation procedure does
-                  not require verification of circuit identification against as-built drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Latent failure 3 (Training):</strong> The technician was not trained to
-                  challenge circuit directory accuracy or to prove dead at the point of work
-                </li>
-                <li className="pl-1">
-                  <strong>Active failure:</strong> The technician isolated the wrong circuit based
-                  on the incorrect directory and began work without proving dead
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                No single failure caused the incident — it was the alignment of all four that
-                created the hazard pathway. Correcting any one of these failures would have broken
-                the chain and prevented the incident.
-              </p>
-            </div>
+          <ConceptBlock
+            title="Example: how latent failures combine"
+            onSite="Practical implication: The Swiss cheese model teaches us that investigating only the active failure (what the technician did wrong) misses the deeper systemic issues. Effective RCA peels back the layers to expose the latent failures — the incorrect circuit directory, the inadequate procedure, the training gap — because these are the failures that, if left uncorrected, will contribute to future incidents across the entire organisation, not just on this specific piece of equipment."
+          >
+            <p>
+              Consider a scenario where a maintenance technician receives an electric shock from a
+              distribution board that should have been isolated:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Latent failure 1 (Design):</strong> The distribution board circuit directory
+                was never updated after a modification two years ago, so circuit identification is
+                incorrect
+              </li>
+              <li>
+                <strong>Latent failure 2 (Procedure):</strong> The site isolation procedure does not
+                require verification of circuit identification against as-built drawings
+              </li>
+              <li>
+                <strong>Latent failure 3 (Training):</strong> The technician was not trained to
+                challenge circuit directory accuracy or to prove dead at the point of work
+              </li>
+              <li>
+                <strong>Active failure:</strong> The technician isolated the wrong circuit based on
+                the incorrect directory and began work without proving dead
+              </li>
+            </ul>
+            <p>
+              No single failure caused the incident — it was the alignment of all four that created
+              the hazard pathway. Correcting any one of these failures would have broken the chain
+              and prevented the incident.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Practical Implication</p>
-              <p className="text-sm text-white">
-                The Swiss cheese model teaches us that investigating only the active failure (what
-                the technician did wrong) misses the deeper systemic issues. Effective RCA peels
-                back the layers to expose the latent failures — the incorrect circuit directory, the
-                inadequate procedure, the training gap — because these are the failures that, if
-                left uncorrected, will contribute to future incidents across the entire
-                organisation, not just on this specific piece of equipment.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Starting a Root Cause Investigation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Starting a root cause investigation</ContentEyebrow>
+
+          <ConceptBlock title="Starting a Root Cause Investigation">
             <p>
               The quality of a root cause investigation is largely determined by what happens in the
               first minutes and hours after a failure is discovered. Evidence is perishable — once
@@ -730,122 +635,73 @@ const MOETModule4Section6_1 = () => {
               lost. A disciplined approach to the initial response sets the foundation for a
               thorough and accurate investigation.
             </p>
-
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Make Safe and Preserve the Scene
-                </h3>
-                <p className="text-sm text-white">
-                  The first priority is always safety — ensure the failed equipment is in a safe
-                  condition and that no one is at risk. However, beyond making safe, resist the urge
-                  to immediately start repairing or cleaning. The as-found condition of the
-                  equipment is your most valuable evidence. Photograph everything: the position of
-                  switches and controls, the condition of terminals and connections, any
-                  discolouration or damage, indicator readings, and the general environment
-                  (temperature gauges, humidity, dust accumulation). Record the date, time, and
-                  environmental conditions.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Gather Factual Data
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Collect all available factual information about the failure event and the
-                  equipment's history:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Maintenance records — when was the equipment last maintained, inspected, or
-                    tested?
-                  </li>
-                  <li className="pl-1">
-                    Operational history — any recent changes in load, operating hours, or process
-                    conditions?
-                  </li>
-                  <li className="pl-1">
-                    Modification history — has the equipment or connected systems been modified?
-                  </li>
-                  <li className="pl-1">
-                    Previous failures — has this equipment or similar equipment failed before?
-                  </li>
-                  <li className="pl-1">
-                    Witness statements — what did operators or other personnel observe before,
-                    during, and after the failure?
-                  </li>
-                  <li className="pl-1">
-                    SCADA/BMS data — historical trend data for voltage, current, temperature,
-                    vibration
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Construct a Timeline
-                </h3>
-                <p className="text-sm text-white">
-                  Build a chronological timeline of events leading up to the failure. Start from a
-                  point well before the failure event — perhaps the last successful maintenance
-                  activity — and work forwards. Include maintenance activities, operational changes,
-                  environmental events (storms, temperature extremes), and any anomalies reported by
-                  operators. The timeline helps identify changes or events that may have triggered
-                  or contributed to the failure.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Examine the Failed Component
-                </h3>
-                <p className="text-sm text-white">
-                  Physical examination of the failed component provides direct evidence of the
-                  failure mechanism. For electrical components, look for signs of thermal damage
-                  (discolouration, melting, charring), mechanical damage (cracks, deformation,
-                  wear), electrical damage (arcing marks, pitting on contacts), and environmental
-                  damage (corrosion, moisture ingress, contamination). Where possible, retain the
-                  failed component for further analysis — destructive testing, metallurgical
-                  examination, or manufacturer investigation may be warranted for critical failures.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 5 — Identify Potential Causes
-                </h3>
-                <p className="text-sm text-white">
-                  Based on the evidence gathered, develop a list of potential causes. At this stage,
-                  be inclusive — do not eliminate possibilities prematurely. Consider technical
-                  causes (component failure modes), human-factor causes (installation errors,
-                  operating mistakes, maintenance omissions), and organisational causes (procedural
-                  gaps, training deficiencies, resource constraints). Use structured techniques such
-                  as the 5 Whys and fishbone diagrams (covered in subsequent sections) to organise
-                  and analyse these potential causes systematically.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to gather evidence, analyse failure data,
-              and construct a logical investigation is directly assessed under the diagnostic and
-              fault-finding competencies of the maintenance technician standard. Your end-point
-              assessment may include a scenario requiring you to demonstrate a systematic approach
-              to failure investigation.
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Make safe and preserve the scene.</strong> The first priority is always
+                safety — ensure the failed equipment is in a safe condition and that no one is at
+                risk. However, beyond making safe, resist the urge to immediately start repairing or
+                cleaning. The as-found condition of the equipment is your most valuable evidence.
+                Photograph everything: the position of switches and controls, the condition of
+                terminals and connections, any discolouration or damage, indicator readings, and the
+                general environment (temperature gauges, humidity, dust accumulation). Record the
+                date, time, and environmental conditions.
+              </li>
+              <li>
+                <strong>Gather factual data.</strong> Collect all available factual information
+                about the failure event and the equipment&apos;s history: maintenance records (when
+                was the equipment last maintained, inspected, or tested?), operational history (any
+                recent changes in load, operating hours, or process conditions?), modification
+                history (has the equipment or connected systems been modified?), previous failures
+                (has this equipment or similar equipment failed before?), witness statements (what
+                did operators or other personnel observe before, during, and after the failure?),
+                and SCADA/BMS data (historical trend data for voltage, current, temperature,
+                vibration).
+              </li>
+              <li>
+                <strong>Construct a timeline.</strong> Build a chronological timeline of events
+                leading up to the failure. Start from a point well before the failure event —
+                perhaps the last successful maintenance activity — and work forwards. Include
+                maintenance activities, operational changes, environmental events (storms,
+                temperature extremes), and any anomalies reported by operators. The timeline helps
+                identify changes or events that may have triggered or contributed to the failure.
+              </li>
+              <li>
+                <strong>Examine the failed component.</strong> Physical examination of the failed
+                component provides direct evidence of the failure mechanism. For electrical
+                components, look for signs of thermal damage (discolouration, melting, charring),
+                mechanical damage (cracks, deformation, wear), electrical damage (arcing marks,
+                pitting on contacts), and environmental damage (corrosion, moisture ingress,
+                contamination). Where possible, retain the failed component for further analysis —
+                destructive testing, metallurgical examination, or manufacturer investigation may be
+                warranted for critical failures.
+              </li>
+              <li>
+                <strong>Identify potential causes.</strong> Based on the evidence gathered, develop
+                a list of potential causes. At this stage, be inclusive — do not eliminate
+                possibilities prematurely. Consider technical causes (component failure modes),
+                human-factor causes (installation errors, operating mistakes, maintenance
+                omissions), and organisational causes (procedural gaps, training deficiencies,
+                resource constraints). Use structured techniques such as the 5 Whys and fishbone
+                diagrams (covered in subsequent sections) to organise and analyse these potential
+                causes systematically.
+              </li>
+            </ol>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> The ability to gather evidence,
+              analyse failure data, and construct a logical investigation is directly assessed under
+              the diagnostic and fault-finding competencies of the maintenance technician standard.
+              Your end-point assessment may include a scenario requiring you to demonstrate a
+              systematic approach to failure investigation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Common Failure Patterns in Electrical Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Common failure patterns in electrical systems</ContentEyebrow>
+
+          <ConceptBlock title="Common Failure Patterns in Electrical Systems">
             <p>
               Experience and industry data reveal recurring failure patterns in electrical systems.
               Recognising these patterns helps maintenance technicians direct their investigations
@@ -853,209 +709,162 @@ const MOETModule4Section6_1 = () => {
               in its specific circumstances, the underlying mechanisms often fall into
               well-established categories.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Loose Connections — The Silent Killer
-              </p>
-              <p className="text-sm text-white mb-2">
-                Loose electrical connections are one of the most common root causes of electrical
-                fires and equipment failures. A connection that is not properly tightened creates
-                increased resistance at the contact point. This increased resistance generates heat,
-                which causes the conductor and terminal to expand and contract with load cycles,
-                progressively loosening the connection further. The cycle of heating, expansion,
-                contraction, and loosening is self-reinforcing and will eventually lead to arcing,
-                insulation failure, and fire.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Root cause:</strong> Often poor workmanship during installation —
-                  insufficient torque, wrong size ferrule, aluminium conductor in a terminal
-                  designed for copper
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Thermal imaging during load, periodic re-torquing,
-                  visual inspection for discolouration
-                </li>
-                <li className="pl-1">
-                  <strong>Prevention:</strong> Torque-controlled tightening to manufacturer's
-                  specification, use of correct termination methods, periodic thermographic surveys
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insulation Degradation</p>
-              <p className="text-sm text-white mb-2">
-                All electrical insulation degrades over time. The rate of degradation depends on the
-                operating conditions — temperature is the primary factor, with the life of organic
-                insulation approximately halving for every 10°C increase in operating temperature
-                above its rated value. Moisture, chemical contamination, mechanical stress, and UV
-                exposure also accelerate degradation.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Root cause:</strong> Sustained operation above design temperature (often
-                  due to overloading or poor ventilation), inadequate environmental protection, or
-                  age
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Insulation resistance testing (trending over time is
-                  more valuable than single readings), partial discharge monitoring for HV
-                  equipment, visual inspection for cracking or discolouration
-                </li>
-                <li className="pl-1">
-                  <strong>Prevention:</strong> Ensure equipment operates within design parameters,
-                  maintain adequate ventilation, schedule periodic insulation testing with trend
-                  analysis
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protection Coordination Failures
-              </p>
-              <p className="text-sm text-white mb-2">
-                When protective devices are not properly coordinated (discrimination), a fault can
-                trip the wrong device — perhaps a main breaker instead of a final circuit MCB —
-                causing widespread loss of supply instead of isolating just the faulty circuit. This
-                is a design-level root cause that may not become apparent until a fault occurs.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Root cause:</strong> Inadequate protection study at design stage,
-                  modifications that changed fault levels without updating the protection scheme,
-                  incorrect device settings
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Protection coordination study, functional testing of
-                  protective devices, analysis of fault event records
-                </li>
-                <li className="pl-1">
-                  <strong>Prevention:</strong> Comprehensive protection coordination study at design
-                  stage and after any modification, periodic verification of device settings
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Environmental Failures</p>
-              <p className="text-sm text-white mb-2">
-                Equipment installed in environments that exceed its IP rating or designed
-                environmental envelope will fail prematurely. This is particularly common where
-                equipment specifications are based on normal indoor conditions but the actual
-                installation environment includes moisture, dust, corrosive atmospheres, or extreme
-                temperatures.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Root cause:</strong> Incorrect equipment specification for the
-                  environment, changes to the environment after installation (e.g., new process
-                  introducing moisture or chemicals), deterioration of environmental seals
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Visual inspection for corrosion, moisture, or
-                  contamination; comparison of equipment IP rating to actual environmental
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Prevention:</strong> Accurate environmental assessment at specification
-                  stage, periodic review of environmental conditions, maintenance of seals and
-                  gaskets
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Recognising these common patterns is a valuable skill, but it
-              must not lead to assumptions. Every investigation should follow the evidence, not the
-              investigator's expectations. Even a pattern that looks familiar may have an unusual
-              root cause in the specific circumstances.
+          <ConceptBlock title="Loose connections — the silent killer">
+            <p>
+              Loose electrical connections are one of the most common root causes of electrical
+              fires and equipment failures. A connection that is not properly tightened creates
+              increased resistance at the contact point. This increased resistance generates heat,
+              which causes the conductor and terminal to expand and contract with load cycles,
+              progressively loosening the connection further. The cycle of heating, expansion,
+              contraction, and loosening is self-reinforcing and will eventually lead to arcing,
+              insulation failure, and fire.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Root cause:</strong> Often poor workmanship during installation —
+                insufficient torque, wrong size ferrule, aluminium conductor in a terminal designed
+                for copper
+              </li>
+              <li>
+                <strong>Detection:</strong> Thermal imaging during load, periodic re-torquing,
+                visual inspection for discolouration
+              </li>
+              <li>
+                <strong>Prevention:</strong> Torque-controlled tightening to manufacturer&apos;s
+                specification, use of correct termination methods, periodic thermographic surveys
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Insulation degradation">
+            <p>
+              All electrical insulation degrades over time. The rate of degradation depends on the
+              operating conditions — temperature is the primary factor, with the life of organic
+              insulation approximately halving for every 10°C increase in operating temperature
+              above its rated value. Moisture, chemical contamination, mechanical stress, and UV
+              exposure also accelerate degradation.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Root cause:</strong> Sustained operation above design temperature (often due
+                to overloading or poor ventilation), inadequate environmental protection, or age
+              </li>
+              <li>
+                <strong>Detection:</strong> Insulation resistance testing (trending over time is
+                more valuable than single readings), partial discharge monitoring for HV equipment,
+                visual inspection for cracking or discolouration
+              </li>
+              <li>
+                <strong>Prevention:</strong> Ensure equipment operates within design parameters,
+                maintain adequate ventilation, schedule periodic insulation testing with trend
+                analysis
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Protection coordination failures">
+            <p>
+              When protective devices are not properly coordinated (discrimination), a fault can
+              trip the wrong device — perhaps a main breaker instead of a final circuit MCB —
+              causing widespread loss of supply instead of isolating just the faulty circuit. This
+              is a design-level root cause that may not become apparent until a fault occurs.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Root cause:</strong> Inadequate protection study at design stage,
+                modifications that changed fault levels without updating the protection scheme,
+                incorrect device settings
+              </li>
+              <li>
+                <strong>Detection:</strong> Protection coordination study, functional testing of
+                protective devices, analysis of fault event records
+              </li>
+              <li>
+                <strong>Prevention:</strong> Comprehensive protection coordination study at design
+                stage and after any modification, periodic verification of device settings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Environmental failures">
+            <p>
+              Equipment installed in environments that exceed its IP rating or designed
+              environmental envelope will fail prematurely. This is particularly common where
+              equipment specifications are based on normal indoor conditions but the actual
+              installation environment includes moisture, dust, corrosive atmospheres, or extreme
+              temperatures.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Root cause:</strong> Incorrect equipment specification for the environment,
+                changes to the environment after installation (e.g., new process introducing
+                moisture or chemicals), deterioration of environmental seals
+              </li>
+              <li>
+                <strong>Detection:</strong> Visual inspection for corrosion, moisture, or
+                contamination; comparison of equipment IP rating to actual environmental conditions
+              </li>
+              <li>
+                <strong>Prevention:</strong> Accurate environmental assessment at specification
+                stage, periodic review of environmental conditions, maintenance of seals and gaskets
+              </li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> Recognising these common patterns is a
+              valuable skill, but it must not lead to assumptions. Every investigation should follow
+              the evidence, not the investigator&apos;s expectations. Even a pattern that looks
+              familiar may have an unusual root cause in the specific circumstances.
+            </p>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RCA Investigation Steps</p>
-                <ul className="space-y-0.5">
-                  <li>1. Make safe and preserve the scene</li>
-                  <li>2. Gather factual data and records</li>
-                  <li>3. Construct a timeline of events</li>
-                  <li>4. Examine the failed component</li>
-                  <li>5. Identify and analyse potential causes</li>
-                  <li>6. Determine root cause(s) and recommend actions</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Failure Categories</p>
-                <ul className="space-y-0.5">
-                  <li>Technical — component, design, material, environment</li>
-                  <li>Human factor — errors, omissions, violations, competence</li>
-                  <li>Organisational — procedures, training, resources, culture</li>
-                  <li>Latent — hidden weaknesses awaiting trigger conditions</li>
-                  <li>Active — immediate actions causing the failure event</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'RCA investigation steps: make safe and preserve the scene; gather factual data and records; construct a timeline of events; examine the failed component; identify and analyse potential causes; determine root cause(s) and recommend actions.',
+              'Failure categories: technical (component, design, material, environment); human factor (errors, omissions, violations, competence); organisational (procedures, training, resources, culture); latent (hidden weaknesses awaiting trigger conditions); active (immediate actions causing the failure event).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Root cause analysis
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  The Five Whys Technique
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-2">
-              Next: The '5 Whys' Technique
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

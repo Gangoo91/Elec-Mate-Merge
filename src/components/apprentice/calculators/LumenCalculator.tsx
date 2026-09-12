@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import type { CalcReport, CalcRow, CalcVerdict } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { ChevronDown, Copy, Check, Settings } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -289,6 +291,194 @@ const LumenCalculator = () => {
     if (calculationType === 'lumens-to-lux') return parseFloat(lumens) > 0;
     return parseFloat(lux) > 0 && parseFloat(fixtureOutput) > 0;
   }, [inputMode, area, length, width, calculationType, lux, lumens, fixtureOutput]);
+
+  // ── Client PDF ───────────────────────────────────────────────────────────
+  // Three calculation modes set `result` in three different places, and each
+  // takes a different figure from the electrician. The headline must never
+  // repeat a value that was typed in for that mode: in "lumens to lux" the
+  // lumens are the input, in the other two modes the target lux is.
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const totalLumens = result.totalLumens ?? 0;
+    const usesTargetLux = result.type !== 'lumens-to-lux';
+    const areaText = `${result.areaVal.toFixed(1)} m²`;
+    const preset = selectedRoom
+      ? ROOM_PRESETS[selectedRoom as keyof typeof ROOM_PRESETS]
+      : undefined;
+
+    const verdict: CalcVerdict =
+      result.complianceLevel === 'excellent' || result.complianceLevel === 'good'
+        ? 'pass'
+        : result.complianceLevel === 'basic'
+          ? 'warn'
+          : 'fail';
+
+    // The same four bands the on-screen badge and assessment step use.
+    const complianceText =
+      result.complianceLevel === 'excellent'
+        ? 'Exceeds 500 lx — suitable for precision work'
+        : result.complianceLevel === 'good'
+          ? 'Meets 300 lx — adequate for general work'
+          : result.complianceLevel === 'basic'
+            ? '100–300 lx — suitable for navigation and circulation only'
+            : 'Below 100 lx — insufficient for most tasks';
+
+    const subtitle =
+      result.type === 'lux-to-lumens'
+        ? `Light output needed for ${areaText} at ${lux} lx${preset ? ` — ${preset.name.toLowerCase()}` : ''}`
+        : result.type === 'lumens-to-lux'
+          ? `Illuminance reached by ${lumens} lm installed over ${areaText}`
+          : `Luminaires needed for ${areaText} at ${lux} lx${preset ? ` — ${preset.name.toLowerCase()}` : ''}`;
+
+    const loadHeadline = result.totalPower
+      ? [{ label: 'Estimated lighting load', value: result.totalPower.toFixed(1), unit: 'W' }]
+      : [];
+
+    const headline: CalcReport['headline'] =
+      result.type === 'lux-to-lumens'
+        ? // Lumens are calculated here; the lux figure was typed in.
+          [
+            { label: 'Total light output required', value: totalLumens.toFixed(0), unit: 'lm' },
+            ...loadHeadline,
+          ]
+        : result.type === 'lumens-to-lux'
+          ? // Illuminance is calculated here; the lumens were typed in.
+            [
+              {
+                label: 'Illuminance achieved',
+                value: (result.achievedLux ?? 0).toFixed(1),
+                unit: 'lx',
+                verdict,
+              },
+              ...loadHeadline,
+            ]
+          : [
+              {
+                label: 'Luminaires required',
+                value: `${result.fixturesNeeded ?? 0}`,
+                unit: 'fixtures',
+              },
+              { label: 'Total light output required', value: totalLumens.toFixed(0), unit: 'lm' },
+              ...loadHeadline,
+            ];
+
+    // Only what was entered. The floor area is an input when typed directly
+    // and a derived figure when it comes from length × width, so in that mode
+    // it moves to the result below.
+    const inputRows: CalcRow[] = [];
+    if (inputMode === 'area') {
+      inputRows.push({ label: 'Floor area', value: `${area} m²` });
+    } else {
+      inputRows.push({ label: 'Room length', value: `${length} m` });
+      inputRows.push({ label: 'Room width', value: `${width} m` });
+    }
+    if (preset && usesTargetLux) {
+      inputRows.push({
+        label: 'Room type',
+        value: preset.name,
+        note: `${preset.description} — preset target ${preset.lux} lx`,
+      });
+    }
+    if (usesTargetLux) {
+      inputRows.push({ label: 'Target illuminance', value: `${lux} lx`, note: complianceText });
+    } else {
+      inputRows.push({ label: 'Total light output installed', value: `${lumens} lm` });
+    }
+    if (result.type === 'fixtures-needed') {
+      inputRows.push({ label: 'Output per luminaire', value: `${fixtureOutput} lm` });
+    }
+    if (result.spacingDistance) {
+      inputRows.push({ label: 'Mounting height', value: `${mountingHeight} m` });
+      inputRows.push({ label: 'Working plane height', value: `${workingHeight} m` });
+    }
+    // Efficacy drives the load estimate whether or not the advanced panel was
+    // opened, so it is always stated. UF, MF and daylight only apply when it was.
+    inputRows.push({
+      label: 'Fixture efficacy',
+      value: `${result.efficacy} lm/W`,
+      note: showAdvanced ? undefined : 'Default value — used for the load estimate',
+    });
+    if (showAdvanced) {
+      inputRows.push({ label: 'Utilisation factor (UF)', value: `${result.uf}` });
+      inputRows.push({ label: 'Maintenance factor (MF)', value: `${result.mf}` });
+      if (result.daylightReduction > 0) {
+        inputRows.push({
+          label: 'Daylight contribution',
+          value: `${(result.daylightReduction * 100).toFixed(0)} %`,
+        });
+      }
+    }
+
+    // The working behind the headline, never a verbatim repeat of it.
+    const resultRows: CalcRow[] = [];
+    if (inputMode === 'dimensions') {
+      resultRows.push({ label: 'Floor area', value: areaText, note: `${length} m × ${width} m` });
+    }
+    if (showAdvanced && usesTargetLux) {
+      resultRows.push({
+        label: 'Light output before losses',
+        value: `${(parseFloat(lux) * result.areaVal).toFixed(0)} lm`,
+        note: `${lux} lx × ${areaText}, before the utilisation and maintenance factors`,
+      });
+    }
+    if (result.type === 'lumens-to-lux') {
+      if (showAdvanced) {
+        resultRows.push({
+          label: 'Illuminance before factors',
+          value: `${(parseFloat(lumens) / result.areaVal).toFixed(1)} lx`,
+          note: `${lumens} lm ÷ ${areaText}`,
+        });
+      }
+      resultRows.push({ label: 'Assessment', value: complianceText });
+    }
+    if (result.type === 'fixtures-needed' && result.fixturesNeeded !== undefined) {
+      resultRows.push({
+        label: 'Luminaires before rounding up',
+        value: (totalLumens / parseFloat(fixtureOutput)).toFixed(2),
+        note: `Rounded up to ${result.fixturesNeeded} whole luminaires`,
+      });
+    }
+    if (result.spacingDistance) {
+      resultRows.push({
+        label: 'Maximum fixture spacing',
+        value: `${result.spacingDistance.toFixed(1)} m`,
+        note: 'Maximum distance between fixture centres',
+      });
+    }
+    if (result.annualCost !== undefined) {
+      resultRows.push({
+        label: 'Estimated annual running cost',
+        value: `£${result.annualCost.toFixed(2)}`,
+        note: 'Estimate at £0.25/kWh over 2,500 operating hours a year',
+      });
+    }
+
+    const notes = [
+      'Lumen method: total light output = illuminance × floor area, adjusted for the utilisation and maintenance factors.',
+      showAdvanced
+        ? ''
+        : 'No utilisation or maintenance factor was applied — these are the raw lumen figures for the area.',
+      result.totalPower
+        ? `The lighting load is an estimate from an assumed efficacy of ${result.efficacy} lm/W, not a measured figure.`
+        : '',
+      result.annualCost !== undefined
+        ? 'The running cost is an estimate based on the values above, not a quotation.'
+        : '',
+    ].filter((t) => t.trim());
+
+    return {
+      meta: { title: 'Lighting Design', subtitle },
+      headline,
+      sections: [
+        { heading: 'Inputs', rows: inputRows },
+        ...(resultRows.length ? [{ heading: 'Result', rows: resultRows }] : []),
+      ],
+      notes: notes.length ? notes : undefined,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

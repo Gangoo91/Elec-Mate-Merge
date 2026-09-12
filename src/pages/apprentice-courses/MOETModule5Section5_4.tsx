@@ -1,8 +1,44 @@
-import { ArrowLeft, RotateCcw, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 5 · Subsection 4 — Functional Testing of Loops
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only a statement that already appears verbatim in the brief's
+ * verified lists for other modules — and that genuinely fits this page's
+ * content — is used here.
+ *   Knowledge  · "Electrical. Conduct functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * placed its four InlineCheck questions out of numeric order (0, 3, 2, 1)
+ * because each pairs with the section it follows — that pairing is preserved
+ * here rather than renumbered.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Functional Testing of Loops - MOET Module 5 Section 5.4';
@@ -253,153 +289,107 @@ const faqs = [
 ];
 
 const MOETModule5Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <RotateCcw className="h-4 w-4" />
-            <span>Module 5.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Functional Testing of Loops
-          </h1>
-          <p className="text-white">
-            End-to-end verification from sensor through controller to final element
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.5 · Subsection 4"
+        title="Functional Testing of Loops"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            End-to-end verification from sensor through controller to final element.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Scope:</strong> Sensor to transmitter to controller to final element
-              </li>
-              <li className="pl-1">
-                <strong>Controller mode:</strong> Manual during testing to prevent auto-response
-              </li>
-              <li className="pl-1">
-                <strong>Dry test:</strong> Simulated signals without process fluid
-              </li>
-              <li className="pl-1">
-                <strong>Wet test:</strong> Actual process fluid to verify sensing and connections
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Loop direction:</strong> Verify controller responds correctly to PV changes
-              </li>
-              <li className="pl-1">
-                <strong>Alarms:</strong> Test activation at correct setpoints with audible
-                annunciation
-              </li>
-              <li className="pl-1">
-                <strong>SIF testing:</strong> IEC 61511 proof test coverage requirements
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Signed loop check sheets for every test
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Scope: sensor to transmitter to controller to final element.',
+              'Controller mode: manual during testing to prevent auto-response.',
+              'Dry test: simulated signals without process fluid.',
+              'Wet test: actual process fluid to verify sensing and connections.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the purpose and scope of loop functional testing',
               'Plan and execute end-to-end loop tests from sensor to final element',
               'Verify loop direction, alarm operation, and fail-safe action',
               'Differentiate between dry tests and wet tests',
               'Complete loop check sheets with appropriate documentation',
               'Explain additional requirements for testing safety instrumented functions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loop direction:</strong> verify the controller responds correctly to PV
+                changes.
+              </li>
+              <li>
+                <strong>Alarms:</strong> test activation at correct setpoints with audible
+                annunciation.
+              </li>
+              <li>
+                <strong>SIF testing:</strong> IEC 61511 proof test coverage requirements.
+              </li>
+              <li>
+                <strong>Documentation:</strong> signed loop check sheets for every test.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Loop Test Planning and Preparation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Loop test planning and preparation</ContentEyebrow>
+
+          <ConceptBlock
+            title="Loop test planning and preparation"
+            onSite="Never start a loop test without reviewing the documentation first. Understanding the loop's intended function, expected signals, and alarm responses prevents unexpected events and makes fault-finding much easier if problems are discovered."
+          >
             <p>
               Before starting any loop test, thorough preparation is essential. Review the{' '}
               <strong>loop drawing</strong> (showing all instruments, wiring, junction boxes, and
-              terminations),
-              <strong> instrument data sheets</strong> (specifying ranges, types, calibration data),
-              <strong> cause and effect diagrams</strong> (defining the expected system response),
-              and the
-              <strong> controller configuration</strong> (scaling, alarm setpoints, control action).
+              terminations), <strong>instrument data sheets</strong> (specifying ranges, types,
+              calibration data), <strong>cause and effect diagrams</strong> (defining the expected
+              system response), and the <strong>controller configuration</strong> (scaling, alarm
+              setpoints, control action).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Pre-Test Prerequisites</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Instruments:</strong> Installed and individually calibrated
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring:</strong> Complete and continuity-tested (point-to-point check
-                  passed)
-                </li>
-                <li className="pl-1">
-                  <strong>Power supplies:</strong> Available and correct voltage/polarity
-                </li>
-                <li className="pl-1">
-                  <strong>Instrument air:</strong> Available for pneumatic actuators (clean, dry,
-                  correct pressure)
-                </li>
-                <li className="pl-1">
-                  <strong>Controller:</strong> Configured with correct scaling, alarm limits, and
-                  control action
-                </li>
-                <li className="pl-1">
-                  <strong>Operations:</strong> Control room operator informed of test activities
-                </li>
-                <li className="pl-1">
-                  <strong>Test equipment:</strong> Process calibrator, multimeter, HART communicator
-                  prepared
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Pre-test prerequisites">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Instruments:</strong> installed and individually calibrated.
+              </li>
+              <li>
+                <strong>Wiring:</strong> complete and continuity-tested (point-to-point check
+                passed).
+              </li>
+              <li>
+                <strong>Power supplies:</strong> available and correct voltage/polarity.
+              </li>
+              <li>
+                <strong>Instrument air:</strong> available for pneumatic actuators (clean, dry,
+                correct pressure).
+              </li>
+              <li>
+                <strong>Controller:</strong> configured with correct scaling, alarm limits, and
+                control action.
+              </li>
+              <li>
+                <strong>Operations:</strong> control room operator informed of test activities.
+              </li>
+              <li>
+                <strong>Test equipment:</strong> process calibrator, multimeter, HART communicator
+                prepared.
+              </li>
+            </ul>
             <p>
               Place the controller in <strong>manual mode</strong> before beginning. This prevents
               automatic control action from causing unintended process changes during testing.
@@ -408,25 +398,18 @@ const MOETModule5Section5_4 = () => {
               these are managed appropriately (bypassed with formal approval if necessary, or tested
               as part of the procedure).
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never start a loop test without reviewing the
-              documentation first. Understanding the loop's intended function, expected signals, and
-              alarm responses prevents unexpected events and makes fault-finding much easier if
-              problems are discovered.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Executing the Loop Test
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Executing the loop test</ContentEyebrow>
+
+          <ConceptBlock
+            title="Executing the loop test"
+            onSite="When testing alarms, approach the setpoint slowly from below (for high alarms) or above (for low alarms). This verifies the exact activation point and avoids overshooting the alarm level, which could trigger safety interlocks."
+          >
             <p>
               The test proceeds systematically from the <strong>sensor end</strong> to the{' '}
               <strong>final element</strong>. Step 1: Simulate or apply a known input at the sensor
@@ -435,41 +418,37 @@ const MOETModule5Section5_4 = () => {
               Check that the process variable appears correctly on any remote displays, recorders,
               and historian trends.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Systematic Test Sequence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Simulate transmitter signal at field end (4 mA, 12 mA, 20
-                  mA)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Verify controller display reads correct value in correct
-                  engineering units
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Check remote displays, recorders, and historian trending
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Test alarm activation at H, L, HH, LL setpoints
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Drive controller output 0-100% and verify final element
-                  response
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Verify loop direction (PV increase causes correct output
-                  response)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Test fail-safe action (remove signal/power, confirm safe
-                  position)
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Systematic test sequence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> simulate transmitter signal at field end (4 mA, 12 mA, 20
+                mA).
+              </li>
+              <li>
+                <strong>Step 2:</strong> verify controller display reads correct value in correct
+                engineering units.
+              </li>
+              <li>
+                <strong>Step 3:</strong> check remote displays, recorders, and historian trending.
+              </li>
+              <li>
+                <strong>Step 4:</strong> test alarm activation at H, L, HH, LL setpoints.
+              </li>
+              <li>
+                <strong>Step 5:</strong> drive controller output 0-100% and verify final element
+                response.
+              </li>
+              <li>
+                <strong>Step 6:</strong> verify loop direction (PV increase causes correct output
+                response).
+              </li>
+              <li>
+                <strong>Step 7:</strong> test fail-safe action (remove signal/power, confirm safe
+                position).
+              </li>
+            </ul>
             <p>
               Step 4: Simulate alarm conditions by driving the signal to high, low, high-high, and
               low-low alarm setpoints. Verify each alarm activates at the correct value, displays on
@@ -478,7 +457,6 @@ const MOETModule5Section5_4 = () => {
               controller, drive the output from 0% to 100% and verify the final element (valve,
               damper, VSD) responds correctly across the full range.
             </p>
-
             <p>
               Step 6: Verify <strong>loop direction</strong> -- when the process variable increases,
               the controller output should move in the correct direction to counteract the change
@@ -487,24 +465,18 @@ const MOETModule5Section5_4 = () => {
               element goes to its designated safe position. Record all results on the loop check
               sheet.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When testing alarms, approach the setpoint slowly from
-              below (for high alarms) or above (for low alarms). This verifies the exact activation
-              point and avoids overshooting the alarm level, which could trigger safety interlocks.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Dry Tests and Wet Tests
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Dry tests and wet tests</ContentEyebrow>
+
+          <ConceptBlock
+            title="Dry tests and wet tests"
+            onSite="A successful dry test does not guarantee the loop will work correctly with actual process fluid. A blocked impulse line, a sensor installed upside down, or a leak at a process connection will only be revealed by wet testing."
+          >
             <p>
               A <strong>dry test</strong> uses simulated signals (injected by calibrators) without
               any process fluid in the system. This verifies the instrumentation, wiring, controller
@@ -512,30 +484,26 @@ const MOETModule5Section5_4 = () => {
               process fluids are introduced and is the standard method for initial loop checking
               during construction and commissioning.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Dry Test Verifies</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Wiring integrity and polarity</li>
-                  <li className="pl-1">Controller input card operation</li>
-                  <li className="pl-1">Scaling, display, and engineering units</li>
-                  <li className="pl-1">Alarm activation and annunciation</li>
-                  <li className="pl-1">Final element response to controller output</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Wet Test Verifies</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Sensing element correct response</li>
-                  <li className="pl-1">Process connections and impulse lines</li>
-                  <li className="pl-1">No leaks at fittings and manifolds</li>
-                  <li className="pl-1">Correct response to actual process conditions</li>
-                  <li className="pl-1">Installation effects (head pressure, orientation)</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Dry test verifies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Wiring integrity and polarity.</li>
+              <li>Controller input card operation.</li>
+              <li>Scaling, display, and engineering units.</li>
+              <li>Alarm activation and annunciation.</li>
+              <li>Final element response to controller output.</li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Wet test verifies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Sensing element correct response.</li>
+              <li>Process connections and impulse lines.</li>
+              <li>No leaks at fittings and manifolds.</li>
+              <li>Correct response to actual process conditions.</li>
+              <li>Installation effects (head pressure, orientation).</li>
+            </ul>
             <p>
               A <strong>wet test</strong> introduces actual process fluid (or a suitable substitute
               such as water or air) into the system to verify the complete measurement chain
@@ -544,73 +512,62 @@ const MOETModule5Section5_4 = () => {
               conditions and that there are no leaks, blockages, or installation errors that would
               not be detected by dry testing alone.
             </p>
-
             <p>
               For a complete commissioning, both dry and wet tests are typically required. The dry
               test verifies the instrumentation and control system, while the wet test confirms the
               process interface. During routine maintenance, a dry test using signal simulation is
               usually sufficient unless the sensor or process connections have been disturbed.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A successful dry test does not guarantee the loop will
-              work correctly with actual process fluid. A blocked impulse line, a sensor installed
-              upside down, or a leak at a process connection will only be revealed by wet testing.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Safety Instrumented Function Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Safety instrumented function testing</ContentEyebrow>
+
+          <ConceptBlock
+            title="Safety instrumented function testing"
+            onSite="Maintenance technicians working on safety instrumented systems must understand the importance of proof testing, follow approved procedures exactly, and never modify or bypass safety functions without formal authorisation through the management of change process."
+          >
             <p>
               Testing <strong>safety instrumented functions (SIFs)</strong> carries additional
               requirements beyond standard loop testing. SIF testing must comply with{' '}
               <strong>IEC 61511</strong> (the process sector standard for functional safety) and the
               specific safety requirements specification (SRS) for each safety function. The test
-              procedure must be designed to achieve the required
-              <strong> proof test coverage</strong> -- the fraction of dangerous undetected failures
+              procedure must be designed to achieve the required{' '}
+              <strong>proof test coverage</strong> -- the fraction of dangerous undetected failures
               that the test can reveal.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                SIF Testing Requirements (IEC 61511)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Approved procedure:</strong> SIF test procedures must be formally approved
-                  and version-controlled
-                </li>
-                <li className="pl-1">
-                  <strong>Proof test coverage:</strong> The test must achieve the coverage assumed
-                  in the SIL calculation
-                </li>
-                <li className="pl-1">
-                  <strong>Competent personnel:</strong> Testers must be trained and authorised for
-                  SIF testing
-                </li>
-                <li className="pl-1">
-                  <strong>Independent witness:</strong> May be required by the safety management
-                  system
-                </li>
-                <li className="pl-1">
-                  <strong>Bypass management:</strong> Formal bypass procedures for any safety
-                  functions disabled during testing
-                </li>
-                <li className="pl-1">
-                  <strong>Complete documentation:</strong> Detailed records maintained for the
-                  lifetime of the SIF
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="SIF testing requirements (IEC 61511)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Approved procedure:</strong> SIF test procedures must be formally approved
+                and version-controlled.
+              </li>
+              <li>
+                <strong>Proof test coverage:</strong> the test must achieve the coverage assumed in
+                the SIL calculation.
+              </li>
+              <li>
+                <strong>Competent personnel:</strong> testers must be trained and authorised for SIF
+                testing.
+              </li>
+              <li>
+                <strong>Independent witness:</strong> may be required by the safety management
+                system.
+              </li>
+              <li>
+                <strong>Bypass management:</strong> formal bypass procedures for any safety
+                functions disabled during testing.
+              </li>
+              <li>
+                <strong>Complete documentation:</strong> detailed records maintained for the
+                lifetime of the SIF.
+              </li>
+            </ul>
             <p>
               A SIF proof test typically includes: end-to-end signal injection to verify sensor and
               logic solver response, verification of the final element (valve) trip action and
@@ -619,67 +576,56 @@ const MOETModule5Section5_4 = () => {
               determined by the SIL verification calculation and specified in the safety
               requirements specification.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Maintenance technicians working on safety instrumented
-              systems must understand the importance of proof testing, follow approved procedures
-              exactly, and never modify or bypass safety functions without formal authorisation
-              through the management of change process.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Loop Check Sheet Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Loop check sheet documentation</ContentEyebrow>
+
+          <ConceptBlock
+            title="Loop check sheet documentation"
+            onSite="Loop check sheets are quality records that may be reviewed during audits, commissioning handover, and regulatory inspections. They demonstrate that the installation has been systematically tested and verified. Incomplete or missing loop check sheets can delay handover and raise questions about the integrity of the installation."
+          >
             <p>
               The <strong>loop check sheet</strong> is the formal record of the loop functional
               test. It provides documented evidence that the loop has been tested and is operating
               correctly. The sheet should be a controlled form within the project or site quality
               management system, with specific fields for all test criteria.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Loop Check Sheet Content
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Loop identification:</strong> Tag number, description, P&ID reference,
-                  loop drawing number
-                </li>
-                <li className="pl-1">
-                  <strong>Instrument details:</strong> Manufacturer, model, serial number, range for
-                  each instrument in the loop
-                </li>
-                <li className="pl-1">
-                  <strong>Signal verification:</strong> Simulated input, expected output, actual
-                  output at each test point
-                </li>
-                <li className="pl-1">
-                  <strong>Alarm verification:</strong> Setpoint, actual activation point, operator
-                  station display, annunciation
-                </li>
-                <li className="pl-1">
-                  <strong>Final element:</strong> Stroke test results, fail-safe action, response
-                  time if applicable
-                </li>
-                <li className="pl-1">
-                  <strong>Deficiencies:</strong> Any problems found, corrective actions taken,
-                  re-test results
-                </li>
-                <li className="pl-1">
-                  <strong>Sign-off:</strong> Tester signature, witness signature, date
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Loop check sheet content">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loop identification:</strong> tag number, description, P&amp;ID reference,
+                loop drawing number.
+              </li>
+              <li>
+                <strong>Instrument details:</strong> manufacturer, model, serial number, range for
+                each instrument in the loop.
+              </li>
+              <li>
+                <strong>Signal verification:</strong> simulated input, expected output, actual
+                output at each test point.
+              </li>
+              <li>
+                <strong>Alarm verification:</strong> setpoint, actual activation point, operator
+                station display, annunciation.
+              </li>
+              <li>
+                <strong>Final element:</strong> stroke test results, fail-safe action, response time
+                if applicable.
+              </li>
+              <li>
+                <strong>Deficiencies:</strong> any problems found, corrective actions taken, re-test
+                results.
+              </li>
+              <li>
+                <strong>Sign-off:</strong> tester signature, witness signature, date.
+              </li>
+            </ul>
             <p>
               All deficiencies discovered during testing must be recorded, including the corrective
               action taken. Do not sign off the loop check sheet until all deficiencies have been
@@ -687,91 +633,117 @@ const MOETModule5Section5_4 = () => {
               immediately should be recorded on a <strong>punch list</strong> with a clear
               description, priority, and responsibility for closure.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Loop check sheets are quality records that may be reviewed
-              during audits, commissioning handover, and regulatory inspections. They demonstrate
-              that the installation has been systematically tested and verified. Incomplete or
-              missing loop check sheets can delay handover and raise questions about the integrity
-              of the installation.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A loop check that finds the right reading on the wrong tag"
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+            situation={
+              <>
+                <p>
+                  Commissioning a new skid, you are loop-checking eight temperature points.
+                  Injecting a simulated signal at TT-201 produces a correct response on the HMI —
+                  but on the display for TT-202.
+                </p>
 
-        <hr className="border-white/5 my-12" />
+                <p>
+                  Both transmitters are the same model and both loops read plausibly during normal
+                  running.
+                </p>
+              </>
+            }
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Loop Test Scope</p>
-                <ul className="space-y-0.5">
-                  <li>Sensor to transmitter to controller to final element</li>
-                  <li>Controller in manual mode during test</li>
-                  <li>Dry test -- simulated signals, no process fluid</li>
-                  <li>Wet test -- actual fluid to verify sensing</li>
-                  <li>Bump test -- small step change to check response</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Verifications</p>
-                <ul className="space-y-0.5">
-                  <li>Loop direction -- correct controller response</li>
-                  <li>Alarm activation at correct setpoints</li>
-                  <li>Fail-safe action on signal/power loss</li>
-                  <li>SIF testing per IEC 61511 proof test coverage</li>
-                  <li>Signed loop check sheet for every test</li>
-                </ul>
-              </div>
+            whatToDo={
+              <>
+                <p>
+                  Stop and check the rest before assuming it is a simple pair swap. Two crossed
+                  loops are common; three or more rotated round a marshalling strip are not unusual
+                  on a new install.
+                </p>
+
+                <p>
+                  Work from the field end, not the panel. Inject at each transmitter in turn and
+                  record which HMI tag responds. That builds the actual map rather than the intended
+                  one.
+                </p>
+
+                <p>
+                  Trace the crossing to a specific point — field junction box, marshalling terminal,
+                  or the card-to-tag assignment in the PLC configuration. Which it is decides
+                  whether the fix is a wiring change or a configuration change, and they carry very
+                  different amounts of retesting.
+                </p>
+
+                <p>
+                  Re-check every loop on the skid after the correction, not just the two you
+                  touched. A swap at a marshalling strip is rarely isolated.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Crossed loops are almost undetectable in normal running, because both readings look
+                reasonable. They surface during an upset, when the control system acts on the wrong
+                vessel — and that is the worst possible moment to discover it. A loop check exists
+                precisely to catch this before the plant is live, which is why proving the tag
+                matters as much as proving the signal.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Loop test scope: sensor to transmitter to controller to final element, with the controller in manual mode during the test.',
+              'A dry test uses simulated signals with no process fluid; a wet test uses actual fluid to verify sensing.',
+              'A bump test is a small step change used to check response.',
+              'Verify loop direction, alarm activation at correct setpoints, and fail-safe action on signal/power loss.',
+              'SIF testing follows IEC 61511 proof test coverage requirements.',
+              'Every test needs a signed loop check sheet.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section5-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Zero, Span and Linearity Adjustments
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section5-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Documenting Calibration Results
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5-5">
-              Next: Documenting Calibration Results
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

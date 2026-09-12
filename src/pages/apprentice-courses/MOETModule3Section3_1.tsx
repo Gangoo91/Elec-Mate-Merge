@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.3 · Subsection 1 — Layout and Design of Control
+ * Panels
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Note: this page deliberately teaches that IEC 61439 replaced IEC 60439 —
+ * the historical 60439 references are intentional, not an error to "fix".
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Layout and Design of Control Panels - MOET Module 3.3.1';
@@ -14,12 +51,7 @@ const quickCheckQuestions = [
     id: 'panel-standard',
     question:
       'Which standard governs the design and construction of low-voltage switchgear and controlgear assemblies?',
-    options: [
-      'BS 5839',
-      'IEC 61439 (BS EN 61439)',
-      'BS 7671',
-      'IEC 60947',
-    ],
+    options: ['BS 5839', 'IEC 61439 (BS EN 61439)', 'BS 7671', 'IEC 60947'],
     correctIndex: 1,
     explanation:
       'IEC 61439 (implemented in the UK as BS EN 61439) is the standard for low-voltage switchgear and controlgear assemblies (commonly known as control panels, MCCs and distribution boards). It replaced the previous IEC 60439 and requires either design verification by testing or by calculation/comparison. BS 7671 covers the installation wiring that connects to the panel, while IEC 60947 covers individual components within the panel.',
@@ -70,12 +102,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'IEC 61439 replaced the previous standard:',
-    options: [
-      'IEC 60529',
-      'IEC 60439',
-      'IEC 60947',
-      'IEC 61000',
-    ],
+    options: ['IEC 60529', 'IEC 60439', 'IEC 60947', 'IEC 61000'],
     correctAnswer: 1,
     explanation:
       'IEC 61439 replaced IEC 60439. The key change was replacing type-testing with design verification, which can be achieved by testing, calculation or comparison with a reference design. This allows greater flexibility for panel manufacturers while maintaining the same safety standards.',
@@ -255,114 +282,49 @@ const faqs = [
 ];
 
 const MOETModule3Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Layout and Design of Control Panels
-          </h1>
-          <p className="text-white">
-            Control panel design principles, component arrangement and IEC 61439 compliance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.3 · Subsection 1"
+        title="Layout and Design of Control Panels"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Control panel design principles, component arrangement and IEC 61439 compliance — what
+            governs the assembly you open up on every maintenance visit, and why the form of
+            separation inside it decides how that visit goes.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Standard:</strong> IEC 61439 (BS EN 61439) governs panel design
-              </li>
-              <li className="pl-1">
-                <strong>Separation:</strong> Forms 1-4 define internal segregation levels
-              </li>
-              <li className="pl-1">
-                <strong>Thermal:</strong> Manage heat dissipation to protect components
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> SLDs, schematics, schedules and test records
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Access:</strong> Design affects how easily components can be maintained
-              </li>
-              <li className="pl-1">
-                <strong>Interlocks:</strong> Door interlocks prevent access to live parts
-              </li>
-              <li className="pl-1">
-                <strong>Modifications:</strong> Must not compromise original design verification
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to electrical plant knowledge and maintenance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Standard: IEC 61439 (BS EN 61439) governs panel design.',
+              'Separation: Forms 1-4 define internal segregation levels.',
+              'Thermal: manage heat dissipation to protect components.',
+              'Documentation: SLDs, schematics, schedules and test records.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the requirements of IEC 61439 for control panel design and verification',
               'Describe the forms of internal separation and their maintenance implications',
               'Assess thermal management requirements for control panel installations',
               'Identify the documentation required with a compliant control panel assembly',
               'Apply safe working practices when maintaining and modifying control panels',
               'Evaluate EMC considerations in panel design and component layout',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>IEC 61439 and panel standards</ContentEyebrow>
 
-        {/* Section 01: IEC 61439 and Panel Standards */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            IEC 61439 and Panel Standards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="IEC 61439 and Panel Standards">
             <p>
               Control panels — whether motor control centres (MCCs), power distribution boards or
               process control panels — are at the heart of every industrial and commercial
@@ -386,166 +348,154 @@ const MOETModule3Section3_1 = () => {
               trunking systems. A maintenance technician working across different installations will
               encounter assemblies covered by several parts of the standard.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IEC 61439 Series — Key Parts
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                IEC 61439 series — key parts
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Part</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Title</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-1</td>
-                      <td className="border border-white/10 px-3 py-2">General rules</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Common requirements for all assemblies
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power switchgear assemblies (PSC)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main distribution boards, MCCs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution boards (DBO)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final distribution boards, consumer units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assemblies for construction sites
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temporary site distribution boards
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable distribution cabinets
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        External utility distribution pillars
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">61439-6</td>
-                      <td className="border border-white/10 px-3 py-2">Busbar trunking systems</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Factory busbar distribution systems
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Part</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Title</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-1</td>
+                    <td className="border border-white/10 px-3 py-2">General rules</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Common requirements for all assemblies
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-2</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Power switchgear assemblies (PSC)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Main distribution boards, MCCs
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-3</td>
+                    <td className="border border-white/10 px-3 py-2">Distribution boards (DBO)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Final distribution boards, consumer units
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-4</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Assemblies for construction sites
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Temporary site distribution boards
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-5</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cable distribution cabinets
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      External utility distribution pillars
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">61439-6</td>
+                    <td className="border border-white/10 px-3 py-2">Busbar trunking systems</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Factory busbar distribution systems
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Design Verification Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Testing:</strong> Full laboratory testing of the assembly design under
-                  fault and load conditions — the most rigorous method
-                </li>
-                <li className="pl-1">
-                  <strong>Calculation:</strong> Mathematical analysis of thermal, short-circuit and
-                  dielectric performance using proven engineering methods
-                </li>
-                <li className="pl-1">
-                  <strong>Comparison:</strong> Comparing the assembly design with a reference design
-                  that has already been verified by testing — the most common method for bespoke
-                  panels
-                </li>
-              </ul>
+          <ConceptBlock title="Design verification methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Testing:</strong> Full laboratory testing of the assembly design under fault
+                and load conditions — the most rigorous method.
+              </li>
+              <li>
+                <strong>Calculation:</strong> Mathematical analysis of thermal, short-circuit and
+                dielectric performance using proven engineering methods.
+              </li>
+              <li>
+                <strong>Comparison:</strong> Comparing the assembly design with a reference design
+                that has already been verified by testing — the most common method for bespoke
+                panels.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="IP rating selection guide">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical IP rating
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Indoor, clean, dry</td>
+                    <td className="border border-white/10 px-3 py-2">IP31 / IP41</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Electrical switch rooms, clean plant rooms
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Indoor, dusty or damp</td>
+                    <td className="border border-white/10 px-3 py-2">IP54</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Factories, workshops, process areas
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Outdoor</td>
+                    <td className="border border-white/10 px-3 py-2">IP55 / IP65</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Weatherproof enclosures, external substations
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Wash-down areas</td>
+                    <td className="border border-white/10 px-3 py-2">IP65 / IP66</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Food processing, pharmaceutical, dairy
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IP Rating Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical IP Rating
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Indoor, clean, dry</td>
-                      <td className="border border-white/10 px-3 py-2">IP31 / IP41</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical switch rooms, clean plant rooms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Indoor, dusty or damp</td>
-                      <td className="border border-white/10 px-3 py-2">IP54</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Factories, workshops, process areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outdoor</td>
-                      <td className="border border-white/10 px-3 py-2">IP55 / IP65</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weatherproof enclosures, external substations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wash-down areas</td>
-                      <td className="border border-white/10 px-3 py-2">IP65 / IP66</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Food processing, pharmaceutical, dairy
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Any modification to an IEC 61439 assembly must maintain
-              the original design verification. If a modification changes the thermal, short-circuit
-              or protection characteristics, the panel may need re-verification. Always consult the
-              panel documentation and the original manufacturer's guidelines before making changes.
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Any modification to an IEC 61439 assembly must maintain the original design
+              verification. If a modification changes the thermal, short-circuit or protection
+              characteristics, the panel may need re-verification. Always consult the panel
+              documentation and the original manufacturer's guidelines before making changes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Internal Separation and Component Layout */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Internal Separation and Component Layout
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Internal separation and component layout</ContentEyebrow>
+
+          <ConceptBlock title="Internal Separation and Component Layout">
             <p>
               The internal arrangement of a control panel determines both safety and
               maintainability. IEC 61439 defines forms of internal separation (Forms 1 through 4)
@@ -563,186 +513,182 @@ const MOETModule3Section3_1 = () => {
               choice of separation form is therefore a balance between initial cost and ongoing
               operational flexibility.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Forms of Internal Separation
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Forms of internal separation
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Form</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Benefit
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">No internal separation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full isolation required for any access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbars separated from functional units
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbars protected during unit maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As 2a, plus terminals separated from busbars
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Terminal access without busbar exposure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separation between functional units, but not their terminals
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Work on one unit without exposing adjacent units
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As 3a, plus terminal separation between units
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full unit and terminal isolation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4a</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As 3b, plus separation of outgoing terminals from busbars
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum protection during maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full compartmentalisation including terminal compartments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Individual unit access while panel remains live
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Form</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Description</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Maintenance benefit
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">1</td>
+                    <td className="border border-white/10 px-3 py-2">No internal separation</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Full isolation required for any access
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">2a</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Busbars separated from functional units
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Busbars protected during unit maintenance
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">2b</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      As 2a, plus terminals separated from busbars
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Terminal access without busbar exposure
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">3a</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Separation between functional units, but not their terminals
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Work on one unit without exposing adjacent units
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">3b</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      As 3a, plus terminal separation between units
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Full unit and terminal isolation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">4a</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      As 3b, plus separation of outgoing terminals from busbars
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Maximum protection during maintenance
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">4b</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Full compartmentalisation including terminal compartments
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Individual unit access while panel remains live
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Component Layout Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat management:</strong> Heat-generating components (VSDs, braking
-                  resistors, large contactors) placed at the top of the panel to allow natural
-                  convection
-                </li>
-                <li className="pl-1">
-                  <strong>Accessibility:</strong> Components requiring frequent adjustment or
-                  replacement placed at accessible heights (typically 400-1,800 mm from floor)
-                </li>
-                <li className="pl-1">
-                  <strong>Segregation:</strong> Power circuits physically separated from control and
-                  signal circuits to minimise EMC interference
-                </li>
-                <li className="pl-1">
-                  <strong>Logical grouping:</strong> Related functional units grouped together
-                  (e.g., all motor starters for a single process line)
-                </li>
-                <li className="pl-1">
-                  <strong>Clearances:</strong> Manufacturer-specified derating distances maintained
-                  around all components
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring routes:</strong> Dedicated cable ducts for power, control and
-                  signal wiring, with adequate bending radii at all turns
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Component layout principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Heat management:</strong> Heat-generating components (VSDs, braking
+                resistors, large contactors) placed at the top of the panel to allow natural
+                convection.
+              </li>
+              <li>
+                <strong>Accessibility:</strong> Components requiring frequent adjustment or
+                replacement placed at accessible heights (typically 400-1,800 mm from floor).
+              </li>
+              <li>
+                <strong>Segregation:</strong> Power circuits physically separated from control and
+                signal circuits to minimise EMC interference.
+              </li>
+              <li>
+                <strong>Logical grouping:</strong> Related functional units grouped together (e.g.,
+                all motor starters for a single process line).
+              </li>
+              <li>
+                <strong>Clearances:</strong> Manufacturer-specified derating distances maintained
+                around all components.
+              </li>
+              <li>
+                <strong>Wiring routes:</strong> Dedicated cable ducts for power, control and signal
+                wiring, with adequate bending radii at all turns.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Arc Fault Containment</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Arc fault containment"
+            whatHappens={
+              <>
                 Internal separation also plays a role in limiting the damage from internal arc
                 faults. An arc fault within a Form 1 panel can propagate throughout the entire
-                assembly, causing extensive damage and potentially injuring anyone nearby. Higher
-                forms of separation contain the arc energy within the affected compartment, limiting
-                damage and protecting adjacent circuits. Some critical installations specify
-                arc-resistant panels tested to IEC 61641, which are designed to vent arc energy
-                safely through designated relief paths.
-              </p>
-            </div>
+                assembly, causing extensive damage and potentially injuring anyone nearby.
+              </>
+            }
+            doInstead={
+              <>
+                Higher forms of separation contain the arc energy within the affected compartment,
+                limiting damage and protecting adjacent circuits. Some critical installations
+                specify arc-resistant panels tested to IEC 61641, which are designed to vent arc
+                energy safely through designated relief paths.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Busbar Design and Sizing
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The busbar system is the backbone of a control panel, distributing power from the
-                incoming supply to all functional units. Busbars are typically manufactured from
-                high-conductivity copper, though aluminium is used in larger installations where
-                weight and cost are factors. The busbar design must account for continuous current
-                rating, short-circuit withstand, temperature rise and mechanical forces during fault
-                conditions.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cross-sectional area:</strong> Determined by the continuous current rating
-                  and permissible temperature rise
-                </li>
-                <li className="pl-1">
-                  <strong>Support spacing:</strong> Busbars must be supported at intervals that
-                  withstand electromagnetic forces during short-circuit faults
-                </li>
-                <li className="pl-1">
-                  <strong>Jointing:</strong> Bolted connections must be correctly torqued with
-                  Belleville (disc spring) washers to maintain contact pressure during thermal
-                  cycling
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation:</strong> Busbars may be bare, sleeved or fully insulated — the
-                  level of insulation affects the form of separation achievable
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Higher forms of separation enable maintenance on
-              individual functional units without isolating the entire panel. This significantly
-              reduces downtime and is particularly important in continuous process industries where
-              a full panel shutdown is extremely costly.
+          <ConceptBlock title="Busbar design and sizing">
+            <p>
+              The busbar system is the backbone of a control panel, distributing power from the
+              incoming supply to all functional units. Busbars are typically manufactured from
+              high-conductivity copper, though aluminium is used in larger installations where
+              weight and cost are factors. The busbar design must account for continuous current
+              rating, short-circuit withstand, temperature rise and mechanical forces during fault
+              conditions.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cross-sectional area:</strong> Determined by the continuous current rating
+                and permissible temperature rise.
+              </li>
+              <li>
+                <strong>Support spacing:</strong> Busbars must be supported at intervals that
+                withstand electromagnetic forces during short-circuit faults.
+              </li>
+              <li>
+                <strong>Jointing:</strong> Bolted connections must be correctly torqued with
+                Belleville (disc spring) washers to maintain contact pressure during thermal
+                cycling.
+              </li>
+              <li>
+                <strong>Insulation:</strong> Busbars may be bare, sleeved or fully insulated — the
+                level of insulation affects the form of separation achievable.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Higher forms of separation enable maintenance on individual functional units without
+              isolating the entire panel. This significantly reduces downtime and is particularly
+              important in continuous process industries where a full panel shutdown is extremely
+              costly.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03: Thermal Management */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermal Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Thermal management</ContentEyebrow>
+
+          <ConceptBlock title="Thermal Management">
             <p>
               Every component inside a control panel generates heat during operation. Contactors,
               circuit breakers, cable terminations, VSDs and transformers all contribute to the
@@ -760,128 +706,117 @@ const MOETModule3Section3_1 = () => {
               thermal management not just a reliability issue but a significant cost factor over the
               panel's life.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cooling Methods</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">IP Impact</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Best Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Natural convection</td>
-                      <td className="border border-white/10 px-3 py-2">Maintained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-power panels in controlled environments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Forced ventilation (fans)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reduced (typically IP43)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium-power panels in clean environments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Air-to-air heat exchanger
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Maintained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dusty or corrosive environments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Panel air conditioning</td>
-                      <td className="border border-white/10 px-3 py-2">Maintained</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High ambient temperatures, precision control
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">Cooling methods</p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Method</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">IP impact</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Best application</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Natural convection</td>
+                    <td className="border border-white/10 px-3 py-2">Maintained</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Low-power panels in controlled environments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Forced ventilation (fans)</td>
+                    <td className="border border-white/10 px-3 py-2">Reduced (typically IP43)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Medium-power panels in clean environments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Air-to-air heat exchanger</td>
+                    <td className="border border-white/10 px-3 py-2">Maintained</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Dusty or corrosive environments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Panel air conditioning</td>
+                    <td className="border border-white/10 px-3 py-2">Maintained</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      High ambient temperatures, precision control
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Thermal Management Failures</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Thermal management failures"
+            whatHappens={
+              <>
                 Common thermal failures include: blocked ventilation grilles (equipment stored
                 against panels); failed or disconnected fans; clogged air filters (the single most
                 common cause); failed air conditioning units on outdoor panels; and excessive
-                component density after modifications. During maintenance inspections, always check
-                internal temperature (thermographic survey) and the condition of all cooling system
-                components.
-              </p>
-            </div>
+                component density after modifications.
+              </>
+            }
+            doInstead={
+              <>
+                During maintenance inspections, always check internal temperature (thermographic
+                survey) and the condition of all cooling system components.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                IEC 61439 Temperature Rise Limits
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accessible external surfaces:</strong> Maximum 70 K above ambient
-                  (typically 110 degrees C at 40 degrees C ambient)
-                </li>
-                <li className="pl-1">
-                  <strong>Terminals for external cables:</strong> Maximum 70 K rise
-                </li>
-                <li className="pl-1">
-                  <strong>Busbars and conductors:</strong> Maximum temperature depends on insulation
-                  class and material
-                </li>
-                <li className="pl-1">
-                  <strong>Operating handles and controls:</strong> Metal 15 K, non-metal 25 K rise
-                  above ambient
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="IEC 61439 temperature rise limits">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Accessible external surfaces:</strong> Maximum 70 K above ambient (typically
+                110 degrees C at 40 degrees C ambient).
+              </li>
+              <li>
+                <strong>Terminals for external cables:</strong> Maximum 70 K rise.
+              </li>
+              <li>
+                <strong>Busbars and conductors:</strong> Maximum temperature depends on insulation
+                class and material.
+              </li>
+              <li>
+                <strong>Operating handles and controls:</strong> Metal 15 K, non-metal 25 K rise
+                above ambient.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Anti-Condensation Protection
-              </h3>
-              <p className="text-sm text-white">
-                In environments with high humidity or significant temperature fluctuations,
-                condensation can form on internal panel surfaces when the panel temperature drops
-                below the dew point — typically overnight or during weekends when the panel is
-                lightly loaded. Condensation on insulation surfaces causes tracking (surface leakage
-                currents that carbonise insulation), corrosion of metallic components and
-                degradation of electronic circuits. Anti-condensation heaters — thermostatically
-                controlled low-wattage heaters — maintain the internal temperature above the dew
-                point and are essential in outdoor panels, coastal locations and unheated plant
-                rooms.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> IEC 61439 requires that the temperature rise inside the
-              panel does not exceed specified limits when all circuits are carrying their rated
-              current at the rated ambient temperature. This must be verified by testing,
-              calculation or comparison as part of the design verification process.
+          <ConceptBlock title="Anti-condensation protection">
+            <p>
+              In environments with high humidity or significant temperature fluctuations,
+              condensation can form on internal panel surfaces when the panel temperature drops
+              below the dew point — typically overnight or during weekends when the panel is lightly
+              loaded. Condensation on insulation surfaces causes tracking (surface leakage currents
+              that carbonise insulation), corrosion of metallic components and degradation of
+              electronic circuits. Anti-condensation heaters — thermostatically controlled
+              low-wattage heaters — maintain the internal temperature above the dew point and are
+              essential in outdoor panels, coastal locations and unheated plant rooms.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              IEC 61439 requires that the temperature rise inside the panel does not exceed
+              specified limits when all circuits are carrying their rated current at the rated
+              ambient temperature. This must be verified by testing, calculation or comparison as
+              part of the design verification process.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04: Documentation and Panel Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Documentation and Panel Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Documentation and panel maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Documentation and Panel Maintenance">
             <p>
               Comprehensive documentation is not just a regulatory requirement — it is the essential
               foundation for safe and effective panel maintenance. Without accurate drawings,
@@ -898,113 +833,99 @@ const MOETModule3Section3_1 = () => {
               failing to update panel documentation is one of the most common — and most serious —
               maintenance failures.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single-line diagram (SLD):</strong> Shows the overall electrical arrangement
+                — switchgear, busbars, protection devices and their interconnections.
+              </li>
+              <li>
+                <strong>General arrangement drawing:</strong> Physical layout showing component
+                positions within the enclosure.
+              </li>
+              <li>
+                <strong>Circuit diagrams (schematics):</strong> Detailed electrical circuits for
+                each functional unit — power circuits, control circuits and interlocks.
+              </li>
+              <li>
+                <strong>Wiring diagrams:</strong> Terminal-to-terminal connections showing cable
+                numbers, terminal identifiers and wire colours.
+              </li>
+              <li>
+                <strong>Component schedule:</strong> List of all components with manufacturer, model
+                number, rating and location reference.
+              </li>
+              <li>
+                <strong>Design verification records:</strong> Temperature rise data, short-circuit
+                withstand verification, IP verification.
+              </li>
+              <li>
+                <strong>Routine test certificates:</strong> Records of factory acceptance testing
+                for each panel.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Panel Documentation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Single-line diagram (SLD):</strong> Shows the overall electrical
-                  arrangement — switchgear, busbars, protection devices and their interconnections
-                </li>
-                <li className="pl-1">
-                  <strong>General arrangement drawing:</strong> Physical layout showing component
-                  positions within the enclosure
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit diagrams (schematics):</strong> Detailed electrical circuits for
-                  each functional unit — power circuits, control circuits and interlocks
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring diagrams:</strong> Terminal-to-terminal connections showing cable
-                  numbers, terminal identifiers and wire colours
-                </li>
-                <li className="pl-1">
-                  <strong>Component schedule:</strong> List of all components with manufacturer,
-                  model number, rating and location reference
-                </li>
-                <li className="pl-1">
-                  <strong>Design verification records:</strong> Temperature rise data, short-circuit
-                  withstand verification, IP verification
-                </li>
-                <li className="pl-1">
-                  <strong>Routine test certificates:</strong> Records of factory acceptance testing
-                  for each panel
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Panel maintenance best practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Annual thermographic survey:</strong> Scan all connections, busbars and
+                components under load to detect hot spots — the single most effective preventive
+                maintenance technique for panels.
+              </li>
+              <li>
+                <strong>Connection torque checks:</strong> Re-torque all main connections
+                periodically — thermal cycling causes gradual loosening that increases resistance
+                and generates heat.
+              </li>
+              <li>
+                <strong>Cleaning:</strong> Vacuum dust and debris with the panel isolated; clean
+                ventilation filters monthly in dusty environments.
+              </li>
+              <li>
+                <strong>Interlock testing:</strong> Verify all door interlocks, key interlocks and
+                safety devices operate correctly.
+              </li>
+              <li>
+                <strong>Documentation update:</strong> After any modification, update all affected
+                drawings and schedules immediately — do not leave this for later.
+              </li>
+              <li>
+                <strong>Insulation resistance testing:</strong> Measure insulation resistance of
+                busbars and main circuits during planned shutdowns.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Panel Maintenance Best Practice
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Annual thermographic survey:</strong> Scan all connections, busbars and
-                  components under load to detect hot spots — the single most effective preventive
-                  maintenance technique for panels
-                </li>
-                <li className="pl-1">
-                  <strong>Connection torque checks:</strong> Re-torque all main connections
-                  periodically — thermal cycling causes gradual loosening that increases resistance
-                  and generates heat
-                </li>
-                <li className="pl-1">
-                  <strong>Cleaning:</strong> Vacuum dust and debris with the panel isolated; clean
-                  ventilation filters monthly in dusty environments
-                </li>
-                <li className="pl-1">
-                  <strong>Interlock testing:</strong> Verify all door interlocks, key interlocks and
-                  safety devices operate correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation update:</strong> After any modification, update all affected
-                  drawings and schedules immediately — do not leave this for later
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation resistance testing:</strong> Measure insulation resistance of
-                  busbars and main circuits during planned shutdowns
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Case Study: The Importance of Documentation
-              </h3>
-              <p className="text-sm text-white">
-                In a reported incident at a manufacturing plant, a maintenance technician needed to
-                isolate a single motor starter within an MCC for contactor replacement. The panel
-                documentation had not been updated following a modification three years earlier, and
-                the circuit labelling no longer matched the drawings. The technician isolated what
-                he believed was the correct circuit, but the motor remained energised — the
-                modification had changed the busbar tap-off arrangement. Fortunately, the technician
-                proved dead before touching any connections and discovered the error. The
-                investigation found that four separate modifications had been made to the panel
-                without any documentation updates, making safe working extremely difficult for all
-                subsequent maintenance.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must be able to interpret
-              technical drawings and schematics, carry out maintenance and fault-finding on control
-              panels, and maintain accurate maintenance records. These are core competence
-              requirements for the electrical maintenance pathway.
+          <ConceptBlock title="Case study: the importance of documentation">
+            <p>
+              In a reported incident at a manufacturing plant, a maintenance technician needed to
+              isolate a single motor starter within an MCC for contactor replacement. The panel
+              documentation had not been updated following a modification three years earlier, and
+              the circuit labelling no longer matched the drawings. The technician isolated what he
+              believed was the correct circuit, but the motor remained energised — the modification
+              had changed the busbar tap-off arrangement. Fortunately, the technician proved dead
+              before touching any connections and discovered the error. The investigation found that
+              four separate modifications had been made to the panel without any documentation
+              updates, making safe working extremely difficult for all subsequent maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Note">
+            <p className="italic">
+              Under ST1426, maintenance technicians must be able to interpret technical drawings and
+              schematics, carry out maintenance and fault-finding on control panels, and maintain
+              accurate maintenance records. These are core competence requirements for the
+              electrical maintenance pathway.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05: EMC Considerations and Wiring Practices */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            EMC Considerations and Wiring Practices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>EMC considerations and wiring practices</ContentEyebrow>
+
+          <ConceptBlock title="EMC Considerations and Wiring Practices">
             <p>
               Electromagnetic compatibility (EMC) is an increasingly important aspect of control
               panel design and maintenance. Modern panels frequently contain variable speed drives,
@@ -1022,177 +943,135 @@ const MOETModule3Section3_1 = () => {
               removing an EMC filter during a VSD replacement, can introduce EMC problems that are
               difficult to diagnose.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Physical segregation:</strong> Power and control/signal wiring routed in
+                separate cable ducts, crossing at 90 degrees where unavoidable.
+              </li>
+              <li>
+                <strong>Screened cables:</strong> All signal and communication cables use screened
+                (shielded) types with the screen terminated at 360 degrees via EMC glands.
+              </li>
+              <li>
+                <strong>EMC filters:</strong> Input and output filters on VSDs to contain harmonic
+                currents and high-frequency switching noise.
+              </li>
+              <li>
+                <strong>Earth references:</strong> Dedicated EMC earth bar connected to the panel
+                earth with short, wide conductors — not long pigtail wires.
+              </li>
+              <li>
+                <strong>Cable entry:</strong> Power cables and signal cables enter the panel through
+                separate gland plates where possible.
+              </li>
+              <li>
+                <strong>Ferrite cores:</strong> Applied to signal cables where additional
+                high-frequency noise suppression is required.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                EMC Best Practice in Panel Design
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Physical segregation:</strong> Power and control/signal wiring routed in
-                  separate cable ducts, crossing at 90 degrees where unavoidable
-                </li>
-                <li className="pl-1">
-                  <strong>Screened cables:</strong> All signal and communication cables use screened
-                  (shielded) types with the screen terminated at 360 degrees via EMC glands
-                </li>
-                <li className="pl-1">
-                  <strong>EMC filters:</strong> Input and output filters on VSDs to contain harmonic
-                  currents and high-frequency switching noise
-                </li>
-                <li className="pl-1">
-                  <strong>Earth references:</strong> Dedicated EMC earth bar connected to the panel
-                  earth with short, wide conductors — not long pigtail wires
-                </li>
-                <li className="pl-1">
-                  <strong>Cable entry:</strong> Power cables and signal cables enter the panel
-                  through separate gland plates where possible
-                </li>
-                <li className="pl-1">
-                  <strong>Ferrite cores:</strong> Applied to signal cables where additional
-                  high-frequency noise suppression is required
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common EMC problems">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>PLC analogue inputs reading erratically due to VSD switching noise.</li>
+              <li>
+                Communication bus (Profibus, Modbus) dropouts from inadequate cable screening.
+              </li>
+              <li>Nuisance RCD tripping caused by VSD leakage currents.</li>
+              <li>Temperature transmitter readings fluctuating when nearby motor starts.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common EMC Problems
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    PLC analogue inputs reading erratically due to VSD switching noise
-                  </li>
-                  <li className="pl-1">
-                    Communication bus (Profibus, Modbus) dropouts from inadequate cable screening
-                  </li>
-                  <li className="pl-1">Nuisance RCD tripping caused by VSD leakage currents</li>
-                  <li className="pl-1">
-                    Temperature transmitter readings fluctuating when nearby motor starts
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance EMC Checks
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Verify cable screen connections at all EMC glands</li>
-                  <li className="pl-1">Check power/signal cable segregation is maintained</li>
-                  <li className="pl-1">Confirm EMC filters are fitted and operational</li>
-                  <li className="pl-1">Inspect earth connections for corrosion or loosening</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Maintenance EMC checks">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Verify cable screen connections at all EMC glands.</li>
+              <li>Check power/signal cable segregation is maintained.</li>
+              <li>Confirm EMC filters are fitted and operational.</li>
+              <li>Inspect earth connections for corrosion or loosening.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                VSD Installation Considerations
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="VSD installation considerations"
+            whatHappens={
+              <>
                 Variable speed drives are the single biggest source of EMC issues in control panels.
                 Their high-frequency switching (typically 4-16 kHz) generates significant conducted
-                and radiated emissions. Proper VSD installation requires: input EMC filter; screened
-                motor cable with 360-degree termination at both ends; maximum cable length
-                compliance (manufacturer-specified); output choke or du/dt filter for long motor
-                cable runs; and segregation of VSD power cables from all control and signal wiring.
-                Failure to follow these practices can cause widespread interference throughout the
-                panel and to external equipment.
-              </p>
-            </div>
+                and radiated emissions.
+              </>
+            }
+            doInstead={
+              <>
+                Proper VSD installation requires: input EMC filter; screened motor cable with
+                360-degree termination at both ends; maximum cable length compliance
+                (manufacturer-specified); output choke or du/dt filter for long motor cable runs;
+                and segregation of VSD power cables from all control and signal wiring. Failure to
+                follow these practices can cause widespread interference throughout the panel and to
+                external equipment.
+              </>
+            }
+          />
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> When replacing a VSD or modifying a panel containing VSDs,
-              always reinstall EMC filters and maintain cable screening. If the original EMC
-              measures are not documented, consult the VSD manufacturer's installation guide for the
-              specific EMC requirements. Poor EMC practice is one of the most common causes of
-              intermittent control system faults.
+          <ConceptBlock title="Note">
+            <p className="italic">
+              When replacing a VSD or modifying a panel containing VSDs, always reinstall EMC
+              filters and maintain cable screening. If the original EMC measures are not documented,
+              consult the VSD manufacturer's installation guide for the specific EMC requirements.
+              Poor EMC practice is one of the most common causes of intermittent control system
+              faults.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'IEC 61439 (BS EN 61439) governs low-voltage switchgear and controlgear assemblies, verified by testing, calculation or comparison.',
+              'Forms of internal separation (1, 2a, 2b, 3a, 3b, 4a, 4b) trade off cost against how much of the panel can stay live during maintenance.',
+              'Thermal management is a design and maintenance issue: every 10 degrees C above rated temperature roughly halves component life.',
+              'Documentation — SLDs, layout and circuit diagrams, schedules, verification and test records — is the foundation of safe maintenance.',
+              'EMC measures (segregation, screened cables, filters, earth references) must be maintained through every modification, not just at build.',
+              'Key references: IEC 61439 (BS EN 61439), IEC 60947, IEC 60529, IEC 61641, BS 7671 Regulation 729.1 and Table 52.2, EMC Directive 2014/30/EU.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">IEC 61439 Key Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Design verification: by testing, calculation or comparison</li>
-                  <li>Forms of separation: 1, 2a, 2b, 3a, 3b, 4a, 4b</li>
-                  <li>Temperature rise limits per IEC 61439 Annex L</li>
-                  <li>Short-circuit withstand verification</li>
-                  <li>Routine tests: insulation, continuity, function</li>
-                  <li>Full technical documentation package</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Annual thermographic survey under load</li>
-                  <li>Connection retorquing at manufacturer values</li>
-                  <li>Ventilation filter cleaning and fan checks</li>
-                  <li>Door interlock and safety device testing</li>
-                  <li>Documentation update after every modification</li>
-                  <li>EMC screen and filter verification</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Panels, cables and containment
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Cable Types and Selection
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-2">
-              Next: Cable Types
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

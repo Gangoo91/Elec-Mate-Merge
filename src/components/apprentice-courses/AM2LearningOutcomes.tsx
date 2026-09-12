@@ -24,7 +24,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 sm:p-6',
+        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_16%)] border border-white/[0.06] p-5 sm:p-6',
         className
       )}
     >
@@ -34,9 +34,26 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
         Learning outcomes
       </div>
 
-      <ul className="mt-3 divide-y divide-white/[0.05]">
+      {/* Two columns from lg; the row divider moves to the item so it does
+          not cut across the gap between the columns. */}
+      {/* Two columns only once there are enough items to fill them. Three
+          outcomes split across two columns leaves an obvious dead zone at the
+          bottom right; four or more balance. */}
+      <ul
+        className={cn(
+          'mt-3 divide-y divide-white/[0.05]',
+          visibleOutcomes.length >= 4 && 'lg:grid lg:grid-cols-2 lg:gap-x-8 lg:divide-y-0'
+        )}
+      >
         {visibleOutcomes.map((outcome, index) => (
-          <li key={index} className="py-2.5 first:pt-0 last:pb-0 flex items-start gap-3">
+          <li
+            key={index}
+            className={cn(
+              'flex items-start gap-3 py-2.5 first:pt-0 last:pb-0',
+              visibleOutcomes.length >= 4 &&
+                'lg:border-b lg:border-white/[0.05] lg:py-3 lg:first:pt-3 lg:last:border-b-0'
+            )}
+          >
             <div className="shrink-0 mt-0.5 h-5 w-5 rounded-full bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center">
               <Check className="h-3 w-3 text-emerald-400" />
             </div>
@@ -51,18 +68,13 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mt-4 inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
+          className="mt-4 inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
         >
           <span>
-            {isExpanded
-              ? 'Show less'
-              : `Show ${outcomes.length - initialVisibleCount} more`}
+            {isExpanded ? 'Show less' : `Show ${outcomes.length - initialVisibleCount} more`}
           </span>
           <ChevronDown
-            className={cn(
-              'h-3.5 w-3.5 transition-transform',
-              isExpanded && 'rotate-180'
-            )}
+            className={cn('h-3.5 w-3.5 transition-transform', isExpanded && 'rotate-180')}
           />
         </button>
       )}

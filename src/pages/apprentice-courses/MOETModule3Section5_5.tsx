@@ -1,17 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.5 · Subsection 5 — Critical Load Management
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Critical Load Management - MOET Module 3.5.5';
 const DESCRIPTION =
   'Comprehensive guide to critical load management for electrical maintenance technicians: load prioritisation, demand management, power quality monitoring, load shedding strategies and emergency procedures under ST1426.';
 
-/* ------------------------------------------------------------------ */
-/*  Quick-check questions (4) — shown after each content section       */
-/* ------------------------------------------------------------------ */
 const quickCheckQuestions = [
   {
     id: 'load-priority',
@@ -30,10 +64,10 @@ const quickCheckQuestions = [
     id: 'demand-response',
     question: 'What is the purpose of automated load shedding during generator operation?',
     options: [
-      "To balance the load evenly across all three phases of the generator",
-      "To improve the power factor of the loads supplied by the generator",
-      "To prevent generator overload by shedding non-essential loads when demand exceeds its rated capacity",
-      "To switch the load back to the mains supply as soon as it is restored",
+      'To balance the load evenly across all three phases of the generator',
+      'To improve the power factor of the loads supplied by the generator',
+      'To prevent generator overload by shedding non-essential loads when demand exceeds its rated capacity',
+      'To switch the load back to the mains supply as soon as it is restored',
     ],
     correctIndex: 2,
     explanation:
@@ -68,9 +102,6 @@ const quickCheckQuestions = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Quiz questions (12) — end-of-page assessment                       */
-/* ------------------------------------------------------------------ */
 const quizQuestions = [
   {
     id: 1,
@@ -232,9 +263,6 @@ const quizQuestions = [
   },
 ];
 
-/* ------------------------------------------------------------------ */
-/*  FAQs (5)                                                           */
-/* ------------------------------------------------------------------ */
 const faqs = [
   {
     question: 'How do I create a load schedule for an existing building?',
@@ -263,120 +291,65 @@ const faqs = [
   },
 ];
 
-/* ================================================================== */
-/*  Component                                                          */
-/* ================================================================== */
 const MOETModule3Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* ---- Sticky header ---- */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* ---- Main article ---- */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* ---- Header ---- */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Critical Load Management
-          </h1>
-          <p className="text-white">
-            Load prioritisation and management during emergency conditions for electrical systems
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.5 · Subsection 5"
+        title="Critical Load Management"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Load prioritisation and management during emergency conditions for electrical systems.
           </p>
-        </header>
 
-        {/* ---- Summary boxes ---- */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Priority tiers:</strong> Life safety, critical, essential, non-essential
+          <TLDR
+            points={[
+              'Priority tiers: Life safety, critical, essential, non-essential.',
+              'Load shedding: Automatic disconnection of non-essential loads.',
+              'Monitoring: Power quality, demand, harmonics, power factor.',
+              'Restoration: Controlled sequence to prevent inrush overload.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Load audits:</strong> Regular review of load priorities and allocations.
               </li>
-              <li className="pl-1">
-                <strong>Load shedding:</strong> Automatic disconnection of non-essential loads
+              <li>
+                <strong>Generator sizing:</strong> Must account for diversity, PF and harmonics.
               </li>
-              <li className="pl-1">
-                <strong>Monitoring:</strong> Power quality, demand, harmonics, power factor
+              <li>
+                <strong>Discrimination:</strong> Selective coordination prevents cascade tripping.
               </li>
-              <li className="pl-1">
-                <strong>Restoration:</strong> Controlled sequence to prevent inrush overload
+              <li>
+                <strong>ST1426:</strong> Maps to electrical systems maintenance and operations KSBs.
               </li>
             </ul>
-          </div>
+          </ConceptBlock>
 
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Load audits:</strong> Regular review of load priorities and allocations
-              </li>
-              <li className="pl-1">
-                <strong>Generator sizing:</strong> Must account for diversity, PF and harmonics
-              </li>
-              <li className="pl-1">
-                <strong>Discrimination:</strong> Selective coordination prevents cascade tripping
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to electrical systems maintenance and operations KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* ---- Learning outcomes ---- */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Categorise electrical loads into priority tiers for emergency management',
               'Explain automated load shedding strategies and their implementation',
               'Describe the impact of power factor and harmonics on standby system capacity',
               'Apply controlled load restoration sequences after power outages',
               'Carry out critical load audits for existing installations',
               'Understand demand management and its role in building energy strategy',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Load prioritisation and classification</ContentEyebrow>
 
-        {/* ---- Section 01 ---- */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Load Prioritisation and Classification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Effective critical load management begins with understanding which loads matter most">
             <p>
               Effective critical load management begins with understanding which loads matter most.
               In every building, from a hospital to an office block, electrical loads have different
@@ -390,267 +363,198 @@ const MOETModule3Section5_5 = () => {
               building use, new equipment installations and evolving business requirements can all
               change a load's criticality over time.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Load Priority Categories
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Definition</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Life Safety</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must never be shed; legally required backup
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm, emergency lighting, smoke ventilation, sprinkler pumps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Critical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Essential for core operations; significant impact if lost
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        IT servers, medical equipment, security systems, lifts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Essential</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Important but can be temporarily shed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General HVAC, standard lighting, refrigeration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Non-essential
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shed first; minimal operational impact
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decorative lighting, vending, non-critical heating
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Load priority categories"
+            onSite="Key point: life-safety loads are defined by legislation (BS 5839 for fire alarm, BS 5266-1:2025 for emergency lighting, Building Regulations Approved Document B for smoke ventilation). These cannot be compromised regardless of the power situation."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Category</th>
+                    <th className="py-2 pr-4 font-medium text-white">Definition</th>
+                    <th className="py-2 font-medium text-white">Examples</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Life Safety</td>
+                    <td className="py-2 pr-4">Must never be shed; legally required backup</td>
+                    <td className="py-2">
+                      Fire alarm, emergency lighting, smoke ventilation, sprinkler pumps
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Critical</td>
+                    <td className="py-2 pr-4">
+                      Essential for core operations; significant impact if lost
+                    </td>
+                    <td className="py-2">IT servers, medical equipment, security systems, lifts</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Essential</td>
+                    <td className="py-2 pr-4">Important but can be temporarily shed</td>
+                    <td className="py-2">General HVAC, standard lighting, refrigeration</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Non-essential</td>
+                    <td className="py-2 pr-4">Shed first; minimal operational impact</td>
+                    <td className="py-2">Decorative lighting, vending, non-critical heating</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Life-safety loads are defined by legislation (BS 5839 for
-              fire alarm, BS 5266 for emergency lighting, Building Regulations Approved Document B
-              for smoke ventilation). These cannot be compromised regardless of the power situation.
-            </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 1 */}
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* ---- Section 02 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Load Shedding and Demand Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Load shedding and demand management</ContentEyebrow>
+
+          <ConceptBlock title="Load shedding is the controlled disconnection of lower-priority loads to prevent overload">
             <p>
               Load shedding is the controlled disconnection of lower-priority loads to prevent
               overloading of a limited power source — typically a standby generator. It is
               implemented through a combination of automatic controls (programmed into the ATS or
               BMS) and manual intervention capabilities for maintenance technicians.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Load Shedding Implementation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Automatic:</strong> Pre-programmed contactors controlled by the ATS or BMS
-                  disconnect non-essential circuits when generator operation is detected
-                </li>
-                <li className="pl-1">
-                  <strong>Stepped:</strong> Loads shed in stages — non-essential first, then
-                  essential if generator loading exceeds threshold
-                </li>
-                <li className="pl-1">
-                  <strong>Dynamic:</strong> Real-time monitoring of generator loading triggers
-                  additional shedding if demand rises (e.g., large motor starts)
-                </li>
-                <li className="pl-1">
-                  <strong>Manual override:</strong> Maintenance technicians can manually shed or
-                  restore loads to manage unexpected conditions
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Generator Overload Protection</p>
-              <p className="text-sm text-white">
-                If the generator is overloaded beyond its rated capacity, it will experience voltage
-                and frequency drop, overheating and ultimately protective shutdown. A generator
-                shutdown during a mains failure leaves the entire installation without power —
-                including life-safety systems. Load shedding is therefore not just an energy
-                management tool; it is a safety system that protects the generator's ability to
-                supply the most critical loads.
-              </p>
-            </div>
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Test load shedding sequences during the monthly ATS test.
-              Verify that the correct loads are shed, in the correct order, and that they restore
-              correctly when normal supply returns.
-            </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 2 */}
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock
+            title="Load shedding implementation"
+            onSite="Key point: test load shedding sequences during the monthly ATS test. Verify that the correct loads are shed, in the correct order, and that they restore correctly when normal supply returns."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Automatic:</strong> Pre-programmed contactors controlled by the ATS or BMS
+                disconnect non-essential circuits when generator operation is detected.
+              </li>
+              <li>
+                <strong>Stepped:</strong> Loads shed in stages — non-essential first, then essential
+                if generator loading exceeds threshold.
+              </li>
+              <li>
+                <strong>Dynamic:</strong> Real-time monitoring of generator loading triggers
+                additional shedding if demand rises (e.g., large motor starts).
+              </li>
+              <li>
+                <strong>Manual override:</strong> Maintenance technicians can manually shed or
+                restore loads to manage unexpected conditions.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* ---- Section 03 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Power Quality and Capacity Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="Generator overload protection"
+            whatHappens="If the generator is overloaded beyond its rated capacity, it will experience voltage and frequency drop, overheating and ultimately protective shutdown. A generator shutdown during a mains failure leaves the entire installation without power — including life-safety systems."
+            doInstead="Load shedding is therefore not just an energy management tool; it is a safety system that protects the generator's ability to supply the most critical loads."
+          />
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Power quality and capacity factors</ContentEyebrow>
+
+          <ConceptBlock title="Power quality matters as much as power quantity">
             <p>
               Critical load management is not just about having enough kilowatts — the quality of
               the power supply matters as much as the quantity. Poor power factor, harmonic
               distortion and voltage instability all reduce the effective capacity of generators and
               UPS systems, and can cause sensitive equipment to malfunction.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Power Factor Impact
-                </h3>
-                <p className="text-sm text-white">
-                  A generator rated at 500 kVA delivers only 400 kW at a power factor of 0.8.
-                  Installing power factor correction capacitors to improve the PF to 0.95 increases
-                  the usable real power to 475 kW — a 19% improvement without changing the
-                  generator. For critical installations, power factor correction on the
-                  generator-backed distribution is a cost-effective way to maximise standby power
-                  capacity.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Harmonic Derating</h3>
-                <p className="text-sm text-white">
-                  Non-linear loads (VSDs, LED drivers, IT power supplies) generate harmonic currents
-                  that cause additional heating in generators and transformers. A generator
-                  supplying a high proportion of non-linear loads may need to be derated by 30-50%.
-                  Power quality monitoring during commissioning and periodic reviews identifies
-                  harmonic issues before they cause equipment failure or capacity shortfalls during
-                  emergencies.
-                </p>
-              </div>
-            </div>
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Power quality monitoring should be part of every critical
-              load management programme. Understanding the actual power characteristics of the
-              installation's loads enables accurate generator sizing and prevents capacity surprises
-              during genuine emergencies.
+          </ConceptBlock>
+
+          <ConceptBlock title="Power factor impact">
+            <p>
+              A generator rated at 500 kVA delivers only 400 kW at a power factor of 0.8. Installing
+              power factor correction capacitors to improve the PF to 0.95 increases the usable real
+              power to 475 kW — a 19% improvement without changing the generator. For critical
+              installations, power factor correction on the generator-backed distribution is a
+              cost-effective way to maximise standby power capacity.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 3 */}
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock
+            title="Harmonic derating"
+            onSite="Key point: power quality monitoring should be part of every critical load management programme. Understanding the actual power characteristics of the installation's loads enables accurate generator sizing and prevents capacity surprises during genuine emergencies."
+          >
+            <p>
+              Non-linear loads (VSDs, LED drivers, IT power supplies) generate harmonic currents
+              that cause additional heating in generators and transformers. A generator supplying a
+              high proportion of non-linear loads may need to be derated by 30-50%. Power quality
+              monitoring during commissioning and periodic reviews identifies harmonic issues before
+              they cause equipment failure or capacity shortfalls during emergencies.
+            </p>
+          </ConceptBlock>
 
-        {/* ---- Section 04 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Load Restoration and Emergency Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Load restoration and emergency procedures</ContentEyebrow>
+
+          <ConceptBlock title="How loads are restored after an outage is as important as how they are managed during one">
             <p>
               How loads are restored after a power outage is as important as how they are managed
               during one. Uncontrolled simultaneous re-energisation can cause voltage collapse,
               generator overload or upstream protection tripping — potentially causing a second
               outage worse than the first.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Controlled Restoration Sequence
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stage 1 (immediate):</strong> Life-safety loads — always connected, never
-                  shed
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 2 (30-60 seconds):</strong> Critical loads — IT, medical, essential
-                  process
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 3 (2-5 minutes):</strong> Essential loads — general HVAC, standard
-                  lighting
-                </li>
-                <li className="pl-1">
-                  <strong>Stage 4 (5-10 minutes):</strong> Non-essential loads — reconnected last
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                Time delays between stages allow motor inrush currents to subside, transformers to
-                magnetise and the supply to stabilise before the next load group is connected.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Emergency Procedures for Maintenance Technicians
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Know the load shedding and restoration sequence before an emergency occurs
-                </li>
-                <li className="pl-1">
-                  Have the load schedule readily accessible in the main switch room
-                </li>
-                <li className="pl-1">
-                  Know the manual override procedures for the ATS and load shedding contactors
-                </li>
-                <li className="pl-1">
-                  Understand the generator capacity limitations and the consequences of overloading
-                </li>
-                <li className="pl-1">
-                  Practice the restoration sequence during planned test events
-                </li>
-                <li className="pl-1">
-                  Document all actions taken during emergency events for post-event review
-                </li>
-              </ul>
-            </div>
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must understand emergency
-              power systems and their operation. This includes load management, generator operation,
-              ATS testing and controlled shutdown/startup procedures. Demonstrating competence in
-              emergency procedures is part of the practical skills assessment.
-            </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quick check 4 */}
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* ---- Section 05 ---- */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Critical Load Audits and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Controlled restoration sequence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stage 1 (immediate):</strong> Life-safety loads — always connected, never
+                shed.
+              </li>
+              <li>
+                <strong>Stage 2 (30-60 seconds):</strong> Critical loads — IT, medical, essential
+                process.
+              </li>
+              <li>
+                <strong>Stage 3 (2-5 minutes):</strong> Essential loads — general HVAC, standard
+                lighting.
+              </li>
+              <li>
+                <strong>Stage 4 (5-10 minutes):</strong> Non-essential loads — reconnected last.
+              </li>
+            </ul>
             <p>
-              A critical load management plan is not a static document -- it must evolve as the
+              Time delays between stages allow motor inrush currents to subside, transformers to
+              magnetise and the supply to stabilise before the next load group is connected.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Emergency procedures for maintenance technicians"
+            onSite="Under ST1426, maintenance technicians must understand emergency power systems and their operation. This includes load management, generator operation, ATS testing and controlled shutdown/startup procedures. Demonstrating competence in emergency procedures is part of the practical skills assessment."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Know the load shedding and restoration sequence before an emergency occurs.</li>
+              <li>Have the load schedule readily accessible in the main switch room.</li>
+              <li>Know the manual override procedures for the ATS and load shedding contactors.</li>
+              <li>
+                Understand the generator capacity limitations and the consequences of overloading.
+              </li>
+              <li>Practice the restoration sequence during planned test events.</li>
+              <li>Document all actions taken during emergency events for post-event review.</li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Critical load audits and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="A critical load management plan is not a static document">
+            <p>
+              A critical load management plan is not a static document — it must evolve as the
               building's use, occupancy and electrical systems change. A critical load audit
               systematically evaluates every electrical load in the building, assessing whether its
               priority classification and supply arrangement match its actual operational
@@ -665,155 +569,111 @@ const MOETModule3Section5_5 = () => {
               building's current use. Regular audits identify these discrepancies and enable the
               critical power system to be realigned with actual operational needs.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Critical Load Audit Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Obtain the existing load schedule, distribution drawings
-                  and single-line diagram
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Survey every circuit -- verify the connected load,
-                  measure actual demand, and identify what equipment is on each circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Interview building operators and department managers to
-                  understand the operational consequence of losing power to each load
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Reclassify each load into the correct priority tier based
-                  on current operational importance
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Compare the actual supply arrangement (backed-up or
-                  non-backed-up) with the required priority classification
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Identify loads that need to be moved to backed-up
-                  supplies or removed from them
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Update the load schedule, generator sizing calculation,
-                  and load shedding configuration
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Continuous Improvement Triggers
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Any significant change in building use or tenancy</li>
-                <li className="pl-1">
-                  Major electrical modification or new equipment installation
-                </li>
-                <li className="pl-1">
-                  Annual review as part of the preventive maintenance programme
-                </li>
-                <li className="pl-1">
-                  After any power outage event -- post-event review of what worked and what failed
-                </li>
-                <li className="pl-1">
-                  Technology changes affecting the load profile (e.g., LED retrofit reducing
-                  lighting demand)
-                </li>
-                <li className="pl-1">Regulatory changes affecting life-safety requirements</li>
-              </ul>
-            </div>
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              understanding of critical power systems and emergency procedures. This includes the
-              ability to review load schedules, verify load priorities, and recommend improvements
-              based on operational experience. The critical load audit process is a practical
-              application of the knowledge, skills and behaviours assessed in the end-point
-              assessment.
-            </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Critical load audit procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Obtain the existing load schedule, distribution drawings
+                and single-line diagram.
+              </li>
+              <li>
+                <strong>Step 2:</strong> Survey every circuit — verify the connected load, measure
+                actual demand, and identify what equipment is on each circuit.
+              </li>
+              <li>
+                <strong>Step 3:</strong> Interview building operators and department managers to
+                understand the operational consequence of losing power to each load.
+              </li>
+              <li>
+                <strong>Step 4:</strong> Reclassify each load into the correct priority tier based
+                on current operational importance.
+              </li>
+              <li>
+                <strong>Step 5:</strong> Compare the actual supply arrangement (backed-up or
+                non-backed-up) with the required priority classification.
+              </li>
+              <li>
+                <strong>Step 6:</strong> Identify loads that need to be moved to backed-up supplies
+                or removed from them.
+              </li>
+              <li>
+                <strong>Step 7:</strong> Update the load schedule, generator sizing calculation, and
+                load shedding configuration.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* ---- FAQs ---- */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* ---- Quick Reference ---- */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Load Priority Tiers</p>
-                <ul className="space-y-0.5">
-                  <li>Life safety -- fire alarm, emergency lighting</li>
-                  <li>Critical -- IT, medical, security, lifts</li>
-                  <li>Essential -- HVAC, standard lighting</li>
-                  <li>Non-essential -- vending, decorative</li>
-                  <li>Never shed life-safety loads</li>
-                  <li>Shed non-essential first</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Capacity and Restoration</p>
-                <ul className="space-y-0.5">
-                  <li>PF 0.8: 500 kVA = only 400 kW</li>
-                  <li>Harmonics: derate gen 30-50%</li>
-                  <li>Generator margin: 20-30% above demand</li>
-                  <li>Restore: life safety, critical, essential, non-essential</li>
-                  <li>Time delays between restoration stages</li>
-                  <li>Audit load schedule annually</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ---- Quiz ---- */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* ---- Navigation ---- */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Continuous improvement triggers"
+            onSite="Under ST1426, maintenance technicians must demonstrate understanding of critical power systems and emergency procedures. This includes the ability to review load schedules, verify load priorities, and recommend improvements based on operational experience. The critical load audit process is a practical application of the knowledge, skills and behaviours assessed in the end-point assessment."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Transfer Switches
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Any significant change in building use or tenancy.</li>
+              <li>Major electrical modification or new equipment installation.</li>
+              <li>Annual review as part of the preventive maintenance programme.</li>
+              <li>
+                After any power outage event — post-event review of what worked and what failed.
+              </li>
+              <li>
+                Technology changes affecting the load profile (e.g., LED retrofit reducing lighting
+                demand).
+              </li>
+              <li>Regulatory changes affecting life-safety requirements.</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Four priority tiers: life safety (never shed), critical, essential (temporarily shed) and non-essential (shed first) — all defined in the load schedule.',
+              'Load shedding runs automatic, stepped and dynamic layers with manual override, and protects the generator from an overload-triggered shutdown that would take down life-safety loads too.',
+              'Power factor: a 500 kVA generator at 0.8 PF delivers only 400 kW; correcting to 0.95 PF raises that to 475 kW — a 19% capacity gain with no change to the generator.',
+              'Harmonic distortion from non-linear loads (VSDs, LED drivers, IT power supplies) can require derating a generator by 30-50%.',
+              'Generator sizing margin is typically 20-30% above calculated demand, loading the generator at 70-80% of its rated capacity.',
+              'Restoration follows a controlled sequence — life safety immediately, critical after 30-60 s, essential after 2-5 min, non-essential after 5-10 min — so inrush currents subside between stages.',
+              "A critical load audit re-verifies every load's priority against its actual operational importance, and should run annually or after any significant change, modification or outage.",
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Transfer Switches
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Solar PV Integration
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

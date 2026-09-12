@@ -1,8 +1,42 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 2 · Subsection 1 — Visual and Sensory Inspection
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Inspect and test electrical aspects of plant. For
+ *     example, visual checks, insulation and continuity checks,
+ *     thermographic surveys, and voltage levels."
+ *   · "Record information."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Visual and Sensory Inspection - MOET Module 4.2.1';
@@ -243,108 +277,65 @@ const faqs = [
 ];
 
 const MOETModule4Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Visual and Sensory Inspection
-          </h1>
-          <p className="text-white">
-            Using look, listen, smell and feel to detect deterioration, damage and developing faults
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.2 · Subsection 1"
+        title="Visual and Sensory Inspection"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Using look, listen, smell and feel to detect deterioration, damage and developing
+            faults.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Look:</strong> Discolouration, damage, corrosion, contamination
+          <TLDR
+            points={[
+              'Look: Discolouration, damage, corrosion, contamination.',
+              'Listen: Buzzing, crackling, grinding, unusual noise.',
+              'Smell: Burning, ozone, overheated insulation.',
+              'Feel: Vibration changes, excessive heat (back of hand safely).',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Overheating:</strong> Brown marks on insulation, melted plastic.
               </li>
-              <li className="pl-1">
-                <strong>Listen:</strong> Buzzing, crackling, grinding, unusual noise
+              <li>
+                <strong>Vermin:</strong> Droppings, nesting, gnawed cables.
               </li>
-              <li className="pl-1">
-                <strong>Smell:</strong> Burning, ozone, overheated insulation
+              <li>
+                <strong>Moisture:</strong> Staining, condensation, corrosion.
               </li>
-              <li className="pl-1">
-                <strong>Feel:</strong> Vibration changes, excessive heat (back of hand safely)
+              <li>
+                <strong>Walkthrough:</strong> Systematic route with structured checklist.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Overheating:</strong> Brown marks on insulation, melted plastic
-              </li>
-              <li className="pl-1">
-                <strong>Vermin:</strong> Droppings, nesting, gnawed cables
-              </li>
-              <li className="pl-1">
-                <strong>Moisture:</strong> Staining, condensation, corrosion
-              </li>
-              <li className="pl-1">
-                <strong>Walkthrough:</strong> Systematic route with structured checklist
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply systematic visual and sensory inspection techniques to electrical installations',
               'Recognise visual signs of overheating, arcing, moisture damage and corrosion',
               'Identify audible indicators of developing faults in contactors, motors and switchgear',
               'Detect olfactory signs of electrical faults including burning and ozone',
               'Conduct structured walkthrough inspections using appropriate checklists',
               'Record and escalate findings appropriately based on severity',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The power of observation</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Power of Observation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The first line of defence in condition monitoring">
             <p>
               Before any test instrument is connected, before any panel door is opened, a skilled
               maintenance technician can gather an enormous amount of information about equipment
@@ -352,367 +343,327 @@ const MOETModule4Section2_1 = () => {
               defence in condition monitoring — it costs nothing, requires no special equipment and
               can be performed during routine site visits.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Four Senses in Electrical Inspection
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Sense</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What to Look/Listen/Smell/Feel For
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Possible Indication
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Sight</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discolouration, melting, cracks, corrosion, damage, contamination, water
-                        staining
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overheating, mechanical damage, moisture ingress, ageing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Hearing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Buzzing, humming, crackling, scraping, squealing, irregular rhythm
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loose components, partial discharge, bearing wear, misalignment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Smell</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Burning, acrid fumes, ozone (chlorine-like), hot oil, electrical smell
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation breakdown, arcing, corona discharge, overheated lubricant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Touch</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excessive heat, unusual vibration, looseness (back of hand for heat,
-                        vibration pen for quantified data)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overloading, bearing defect, loose mounting, imbalance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="The four senses in electrical inspection">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Sense
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      What to look/listen/smell/feel for
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Possible indication
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Sight</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Discolouration, melting, cracks, corrosion, damage, contamination, water
+                      staining
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Overheating, mechanical damage, moisture ingress, ageing
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Hearing</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Buzzing, humming, crackling, scraping, squealing, irregular rhythm
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Loose components, partial discharge, bearing wear, misalignment
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Smell</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Burning, acrid fumes, ozone (chlorine-like), hot oil, electrical smell
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Insulation breakdown, arcing, corona discharge, overheated lubricant
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Touch</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Excessive heat, unusual vibration, looseness (back of hand for heat, vibration
+                      pen for quantified data)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Overloading, bearing defect, loose mounting, imbalance
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety First</p>
-              <p className="text-sm text-white">
-                Sensory inspection must always be conducted safely. Never touch energised
-                conductors. Use the back of your hand at a safe distance to sense heat before
-                touching equipment casings. Approach carefully when investigating unusual sounds —
-                arcing and partial discharge can escalate to flashover. If you smell burning and the
-                source is not immediately obvious, do not open panel doors without appropriate PPE
-                and a safe system of work.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Safety first">
+            <p>
+              Sensory inspection must always be conducted safely. Never touch energised conductors.
+              Use the back of your hand at a safe distance to sense heat before touching equipment
+              casings. Approach carefully when investigating unusual sounds — arcing and partial
+              discharge can escalate to flashover. If you smell burning and the source is not
+              immediately obvious, do not open panel doors without appropriate PPE and a safe system
+              of work.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Signs of Overheating and Electrical Damage
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Signs of overheating and electrical damage</ContentEyebrow>
+
+          <ConceptBlock title="The most common precursor to electrical failure and fire">
             <p>
               Overheating is the most common precursor to electrical failure and fire. Learning to
               recognise the visual signs of overheating is one of the most valuable skills a
               maintenance technician can develop.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Visual Signs of Overheating
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Insulation discolouration:</strong> White PVC turns yellow, then brown,
-                    then black as temperature increases
-                  </li>
-                  <li className="pl-1">
-                    <strong>Melting:</strong> Deformed plastic enclosures, melted cable sheathing,
-                    softened insulation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Charring:</strong> Blackened areas around connections indicate sustained
-                    high temperature
-                  </li>
-                  <li className="pl-1">
-                    <strong>Conductor discolouration:</strong> Copper turns dark brown/black when
-                    overheated; aluminium shows white oxide
-                  </li>
-                  <li className="pl-1">
-                    <strong>Arc damage:</strong> Pitting, cratering, metal spatter on contacts and
-                    busbars
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tracking:</strong> Carbon paths across insulating surfaces — a precursor
-                    to flashover
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Visual signs of overheating">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation discolouration:</strong> White PVC turns yellow, then brown, then
+                black as temperature increases
+              </li>
+              <li>
+                <strong>Melting:</strong> Deformed plastic enclosures, melted cable sheathing,
+                softened insulation
+              </li>
+              <li>
+                <strong>Charring:</strong> Blackened areas around connections indicate sustained
+                high temperature
+              </li>
+              <li>
+                <strong>Conductor discolouration:</strong> Copper turns dark brown/black when
+                overheated; aluminium shows white oxide
+              </li>
+              <li>
+                <strong>Arc damage:</strong> Pitting, cratering, metal spatter on contacts and
+                busbars
+              </li>
+              <li>
+                <strong>Tracking:</strong> Carbon paths across insulating surfaces — a precursor to
+                flashover
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environmental Damage Indicators
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Corrosion:</strong> Green verdigris on copper, white powder on
-                    aluminium, rust on steel
-                  </li>
-                  <li className="pl-1">
-                    <strong>Water damage:</strong> Tide marks, staining, calcium deposits, corrosion
-                    patterns
-                  </li>
-                  <li className="pl-1">
-                    <strong>UV degradation:</strong> Brittle, cracking cable sheath on outdoor
-                    installations
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chemical attack:</strong> Softened or swollen insulation near chemical
-                    stores or processes
-                  </li>
-                  <li className="pl-1">
-                    <strong>Vermin damage:</strong> Gnawed insulation, droppings, nesting material,
-                    urine staining
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Environmental damage indicators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Corrosion:</strong> Green verdigris on copper, white powder on aluminium,
+                rust on steel
+              </li>
+              <li>
+                <strong>Water damage:</strong> Tide marks, staining, calcium deposits, corrosion
+                patterns
+              </li>
+              <li>
+                <strong>UV degradation:</strong> Brittle, cracking cable sheath on outdoor
+                installations
+              </li>
+              <li>
+                <strong>Chemical attack:</strong> Softened or swollen insulation near chemical
+                stores or processes
+              </li>
+              <li>
+                <strong>Vermin damage:</strong> Gnawed insulation, droppings, nesting material,
+                urine staining
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Audible and Olfactory Indicators
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Audible and olfactory indicators</ContentEyebrow>
+
+          <ConceptBlock title="Diagnosing faults you cannot see">
             <p>
               Sound and smell can alert you to faults that are not visible. Many experienced
               technicians can diagnose equipment problems simply by listening to the operating sound
               or detecting a characteristic smell. Developing this skill requires exposure to both
               normal and abnormal operating conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Sounds to Listen For
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Buzzing contactor:</strong> Damaged shading ring or dirty pole faces
-                  </li>
-                  <li className="pl-1">
-                    <strong>Crackling in panel:</strong> Partial discharge or loose connection
-                    arcing
-                  </li>
-                  <li className="pl-1">
-                    <strong>Motor grinding:</strong> Bearing failure or rotor-to-stator contact
-                  </li>
-                  <li className="pl-1">
-                    <strong>Squealing belt:</strong> Loose or worn V-belt slipping
-                  </li>
-                  <li className="pl-1">
-                    <strong>Transformer hum increase:</strong> Core looseness or overloading
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rhythmic thumping:</strong> Motor imbalance or loose coupling
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Smells to Recognise
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Burning plastic:</strong> Overheating insulation or cable sheath
-                  </li>
-                  <li className="pl-1">
-                    <strong>Acrid/sharp smell:</strong> Electrical arcing or overheated contacts
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ozone (chlorine-like):</strong> Corona or partial discharge
-                  </li>
-                  <li className="pl-1">
-                    <strong>Fish-like smell:</strong> Overheated bakelite or phenolic resin (older
-                    equipment)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Sweet chemical smell:</strong> Overheated transformer oil or coolant
-                  </li>
-                  <li className="pl-1">
-                    <strong>Sulphur smell:</strong> Battery gassing from UPS or emergency lighting
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Sounds to listen for">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Buzzing contactor:</strong> Damaged shading ring or dirty pole faces
+              </li>
+              <li>
+                <strong>Crackling in panel:</strong> Partial discharge or loose connection arcing
+              </li>
+              <li>
+                <strong>Motor grinding:</strong> Bearing failure or rotor-to-stator contact
+              </li>
+              <li>
+                <strong>Squealing belt:</strong> Loose or worn V-belt slipping
+              </li>
+              <li>
+                <strong>Transformer hum increase:</strong> Core looseness or overloading
+              </li>
+              <li>
+                <strong>Rhythmic thumping:</strong> Motor imbalance or loose coupling
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Smells to recognise">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Burning plastic:</strong> Overheating insulation or cable sheath
+              </li>
+              <li>
+                <strong>Acrid/sharp smell:</strong> Electrical arcing or overheated contacts
+              </li>
+              <li>
+                <strong>Ozone (chlorine-like):</strong> Corona or partial discharge
+              </li>
+              <li>
+                <strong>Fish-like smell:</strong> Overheated bakelite or phenolic resin (older
+                equipment)
+              </li>
+              <li>
+                <strong>Sweet chemical smell:</strong> Overheated transformer oil or coolant
+              </li>
+              <li>
+                <strong>Sulphur smell:</strong> Battery gassing from UPS or emergency lighting
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            The Systematic Walkthrough
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The systematic walkthrough</ContentEyebrow>
+
+          <ConceptBlock title="Converting ad-hoc observation into a repeatable process">
             <p>
               A systematic walkthrough converts ad-hoc observation into a structured, repeatable
               process. It follows a planned route, uses a checklist to ensure completeness, and
               produces documented records that can be compared over time.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Walkthrough Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Plan the route:</strong> Start at the main intake and work through the
-                  distribution hierarchy
-                </li>
-                <li className="pl-1">
-                  <strong>Use a checklist:</strong> Structured list covering every item to be
-                  inspected
-                </li>
-                <li className="pl-1">
-                  <strong>Be systematic:</strong> Work top to bottom, left to right, inside to
-                  outside
-                </li>
-                <li className="pl-1">
-                  <strong>Take time:</strong> Rushing defeats the purpose — slow down and observe
-                  carefully
-                </li>
-                <li className="pl-1">
-                  <strong>Record everything:</strong> Satisfactory and unsatisfactory findings both
-                  have value
-                </li>
-                <li className="pl-1">
-                  <strong>Photograph anomalies:</strong> Visual record supports the written findings
-                </li>
-                <li className="pl-1">
-                  <strong>Compare to previous:</strong> Has anything changed since the last
-                  walkthrough?
-                </li>
-                <li className="pl-1">
-                  <strong>Escalate promptly:</strong> Do not wait until the end of the walkthrough
-                  to report urgent findings
-                </li>
-              </ul>
+          <ConceptBlock title="Walkthrough procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Plan the route:</strong> Start at the main intake and work through the
+                distribution hierarchy
+              </li>
+              <li>
+                <strong>Use a checklist:</strong> Structured list covering every item to be
+                inspected
+              </li>
+              <li>
+                <strong>Be systematic:</strong> Work top to bottom, left to right, inside to outside
+              </li>
+              <li>
+                <strong>Take time:</strong> Rushing defeats the purpose — slow down and observe
+                carefully
+              </li>
+              <li>
+                <strong>Record everything:</strong> Satisfactory and unsatisfactory findings both
+                have value
+              </li>
+              <li>
+                <strong>Photograph anomalies:</strong> Visual record supports the written findings
+              </li>
+              <li>
+                <strong>Compare to previous:</strong> Has anything changed since the last
+                walkthrough?
+              </li>
+              <li>
+                <strong>Escalate promptly:</strong> Do not wait until the end of the walkthrough to
+                report urgent findings
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">ST1426 link: </span>
+            The ability to carry out systematic visual and sensory inspections, identify
+            abnormalities, and report findings accurately is a fundamental competency for
+            maintenance technicians. This is assessed through practical observation and the
+            professional discussion at end-point assessment.
+          </p>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Visual warning signs"
+            points={[
+              'Brown/black discolouration = overheating.',
+              'Green deposits on copper = corrosion + moisture.',
+              'Melted plastic = sustained high temperature.',
+              'Carbon tracks = tracking/flashover risk.',
+              'Gnawed cables = vermin damage.',
+            ]}
+          />
+
+          <KeyTakeaways
+            title="Sensory warning signs"
+            points={[
+              'Buzzing contactor = shading ring/pole face fault.',
+              'Crackling = partial discharge or arcing.',
+              'Burning smell = insulation overheating.',
+              'Ozone smell = corona/partial discharge.',
+              'Changed vibration = bearing/alignment fault.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section 4.2 hub
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Thermal Imaging
+                </div>
+              </button>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to carry out systematic visual and sensory
-              inspections, identify abnormalities, and report findings accurately is a fundamental
-              competency for maintenance technicians. This is assessed through practical observation
-              and the professional discussion at end-point assessment.
-            </p>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Visual Warning Signs</p>
-                <ul className="space-y-0.5">
-                  <li>Brown/black discolouration = overheating</li>
-                  <li>Green deposits on copper = corrosion + moisture</li>
-                  <li>Melted plastic = sustained high temperature</li>
-                  <li>Carbon tracks = tracking/flashover risk</li>
-                  <li>Gnawed cables = vermin damage</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Sensory Warning Signs</p>
-                <ul className="space-y-0.5">
-                  <li>Buzzing contactor = shading ring/pole face fault</li>
-                  <li>Crackling = partial discharge or arcing</li>
-                  <li>Burning smell = insulation overheating</li>
-                  <li>Ozone smell = corona/partial discharge</li>
-                  <li>Changed vibration = bearing/alignment fault</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-2">
-              Next: Thermal Imaging
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

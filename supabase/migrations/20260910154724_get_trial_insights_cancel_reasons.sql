@@ -1,4 +1,4 @@
--- Why people actually leave, for the Trials page.
+-- Why people actually leave, added to get_trial_insights.
 --
 -- `cancel_survey_responses` is filled by the in-app cancel flow across the whole
 -- paying base, not just trials, so it is labelled as such on the page. It earns

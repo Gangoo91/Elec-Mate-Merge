@@ -145,6 +145,11 @@ interface NotificationTypeConfig {
   actions: NotificationAction[];
 }
 
+/** The Elec-Mate mark. Shown on every push so ours is recognisable at a glance. */
+const BRAND_ICON = '/pwa-192x192.png';
+/** Android masks the badge to a silhouette, so it has to be the flat mark. */
+const BRAND_BADGE = '/icons/badge.svg';
+
 const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
   peer: {
     icon: '/icons/peer.svg',
@@ -248,7 +253,9 @@ const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
   study: {
     icon: '/icons/message.svg',
     badge: '/icons/badge.svg',
-    color: '#A855F7',
+    // Was #A855F7 — purple. Android tints the notification with this, so every
+    // study push we have sent has been accented in a colour the app does not use.
+    color: '#F5C518',
     vibrate: [100, 50, 100],
     requireInteraction: false,
     actions: [
@@ -364,14 +371,23 @@ self.addEventListener('push', (event: PushEvent) => {
   const type = payload.type || 'default';
   const config = NOTIFICATION_CONFIG[type] || NOTIFICATION_CONFIG.default;
 
-  // Overdue invoice gets a different icon
+  // The icon slot is the app's identity on both platforms — it is the square a
+  // person recognises on a crowded lock screen — so it carries the Elec-Mate
+  // mark rather than a per-type glyph. Every push overrode the logo the server
+  // had already sent with a generic speech bubble, so nothing we have ever sent
+  // has been recognisable as ours at a glance.
+  //
+  // Per-type meaning still lands: `badge` is Android's small monochrome
+  // status-bar mark, the actions differ, and the title says what it is. An
+  // overdue invoice keeps its own icon — that is a state, not a category, and
+  // it earns the exception.
   const isOverdue = type === 'invoice' && payload.data?.status === 'overdue';
-  const icon = isOverdue ? '/icons/invoice-overdue.svg' : config.icon;
+  const icon = isOverdue ? '/icons/invoice-overdue.svg' : BRAND_ICON;
 
   const options: NotificationOptions & { actions?: NotificationAction[] } = {
     body: payload.body,
     icon: icon,
-    badge: config.badge,
+    badge: config.badge || BRAND_BADGE,
     tag:
       (payload.data?.tag as string) ||
       `${type}-${payload.data?.conversationId || payload.data?.invoiceId || payload.data?.applicationId || Date.now()}`,
@@ -406,8 +422,9 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
     return;
   }
 
-  // Tap tracking (best-effort beacon) — powers campaign tap-through rate.
-  if (data.announcementId) {
+  // Tap tracking (best-effort beacon) — campaign tap-through rate, and
+  // per-push attribution for everything else via data.logId.
+  if (data.announcementId || data.logId) {
     event.waitUntil(
       fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/track-push-event', {
         method: 'POST',
@@ -417,7 +434,11 @@ self.addEventListener('notificationclick', (event: NotificationEvent) => {
           apikey:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8',
         },
-        body: JSON.stringify({ announcementId: data.announcementId, event: 'tapped' }),
+        body: JSON.stringify({
+          announcementId: data.announcementId,
+          logId: data.logId,
+          event: 'tapped',
+        }),
       }).catch(() => {})
     );
   }

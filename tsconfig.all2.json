@@ -1,0 +1,12 @@
+{"extends":"./tsconfig.app.json","include":[
+"src/components/apprentice/calculators/*.tsx",
+"src/components/calculators/**/*.tsx",
+"src/lib/calculator-report.ts",
+"src/lib/calculator-report-context.tsx",
+"src/pages/electrician-tools/Calculations.tsx",
+"src/pages/electrician/renewables/RenewableCalc.tsx",
+"src/components/apprentice/toolbox/ActiveToolContent.tsx",
+"src/components/subscription/CancelFlow.tsx",
+"src/pages/Subscriptions.tsx",
+"src/hooks/auth/types.ts"
+]}

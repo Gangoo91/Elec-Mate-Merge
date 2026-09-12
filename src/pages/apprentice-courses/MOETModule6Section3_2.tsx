@@ -1,8 +1,40 @@
-import { ArrowLeft, AlertTriangle, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 3 · Subsection 2 — Fault Reports and Corrective
+ * Actions
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fault Reports and Corrective Actions - MOET Module 6 Section 3.2';
@@ -69,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'The 5 Whys technique is used in fault diagnosis to:',
     options: [
-      "Calculate how many maintenance hours a recurring fault has cost",
-      "Rank five competing faults in order of repair priority",
+      'Calculate how many maintenance hours a recurring fault has cost',
+      'Rank five competing faults in order of repair priority',
       "Identify the root cause by repeatedly asking 'why' until the fundamental cause is found",
-      "Decide which of five technicians is best suited to attend the fault",
+      'Decide which of five technicians is best suited to attend the fault',
     ],
     correctAnswer: 2,
     explanation:
@@ -136,8 +168,8 @@ const quizQuestions = [
     question: "A 'near miss' related to an electrical fault should be:",
     options: [
       "Logged informally in the technician's personal diary only",
-      "Ignored if no equipment was actually damaged",
-      "Discussed verbally at the next team meeting without a written record",
+      'Ignored if no equipment was actually damaged',
+      'Discussed verbally at the next team meeting without a written record',
       "Reported and documented using the organisation's incident reporting system",
     ],
     correctAnswer: 3,
@@ -201,9 +233,9 @@ const quizQuestions = [
     question: 'Fault reports and corrective action records should typically be retained for:',
     options: [
       "The life of the asset, or as specified by the organisation's retention policy (typically 5+ years minimum)",
-      "Until the equipment is next serviced, then discarded",
-      "A maximum of 12 months, after which they must be deleted",
-      "Only as long as the technician who carried out the work remains employed",
+      'Until the equipment is next serviced, then discarded',
+      'A maximum of 12 months, after which they must be deleted',
+      'Only as long as the technician who carried out the work remains employed',
     ],
     correctAnswer: 0,
     explanation:
@@ -240,109 +272,51 @@ const faqs = [
 ];
 
 const MOETModule6Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <AlertTriangle className="h-4 w-4" />
-            <span>Module 6.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fault Reports and Corrective Actions
-          </h1>
-          <p className="text-white">
-            Systematic fault reporting, root cause analysis and corrective action documentation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.3 · Subsection 2"
+        title="Fault Reports and Corrective Actions"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Systematic fault reporting, root cause analysis and corrective action documentation.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault reports:</strong> Factual record of fault, cause and corrective action
-              </li>
-              <li className="pl-1">
-                <strong>Root cause:</strong> Underlying reason, not just the immediate symptom
-              </li>
-              <li className="pl-1">
-                <strong>Corrective actions:</strong> Temporary (restore) vs permanent (root cause
-                fix)
-              </li>
-              <li className="pl-1">
-                <strong>Follow-up:</strong> Verification, monitoring and close-out procedures
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>5 Whys / fishbone:</strong> Structured root cause analysis techniques
-              </li>
-              <li className="pl-1">
-                <strong>FMEA:</strong> Risk-based failure mode prioritisation
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Test under load after every repair
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to fault diagnosis and reporting KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Fault reports: factual record of fault, cause and corrective action.',
+              'Root cause: underlying reason, not just the immediate symptom.',
+              'Corrective actions: temporary (restore) vs permanent (root cause fix).',
+              'Follow-up: verification, monitoring and close-out procedures.',
+              '5 Whys / fishbone: structured root cause analysis techniques.',
+              'FMEA: risk-based failure mode prioritisation.',
+              'Verification: test under load after every repair.',
+              'ST1426: maps to fault diagnosis and reporting KSBs.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Write clear, structured fault reports with all required information',
               'Apply root cause analysis techniques including 5 Whys and fishbone diagrams',
               'Classify failure modes and prioritise corrective actions by risk',
               'Document corrective actions from diagnosis through verification',
               'Understand the difference between temporary and permanent corrective actions',
               'Meet ST1426 requirements for fault reporting and professional communication',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The anatomy of a fault report</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Anatomy of a Fault Report
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The anatomy of a fault report">
             <p>
               A fault report is a structured document that records an equipment failure or
               malfunction, the diagnostic process followed, the root cause identified, and the
@@ -350,445 +324,388 @@ const MOETModule6Section3_2 = () => {
               supporting asset management decisions, providing compliance evidence, and building
               institutional knowledge for future technicians.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Elements of a Fault Report
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Report reference:</strong> Unique number linked to the work order or CMMS
-                  entry
-                </li>
-                <li className="pl-1">
-                  <strong>Date, time and duration:</strong> When the fault was reported, attended
-                  and resolved
-                </li>
-                <li className="pl-1">
-                  <strong>Asset identification:</strong> Equipment tag, asset number, location code
-                </li>
-                <li className="pl-1">
-                  <strong>Fault description:</strong> Symptoms observed — alarms, abnormal
-                  behaviour, measurements
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostic process:</strong> Tests performed, measurements taken, logical
-                  steps followed
-                </li>
-                <li className="pl-1">
-                  <strong>Root cause:</strong> The underlying reason the fault occurred
-                </li>
-                <li className="pl-1">
-                  <strong>Corrective action:</strong> What was done to resolve the fault (temporary
-                  or permanent)
-                </li>
-                <li className="pl-1">
-                  <strong>Parts and materials:</strong> Items used with part numbers and quantities
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Test results confirming successful repair
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding actions:</strong> Any further work required with priority and
-                  timescale
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Essential elements of a fault report">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Report reference:</strong> unique number linked to the work order or CMMS
+                entry.
+              </li>
+              <li>
+                <strong>Date, time and duration:</strong> when the fault was reported, attended and
+                resolved.
+              </li>
+              <li>
+                <strong>Asset identification:</strong> equipment tag, asset number, location code.
+              </li>
+              <li>
+                <strong>Fault description:</strong> symptoms observed — alarms, abnormal behaviour,
+                measurements.
+              </li>
+              <li>
+                <strong>Diagnostic process:</strong> tests performed, measurements taken, logical
+                steps followed.
+              </li>
+              <li>
+                <strong>Root cause:</strong> the underlying reason the fault occurred.
+              </li>
+              <li>
+                <strong>Corrective action:</strong> what was done to resolve the fault (temporary or
+                permanent).
+              </li>
+              <li>
+                <strong>Parts and materials:</strong> items used with part numbers and quantities.
+              </li>
+              <li>
+                <strong>Verification:</strong> test results confirming successful repair.
+              </li>
+              <li>
+                <strong>Outstanding actions:</strong> any further work required with priority and
+                timescale.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Common Fault Reporting Mistakes
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Describing the repair but not the fault found</li>
-                <li className="pl-1">
-                  Recording the symptom as the root cause (e.g., "replaced blown fuse" without
-                  explaining why it blew)
-                </li>
-                <li className="pl-1">
-                  Using vague descriptions: "fixed motor" instead of specific actions
-                </li>
-                <li className="pl-1">
-                  Not recording diagnostic steps — losing valuable troubleshooting information
-                </li>
-                <li className="pl-1">
-                  Failing to document outstanding actions that need follow-up
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common fault reporting mistakes">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Describing the repair but not the fault found.</li>
+              <li>
+                Recording the symptom as the root cause (e.g., &quot;replaced blown fuse&quot;
+                without explaining why it blew).
+              </li>
+              <li>
+                Using vague descriptions: &quot;fixed motor&quot; instead of specific actions.
+              </li>
+              <li>Not recording diagnostic steps — losing valuable troubleshooting information.</li>
+              <li>Failing to document outstanding actions that need follow-up.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Root Cause Analysis Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Root cause analysis techniques</ContentEyebrow>
+
+          <ConceptBlock title="Root cause analysis techniques">
             <p>
               Root cause analysis (RCA) is the systematic process of identifying the underlying
               reason a fault occurred, rather than just addressing the visible symptom. Effective
               RCA prevents recurring faults, reduces maintenance costs, and improves equipment
               reliability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  The 5 Whys Technique
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Starting with the fault symptom, ask "why?" repeatedly until the fundamental cause
-                  is uncovered.
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex gap-2">
-                    <span className="text-elec-yellow/80 font-mono">Why 1:</span>
-                    <span>
-                      The motor tripped on overload. <em className="text-white">Why?</em>
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="text-elec-yellow/80 font-mono">Why 2:</span>
-                    <span>
-                      The motor was drawing excessive current.{' '}
-                      <em className="text-white">Why?</em>
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="text-elec-yellow/80 font-mono">Why 3:</span>
-                    <span>
-                      The driven pump was mechanically seized.{' '}
-                      <em className="text-white">Why?</em>
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="text-elec-yellow/80 font-mono">Why 4:</span>
-                    <span>
-                      The pump bearing failed due to lack of lubrication.{' '}
-                      <em className="text-white">Why?</em>
-                    </span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="text-elec-yellow/80 font-mono">Why 5:</span>
-                    <span>
-                      The lubrication schedule was not followed — PM task overdue by 3 months.
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-elec-yellow/70 mt-3">
-                  <strong>Root cause:</strong> Failure to follow the preventive maintenance
-                  schedule. The corrective action is not just to replace the bearing — it is to
-                  address the PM scheduling gap.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ishikawa (Fishbone) Diagram
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Organises potential causes into six categories (the 6 Ms):
-                </p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Manpower:</strong> Training, competence, fatigue
-                  </div>
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Methods:</strong> Procedures, work instructions
-                  </div>
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Machinery:</strong> Equipment condition, age
-                  </div>
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Materials:</strong> Component quality, compatibility
-                  </div>
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Measurement:</strong> Test accuracy, calibration
-                  </div>
-                  <div className="p-2 rounded bg-white/5">
-                    <strong>Environment:</strong> Temperature, moisture, contamination
-                  </div>
-                </div>
-              </div>
+          <ConceptBlock title="The 5 Whys technique">
+            <p>
+              Starting with the fault symptom, ask &quot;why?&quot; repeatedly until the fundamental
+              cause is uncovered.
+            </p>
+            <div className="space-y-2 rounded-lg bg-white/5 p-4">
+              <p>
+                <span className="font-mono text-elec-yellow/80">Why 1:</span> The motor tripped on
+                overload. <em>Why?</em>
+              </p>
+              <p>
+                <span className="font-mono text-elec-yellow/80">Why 2:</span> The motor was drawing
+                excessive current. <em>Why?</em>
+              </p>
+              <p>
+                <span className="font-mono text-elec-yellow/80">Why 3:</span> The driven pump was
+                mechanically seized. <em>Why?</em>
+              </p>
+              <p>
+                <span className="font-mono text-elec-yellow/80">Why 4:</span> The pump bearing
+                failed due to lack of lubrication. <em>Why?</em>
+              </p>
+              <p>
+                <span className="font-mono text-elec-yellow/80">Why 5:</span> The lubrication
+                schedule was not followed — PM task overdue by 3 months.
+              </p>
+              <p className="border-t border-white/10 pt-2 text-elec-yellow/70">
+                <strong>Root cause:</strong> Failure to follow the preventive maintenance schedule.
+                The corrective action is not just to replace the bearing — it is to address the PM
+                scheduling gap.
+              </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Ishikawa (fishbone) diagram">
+            <p>Organises potential causes into six categories (the 6 Ms):</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Manpower:</strong> training, competence, fatigue.
+              </li>
+              <li>
+                <strong>Methods:</strong> procedures, work instructions.
+              </li>
+              <li>
+                <strong>Machinery:</strong> equipment condition, age.
+              </li>
+              <li>
+                <strong>Materials:</strong> component quality, compatibility.
+              </li>
+              <li>
+                <strong>Measurement:</strong> test accuracy, calibration.
+              </li>
+              <li>
+                <strong>Environment:</strong> temperature, moisture, contamination.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Failure Classification and Prioritisation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Failure classification and prioritisation</ContentEyebrow>
+
+          <ConceptBlock title="Failure classification and prioritisation">
             <p>
               Understanding different types of failure helps you categorise faults accurately and
               prioritise corrective actions appropriately. Electrical equipment can fail in several
               distinct modes, each requiring a different response.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Failure Mode</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Catastrophic</td>
-                      <td className="border border-white/10 px-3 py-2">Complete, sudden failure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformer winding failure, VSD power stage burnout
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Degraded</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Operates but below rated performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor running hot, capacitor bank partially failed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Intermittent</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Appears and disappears unpredictably
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loose connection causing random trips
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Hidden</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not apparent during normal operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standby generator failure, UPS battery degradation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Incipient</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Early-stage deterioration detectable by monitoring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Declining insulation resistance, partial discharge
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Failure classification"
+            headers={['Failure Mode', 'Description', 'Electrical Example']}
+            rows={[
+              [
+                'Catastrophic',
+                'Complete, sudden failure',
+                'Transformer winding failure, VSD power stage burnout',
+              ],
+              [
+                'Degraded',
+                'Operates but below rated performance',
+                'Motor running hot, capacitor bank partially failed',
+              ],
+              [
+                'Intermittent',
+                'Appears and disappears unpredictably',
+                'Loose connection causing random trips',
+              ],
+              [
+                'Hidden',
+                'Not apparent during normal operation',
+                'Standby generator failure, UPS battery degradation',
+              ],
+              [
+                'Incipient',
+                'Early-stage deterioration detectable by monitoring',
+                'Declining insulation resistance, partial discharge',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Corrective Action Priority Matrix
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Priority</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Criteria</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Response Time</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
-                        P1 — Emergency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate safety risk or critical production loss
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Immediate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
-                        P2 — Urgent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Significant operational impact, near-term safety risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Within 24 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
-                        P3 — Planned
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-critical, can be scheduled normally
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Within 1-2 weeks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-blue-400">
-                        P4 — Improvement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enhancement, no immediate risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Next shutdown</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <AppendixTable
+            caption="Corrective action priority matrix"
+            headers={['Priority', 'Criteria', 'Response Time']}
+            rows={[
+              [
+                <span className="font-medium text-red-400">P1 — Emergency</span>,
+                'Immediate safety risk or critical production loss',
+                'Immediate',
+              ],
+              [
+                <span className="font-medium text-orange-400">P2 — Urgent</span>,
+                'Significant operational impact, near-term safety risk',
+                'Within 24 hours',
+              ],
+              [
+                <span className="font-medium text-yellow-400">P3 — Planned</span>,
+                'Non-critical, can be scheduled normally',
+                'Within 1-2 weeks',
+              ],
+              [
+                <span className="font-medium text-blue-400">P4 — Improvement</span>,
+                'Enhancement, no immediate risk',
+                'Next shutdown',
+              ],
+            ]}
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Corrective Action Documentation and Follow-Up
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Corrective action documentation and follow-up</ContentEyebrow>
+
+          <ConceptBlock title="Corrective action documentation and follow-up">
             <p>
               Every corrective action must answer three questions: what was done, was it effective,
               and is any further work needed? Documenting this with sufficient detail closes the
               loop on fault management and ensures nothing falls through the cracks.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Temporary Corrective Actions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Restores equipment to operational state</li>
-                  <li className="pl-1">Does not address root cause</li>
-                  <li className="pl-1">Must be clearly flagged as temporary</li>
-                  <li className="pl-1">Generates a follow-up work order for permanent fix</li>
-                  <li className="pl-1">
-                    Example: bypassing a faulty sensor with a manual override
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Permanent Corrective Actions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Addresses the root cause of the fault</li>
-                  <li className="pl-1">Prevents recurrence of the same failure</li>
-                  <li className="pl-1">May include design modifications or procedure changes</li>
-                  <li className="pl-1">Verified through testing and monitoring</li>
-                  <li className="pl-1">Example: replacing undersized cable causing voltage drop</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Temporary corrective actions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Restores equipment to operational state.</li>
+              <li>Does not address root cause.</li>
+              <li>Must be clearly flagged as temporary.</li>
+              <li>Generates a follow-up work order for permanent fix.</li>
+              <li>Example: bypassing a faulty sensor with a manual override.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Verification and Close-Out
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Functional testing under normal operating conditions</li>
-                <li className="pl-1">Electrical tests as appropriate (IR, continuity, Zs)</li>
-                <li className="pl-1">Thermal monitoring during initial run-up period</li>
-                <li className="pl-1">
-                  Confirmation from operations that equipment performs as expected
-                </li>
-                <li className="pl-1">Recording all test results in the CMMS and/or logbook</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Permanent corrective actions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Addresses the root cause of the fault.</li>
+              <li>Prevents recurrence of the same failure.</li>
+              <li>May include design modifications or procedure changes.</li>
+              <li>Verified through testing and monitoring.</li>
+              <li>Example: replacing undersized cable causing voltage drop.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The standard requires competence in fault diagnosis,
+          <ConceptBlock title="Verification and close-out">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Functional testing under normal operating conditions.</li>
+              <li>Electrical tests as appropriate (IR, continuity, Zs).</li>
+              <li>Thermal monitoring during initial run-up period.</li>
+              <li>Confirmation from operations that equipment performs as expected.</li>
+              <li>Recording all test results in the CMMS and/or logbook.</li>
+            </ul>
+            <p>
+              <strong>ST1426 link:</strong> the standard requires competence in fault diagnosis,
               corrective action implementation and verification. Your fault reports and corrective
               action records are direct evidence for your EPA portfolio.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Quick reference">
+            <p className="font-medium text-white">Fault report structure</p>
+            <ul className="list-decimal space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Identification — asset, location, date/time.</li>
+              <li>Symptom — what was observed.</li>
+              <li>Diagnosis — tests and investigations.</li>
+              <li>Root cause — underlying reason.</li>
+              <li>Corrective action — what was done.</li>
+              <li>Verification — proof of effective repair.</li>
+            </ul>
+            <p className="font-medium text-white">RCA techniques</p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>5 Whys — iterative cause-and-effect.</li>
+              <li>Fishbone — 6 Ms categorisation.</li>
+              <li>FMEA — risk priority scoring.</li>
+              <li>Fault tree — top-down logic diagram.</li>
+              <li>Pareto — 80/20 frequency analysis.</li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A fault report that sends the next technician back to the same machine"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Fault Report Structure</p>
-                <ul className="space-y-0.5">
-                  <li>1. Identification — asset, location, date/time</li>
-                  <li>2. Symptom — what was observed</li>
-                  <li>3. Diagnosis — tests and investigations</li>
-                  <li>4. Root cause — underlying reason</li>
-                  <li>5. Corrective action — what was done</li>
-                  <li>6. Verification — proof of effective repair</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">RCA Techniques</p>
-                <ul className="space-y-0.5">
-                  <li>5 Whys — iterative cause-and-effect</li>
-                  <li>Fishbone — 6 Ms categorisation</li>
-                  <li>FMEA — risk priority scoring</li>
-                  <li>Fault tree — top-down logic diagram</li>
-                  <li>Pareto — 80/20 frequency analysis</li>
-                </ul>
-              </div>
+            situation={
+              <>
+                <p>
+                  A fault report on a packaging machine reads, in full: "Machine stopped. Reset and
+                  running. No further action."
+                </p>
+
+                <p>
+                  The same machine stops again six days later. The technician who attends has no
+                  idea it has happened before, and starts from nothing.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Record what the machine was doing when it stopped, not just that it stopped. Load,
+                  product, stage of cycle, how long it had been running — these are what make a
+                  pattern visible across several visits.
+                </p>
+
+                <p>
+                  Record what you actually checked and found, including the things that were fine.
+                  "Field terminals checked, tight" is useful information to the next person; its
+                  absence means they will check them again.
+                </p>
+
+                <p>
+                  Record what you changed, if anything, and what you deliberately did not. A reset
+                  with no fault found is a legitimate outcome, but it must be written as "no fault
+                  found on inspection", not as a repair.
+                </p>
+
+                <p>
+                  Say what you would do next if it recurs. That single sentence is what converts
+                  three separate callouts into one diagnosis.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                A fault report is not an administrative task, it is the only memory the plant has.
+                Written badly, every visit starts from zero and an intermittent fault can run for
+                months. Written properly, the third occurrence is where someone spots that it always
+                happens on the same product changeover. The cost of a poor report is not the five
+                minutes saved writing it — it is the repeat visits it guarantees.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Fault reports: factual record of fault, cause and corrective action.',
+              'Root cause: underlying reason, not just the immediate symptom.',
+              'Corrective actions: temporary (restore) vs permanent (root cause fix).',
+              'Follow-up: verification, monitoring and close-out procedures.',
+              '5 Whys / fishbone: structured root cause analysis techniques.',
+              'FMEA: risk-based failure mode prioritisation.',
+              'Verification: test under load after every repair.',
+              'ST1426: maps to fault diagnosis and reporting KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Recording Work Completed
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Digital vs Paper-Based Reporting
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Recording Work Completed
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-3">
-              Next: Digital vs Paper-Based Reporting
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

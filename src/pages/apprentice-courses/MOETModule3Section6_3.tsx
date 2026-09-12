@@ -1,14 +1,56 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.6 · Subsection 3 — Energy Storage Systems
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { EpsSld } from '@/components/study-centre/diagrams/renewableSld';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Storage Systems - MOET Module 3.6.3';
 const DESCRIPTION =
   'Comprehensive guide to battery energy storage systems (BESS) for electrical maintenance technicians: lithium-ion technology, system architectures, battery management systems, grid-scale and domestic storage, safety hazards, thermal runaway, maintenance and UK regulatory requirements under ST1426.';
 
+/* ------------------------------------------------------------------ */
+/*  Quick-check questions (4) — shown after each content section       */
+/* ------------------------------------------------------------------ */
 const quickCheckQuestions = [
   {
     id: 'bess-purpose',
@@ -66,6 +108,9 @@ const quickCheckQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Quiz questions (12) — end-of-page assessment                       */
+/* ------------------------------------------------------------------ */
 const quizQuestions = [
   {
     id: 1,
@@ -130,7 +175,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'BS 7671 does not yet have a dedicated section for battery storage (unlike Section 712 for PV), but general requirements apply along with manufacturer installation instructions. Key considerations: DC wiring must be protected and labelled; isolation devices must allow safe disconnection of both DC and AC circuits; ventilation must be adequate for potential gas release; fire resistance of enclosures and separation from habitable spaces; accessible emergency isolation for firefighters; protective bonding of all exposed metalwork; and RCD protection on AC circuits. The IET Code of Practice for Electrical Energy Storage Systems provides additional guidance.',
+      'BS 7671:2018+A4:2026 introduced a new Chapter 57 specifically for stationary secondary battery installations — batteries whose designed purpose is the storage and supply of electrical installations. It does not apply where the battery is built into a product covered by its own product safety standard, nor to batteries inside pluggable UPS, fire alarm, emergency lighting or central safety power supply systems that conform to their own standards. Alongside Chapter 57, the general requirements and the manufacturer installation instructions still apply. Key considerations: DC wiring must be protected and labelled; isolation devices must allow safe disconnection of both DC and AC circuits; ventilation must be adequate for potential gas release; fire resistance of enclosures and separation from habitable spaces; accessible emergency isolation for firefighters; protective bonding of all exposed metalwork; and RCD protection on AC circuits. The IET Code of Practice for Electrical Energy Storage Systems provides additional guidance.',
   },
   {
     id: 6,
@@ -226,6 +271,9 @@ const quizQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  FAQs (5)                                                           */
+/* ------------------------------------------------------------------ */
 const faqs = [
   {
     question: 'How long do battery storage systems last?',
@@ -255,114 +303,56 @@ const faqs = [
 ];
 
 const MOETModule3Section6_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.6.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Storage Systems
-          </h1>
-          <p className="text-white">
-            Battery storage technology, safety and maintenance for electrical technicians
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.6 · Subsection 3"
+        title="Energy Storage Systems"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Battery storage technology, safety and maintenance for electrical technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BESS:</strong> Store energy as chemical energy for later electrical use
-              </li>
-              <li className="pl-1">
-                <strong>Li-ion:</strong> 90-95% efficiency, 3,000-10,000 cycle life, BMS essential
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Thermal runaway, toxic gases, DC shock hazards
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671, IET CoP for EESS, G99/G98 for export
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Growth:</strong> UK BESS market expanding rapidly (domestic and grid-scale)
-              </li>
-              <li className="pl-1">
-                <strong>BMS:</strong> Monitor cell balance, temperature, fault codes and firmware
-              </li>
-              <li className="pl-1">
-                <strong>Emergency:</strong> Know thermal runaway signs — swelling, heat, gas odour
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Emerging technologies knowledge required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'BESS: Store energy as chemical energy for later electrical use.',
+              'Li-ion: 90-95% efficiency, 3,000-10,000 cycle life, BMS essential.',
+              'Safety: Thermal runaway, toxic gases, DC shock hazards.',
+              'Standards: BS 7671, IET CoP for EESS, G99/G98 for export.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Growth: UK BESS market expanding rapidly (domestic and grid-scale).</li>
+              <li>BMS: Monitor cell balance, temperature, fault codes and firmware.</li>
+              <li>Emergency: Know thermal runaway signs — swelling, heat, gas odour.</li>
+              <li>ST1426: Emerging technologies knowledge required.</li>
+            </ul>
+          </ConceptBlock>
+
+          <LearningOutcomes
+            outcomes={[
               'Explain lithium-ion battery chemistry and the key differences between NMC and LFP',
               'Describe BESS system architecture: cells, modules, racks, BMS, inverter and thermal management',
               'Identify thermal runaway hazards and the emergency response procedures',
               'Apply BS 7671 requirements and IET guidance for battery storage installations',
               'Carry out BESS inspection, BMS log review and basic fault-finding',
               'Understand the role of BESS in grid frequency response and renewable energy integration',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Battery chemistry and cell technology</ContentEyebrow>
 
-        {/* Section 01: Battery Chemistry and Cell Technology */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Battery Chemistry and Cell Technology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="How lithium-ion cells store and release energy">
             <p>
               Lithium-ion technology dominates modern energy storage because of its superior energy
               density, efficiency, and cycle life compared to older chemistries. However, different
@@ -375,9 +365,9 @@ const MOETModule3Section6_3 = () => {
               All lithium-ion cells work on the same fundamental principle: lithium ions move
               between the cathode (positive electrode) and anode (negative electrode, typically
               graphite) through an electrolyte during charge and discharge. The cathode chemistry
-              determines the cell's characteristics. During charging, lithium ions move from the
-              cathode to the anode, storing energy. During discharge, the ions flow back, releasing
-              energy as electrical current through the external circuit.
+              determines the cell&apos;s characteristics. During charging, lithium ions move from
+              the cathode to the anode, storing energy. During discharge, the ions flow back,
+              releasing energy as electrical current through the external circuit.
             </p>
             <p>
               The electrolyte in conventional lithium-ion cells is a flammable organic solvent
@@ -388,69 +378,51 @@ const MOETModule3Section6_3 = () => {
               correct installation practices are not optional — they are critical safety
               requirements.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lithium-Ion Chemistry Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Chemistry</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Energy Density</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Safety</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cycle Life</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        NMC (Nickel Manganese Cobalt)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">High (200-250 Wh/kg)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate — thermal runaway at ~150 degrees C
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3,000-5,000 cycles</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        LFP (Lithium Iron Phosphate)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lower (100-160 Wh/kg)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High — thermal runaway at ~270 degrees C
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">5,000-10,000 cycles</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        NCA (Nickel Cobalt Aluminium)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very high (250-300 Wh/kg)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower — requires robust BMS
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2,000-3,000 cycles</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sodium-ion (emerging)</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate (100-160 Wh/kg)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High — no lithium, non-flammable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3,000-5,000 cycles</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Lithium-ion chemistry comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Chemistry</th>
+                    <th className="py-2 pr-4 font-medium text-white">Energy density</th>
+                    <th className="py-2 pr-4 font-medium text-white">Safety</th>
+                    <th className="py-2 font-medium text-white">Cycle life</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">NMC (Nickel Manganese Cobalt)</td>
+                    <td className="py-2 pr-4">High (200-250 Wh/kg)</td>
+                    <td className="py-2 pr-4">Moderate — thermal runaway at ~150 degrees C</td>
+                    <td className="py-2">3,000-5,000 cycles</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">LFP (Lithium Iron Phosphate)</td>
+                    <td className="py-2 pr-4">Lower (100-160 Wh/kg)</td>
+                    <td className="py-2 pr-4">High — thermal runaway at ~270 degrees C</td>
+                    <td className="py-2">5,000-10,000 cycles</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">NCA (Nickel Cobalt Aluminium)</td>
+                    <td className="py-2 pr-4">Very high (250-300 Wh/kg)</td>
+                    <td className="py-2 pr-4">Lower — requires robust BMS</td>
+                    <td className="py-2">2,000-3,000 cycles</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Sodium-ion (emerging)</td>
+                    <td className="py-2 pr-4">Moderate (100-160 Wh/kg)</td>
+                    <td className="py-2 pr-4">High — no lithium, non-flammable</td>
+                    <td className="py-2">3,000-5,000 cycles</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical: Thermal Runaway</p>
+          <ConceptBlock title="Critical: thermal runaway">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
               <p className="text-sm text-white">
                 Thermal runaway is the most serious hazard in lithium-ion systems. It is a
                 self-sustaining exothermic reaction triggered by: overcharge (exceeding maximum cell
@@ -463,7 +435,6 @@ const MOETModule3Section6_3 = () => {
                 lithium-ion battery fires can re-ignite hours or days after apparent extinguishment.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> LFP chemistry is increasingly preferred for stationary
               storage because its higher thermal runaway threshold (approximately 270 degrees C vs
@@ -471,18 +442,15 @@ const MOETModule3Section6_3 = () => {
               lithium-ion chemistry is immune to thermal runaway — all require proper BMS
               protection, thermal management, and safe installation practices.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: BESS System Architecture */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            BESS System Architecture
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BESS system architecture</ContentEyebrow>
+
+          <ConceptBlock title="More than just batteries">
             <p>
               A battery energy storage system is far more than just batteries. It is an integrated
               system comprising battery cells, a battery management system, power conversion
@@ -497,136 +465,111 @@ const MOETModule3Section6_3 = () => {
               control appropriate to that tier. This hierarchical approach enables both fine-grained
               cell-level protection and system-level coordination of charge/discharge strategies.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">System Hierarchy</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Cell:</strong> The basic electrochemical unit (3.2-3.7 V nominal
-                    depending on chemistry)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Module:</strong> Multiple cells connected in series/parallel with
-                    cell-level BMS monitoring
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rack/Pack:</strong> Multiple modules connected in series to achieve the
-                    required system voltage (typically 48-800 V DC)
-                  </li>
-                  <li className="pl-1">
-                    <strong>BMS:</strong> Hierarchical — cell-level monitoring, module-level
-                    control, system-level management
-                  </li>
-                  <li className="pl-1">
-                    <strong>Inverter:</strong> DC to AC conversion (bidirectional for grid-connected
-                    systems)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Thermal management:</strong> Active cooling (liquid or forced air)
-                    maintaining cells within 15-35 degrees C
-                  </li>
-                  <li className="pl-1">
-                    <strong>Safety systems:</strong> Contactors, fuses, fire detection, ventilation,
-                    emergency shutdown
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Battery Management System (BMS) Functions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Cell monitoring:</strong> Voltage, temperature, and current for every
-                    cell in the system
-                  </li>
-                  <li className="pl-1">
-                    <strong>Cell balancing:</strong> Equalising charge across cells in series
-                    strings (passive or active balancing)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Protection:</strong> Overvoltage, undervoltage, overcurrent,
-                    over-temperature, and short circuit protection
-                  </li>
-                  <li className="pl-1">
-                    <strong>State estimation:</strong> SoC (state of charge), SoH (state of health),
-                    SoP (state of power)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Communication:</strong> Data interface to inverter, EMS, and remote
-                    monitoring platforms
-                  </li>
-                  <li className="pl-1">
-                    <strong>Logging:</strong> Historical data for performance analysis and warranty
-                    claims
-                  </li>
-                </ul>
-              </div>
+          <EpsSld caption="A domestic hybrid inverter switches from grid-following to grid-forming on a grid outage, powering only a backup consumer unit of protected loads from the battery — the same DC bus and inverter that handle everyday charge/discharge duty." />
+
+          <ConceptBlock title="System hierarchy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cell:</strong> The basic electrochemical unit (3.2-3.7 V nominal depending
+                on chemistry).
+              </li>
+              <li>
+                <strong>Module:</strong> Multiple cells connected in series/parallel with cell-level
+                BMS monitoring.
+              </li>
+              <li>
+                <strong>Rack/Pack:</strong> Multiple modules connected in series to achieve the
+                required system voltage (typically 48-800 V DC).
+              </li>
+              <li>
+                <strong>BMS:</strong> Hierarchical — cell-level monitoring, module-level control,
+                system-level management.
+              </li>
+              <li>
+                <strong>Inverter:</strong> DC to AC conversion (bidirectional for grid-connected
+                systems).
+              </li>
+              <li>
+                <strong>Thermal management:</strong> Active cooling (liquid or forced air)
+                maintaining cells within 15-35 degrees C.
+              </li>
+              <li>
+                <strong>Safety systems:</strong> Contactors, fuses, fire detection, ventilation,
+                emergency shutdown.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Battery management system (BMS) functions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cell monitoring:</strong> Voltage, temperature, and current for every cell
+                in the system.
+              </li>
+              <li>
+                <strong>Cell balancing:</strong> Equalising charge across cells in series strings
+                (passive or active balancing).
+              </li>
+              <li>
+                <strong>Protection:</strong> Overvoltage, undervoltage, overcurrent,
+                over-temperature, and short circuit protection.
+              </li>
+              <li>
+                <strong>State estimation:</strong> SoC (state of charge), SoH (state of health), SoP
+                (state of power).
+              </li>
+              <li>
+                <strong>Communication:</strong> Data interface to inverter, EMS, and remote
+                monitoring platforms.
+              </li>
+              <li>
+                <strong>Logging:</strong> Historical data for performance analysis and warranty
+                claims.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Domestic vs grid-scale BESS architecture">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">Domestic (5-15 kWh)</th>
+                    <th className="py-2 font-medium text-white">Grid-scale (1-1,000 MWh)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Enclosure</td>
+                    <td className="py-2 pr-4">Wall-mounted indoor/garage unit</td>
+                    <td className="py-2">Shipping container modules</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Cooling</td>
+                    <td className="py-2 pr-4">Passive or small fan</td>
+                    <td className="py-2">Liquid cooling or HVAC</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Fire suppression</td>
+                    <td className="py-2 pr-4">None (relies on BMS and separation)</td>
+                    <td className="py-2">Dedicated system (water mist, aerosol)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Inverter</td>
+                    <td className="py-2 pr-4">Integrated or hybrid (3-7 kW)</td>
+                    <td className="py-2">Separate PCS (MW-scale)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Grid connection</td>
+                    <td className="py-2 pr-4">G98 (aggregate up to 16 A/phase, ~3.68 kW)</td>
+                    <td className="py-2">G99 (HV connection typical)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Domestic vs Grid-Scale BESS Architecture
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Domestic (5-15 kWh)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Grid-Scale (1-1,000 MWh)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Enclosure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wall-mounted indoor/garage unit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Shipping container modules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cooling</td>
-                      <td className="border border-white/10 px-3 py-2">Passive or small fan</td>
-                      <td className="border border-white/10 px-3 py-2">Liquid cooling or HVAC</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fire suppression</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        None (relies on BMS and separation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dedicated system (water mist, aerosol)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inverter</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrated or hybrid (3-7 kW)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Separate PCS (MW-scale)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Grid connection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        G98 (up to 3.68 kW/phase)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        G99 (HV connection typical)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The BMS is the single most critical safety component. A
               properly functioning BMS prevents the conditions that lead to thermal runaway. During
@@ -634,18 +577,15 @@ const MOETModule3Section6_3 = () => {
               degradation or connection issues), temperature excursions, fault codes, and capacity
               fade trends.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 03: Safety, Installation and Regulatory Requirements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Safety, Installation and Regulatory Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety, installation and regulatory requirements</ContentEyebrow>
+
+          <ConceptBlock title="A battery can never be de-energised">
             <p>
               Battery storage systems present unique safety challenges that differ from conventional
               electrical installations. The combination of stored electrochemical energy, high DC
@@ -662,51 +602,36 @@ const MOETModule3Section6_3 = () => {
               This fundamentally changes the approach to safe working — additional precautions are
               needed beyond standard safe isolation procedures.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Installation Requirements
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">BS 7671 general requirements for all circuits</li>
-                  <li className="pl-1">IET Code of Practice for EESS guidance</li>
-                  <li className="pl-1">DC isolation devices (battery, inverter)</li>
-                  <li className="pl-1">Ventilation for gas dispersal</li>
-                  <li className="pl-1">Fire separation from habitable spaces</li>
-                  <li className="pl-1">Emergency isolation accessible from outside</li>
-                  <li className="pl-1">Warning labels: 'BATTERY STORAGE SYSTEM'</li>
-                  <li className="pl-1">Earthing and bonding of all metalwork</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Safety Hazards</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    DC electric shock (48-800 V DC that remains live even when isolated from AC)
-                  </li>
-                  <li className="pl-1">
-                    Thermal runaway and fire (temperatures exceeding 700 degrees C)
-                  </li>
-                  <li className="pl-1">Toxic gas release (hydrogen fluoride, carbon monoxide)</li>
-                  <li className="pl-1">
-                    Explosion risk (flammable gas accumulation in enclosed spaces)
-                  </li>
-                  <li className="pl-1">
-                    Re-ignition (battery fires can re-ignite hours after extinguishment)
-                  </li>
-                  <li className="pl-1">
-                    Stored energy (cells cannot be 'de-energised' like a switch)
-                  </li>
-                  <li className="pl-1">Arc flash at DC disconnection points</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Installation requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>BS 7671 general requirements for all circuits.</li>
+              <li>BS 7671:2018+A4:2026 Chapter 57 — stationary secondary battery installations.</li>
+              <li>IET Code of Practice for EESS guidance.</li>
+              <li>DC isolation devices (battery, inverter).</li>
+              <li>Ventilation for gas dispersal.</li>
+              <li>Fire separation from habitable spaces.</li>
+              <li>Emergency isolation accessible from outside.</li>
+              <li>Warning labels: &apos;BATTERY STORAGE SYSTEM&apos;.</li>
+              <li>Earthing and bonding of all metalwork.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Emergency Response: Battery Fire
-              </p>
+          <ConceptBlock title="Safety hazards">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>DC electric shock (48-800 V DC that remains live even when isolated from AC).</li>
+              <li>Thermal runaway and fire (temperatures exceeding 700 degrees C).</li>
+              <li>Toxic gas release (hydrogen fluoride, carbon monoxide).</li>
+              <li>Explosion risk (flammable gas accumulation in enclosed spaces).</li>
+              <li>Re-ignition (battery fires can re-ignite hours after extinguishment).</li>
+              <li>Stored energy (cells cannot be &apos;de-energised&apos; like a switch).</li>
+              <li>Arc flash at DC disconnection points.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Emergency response: battery fire">
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
               <p className="text-sm text-white">
                 If you suspect a battery is in thermal runaway (swelling, hissing, smoke, heat,
                 chemical odour): evacuate the area immediately — do not attempt to disconnect or
@@ -718,55 +643,45 @@ const MOETModule3Section6_3 = () => {
                 monitored for at least 24 hours after extinguishment due to re-ignition risk.
               </p>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Key Regulatory References
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Reference</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 (18th Edition)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General installation requirements; no dedicated BESS section yet
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IET CoP for EESS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed guidance for battery storage installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEC 62619</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety requirements for secondary lithium cells in industrial applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">G98/G99</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Grid connection requirements for battery export
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EAWR 1989</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duty to maintain safe electrical systems
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Key regulatory references">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Reference</th>
+                    <th className="py-2 font-medium text-white">Coverage</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">BS 7671 (18th Edition)</td>
+                    <td className="py-2">
+                      General installation requirements; no dedicated BESS section yet
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">IET CoP for EESS</td>
+                    <td className="py-2">Detailed guidance for battery storage installations</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">IEC 62619</td>
+                    <td className="py-2">
+                      Safety requirements for secondary lithium cells in industrial applications
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">G98/G99</td>
+                    <td className="py-2">Grid connection requirements for battery export</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">EAWR 1989</td>
+                    <td className="py-2">Duty to maintain safe electrical systems</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Unlike a mains circuit that can be completely de-energised
               by opening a switch, a battery always contains stored energy. Even after DC isolation,
@@ -774,18 +689,15 @@ const MOETModule3Section6_3 = () => {
               practices for BESS must account for this fundamental difference from conventional
               electrical maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 04: BESS Maintenance and Grid Services */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BESS Maintenance and Grid Services
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BESS maintenance and grid services</ContentEyebrow>
+
+          <ConceptBlock title="Maintenance matched to the duty cycle">
             <p>
               Battery storage systems require systematic maintenance to ensure safe operation and
               optimal performance throughout their design life. The maintenance regime combines
@@ -802,146 +714,131 @@ const MOETModule3Section6_3 = () => {
               The maintenance schedule should reflect the actual duty cycle, not just a generic
               calendar-based interval.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                BESS Maintenance Schedule
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Tasks
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monthly (remote)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review BMS data: cell balance, temperature trends, fault codes, capacity
-                        utilisation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual inspection: enclosure condition, ventilation, signs of overheating,
-                        pest damage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Six-monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical checks: isolation devices, protection settings, earthing,
-                        connection torques
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Annual</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full inspection and test: capacity test, thermographic survey, BMS
-                        calibration check, firmware updates
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">As required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault investigation, cell replacement, BMS recalibration, fire system
-                        inspection
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="BESS maintenance schedule">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Frequency</th>
+                    <th className="py-2 font-medium text-white">Maintenance tasks</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Monthly (remote)</td>
+                    <td className="py-2">
+                      Review BMS data: cell balance, temperature trends, fault codes, capacity
+                      utilisation
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Quarterly</td>
+                    <td className="py-2">
+                      Visual inspection: enclosure condition, ventilation, signs of overheating,
+                      pest damage
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Six-monthly</td>
+                    <td className="py-2">
+                      Electrical checks: isolation devices, protection settings, earthing,
+                      connection torques
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Annual</td>
+                    <td className="py-2">
+                      Full inspection and test: capacity test, thermographic survey, BMS calibration
+                      check, firmware updates
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">As required</td>
+                    <td className="py-2">
+                      Fault investigation, cell replacement, BMS recalibration, fire system
+                      inspection
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Grid Services Provided by BESS
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency response:</strong> Dynamic Containment, Dynamic Moderation,
-                  Dynamic Regulation — injecting/absorbing power within milliseconds to maintain
-                  grid frequency at 50 Hz
-                </li>
-                <li className="pl-1">
-                  <strong>Peak shaving:</strong> Reducing demand during peak tariff periods (4-7 pm)
-                  by discharging stored energy
-                </li>
-                <li className="pl-1">
-                  <strong>Renewable integration:</strong> Smoothing variable PV/wind output and
-                  time-shifting generation to match demand
-                </li>
-                <li className="pl-1">
-                  <strong>Capacity market:</strong> Providing guaranteed available capacity during
-                  system stress events
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage support:</strong> Reactive power provision for local voltage
-                  regulation
-                </li>
-                <li className="pl-1">
-                  <strong>Black start:</strong> Capability to energise grid sections after a total
-                  blackout (large installations)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Grid services provided by BESS">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency response:</strong> Dynamic Containment, Dynamic Moderation,
+                Dynamic Regulation — injecting/absorbing power within milliseconds to maintain grid
+                frequency at 50 Hz.
+              </li>
+              <li>
+                <strong>Peak shaving:</strong> Reducing demand during peak tariff periods (4-7 pm)
+                by discharging stored energy.
+              </li>
+              <li>
+                <strong>Renewable integration:</strong> Smoothing variable PV/wind output and
+                time-shifting generation to match demand.
+              </li>
+              <li>
+                <strong>Capacity market:</strong> Providing guaranteed available capacity during
+                system stress events.
+              </li>
+              <li>
+                <strong>Voltage support:</strong> Reactive power provision for local voltage
+                regulation.
+              </li>
+              <li>
+                <strong>Black start:</strong> Capability to energise grid sections after a total
+                blackout (large installations).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                BMS Log Analysis for Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cell voltage spread:</strong> Maximum voltage difference between cells
-                  should be less than 50 mV for NMC or 30 mV for LFP — wider spread indicates cell
-                  degradation, poor balancing, or connection resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature differential:</strong> Cell-to-cell temperature difference
-                  exceeding 5 degrees C suggests uneven cooling or a developing cell fault
-                </li>
-                <li className="pl-1">
-                  <strong>Capacity fade:</strong> Compare current usable capacity with original
-                  rated capacity — degradation exceeding the manufacturer's warranty curve indicates
-                  accelerated ageing
-                </li>
-                <li className="pl-1">
-                  <strong>Fault history:</strong> Review all logged fault codes; recurring faults
-                  indicate systemic issues requiring investigation
-                </li>
-                <li className="pl-1">
-                  <strong>Cycle count:</strong> Track total cycles against warranty limits;
-                  excessive cycling (especially from frequency response duty) may accelerate
-                  degradation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="BMS log analysis for maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cell voltage spread:</strong> Maximum voltage difference between cells
+                should be less than 50 mV for NMC or 30 mV for LFP — wider spread indicates cell
+                degradation, poor balancing, or connection resistance.
+              </li>
+              <li>
+                <strong>Temperature differential:</strong> Cell-to-cell temperature difference
+                exceeding 5 degrees C suggests uneven cooling or a developing cell fault.
+              </li>
+              <li>
+                <strong>Capacity fade:</strong> Compare current usable capacity with original rated
+                capacity — degradation exceeding the manufacturer&apos;s warranty curve indicates
+                accelerated ageing.
+              </li>
+              <li>
+                <strong>Fault history:</strong> Review all logged fault codes; recurring faults
+                indicate systemic issues requiring investigation.
+              </li>
+              <li>
+                <strong>Cycle count:</strong> Track total cycles against warranty limits; excessive
+                cycling (especially from frequency response duty) may accelerate degradation.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must understand energy
-              storage as part of the emerging technologies knowledge requirement. The rapid growth
-              of BESS — both domestic (paired with solar PV) and grid-scale (providing frequency
-              response and capacity services) — means this technology will form an increasing part
-              of the maintenance workload. Technicians who develop competence in BESS maintenance
-              will be highly valued in the evolving energy market.
-            </p>
-          </div>
-        </section>
+          <p className="text-sm text-white italic">
+            <strong>Note:</strong> Under ST1426, maintenance technicians must understand energy
+            storage as part of the emerging technologies knowledge requirement. The rapid growth of
+            BESS — both domestic (paired with solar PV) and grid-scale (providing frequency response
+            and capacity services) — means this technology will form an increasing part of the
+            maintenance workload. Technicians who develop competence in BESS maintenance will be
+            highly valued in the evolving energy market.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 05: Second-Life Batteries and Future Storage Technologies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Second-Life Batteries and Future Storage Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Second-life batteries and future storage technologies</ContentEyebrow>
+
+          <ConceptBlock title="Extending battery life beyond first use">
             <p>
               As the first generation of electric vehicle batteries reaches the end of their
               automotive life (typically when capacity drops below 70-80% of original), these
@@ -962,181 +859,155 @@ const MOETModule3Section6_3 = () => {
             </p>
             <p>
               The circular economy approach to batteries is becoming increasingly important. The
-              UK's commitment to net zero will require millions of battery systems in vehicles,
+              UK&apos;s commitment to net zero will require millions of battery systems in vehicles,
               buildings, and grid infrastructure. Managing these batteries through their full
               lifecycle — manufacture, first use, second life, and recycling — is essential for both
               economic and environmental sustainability. The maintenance technician plays a key role
               in this lifecycle by maintaining systems to achieve their design life and identifying
               batteries suitable for second-life applications rather than premature recycling.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Second-Life Battery Considerations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Capacity:</strong> Typically 70-80% of original rated capacity — adequate
-                  for stationary applications with lower energy density requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> Each module must be individually tested for capacity,
-                  internal resistance and cell balance before repurposing
-                </li>
-                <li className="pl-1">
-                  <strong>BMS:</strong> New BMS often required, calibrated for the actual cell
-                  characteristics rather than the original EV specification
-                </li>
-                <li className="pl-1">
-                  <strong>Safety:</strong> Same thermal runaway risks as new batteries — fire
-                  suppression and ventilation requirements unchanged
-                </li>
-                <li className="pl-1">
-                  <strong>Standards:</strong> IEC 62619 applies to second-life battery systems; UK
-                  regulatory framework still developing
-                </li>
-                <li className="pl-1">
-                  <strong>Cost:</strong> Typically 30-60% of new battery cost — attractive for
-                  lower-cycling applications
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Second-life battery considerations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Capacity:</strong> Typically 70-80% of original rated capacity — adequate
+                for stationary applications with lower energy density requirements.
+              </li>
+              <li>
+                <strong>Testing:</strong> Each module must be individually tested for capacity,
+                internal resistance and cell balance before repurposing.
+              </li>
+              <li>
+                <strong>BMS:</strong> New BMS often required, calibrated for the actual cell
+                characteristics rather than the original EV specification.
+              </li>
+              <li>
+                <strong>Safety:</strong> Same thermal runaway risks as new batteries — fire
+                suppression and ventilation requirements unchanged.
+              </li>
+              <li>
+                <strong>Standards:</strong> IEC 62619 applies to second-life battery systems; UK
+                regulatory framework still developing.
+              </li>
+              <li>
+                <strong>Cost:</strong> Typically 30-60% of new battery cost — attractive for
+                lower-cycling applications.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Emerging Storage Technologies
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sodium-ion:</strong> No lithium required; inherently safer; comparable
-                  cycle life to LFP; lower energy density; now entering commercial production
-                </li>
-                <li className="pl-1">
-                  <strong>Flow batteries:</strong> Vanadium redox or zinc-bromine; power and energy
-                  independently scalable; 20,000+ cycles; suited to long-duration (4-12 hours)
-                  applications
-                </li>
-                <li className="pl-1">
-                  <strong>Solid-state:</strong> Solid electrolyte replacing liquid — higher energy
-                  density, inherently safer, but currently expensive and limited to small cells
-                </li>
-                <li className="pl-1">
-                  <strong>Gravity storage:</strong> Lifting heavy blocks during charging and
-                  lowering them to generate electricity — long life, no chemical degradation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Emerging storage technologies">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sodium-ion:</strong> No lithium required; inherently safer; comparable cycle
+                life to LFP; lower energy density; now entering commercial production.
+              </li>
+              <li>
+                <strong>Flow batteries:</strong> Vanadium redox or zinc-bromine; power and energy
+                independently scalable; 20,000+ cycles; suited to long-duration (4-12 hours)
+                applications.
+              </li>
+              <li>
+                <strong>Solid-state:</strong> Solid electrolyte replacing liquid — higher energy
+                density, inherently safer, but currently expensive and limited to small cells.
+              </li>
+              <li>
+                <strong>Gravity storage:</strong> Lifting heavy blocks during charging and lowering
+                them to generate electricity — long life, no chemical degradation.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Battery Lifecycle and the Maintenance Technician
-              </h3>
-              <p className="text-sm text-white">
-                The maintenance technician interacts with the battery lifecycle at several points.
-                During the operational phase, regular maintenance ensures the battery achieves its
-                design life and warranty targets. As the battery ages, BMS data analysis identifies
-                whether degradation is within expected parameters or accelerated. When the battery
-                reaches end-of-first-life (typically 70-80% capacity for EV batteries, or when
-                performance no longer meets the application requirement), the technician's
-                assessment informs whether the battery is suitable for second-life repurposing or
-                should be sent for recycling. Proper documentation throughout the battery's life
-                supports these decisions and ensures compliance with the Waste Batteries and
-                Accumulators Regulations 2009.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, awareness of emerging energy storage technologies
-              supports the standard's requirement for technicians to understand developing
-              technologies and their maintenance implications. The storage landscape is evolving
-              rapidly, and technicians who stay current with new chemistries and system
-              architectures will be best prepared for the changing maintenance workload.
+          <ConceptBlock title="Battery lifecycle and the maintenance technician">
+            <p>
+              The maintenance technician interacts with the battery lifecycle at several points.
+              During the operational phase, regular maintenance ensures the battery achieves its
+              design life and warranty targets. As the battery ages, BMS data analysis identifies
+              whether degradation is within expected parameters or accelerated. When the battery
+              reaches end-of-first-life (typically 70-80% capacity for EV batteries, or when
+              performance no longer meets the application requirement), the technician&apos;s
+              assessment informs whether the battery is suitable for second-life repurposing or
+              should be sent for recycling. Proper documentation throughout the battery&apos;s life
+              supports these decisions and ensures compliance with the Waste Batteries and
+              Accumulators Regulations 2009.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <p className="text-sm text-white italic">
+            <strong>Note:</strong> Under ST1426, awareness of emerging energy storage technologies
+            supports the standard&apos;s requirement for technicians to understand developing
+            technologies and their maintenance implications. The storage landscape is evolving
+            rapidly, and technicians who stay current with new chemistries and system architectures
+            will be best prepared for the changing maintenance workload.
+          </p>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <VideoCard
+            url="https://www.youtube.com/watch?v=8XI6GVLjPng"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Battery Chemistry Summary</p>
-                <ul className="space-y-0.5">
-                  <li>NMC: high density, 150 C runaway, 3-5k cycles</li>
-                  <li>LFP: safer, 270 C runaway, 5-10k cycles</li>
-                  <li>NCA: highest density, needs robust BMS</li>
-                  <li>Na-ion: no lithium, emerging commercial</li>
-                  <li>Round-trip efficiency: 90-95%</li>
-                  <li>80% DoD doubles cycle life vs 100%</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safety and Maintenance</p>
-                <ul className="space-y-0.5">
-                  <li>BMS: monitor cell voltage, temp, SoC</li>
-                  <li>Thermal runaway: 700 C+, toxic gases</li>
-                  <li>Swelling/leakage: evacuate immediately</li>
-                  <li>Cells always energised (cannot de-energise)</li>
-                  <li>Monthly: BMS log review (remote)</li>
-                  <li>Annual: capacity test, thermographic survey</li>
-                  <li>IET Code of Practice for EESS</li>
-                </ul>
-              </div>
+            title="What Is an Inverter? How Inverters Work"
+
+            channel="The Engineering Mindset"
+
+            duration="4:46"
+
+            topic="Turning stored DC back into grid-synchronised AC"
+
+            caption="Short and central to storage — the inverter is what makes a battery useful to an installation."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'NMC: high density, 150 C runaway, 3-5k cycles. LFP: safer, 270 C runaway, 5-10k cycles.',
+              'NCA: highest density, needs robust BMS. Na-ion: no lithium, emerging commercial.',
+              'Round-trip efficiency: 90-95%. 80% DoD roughly doubles cycle life versus 100%.',
+              'BMS: monitor cell voltage, temperature and SoC. Thermal runaway: 700 C+, toxic gases.',
+              'Swelling or leakage: evacuate immediately. Cells are always energised — they cannot be de-energised.',
+              'Monthly: BMS log review (remote). Annual: capacity test, thermographic survey. IET Code of Practice for EESS applies.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Wind and Other Renewables
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Smart Grids and Smart Meters
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Wind and Other Renewables
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-4">
-              Next: Smart Grids and Smart Meters
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

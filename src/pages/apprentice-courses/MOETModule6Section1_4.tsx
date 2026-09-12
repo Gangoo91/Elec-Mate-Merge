@@ -1,8 +1,40 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 1 · Subsection 4 — Drawing Layouts and Title Blocks
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Reference conversion for the MOET redesign — the pattern every other
+ * subsection page follows. Content preserved from the original; structure,
+ * shell and reading measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Drawing Layouts and Title Blocks - MOET Module 6 Section 1.4';
@@ -255,118 +287,51 @@ const faqs = [
 ];
 
 const MOETModule6Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Drawing Layouts and Title Blocks
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.1 · Subsection 4"
+        title="Drawing Layouts and Title Blocks"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Standard sheet sizes, title block content, revision tables, drawing registers and
             document conventions
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Title block:</strong> Drawing number, title, scale, projection, revision,
-                approvals
-              </li>
-              <li className="pl-1">
-                <strong>Sheet sizes:</strong> ISO A series — A0 (largest) through A4
-              </li>
-              <li className="pl-1">
-                <strong>Revision table:</strong> Chronological audit trail of all changes
-              </li>
-              <li className="pl-1">
-                <strong>Drawing register:</strong> Master index of all project drawings
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Document control:</strong> Ensures you work from the correct, current
-                drawing
-              </li>
-              <li className="pl-1">
-                <strong>Parts lists:</strong> Essential for ordering replacement components
-              </li>
-              <li className="pl-1">
-                <strong>Cross-references:</strong> Link GA, schematic and cable drawings together
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Documentation management competence for EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Title block: drawing number, title, scale, projection, revision status and approvals — always check it before reading the drawing.',
+              'Sheet sizes follow the ISO A series — A0 (largest) down to A4 — with the title block visible in the bottom right even when folded to A4.',
+              'The revision table is the audit trail: date, description and who authorised the change since first issue.',
+              'The drawing register is the master index of every drawing and its current revision — the starting point for finding anything.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the standard information contained in a drawing title block',
               'Explain the purpose and content of revision tables for document control',
               'Describe ISO A series sheet sizes and their application to engineering drawings',
               'Use drawing registers and cross-references to navigate drawing sets',
               'Interpret parts lists for ordering replacement maintenance components',
               'Apply drawing layout knowledge to locate and verify technical information',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The title block</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Title Block — Drawing Identity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The Title Block — Drawing Identity"
+            onSite="Every time you pick up a drawing, check four things in the title block before reading anything else: the drawing number (is this the right drawing?), the revision (is this the current version?), the scale (how do I interpret dimensions?), and the projection symbol (which convention is used?). This four-second check prevents the most common drawing interpretation errors."
+          >
             <p>
               The title block is the most important administrative area on any engineering drawing.
               Positioned in the bottom right corner of the sheet (so it remains visible when larger
@@ -381,167 +346,105 @@ const MOETModule6Section1_4 = () => {
               block ensures you are working from the correct, current version of the drawing — a
               fundamental safety requirement.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Title Block Fields
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Drawing number:</strong> Unique identifier — the primary reference for the
-                  drawing
-                </li>
-                <li className="pl-1">
-                  <strong>Drawing title:</strong> Descriptive name (e.g., "MCC-01 General
-                  Arrangement — Front Elevation")
-                </li>
-                <li className="pl-1">
-                  <strong>Scale:</strong> Relationship between drawing size and actual size (e.g.,
-                  1:10)
-                </li>
-                <li className="pl-1">
-                  <strong>Projection symbol:</strong> First angle or third angle indicator
-                </li>
-                <li className="pl-1">
-                  <strong>Revision:</strong> Current revision letter or number
-                </li>
-                <li className="pl-1">
-                  <strong>Date:</strong> Date of original issue and current revision
-                </li>
-                <li className="pl-1">
-                  <strong>Originator:</strong> Name of the person who created the drawing
-                </li>
-                <li className="pl-1">
-                  <strong>Checker:</strong> Name of the person who verified technical accuracy
-                </li>
-                <li className="pl-1">
-                  <strong>Approver:</strong> Name of the person who authorised issue
-                </li>
-                <li className="pl-1">
-                  <strong>Sheet number:</strong> Sheet X of Y (for multi-sheet drawings)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Standard Title Block Fields">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Drawing number:</strong> Unique identifier — the primary reference for the
+                drawing
+              </li>
+              <li>
+                <strong>Drawing title:</strong> Descriptive name (e.g., "MCC-01 General Arrangement
+                — Front Elevation")
+              </li>
+              <li>
+                <strong>Scale:</strong> Relationship between drawing size and actual size (e.g.,
+                1:10)
+              </li>
+              <li>
+                <strong>Projection symbol:</strong> First angle or third angle indicator
+              </li>
+              <li>
+                <strong>Revision:</strong> Current revision letter or number
+              </li>
+              <li>
+                <strong>Date:</strong> Date of original issue and current revision
+              </li>
+              <li>
+                <strong>Originator:</strong> Name of the person who created the drawing
+              </li>
+              <li>
+                <strong>Checker:</strong> Name of the person who verified technical accuracy
+              </li>
+              <li>
+                <strong>Approver:</strong> Name of the person who authorised issue
+              </li>
+              <li>
+                <strong>Sheet number:</strong> Sheet X of Y (for multi-sheet drawings)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">First Check — Every Time</p>
-              <p className="text-sm text-white">
-                Every time you pick up a drawing, check four things in the title block before
-                reading anything else: the drawing number (is this the right drawing?), the revision
-                (is this the current version?), the scale (how do I interpret dimensions?), and the
-                projection symbol (which convention is used?). This four-second check prevents the
-                most common drawing interpretation errors.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Sheet Sizes, Borders and Zone References
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Sheet sizes and borders</ContentEyebrow>
+
+          <ConceptBlock title="Sheet Sizes, Borders and Zone References">
             <p>
               Engineering drawings use standardised sheet sizes from the ISO A series. Understanding
               these sizes and the layout conventions for borders, margins and zone references helps
               you navigate drawings efficiently — particularly large format drawings that are common
               for site layouts, single-line diagrams and general arrangement drawings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Dimensions (mm)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Use in Electrical
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A0</td>
-                      <td className="border border-white/10 px-3 py-2">841 x 1189</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Site layouts, large single-line diagrams, floor plans
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A1</td>
-                      <td className="border border-white/10 px-3 py-2">594 x 841</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment GA drawings, schematic diagrams, distribution layouts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A2</td>
-                      <td className="border border-white/10 px-3 py-2">420 x 594</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Panel layout drawings, wiring diagrams, cable schedules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A3</td>
-                      <td className="border border-white/10 px-3 py-2">297 x 420</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detail drawings, component drawings, small schematics
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A4</td>
-                      <td className="border border-white/10 px-3 py-2">210 x 297</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Data sheets, cover sheets, small details, certificates
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="ISO A Series Sheet Sizes"
+            headers={['Size', 'Dimensions (mm)', 'Typical Use in Electrical']}
+            rows={[
+              ['A0', '841 x 1189', 'Site layouts, large single-line diagrams, floor plans'],
+              [
+                'A1',
+                '594 x 841',
+                'Equipment GA drawings, schematic diagrams, distribution layouts',
+              ],
+              ['A2', '420 x 594', 'Panel layout drawings, wiring diagrams, cable schedules'],
+              ['A3', '297 x 420', 'Detail drawings, component drawings, small schematics'],
+              ['A4', '210 x 297', 'Data sheets, cover sheets, small details, certificates'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Border and Zone Conventions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Filing margin:</strong> 20 mm on the left edge (for binding); 10 mm on
-                  other edges
-                </li>
-                <li className="pl-1">
-                  <strong>Zone references:</strong> Letters (A, B, C) vertically from bottom;
-                  numbers (1, 2, 3) horizontally from right
-                </li>
-                <li className="pl-1">
-                  <strong>Grid system:</strong> Allows features to be located by reference (e.g.,
-                  "Motor M3 is at zone C4")
-                </li>
-                <li className="pl-1">
-                  <strong>Centring marks:</strong> Small marks at the midpoint of each border edge
-                  for alignment
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Border and Zone Conventions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Filing margin:</strong> 20 mm on the left edge (for binding); 10 mm on other
+                edges
+              </li>
+              <li>
+                <strong>Zone references:</strong> Letters (A, B, C) vertically from bottom; numbers
+                (1, 2, 3) horizontally from right
+              </li>
+              <li>
+                <strong>Grid system:</strong> Allows features to be located by reference (e.g.,
+                "Motor M3 is at zone C4")
+              </li>
+              <li>
+                <strong>Centring marks:</strong> Small marks at the midpoint of each border edge for
+                alignment
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Revision Tables and Change Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Revision tables and change control</ContentEyebrow>
+
+          <ConceptBlock title="Revision Tables and Change Control">
             <p>
               The revision table is the audit trail of every change made to a drawing. It is
               positioned adjacent to or above the title block and provides a chronological record of
@@ -549,194 +452,114 @@ const MOETModule6Section1_4 = () => {
               technicians, the revision table tells you how the drawing has evolved and confirms you
               are looking at the latest version.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Revision Table Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Rev</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Date</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">By</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">-</td>
-                      <td className="border border-white/10 px-3 py-2">15/03/2023</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First issue for construction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">JB</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A</td>
-                      <td className="border border-white/10 px-3 py-2">22/06/2023</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable entry positions updated per site survey
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">KM</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">10/11/2023</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        As-built — reflects installed arrangement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">KM</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Revision Table Structure"
+            headers={['Rev', 'Date', 'Description', 'By']}
+            rows={[
+              ['-', '15/03/2023', 'First issue for construction', 'JB'],
+              ['A', '22/06/2023', 'Cable entry positions updated per site survey', 'KM'],
+              ['B', '10/11/2023', 'As-built — reflects installed arrangement', 'KM'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Working from the Wrong Revision
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Working from the Wrong Revision"
+            whatHappens={
+              <>
                 Using a superseded drawing revision is a significant safety risk. Cable routes may
                 have changed, equipment may have been relocated, protection settings may have been
-                updated, or additional circuits may have been added. If the drawing does not match
-                what you find on site, stop work and verify which is correct — the drawing or the
-                installation. Report discrepancies through the formal document control process.
-              </p>
-            </div>
+                updated, or additional circuits may have been added.
+              </>
+            }
+            doInstead={
+              <>
+                If the drawing does not match what you find on site, stop work and verify which is
+                correct — the drawing or the installation. Report discrepancies through the formal
+                document control process.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Revision clouds">
+            <p>
               <strong>Key point:</strong> Revision clouds (irregular cloud-shaped outlines) on the
               drawing body highlight areas that changed in the current revision. Look for these to
               quickly identify what has been modified without comparing the entire drawing to the
               previous version.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Drawing Types and Cross-Referencing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Drawing types and cross-referencing</ContentEyebrow>
+
+          <ConceptBlock title="Drawing Types and Cross-Referencing">
             <p>
               A complete set of engineering drawings for an electrical installation comprises many
               different types of drawing, each serving a specific purpose. Understanding the drawing
               types and how they cross-reference each other allows you to navigate the complete
               drawing set efficiently and find the information you need.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Drawing Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What It Shows</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Use
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Site layout</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment positions within building/site
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Locating equipment, planning access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General arrangement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment dimensions, mounting, clearances
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Replacement planning, compatibility
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-line diagram</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power distribution architecture
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Isolation planning, fault-finding
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Schematic diagram</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit logic and operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding circuit function
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wiring diagram</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical terminal connections
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wiring, testing, reconnection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable schedule</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable types, sizes, routes, references
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable identification, replacement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Drawing Types and Cross-Referencing"
+            headers={['Drawing Type', 'What It Shows', 'Maintenance Use']}
+            rows={[
+              [
+                'Site layout',
+                'Equipment positions within building/site',
+                'Locating equipment, planning access',
+              ],
+              [
+                'General arrangement',
+                'Equipment dimensions, mounting, clearances',
+                'Replacement planning, compatibility',
+              ],
+              [
+                'Single-line diagram',
+                'Power distribution architecture',
+                'Isolation planning, fault-finding',
+              ],
+              [
+                'Schematic diagram',
+                'Circuit logic and operation',
+                'Understanding circuit function',
+              ],
+              ['Wiring diagram', 'Physical terminal connections', 'Wiring, testing, reconnection'],
+              [
+                'Cable schedule',
+                'Cable types, sizes, routes, references',
+                'Cable identification, replacement',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cross-Referencing Between Drawings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Drawing sets are interconnected through cross-references. A GA drawing may reference
-                the schematic diagram for circuit logic, the cable schedule for cable
-                specifications, and the single-line diagram for the distribution hierarchy.
-                Cross-references use drawing numbers and often include zone references to locate
-                specific features.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Equipment tag numbers link across all drawing types</li>
-                <li className="pl-1">
-                  Cable references connect schematic, wiring and cable schedule drawings
-                </li>
-                <li className="pl-1">
-                  Circuit references link the SLD to distribution board schedules
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Cross-Referencing Between Drawings">
+            <p>
+              Drawing sets are interconnected through cross-references. A GA drawing may reference
+              the schematic diagram for circuit logic, the cable schedule for cable specifications,
+              and the single-line diagram for the distribution hierarchy. Cross-references use
+              drawing numbers and often include zone references to locate specific features.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Equipment tag numbers link across all drawing types</li>
+              <li>Cable references connect schematic, wiring and cable schedule drawings</li>
+              <li>Circuit references link the SLD to distribution board schedules</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Drawing Registers and Document Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Drawing registers and document management</ContentEyebrow>
+
+          <ConceptBlock title="Drawing Registers and Document Management">
             <p>
               A drawing register (also called a document register or transmittal log) is the master
               index of all drawings in a project or installation. It is the starting point for
@@ -744,143 +567,104 @@ const MOETModule6Section1_4 = () => {
               maintenance organisations, the drawing register is managed within the document
               management system (DMS) or the CMMS.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Drawing Register Content
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Drawing number:</strong> Unique identifier for each drawing
-                </li>
-                <li className="pl-1">
-                  <strong>Title:</strong> Descriptive name of the drawing content
-                </li>
-                <li className="pl-1">
-                  <strong>Current revision:</strong> The latest approved revision letter or number
-                </li>
-                <li className="pl-1">
-                  <strong>Date of current revision:</strong> When the latest revision was issued
-                </li>
-                <li className="pl-1">
-                  <strong>Status:</strong> For construction, for information, as-built, superseded
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution:</strong> Who holds controlled copies
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Drawing Register Content">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Drawing number:</strong> Unique identifier for each drawing
+              </li>
+              <li>
+                <strong>Title:</strong> Descriptive name of the drawing content
+              </li>
+              <li>
+                <strong>Current revision:</strong> The latest approved revision letter or number
+              </li>
+              <li>
+                <strong>Date of current revision:</strong> When the latest revision was issued
+              </li>
+              <li>
+                <strong>Status:</strong> For construction, for information, as-built, superseded
+              </li>
+              <li>
+                <strong>Distribution:</strong> Who holds controlled copies
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Controlled Copies</h3>
-                <p className="text-sm text-white">
-                  Controlled copies are registered in the DMS and are automatically replaced when a
-                  new revision is issued. The holder always has the current version. Use controlled
-                  copies for all active maintenance work.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Uncontrolled Copies
-                </h3>
-                <p className="text-sm text-white">
-                  Uncontrolled copies are snapshots at a specific revision and are not updated. They
-                  may be used for reference or training but must be clearly marked 'UNCONTROLLED' to
-                  prevent accidental use for active work.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in using technical documentation systems. Navigating drawing registers, verifying
-              revision status, and understanding document control principles are assessed
-              competences — they demonstrate the professional approach expected of a qualified
-              maintenance technician.
+          <ConceptBlock title="Controlled Copies">
+            <p>
+              Controlled copies are registered in the DMS and are automatically replaced when a new
+              revision is issued. The holder always has the current version. Use controlled copies
+              for all active maintenance work.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Uncontrolled Copies"
+            onSite="ST1426 link: the maintenance technician standard requires competence in using technical documentation systems. Navigating drawing registers, verifying revision status, and understanding document control principles are assessed competences — they demonstrate the professional approach expected of a qualified maintenance technician."
+          >
+            <p>
+              Uncontrolled copies are snapshots at a specific revision and are not updated. They may
+              be used for reference or training but must be clearly marked 'UNCONTROLLED' to prevent
+              accidental use for active work.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Drawing number — unique identifier',
+              'Revision — current version status',
+              'Scale — drawing to actual size ratio',
+              'Projection — first or third angle symbol',
+              'Approvals — originator, checker, approver',
+              'A0: 841 x 1189 mm (site layouts)',
+              'A1: 594 x 841 mm (GA drawings)',
+              'A2: 420 x 594 mm (panel layouts)',
+              'A3: 297 x 420 mm (detail drawings)',
+              'A4: 210 x 297 mm (data sheets)',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Title Block Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Drawing number — unique identifier</li>
-                  <li>Revision — current version status</li>
-                  <li>Scale — drawing to actual size ratio</li>
-                  <li>Projection — first or third angle symbol</li>
-                  <li>Approvals — originator, checker, approver</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">ISO A Sheet Sizes</p>
-                <ul className="space-y-0.5">
-                  <li>A0: 841 x 1189 mm (site layouts)</li>
-                  <li>A1: 594 x 841 mm (GA drawings)</li>
-                  <li>A2: 420 x 594 mm (panel layouts)</li>
-                  <li>A3: 297 x 420 mm (detail drawings)</li>
-                  <li>A4: 210 x 297 mm (data sheets)</li>
-                </ul>
-              </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section1-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Orthographic Projection (Engineering Drawings)
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section1-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Introduction to CAD
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Orthographic Projection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1-5">
-              Next: Introduction to CAD
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

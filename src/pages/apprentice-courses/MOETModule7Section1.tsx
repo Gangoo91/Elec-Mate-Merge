@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '7.1.1',
-      title: 'Multiple-choice question banks',
-      description: 'Practice question banks covering all module topics and learning outcomes',
-      icon: HelpCircle,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section1-1',
-    },
-    {
-      number: '7.1.2',
-      title: 'Timed mock tests',
-      description: 'Full-length practice tests under exam conditions with time constraints',
-      icon: Clock,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section1-2',
-    },
-    {
-      number: '7.1.3',
-      title: 'Feedback and explanations',
-      description: 'Detailed explanations for answers and performance feedback',
-      icon: MessageSquare,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section1-3',
-    },
-    {
-      number: '7.1.4',
-      title: 'Identifying knowledge gaps',
-      description: 'Self-assessment techniques and identifying areas for improvement',
-      icon: Search,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section1-4',
-    },
-    {
-      number: '7.1.5',
-      title: 'Exam techniques and strategies',
-      description: 'Test-taking strategies, time management and approach techniques',
-      icon: Target,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section1-5',
-    },
-  ];
-
+  {
+    number: '7.1.1',
+    title: 'Multiple-choice question banks',
+    description: 'Practice question banks covering all module topics and learning outcomes',
+    icon: HelpCircle,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section1-1',
+  },
+  {
+    number: '7.1.2',
+    title: 'Timed mock tests',
+    description: 'Full-length practice tests under exam conditions with time constraints',
+    icon: Clock,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section1-2',
+  },
+  {
+    number: '7.1.3',
+    title: 'Feedback and explanations',
+    description: 'Detailed explanations for answers and performance feedback',
+    icon: MessageSquare,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section1-3',
+  },
+  {
+    number: '7.1.4',
+    title: 'Identifying knowledge gaps',
+    description: 'Self-assessment techniques and identifying areas for improvement',
+    icon: Search,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section1-4',
+  },
+  {
+    number: '7.1.5',
+    title: 'Exam techniques and strategies',
+    description: 'Test-taking strategies, time management and approach techniques',
+    icon: Target,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section1-5',
+  },
+];
 
 const MOETModule7Section1 = () => {
   useSEO(

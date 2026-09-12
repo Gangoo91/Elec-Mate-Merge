@@ -7,6 +7,7 @@ import {
   DraftingCompass,
   Users,
   GraduationCap,
+  BookMarked,
 } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
@@ -64,7 +65,8 @@ const modules = [
   {
     moduleNumber: 7,
     title: 'Career awareness and professional development',
-    description: 'Professional standards, career progression and continuing professional development.',
+    description:
+      'Professional standards, career progression and continuing professional development.',
     icon: Users,
     duration: '50 mins',
     link: '../level3-module7',
@@ -72,7 +74,8 @@ const modules = [
   {
     moduleNumber: 8,
     title: 'Mock exams and assessment',
-    description: 'Mock examinations, practical guidance and exam techniques for the Level 3 qualification.',
+    description:
+      'Mock examinations, practical guidance and exam techniques for the Level 3 qualification.',
     icon: GraduationCap,
     duration: '60 mins',
     link: '../level3-module8',
@@ -113,6 +116,15 @@ export default function Level3() {
           index={index}
         />
       ))}
+      <ModuleCard
+        to="/study-centre/glossary?course=level3"
+        moduleNumber={modules.length + 1}
+        title="Glossary"
+        description="Every abbreviation this course uses, defined in plain English — shared across the study centre so a term means the same thing wherever you meet it."
+        icon={BookMarked}
+        duration="Reference"
+        index={modules.length}
+      />
     </CourseShell>
   );
 }

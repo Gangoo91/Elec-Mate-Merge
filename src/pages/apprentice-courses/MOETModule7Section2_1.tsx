@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 1 — Safe Isolation and Testing Routines
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * ✅ ACCURACY CHECKED: this page's GS38 figures (4 mm max exposed probe tip,
+ * finger guards, fuses "usually not exceeding 500 mA") were verified against
+ * the primary source held at ~/Desktop/hav/HSE-GS38-Electrical-test-equipment.pdf
+ * (GS38, 4th edition, para 9) and are CORRECT — nothing changed. The 2 mm
+ * figure the source mentions is GS38's own "where practicable" recommendation
+ * to go BELOW the 4 mm maximum, not a separate limit, and this page does not
+ * claim otherwise.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safe Isolation and Testing Routines - MOET Module 7 Section 2.1';
@@ -264,115 +302,84 @@ const faqs = [
 ];
 
 const MOETModule7Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safe Isolation and Testing Routines
-          </h1>
-          <p className="text-white">
-            Demonstrating safe isolation competence to the EPA assessor with confidence and clarity
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 1"
+        title="Safe Isolation and Testing Routines"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Demonstrating safe isolation competence to the EPA assessor with confidence and clarity.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Sequence:</strong> Identify, isolate, lock off, prove-test-prove
-              </li>
-              <li className="pl-1">
-                <strong>GS38:</strong> 4 mm tips, fused leads, finger guards, CAT rated
-              </li>
-              <li className="pl-1">
-                <strong>Explain:</strong> Talk through each step and its safety reason
-              </li>
-              <li className="pl-1">
-                <strong>Time:</strong> Practise until efficient — never skip safety steps
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EAWR Reg 4(3):</strong> Legal duty for safe systems of work
-              </li>
-              <li className="pl-1">
-                <strong>LOTO:</strong> Lock out, tag out — personal safety locks
-              </li>
-              <li className="pl-1">
-                <strong>Assessor:</strong> Observing safety, method and understanding
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Core practical competence for EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Sequence: identify, isolate, lock off, prove-test-prove.',
+              'GS38: 4 mm tips, fused leads, finger guards, CAT rated.',
+              'Explain: talk through each step and its safety reason.',
+              'Time: practise until efficient — never skip safety steps.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Safe isolation',
+
+                gist: 'Identify the supply, switch off, isolate, lock off and prove dead at the point of work — with a GS38-compliant indicator proved before and after.',
+
+                where: '1.1.2',
+              },
+
+              {
+                term: 'The Electricity at Work Regulations',
+
+                gist: 'The statutory duties: Reg 4(2) maintenance, Reg 13 precautions on dead equipment, Reg 14 live working, Reg 16 competence.',
+
+                where: '1.4.2',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Demonstrate the complete safe isolation procedure to an assessor',
               'Execute the prove-test-prove sequence correctly every time',
               'Ensure all test equipment meets GS38 requirements',
               'Explain each step and its safety rationale clearly',
               'Manage time effectively during the practical observation',
               'Avoid common mistakes that lead to practical assessment failures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>EAWR Reg 4(3):</strong> legal duty for safe systems of work.
+              </li>
+              <li>
+                <strong>LOTO:</strong> lock out, tag out — personal safety locks.
+              </li>
+              <li>
+                <strong>Assessor:</strong> observing safety, method and understanding.
+              </li>
+              <li>
+                <strong>ST1426:</strong> core practical competence for EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Safe Isolation Procedure for EPA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The safe isolation procedure for EPA</ContentEyebrow>
+
+          <ConceptBlock title="The safe isolation procedure for EPA">
             <p>
               Safe isolation is the foundation of all electrical maintenance work and is always
               assessed during the EPA practical observation. The assessor will watch you perform the
@@ -380,7 +387,6 @@ const MOETModule7Section2_1 = () => {
               why each step is necessary. This is the single most important competence you will
               demonstrate — getting it wrong is an automatic fail.
             </p>
-
             <p>
               The procedure must be followed every time, without exception. Even if you have
               isolated the same circuit a hundred times before, the EPA assessor expects to see the
@@ -389,136 +395,125 @@ const MOETModule7Section2_1 = () => {
               acceptable in the workplace either. The EPA tests your professional standard, not your
               minimum standard.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Complete Safe Isolation Sequence
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify the circuit:</strong> Confirm the exact circuit to be isolated
-                  using labels, drawings, and circuit charts. Verify the circuit identity — do not
-                  rely on a single label
-                </li>
-                <li className="pl-1">
-                  <strong>Obtain authorisation:</strong> Confirm you have permission to isolate (PTW
-                  if required). On some sites, a permit to work is mandatory before isolation
-                </li>
-                <li className="pl-1">
-                  <strong>Notify affected persons:</strong> Inform anyone who may be affected by the
-                  isolation — production staff, building occupants, other trades
-                </li>
-                <li className="pl-1">
-                  <strong>Switch off:</strong> Switch off the circuit at the local isolator or
-                  distribution board using the correct device
-                </li>
-                <li className="pl-1">
-                  <strong>Isolate:</strong> Remove fuses or open the isolator to create a physical
-                  break in the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Lock off:</strong> Apply a personal safety lock and danger notice at the
-                  point of isolation
-                </li>
-                <li className="pl-1">
-                  <strong>Prove:</strong> Prove the voltage indicator on a known live source or
-                  proving unit
-                </li>
-                <li className="pl-1">
-                  <strong>Test:</strong> Test the isolated circuit between all conductors (L-N, L-E,
-                  N-E for single phase; all combinations for three-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Re-prove:</strong> Prove the voltage indicator again on the known live
-                  source or proving unit
-                </li>
-                <li className="pl-1">
-                  <strong>Confirm dead:</strong> The circuit is now confirmed dead and safe to work
-                  on
-                </li>
-              </ol>
+          <ConceptBlock title="The complete safe isolation sequence">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify the circuit:</strong> confirm the exact circuit to be isolated
+                using labels, drawings, and circuit charts. Verify the circuit identity — do not
+                rely on a single label.
+              </li>
+              <li>
+                <strong>Obtain authorisation:</strong> confirm you have permission to isolate (PTW
+                if required). On some sites, a permit to work is mandatory before isolation.
+              </li>
+              <li>
+                <strong>Notify affected persons:</strong> inform anyone who may be affected by the
+                isolation — production staff, building occupants, other trades.
+              </li>
+              <li>
+                <strong>Switch off:</strong> switch off the circuit at the local isolator or
+                distribution board using the correct device.
+              </li>
+              <li>
+                <strong>Isolate:</strong> remove fuses or open the isolator to create a physical
+                break in the circuit.
+              </li>
+              <li>
+                <strong>Lock off:</strong> apply a personal safety lock and danger notice at the
+                point of isolation.
+              </li>
+              <li>
+                <strong>Prove:</strong> prove the voltage indicator on a known live source or
+                proving unit.
+              </li>
+              <li>
+                <strong>Test:</strong> test the isolated circuit between all conductors (L-N, L-E,
+                N-E for single phase; all combinations for three-phase).
+              </li>
+              <li>
+                <strong>Re-prove:</strong> prove the voltage indicator again on the known live
+                source or proving unit.
+              </li>
+              <li>
+                <strong>Confirm dead:</strong> the circuit is now confirmed dead and safe to work
+                on.
+              </li>
+            </ol>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Critical: test between ALL conductors"
+            whatHappens={
+              <>
+                A circuit may appear dead between line and neutral but have a fault condition
+                between neutral and earth. Testing only some of the combinations can leave a live
+                conductor undetected despite the circuit "reading" dead.
+              </>
+            }
+            doInstead={
+              <>
+                Test between all combinations: line-neutral, line-earth, and neutral-earth. For
+                three-phase circuits, test between all phases and between each phase and
+                neutral/earth — that is a minimum of ten tests.
+              </>
+            }
+          />
+
+          <ConceptBlock title="Single-phase vs three-phase test combinations">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Circuit type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test combinations</th>
+                    <th className="py-2 font-medium text-white">Minimum tests</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Single-phase</td>
+                    <td className="py-2 pr-4">L-N, L-E, N-E</td>
+                    <td className="py-2">3</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Three-phase (no neutral)</td>
+                    <td className="py-2 pr-4">L1-L2, L2-L3, L1-L3, L1-E, L2-E, L3-E</td>
+                    <td className="py-2">6</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Three-phase with neutral</td>
+                    <td className="py-2 pr-4">
+                      L1-L2, L2-L3, L1-L3, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E
+                    </td>
+                    <td className="py-2">10</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Critical: Test Between ALL Conductors
-              </p>
-              <p className="text-sm text-white">
-                When testing for dead, you must test between all combinations: line-neutral,
-                line-earth, and neutral-earth. A circuit may appear dead between line and neutral
-                but have a fault condition between neutral and earth. Testing all combinations
-                confirms the circuit is genuinely de-energised. For three-phase circuits, test
-                between all phases and between each phase and neutral/earth — that is a minimum of
-                ten tests.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Single-Phase vs Three-Phase Test Combinations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Test Combinations
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum Tests</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Single-phase</td>
-                      <td className="border border-white/10 px-3 py-2">L-N, L-E, N-E</td>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase (no neutral)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        L1-L2, L2-L3, L1-L3, L1-E, L2-E, L3-E
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-phase with neutral</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        L1-L2, L2-L3, L1-L3, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The prove-test-prove sequence is non-negotiable. Skipping
+            <p>
+              <strong>Key point:</strong> the prove-test-prove sequence is non-negotiable. Skipping
               the re-prove step is a common shortcut that assessors will immediately identify as a
               fail point. Even if the test shows dead, without re-proving your indicator you cannot
               be certain the reading was accurate.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            GS38 Compliance and Test Equipment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>GS38 compliance and test equipment</ContentEyebrow>
+
+          <ConceptBlock title="GS38 compliance and test equipment">
             <p>
-              The Health and Safety Executive's Guidance Note GS38 sets out the requirements for
-              electrical test equipment used by electricians. During the EPA, your test equipment
-              must be visibly compliant with GS38, and you should be able to explain the
+              The Health and Safety Executive&apos;s Guidance Note GS38 sets out the requirements
+              for electrical test equipment used by electricians. During the EPA, your test
+              equipment must be visibly compliant with GS38, and you should be able to explain the
               requirements if asked. Using non-compliant equipment is both a safety risk and a
               potential fail point in the assessment.
             </p>
-
             <p>
               GS38 was published specifically to address the number of electrical accidents caused
               by inadequate or damaged test equipment. The guidance applies to all voltage
@@ -526,123 +521,99 @@ const MOETModule7Section2_1 = () => {
               conductors. Understanding the reasoning behind each requirement helps you explain it
               to the assessor and demonstrates deeper knowledge.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">GS38 Key Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Probe tips:</strong> Maximum 4 mm exposed conductive material — prevents
-                  accidental contact with adjacent conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Finger guards:</strong> Barriers to prevent fingers touching live parts —
-                  protects against electric shock during testing
-                </li>
-                <li className="pl-1">
-                  <strong>Fused leads:</strong> 500 mA HRC fuses in both leads — limits the energy
-                  released during a fault on the test instrument
-                </li>
-                <li className="pl-1">
-                  <strong>Robust insulation:</strong> Leads rated for the voltage being tested —
-                  prevents insulation breakdown and shock
-                </li>
-                <li className="pl-1">
-                  <strong>CAT rating:</strong> Appropriate category for the installation (CAT III or
-                  CAT IV for distribution) — ensures the instrument can withstand transient voltages
-                </li>
-                <li className="pl-1">
-                  <strong>Calibration:</strong> Within calibration date (check the label) — ensures
-                  readings are accurate and reliable
-                </li>
-              </ul>
+          <ConceptBlock title="GS38 key requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Probe tips:</strong> maximum 4 mm exposed conductive material — prevents
+                accidental contact with adjacent conductors.
+              </li>
+              <li>
+                <strong>Finger guards:</strong> barriers to prevent fingers touching live parts —
+                protects against electric shock during testing.
+              </li>
+              <li>
+                <strong>Fused leads:</strong> 500 mA HRC fuses in both leads — limits the energy
+                released during a fault on the test instrument.
+              </li>
+              <li>
+                <strong>Robust insulation:</strong> leads rated for the voltage being tested —
+                prevents insulation breakdown and shock.
+              </li>
+              <li>
+                <strong>CAT rating:</strong> appropriate category for the installation (CAT III or
+                CAT IV for distribution) — ensures the instrument can withstand transient voltages.
+              </li>
+              <li>
+                <strong>Calibration:</strong> within calibration date (check the label) — ensures
+                readings are accurate and reliable.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Pre-test equipment check">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Visual inspection of leads — no damage, cracks, or exposed conductors.</li>
+              <li>Confirm probe tips meet GS38 requirements (4 mm maximum, with guards).</li>
+              <li>Check fuses are present and the correct rating (500 mA HRC).</li>
+              <li>Check calibration date is current.</li>
+              <li>Test battery condition (if applicable).</li>
+              <li>Prove on known live source before use.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="CAT rating guide for maintenance environments">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">CAT rating</th>
+                    <th className="py-2 pr-4 font-medium text-white">Application</th>
+                    <th className="py-2 font-medium text-white">Example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">CAT II</td>
+                    <td className="py-2 pr-4">Domestic appliance level</td>
+                    <td className="py-2">Socket outlets, portable equipment</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">CAT III</td>
+                    <td className="py-2 pr-4">Distribution level</td>
+                    <td className="py-2">Distribution boards, bus bars, motor control centres</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">CAT IV</td>
+                    <td className="py-2 pr-4">Origin of installation</td>
+                    <td className="py-2">Incoming supply, service heads, main switchgear</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Test Equipment Check
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Visual inspection of leads — no damage, cracks, or exposed conductors
-                </li>
-                <li className="pl-1">
-                  Confirm probe tips meet GS38 requirements (4 mm maximum, with guards)
-                </li>
-                <li className="pl-1">
-                  Check fuses are present and the correct rating (500 mA HRC)
-                </li>
-                <li className="pl-1">Check calibration date is current</li>
-                <li className="pl-1">Test battery condition (if applicable)</li>
-                <li className="pl-1">Prove on known live source before use</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CAT Rating Guide for Maintenance Environments
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">CAT Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT II</td>
-                      <td className="border border-white/10 px-3 py-2">Domestic appliance level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets, portable equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT III</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution boards, bus bars, motor control centres
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT IV</td>
-                      <td className="border border-white/10 px-3 py-2">Origin of installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Incoming supply, service heads, main switchgear
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Demonstrating that you check your test equipment before
+            <p>
+              <strong>Key point:</strong> demonstrating that you check your test equipment before
               use shows the assessor a professional, safety-conscious approach. This is a
               distinction-level behaviour — it shows you do not just use the right equipment, you
               actively verify it is safe and suitable before every use.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Explaining Your Actions to the Assessor
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Explaining your actions to the assessor</ContentEyebrow>
+
+          <ConceptBlock title="Explaining your actions to the assessor">
             <p>
               The practical observation assesses both your ability to perform tasks and your
               understanding of why each step is necessary. Talking through your actions as you work
-              — sometimes called "thinking aloud" — is the most effective way to demonstrate this
-              understanding. Without verbal communication, the assessor can only see what you do,
-              not why you are doing it.
+              — sometimes called &quot;thinking aloud&quot; — is the most effective way to
+              demonstrate this understanding. Without verbal communication, the assessor can only
+              see what you do, not why you are doing it.
             </p>
-
             <p>
               Many candidates underestimate how important this communication element is. Two
               candidates who perform the identical procedure can receive different grades: the one
@@ -650,96 +621,73 @@ const MOETModule7Section2_1 = () => {
               understanding, not just mechanical skill. Practise your running commentary until it
               feels natural and conversational, not scripted.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What to Say at Each Step
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identifying circuit:</strong> "I'm confirming the circuit identity using
-                  the schedule of circuits and distribution board labelling to ensure I isolate the
-                  correct circuit"
-                </li>
-                <li className="pl-1">
-                  <strong>Locking off:</strong> "I'm applying my personal safety lock so the circuit
-                  cannot be re-energised by anyone else while I'm working on it — this is my LOTO
-                  procedure"
-                </li>
-                <li className="pl-1">
-                  <strong>Proving:</strong> "I'm proving my voltage indicator on this known live
-                  source to confirm it's reading correctly before I test the isolated circuit"
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> "I'm testing between line and neutral, line and earth,
-                  and neutral and earth to confirm the circuit is dead on all conductors"
-                </li>
-                <li className="pl-1">
-                  <strong>Re-proving:</strong> "I'm re-proving the indicator on the known source to
-                  confirm it's still working correctly — this validates my 'dead' reading was
-                  genuine"
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What to say at each step">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identifying circuit:</strong> &quot;I&apos;m confirming the circuit identity
+                using the schedule of circuits and distribution board labelling to ensure I isolate
+                the correct circuit.&quot;
+              </li>
+              <li>
+                <strong>Locking off:</strong> &quot;I&apos;m applying my personal safety lock so the
+                circuit cannot be re-energised by anyone else while I&apos;m working on it — this is
+                my LOTO procedure.&quot;
+              </li>
+              <li>
+                <strong>Proving:</strong> &quot;I&apos;m proving my voltage indicator on this known
+                live source to confirm it&apos;s reading correctly before I test the isolated
+                circuit.&quot;
+              </li>
+              <li>
+                <strong>Testing:</strong> &quot;I&apos;m testing between line and neutral, line and
+                earth, and neutral and earth to confirm the circuit is dead on all conductors.&quot;
+              </li>
+              <li>
+                <strong>Re-proving:</strong> &quot;I&apos;m re-proving the indicator on the known
+                source to confirm it&apos;s still working correctly — this validates my
+                &apos;dead&apos; reading was genuine.&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Referencing Standards Naturally
-              </p>
-              <p className="text-sm text-white">
-                Where natural, reference the relevant standard or regulation. For example: "I'm
-                following the GS38 guidance by checking my probe tips are within the 4 mm maximum"
-                or "This prove-test-prove sequence is required by HSG85 safe working practices." You
-                do not need to recite regulation numbers from memory, but demonstrating awareness of
-                the regulatory framework achieves higher marks. The key word is "naturally" — do not
-                force in references that feel out of place. If a reference comes to mind, include
-                it; if not, your practical demonstration speaks for itself.
-              </p>
-            </div>
+          <ConceptBlock title="Referencing standards naturally">
+            <p>
+              Where natural, reference the relevant standard or regulation. For example:
+              &quot;I&apos;m following the GS38 guidance by checking my probe tips are within the 4
+              mm maximum&quot; or &quot;This prove-test-prove sequence is required by HSG85 safe
+              working practices.&quot; You do not need to recite regulation numbers from memory, but
+              demonstrating awareness of the regulatory framework achieves higher marks. The key
+              word is &quot;naturally&quot; — do not force in references that feel out of place. If
+              a reference comes to mind, include it; if not, your practical demonstration speaks for
+              itself.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Dos and Don'ts
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm font-medium text-green-400 mb-1">Do</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Explain at key decision points</li>
-                    <li className="pl-1">Use your own words, not a script</li>
-                    <li className="pl-1">Reference safety reasons for each step</li>
-                    <li className="pl-1">State what readings you expect and why</li>
-                  </ul>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-red-400 mb-1">Don't</p>
-                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                    <li className="pl-1">Narrate every micro-action</li>
-                    <li className="pl-1">Read from prepared notes</li>
-                    <li className="pl-1">Stay completely silent</li>
-                    <li className="pl-1">Wait to be asked before speaking</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Practise the running commentary during your preparation.
+          <ConceptBlock title="Communication dos and don'ts">
+            <p>
+              <strong>Do:</strong> explain at key decision points. Use your own words, not a script.
+              Reference safety reasons for each step. State what readings you expect and why.
+            </p>
+            <p>
+              <strong>Don&apos;t:</strong> narrate every micro-action. Read from prepared notes.
+              Stay completely silent. Wait to be asked before speaking.
+            </p>
+            <p>
+              <strong>Key point:</strong> practise the running commentary during your preparation.
               It should feel natural, not scripted. The assessor wants to hear genuine
               understanding, not a memorised speech.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Time Management During Practical Tasks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Time management during practical tasks</ContentEyebrow>
+
+          <ConceptBlock title="Time management during practical tasks">
             <p>
               The practical observation has a defined time allocation. You need to work efficiently
               without compromising safety. This balance comes from practice — the more familiar you
@@ -747,7 +695,6 @@ const MOETModule7Section2_1 = () => {
               quality and safety. Time management during the EPA is not about rushing; it is about
               eliminating hesitation and unnecessary delays.
             </p>
-
             <p>
               The biggest time-wasters during practical assessments are not the procedures
               themselves but the pauses caused by uncertainty: hesitating over which probe to
@@ -756,113 +703,101 @@ const MOETModule7Section2_1 = () => {
               from one step to the next, appearing calm and confident — which is exactly the
               impression you want to give the assessor.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Speed Through Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Repetition:</strong> Practise the safe isolation procedure until it is
-                  second nature — aim for at least 20 complete run-throughs
-                </li>
-                <li className="pl-1">
-                  <strong>Tool preparation:</strong> Have all tools and equipment ready and
-                  organised before starting — a tool roll or pouch saves searching time
-                </li>
-                <li className="pl-1">
-                  <strong>Efficient movement:</strong> Plan your sequence to minimise unnecessary
-                  back-and-forth between the isolator and work position
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid hesitation:</strong> Confidence from practice eliminates pauses and
-                  uncertainty that waste valuable minutes
-                </li>
-                <li className="pl-1">
-                  <strong>Self-timing:</strong> Time yourself during practice to identify where you
-                  can improve efficiency without compromising safety
-                </li>
-              </ul>
+          <ConceptBlock title="Building speed through practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Repetition:</strong> practise the safe isolation procedure until it is
+                second nature — aim for at least 20 complete run-throughs.
+              </li>
+              <li>
+                <strong>Tool preparation:</strong> have all tools and equipment ready and organised
+                before starting — a tool roll or pouch saves searching time.
+              </li>
+              <li>
+                <strong>Efficient movement:</strong> plan your sequence to minimise unnecessary
+                back-and-forth between the isolator and work position.
+              </li>
+              <li>
+                <strong>Avoid hesitation:</strong> confidence from practice eliminates pauses and
+                uncertainty that waste valuable minutes.
+              </li>
+              <li>
+                <strong>Self-timing:</strong> time yourself during practice to identify where you
+                can improve efficiency without compromising safety.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Typical time allocation for practical tasks">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Activity</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical time</th>
+                    <th className="py-2 font-medium text-white">Key focus</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safe isolation procedure</td>
+                    <td className="py-2 pr-4">10-15 minutes</td>
+                    <td className="py-2">Full procedure, no shortcuts</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fault diagnosis</td>
+                    <td className="py-2 pr-4">20-40 minutes</td>
+                    <td className="py-2">Systematic method, clear reasoning</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Component replacement</td>
+                    <td className="py-2 pr-4">15-30 minutes</td>
+                    <td className="py-2">Correct procedure, workmanship quality</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Testing and verification</td>
+                    <td className="py-2 pr-4">10-20 minutes</td>
+                    <td className="py-2">Thorough testing, documented results</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Time Allocation for Practical Tasks
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Focus</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safe isolation procedure</td>
-                      <td className="border border-white/10 px-3 py-2">10-15 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full procedure, no shortcuts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fault diagnosis</td>
-                      <td className="border border-white/10 px-3 py-2">20-40 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Systematic method, clear reasoning
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Component replacement</td>
-                      <td className="border border-white/10 px-3 py-2">15-30 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct procedure, workmanship quality
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Testing and verification</td>
-                      <td className="border border-white/10 px-3 py-2">10-20 minutes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thorough testing, documented results
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <CommonMistake
+            title="Never compromise safety for speed"
+            whatHappens={
+              <>
+                If time is running short, skipping safety steps to finish is a serious error. The
+                assessor is looking for competent, safe practice — not a speed record.
+              </>
+            }
+            doInstead={
+              <>
+                A candidate who completes the task slowly but safely will score higher than one who
+                rushes and omits critical safety procedures. If you run out of time, the fact that
+                you maintained safety throughout will be noted positively. A methodical approach
+                that does not quite finish is always better than a rushed approach that skips
+                proving dead.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Never Compromise Safety for Speed
-              </p>
-              <p className="text-sm text-white">
-                If time is running short, do not skip safety steps. A candidate who completes the
-                task slowly but safely will score higher than one who rushes and omits critical
-                safety procedures. The assessor is looking for competent, safe practice — not a
-                speed record. If you run out of time, the fact that you maintained safety throughout
-                will be noted positively. A methodical approach that does not quite finish is always
-                better than a rushed approach that skips proving dead.
-              </p>
-            </div>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> safe isolation is a core competence requirement of the
+            Maintenance and Operations Engineering Technician standard. It is assessed in every EPA
+            practical observation and is a fundamental skill for your entire career.
+          </p>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Safe isolation is a core competence requirement of the
-              Maintenance and Operations Engineering Technician standard. It is assessed in every
-              EPA practical observation and is a fundamental skill for your entire career.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Common Mistakes and How to Avoid Them
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Common mistakes and how to avoid them</ContentEyebrow>
+
+          <ConceptBlock title="Common mistakes and how to avoid them">
             <p>
               Experience from EPA assessors across the country reveals consistent patterns in the
               mistakes candidates make during the safe isolation demonstration. Understanding these
@@ -870,189 +805,160 @@ const MOETModule7Section2_1 = () => {
               advantage. Most of these mistakes are preventable through awareness and practice, not
               through additional knowledge.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Top Safe Isolation Errors in EPA Assessments
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Skipping the re-prove step:</strong> Testing the circuit for dead but not
-                  re-proving the indicator afterwards. This is the single most common error and is a
-                  significant fail point
-                </li>
-                <li className="pl-1">
-                  <strong>Not testing all conductor combinations:</strong> Only testing L-N on a
-                  single-phase circuit and missing L-E and N-E, or missing phase-to-phase tests on
-                  three-phase circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Using non-GS38-compliant equipment:</strong> Probes without finger guards,
-                  exposed tips longer than 4 mm, or leads without fuses
-                </li>
-                <li className="pl-1">
-                  <strong>Forgetting to apply the lock and danger notice:</strong> Isolating and
-                  testing but not physically locking off the isolator before beginning work
-                </li>
-                <li className="pl-1">
-                  <strong>Not identifying the circuit correctly:</strong> Rushing into isolation
-                  without confirming the circuit identity from the schedule of circuits or
-                  distribution board labelling
-                </li>
-                <li className="pl-1">
-                  <strong>Working in silence:</strong> Performing the procedure correctly but not
-                  explaining any of the steps, leaving the assessor unable to confirm understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Not checking equipment before use:</strong> Starting to test without
-                  visually inspecting the voltage indicator and leads for damage
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Top safe isolation errors in EPA assessments">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Skipping the re-prove step:</strong> testing the circuit for dead but not
+                re-proving the indicator afterwards. This is the single most common error and is a
+                significant fail point.
+              </li>
+              <li>
+                <strong>Not testing all conductor combinations:</strong> only testing L-N on a
+                single-phase circuit and missing L-E and N-E, or missing phase-to-phase tests on
+                three-phase circuits.
+              </li>
+              <li>
+                <strong>Using non-GS38-compliant equipment:</strong> probes without finger guards,
+                exposed tips longer than 4 mm, or leads without fuses.
+              </li>
+              <li>
+                <strong>Forgetting to apply the lock and danger notice:</strong> isolating and
+                testing but not physically locking off the isolator before beginning work.
+              </li>
+              <li>
+                <strong>Not identifying the circuit correctly:</strong> rushing into isolation
+                without confirming the circuit identity from the schedule of circuits or
+                distribution board labelling.
+              </li>
+              <li>
+                <strong>Working in silence:</strong> performing the procedure correctly but not
+                explaining any of the steps, leaving the assessor unable to confirm understanding.
+              </li>
+              <li>
+                <strong>Not checking equipment before use:</strong> starting to test without
+                visually inspecting the voltage indicator and leads for damage.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Assessment Practice Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Practise the complete procedure at least 20 times until it is automatic
-                </li>
-                <li className="pl-1">
-                  Have a colleague observe and give feedback on your technique and communication
-                </li>
-                <li className="pl-1">
-                  Time yourself to ensure you can complete the procedure comfortably within the
-                  allocation
-                </li>
-                <li className="pl-1">
-                  Practise on different types of distribution boards and isolators if possible
-                </li>
-                <li className="pl-1">
-                  Rehearse your verbal commentary at each step until it flows naturally
-                </li>
-                <li className="pl-1">
-                  Verify your test equipment is GS38-compliant, calibrated, and in good condition
-                </li>
-                <li className="pl-1">
-                  Familiarise yourself with the specific lock-off devices you will use
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Pre-assessment practice checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Practise the complete procedure at least 20 times until it is automatic.</li>
+              <li>
+                Have a colleague observe and give feedback on your technique and communication.
+              </li>
+              <li>
+                Time yourself to ensure you can complete the procedure comfortably within the
+                allocation.
+              </li>
+              <li>Practise on different types of distribution boards and isolators if possible.</li>
+              <li>Rehearse your verbal commentary at each step until it flows naturally.</li>
+              <li>
+                Verify your test equipment is GS38-compliant, calibrated, and in good condition.
+              </li>
+              <li>Familiarise yourself with the specific lock-off devices you will use.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Handling Nerves During the Procedure
-              </p>
-              <p className="text-sm text-white">
-                Assessment nerves can cause even well-prepared candidates to make mistakes. The best
-                defence is overlearning — practising so much that the procedure becomes automatic,
-                like driving a car. When nerves affect your conscious thinking, your trained muscle
-                memory takes over. If you feel nervous during the assessment, take a breath, return
-                to the start of the step you are on, and continue methodically. The assessor
-                understands nerves and will not penalise a brief pause to compose yourself.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The candidates who perform best in EPA safe isolation
+          <ConceptBlock title="Handling nerves during the procedure">
+            <p>
+              Assessment nerves can cause even well-prepared candidates to make mistakes. The best
+              defence is overlearning — practising so much that the procedure becomes automatic,
+              like driving a car. When nerves affect your conscious thinking, your trained muscle
+              memory takes over. If you feel nervous during the assessment, take a breath, return to
+              the start of the step you are on, and continue methodically. The assessor understands
+              nerves and will not penalise a brief pause to compose yourself.
+            </p>
+            <p>
+              <strong>Key point:</strong> the candidates who perform best in EPA safe isolation
               assessments are not necessarily the most technically knowledgeable — they are the ones
               who have practised the most. Repetition builds the confidence and fluency that the
               assessor is looking for.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Quick reference — safe isolation">
+            <p>
+              <strong>Procedure order:</strong> identify circuit → obtain authorisation → notify
+              affected persons → switch off → isolate (physical break) → lock off + danger notice →
+              prove indicator → test for dead (all combinations) → re-prove indicator → confirm dead
+              — safe to work.
+            </p>
+            <p>
+              <strong>Key standards:</strong> GS38 (test equipment requirements); EAWR 1989 Reg 4(3)
+              (safe systems of work); EAWR 1989 Reg 12 (isolation requirements); EAWR 1989 Reg 14
+              (working on dead equipment); HSG85 (electricity at work: safe working practices); BS
+              7671 (IET Wiring Regulations).
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <VideoCard
+            url="https://www.youtube.com/watch?v=Ft_UdvFOvts"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-4 rounded-lg bg-white/5">
-            <h2 className="text-lg font-semibold text-white mb-3">
-              Quick Reference — Safe Isolation
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
-              <div>
-                <p className="font-medium text-elec-yellow/80 mb-1">Procedure Order</p>
-                <ol className="list-decimal list-outside ml-5 space-y-0.5">
-                  <li className="pl-1">Identify circuit</li>
-                  <li className="pl-1">Obtain authorisation</li>
-                  <li className="pl-1">Notify affected persons</li>
-                  <li className="pl-1">Switch off</li>
-                  <li className="pl-1">Isolate (physical break)</li>
-                  <li className="pl-1">Lock off + danger notice</li>
-                  <li className="pl-1">Prove indicator</li>
-                  <li className="pl-1">Test for dead (all combinations)</li>
-                  <li className="pl-1">Re-prove indicator</li>
-                  <li className="pl-1">Confirm dead — safe to work</li>
-                </ol>
-              </div>
-              <div>
-                <p className="font-medium text-elec-yellow/80 mb-1">Key Standards</p>
-                <ul className="list-disc list-outside ml-5 space-y-0.5">
-                  <li className="pl-1">GS38 — Test equipment requirements</li>
-                  <li className="pl-1">EAWR 1989 Reg 4(3) — Safe systems of work</li>
-                  <li className="pl-1">EAWR 1989 Reg 12 — Isolation requirements</li>
-                  <li className="pl-1">EAWR 1989 Reg 14 — Working on dead equipment</li>
-                  <li className="pl-1">HSG85 — Electricity at work: safe working practices</li>
-                  <li className="pl-1">BS 7671 — IET Wiring Regulations</li>
-                </ul>
-              </div>
+            title="How to Prep for a Successful Assessment"
+
+            channel="Craig Wiltshire"
+
+            duration="3:58"
+
+            topic="What a practical assessment day actually asks of you"
+
+            caption="Short and specific about preparation, which is the part apprentices tend to leave until the week before."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'The prove-test-prove sequence is non-negotiable — skipping the re-prove step is the single most common fail point.',
+              'Test between every conductor combination, not just the ones that are quick to reach — a fault can hide on an untested pair.',
+              'GS38-compliant test equipment: 4 mm max exposed tip, finger guards, fused leads, correct CAT rating, in calibration.',
+              'Explain your actions as you work — the assessor grades understanding, not just correct hands.',
+              'Never trade safety for speed. Practice removes hesitation; it should never remove a safety step.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Safe Isolation" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Practical task preparation
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Fault Diagnosis Exercises
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Safe Isolation" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-2">
-              Next: Fault Diagnosis Exercises
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

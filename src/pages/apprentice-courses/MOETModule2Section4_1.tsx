@@ -1,8 +1,43 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 1 — Fuses and Circuit Breakers
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fuses and Circuit Breakers - MOET Module 2 Section 4.1';
@@ -83,12 +118,7 @@ const quizQuestions = [
     id: 2,
     question:
       'Which standard covers miniature circuit breakers (MCBs) for household and similar installations?',
-    options: [
-      'BS EN 61009',
-      'BS 88',
-      'BS EN 60898',
-      'BS 3036',
-    ],
+    options: ['BS EN 61009', 'BS 88', 'BS EN 60898', 'BS 3036'],
     correctAnswer: 2,
     explanation:
       'BS EN 60898 covers miniature circuit breakers (MCBs) for overcurrent protection in household and similar installations. BS 88 covers industrial HRC fuses, BS 3036 covers semi-enclosed fuses, and BS EN 61009 covers residual current operated circuit breakers with integral overcurrent protection (RCBOs).',
@@ -258,117 +288,72 @@ const faqs = [
 ];
 
 const MOETModule2Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fuses and Circuit Breakers
-          </h1>
-          <p className="text-white">
-            Overcurrent protection devices, selection and operation for electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 1"
+        title="Fuses and Circuit Breakers"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Overcurrent protection devices, selection and operation for electrical maintenance —
+            fuse types, MCB trip characteristics, and the BS 7671 conditions a replacement device
+            must satisfy.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fuses:</strong> Sacrificial devices — BS 88 HRC, BS 3036 rewirable, BS 1362
-                cartridge
-              </li>
-              <li className="pl-1">
-                <strong>MCBs:</strong> Resettable devices — Type B (3-5x), Type C (5-10x), Type D
-                (10-20x)
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Ib &le; In &le; Iz; breaking capacity &ge; Ipf
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671, BS EN 60898, BS 88, BS 3036
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault finding:</strong> Identify why a device has operated before resetting
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Always like-for-like unless re-designed
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Verify Ipf does not exceed device breaking capacity
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to electrical engineering principles KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Fuses: sacrificial devices — BS 88 HRC, BS 3036 rewirable, BS 1362 cartridge.',
+              'MCBs: resettable devices — Type B (3-5x), Type C (5-10x), Type D (10-20x).',
+              'Selection: Ib <= In <= Iz; breaking capacity >= Ipf.',
+              'Standards: BS 7671, BS EN 60898, BS 88, BS 3036.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principles of fuses and miniature circuit breakers',
               'Identify the main fuse types used in UK electrical installations (BS 88, BS 3036, BS 1362)',
               'Describe MCB trip characteristics (Type B, C and D) and their applications',
               'Apply the selection criteria Ib <= In <= Iz for overcurrent protective devices',
               'Understand breaking capacity requirements and back-up protection',
               'Reference BS 7671, BS EN 60898 and BS 88 requirements for device selection',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The purpose of overcurrent protection</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Purpose of Overcurrent Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Detect overcurrent, disconnect before it does damage"
+            onSite="As a maintenance technician you will frequently encounter protective devices that have operated. Understanding why a fuse has blown or an MCB has tripped is fundamental to fault diagnosis — a device operating on overload indicates a different problem from one operating on short-circuit, and the condition of the device after operation gives you diagnostic evidence."
+          >
             <p>
               Every electrical circuit carries the risk of overcurrent — a condition where the
               current flowing through conductors exceeds the level for which they are designed.
@@ -392,53 +377,31 @@ const MOETModule2Section4_1 = () => {
               overload (Section 433) and short-circuit (Section 434) — may be provided by a single
               device or by separate devices.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Two Types of Overcurrent
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Overload current:</strong> An overcurrent occurring in a circuit that is
-                  electrically sound — caused by excessive demand. Typically 1.5 to 6 times the
-                  design current. Requires disconnection within minutes to hours depending on
-                  magnitude.
-                </li>
-                <li className="pl-1">
-                  <strong>Short-circuit current (fault current):</strong> An overcurrent resulting
-                  from a fault of negligible impedance between live conductors or between a live
-                  conductor and earth. Can reach tens of thousands of amperes. Requires
-                  disconnection in fractions of a second.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Two types of overcurrent">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Overload current:</strong> An overcurrent occurring in a circuit that is
+                electrically sound — caused by excessive demand. Typically 1.5 to 6 times the design
+                current. Requires disconnection within minutes to hours depending on magnitude.
+              </li>
+              <li>
+                <strong>Short-circuit current (fault current):</strong> An overcurrent resulting
+                from a fault of negligible impedance between live conductors or between a live
+                conductor and earth. Can reach tens of thousands of amperes. Requires disconnection
+                in fractions of a second.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Why This Matters for Maintenance Technicians
-              </p>
-              <p className="text-sm text-white">
-                As a maintenance technician, you will frequently encounter protective devices that
-                have operated. Understanding why a fuse has blown or an MCB has tripped is
-                fundamental to fault diagnosis. A device operating on overload indicates a different
-                problem from one operating on short-circuit. The condition of the device after
-                operation — for example, a fuse element that has melted cleanly (overload) versus
-                one that has exploded with sand discolouration (short-circuit) — provides valuable
-                diagnostic information.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fuse Types and Operating Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Fuse types and operating principles</ContentEyebrow>
+
+          <ConceptBlock title="A carefully calibrated conductor designed to melt">
             <p>
               A fuse is the simplest form of overcurrent protection. It consists of a carefully
               calibrated conductor (the fuse element) that is designed to melt when the current
@@ -447,145 +410,113 @@ const MOETModule2Section4_1 = () => {
               current. The method of arc extinction varies between fuse types and directly affects
               the device's breaking capacity and current-limiting ability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BS 88 HRC (High Rupturing Capacity) Fuses
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  BS 88 fuses are the workhorse of industrial and commercial electrical protection
-                  in the UK. They consist of a silver or copper fuse element enclosed within a
-                  robust ceramic body filled with granular quartz sand. When the element melts, the
-                  arc energy is absorbed by the sand, which vitrifies (turns to glass) in the arc
-                  path. This provides extremely effective arc quenching and current-limiting
-                  properties.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Breaking capacity: up to 80 kA at 415 V AC</li>
-                  <li className="pl-1">Excellent current-limiting (low I²t let-through)</li>
-                  <li className="pl-1">Available in ratings from 2 A to 1250 A</li>
-                  <li className="pl-1">Bolt-in (tag) or clip-in carrier types</li>
-                  <li className="pl-1">
-                    Category of duty: gG (general purpose) or aM (motor circuit back-up)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BS 3036 Semi-Enclosed (Rewirable) Fuses
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  BS 3036 fuses use a thin tinned copper wire as the fuse element, held between two
-                  terminal screws in an open or semi-enclosed ceramic holder. When the wire melts,
-                  the arc is quenched in the surrounding air — a far less effective method than the
-                  sand-filled HRC design. This results in a lower breaking capacity and a poor
-                  fusing factor.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Fusing factor: approximately 1.8 to 2.0 (requires cable derating by factor
-                    0.725)
-                  </li>
-                  <li className="pl-1">Breaking capacity: typically 1 kA to 4 kA</li>
-                  <li className="pl-1">Risk of incorrect fuse wire being fitted</li>
-                  <li className="pl-1">
-                    Still found in older domestic and light commercial installations
-                  </li>
-                  <li className="pl-1">
-                    Being progressively replaced by MCBs in new installations
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BS 1362 Cartridge Fuses (Plug-Top Fuses)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  BS 1362 fuses are small ceramic cartridge fuses designed specifically for BS 1363
-                  13 A plug tops. They contain a sand-filled ceramic body with a silver element and
-                  brass end caps. Their primary purpose is to protect the flexible cord between the
-                  plug and the appliance.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Standard ratings: 3 A (red) and 13 A (brown)</li>
-                  <li className="pl-1">Other ratings available: 1 A, 2 A, 5 A, 7 A, 10 A</li>
-                  <li className="pl-1">Must be correctly selected for the appliance rating</li>
-                  <li className="pl-1">
-                    Common maintenance task: checking and replacing blown plug fuses
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Comparison of Fuse Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">BS 88 HRC</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        BS 3036 Rewirable
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        BS 1362 Cartridge
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Breaking capacity</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 80 kA</td>
-                      <td className="border border-white/10 px-3 py-2">1-4 kA</td>
-                      <td className="border border-white/10 px-3 py-2">6 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fusing factor</td>
-                      <td className="border border-white/10 px-3 py-2">~1.25</td>
-                      <td className="border border-white/10 px-3 py-2">~1.8-2.0</td>
-                      <td className="border border-white/10 px-3 py-2">~1.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current limiting</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                      <td className="border border-white/10 px-3 py-2">Poor</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical application</td>
-                      <td className="border border-white/10 px-3 py-2">Industrial/commercial</td>
-                      <td className="border border-white/10 px-3 py-2">Older domestic</td>
-                      <td className="border border-white/10 px-3 py-2">Plug tops</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When replacing fuses during maintenance, always use the
-              correct type and rating. Never substitute a higher-rated fuse to "stop it blowing" —
-              this defeats the protection and puts the installation at risk. If a fuse operates
-              repeatedly, investigate and rectify the cause.
+          <ConceptBlock title="BS 88 HRC (High Rupturing Capacity) fuses">
+            <p>
+              BS 88 fuses are the workhorse of industrial and commercial electrical protection in
+              the UK. They consist of a silver or copper fuse element enclosed within a robust
+              ceramic body filled with granular quartz sand. When the element melts, the arc energy
+              is absorbed by the sand, which vitrifies (turns to glass) in the arc path. This
+              provides extremely effective arc quenching and current-limiting properties.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Breaking capacity: up to 80 kA at 415 V AC</li>
+              <li>Excellent current-limiting (low I²t let-through)</li>
+              <li>Available in ratings from 2 A to 1250 A</li>
+              <li>Bolt-in (tag) or clip-in carrier types</li>
+              <li>Category of duty: gG (general purpose) or aM (motor circuit back-up)</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="BS 3036 semi-enclosed (rewirable) fuses">
+            <p>
+              BS 3036 fuses use a thin tinned copper wire as the fuse element, held between two
+              terminal screws in an open or semi-enclosed ceramic holder. When the wire melts, the
+              arc is quenched in the surrounding air — a far less effective method than the
+              sand-filled HRC design. This results in a lower breaking capacity and a poor fusing
+              factor.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Fusing factor: approximately 1.8 to 2.0 (requires cable derating by factor 0.725)
+              </li>
+              <li>Breaking capacity: typically 1 kA to 4 kA</li>
+              <li>Risk of incorrect fuse wire being fitted</li>
+              <li>Still found in older domestic and light commercial installations</li>
+              <li>Being progressively replaced by MCBs in new installations</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Miniature Circuit Breakers (MCBs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="BS 1362 cartridge fuses (plug-top fuses)">
+            <p>
+              BS 1362 fuses are small ceramic cartridge fuses designed specifically for BS 1363 13 A
+              plug tops. They contain a sand-filled ceramic body with a silver element and brass end
+              caps. Their primary purpose is to protect the flexible cord between the plug and the
+              appliance.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Standard ratings: 3 A (red) and 13 A (brown)</li>
+              <li>Other ratings available: 1 A, 2 A, 5 A, 7 A, 10 A</li>
+              <li>Must be correctly selected for the appliance rating</li>
+              <li>Common maintenance task: checking and replacing blown plug fuses</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Comparison of fuse types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Characteristic</th>
+                    <th className="py-2 pr-4 font-medium text-white">BS 88 HRC</th>
+                    <th className="py-2 pr-4 font-medium text-white">BS 3036 Rewirable</th>
+                    <th className="py-2 font-medium text-white">BS 1362 Cartridge</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Breaking capacity</td>
+                    <td className="py-2 pr-4">Up to 80 kA</td>
+                    <td className="py-2 pr-4">1-4 kA</td>
+                    <td className="py-2">6 kA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fusing factor</td>
+                    <td className="py-2 pr-4">~1.25</td>
+                    <td className="py-2 pr-4">~1.8-2.0</td>
+                    <td className="py-2">~1.5</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Current limiting</td>
+                    <td className="py-2 pr-4">Excellent</td>
+                    <td className="py-2 pr-4">Poor</td>
+                    <td className="py-2">Moderate</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Typical application</td>
+                    <td className="py-2 pr-4">Industrial/commercial</td>
+                    <td className="py-2 pr-4">Older domestic</td>
+                    <td className="py-2">Plug tops</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-elec-yellow/70">
+              <strong>Key point:</strong> When replacing fuses during maintenance, always use the
+              correct type and rating. Never substitute a higher-rated fuse to &quot;stop it
+              blowing&quot; — this defeats the protection and puts the installation at risk. If a
+              fuse operates repeatedly, investigate and rectify the cause.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Miniature circuit breakers (MCBs)</ContentEyebrow>
+
+          <ConceptBlock title="Resettable — two trip mechanisms working in parallel">
             <p>
               Miniature circuit breakers (MCBs) to BS EN 60898 have largely replaced fuses in modern
               domestic and commercial installations. Unlike fuses, MCBs are resettable — after
@@ -601,30 +532,25 @@ const MOETModule2Section4_1 = () => {
               This provides short-circuit protection. The combination of both mechanisms in a single
               device makes the MCB effective across the full range of overcurrent conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCB Trip Types (BS EN 60898)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Type B — 3 to 5 times In:</strong> For resistive and low-inrush loads.
-                  Standard for domestic lighting and socket circuits. Most common type in UK
-                  dwellings.
-                </li>
-                <li className="pl-1">
-                  <strong>Type C — 5 to 10 times In:</strong> For loads with moderate inrush
-                  currents. Suitable for small motors, commercial lighting with magnetic ballasts,
-                  and some IT equipment.
-                </li>
-                <li className="pl-1">
-                  <strong>Type D — 10 to 20 times In:</strong> For loads with very high inrush
-                  currents. Used for large motors, transformers, welding equipment and X-ray
-                  machines.
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="MCB trip types (BS EN 60898)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Type B — 3 to 5 times In:</strong> For resistive and low-inrush loads.
+                Standard for domestic lighting and socket circuits. Most common type in UK
+                dwellings.
+              </li>
+              <li>
+                <strong>Type C — 5 to 10 times In:</strong> For loads with moderate inrush currents.
+                Suitable for small motors, commercial lighting with magnetic ballasts, and some IT
+                equipment.
+              </li>
+              <li>
+                <strong>Type D — 10 to 20 times In:</strong> For loads with very high inrush
+                currents. Used for large motors, transformers, welding equipment and X-ray machines.
+              </li>
+            </ul>
             <p>
               The choice of MCB type is critical. If a Type B MCB is used on a circuit with high
               inrush current (such as a direct-on-line motor starter), the magnetic element may trip
@@ -633,100 +559,77 @@ const MOETModule2Section4_1 = () => {
               provide adequate short-circuit protection for the cable under certain fault
               conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCB Ratings and Markings
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Every MCB carries markings indicating its rated current, trip type, breaking
-                capacity and applicable standard. Understanding these markings is essential for
-                correct identification and replacement during maintenance.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rated current (In):</strong> 6, 10, 16, 20, 25, 32, 40, 50, 63 A (standard
-                  preferred values)
-                </li>
-                <li className="pl-1">
-                  <strong>Trip type:</strong> B, C or D (marked before the current rating, e.g.,
-                  "B32")
-                </li>
-                <li className="pl-1">
-                  <strong>Breaking capacity:</strong> Typically 6 kA (6000) or 10 kA (10000) for
-                  domestic MCBs
-                </li>
-                <li className="pl-1">
-                  <strong>Standard:</strong> BS EN 60898 for household; BS EN 60947-2 for industrial
-                  (MCCBs)
-                </li>
-                <li className="pl-1">
-                  <strong>Single-pole, double-pole or triple-pole:</strong> Indicated by the number
-                  of switching contacts
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="MCB ratings and markings"
+            onSite="If an MCB trips repeatedly without an obvious fault, consider whether the trip type is correct for the load. LED driver inrush, IT equipment switch-on surge, and motor starting currents are common causes of nuisance tripping on Type B MCBs. Do not simply uprate the device — assess the load characteristics and select the appropriate trip type. If the MCB is correct for the load, investigate for a developing fault such as insulation breakdown or a loose connection causing intermittent arcing."
+          >
+            <p>
+              Every MCB carries markings indicating its rated current, trip type, breaking capacity
+              and applicable standard. Understanding these markings is essential for correct
+              identification and replacement during maintenance.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rated current (In):</strong> 6, 10, 16, 20, 25, 32, 40, 50, 63 A (standard
+                preferred values)
+              </li>
+              <li>
+                <strong>Trip type:</strong> B, C or D (marked before the current rating, e.g.,
+                &quot;B32&quot;)
+              </li>
+              <li>
+                <strong>Breaking capacity:</strong> Typically 6 kA (6000) or 10 kA (10000) for
+                domestic MCBs
+              </li>
+              <li>
+                <strong>Standard:</strong> BS EN 60898 for household; BS EN 60947-2 for industrial
+                (MCCBs)
+              </li>
+              <li>
+                <strong>Single-pole, double-pole or triple-pole:</strong> Indicated by the number of
+                switching contacts
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Maintenance Tip: Nuisance Tripping
-              </p>
-              <p className="text-sm text-white">
-                If an MCB trips repeatedly without an obvious fault, consider whether the trip type
-                is correct for the load. LED driver inrush, IT equipment switch-on surge, and motor
-                starting currents are common causes of nuisance tripping on Type B MCBs. Do not
-                simply uprate the device — assess the load characteristics and select the
-                appropriate trip type. If the MCB is correct for the load, investigate for a
-                developing fault such as insulation breakdown or a loose connection causing
-                intermittent arcing.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Selection Criteria and BS 7671 Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Selection criteria and BS 7671 requirements</ContentEyebrow>
+
+          <ConceptBlock title="Several conditions, satisfied simultaneously">
             <p>
               Selecting the correct overcurrent protective device requires satisfying several
               conditions simultaneously. BS 7671 Chapter 43 sets out the requirements, and a
               maintenance technician must understand these to verify that existing protection is
               adequate and to specify replacements correctly.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Fundamental Selection Conditions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Condition 1 (Reg 433.1.1):</strong> Ib &le; In &le; Iz — the device rated
-                  current must be between the design current and the cable current-carrying capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Condition 2 (Reg 433.1.1):</strong> I2 &le; 1.45 &times; Iz — the current
-                  causing effective operation of the device must not exceed 1.45 times the cable
-                  current-carrying capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Condition 3 (Reg 434.5.1):</strong> Breaking capacity &ge; Ipf — the
-                  device must be able to safely interrupt the maximum prospective fault current at
-                  its point of installation
-                </li>
-                <li className="pl-1">
-                  <strong>Condition 4 (Reg 434.5.2):</strong> I²t &le; k²S² — the energy let-through
-                  of the device must not exceed the energy withstand of the cable during a
-                  short-circuit
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="The fundamental selection conditions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Condition 1 (Reg 433.1.1):</strong> Ib ≤ In ≤ Iz — the device rated current
+                must be between the design current and the cable current-carrying capacity
+              </li>
+              <li>
+                <strong>Condition 2 (Reg 433.1.1):</strong> I2 ≤ 1.45 × Iz — the current causing
+                effective operation of the device must not exceed 1.45 times the cable
+                current-carrying capacity
+              </li>
+              <li>
+                <strong>Condition 3 (Reg 434.5.1):</strong> Breaking capacity ≥ Ipf — the device
+                must be able to safely interrupt the maximum prospective fault current at its point
+                of installation
+              </li>
+              <li>
+                <strong>Condition 4 (Reg 434.5.2):</strong> I²t ≤ k²S² — the energy let-through of
+                the device must not exceed the energy withstand of the cable during a short-circuit
+              </li>
+            </ul>
             <p>
               For MCBs to BS EN 60898, Condition 2 is automatically satisfied because the
               conventional tripping current (I2) is defined as 1.45 times In by the standard.
@@ -734,66 +637,51 @@ const MOETModule2Section4_1 = () => {
               correction factor of 0.725 must be applied to the cable sizing, effectively requiring
               a larger cable to compensate for the fuse's imprecision.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Worked Example: Device Selection
+          <ConceptBlock title="Worked example: device selection">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="mb-2">
+                <strong>Scenario:</strong> A 230 V single-phase circuit supplies a 6 kW electric
+                shower. The cable is 6 mm² twin and earth (PVC, clipped direct), with a
+                current-carrying capacity (Iz) of 47 A after applying correction factors.
               </p>
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white mb-2">
-                  <strong>Scenario:</strong> A 230 V single-phase circuit supplies a 6 kW electric
-                  shower. The cable is 6 mm² twin and earth (PVC, clipped direct), with a
-                  current-carrying capacity (Iz) of 47 A after applying correction factors.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Design current (Ib) = P / V = 6000 / 230 = 26.1 A</li>
-                  <li className="pl-1">
-                    Select In: Ib &le; In &le; Iz → 26.1 &le; In &le; 47 → choose 32 A Type B MCB
-                  </li>
-                  <li className="pl-1">
-                    Check I2: 1.45 &times; In = 1.45 &times; 32 = 46.4 A &le; 1.45 &times; 47 =
-                    68.15 A ✓
-                  </li>
-                  <li className="pl-1">
-                    Check breaking capacity: measured Ipf = 2.8 kA; MCB breaking capacity = 6 kA ✓
-                  </li>
-                </ul>
-              </div>
+              <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                <li>Design current (Ib) = P / V = 6000 / 230 = 26.1 A</li>
+                <li>Select In: Ib ≤ In ≤ Iz → 26.1 ≤ In ≤ 47 → choose 32 A Type B MCB</li>
+                <li>Check I2: 1.45 × In = 1.45 × 32 = 46.4 A ≤ 1.45 × 47 = 68.15 A ✓</li>
+                <li>
+                  Check breaking capacity: measured Ipf = 2.8 kA; MCB breaking capacity = 6 kA ✓
+                </li>
+              </ul>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Back-Up Protection (Reg 434.5.1)
-              </h3>
-              <p className="text-sm text-white">
-                Where the prospective fault current exceeds the breaking capacity of an individual
-                device, back-up protection may be used. A higher-rated upstream device (typically an
-                HRC fuse) limits the fault current to a level the downstream device can handle. The
-                combination must be tested and verified by the manufacturer — you cannot simply
-                assume any fuse will provide adequate back-up for any MCB. The manufacturer's
-                coordination tables must be consulted.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Back-up protection (Reg 434.5.1)">
+            <p>
+              Where the prospective fault current exceeds the breaking capacity of an individual
+              device, back-up protection may be used. A higher-rated upstream device (typically an
+              HRC fuse) limits the fault current to a level the downstream device can handle. The
+              combination must be tested and verified by the manufacturer — you cannot simply assume
+              any fuse will provide adequate back-up for any MCB. The manufacturer's coordination
+              tables must be consulted.
+            </p>
+            <p className="text-elec-yellow/70">
               <strong>Maintenance relevance:</strong> When replacing a protective device, verify
               that the replacement satisfies all four conditions. If the installation has changed
               since original design (e.g., additional loads added), the existing protection may no
               longer be adequate. Always check rather than assuming like-for-like replacement is
               sufficient.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Time/Current Characteristics and Discrimination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Time/current characteristics and discrimination</ContentEyebrow>
+
+          <ConceptBlock title="Every device has a characteristic curve">
             <p>
               Every overcurrent protective device has a characteristic curve that shows the
               relationship between the magnitude of the current flowing through it and the time it
@@ -808,27 +696,26 @@ const MOETModule2Section4_1 = () => {
               magnetic (instantaneous) region, which is a near-vertical line at the magnetic trip
               threshold.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Disconnection Times (BS 7671 Regulation 411.3.2)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>TN systems, 230 V final circuits &le; 32 A:</strong> Maximum 0.4 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>TN systems, 230 V distribution circuits:</strong> Maximum 5 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>TT systems, 230 V final circuits &le; 32 A:</strong> Maximum 0.2 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>TT systems, 230 V distribution circuits:</strong> Maximum 1 second
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Disconnection times (BS 7671 Regulation 411.3.2)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>TN systems, 230 V final circuits ≤ 32 A:</strong> Maximum 0.4 seconds
+              </li>
+              <li>
+                <strong>TN systems, 230 V distribution circuits:</strong> Maximum 5 seconds
+              </li>
+              <li>
+                <strong>TT systems, 230 V final circuits ≤ 32 A:</strong> Maximum 0.2 seconds
+              </li>
+              <li>
+                <strong>TT systems, 230 V distribution circuits:</strong> Maximum 1 second
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Achieving discrimination">
             <p>
               Discrimination (selectivity) is the coordination of protective devices in series such
               that only the device nearest to the fault operates. This minimises disruption — a
@@ -837,149 +724,117 @@ const MOETModule2Section4_1 = () => {
               upstream device at all fault current levels up to the maximum prospective fault
               current at the downstream device.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time discrimination:</strong> Upstream device has a longer operating time
+                than the downstream device at the same current level
+              </li>
+              <li>
+                <strong>Current discrimination:</strong> Upstream device has a higher current
+                setting so it does not respond to fault currents cleared by the downstream device
+              </li>
+              <li>
+                <strong>Energy discrimination:</strong> The I²t let-through of the downstream device
+                is less than the I²t required to trip the upstream device
+              </li>
+              <li>
+                <strong>Zone discrimination:</strong> In complex installations, intelligent devices
+                communicate to ensure only the device nearest the fault operates
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Achieving Discrimination
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Time discrimination:</strong> Upstream device has a longer operating time
-                  than the downstream device at the same current level
-                </li>
-                <li className="pl-1">
-                  <strong>Current discrimination:</strong> Upstream device has a higher current
-                  setting so it does not respond to fault currents cleared by the downstream device
-                </li>
-                <li className="pl-1">
-                  <strong>Energy discrimination:</strong> The I²t let-through of the downstream
-                  device is less than the I²t required to trip the upstream device
-                </li>
-                <li className="pl-1">
-                  <strong>Zone discrimination:</strong> In complex installations, intelligent
-                  devices communicate to ensure only the device nearest the fault operates
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Fuse-to-Fuse Discrimination
-                </h3>
-                <p className="text-sm text-white">
-                  Generally achieved with a ratio of 1.6:1 or greater between upstream and
-                  downstream fuse ratings (for BS 88 HRC fuses of the same manufacturer). For
-                  example, a 100 A upstream fuse will discriminate with a 63 A downstream fuse
-                  (ratio 1.59:1 — borderline) but will reliably discriminate with a 50 A downstream
-                  fuse (ratio 2:1).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  MCB-to-MCB Discrimination
-                </h3>
-                <p className="text-sm text-white">
-                  More difficult to achieve because the magnetic trip regions overlap. A ratio of at
-                  least 2:1 between upstream and downstream MCB ratings is often needed, and full
-                  discrimination may not be possible at high fault currents. Manufacturer data
-                  sheets must be consulted for specific device combinations.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Fuse-to-fuse and MCB-to-MCB discrimination">
+            <p>
+              <strong>Fuse-to-fuse discrimination</strong> is generally achieved with a ratio of
+              1.6:1 or greater between upstream and downstream fuse ratings (for BS 88 HRC fuses of
+              the same manufacturer). For example, a 100 A upstream fuse will discriminate with a 63
+              A downstream fuse (ratio 1.59:1 — borderline) but will reliably discriminate with a 50
+              A downstream fuse (ratio 2:1).
+            </p>
+            <p>
+              <strong>MCB-to-MCB discrimination</strong> is more difficult to achieve because the
+              magnetic trip regions overlap. A ratio of at least 2:1 between upstream and downstream
+              MCB ratings is often needed, and full discrimination may not be possible at high fault
+              currents. Manufacturer data sheets must be consulted for specific device combinations.
+            </p>
+            <p className="text-elec-yellow/70">
               <strong>Practical point:</strong> In maintenance work, if you find that a main device
               is tripping instead of the device protecting the faulty circuit, this indicates a
               discrimination problem. The time/current characteristics of the devices in series need
               to be reviewed, and it may be necessary to change device types or ratings to restore
               correct coordination.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=VGj32euYZ2c"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Circuit Breaker Basics — How Do They Work?"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Device Selection (BS 7671 Ch.43)</p>
-                <ul className="space-y-0.5">
-                  <li>
-                    Ib &le; In &le; Iz (design current &le; device rating &le; cable capacity)
-                  </li>
-                  <li>
-                    I2 &le; 1.45 &times; Iz (tripping current &le; 1.45 &times; cable capacity)
-                  </li>
-                  <li>Breaking capacity &ge; Ipf (prospective fault current)</li>
-                  <li>I²t &le; k²S² (energy let-through &le; cable withstand)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS 88 — HRC industrial fuses</li>
-                  <li>BS 3036 — Semi-enclosed (rewirable) fuses</li>
-                  <li>BS 1362 — Plug-top cartridge fuses</li>
-                  <li>BS EN 60898 — MCBs for household installations</li>
-                  <li>BS 7671:2018+A2:2022 — IET Wiring Regulations</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="1:51"
+
+            topic="What is actually happening inside the breaker when it trips"
+
+            caption="Under two minutes. Shows the thermal bimetal and the magnetic coil doing two different jobs, which is the distinction this page turns on."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Fuses are sacrificial — BS 88 HRC (industrial, up to 80 kA), BS 3036 rewirable (older domestic, poor fusing factor), BS 1362 (plug tops).',
+              "MCBs are resettable — Type B (3-5x), Type C (5-10x), Type D (10-20x) — choose the type to match the load's inrush current.",
+              'Selection conditions: Ib <= In <= Iz; I2 <= 1.45 x Iz; breaking capacity >= Ipf; I squared t <= k squared S squared.',
+              'Breaking capacity must never be less than the prospective fault current at the point of installation (Reg 434.5.1).',
+              'Back-up (cascade) protection is only valid when tested and certified as a coordinated combination by the manufacturer.',
+              'Discrimination ensures only the device nearest the fault operates — achieved through time, current, energy or zone coordination.',
+              'Never substitute a higher-rated fuse to stop nuisance operation — investigate and rectify the underlying cause instead.',
+              'Key standards: BS 88 (HRC fuses), BS 3036 (rewirable fuses), BS 1362 (plug-top fuses), BS EN 60898 (MCBs), BS 7671:2018+A4:2026 (IET Wiring Regulations).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Protection and earthing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  RCDs and RCBOs
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-2">
-              Next: RCDs and RCBOs
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

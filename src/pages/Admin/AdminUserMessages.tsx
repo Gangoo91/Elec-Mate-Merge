@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { formatDistanceToNowStrict } from 'date-fns';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -30,7 +32,13 @@ import PullToRefresh from '@/components/admin/PullToRefresh';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import ChatThread from '@/components/messaging/ChatThread';
 import { SwipeableRow } from '@/components/ui/swipeable-row';
-import { Segmented, Panel, SectionHead, GOOD, SERIOUS } from '@/components/admin/overview/primitives';
+import {
+  Segmented,
+  Panel,
+  RoundAvatar,
+  GOOD,
+  SERIOUS,
+} from '@/components/admin/overview/primitives';
 import {
   useAdminInbox,
   useArchiveConversation,
@@ -42,7 +50,6 @@ import {
 import {
   PageFrame,
   Eyebrow,
-  FilterBar,
   ListCard,
   ListCardHeader,
   ListBody,
@@ -99,14 +106,35 @@ function waitLabel(ms: number): string {
    used across the admin pages, with amber and red carrying the age. */
 const MSG_SERIES = ['#199E70', '#3987E5', '#FAB219', '#E66767'] as const;
 
+/**
+ * The list is grouped by how long people have waited, and the group header is
+ * the thing that says so.
+ *
+ * Wait age used to be stated four separate times on one screen — a stacked bar
+ * in the hero, a rail of age filter tabs, a coloured spine on every row, and
+ * the wait figure itself. Three of those are redundant. A group heading labels
+ * itself, so the tabs and the spine both go: you read OVER A MONTH · 4 once and
+ * every row beneath it inherits the meaning, which is also why the rows can now
+ * be quieter than they were.
+ *
+ * Order is worst-first. Answered threads sit at the bottom under their own
+ * heading rather than being a filter you have to go looking for.
+ */
+const WAIT_GROUPS = [
+  { key: 'older', label: 'Waiting over a month', fill: MSG_SERIES[3] },
+  { key: 'month', label: 'Waiting over a week', fill: MSG_SERIES[2] },
+  { key: 'week', label: 'Waiting a few days', fill: MSG_SERIES[1] },
+  { key: 'day', label: 'Came in today', fill: MSG_SERIES[0] },
+  { key: 'answered', label: 'Answered', fill: 'rgba(255,255,255,0.26)' },
+] as const;
+
+type WaitGroupKey = (typeof WAIT_GROUPS)[number]['key'];
+
 export default function AdminUserMessages() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState<
-    'all' | 'week' | 'overweek' | 'overmonth' | 'answered'
-  >('all');
   // ELE-1416 — hold only the partner id, never a snapshot of the conversation.
   // Previously this stored the whole AdminConversation object captured when
   // the thread was opened. Sending a reply invalidated the query and refetched
@@ -134,6 +162,22 @@ export default function AdminUserMessages() {
   // ELE-1415/1417 — grouping moved to the shared useAdminInbox hook so the
   // admin page and the user-side Messages sheet read the same conversations.
   const { data: conversations, isLoading, refetch, isFetching } = useAdminInbox(true, view);
+
+  /*
+    Search reaches into the view you are not looking at.
+
+    "Did I already answer someone about this?" is the commonest reason to
+    search a support inbox, and the answer is nearly always in Archived — which
+    the search could not see, because the query is keyed per view. This fetches
+    the other side only while a search is actually running, and reports the
+    count rather than merging the results, so the list you are reading stays
+    the list you asked for.
+  */
+  const searching = search.trim().length >= 2;
+  const { data: otherViewConversations } = useAdminInbox(
+    searching,
+    view === 'inbox' ? 'archived' : 'inbox'
+  );
 
   const isMobile = useIsMobile();
   const archive = useArchiveConversation();
@@ -309,6 +353,43 @@ export default function AdminUserMessages() {
   const emailByUserId = useMemo(
     () => new Map((allAdminUsers ?? []).map((u) => [u.id, u.email])),
     [allAdminUsers]
+  );
+
+  /*
+    Who you are actually replying to.
+
+    A name and a role pill was everything this page knew about the person, so a
+    paying customer who was in the app yesterday and someone who reported a
+    crash in February and never came back looked identical. Of the ten open
+    threads, seven are live paying customers and three have churned — which is
+    the difference between an urgent reply and a post-mortem.
+
+    `useAdminUsersBase` already carries subscribed / tier / last_sign_in and is
+    already loaded on this page for the compose picker, so this is free.
+  */
+  const partnerContext = useMemo(() => {
+    const m = new Map<
+      string,
+      { paying: boolean; tier?: string; lastSeen?: string | null; joined?: string }
+    >();
+    (allAdminUsers ?? []).forEach((u) =>
+      m.set(u.id, {
+        paying: !!u.subscribed,
+        tier: u.subscription_tier,
+        lastSeen: u.last_sign_in,
+        joined: u.created_at,
+      })
+    );
+    return m;
+  }, [allAdminUsers]);
+
+  /** How many open threads are from someone still paying. */
+  const payingOpen = useMemo(
+    () =>
+      (conversations ?? []).filter(
+        (c) => c.awaitingReply && partnerContext.get(c.partnerId)?.paying
+      ).length,
+    [conversations, partnerContext]
   );
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -495,10 +576,10 @@ export default function AdminUserMessages() {
     this the rail split on read-state and the hero split on age, so the two
     halves of the page measured different things.
   */
-  const waitBucketOf = (conv: AdminConversation): 'day' | 'week' | 'month' | 'older' | null => {
-    if (!conv.awaitingReply) return null;
+  const waitBucketOf = (conv: AdminConversation): WaitGroupKey => {
+    if (!conv.awaitingReply) return 'answered';
     const last = conv.messages[conv.messages.length - 1];
-    if (!last) return null;
+    if (!last) return 'answered';
     const waited = Date.now() - new Date(last.created_at).getTime();
     if (waited < 86400000) return 'day';
     if (waited < 7 * 86400000) return 'week';
@@ -506,83 +587,52 @@ export default function AdminUserMessages() {
     return 'older';
   };
 
-  const waitBuckets = useMemo(() => {
-    const buckets = [
-      { key: 'day', label: 'under a day', max: 86400000, fill: MSG_SERIES[0], count: 0 },
-      { key: 'week', label: 'under a week', max: 7 * 86400000, fill: MSG_SERIES[1], count: 0 },
-      { key: 'month', label: 'over a week', max: 30 * 86400000, fill: MSG_SERIES[2], count: 0 },
-      { key: 'older', label: 'over a month', max: Infinity, fill: MSG_SERIES[3], count: 0 },
-    ];
-    (conversations ?? []).forEach((conv) => {
-      if (!conv.awaitingReply) return;
-      const last = conv.messages[conv.messages.length - 1];
-      if (!last) return;
-      const waited = Date.now() - new Date(last.created_at).getTime();
-      const b = buckets.find((x) => waited < x.max) ?? buckets[buckets.length - 1];
-      b.count += 1;
-    });
-    return buckets;
-  }, [conversations]);
+  // Search the whole thread, not just the last message — the thing you
+  // remember is rarely the most recent line. Shared so the count for the other
+  // view cannot drift from the list you can see.
+  const matchesSearch = (conv: AdminConversation, q: string) =>
+    !q ||
+    !!conv.partner?.full_name?.toLowerCase().includes(q) ||
+    conv.messages.some((m) => m.message?.toLowerCase().includes(q));
+
+  const otherViewMatches = useMemo(() => {
+    if (!searching) return 0;
+    const q = search.trim().toLowerCase();
+    return (otherViewConversations ?? []).filter((c) => matchesSearch(c, q)).length;
+  }, [otherViewConversations, search, searching]);
 
   const filteredConversations = useMemo(() => {
     if (!conversations) return [];
     const searchLower = search.toLowerCase();
 
-    const filtered = conversations.filter((conv) => {
-      if (searchLower) {
-        // Search the whole thread, not just the last message — the thing you
-        // remember is rarely the most recent line.
-        const matchesSearch =
-          conv.partner?.full_name?.toLowerCase().includes(searchLower) ||
-          conv.messages.some((m) => m.message?.toLowerCase().includes(searchLower));
-        if (!matchesSearch) return false;
-      }
-
-      /*
-        Split by how long they have waited, not by read-state.
-
-        Read / Sent overlapped — a conversation you had read AND replied to
-        counted in both — so the rail read All 15 against Unread 1 + Read 14 +
-        Sent 2 = 17, for a control that looks like it partitions. Worse, it was
-        answering a question nobody has: all 15 threads are awaiting a reply, so
-        which of them you have opened tells you nothing. Age does, and these
-        buckets are exclusive, so the counts add up to All.
-      */
-      switch (activeTab) {
-        case 'week':
-          return waitBucketOf(conv) === 'day' || waitBucketOf(conv) === 'week';
-        case 'overweek':
-          return waitBucketOf(conv) === 'month';
-        case 'overmonth':
-          return waitBucketOf(conv) === 'older';
-        case 'answered':
-          return !conv.awaitingReply;
-        case 'all':
-        default:
-          return true;
-      }
-    });
+    const filtered = conversations.filter((conv) => matchesSearch(conv, searchLower));
 
     // ELE-1415 — the list had no sort at all, so ordering fell out of Map
     // insertion. Shared sort: needs answering, then unopened, then recency.
     return sortAdminConversations(filtered);
-  }, [conversations, search, activeTab, user?.id]);
+  }, [conversations, search]);
 
-  const tabs = useMemo(() => {
-    const count = (want: ReturnType<typeof waitBucketOf>[]) =>
-      (conversations ?? []).filter((c) => want.includes(waitBucketOf(c))).length;
-    return [
-      { value: 'all', label: 'All', count: conversations?.length ?? 0 },
-      { value: 'week', label: 'This week', count: count(['day', 'week']) },
-      { value: 'overweek', label: 'Over a week', count: count(['month']) },
-      { value: 'overmonth', label: 'Over a month', count: count(['older']) },
-      {
-        value: 'answered',
-        label: 'Answered',
-        count: (conversations ?? []).filter((c) => !c.awaitingReply).length,
-      },
-    ];
-  }, [conversations]);
+  /*
+    The list, cut into wait-age sections in worst-first order.
+
+    Empty sections are dropped rather than rendered as a heading with nothing
+    under it, so on a quiet day the page is short instead of being four labels
+    and a blank.
+  */
+  const grouped = useMemo(() => {
+    // Archived threads are done with. "Waiting over a month" is the wrong
+    // thing to say about something you have deliberately put away, so that
+    // view stays one flat list.
+    if (view === 'archived') {
+      return filteredConversations.length
+        ? [{ key: 'archived', label: 'Put away', fill: 'rgba(255,255,255,0.26)', rows: filteredConversations }]
+        : [];
+    }
+    return WAIT_GROUPS.map((g) => ({
+      ...g,
+      rows: filteredConversations.filter((c) => waitBucketOf(c) === g.key),
+    })).filter((g) => g.rows.length > 0);
+  }, [filteredConversations, view]);
 
   return (
     <PullToRefresh
@@ -653,46 +703,6 @@ export default function AdminUserMessages() {
                 </div>
               )}
 
-              {stats.awaiting > 0 && (
-                <div className="mt-5">
-                  {/* How the queue is distributed by age — a fortnight-old
-                      thread and a three-month-old one were the same row. */}
-                  <div className="flex w-full rounded-full" style={{ height: 10, gap: 2 }}>
-                    {waitBuckets
-                      .filter((b) => b.count > 0)
-                      .map((b, i, seg) => (
-                        <div
-                          key={b.key}
-                          title={`${b.label}: ${b.count}`}
-                          style={{
-                            width: `calc(${(b.count / Math.max(stats.awaiting, 1)) * 100}% - ${
-                              (2 * (seg.length - 1)) / seg.length
-                            }px)`,
-                            background: b.fill,
-                            borderTopLeftRadius: i === 0 ? 999 : 2,
-                            borderBottomLeftRadius: i === 0 ? 999 : 2,
-                            borderTopRightRadius: i === seg.length - 1 ? 999 : 2,
-                            borderBottomRightRadius: i === seg.length - 1 ? 999 : 2,
-                          }}
-                        />
-                      ))}
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12px] text-white">
-                    {waitBuckets
-                      .filter((b) => b.count > 0)
-                      .map((b) => (
-                        <span key={b.key} className="flex items-center gap-2">
-                          <span
-                            className="h-2 w-2 shrink-0 rounded-full"
-                            style={{ background: b.fill }}
-                          />
-                          <span className="font-medium tabular-nums text-white">{b.count}</span>{' '}
-                          {b.label}
-                        </span>
-                      ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             {/*
@@ -708,32 +718,41 @@ export default function AdminUserMessages() {
                   value: stats.awaiting,
                   sub: 'not marked answered',
                   accent: true,
-                  tab: 'all',
+                  to: 'list',
                 },
                 {
                   label: 'Unopened',
                   value: stats.unreadConversations,
                   sub: `${stats.unread} message${stats.unread === 1 ? '' : 's'}`,
-                  tab: 'all',
+                  to: 'list',
                 },
                 {
                   label: 'Longest wait',
                   value: stats.awaiting > 0 ? waitLabel(stats.oldestWaitMs) : '—',
                   sub: 'oldest still open',
-                  // Jumps to the threads that have been waiting longest — the
-                  // card names the problem, so it should take you to it.
-                  tab: 'overmonth',
+                  // The card names the problem, so it takes you to it. It used
+                  // to switch a filter tab; the list is sectioned now, so it
+                  // scrolls to the section instead — nothing gets hidden to
+                  // show you something.
+                  to: 'group-older',
                 },
                 {
-                  label: 'Conversations',
-                  value: conversations?.length ?? 0,
-                  sub: `${stats.total} messages`,
-                  tab: 'all',
+                  // "Conversations 15 · 33 messages" restated the All tab two
+                  // inches away. How many of the open ones are paying customers
+                  // is the thing that decides what you answer first.
+                  label: 'Still paying',
+                  value: payingOpen,
+                  sub: `of ${stats.awaiting} open`,
+                  to: 'list',
                 },
               ].map((c) => (
                 <button
                   key={c.label}
-                  onClick={() => setActiveTab(c.tab as typeof activeTab)}
+                  onClick={() =>
+                    document
+                      .getElementById(c.to)
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
                   className="touch-manipulation rounded-xl border border-white/[0.08] bg-white/[0.035] px-4 py-3.5 text-left transition-colors hover:bg-white/[0.06]"
                 >
                   <div
@@ -754,58 +773,40 @@ export default function AdminUserMessages() {
           </div>
         </Panel>
 
-        <FilterBar
-          tabs={tabs}
-          activeTab={activeTab}
-          onTabChange={(v) => setActiveTab(v as typeof activeTab)}
-          search={search}
-          onSearchChange={setSearch}
-          searchPlaceholder="Search conversations…"
-        />
-
         {isLoading ? (
           <LoadingBlocks />
-        ) : filteredConversations.length === 0 ? (
-          <EmptyState
-            title="No messages"
-            description="When users contact support, threads appear here."
-            action="Compose message"
-            onAction={() => setComposeOpen(true)}
-          />
         ) : (
-          <Panel>
-            <SectionHead
-              title={view === 'archived' ? 'Archived' : 'Inbox'}
-              meta={
-                view === 'archived'
-                  ? `${filteredConversations.length} put away`
-                  : stats.unread > 0
-                    ? `${stats.unread} unread`
-                    : 'up to date'
-              }
-              action="Compose"
-              onAction={() => setComposeOpen(true)}
-            />
-            {view === 'inbox' && filteredConversations.length > 0 && (
-              <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
-                <span className="text-[12px] text-white">
-                  {filteredConversations.length} shown
-                  {activeTab !== 'all' && ' in this filter'}
-                </span>
-                <button
-                  type="button"
-                  onClick={markAllAnswered}
-                  disabled={archive.isPending}
-                  className="h-11 touch-manipulation rounded-lg border border-white/[0.12] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.06] disabled:opacity-50 sm:h-9"
-                >
-                  Mark {filteredConversations.length} answered
-                </button>
-              </div>
-            )}
-            {/* Archived was unreachable until this existed. */}
-            <div className="mt-3">
+          /*
+            The panel always renders, even with nothing in it.
+
+            An empty result used to replace the whole block with "No messages —
+            when users contact support, threads appear here", which took the
+            toolbar with it. Search for something with no hits and the search
+            box you had just typed into disappeared, so there was no way to
+            clear it short of reloading the page — and the copy was wrong
+            anyway, since there were ten messages, just none matching. The
+            empty state now sits inside the list and says which of the three
+            things actually happened.
+          */
+          <Panel id="list">
+            {/*
+              One control row where there were four.
+
+              Between the hero and the first message sat a filter rail, a
+              section head titled "Inbox", a line reading "10 shown" next to a
+              "Mark 10 answered" button, and then an Inbox/Archived segment —
+              so the word Inbox appeared twice, the count three times, and a
+              bulk action that clears threads you have not read was the second
+              thing a thumb reached. All of it collapses to this: where you are,
+              what is in it, and a way to search.
+            */}
+            <div className="flex items-center gap-2">
               <Segmented<'inbox' | 'archived'>
+                className="shrink-0"
                 options={[
+                  // No counts here: `useAdminInbox` fetches one view at a
+                  // time, so an archived tally would need a second query to
+                  // say something the group headings below already say.
                   { key: 'inbox', label: 'Inbox' },
                   { key: 'archived', label: 'Archived' },
                 ]}
@@ -815,9 +816,92 @@ export default function AdminUserMessages() {
                   setSelectedPartnerId(null);
                 }}
               />
+              <div className="relative min-w-0 flex-1">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-white/45" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search"
+                  aria-label="Search conversations"
+                  className="h-11 w-full touch-manipulation rounded-[10px] border border-white/[0.09] bg-white/[0.04] pl-9 pr-3 text-[13px] text-white placeholder:text-white/40 focus:border-white/25 focus:outline-none sm:h-9"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() => setComposeOpen(true)}
+                aria-label="Compose message"
+                className="flex h-11 w-11 shrink-0 touch-manipulation items-center justify-center rounded-[10px] border border-white/[0.09] text-white transition-colors hover:bg-white/[0.06] sm:h-9 sm:w-9"
+              >
+                <PenSquare className="h-4 w-4" />
+              </button>
             </div>
+            {searching && otherViewMatches > 0 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setView(view === 'inbox' ? 'archived' : 'inbox');
+                  setSelectedPartnerId(null);
+                }}
+                className="mt-2 flex h-11 w-full touch-manipulation items-center gap-2 rounded-[10px] border border-white/[0.09] bg-white/[0.03] px-3 text-left text-[12px] text-white transition-colors hover:bg-white/[0.06] sm:h-9"
+              >
+                <Search className="h-3.5 w-3.5 shrink-0 text-white/50" />
+                <span className="min-w-0 truncate">
+                  <span className="font-semibold">{otherViewMatches}</span>{' '}
+                  {otherViewMatches === 1 ? 'match' : 'matches'} in{' '}
+                  {view === 'inbox' ? 'Archived' : 'Inbox'}
+                </span>
+                <span className="ml-auto shrink-0 font-semibold text-white/70">Show</span>
+              </button>
+            )}
+            {grouped.length === 0 && (
+              <div className="px-1 py-10 text-center">
+                <p className="text-[13.5px] font-semibold text-white">
+                  {searching
+                    ? 'Nothing matches that'
+                    : view === 'archived'
+                      ? 'Nothing archived yet'
+                      : 'Inbox is clear'}
+                </p>
+                <p className="mx-auto mt-1.5 max-w-[34ch] text-[12px] text-white/70">
+                  {searching
+                    ? `No ${view === 'archived' ? 'archived thread' : 'conversation'} mentions "${search.trim()}".`
+                    : view === 'archived'
+                      ? 'Threads you mark answered are filed here.'
+                      : 'Nothing is waiting on a reply.'}
+                </p>
+                {searching && (
+                  <button
+                    type="button"
+                    onClick={() => setSearch('')}
+                    className="mt-3 h-11 touch-manipulation rounded-lg border border-white/[0.12] px-4 text-[12px] font-semibold text-white transition-colors hover:bg-white/[0.06] sm:h-9"
+                  >
+                    Clear search
+                  </button>
+                )}
+              </div>
+            )}
             <div className="mt-1">
-              {filteredConversations.map((conv) => {
+              {grouped.map((group) => (
+                <div key={group.key} id={`group-${group.key}`} className="scroll-mt-32">
+                  {/*
+                    The section heading carries the age, so no row below it has
+                    to. It is what replaced the filter rail and the coloured
+                    spine that used to run down every row.
+                  */}
+                  <div className="mt-4 flex items-center gap-2 border-b border-white/[0.07] pb-1.5 first:mt-2">
+                    <span
+                      aria-hidden
+                      className="h-1.5 w-1.5 shrink-0 rounded-full"
+                      style={{ background: group.fill }}
+                    />
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                      {group.label}
+                    </span>
+                    <span className="text-[11px] tabular-nums text-white/55">
+                      {group.rows.length}
+                    </span>
+                  </div>
+                  {group.rows.map((conv) => {
                 const unread = conv.unreadCount > 0;
                 /*
                   Waiting time, sized and coloured by how bad it is.
@@ -829,23 +913,49 @@ export default function AdminUserMessages() {
                 const waitedMs = conv.awaitingReply
                   ? Date.now() - new Date(conv.lastMessage.created_at).getTime()
                   : 0;
-                const waitTone = !conv.awaitingReply
-                  ? 'text-white/50'
+                /*
+                  Urgency is stated once, on the wait figure.
+
+                  It was also a 3px spine down the left of every row, which is
+                  the same fact twice and left the list looking barred. The
+                  section heading above the row now says how old it is; within
+                  a section this just separates a five-month wait from a
+                  five-week one.
+                */
+                const waitColour = !conv.awaitingReply
+                  ? 'rgba(255,255,255,0.5)'
                   : waitedMs > 30 * 86400000
-                    ? 'text-red-400'
+                    ? SERIOUS
                     : waitedMs > 7 * 86400000
-                      ? 'text-amber-400'
-                      : 'text-white';
+                      ? '#e0a52e'
+                      : 'rgba(255,255,255,0.85)';
                 const role = conv.partner?.role;
+                const partnerCtx = partnerContext.get(conv.partnerId);
                 const preview =
-                  conv.lastMessage.message.length > 140
-                    ? conv.lastMessage.message.slice(0, 137) + '…'
+                  conv.lastMessage.message.length > 150
+                    ? conv.lastMessage.message.slice(0, 147) + '…'
                     : conv.lastMessage.message;
 
                 return (
                   <SwipeableRow
                     key={conv.partnerId}
-                    contentClassName="bg-transparent"
+                    /*
+                      Opaque on a phone, transparent everywhere else.
+
+                      The swipe layer sits BEHIND the sliding panel, so a
+                      transparent panel showed "Delete" and "Answered" under
+                      every row permanently — it was `bg-transparent` back when
+                      ListRow painted its own surface. It only needs a fill
+                      where the gesture exists: on desktop the actions are not
+                      rendered at all, and leaving it transparent there keeps
+                      the panel's gradient unbroken.
+
+                      #2a2a2a, not something darker. The panel computes to about
+                      rgb(40,40,40) here, so a #1a1a1a row read as a hole
+                      punched in the surface — the same inversion Andrew caught
+                      on the revenue page. Elevation runs lighter.
+                    */
+                    contentClassName={isMobile ? 'bg-[#2a2a2a]' : 'bg-transparent'}
                     // Touch-only, same as the Messages-sheet inbox — wiring a
                     // swipe on desktop just adds a gesture a mouse can't do.
                     /*
@@ -880,79 +990,154 @@ export default function AdminUserMessages() {
                         : undefined
                     }
                   >
-                    <ListRow
-                      // ELE-1415 — the accent marks "needs you", not merely
-                      // "unopened". A thread you have read but not answered still
-                      // has someone waiting at the other end of it.
-                      accent={conv.awaitingReply || unread ? 'yellow' : undefined}
-                      lead={<Avatar initials={getInitials(conv.partner?.full_name)} />}
-                      // Everything lives in title/subtitle, nothing in `trailing`.
-                      // ListRow's trailing slot is shrink-0 while the text block is
-                      // flex-1 min-w-0, so pills in trailing ate the whole row on a
-                      // phone and the name and preview collapsed to nothing.
-                      title={
+                    <div className="group/row relative border-b border-white/[0.06]">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenConversation(conv)}
+                      className="flex w-full touch-manipulation gap-3 py-2.5 pr-1 text-left transition-colors hover:bg-white/[0.03] active:bg-white/[0.06]"
+                    >
+                      <span className="mt-0.5 shrink-0">
+                        <RoundAvatar initials={getInitials(conv.partner?.full_name)} />
+                      </span>
+
+                      <span className="min-w-0 flex-1">
+                        {/* 1 — who, and how long they have waited */}
                         <span className="flex items-baseline gap-2">
                           <span
                             className={cn(
-                              'truncate',
-                              conv.awaitingReply || unread ? 'font-semibold' : ''
+                              'min-w-0 flex-1 truncate text-[14px] leading-[19px] text-white',
+                              conv.awaitingReply || unread ? 'font-semibold' : 'font-medium'
                             )}
                           >
                             {conv.partner?.full_name || 'Unknown User'}
                           </span>
                           {unread && (
-                            <span className="shrink-0 min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-bold tabular-nums flex items-center justify-center">
+                            <span className="flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full bg-elec-yellow px-1 text-[10px] font-bold tabular-nums text-black">
                               {conv.unreadCount}
                             </span>
                           )}
                           <span
                             className={cn(
-                              'ml-auto shrink-0 text-[13px] font-semibold tabular-nums',
-                              waitTone
+                              'shrink-0 text-[12px] font-semibold tabular-nums transition-opacity',
+                              !isMobile && 'group-hover/row:opacity-0'
                             )}
-                            title={
-                              conv.awaitingReply
-                                ? `Waiting ${waitLabel(waitedMs)} for a reply`
-                                : 'Last message'
-                            }
+                            style={{ color: waitColour }}
                           >
                             {conv.awaitingReply
-                              ? `${waitLabel(waitedMs)} waiting`
+                              ? waitLabel(waitedMs)
                               : relativeTime(new Date(conv.lastMessage.created_at))}
                           </span>
                         </span>
-                      }
-                      subtitle={
-                        <span className="flex items-baseline gap-1.5">
-                          {conv.awaitingReply && (
-                            <span className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow">
-                              Awaiting
+
+                        {/* 2 — what they actually said. The reason you are here. */}
+                        <span className="mt-1 block text-[13px] leading-[18px] text-white [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden">
+                          {!conv.awaitingReply && conv.hasAdminReply && (
+                            <span className="text-white/70">You: </span>
+                          )}
+                          {preview}
+                        </span>
+
+                        {/* 3 — who they are to the business */}
+                        <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] leading-4 text-white">
+                          {partnerCtx && (
+                            <span
+                              className="rounded px-1.5 py-px font-semibold"
+                              style={
+                                partnerCtx.paying
+                                  ? { background: 'rgba(25,158,112,0.16)', color: '#3ecf8e' }
+                                  : { background: 'rgba(255,255,255,0.07)', color: '#ffffff' }
+                              }
+                            >
+                              {partnerCtx.paying ? 'Paying' : 'Lapsed'}
                             </span>
                           )}
-                          <span
-                            className={cn(
-                              'truncate',
-                              conv.awaitingReply ? 'font-semibold text-white' : 'text-white'
-                            )}
-                          >
-                            {/* Say who spoke last, or your own reply reads as theirs. */}
-                            {!conv.awaitingReply && conv.hasAdminReply && (
-                              <span className="text-white">You: </span>
-                            )}
-                            {preview}
-                          </span>
-                          {role && (
-                            <span className="ml-auto shrink-0 hidden sm:inline text-[10px] uppercase tracking-[0.12em] text-white capitalize">
-                              {role}
+                          {role && <span className="capitalize">{role}</span>}
+                          {partnerCtx?.lastSeen && (
+                            <span className="text-white/70">
+                              seen {relativeTime(new Date(partnerCtx.lastSeen))}
+                            </span>
+                          )}
+                          {/*
+                            The preview is the LAST message, which on a running
+                            thread can be "cheers" while the actual question is
+                            three messages up. Saying how many there are stops
+                            a long thread reading as a one-liner.
+                          */}
+                          {conv.messages.length > 1 && (
+                            <span className="text-white/70">
+                              {conv.messages.length} in thread
                             </span>
                           )}
                         </span>
-                      }
-                      onClick={() => handleOpenConversation(conv)}
-                    />
+                      </span>
+                    </button>
+                    {/*
+                      Row actions for a mouse.
+
+                      Clearing the queue was a phone-only ability: `rightAction`
+                      and `leftAction` are gated on `isMobile`, so on a laptop
+                      the only way to mark a thread answered was to open it,
+                      scroll the sheet and find the button. These sit where the
+                      wait figure is and fade it out on hover — same spot, never
+                      both at once, no layout shift, and by the time you are
+                      reaching for them you have already read the age.
+                    */}
+                    {!isMobile && (
+                      <div className="absolute right-1 top-2 flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/row:opacity-100">
+                        <button
+                          type="button"
+                          aria-label={view === 'archived' ? 'Restore' : 'Mark answered'}
+                          title={view === 'archived' ? 'Restore to inbox' : 'Mark answered'}
+                          onClick={() =>
+                            view === 'archived'
+                              ? unarchiveConversation(conv)
+                              : archiveConversation(conv)
+                          }
+                          className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.12] bg-[#2f2f2f] text-white transition-colors hover:bg-[#3a3a3a]"
+                        >
+                          {view === 'archived' ? (
+                            <ArchiveRestore className="h-3.5 w-3.5" />
+                          ) : (
+                            <Archive className="h-3.5 w-3.5" />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          aria-label="Delete conversation"
+                          title="Delete conversation"
+                          onClick={() => deleteConversation(conv)}
+                          className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.12] bg-[#2f2f2f] text-white transition-colors hover:border-[#E66767]/40 hover:bg-[#3a2a2a] hover:text-[#E66767]"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    )}
+                    </div>
                   </SwipeableRow>
                 );
-              })}
+                  })}
+                </div>
+              ))}
+              {/*
+                Bulk clear lives at the foot, after the list.
+
+                As a button above the rows it was the second thing your thumb
+                reached, on an action that empties threads you have not read.
+                Below them it is still one tap, but only once you have scrolled
+                past what it would clear.
+              */}
+              {view === 'inbox' && stats.awaiting > 0 && !search && (
+                <div className="mt-4 border-t border-white/[0.07] pt-3">
+                  <button
+                    type="button"
+                    onClick={markAllAnswered}
+                    disabled={archive.isPending}
+                    className="h-11 touch-manipulation text-[12px] font-semibold text-white/70 transition-colors hover:text-white disabled:opacity-50"
+                  >
+                    Mark all {stats.awaiting} answered
+                  </button>
+                </div>
+              )}
             </div>
           </Panel>
         )}
@@ -989,6 +1174,24 @@ export default function AdminUserMessages() {
                         {selectedConversation?.messages.length}{' '}
                         {selectedConversation?.messages.length === 1 ? 'message' : 'messages'}
                       </p>
+                      {(() => {
+                        const ctx = selectedConversation
+                          ? partnerContext.get(selectedConversation.partnerId)
+                          : undefined;
+                        if (!ctx) return null;
+                        return (
+                          <>
+                            <Pill tone={ctx.paying ? 'emerald' : 'blue'}>
+                              {ctx.paying ? `Paying${ctx.tier ? ` · ${ctx.tier}` : ''}` : 'Lapsed'}
+                            </Pill>
+                            {ctx.lastSeen && (
+                              <p className="text-[11px] text-white">
+                                seen {formatDistanceToNowStrict(new Date(ctx.lastSeen))} ago
+                              </p>
+                            )}
+                          </>
+                        );
+                      })()}
                       {selectedConversation?.partner?.role && (
                         <Pill
                           tone={roleToTone(selectedConversation.partner.role)}
@@ -1052,6 +1255,64 @@ export default function AdminUserMessages() {
                   )}
                 </div>
               </SheetHeader>
+
+              {/*
+                Who you are actually talking to.
+
+                The header said "3 messages · Paying · Electrician" and nothing
+                else, so every reply was written blind: no email, no idea
+                whether this was someone who joined last week or has been paying
+                since April, and no way to reach the rest of their record
+                without leaving the page and searching for them by hand. These
+                are the four facts that change what you write back.
+              */}
+              {(() => {
+                if (!selectedConversation) return null;
+                const ctx = partnerContext.get(selectedConversation.partnerId);
+                const email = emailByUserId.get(selectedConversation.partnerId);
+                const opened = selectedConversation.messages[0];
+                return (
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-white/[0.06] bg-white/[0.02] px-4 py-2.5 text-[11.5px] text-white">
+                    {email && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard?.writeText(email);
+                          toast({ title: 'Email copied', description: email });
+                        }}
+                        className="flex min-w-0 touch-manipulation items-center gap-1.5 text-white transition-colors hover:text-elec-yellow"
+                        title="Copy email address"
+                      >
+                        <Mail className="h-3 w-3 shrink-0" />
+                        <span className="truncate">{email}</span>
+                      </button>
+                    )}
+                    {ctx?.joined && (
+                      <span className="text-white/70">
+                        joined {formatDistanceToNowStrict(new Date(ctx.joined))} ago
+                      </span>
+                    )}
+                    {opened && (
+                      <span className="text-white/70">
+                        first wrote {formatDistanceToNowStrict(new Date(opened.created_at))} ago
+                      </span>
+                    )}
+                    {email && (
+                      // `Link`, not `<a href>`: a plain anchor is a full page
+                      // load, and this app takes the better part of half a
+                      // minute to boot the admin shell from cold.
+                      <Link
+                        to={`/admin/users?q=${encodeURIComponent(email)}`}
+                        onClick={() => setSelectedPartnerId(null)}
+                        className="ml-auto flex shrink-0 touch-manipulation items-center gap-1 font-semibold text-white transition-colors hover:text-elec-yellow"
+                      >
+                        Full record
+                        <ArrowLeft className="h-3 w-3 rotate-180" />
+                      </Link>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* ELE-1417 — thread + composer now come from the shared
                   ChatThread so the admin and user sides cannot drift apart. */}

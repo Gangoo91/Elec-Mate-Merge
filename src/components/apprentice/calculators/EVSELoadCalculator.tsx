@@ -240,7 +240,7 @@ const EVSELoadCalculator = () => {
 
     return {
       meta: {
-        title: 'EVSE Load Calculator',
+        title: 'EVSE Load',
         subtitle: 'Load, cable and protection sizing for EV charge points',
         standard: 'BS 7671:2018+A4:2026 — Section 722',
       },
@@ -261,12 +261,26 @@ const EVSELoadCalculator = () => {
         {
           heading: 'Inputs',
           rows: [
-            { label: 'Charging points', value: `${getTotalPoints()}` },
+            {
+              label: 'Charging points',
+              value: `${getTotalPoints()} total`,
+              note: chargingPoints
+                .map(
+                  (p) =>
+                    `${p.quantity} × ${CHARGER_TYPES[p.chargerType as keyof typeof CHARGER_TYPES]?.label ?? p.chargerType}`
+                )
+                .join(', '),
+            },
             { label: 'Supply', value: `${supplyVoltage} V` },
-            { label: 'Earthing system', value: earthingSystem },
+            {
+              label: 'Earthing system',
+              value:
+                EARTHING_SYSTEMS[earthingSystem as keyof typeof EARTHING_SYSTEMS]?.label ??
+                earthingSystem,
+            },
             { label: 'Available capacity', value: `${availableCapacity} kW` },
             { label: 'Cable length', value: `${cableLength} m` },
-            { label: 'Diversity scenario', value: diversityScenario },
+            { label: 'Diversity scenario', value: diversityEntry.label },
             { label: 'Power factor', value: powerFactor },
           ],
         },

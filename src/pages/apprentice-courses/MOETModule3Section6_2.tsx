@@ -1,14 +1,55 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.6 · Subsection 2 — Wind and Other Renewables
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Wind and Other Renewables - MOET Module 3.6.2';
 const DESCRIPTION =
   'Overview of wind power, hydro, heat pumps and other renewable energy technologies for electrical maintenance technicians: operating principles, electrical systems, grid connection, maintenance requirements and UK regulatory framework under ST1426.';
 
+/* ------------------------------------------------------------------ */
+/*  Quick-check questions (4) — shown after each content section       */
+/* ------------------------------------------------------------------ */
 const quickCheckQuestions = [
   {
     id: 'wind-generation',
@@ -39,7 +80,7 @@ const quickCheckQuestions = [
   {
     id: 'grid-connection-renewables',
     question:
-      'What engineering recommendation governs the connection of renewable generation above 3.68 kW per phase to the UK distribution network?',
+      'What engineering recommendation governs the connection of renewable generation above the G98 threshold (an aggregate Registered Capacity of 16 A per phase) to the UK distribution network?',
     options: [
       'BS 7909, which sets requirements for temporary electrical generation and distribution at events and sites',
       'G99, which requires formal application, technical assessment and DNO approval before connection',
@@ -48,7 +89,7 @@ const quickCheckQuestions = [
     ],
     correctIndex: 1,
     explanation:
-      "G99 is the engineering recommendation that governs connection of generation above 3.68 kW per phase to the distribution network. It applies to all generation types — wind, solar, hydro, CHP, batteries, etc. G99 requires: formal application to the DNO; network impact assessment (including fault level contribution, voltage rise, and harmonic analysis); agreed protection settings; commissioning witness testing (for larger installations); and ongoing compliance. G98 covers smaller installations up to 3.68 kW per phase under a simpler 'fit and notify' process.",
+      "G99 governs connection of generation above the G98 threshold. G99 defines that threshold in current: G98 covers a Power Generating Module with a nominal current up to and including 16 A per phase, and for Fully Type Tested equipment it is the AGGREGATE Registered Capacity that must be 16 A per phase or less (roughly 3.68 kW single phase). It applies to all generation types — wind, solar, hydro, CHP, batteries, etc. G99 requires: formal application to the DNO; network impact assessment (including fault level contribution, voltage rise, and harmonic analysis); agreed protection settings; commissioning witness testing (for larger installations); and ongoing compliance. G98 covers smaller installations up to 3.68 kW per phase under a simpler 'fit and notify' process.",
   },
   {
     id: 'micro-hydro',
@@ -65,6 +106,9 @@ const quickCheckQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  Quiz questions (12) — end-of-page assessment                       */
+/* ------------------------------------------------------------------ */
 const quizQuestions = [
   {
     id: 1,
@@ -226,6 +270,9 @@ const quizQuestions = [
   },
 ];
 
+/* ------------------------------------------------------------------ */
+/*  FAQs (5)                                                           */
+/* ------------------------------------------------------------------ */
 const faqs = [
   {
     question: 'Will heat pumps replace gas boilers in the UK?',
@@ -255,121 +302,62 @@ const faqs = [
 ];
 
 const MOETModule3Section6_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.6.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Wind and Other Renewables
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.6 · Subsection 2"
+        title="Wind and Other Renewables"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Wind power, hydro, heat pumps and emerging renewable technologies for maintenance
-            technicians
+            technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Wind:</strong> Kinetic energy to electrical via generator and power
-                electronics
-              </li>
-              <li className="pl-1">
-                <strong>Heat pumps:</strong> Renewable heat from air/ground, COP 2.5-4.5
-              </li>
-              <li className="pl-1">
-                <strong>Hydro:</strong> Turbine types matched to head and flow conditions
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> G99/G98 grid connection, BS 7671, EAWR 1989
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Growth:</strong> Net zero drives massive expansion of all renewables
-              </li>
-              <li className="pl-1">
-                <strong>Heat pumps:</strong> 600,000/year target by 2028 — major maintenance market
-              </li>
-              <li className="pl-1">
-                <strong>Skills:</strong> Each technology has unique electrical hazards
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Emerging technologies knowledge required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Wind: Kinetic energy to electrical via generator and power electronics.',
+              'Heat pumps: Renewable heat from air/ground, COP 2.5-4.5.',
+              'Hydro: Turbine types matched to head and flow conditions.',
+              'Standards: G99/G98 grid connection, BS 7671, EAWR 1989.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Growth: Net zero drives massive expansion of all renewables.</li>
+              <li>Heat pumps: 600,000/year target by 2028 — major maintenance market.</li>
+              <li>Skills: Each technology has unique electrical hazards.</li>
+              <li>ST1426: Emerging technologies knowledge required.</li>
+            </ul>
+          </ConceptBlock>
+
+          <LearningOutcomes
+            outcomes={[
               'Describe the operating principles of wind turbine electrical generation systems',
               'Explain heat pump technology including ASHP and GSHP operating principles and COP',
               'Identify the electrical systems in micro-hydro, biomass CHP and other renewables',
               'Apply G99/G98 grid connection requirements to renewable generation',
               'Describe the maintenance requirements for wind, heat pump and hydro electrical systems',
               'Relate the UK net zero targets to the growing demand for renewable technology maintenance skills',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Wind turbine electrical systems</ContentEyebrow>
 
-        {/* Section 01: Wind Turbine Electrical Systems */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Wind Turbine Electrical Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Converting kinetic energy into electrical energy">
             <p>
-              Wind energy is the UK's largest source of renewable electricity, with over 28 GW of
-              installed capacity (onshore and offshore combined as of 2025). While large-scale wind
-              farms are maintained by specialist turbine technicians, smaller wind turbines (up to
-              100 kW) on industrial, agricultural and community sites fall within the scope of
+              Wind energy is the UK&apos;s largest source of renewable electricity, with over 28 GW
+              of installed capacity (onshore and offshore combined as of 2025). While large-scale
+              wind farms are maintained by specialist turbine technicians, smaller wind turbines (up
+              to 100 kW) on industrial, agricultural and community sites fall within the scope of
               general electrical maintenance technicians. Understanding wind turbine electrical
               systems is therefore directly relevant to the ST1426 standard.
             </p>
@@ -390,91 +378,72 @@ const MOETModule3Section6_2 = () => {
               Turbines typically operate between a cut-in speed of 3-4 m/s and a cut-out speed of 25
               m/s, with rated power achieved at approximately 11-13 m/s.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wind Turbine Generator Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Operation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        DFIG (Doubly-Fed Induction)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stator direct to grid, rotor via partial converter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smaller converter (30% rating), proven technology
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        PMSG (Permanent Magnet Synchronous)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full output via power converter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No gearbox possible (direct drive), higher efficiency
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Squirrel-cage Induction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fixed speed, direct grid connection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, robust, low cost — used in smaller turbines
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Wind turbine generator types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Operation</th>
+                    <th className="py-2 font-medium text-white">Advantages</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">DFIG (Doubly-Fed Induction)</td>
+                    <td className="py-2 pr-4">
+                      Stator direct to grid, rotor via partial converter
+                    </td>
+                    <td className="py-2">Smaller converter (30% rating), proven technology</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">PMSG (Permanent Magnet Synchronous)</td>
+                    <td className="py-2 pr-4">Full output via power converter</td>
+                    <td className="py-2">No gearbox possible (direct drive), higher efficiency</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Squirrel-cage Induction</td>
+                    <td className="py-2 pr-4">Fixed speed, direct grid connection</td>
+                    <td className="py-2">Simple, robust, low cost — used in smaller turbines</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Electrical Subsystems in a Wind Turbine
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Power converter:</strong> Rectifier and inverter stages converting
-                  variable-frequency generator output to fixed 50 Hz grid frequency. Typically uses
-                  IGBT (insulated-gate bipolar transistor) switching devices with PWM control
-                </li>
-                <li className="pl-1">
-                  <strong>Step-up transformer:</strong> Raises the generator voltage (typically 690
-                  V) to the local distribution voltage (11 kV or 33 kV for larger turbines) for grid
-                  connection
-                </li>
-                <li className="pl-1">
-                  <strong>Pitch system:</strong> Electrically or hydraulically actuated blade pitch
-                  mechanism that adjusts blade angle for speed control and power regulation —
-                  battery-backed for emergency feathering
-                </li>
-                <li className="pl-1">
-                  <strong>Yaw system:</strong> Electric motors that rotate the nacelle to face the
-                  wind, controlled by a wind vane and anemometer on the nacelle roof
-                </li>
-                <li className="pl-1">
-                  <strong>Lightning protection:</strong> Receptor system on blade tips,
-                  down-conductors through the blades, hub and tower to the earthing system —
-                  essential as turbines are prominent structures
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key electrical subsystems in a wind turbine">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Power converter:</strong> Rectifier and inverter stages converting
+                variable-frequency generator output to fixed 50 Hz grid frequency. Typically uses
+                IGBT (insulated-gate bipolar transistor) switching devices with PWM control.
+              </li>
+              <li>
+                <strong>Step-up transformer:</strong> Raises the generator voltage (typically 690 V)
+                to the local distribution voltage (11 kV or 33 kV for larger turbines) for grid
+                connection.
+              </li>
+              <li>
+                <strong>Pitch system:</strong> Electrically or hydraulically actuated blade pitch
+                mechanism that adjusts blade angle for speed control and power regulation —
+                battery-backed for emergency feathering.
+              </li>
+              <li>
+                <strong>Yaw system:</strong> Electric motors that rotate the nacelle to face the
+                wind, controlled by a wind vane and anemometer on the nacelle roof.
+              </li>
+              <li>
+                <strong>Lightning protection:</strong> Receptor system on blade tips,
+                down-conductors through the blades, hub and tower to the earthing system — essential
+                as turbines are prominent structures.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety: Wind Turbine Hazards</p>
+          <ConceptBlock title="Safety: wind turbine hazards">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
               <p className="text-sm text-white">
                 Wind turbines present unique electrical and mechanical hazards: high voltages
                 (typically 690 V at the generator, stepped up to 11 kV or 33 kV for larger
@@ -486,7 +455,6 @@ const MOETModule3Section6_2 = () => {
                 to work system is essential for all maintenance activities on wind turbines.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Small wind turbines (under 50 kW) connected to the
               distribution network must comply with G98 or G99 depending on their capacity. The DNO
@@ -494,21 +462,18 @@ const MOETModule3Section6_2 = () => {
               is mandatory to prevent the turbine energising a network that has been disconnected
               for maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Heat Pump Technology */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Heat Pump Technology
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Heat pump technology</ContentEyebrow>
+
+          <ConceptBlock title="The UK government's preferred technology for decarbonising heating">
             <p>
-              Heat pumps are the UK government's preferred technology for decarbonising building
-              heating. They use the refrigeration cycle in reverse — extracting heat from a
+              Heat pumps are the UK government&apos;s preferred technology for decarbonising
+              building heating. They use the refrigeration cycle in reverse — extracting heat from a
               low-temperature source (air, ground, or water) and delivering it at a higher
               temperature for space heating and hot water. For every unit of electricity consumed, a
               heat pump delivers 2.5 to 4.5 units of heat, making it far more efficient than direct
@@ -532,130 +497,96 @@ const MOETModule3Section6_2 = () => {
               returns to the evaporator to repeat the cycle. The COP is the ratio of heat delivered
               to electrical energy consumed by the compressor.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Air-Source Heat Pumps (ASHPs)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Extract heat from outdoor air via an evaporator coil (works down to -15 degrees
-                    C or below)
-                  </li>
-                  <li className="pl-1">
-                    Typical domestic ASHP: 5-12 kW heat output, 230 V or 400 V supply
-                  </li>
-                  <li className="pl-1">
-                    Inverter-driven compressors modulate output to match demand (variable speed)
-                  </li>
-                  <li className="pl-1">
-                    Defrost cycle required in cold weather — reverses the refrigeration cycle to
-                    melt ice on the evaporator
-                  </li>
-                  <li className="pl-1">SCOP typically 2.5-3.5 in UK climate conditions</li>
-                  <li className="pl-1">
-                    External unit requires minimum clearances for airflow — maintenance access
-                    essential
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ground-Source Heat Pumps (GSHPs)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Extract heat from the ground via closed-loop pipes (horizontal trenches or
-                    vertical boreholes)
-                  </li>
-                  <li className="pl-1">
-                    Ground temperature stable at 10-13 degrees C year-round in the UK
-                  </li>
-                  <li className="pl-1">Higher and more consistent COP than ASHPs (SCOP 3.5-4.5)</li>
-                  <li className="pl-1">
-                    Higher installation cost (ground works) but lower running costs
-                  </li>
-                  <li className="pl-1">
-                    Circulation pump for ground loop requires electrical maintenance
-                  </li>
-                  <li className="pl-1">
-                    MCS certification required for Boiler Upgrade Scheme eligibility
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Air-source heat pumps (ASHPs)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Extract heat from outdoor air via an evaporator coil (works down to -15 degrees C or
+                below).
+              </li>
+              <li>Typical domestic ASHP: 5-12 kW heat output, 230 V or 400 V supply.</li>
+              <li>Inverter-driven compressors modulate output to match demand (variable speed).</li>
+              <li>
+                Defrost cycle required in cold weather — reverses the refrigeration cycle to melt
+                ice on the evaporator.
+              </li>
+              <li>SCOP typically 2.5-3.5 in UK climate conditions.</li>
+              <li>
+                External unit requires minimum clearances for airflow — maintenance access
+                essential.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Ground-source heat pumps (GSHPs)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Extract heat from the ground via closed-loop pipes (horizontal trenches or vertical
+                boreholes).
+              </li>
+              <li>Ground temperature stable at 10-13 degrees C year-round in the UK.</li>
+              <li>Higher and more consistent COP than ASHPs (SCOP 3.5-4.5).</li>
+              <li>Higher installation cost (ground works) but lower running costs.</li>
+              <li>Circulation pump for ground loop requires electrical maintenance.</li>
+              <li>MCS certification required for Boiler Upgrade Scheme eligibility.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ASHP vs GSHP comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">ASHP</th>
+                    <th className="py-2 font-medium text-white">GSHP</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">SCOP (UK)</td>
+                    <td className="py-2 pr-4">2.5-3.5</td>
+                    <td className="py-2">3.5-4.5</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Install cost (domestic)</td>
+                    <td className="py-2 pr-4">GBP 7,000-14,000</td>
+                    <td className="py-2">GBP 15,000-35,000</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">External space</td>
+                    <td className="py-2 pr-4">Wall/ground mounting, min clearances</td>
+                    <td className="py-2">Large garden or borehole access</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Noise</td>
+                    <td className="py-2 pr-4">Fan noise (consider neighbours)</td>
+                    <td className="py-2">Near-silent externally</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Electrical supply</td>
+                    <td className="py-2 pr-4">230 V or 400 V (larger units)</td>
+                    <td className="py-2">230 V or 400 V (larger units)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ASHP vs GSHP Comparison
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ASHP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">GSHP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SCOP (UK)</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-3.5</td>
-                      <td className="border border-white/10 px-3 py-2">3.5-4.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Install cost (domestic)</td>
-                      <td className="border border-white/10 px-3 py-2">GBP 7,000-14,000</td>
-                      <td className="border border-white/10 px-3 py-2">GBP 15,000-35,000</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">External space</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wall/ground mounting, min clearances
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large garden or borehole access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Noise</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fan noise (consider neighbours)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Near-silent externally</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        230 V or 400 V (larger units)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        230 V or 400 V (larger units)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Important: Electrical Supply Sizing
-              </p>
+          <ConceptBlock title="Important: electrical supply sizing">
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
               <p className="text-sm text-white">
                 The electrical supply to a heat pump must be correctly sized for the compressor
                 starting current (which can be 3-6 times the running current for non-inverter
                 models). The supply circuit, protective device, and cable must comply with BS 7671
-                and the manufacturer's requirements. Inverter-driven heat pumps have softer starting
-                characteristics but may require EMC filtering to prevent harmonic interference with
-                other equipment on the same circuit. Always verify the supply capacity before
-                installation — an undersized supply will cause nuisance tripping and premature
-                contactor failure.
+                and the manufacturer&apos;s requirements. Inverter-driven heat pumps have softer
+                starting characteristics but may require EMC filtering to prevent harmonic
+                interference with other equipment on the same circuit. Always verify the supply
+                capacity before installation — an undersized supply will cause nuisance tripping and
+                premature contactor failure.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The Boiler Upgrade Scheme (BUS) provides grants of up to
               GBP 7,500 for heat pump installations. MCS certification of the installer is required
@@ -663,18 +594,15 @@ const MOETModule3Section6_2 = () => {
               target, the demand for competent electrical maintenance of heat pump systems will
               increase proportionally.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Micro-Hydro, Biomass CHP and Other Technologies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Micro-Hydro, Biomass CHP and Other Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Micro-hydro, biomass CHP and other technologies</ContentEyebrow>
+
+          <ConceptBlock title="Beyond wind, solar and heat pumps">
             <p>
               Beyond wind, solar and heat pumps, several other renewable and low-carbon technologies
               are relevant to the maintenance technician. Micro-hydro power exploits flowing water,
@@ -691,105 +619,99 @@ const MOETModule3Section6_2 = () => {
               technician who can work competently across these technologies has a significant
               competitive advantage.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Micro-Hydro Power</h3>
-              <p className="text-sm text-white mb-2">
-                Micro-hydro (up to 100 kW) uses the energy in flowing water to drive a turbine and
-                generator. The UK has significant micro-hydro potential, particularly in Scotland,
-                Wales and northern England. The available power depends on two factors: the head
-                (vertical drop in metres) and the flow rate (volume of water in litres per second).
-                Power output equals approximately head x flow x 7 watts (accounting for typical
-                turbine and generator efficiency).
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Turbine types:</strong> Pelton (high head, low flow), Turgo (medium head),
-                  Crossflow (medium head, variable flow), Kaplan (low head, high flow)
-                </li>
-                <li className="pl-1">
-                  <strong>Generator:</strong> Induction generator (grid-connected) or synchronous
-                  generator (off-grid capable)
-                </li>
-                <li className="pl-1">
-                  <strong>Control:</strong> Electronic load controller (ELC) or governor to maintain
-                  frequency under varying load
-                </li>
-                <li className="pl-1">
-                  <strong>Grid connection:</strong> G98/G99 compliance, anti-islanding, power
-                  quality monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Generator bearings, brush gear (synchronous), intake
-                  screens, control electronics
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Micro-hydro power">
+            <p>
+              Micro-hydro (up to 100 kW) uses the energy in flowing water to drive a turbine and
+              generator. The UK has significant micro-hydro potential, particularly in Scotland,
+              Wales and northern England. The available power depends on two factors: the head
+              (vertical drop in metres) and the flow rate (volume of water in litres per second).
+              Power output equals approximately head x flow x 7 watts (accounting for typical
+              turbine and generator efficiency).
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Turbine types:</strong> Pelton (high head, low flow), Turgo (medium head),
+                Crossflow (medium head, variable flow), Kaplan (low head, high flow).
+              </li>
+              <li>
+                <strong>Generator:</strong> Induction generator (grid-connected) or synchronous
+                generator (off-grid capable).
+              </li>
+              <li>
+                <strong>Control:</strong> Electronic load controller (ELC) or governor to maintain
+                frequency under varying load.
+              </li>
+              <li>
+                <strong>Grid connection:</strong> G98/G99 compliance, anti-islanding, power quality
+                monitoring.
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Generator bearings, brush gear (synchronous), intake
+                screens, control electronics.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Biomass CHP Systems</h3>
-              <p className="text-sm text-white mb-2">
-                Biomass CHP generates electricity and heat simultaneously from organic fuel sources.
-                The electrical systems are similar to conventional standby generation but with the
-                added complexity of fuel handling, combustion control, and heat recovery systems.
-                Overall efficiency of 70-85% (electrical plus thermal combined) far exceeds
-                electricity-only generation, making CHP economically attractive where there is a
-                consistent heat demand.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Technologies:</strong> Steam turbine, Organic Rankine Cycle (ORC),
-                  gasification engine
-                </li>
-                <li className="pl-1">
-                  <strong>Fuels:</strong> Wood chip, wood pellets, agricultural waste, anaerobic
-                  digestion biogas
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency:</strong> 70-85% overall (electrical + thermal combined)
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical:</strong> Synchronous generator, synchronising controls,
-                  export/import metering
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Generator, switchgear, control systems, exhaust
-                  treatment, heat exchangers
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Biomass CHP systems">
+            <p>
+              Biomass CHP generates electricity and heat simultaneously from organic fuel sources.
+              The electrical systems are similar to conventional standby generation but with the
+              added complexity of fuel handling, combustion control, and heat recovery systems.
+              Overall efficiency of 70-85% (electrical plus thermal combined) far exceeds
+              electricity-only generation, making CHP economically attractive where there is a
+              consistent heat demand.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Technologies:</strong> Steam turbine, Organic Rankine Cycle (ORC),
+                gasification engine.
+              </li>
+              <li>
+                <strong>Fuels:</strong> Wood chip, wood pellets, agricultural waste, anaerobic
+                digestion biogas.
+              </li>
+              <li>
+                <strong>Efficiency:</strong> 70-85% overall (electrical + thermal combined).
+              </li>
+              <li>
+                <strong>Electrical:</strong> Synchronous generator, synchronising controls,
+                export/import metering.
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Generator, switchgear, control systems, exhaust
+                treatment, heat exchangers.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Emerging: Hydrogen Fuel Cells
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Hydrogen fuel cells convert hydrogen and oxygen directly into electricity, water,
-                and heat through an electrochemical process. They produce no carbon emissions at the
-                point of use (the carbon impact depends on how the hydrogen is produced). Proton
-                exchange membrane (PEM) fuel cells are the most common type for building
-                applications, offering quiet operation, rapid start-up, and modular scalability.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Output:</strong> DC electricity (requires inverter for AC loads), useful
-                  heat, and water
-                </li>
-                <li className="pl-1">
-                  <strong>Applications:</strong> Backup power, off-grid supply, commercial building
-                  CHP
-                </li>
-                <li className="pl-1">
-                  <strong>Hazards:</strong> Hydrogen is flammable and explosive in air (4-75%
-                  concentration range)
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Stack replacement (every 40,000-80,000 hours),
-                  humidification system, inverter
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Emerging: hydrogen fuel cells">
+            <p>
+              Hydrogen fuel cells convert hydrogen and oxygen directly into electricity, water, and
+              heat through an electrochemical process. They produce no carbon emissions at the point
+              of use (the carbon impact depends on how the hydrogen is produced). Proton exchange
+              membrane (PEM) fuel cells are the most common type for building applications, offering
+              quiet operation, rapid start-up, and modular scalability.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Output:</strong> DC electricity (requires inverter for AC loads), useful
+                heat, and water.
+              </li>
+              <li>
+                <strong>Applications:</strong> Backup power, off-grid supply, commercial building
+                CHP.
+              </li>
+              <li>
+                <strong>Hazards:</strong> Hydrogen is flammable and explosive in air (4-75%
+                concentration range).
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Stack replacement (every 40,000-80,000 hours),
+                humidification system, inverter.
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> All generation technologies connected to the distribution
               network must comply with the same G99/G98 requirements, regardless of fuel source. The
@@ -797,25 +719,22 @@ const MOETModule3Section6_2 = () => {
               technology-neutral — the grid does not distinguish between a watt produced by wind,
               hydro, biomass, or hydrogen.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: UK Renewable Energy Policy and Maintenance Implications */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            UK Renewable Energy Policy and Maintenance Implications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>UK renewable energy policy and maintenance implications</ContentEyebrow>
+
+          <ConceptBlock title="A fundamental transformation of the energy system">
             <p>
-              The UK's legally binding commitment to net zero greenhouse gas emissions by 2050 is
-              driving a fundamental transformation of the energy system. For electrical maintenance
-              technicians, this means a rapidly growing installed base of renewable and low-carbon
-              technologies, each requiring ongoing maintenance. Understanding the policy landscape
-              helps technicians anticipate demand for their skills and plan their professional
-              development.
+              The UK&apos;s legally binding commitment to net zero greenhouse gas emissions by 2050
+              is driving a fundamental transformation of the energy system. For electrical
+              maintenance technicians, this means a rapidly growing installed base of renewable and
+              low-carbon technologies, each requiring ongoing maintenance. Understanding the policy
+              landscape helps technicians anticipate demand for their skills and plan their
+              professional development.
             </p>
             <p>
               The scale of the transition is unprecedented. The UK aims to fully decarbonise its
@@ -824,114 +743,86 @@ const MOETModule3Section6_2 = () => {
               intermittent renewables. Each of these targets creates a direct demand for electrical
               maintenance technicians with renewable technology competence.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key UK Targets</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Net zero emissions by 2050 (Climate Change Act)</li>
-                  <li className="pl-1">Fully decarbonised electricity by 2035</li>
-                  <li className="pl-1">No new gas boilers from 2035 (heat pump transition)</li>
-                  <li className="pl-1">600,000 heat pump installations per year by 2028</li>
-                  <li className="pl-1">50 GW offshore wind by 2030</li>
-                  <li className="pl-1">70 GW solar by 2035</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance Market Growth
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Over 1.2 million PV installations already in UK (growing rapidly)
-                  </li>
-                  <li className="pl-1">Heat pump installations doubling year-on-year</li>
-                  <li className="pl-1">EV charger installations exceeding 500,000</li>
-                  <li className="pl-1">Battery storage deployed at domestic and grid scale</li>
-                  <li className="pl-1">All systems require periodic inspection and maintenance</li>
-                  <li className="pl-1">Skills shortage in renewable technology maintenance</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Key UK targets">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Net zero emissions by 2050 (Climate Change Act).</li>
+              <li>Fully decarbonised electricity by 2035.</li>
+              <li>No new gas boilers from 2035 (heat pump transition).</li>
+              <li>600,000 heat pump installations per year by 2028.</li>
+              <li>50 GW offshore wind by 2030.</li>
+              <li>70 GW solar by 2035.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Maintenance market growth">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Over 1.2 million PV installations already in UK (growing rapidly).</li>
+              <li>Heat pump installations doubling year-on-year.</li>
+              <li>EV charger installations exceeding 500,000.</li>
+              <li>Battery storage deployed at domestic and grid scale.</li>
+              <li>All systems require periodic inspection and maintenance.</li>
+              <li>Skills shortage in renewable technology maintenance.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Regulatory framework summary">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Regulation/Standard</th>
+                    <th className="py-2 font-medium text-white">Coverage</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">BS 7671 (18th Edition)</td>
+                    <td className="py-2">
+                      All electrical installations including renewable systems
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">EAWR 1989</td>
+                    <td className="py-2">Duty to maintain safe electrical systems</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">G98/G99</td>
+                    <td className="py-2">DNO connection requirements for generation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">MCS MIS 3002/3005</td>
+                    <td className="py-2">PV and heat pump installation standards</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">F-Gas Regulations</td>
+                    <td className="py-2">Heat pump refrigerant handling</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Building Regulations Part L/P</td>
+                    <td className="py-2">Energy efficiency and electrical safety</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Regulatory Framework Summary
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Regulation/Standard
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Coverage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 (18th Edition)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All electrical installations including renewable systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EAWR 1989</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duty to maintain safe electrical systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">G98/G99</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DNO connection requirements for generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCS MIS 3002/3005</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PV and heat pump installation standards
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F-Gas Regulations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat pump refrigerant handling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building Regulations Part L/P
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Energy efficiency and electrical safety
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
             <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
               awareness of emerging technologies and their impact on electrical maintenance
               practices. This includes understanding the operating principles, safety hazards, and
               maintenance requirements of renewable and low-carbon technologies. The growing
               installed base of these technologies means they will form an increasing proportion of
-              the maintenance technician's workload.
+              the maintenance technician&apos;s workload.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Electrical Maintenance Across Renewable Technologies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Electrical Maintenance Across Renewable Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electrical maintenance across renewable technologies</ContentEyebrow>
+
+          <ConceptBlock title="Working safely and effectively across a growing range of technologies">
             <p>
               Each renewable technology presents distinct electrical maintenance requirements and
               safety hazards. The maintenance technician must understand these differences to work
@@ -957,215 +848,171 @@ const MOETModule3Section6_2 = () => {
               interact and ensure that maintenance on one component does not adversely affect the
               operation of others.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Technology-Specific Maintenance Summary
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Maintenance Focus
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Hazards</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Small wind</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator, converter, switchgear, earthing, lightning protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Height, rotating parts, HV, stored energy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ASHP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compressor current, contactors, controls, defrost, supply circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerant (F-Gas), inverter-driven EMC
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">GSHP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compressor, circulation pumps, controls, earth loop monitoring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Refrigerant (F-Gas), antifreeze
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Micro-hydro</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator bearings, brush gear, ELC, grid connection, protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Water, remote location, HV generation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Biomass CHP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generator, synchronising, switchgear, export metering, controls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hot surfaces, exhaust gases, HV
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Technology-specific maintenance summary">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Technology</th>
+                    <th className="py-2 pr-4 font-medium text-white">
+                      Electrical maintenance focus
+                    </th>
+                    <th className="py-2 font-medium text-white">Key hazards</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Small wind</td>
+                    <td className="py-2 pr-4">
+                      Generator, converter, switchgear, earthing, lightning protection
+                    </td>
+                    <td className="py-2">Height, rotating parts, HV, stored energy</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">ASHP</td>
+                    <td className="py-2 pr-4">
+                      Compressor current, contactors, controls, defrost, supply circuit
+                    </td>
+                    <td className="py-2">Refrigerant (F-Gas), inverter-driven EMC</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">GSHP</td>
+                    <td className="py-2 pr-4">
+                      Compressor, circulation pumps, controls, earth loop monitoring
+                    </td>
+                    <td className="py-2">Refrigerant (F-Gas), antifreeze</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Micro-hydro</td>
+                    <td className="py-2 pr-4">
+                      Generator bearings, brush gear, ELC, grid connection, protection
+                    </td>
+                    <td className="py-2">Water, remote location, HV generation</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Biomass CHP</td>
+                    <td className="py-2 pr-4">
+                      Generator, synchronising, switchgear, export metering, controls
+                    </td>
+                    <td className="py-2">Hot surfaces, exhaust gases, HV</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cross-Technology Maintenance Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Commissioning baseline:</strong> Record all performance parameters at
-                  commissioning for future comparison
-                </li>
-                <li className="pl-1">
-                  <strong>G99/G98 compliance:</strong> Verify anti-islanding protection and
-                  protection settings at every periodic inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing integrity:</strong> All renewable installations require
-                  comprehensive earthing and bonding — verify continuity regularly
-                </li>
-                <li className="pl-1">
-                  <strong>Power quality:</strong> Monitor inverter output for harmonics and power
-                  factor compliance
-                </li>
-                <li className="pl-1">
-                  <strong>Performance trending:</strong> Compare current output with historical data
-                  and expected values for the season
-                </li>
-                <li className="pl-1">
-                  <strong>Safety documentation:</strong> Maintain risk assessments and safe systems
-                  of work specific to each technology
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Cross-technology maintenance principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Commissioning baseline:</strong> Record all performance parameters at
+                commissioning for future comparison.
+              </li>
+              <li>
+                <strong>G99/G98 compliance:</strong> Verify anti-islanding protection and protection
+                settings at every periodic inspection.
+              </li>
+              <li>
+                <strong>Earthing integrity:</strong> All renewable installations require
+                comprehensive earthing and bonding — verify continuity regularly.
+              </li>
+              <li>
+                <strong>Power quality:</strong> Monitor inverter output for harmonics and power
+                factor compliance.
+              </li>
+              <li>
+                <strong>Performance trending:</strong> Compare current output with historical data
+                and expected values for the season.
+              </li>
+              <li>
+                <strong>Safety documentation:</strong> Maintain risk assessments and safe systems of
+                work specific to each technology.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Case Study: Integrated Domestic Renewable System
-              </h3>
-              <p className="text-sm text-white">
+          <Scenario
+            title="Integrated domestic renewable system"
+            situation={
+              <>
                 A typical modern domestic installation might include: 4 kWp solar PV array, 10 kWh
                 battery storage, 8 kW air-source heat pump, and a 7 kW EV charger — all managed by a
                 hybrid inverter and energy management system. The total connected load exceeds the
                 typical 100 A single-phase supply, so the energy management system coordinates the
-                operation of each component. During a periodic inspection, the maintenance
-                technician must: verify each system's protection and isolation; test RCDs for all
-                circuits; check the energy management system is correctly prioritising loads;
-                confirm G98/G99 compliance for the PV and battery export; and ensure the EV
-                charger's PME earthing provisions are intact. This integrated approach requires
-                competence across multiple renewable technologies.
-              </p>
+                operation of each component.
+              </>
+            }
+            whatToDo={
+              <>
+                During a periodic inspection, the maintenance technician must: verify each
+                system&apos;s protection and isolation; test RCDs for all circuits; check the energy
+                management system is correctly prioritising loads; confirm G98/G99 compliance for
+                the PV and battery export; and ensure the EV charger&apos;s PME earthing provisions
+                are intact.
+              </>
+            }
+            whyItMatters="This integrated approach requires competence across multiple renewable technologies."
+          />
+
+          <p className="text-sm text-white italic">
+            <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate awareness
+            of renewable and emerging technologies as part of the standard&apos;s knowledge
+            requirements. The growing installed base of wind, heat pump, hydro and CHP systems means
+            that technicians who develop competence across multiple renewable technologies will be
+            increasingly valuable in the labour market.
+          </p>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Wind DFIG: stator direct, rotor via converter. Wind PMSG: full output via converter.',
+              'ASHP SCOP: 2.5-3.5 (UK climate). GSHP SCOP: 3.5-4.5 (stable ground temp).',
+              'Hydro: Pelton (high head), Kaplan (low head). CHP: 70-85% overall efficiency.',
+              'Net zero by 2050 (Climate Change Act). No new gas boilers from 2035.',
+              '600,000 heat pumps/year by 2028. G98: aggregate up to 16 A/phase (~3.68 kW). G99: above that.',
+              'F-Gas certification required for refrigerants. MCS MIS 3005 is the heat pump standard.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Solar PV Integration
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section6-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Energy Storage Systems
+                </div>
+              </button>
             </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              awareness of renewable and emerging technologies as part of the standard's knowledge
-              requirements. The growing installed base of wind, heat pump, hydro and CHP systems
-              means that technicians who develop competence across multiple renewable technologies
-              will be increasingly valuable in the labour market.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Renewable Technologies</p>
-                <ul className="space-y-0.5">
-                  <li>Wind DFIG: stator direct, rotor via converter</li>
-                  <li>Wind PMSG: full output via converter</li>
-                  <li>ASHP SCOP: 2.5-3.5 (UK climate)</li>
-                  <li>GSHP SCOP: 3.5-4.5 (stable ground temp)</li>
-                  <li>Hydro: Pelton (high head), Kaplan (low head)</li>
-                  <li>CHP: 70-85% overall efficiency</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">UK Policy and Standards</p>
-                <ul className="space-y-0.5">
-                  <li>Net zero by 2050 (Climate Change Act)</li>
-                  <li>No new gas boilers from 2035</li>
-                  <li>600,000 heat pumps/year by 2028</li>
-                  <li>G98: up to 3.68 kW/phase</li>
-                  <li>G99: above 3.68 kW/phase</li>
-                  <li>F-Gas certification for refrigerants</li>
-                  <li>MCS MIS 3005 heat pump standard</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Solar PV Integration
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-3">
-              Next: Energy Storage Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

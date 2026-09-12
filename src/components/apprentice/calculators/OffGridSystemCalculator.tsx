@@ -195,6 +195,12 @@ export function OffGridSystemCalculator() {
     }
   };
 
+  const BATTERY_LOCATION_LABELS: Record<string, string> = {
+    indoor: 'Indoor (20°C)',
+    sheltered: 'Sheltered (5–15°C)',
+    outdoor: 'Outdoor (0–5°C)',
+  };
+
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
     const ratingStatus = getRatingStatus(result.systemRating);
@@ -224,7 +230,10 @@ export function OffGridSystemCalculator() {
             { label: 'System voltage', value: `${systemVoltage} V DC` },
             { label: 'Panel wattage', value: `${panelWattage} W` },
             { label: 'Battery type', value: batteryType === 'lithium' ? 'LiFePO4' : 'AGM deep cycle' },
-            { label: 'Battery location', value: batteryLocation },
+            {
+              label: 'Battery location',
+              value: BATTERY_LOCATION_LABELS[batteryLocation] ?? batteryLocation,
+            },
             { label: 'Battery capacity', value: `${batteryCapacity} Ah` },
             { label: 'Depth of discharge', value: `${depthOfDischarge} %` },
             { label: 'System efficiency', value: `${systemEfficiency} %` },
@@ -242,7 +251,10 @@ export function OffGridSystemCalculator() {
               value: `${result.dailyEnergyBalance >= 0 ? '+' : ''}${result.dailyEnergyBalance.toFixed(1)} kWh`,
             },
             { label: 'Overall system efficiency', value: `${result.overallEfficiency.toFixed(0)} %` },
-            { label: 'System rating', value: result.systemRating },
+            {
+              label: 'System rating',
+              value: result.systemRating.charAt(0).toUpperCase() + result.systemRating.slice(1),
+            },
           ],
         },
         {

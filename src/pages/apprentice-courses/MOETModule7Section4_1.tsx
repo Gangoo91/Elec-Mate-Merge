@@ -1,8 +1,40 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 4 · Subsection 1 — Teamwork and Collaboration
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page covers general professional behaviours (teamwork,
+ * collaboration, conflict handling). None of the ST1426 statements verified
+ * elsewhere in this conversion (Modules 1-4) describe team-working
+ * specifically, and the published KSB numbering has not been verified against
+ * a primary source, so no KSB quote is included here rather than inventing
+ * one. Flagged in the conversion report.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Teamwork and Collaboration - MOET Module 7 Section 4.1';
@@ -27,7 +59,7 @@ const quickCheckQuestions = [
     id: 'toolbox-talk-purpose',
     question: 'What is the primary purpose of a toolbox talk before a maintenance task?',
     options: [
-      'To formally record each technician\'s working hours and allocate the labour cost to the correct job number',
+      "To formally record each technician's working hours and allocate the labour cost to the correct job number",
       'To brief the team on the task scope, hazards, roles and safety measures',
       'To allow the supervisor to issue verbal warnings to underperforming members in front of the group',
       'To complete the permit-to-work paperwork so that no further isolation checks are needed on site',
@@ -138,7 +170,7 @@ const quizQuestions = [
     question: 'When delegating tasks within a maintenance team, the team leader should ensure:',
     options: [
       'The most difficult tasks are always given to the newest members to accelerate their learning',
-      'Tasks are shared out equally by headcount, regardless of each person\'s skills or experience',
+      "Tasks are shared out equally by headcount, regardless of each person's skills or experience",
       'Tasks are matched to individual competence, clearly communicated and monitored for progress',
       'Once a task is handed over, the leader steps back entirely and does not check on progress',
     ],
@@ -264,116 +296,65 @@ const faqs = [
 ];
 
 const MOETModule7Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Teamwork and Collaboration
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.4 · Subsection 1"
+        title="Teamwork and Collaboration"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Working effectively in maintenance teams and demonstrating collaborative professional
-            behaviours
+            behaviours.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Team roles:</strong> Belbin model — thinkers, doers, people-focused
-              </li>
-              <li className="pl-1">
-                <strong>Development:</strong> Tuckman — forming, storming, norming, performing
-              </li>
-              <li className="pl-1">
-                <strong>Key skills:</strong> Communication, delegation, conflict resolution
-              </li>
-              <li className="pl-1">
-                <strong>EPA focus:</strong> Portfolio evidence and professional discussion
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Shutdowns:</strong> Multi-trade coordination and communication
-              </li>
-              <li className="pl-1">
-                <strong>Shift handovers:</strong> Safety-critical information transfer
-              </li>
-              <li className="pl-1">
-                <strong>Cross-functional:</strong> Electrical, mechanical, instrumentation teams
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Behaviours component — working with others
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Team roles: Belbin model — thinkers, doers, people-focused.',
+              'Development: Tuckman — forming, storming, norming, performing.',
+              'Key skills: Communication, delegation, conflict resolution.',
+              'EPA focus: Portfolio evidence and professional discussion.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the importance of effective teamwork in electrical maintenance environments',
               "Describe Belbin's team role theory and Tuckman's stages of team development",
               'Demonstrate collaborative problem-solving and fault diagnosis techniques',
               'Apply professional communication skills within multi-disciplinary teams',
               'Handle conflict, provide constructive feedback and support less experienced colleagues',
               'Gather and present portfolio evidence of teamwork for EPA assessment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Shutdowns:</strong> multi-trade coordination and communication.
+              </li>
+              <li>
+                <strong>Shift handovers:</strong> safety-critical information transfer.
+              </li>
+              <li>
+                <strong>Cross-functional:</strong> electrical, mechanical, instrumentation teams.
+              </li>
+              <li>
+                <strong>ST1426:</strong> behaviours component — working with others.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Teamwork Matters in Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Why teamwork matters in electrical maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Even lone workers operate inside a wider team">
             <p>
               Electrical maintenance is rarely a solo activity. Even when a single technician is
               despatched to a fault call, they operate within a wider team: coordinating with
@@ -390,39 +371,38 @@ const MOETModule7Section4_1 = () => {
               look for concrete evidence that you communicate clearly, support colleagues,
               contribute to team objectives and handle interpersonal challenges professionally.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Teams Outperform Individuals
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Combined knowledge:</strong> Multiple technicians bring different
-                  experiences, training and specialist knowledge to complex fault diagnosis
-                </li>
-                <li className="pl-1">
-                  <strong>Safety assurance:</strong> A second pair of eyes catches errors —
-                  particularly important for safe isolation, proving dead and permit to work
-                  procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency:</strong> Well-coordinated teams complete shutdown tasks
-                  faster, reducing costly downtime for the business
-                </li>
-                <li className="pl-1">
-                  <strong>Resilience:</strong> Teams can adapt to unexpected problems by
-                  redistributing tasks and drawing on the breadth of their collective capability
-                </li>
-                <li className="pl-1">
-                  <strong>Development:</strong> Less experienced technicians learn from more
-                  experienced colleagues through day-to-day collaboration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Why teams outperform individuals">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Combined knowledge:</strong> multiple technicians bring different
+                experiences, training and specialist knowledge to complex fault diagnosis.
+              </li>
+              <li>
+                <strong>Safety assurance:</strong> a second pair of eyes catches errors —
+                particularly important for safe isolation, proving dead and permit to work
+                procedures.
+              </li>
+              <li>
+                <strong>Efficiency:</strong> well-coordinated teams complete shutdown tasks faster,
+                reducing costly downtime for the business.
+              </li>
+              <li>
+                <strong>Resilience:</strong> teams can adapt to unexpected problems by
+                redistributing tasks and drawing on the breadth of their collective capability.
+              </li>
+              <li>
+                <strong>Development:</strong> less experienced technicians learn from more
+                experienced colleagues through day-to-day collaboration.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">When Teamwork Fails</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="When teamwork fails"
+            whatHappens={
+              <>
                 HSE investigations into maintenance-related incidents frequently identify teamwork
                 failures as contributing factors: poor handovers between shifts, unclear role
                 assignments during shutdowns, failure to communicate changes in isolation status,
@@ -430,26 +410,24 @@ const MOETModule7Section4_1 = () => {
                 reported case, a technician was electrocuted because a colleague on a different
                 shift re-energised a circuit without checking the permit to work log — a
                 catastrophic handover failure.
-              </p>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Treat teamwork in maintenance as a safety-critical skill. The ability to
+                communicate, coordinate and collaborate directly affects whether people go home safe
+                at the end of each shift.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Teamwork in maintenance is a safety-critical skill. The
-              ability to communicate, coordinate and collaborate directly affects whether people go
-              home safe at the end of each shift.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Understanding Team Roles and Dynamics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding team roles and dynamics</ContentEyebrow>
+
+          <ConceptBlock title="How people interact shapes team performance">
             <p>
               Effective teams are not simply groups of competent individuals. Research into team
               performance — most notably by Meredith Belbin and Bruce Tuckman — shows that how
@@ -458,138 +436,120 @@ const MOETModule7Section4_1 = () => {
               contribute more effectively and navigate the inevitable challenges of working with
               others.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Belbin's Team Roles</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Role</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2" rowSpan={3}>
-                        Action-oriented
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Shaper</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Drives the team forward during a tight shutdown window
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Implementer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Turns the maintenance plan into practical, step-by-step actions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Completer-Finisher</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Checks all connections, labels and documentation before handback
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2" rowSpan={3}>
-                        People-oriented
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Coordinator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Organises the team, delegates tasks to match competence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Teamworker</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supports colleagues, resolves friction, maintains morale
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resource Investigator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sources hard-to-find spare parts, liaises with suppliers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2" rowSpan={3}>
-                        Thought-oriented
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Plant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Generates creative solutions to unusual faults
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monitor-Evaluator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Critically assesses proposed repair methods before committing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specialist</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provides deep expertise in a specific area (e.g., PLC programming)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Belbin's team roles">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Category</th>
+                    <th className="py-2 pr-4 font-medium text-white">Role</th>
+                    <th className="py-2 font-medium text-white">Maintenance example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Action-oriented</td>
+                    <td className="py-2 pr-4 align-top">Shaper</td>
+                    <td className="py-2">Drives the team forward during a tight shutdown window</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Action-oriented</td>
+                    <td className="py-2 pr-4 align-top">Implementer</td>
+                    <td className="py-2">
+                      Turns the maintenance plan into practical, step-by-step actions
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Action-oriented</td>
+                    <td className="py-2 pr-4 align-top">Completer-Finisher</td>
+                    <td className="py-2">
+                      Checks all connections, labels and documentation before handback
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">People-oriented</td>
+                    <td className="py-2 pr-4 align-top">Coordinator</td>
+                    <td className="py-2">
+                      Organises the team, delegates tasks to match competence
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">People-oriented</td>
+                    <td className="py-2 pr-4 align-top">Teamworker</td>
+                    <td className="py-2">
+                      Supports colleagues, resolves friction, maintains morale
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">People-oriented</td>
+                    <td className="py-2 pr-4 align-top">Resource Investigator</td>
+                    <td className="py-2">
+                      Sources hard-to-find spare parts, liaises with suppliers
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Thought-oriented</td>
+                    <td className="py-2 pr-4 align-top">Plant</td>
+                    <td className="py-2">Generates creative solutions to unusual faults</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Thought-oriented</td>
+                    <td className="py-2 pr-4 align-top">Monitor-Evaluator</td>
+                    <td className="py-2">
+                      Critically assesses proposed repair methods before committing
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Thought-oriented</td>
+                    <td className="py-2 pr-4 align-top">Specialist</td>
+                    <td className="py-2">
+                      Provides deep expertise in a specific area (e.g., PLC programming)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Tuckman's Stages of Team Development
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Forming:</strong> Team members are polite, cautious and uncertain. Roles
-                  are unclear. In maintenance, this is typical when a new team is assembled for a
-                  project or a new starter joins
-                </li>
-                <li className="pl-1">
-                  <strong>Storming:</strong> Conflict emerges as individuals push boundaries,
-                  challenge each other and compete for influence. This is normal and necessary — it
-                  establishes working norms
-                </li>
-                <li className="pl-1">
-                  <strong>Norming:</strong> The team settles into productive working patterns. Roles
-                  are accepted, communication improves and mutual respect develops
-                </li>
-                <li className="pl-1">
-                  <strong>Performing:</strong> The team works at peak efficiency with minimal
-                  friction. Members support each other, adapt flexibly and focus on shared
-                  objectives
-                </li>
-                <li className="pl-1">
-                  <strong>Adjourning:</strong> The team disbands after completing the task. In
-                  maintenance, this happens at the end of a shutdown or project
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Tuckman's stages of team development"
+            onSite="Knowing that conflict (storming) is a normal stage of team development helps you respond professionally rather than taking disagreements personally. The most effective teams work through conflict to reach stronger working relationships."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Forming:</strong> team members are polite, cautious and uncertain. Roles are
+                unclear. In maintenance, this is typical when a new team is assembled for a project
+                or a new starter joins.
+              </li>
+              <li>
+                <strong>Storming:</strong> conflict emerges as individuals push boundaries,
+                challenge each other and compete for influence. This is normal and necessary — it
+                establishes working norms.
+              </li>
+              <li>
+                <strong>Norming:</strong> the team settles into productive working patterns. Roles
+                are accepted, communication improves and mutual respect develops.
+              </li>
+              <li>
+                <strong>Performing:</strong> the team works at peak efficiency with minimal
+                friction. Members support each other, adapt flexibly and focus on shared objectives.
+              </li>
+              <li>
+                <strong>Adjourning:</strong> the team disbands after completing the task. In
+                maintenance, this happens at the end of a shutdown or project.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Knowing that conflict (storming) is a normal stage of team
-              development helps you respond professionally rather than taking disagreements
-              personally. The most effective teams work through conflict to reach stronger working
-              relationships.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Collaborative Problem-Solving in Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Collaborative problem-solving in maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Pooling knowledge improves the quality of the solution">
             <p>
               Some of the most challenging aspects of electrical maintenance — complex fault
               diagnosis, system modifications, and emergency response — benefit enormously from
@@ -598,105 +558,105 @@ const MOETModule7Section4_1 = () => {
               true in modern maintenance environments where systems integrate electrical,
               mechanical, pneumatic and control elements.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Collaborative Fault Diagnosis Process
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gather information collectively:</strong> Each team member shares what
-                  they know — symptoms observed, recent work carried out, production conditions at
-                  the time of failure
-                </li>
-                <li className="pl-1">
-                  <strong>Brainstorm possible causes:</strong> Encourage all ideas without premature
-                  dismissal. A less experienced technician may spot something a more experienced one
-                  overlooks
-                </li>
-                <li className="pl-1">
-                  <strong>Evaluate and prioritise:</strong> As a team, assess the likelihood of each
-                  cause and agree the most logical testing sequence
-                </li>
-                <li className="pl-1">
-                  <strong>Divide and test:</strong> Allocate testing tasks based on individual
-                  competence and available equipment. Maintain communication throughout
-                </li>
-                <li className="pl-1">
-                  <strong>Share findings and converge:</strong> Bring results together, eliminate
-                  causes, and narrow down to the root cause
-                </li>
-                <li className="pl-1">
-                  <strong>Agree the repair:</strong> Collectively agree the repair approach,
-                  considering safety, quality and time constraints
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Collaborative fault diagnosis process">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gather information collectively:</strong> each team member shares what they
+                know — symptoms observed, recent work carried out, production conditions at the time
+                of failure.
+              </li>
+              <li>
+                <strong>Brainstorm possible causes:</strong> encourage all ideas without premature
+                dismissal. A less experienced technician may spot something a more experienced one
+                overlooks.
+              </li>
+              <li>
+                <strong>Evaluate and prioritise:</strong> as a team, assess the likelihood of each
+                cause and agree the most logical testing sequence.
+              </li>
+              <li>
+                <strong>Divide and test:</strong> allocate testing tasks based on individual
+                competence and available equipment. Maintain communication throughout.
+              </li>
+              <li>
+                <strong>Share findings and converge:</strong> bring results together, eliminate
+                causes, and narrow down to the root cause.
+              </li>
+              <li>
+                <strong>Agree the repair:</strong> collectively agree the repair approach,
+                considering safety, quality and time constraints.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cross-Functional Collaboration
-                </h3>
-                <p className="text-sm text-white">
-                  Modern maintenance increasingly requires cross-functional teams. An electrical
-                  technician may need to work with mechanical fitters, instrumentation engineers,
-                  HVAC specialists and production operators to diagnose and resolve complex system
-                  faults. Understanding the basics of adjacent disciplines — how a motor drives a
-                  pump, how a sensor feeds a PLC, how process conditions affect electrical
-                  components — makes you a far more effective team member.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Knowledge Sharing</h3>
-                <p className="text-sm text-white">
-                  Effective teams actively share knowledge. When you discover a useful fault-finding
-                  technique, an efficient wiring method, or a better way to interpret a technical
-                  drawing, share it with colleagues. This builds collective capability and creates a
-                  culture of continuous improvement. Hoarding knowledge may feel like it protects
-                  your position, but it weakens the team and is the opposite of the professional
-                  behaviour expected under ST1426.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Cross-functional collaboration">
+            <p>
+              Modern maintenance increasingly requires cross-functional teams. An electrical
+              technician may need to work with mechanical fitters, instrumentation engineers, HVAC
+              specialists and production operators to diagnose and resolve complex system faults.
+              Understanding the basics of adjacent disciplines — how a motor drives a pump, how a
+              sensor feeds a PLC, how process conditions affect electrical components — makes you a
+              far more effective team member.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Case Study: Collaborative Shutdown Success
-              </h3>
-              <p className="text-sm text-white">
+          <ConceptBlock title="Knowledge sharing">
+            <p>
+              Effective teams actively share knowledge. When you discover a useful fault-finding
+              technique, an efficient wiring method, or a better way to interpret a technical
+              drawing, share it with colleagues. This builds collective capability and creates a
+              culture of continuous improvement. Hoarding knowledge may feel like it protects your
+              position, but it weakens the team and is the opposite of the professional behaviour
+              expected under ST1426.
+            </p>
+          </ConceptBlock>
+
+          <Scenario
+            title="Collaborative shutdown success"
+            situation={
+              <p>
                 A manufacturing facility scheduled a 48-hour electrical shutdown to replace ageing
                 switchgear. The maintenance team comprised six electrical technicians, two
-                mechanical fitters, an instrumentation engineer and a project coordinator. Before
-                the shutdown, the team held three planning meetings to agree the sequence of work,
-                assign roles, identify interfaces between tasks, and establish communication
-                protocols. During the shutdown, 15-minute progress huddles were held every four
-                hours. When an unexpected problem arose — a cable route was obstructed by a newly
-                installed mechanical duct — the team quickly re-planned, with the mechanical fitters
-                modifying the duct run while the electricians worked on an alternative section. The
-                shutdown was completed on time, with no safety incidents, because of effective
-                teamwork and communication.
+                mechanical fitters, an instrumentation engineer and a project coordinator.
               </p>
-            </div>
+            }
+            whatToDo={
+              <>
+                <p>
+                  Before the shutdown, the team held three planning meetings to agree the sequence
+                  of work, assign roles, identify interfaces between tasks, and establish
+                  communication protocols. During the shutdown, 15-minute progress huddles were held
+                  every four hours.
+                </p>
+                <p>
+                  When an unexpected problem arose — a cable route was obstructed by a newly
+                  installed mechanical duct — the team quickly re-planned, with the mechanical
+                  fitters modifying the duct run while the electricians worked on an alternative
+                  section.
+                </p>
+              </>
+            }
+            whyItMatters={
+              <>
+                The shutdown was completed on time, with no safety incidents, because of effective
+                teamwork and communication. Collaborative problem-solving is not about having
+                meetings for the sake of it — it is about drawing on collective capability to solve
+                problems safely and efficiently. The best maintenance teams collaborate naturally —
+                sharing information, helping each other, and maintaining awareness of the bigger
+                picture.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Collaborative problem-solving is not about having meetings
-              for the sake of it. It is about drawing on collective capability to solve problems
-              safely and efficiently. The best maintenance teams collaborate naturally — sharing
-              information, helping each other, and maintaining awareness of the bigger picture.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Conflict Resolution and Constructive Feedback
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Conflict resolution and constructive feedback</ContentEyebrow>
+
+          <ConceptBlock title="Handling disagreement professionally">
             <p>
               Conflict is inevitable in any team, and maintenance teams are no exception.
               Disagreements about the best approach to a repair, frustration during high-pressure
@@ -705,102 +665,86 @@ const MOETModule7Section4_1 = () => {
               constructively, resolve disagreements without damaging working relationships, and give
               feedback that helps colleagues improve.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Conflict Resolution Steps
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Acknowledge the disagreement:</strong> Do not ignore it or hope it goes
-                  away. Recognise that there is a difference of opinion
-                </li>
-                <li className="pl-1">
-                  <strong>Listen actively:</strong> Hear your colleague's perspective fully before
-                  responding. Do not interrupt or dismiss their view
-                </li>
-                <li className="pl-1">
-                  <strong>Focus on the issue, not the person:</strong> Discuss the technical merits
-                  of each approach rather than criticising the individual
-                </li>
-                <li className="pl-1">
-                  <strong>Seek common ground:</strong> Identify areas of agreement and build from
-                  there
-                </li>
-                <li className="pl-1">
-                  <strong>Compromise or defer:</strong> If agreement cannot be reached, propose a
-                  compromise. If the matter is safety-critical, escalate to a supervisor
-                </li>
-                <li className="pl-1">
-                  <strong>Move forward positively:</strong> Once resolved, do not hold grudges.
-                  Maintain a professional working relationship
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Conflict resolution steps">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Acknowledge the disagreement:</strong> do not ignore it or hope it goes
+                away. Recognise that there is a difference of opinion.
+              </li>
+              <li>
+                <strong>Listen actively:</strong> hear your colleague&apos;s perspective fully
+                before responding. Do not interrupt or dismiss their view.
+              </li>
+              <li>
+                <strong>Focus on the issue, not the person:</strong> discuss the technical merits of
+                each approach rather than criticising the individual.
+              </li>
+              <li>
+                <strong>Seek common ground:</strong> identify areas of agreement and build from
+                there.
+              </li>
+              <li>
+                <strong>Compromise or defer:</strong> if agreement cannot be reached, propose a
+                compromise. If the matter is safety-critical, escalate to a supervisor.
+              </li>
+              <li>
+                <strong>Move forward positively:</strong> once resolved, do not hold grudges.
+                Maintain a professional working relationship.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Giving Constructive Feedback
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Be specific:</strong> "The cable termination in DB3 was loose" rather than
-                  "Your work is sloppy"
-                </li>
-                <li className="pl-1">
-                  <strong>Be timely:</strong> Give feedback as soon as practical after the event,
-                  not weeks later
-                </li>
-                <li className="pl-1">
-                  <strong>Be private:</strong> Give corrective feedback one-to-one, not in front of
-                  others
-                </li>
-                <li className="pl-1">
-                  <strong>Be balanced:</strong> Acknowledge what was done well alongside what needs
-                  improvement
-                </li>
-                <li className="pl-1">
-                  <strong>Focus on behaviour, not personality:</strong> "The circuit labels need to
-                  be more legible" not "You are careless"
-                </li>
-                <li className="pl-1">
-                  <strong>Offer help:</strong> "Would you like me to show you the technique I use
-                  for cable dressing?" rather than just pointing out the problem
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Giving constructive feedback">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Be specific:</strong> &quot;The cable termination in DB3 was loose&quot;
+                rather than &quot;Your work is sloppy&quot;.
+              </li>
+              <li>
+                <strong>Be timely:</strong> give feedback as soon as practical after the event, not
+                weeks later.
+              </li>
+              <li>
+                <strong>Be private:</strong> give corrective feedback one-to-one, not in front of
+                others.
+              </li>
+              <li>
+                <strong>Be balanced:</strong> acknowledge what was done well alongside what needs
+                improvement.
+              </li>
+              <li>
+                <strong>Focus on behaviour, not personality:</strong> &quot;The circuit labels need
+                to be more legible&quot; not &quot;You are careless&quot;.
+              </li>
+              <li>
+                <strong>Offer help:</strong> &quot;Would you like me to show you the technique I use
+                for cable dressing?&quot; rather than just pointing out the problem.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Receiving Feedback Professionally
-              </p>
-              <p className="text-sm text-white">
-                How you receive feedback is equally important. Listen without becoming defensive,
-                ask clarifying questions if needed, thank the person for their input and take action
-                on valid points. Even if you disagree, consider the feedback carefully before
-                dismissing it. The ability to receive feedback gracefully is a mark of professional
-                maturity and is noticed by EPA assessors.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The professional behaviours component of the EPA
-              specifically assesses your ability to work constructively with others, which includes
-              handling disagreements professionally, giving and receiving feedback, and maintaining
-              positive working relationships even under pressure.
+          <ConceptBlock
+            title="Receiving feedback professionally"
+            onSite="The professional behaviours component of the EPA specifically assesses your ability to work constructively with others, which includes handling disagreements professionally, giving and receiving feedback, and maintaining positive working relationships even under pressure."
+          >
+            <p>
+              How you receive feedback is equally important. Listen without becoming defensive, ask
+              clarifying questions if needed, thank the person for their input and take action on
+              valid points. Even if you disagree, consider the feedback carefully before dismissing
+              it. The ability to receive feedback gracefully is a mark of professional maturity and
+              is noticed by EPA assessors.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Building Your Teamwork Evidence for EPA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Building your teamwork evidence for EPA</ContentEyebrow>
+
+          <ConceptBlock title="Gathering evidence in real time">
             <p>
               Gathering strong evidence of teamwork is essential for your EPA portfolio and
               professional discussion. The assessor will expect you to provide specific, detailed
@@ -808,157 +752,138 @@ const MOETModule7Section4_1 = () => {
               come from real workplace situations that you record at the time, rather than trying to
               remember months later.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Teamwork Evidence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Witness testimonies:</strong> Written statements from supervisors,
-                  colleagues and mentors describing your teamwork contributions
-                </li>
-                <li className="pl-1">
-                  <strong>Reflective accounts:</strong> Your own written reflections on team
-                  situations — what happened, your contribution, what you learned
-                </li>
-                <li className="pl-1">
-                  <strong>Toolbox talk records:</strong> Evidence of participation in and, ideally,
-                  delivery of toolbox talks
-                </li>
-                <li className="pl-1">
-                  <strong>Shutdown/project records:</strong> Documentation from team maintenance
-                  activities showing your role and contribution
-                </li>
-                <li className="pl-1">
-                  <strong>Meeting minutes:</strong> Records of team meetings where you contributed
-                  ideas or took action items
-                </li>
-                <li className="pl-1">
-                  <strong>Mentoring evidence:</strong> Records of supporting apprentices or less
-                  experienced colleagues
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Types of teamwork evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Witness testimonies:</strong> written statements from supervisors,
+                colleagues and mentors describing your teamwork contributions.
+              </li>
+              <li>
+                <strong>Reflective accounts:</strong> your own written reflections on team
+                situations — what happened, your contribution, what you learned.
+              </li>
+              <li>
+                <strong>Toolbox talk records:</strong> evidence of participation in and, ideally,
+                delivery of toolbox talks.
+              </li>
+              <li>
+                <strong>Shutdown/project records:</strong> documentation from team maintenance
+                activities showing your role and contribution.
+              </li>
+              <li>
+                <strong>Meeting minutes:</strong> records of team meetings where you contributed
+                ideas or took action items.
+              </li>
+              <li>
+                <strong>Mentoring evidence:</strong> records of supporting apprentices or less
+                experienced colleagues.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                STAR Technique for Professional Discussion
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When discussing teamwork examples in your EPA professional discussion, use the STAR
-                technique to structure clear, compelling answers:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Situation:</strong> Set the scene — what was the task, who was in the
-                  team, what were the conditions?
-                </li>
-                <li className="pl-1">
-                  <strong>Task:</strong> What was your specific role and responsibility within the
-                  team?
-                </li>
-                <li className="pl-1">
-                  <strong>Action:</strong> What did you actually do? How did you communicate,
-                  collaborate, solve problems?
-                </li>
-                <li className="pl-1">
-                  <strong>Result:</strong> What was the outcome? What did the team achieve? What did
-                  you learn?
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Strong Evidence Example
-                </h3>
-                <p className="text-sm text-white">
-                  "During a weekend shutdown, I worked as part of a four-person team replacing
-                  distribution boards in Block C. My role was to terminate the outgoing circuits
-                  while my colleague handled the incoming supply. We held a toolbox talk at the
-                  start, agreed isolation responsibilities, and maintained radio contact throughout.
-                  When we discovered an unexpected three-phase supply that was not on the drawings,
-                  I immediately communicated this to the team lead, and we revised the isolation
-                  plan together before proceeding safely."
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Weak Evidence Example
-                </h3>
-                <p className="text-sm text-white">
-                  "I work well in teams and get along with everyone." This is far too vague — it
-                  provides no specific evidence, no context, no detail of your contribution and no
-                  demonstration of the behaviours the assessor is looking for. Always provide
-                  concrete examples with enough detail to show what you actually did.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Start a teamwork evidence log now. After any significant
-              team activity, spend five minutes noting the situation, your role, what you did, and
-              the outcome. This habit provides a rich bank of evidence for your EPA and demonstrates
-              the reflective practice that assessors value highly.
+          <ConceptBlock title="STAR technique for professional discussion">
+            <p>
+              When discussing teamwork examples in your EPA professional discussion, use the STAR
+              technique to structure clear, compelling answers:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Situation:</strong> set the scene — what was the task, who was in the team,
+                what were the conditions?
+              </li>
+              <li>
+                <strong>Task:</strong> what was your specific role and responsibility within the
+                team?
+              </li>
+              <li>
+                <strong>Action:</strong> what did you actually do? How did you communicate,
+                collaborate, solve problems?
+              </li>
+              <li>
+                <strong>Result:</strong> what was the outcome? What did the team achieve? What did
+                you learn?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Strong evidence vs weak evidence"
+            onSite="Start a teamwork evidence log now. After any significant team activity, spend five minutes noting the situation, your role, what you did, and the outcome. This habit provides a rich bank of evidence for your EPA and demonstrates the reflective practice that assessors value highly."
+          >
+            <p>
+              <strong>Strong evidence example:</strong> &quot;During a weekend shutdown, I worked as
+              part of a four-person team replacing distribution boards in Block C. My role was to
+              terminate the outgoing circuits while my colleague handled the incoming supply. We
+              held a toolbox talk at the start, agreed isolation responsibilities, and maintained
+              radio contact throughout. When we discovered an unexpected three-phase supply that was
+              not on the drawings, I immediately communicated this to the team lead, and we revised
+              the isolation plan together before proceeding safely.&quot;
+            </p>
+            <p>
+              <strong>Weak evidence example:</strong> &quot;I work well in teams and get along with
+              everyone.&quot; This is far too vague — it provides no specific evidence, no context,
+              no detail of your contribution and no demonstration of the behaviours the assessor is
+              looking for. Always provide concrete examples with enough detail to show what you
+              actually did.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge — Teamwork and Collaboration"
-            questions={quizQuestions}
+          <KeyTakeaways
+            points={[
+              'Teamwork in maintenance is a safety-critical skill — communication and coordination affect whether people go home safe.',
+              'Belbin: effective teams balance action-oriented, people-oriented and thought-oriented roles.',
+              'Tuckman: forming, storming, norming, performing, adjourning — storming is normal, not a failure.',
+              'Collaborative fault diagnosis draws on collective knowledge to reach a faster, more accurate diagnosis.',
+              'Resolve conflict by focusing on the issue, not the person, and escalate genuine safety disagreements.',
+              'Give feedback that is specific, timely, private and balanced; receive feedback without becoming defensive.',
+              'Use the STAR technique (Situation, Task, Action, Result) to structure EPA evidence of teamwork.',
+            ]}
           />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-2">
-              Next: Communication and Reporting Skills
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Test Your Knowledge — Teamwork and Collaboration"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section overview
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Communication and Reporting Skills
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

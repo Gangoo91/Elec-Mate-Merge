@@ -347,7 +347,7 @@ const RCDDiscriminationCalculator = () => {
 
     return {
       meta: {
-        title: 'RCD Discrimination Calculator',
+        title: 'RCD Discrimination',
         subtitle: 'Selective operation between upstream and downstream RCDs',
         ...(result.regulatoryReference ? { standard: result.regulatoryReference } : {}),
       },
@@ -380,8 +380,6 @@ const RCDDiscriminationCalculator = () => {
         {
           heading: 'Result',
           rows: [
-            { label: 'Current ratio', value: `${result.currentRatio.toFixed(1)}:1` },
-            { label: 'Time difference', value: `${result.timeDifference} ms` },
             { label: 'Risk level', value: result.riskLevel.toUpperCase() },
             { label: 'Compliance status', value: result.complianceStatus.toUpperCase() },
             { label: 'Recommendation', value: result.recommendation },

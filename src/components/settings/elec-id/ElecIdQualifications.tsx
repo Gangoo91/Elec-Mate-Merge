@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
@@ -33,6 +27,14 @@ import {
   toneText,
   type Tone,
 } from '@/components/college/primitives';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/settings/formStyles';
 
 interface Qualification {
   id: string;
@@ -59,7 +61,7 @@ const CATEGORY_TONE: Record<string, Tone> = {
 
 const QualificationSkeleton = () => (
   <div className="space-y-4">
-    <div className="bg-[hsl(0_0%_12%)] rounded-2xl border border-white/[0.06] overflow-hidden">
+    <div className="bg-white/[0.05] rounded-2xl border border-elec-yellow/35 overflow-hidden">
       <div className="p-4 border-b border-white/[0.06]">
         <Skeleton className="h-5 w-32 bg-white/[0.04]" />
       </div>
@@ -308,8 +310,8 @@ const ElecIdQualifications = () => {
   const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
     <div className="space-y-4">
       {!isEdit && (
-        <div className="space-y-2">
-          <Label className="text-xs text-white">Category</Label>
+        <div>
+          <Label className={labelCn}>Category</Label>
           <div className="flex flex-wrap gap-1.5">
             {Object.entries(UK_QUALIFICATIONS).map(([key, cat]) => {
               const isSelected = selectedCategory === key;
@@ -331,12 +333,8 @@ const ElecIdQualifications = () => {
                     setSelectedCategory(key);
                     setSelectedQual('');
                   }}
-                  className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation',
-                    isSelected
-                      ? 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20'
-                      : 'bg-white/[0.04] text-white hover:bg-white/[0.08] border border-white/[0.06]'
-                  )}
+                  className={cn(chipBase, 'flex-none px-3', isSelected ? chipOn : chipOff)}
+                  aria-pressed={isSelected}
                 >
                   {shortLabel}
                 </button>
@@ -347,37 +345,33 @@ const ElecIdQualifications = () => {
       )}
 
       {isEdit && (
-        <div className="space-y-1.5">
-          <Label className="text-xs text-white">Category</Label>
-          <div className="h-11 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 flex items-center text-sm text-white">
+        <div>
+          <Label className={labelCn}>Category</Label>
+          <div className="h-11 border-b border-white/[0.15] px-1 flex items-center text-base font-medium text-white">
             {UK_QUALIFICATIONS[selectedCategory]?.label || selectedCategory}
           </div>
         </div>
       )}
 
       {selectedCategory && (
-        <div className="space-y-1.5">
-          <Label className="text-xs text-white">Qualification</Label>
+        <div>
+          <Label className={labelCn}>Qualification</Label>
           {isEdit ? (
-            <div className="h-11 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 flex items-center text-sm text-white">
+            <div className="h-11 border-b border-white/[0.15] px-1 flex items-center text-base font-medium text-white">
               {getQualificationLabel(selectedQual)}
             </div>
           ) : (
-            <Select value={selectedQual} onValueChange={setSelectedQual}>
-              <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white">
-                <SelectValue placeholder="Select qualification…" />
-              </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] max-h-[280px]">
-                {getCategoryQualifications(selectedCategory).map((qual) => (
-                  <SelectItem key={qual.value} value={qual.value} className="py-2.5 text-sm">
-                    <div>
-                      <span className="font-medium">{qual.label}</span>
-                      <span className="text-white ml-2 text-xs">{qual.awarding}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MobileSelectPicker
+              value={selectedQual}
+              onValueChange={setSelectedQual}
+              options={getCategoryQualifications(selectedCategory).map((qual) => ({
+                value: qual.value,
+                label: qual.label,
+                description: qual.awarding,
+              }))}
+              placeholder="Select qualification…"
+              triggerClassName={selectTriggerCn}
+            />
           )}
           {selectedQualInfo?.hasExpiry && !isEdit && (
             <p className="text-[11px] text-amber-400 mt-1">
@@ -388,36 +382,36 @@ const ElecIdQualifications = () => {
       )}
 
       {(selectedQualInfo || isEdit) && (
-        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/[0.06]">
-          <div className="space-y-1.5">
-            <Label className="text-xs text-white">Date achieved</Label>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-4 pt-4 border-t border-white/[0.1]">
+          <div>
+            <Label className={labelCn}>Date achieved</Label>
             <Input
               type="date"
               value={formData.dateAchieved}
               onChange={(e) => setFormData({ ...formData, dateAchieved: e.target.value })}
-              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white"
+              className={inputCn}
             />
           </div>
           {(selectedQualInfo?.hasExpiry || formData.expiryDate || isEdit) && (
-            <div className="space-y-1.5">
-              <Label className="text-xs text-white">Expiry date</Label>
+            <div>
+              <Label className={labelCn}>Expiry date</Label>
               <Input
                 type="date"
                 value={formData.expiryDate}
                 onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
-                className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white"
+                className={inputCn}
               />
             </div>
           )}
-          <div className="space-y-1.5 col-span-2">
-            <Label className="text-xs text-white">
+          <div className="col-span-2">
+            <Label className={labelCn}>
               Certificate no. <span className="text-white">(optional)</span>
             </Label>
             <Input
               value={formData.certificateNumber}
               onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
               placeholder="e.g. CG-2382-123456"
-              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white placeholder:text-white"
+              className={inputCn}
             />
           </div>
         </div>
@@ -428,7 +422,7 @@ const ElecIdQualifications = () => {
   const FormFooter = ({ isEdit = false, onClose }: { isEdit?: boolean; onClose: () => void }) => (
     <div className="flex gap-3 pt-2">
       <button
-        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation active:scale-[0.98] disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation active:scale-[0.98] disabled:opacity-60"
         onClick={() => {
           onClose();
           resetForm();
@@ -438,7 +432,7 @@ const ElecIdQualifications = () => {
         Cancel
       </button>
       <button
-        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white/70"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:bg-white/[0.08] disabled:text-white"
         onClick={isEdit ? handleEditQualification : handleAddQualification}
         disabled={
           (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) || isLoading
@@ -469,7 +463,7 @@ const ElecIdQualifications = () => {
       />
 
       <Sheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Add qualification" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -485,7 +479,7 @@ const ElecIdQualifications = () => {
       </Sheet>
 
       <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Edit qualification" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -568,8 +562,8 @@ const ElecIdQualifications = () => {
                             className={cn(
                               'w-full flex items-center gap-4 px-5 py-4 rounded-2xl border transition-all touch-manipulation text-left',
                               isExpanded
-                                ? 'bg-[hsl(0_0%_15%)] border-white/[0.08]'
-                                : 'bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
+                                ? 'bg-white/[0.08] border-white/[0.08]'
+                                : 'bg-white/[0.05] border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
                             )}
                           >
                             <span
@@ -601,7 +595,7 @@ const ElecIdQualifications = () => {
                                 {getQualificationLabel(qual.qualificationValue)}
                               </p>
                               {qual.awardingBody && (
-                                <p className="text-[11.5px] text-white/65 mt-0.5 truncate">
+                                <p className="text-[11.5px] text-white mt-0.5 truncate">
                                   {qual.awardingBody}
                                 </p>
                               )}
@@ -682,7 +676,7 @@ const ElecIdQualifications = () => {
 
                             <div className="flex items-center gap-2 pt-1">
                               <button
-                                className="h-11 px-3 text-xs rounded-lg border border-white/[0.06] bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation"
+                                className="h-11 px-3 text-xs rounded-lg border border-elec-yellow/35 bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   openEditSheet(qual);

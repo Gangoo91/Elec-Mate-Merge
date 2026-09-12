@@ -220,7 +220,7 @@ const EarthElectrodeCalculator = () => {
     const rodLabel = diameterOptions.find((d) => d.value === electrodeDiameter)?.label ?? electrodeDiameter;
     return {
       meta: {
-        title: 'Earth Electrode Calculator',
+        title: 'Earth Electrode',
         subtitle: 'Earth rod resistance for a TT system',
         standard: 'BS 7671 — Section 542',
       },
@@ -245,10 +245,15 @@ const EarthElectrodeCalculator = () => {
           ],
         },
         {
+          // Total resistance is already the headline figure — repeating it here
+          // would restate rather than add anything, so this section carries the
+          // working (single rod resistance, and any remedial length) instead.
           heading: 'Result',
           rows: [
             { label: 'Single rod resistance', value: `${result.singleRodResistance.toFixed(1)} Ω` },
-            { label: 'Total resistance', value: `${result.totalResistance.toFixed(1)} Ω` },
+            ...(result.rods > 1
+              ? [{ label: 'Rods in parallel', value: result.rods.toString() }]
+              : []),
             ...(result.requiredLength
               ? [{ label: 'Required length to meet target', value: `${result.requiredLength.toFixed(1)} m` }]
               : []),

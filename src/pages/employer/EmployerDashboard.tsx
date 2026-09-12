@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import useSEO from '@/hooks/useSEO';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
 import { IconButton, LoadingBlocks, Eyebrow } from '@/components/employer/editorial';
+import { InDevelopmentBanner } from '@/components/employer/InDevelopmentBanner';
 
 const OverviewSection = lazy(() =>
   import('@/components/employer/sections/OverviewSection').then((m) => ({
@@ -970,6 +971,8 @@ const EmployerDashboard = () => {
   return (
     <>
       <div className="min-h-screen bg-[hsl(0_0%_6%)] text-white">
+        <InDevelopmentBanner />
+
         {!isOverview && (
           <div className="sticky top-0 z-30 bg-[hsl(0_0%_6%)]/85 backdrop-blur-md border-b border-white/[0.06]">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center gap-3">

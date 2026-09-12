@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.6 · Subsection 5 — Role of First Responders on Site
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *              · "Emergency incident and response procedures."
+ *   Skills     · "Follow emergency incident and response procedures."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * final subsection of Module 1 — its "next" link opens Module 2.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Role of First Responders on Site - MOET Module 1 Section 6.5';
@@ -83,12 +120,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A First Aid at Work (FAW) certificate is valid for:',
-    options: [
-      '5 years',
-      '1 year',
-      '3 years',
-      '2 years',
-    ],
+    options: ['5 years', '1 year', '3 years', '2 years'],
     correctAnswer: 2,
     explanation:
       'FAW and EFAW certificates are valid for 3 years. First aiders must attend a requalification course before their certificate expires to maintain their qualification. If the certificate lapses, the person is no longer a qualified first aider. Annual refresher training is strongly recommended (though not mandatory) to maintain skills between requalification courses.',
@@ -261,115 +293,51 @@ const faqs = [
 ];
 
 const MOETModule1Section6_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.6.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Role of First Responders on Site
-          </h1>
-          <p className="text-white">
-            First aid provision, qualifications, AED use and coordination with emergency services
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.6 · Subsection 5"
+        title="Role of First Responders on Site"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            First aid provision, qualifications, AED use and coordination with emergency services.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Minimum:</strong> Appointed person + first aid kit in every workplace
-              </li>
-              <li className="pl-1">
-                <strong>FAW:</strong> 3-day qualification, full first aid, valid 3 years
-              </li>
-              <li className="pl-1">
-                <strong>EFAW:</strong> 1-day qualification, basic life-saving, valid 3 years
-              </li>
-              <li className="pl-1">
-                <strong>AEDs:</strong> Accessible, signed, usable by anyone
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Higher risk:</strong> Enhanced first aid provision recommended
-              </li>
-              <li className="pl-1">
-                <strong>Lone workers:</strong> Personal kit, comms, man-down devices
-              </li>
-              <li className="pl-1">
-                <strong>Site access:</strong> Clear routes for ambulances to reach casualty
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to emergency response and wellbeing KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Minimum: Appointed person + first aid kit in every workplace',
+              'FAW: 3-day qualification, full first aid, valid 3 years',
+              'EFAW: 1-day qualification, basic life-saving, valid 3 years',
+              'AEDs: Accessible, signed, usable by anyone',
+              'Higher risk: Enhanced first aid provision recommended',
+              'Lone workers: Personal kit, comms, man-down devices',
+              'Site access: Clear routes for ambulances to reach casualty',
+              'ST1426: Maps to emergency response and wellbeing KSBs',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between the roles of appointed person, EFAW first aider and FAW first aider',
               'Explain the first aid needs assessment process for electrical maintenance workplaces',
               'Describe the requirements for first aid equipment, facilities and AED provision',
               'Coordinate effectively with emergency services during an electrical incident',
               'Identify additional considerations for lone workers and multi-site working',
               'Recognise the role of mental health first aid in the electrical industry',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>First aid roles and qualifications</ContentEyebrow>
 
-        {/* Section 01: First Aid Roles and Qualifications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            First Aid Roles and Qualifications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="First Aid Roles and Qualifications">
             <p>
               The Health and Safety (First-Aid) Regulations 1981 require employers to provide
               adequate and appropriate first aid arrangements for their employees. The level of
@@ -378,110 +346,93 @@ const MOETModule1Section6_5 = () => {
               Understanding the different first aid roles and qualifications is essential for every
               maintenance technician.
             </p>
-
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Role</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Training</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Validity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Appointed Person
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No formal qualification (awareness training recommended)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Takes charge in emergencies, calls 999, maintains first aid kit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        N/A — employer designation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        EFAW First Aider
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1-day course (6 hours regulated)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Basic life-saving: CPR, choking, bleeding, shock, unconsciousness
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        FAW First Aider
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3-day course (18 hours regulated)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full range: burns, fractures, eye injuries, poisoning, AED, medical
-                        emergencies
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Paediatric First Aider
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-day course (12 hours)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        First aid for infants and children (schools, nurseries)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">3 years</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Role</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Training</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Validity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Appointed Person
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      No formal qualification (awareness training recommended)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Takes charge in emergencies, calls 999, maintains first aid kit
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">N/A — employer designation</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      EFAW First Aider
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      1-day course (6 hours regulated)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Basic life-saving: CPR, choking, bleeding, shock, unconsciousness
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      FAW First Aider
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      3-day course (18 hours regulated)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Full range: burns, fractures, eye injuries, poisoning, AED, medical
+                      emergencies
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Paediatric First Aider
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">2-day course (12 hours)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      First aid for infants and children (schools, nurseries)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">3 years</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Appointed Person Duties
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Take charge when someone is injured or ill</li>
-                  <li className="pl-1">Call 999 and coordinate the emergency response</li>
-                  <li className="pl-1">Look after and maintain the first aid equipment</li>
-                  <li className="pl-1">Ensure the first aid kit is stocked and accessible</li>
-                  <li className="pl-1">Record incidents in the accident book</li>
-                  <li className="pl-1">They must NOT attempt to give first aid treatment</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  FAW First Aider Skills
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Primary survey (DR ABC) and CPR</li>
-                  <li className="pl-1">AED use and defibrillation</li>
-                  <li className="pl-1">Treatment of burns (thermal, electrical, chemical)</li>
-                  <li className="pl-1">Management of fractures, sprains and dislocations</li>
-                  <li className="pl-1">
-                    Control of bleeding (direct pressure, dressings, tourniquets)
-                  </li>
-                  <li className="pl-1">Treatment of shock, poisoning, anaphylaxis</li>
-                  <li className="pl-1">Eye injuries, head injuries, spinal injuries</li>
-                  <li className="pl-1">
-                    Medical emergencies (heart attack, stroke, seizures, diabetes)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
+            <p>
+              <strong>Appointed Person Duties</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Take charge when someone is injured or ill</li>
+              <li>Call 999 and coordinate the emergency response</li>
+              <li>Look after and maintain the first aid equipment</li>
+              <li>Ensure the first aid kit is stocked and accessible</li>
+              <li>Record incidents in the accident book</li>
+              <li>They must NOT attempt to give first aid treatment</li>
+            </ul>
+            <p>
+              <strong>FAW First Aider Skills</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Primary survey (DR ABC) and CPR</li>
+              <li>AED use and defibrillation</li>
+              <li>Treatment of burns (thermal, electrical, chemical)</li>
+              <li>Management of fractures, sprains and dislocations</li>
+              <li>Control of bleeding (direct pressure, dressings, tourniquets)</li>
+              <li>Treatment of shock, poisoning, anaphylaxis</li>
+              <li>Eye injuries, head injuries, spinal injuries</li>
+              <li>Medical emergencies (heart attack, stroke, seizures, diabetes)</li>
+            </ul>
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
+              <p className="mb-2 text-sm font-medium text-orange-400">
                 Requalification and Refresher Training
               </p>
               <p className="text-sm text-white">
@@ -494,7 +445,6 @@ const MOETModule1Section6_5 = () => {
                 aider and cannot be counted in the first aid provision.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Recommendation for electricians:</strong> Given the specific risks of
               electrical work (shock, burns, arc flash), the 3-day FAW course is recommended over
@@ -502,18 +452,15 @@ const MOETModule1Section6_5 = () => {
               unconscious casualties and use of AEDs in much greater depth — all directly relevant
               to electrical incidents.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: First Aid Needs Assessment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            First Aid Needs Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>First aid needs assessment</ContentEyebrow>
+
+          <ConceptBlock title="Factors to Consider in the Assessment">
             <p>
               The first aid needs assessment is the process by which an employer determines what
               first aid provision is required for their workplace. It is a legal requirement under
@@ -521,171 +468,153 @@ const MOETModule1Section6_5 = () => {
               regularly, and updated whenever circumstances change. For electrical maintenance
               operations, the assessment must reflect the higher-risk nature of the work.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Nature of the work:</strong> Electrical maintenance involves risks of
+                electric shock, arc flash burns, falls from height, manual handling injuries and
+                cuts. These are higher-risk activities requiring enhanced first aid provision
+                compared to office work
+              </li>
+              <li>
+                <strong>Workplace hazards:</strong> Specific hazards at each site — HV equipment,
+                confined spaces, remote locations, hazardous substances (SF6, transformer oil),
+                working at height
+              </li>
+              <li>
+                <strong>Number of employees:</strong> How many people are on site? Include
+                contractors, visitors and members of the public who may be affected by the work
+              </li>
+              <li>
+                <strong>Workforce distribution:</strong> Are workers spread across a large site, on
+                different floors, in different buildings? First aid must be accessible from every
+                work area
+              </li>
+              <li>
+                <strong>Shift patterns:</strong> First aid provision must be maintained on all
+                shifts, including nights and weekends. If your workforce reduces on night shifts,
+                the first aid provision must still be adequate
+              </li>
+              <li>
+                <strong>Lone workers:</strong> Special provision for those working alone — personal
+                first aid kits, reliable communications, man-down devices, welfare check systems
+              </li>
+              <li>
+                <strong>Location:</strong> Distance from the nearest hospital A&E, ambulance
+                response times (rural sites may have 30+ minute response times), access difficulties
+              </li>
+              <li>
+                <strong>Accident history:</strong> Review past accidents and near misses to identify
+                specific first aid needs. If your site has a history of electrical burns, enhanced
+                burns treatment provision is needed
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Factors to Consider in the Assessment
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Nature of the work:</strong> Electrical maintenance involves risks of
-                  electric shock, arc flash burns, falls from height, manual handling injuries and
-                  cuts. These are higher-risk activities requiring enhanced first aid provision
-                  compared to office work
-                </li>
-                <li className="pl-1">
-                  <strong>Workplace hazards:</strong> Specific hazards at each site — HV equipment,
-                  confined spaces, remote locations, hazardous substances (SF6, transformer oil),
-                  working at height
-                </li>
-                <li className="pl-1">
-                  <strong>Number of employees:</strong> How many people are on site? Include
-                  contractors, visitors and members of the public who may be affected by the work
-                </li>
-                <li className="pl-1">
-                  <strong>Workforce distribution:</strong> Are workers spread across a large site,
-                  on different floors, in different buildings? First aid must be accessible from
-                  every work area
-                </li>
-                <li className="pl-1">
-                  <strong>Shift patterns:</strong> First aid provision must be maintained on all
-                  shifts, including nights and weekends. If your workforce reduces on night shifts,
-                  the first aid provision must still be adequate
-                </li>
-                <li className="pl-1">
-                  <strong>Lone workers:</strong> Special provision for those working alone —
-                  personal first aid kits, reliable communications, man-down devices, welfare check
-                  systems
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Distance from the nearest hospital A&E, ambulance
-                  response times (rural sites may have 30+ minute response times), access
-                  difficulties
-                </li>
-                <li className="pl-1">
-                  <strong>Accident history:</strong> Review past accidents and near misses to
-                  identify specific first aid needs. If your site has a history of electrical burns,
-                  enhanced burns treatment provision is needed
-                </li>
-              </ul>
+          <ConceptBlock title="First Aid Equipment and Facilities">
+            <p>
+              The assessment determines what equipment is needed. For electrical maintenance
+              workplaces, this typically includes:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>First aid kits:</strong> BS 8599-1 compliant kits in fixed locations, plus
+                personal kits for mobile workers. Contents should include burn dressings, eye wash
+                and resuscitation face shields
+              </li>
+              <li>
+                <strong>AED:</strong> One or more automated external defibrillators in accessible
+                locations — essential for workplaces with electrical hazards due to the risk of
+                cardiac arrest from electric shock
+              </li>
+              <li>
+                <strong>Burns treatment:</strong> Burn gel sachets, burn dressings, cling film.
+                Consider specialist burn kits for sites with significant arc flash risk
+              </li>
+              <li>
+                <strong>Eye wash:</strong> Sterile eye wash stations or bottles — essential where
+                there is risk of arc flash, chemical splash or debris in eyes
+              </li>
+              <li>
+                <strong>First aid room:</strong> Required for larger workplaces (generally 150+
+                employees) or where the assessment identifies a need. Should include a couch,
+                blankets, sink, telephone, record book
+              </li>
+              <li>
+                <strong>Emergency shower:</strong> Required where hazardous substances (battery
+                acid, transformer oil, SF6) may cause chemical burns
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="HSE Guidance on Numbers of First Aiders">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Risk Level</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Employees</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Suggested Minimum Provision
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Low risk (offices, shops)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Under 25</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Appointed person + first aid kit
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Low risk</td>
+                    <td className="border border-white/10 px-3 py-2">25-50</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      At least 1 EFAW first aider
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Higher risk (electrical, construction)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Under 5</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Appointed person + first aid kit (consider EFAW)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Higher risk</td>
+                    <td className="border border-white/10 px-3 py-2">5-50</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      At least 1 FAW first aider + additional based on assessment
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Higher risk</td>
+                    <td className="border border-white/10 px-3 py-2">50+</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      1 FAW first aider per 50 employees + additional based on assessment
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                First Aid Equipment and Facilities
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The assessment determines what equipment is needed. For electrical maintenance
-                workplaces, this typically includes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First aid kits:</strong> BS 8599-1 compliant kits in fixed locations, plus
-                  personal kits for mobile workers. Contents should include burn dressings, eye wash
-                  and resuscitation face shields
-                </li>
-                <li className="pl-1">
-                  <strong>AED:</strong> One or more automated external defibrillators in accessible
-                  locations — essential for workplaces with electrical hazards due to the risk of
-                  cardiac arrest from electric shock
-                </li>
-                <li className="pl-1">
-                  <strong>Burns treatment:</strong> Burn gel sachets, burn dressings, cling film.
-                  Consider specialist burn kits for sites with significant arc flash risk
-                </li>
-                <li className="pl-1">
-                  <strong>Eye wash:</strong> Sterile eye wash stations or bottles — essential where
-                  there is risk of arc flash, chemical splash or debris in eyes
-                </li>
-                <li className="pl-1">
-                  <strong>First aid room:</strong> Required for larger workplaces (generally 150+
-                  employees) or where the assessment identifies a need. Should include a couch,
-                  blankets, sink, telephone, record book
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency shower:</strong> Required where hazardous substances (battery
-                  acid, transformer oil, SF6) may cause chemical burns
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HSE Guidance on Numbers of First Aiders
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Risk Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Employees</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Suggested Minimum Provision
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Low risk (offices, shops)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Under 25</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Appointed person + first aid kit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Low risk</td>
-                      <td className="border border-white/10 px-3 py-2">25-50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At least 1 EFAW first aider
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Higher risk (electrical, construction)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Under 5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Appointed person + first aid kit (consider EFAW)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Higher risk</td>
-                      <td className="border border-white/10 px-3 py-2">5-50</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At least 1 FAW first aider + additional based on assessment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Higher risk</td>
-                      <td className="border border-white/10 px-3 py-2">50+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1 FAW first aider per 50 employees + additional based on assessment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> These are guidelines, not absolute rules. The first aid
               needs assessment may determine that more (or fewer) first aiders are needed based on
               the specific circumstances. The assessment is the definitive document — not a table.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: AED Provision and Training */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            AED Provision and Training
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>AED provision and training</ContentEyebrow>
+
+          <ConceptBlock title="AED Placement Principles">
             <p>
               Automated external defibrillators (AEDs) are the single most important piece of
               equipment for improving survival from cardiac arrest — the primary cause of death from
@@ -693,255 +622,202 @@ const MOETModule1Section6_5 = () => {
               should be a priority. Since the Automated External Defibrillators (Public Access)
               Regulations, their use by the public has been actively encouraged.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                AED Placement Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accessibility:</strong> AEDs must be accessible 24/7, not locked away. Use
-                  wall-mounted cabinets with clear signage (green heart symbol)
-                </li>
-                <li className="pl-1">
-                  <strong>Proximity:</strong> The target is for an AED to be reachable within 3-5
-                  minutes from any point in the workplace. For every minute without defibrillation,
-                  survival drops by 7-10%
-                </li>
-                <li className="pl-1">
-                  <strong>High-risk areas:</strong> Place AEDs near electrical switchrooms,
-                  substations, workshops, plant rooms and other areas where electric shock risk is
-                  highest
-                </li>
-                <li className="pl-1">
-                  <strong>High-traffic areas:</strong> Also place AEDs in reception areas, canteens
-                  and stairway landings where many people pass and they are likely to be seen and
-                  accessed quickly
-                </li>
-                <li className="pl-1">
-                  <strong>Multiple units:</strong> Large sites may need multiple AEDs to ensure
-                  coverage. Consider each floor of a multi-storey building, each wing of a large
-                  building, and separate outbuildings
-                </li>
-                <li className="pl-1">
-                  <strong>Signage:</strong> Standard green AED location signs visible from corridors
-                  and access routes. Include the AED location on site fire safety plans
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">AED Maintenance</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Daily visual check — green light/indicator showing ready status
-                  </li>
-                  <li className="pl-1">
-                    Monthly check — battery level, pad expiry dates, cabinet condition
-                  </li>
-                  <li className="pl-1">
-                    Replace pads before expiry (typically 2-5 years depending on manufacturer)
-                  </li>
-                  <li className="pl-1">
-                    Replace battery according to manufacturer schedule (typically 3-5 years)
-                  </li>
-                  <li className="pl-1">
-                    After use — replace pads immediately, check battery, clean unit
-                  </li>
-                  <li className="pl-1">Record all checks in a maintenance log</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">AED Training</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    AEDs can be used by anyone — no formal training is legally required
-                  </li>
-                  <li className="pl-1">
-                    Training significantly improves confidence and speed of use
-                  </li>
-                  <li className="pl-1">AED awareness is included in both FAW and EFAW courses</li>
-                  <li className="pl-1">
-                    Standalone AED courses are available (typically 2-4 hours)
-                  </li>
-                  <li className="pl-1">
-                    Practice with training units improves real-world performance
-                  </li>
-                  <li className="pl-1">
-                    All electrical maintenance technicians should be AED-trained
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Chain of Survival</p>
-              <p className="text-sm text-white mb-2">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Accessibility:</strong> AEDs must be accessible 24/7, not locked away. Use
+                wall-mounted cabinets with clear signage (green heart symbol)
+              </li>
+              <li>
+                <strong>Proximity:</strong> The target is for an AED to be reachable within 3-5
+                minutes from any point in the workplace. For every minute without defibrillation,
+                survival drops by 7-10%
+              </li>
+              <li>
+                <strong>High-risk areas:</strong> Place AEDs near electrical switchrooms,
+                substations, workshops, plant rooms and other areas where electric shock risk is
+                highest
+              </li>
+              <li>
+                <strong>High-traffic areas:</strong> Also place AEDs in reception areas, canteens
+                and stairway landings where many people pass and they are likely to be seen and
+                accessed quickly
+              </li>
+              <li>
+                <strong>Multiple units:</strong> Large sites may need multiple AEDs to ensure
+                coverage. Consider each floor of a multi-storey building, each wing of a large
+                building, and separate outbuildings
+              </li>
+              <li>
+                <strong>Signage:</strong> Standard green AED location signs visible from corridors
+                and access routes. Include the AED location on site fire safety plans
+              </li>
+            </ul>
+            <p>
+              <strong>AED Maintenance</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Daily visual check — green light/indicator showing ready status</li>
+              <li>Monthly check — battery level, pad expiry dates, cabinet condition</li>
+              <li>Replace pads before expiry (typically 2-5 years depending on manufacturer)</li>
+              <li>Replace battery according to manufacturer schedule (typically 3-5 years)</li>
+              <li>After use — replace pads immediately, check battery, clean unit</li>
+              <li>Record all checks in a maintenance log</li>
+            </ul>
+            <p>
+              <strong>AED Training</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>AEDs can be used by anyone — no formal training is legally required</li>
+              <li>Training significantly improves confidence and speed of use</li>
+              <li>AED awareness is included in both FAW and EFAW courses</li>
+              <li>Standalone AED courses are available (typically 2-4 hours)</li>
+              <li>Practice with training units improves real-world performance</li>
+              <li>All electrical maintenance technicians should be AED-trained</li>
+            </ul>
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+              <p className="mb-2 text-sm font-medium text-red-400">The Chain of Survival</p>
+              <p className="mb-2 text-sm text-white">
                 The Resuscitation Council UK's Chain of Survival describes the critical links in
                 surviving cardiac arrest. Each link must be strong for the chain to work:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 text-sm text-white marker:text-elec-yellow/70">
+                <li>
                   <strong>Link 1 — Early recognition:</strong> Recognise cardiac arrest
                   (unresponsive, not breathing normally) and call 999
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Link 2 — Early CPR:</strong> Start chest compressions immediately to
                   maintain blood flow to the brain and heart
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Link 3 — Early defibrillation:</strong> Apply an AED as soon as possible
                   to restore normal heart rhythm
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Link 4 — Early advanced care:</strong> Paramedics provide advanced life
                   support, drugs and transport to hospital
                 </li>
               </ul>
-              <p className="text-sm text-white mt-2">
+              <p className="mt-2 text-sm text-white">
                 In the workplace, you are responsible for the first three links. Having AEDs
                 accessible and people trained to use them can increase survival from cardiac arrest
                 from under 10% to over 70%.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Know the location of every AED on every site you work on.
               Check this during your site induction. In a cardiac arrest emergency, fetching the AED
               should happen simultaneously with starting CPR — send someone for the AED while you
               begin compressions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Coordination with Emergency Services */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Coordination with Emergency Services
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Coordination with emergency services</ContentEyebrow>
+
+          <ConceptBlock title="Calling 999 — What to Say">
             <p>
               When an electrical incident occurs, effective coordination with the emergency services
               can make the difference between life and death. The time between calling 999 and
               paramedics reaching the casualty is critical — every action you take to reduce that
               time and provide them with useful information improves the outcome.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Service required:</strong> "Ambulance" (and "Fire" if there is an active
+                fire)
+              </li>
+              <li>
+                <strong>Location:</strong> Exact address, building name, floor, room number,
+                what3words or grid reference for remote sites
+              </li>
+              <li>
+                <strong>Nature of incident:</strong> "Electric shock" — state this clearly so the
+                call is prioritised appropriately
+              </li>
+              <li>
+                <strong>Casualty condition:</strong> Conscious/unconscious, breathing/not breathing,
+                CPR in progress
+              </li>
+              <li>
+                <strong>Voltage:</strong> "Low voltage, 230 volts" or "High voltage, 11,000 volts" —
+                this affects the medical response
+              </li>
+              <li>
+                <strong>Number of casualties:</strong> If multiple people are involved
+              </li>
+              <li>
+                <strong>Access:</strong> Any access difficulties — locked gates, height barriers,
+                one-way systems, construction site hazards
+              </li>
+              <li>
+                <strong>Do not hang up:</strong> Stay on the line — the dispatcher will give you
+                instructions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calling 999 — What to Say
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Service required:</strong> "Ambulance" (and "Fire" if there is an active
-                  fire)
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Exact address, building name, floor, room number,
-                  what3words or grid reference for remote sites
-                </li>
-                <li className="pl-1">
-                  <strong>Nature of incident:</strong> "Electric shock" — state this clearly so the
-                  call is prioritised appropriately
-                </li>
-                <li className="pl-1">
-                  <strong>Casualty condition:</strong> Conscious/unconscious, breathing/not
-                  breathing, CPR in progress
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage:</strong> "Low voltage, 230 volts" or "High voltage, 11,000 volts"
-                  — this affects the medical response
-                </li>
-                <li className="pl-1">
-                  <strong>Number of casualties:</strong> If multiple people are involved
-                </li>
-                <li className="pl-1">
-                  <strong>Access:</strong> Any access difficulties — locked gates, height barriers,
-                  one-way systems, construction site hazards
-                </li>
-                <li className="pl-1">
-                  <strong>Do not hang up:</strong> Stay on the line — the dispatcher will give you
-                  instructions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Facilitating Site Access
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Delays in emergency vehicle access are a significant factor in poor outcomes. Plan
-                for this in advance:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gates and barriers:</strong> Ensure site gates are unlocked or someone is
-                  ready to open them. Note the location of gate keys/fobs in your site induction
-                </li>
-                <li className="pl-1">
-                  <strong>Height restrictions:</strong> Ambulances are typically 3+ metres tall.
-                  Identify any height barriers and alternative access routes
-                </li>
-                <li className="pl-1">
-                  <strong>Guide:</strong> Send someone to the site entrance to meet the ambulance
-                  and guide them directly to the casualty
-                </li>
-                <li className="pl-1">
-                  <strong>Clear route:</strong> Move vehicles, plant and materials to create a clear
-                  access route from the entrance to the casualty's location
-                </li>
-                <li className="pl-1">
-                  <strong>Stretcher access:</strong> Consider whether a stretcher can reach the
-                  casualty — narrow corridors, steep stairs, confined spaces may require rescue
-                  services
-                </li>
-                <li className="pl-1">
-                  <strong>what3words:</strong> This app provides a precise 3-metre square location
-                  that emergency services can use to navigate directly to you
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Information for Paramedics
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Voltage and supply type (AC/DC, single/three phase)</li>
-                  <li className="pl-1">Estimated duration of electrical contact</li>
-                  <li className="pl-1">Current pathway through the body</li>
-                  <li className="pl-1">Whether the casualty lost consciousness</li>
-                  <li className="pl-1">Falls or secondary injuries</li>
-                  <li className="pl-1">
-                    CPR details — duration, compressions only or with breaths
-                  </li>
-                  <li className="pl-1">AED use — number of shocks delivered, times</li>
-                  <li className="pl-1">Casualty's name, age and any known medical conditions</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Post-Incident Actions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Preserve the accident scene for investigation</li>
-                  <li className="pl-1">Record everything — times, actions, observations</li>
-                  <li className="pl-1">Notify your supervisor and the site manager</li>
-                  <li className="pl-1">Complete accident book entry and internal report</li>
-                  <li className="pl-1">Identify RIDDOR reporting requirements</li>
-                  <li className="pl-1">Support for witnesses and colleagues (welfare)</li>
-                  <li className="pl-1">Replace any first aid supplies used</li>
-                  <li className="pl-1">Review and restock AED pads if used</li>
-                </ul>
-              </div>
-            </div>
-
+          <ConceptBlock title="Facilitating Site Access">
+            <p>
+              Delays in emergency vehicle access are a significant factor in poor outcomes. Plan for
+              this in advance:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gates and barriers:</strong> Ensure site gates are unlocked or someone is
+                ready to open them. Note the location of gate keys/fobs in your site induction
+              </li>
+              <li>
+                <strong>Height restrictions:</strong> Ambulances are typically 3+ metres tall.
+                Identify any height barriers and alternative access routes
+              </li>
+              <li>
+                <strong>Guide:</strong> Send someone to the site entrance to meet the ambulance and
+                guide them directly to the casualty
+              </li>
+              <li>
+                <strong>Clear route:</strong> Move vehicles, plant and materials to create a clear
+                access route from the entrance to the casualty's location
+              </li>
+              <li>
+                <strong>Stretcher access:</strong> Consider whether a stretcher can reach the
+                casualty — narrow corridors, steep stairs, confined spaces may require rescue
+                services
+              </li>
+              <li>
+                <strong>what3words:</strong> This app provides a precise 3-metre square location
+                that emergency services can use to navigate directly to you
+              </li>
+            </ul>
+            <p>
+              <strong>Information for Paramedics</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Voltage and supply type (AC/DC, single/three phase)</li>
+              <li>Estimated duration of electrical contact</li>
+              <li>Current pathway through the body</li>
+              <li>Whether the casualty lost consciousness</li>
+              <li>Falls or secondary injuries</li>
+              <li>CPR details — duration, compressions only or with breaths</li>
+              <li>AED use — number of shocks delivered, times</li>
+              <li>Casualty's name, age and any known medical conditions</li>
+            </ul>
+            <p>
+              <strong>Post-Incident Actions</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Preserve the accident scene for investigation</li>
+              <li>Record everything — times, actions, observations</li>
+              <li>Notify your supervisor and the site manager</li>
+              <li>Complete accident book entry and internal report</li>
+              <li>Identify RIDDOR reporting requirements</li>
+              <li>Support for witnesses and colleagues (welfare)</li>
+              <li>Replace any first aid supplies used</li>
+              <li>Review and restock AED pads if used</li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> In a serious electrical incident, multiple emergency
               services may be needed. Fire and rescue services may be required for HV incidents
@@ -949,18 +825,15 @@ const MOETModule1Section6_5 = () => {
               rescue, or working at height rescue. Police may attend fatal or potentially fatal
               incidents. Coordinate all services through the 999 operator.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Mental Health, Lone Workers and Multi-Site Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Mental Health, Lone Workers and Multi-Site Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Mental health, lone workers and multi-site considerations</ContentEyebrow>
+
+          <ConceptBlock title="Mental Health First Aid">
             <p>
               First aid provision extends beyond physical injuries. Mental health first aid, lone
               worker safety and the challenges of multi-site working all require specific
@@ -968,226 +841,182 @@ const MOETModule1Section6_5 = () => {
               industries have some of the highest rates of mental health issues and suicide in the
               UK workforce — making mental health awareness a critical competence for all workers.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prevalence:</strong> Mental health problems affect approximately 1 in 4
+                people in any given year. The construction and engineering sectors have
+                disproportionately high rates of stress, anxiety, depression and suicide
+              </li>
+              <li>
+                <strong>Risk factors in electrical maintenance:</strong> Long hours, time away from
+                home, job insecurity, pressure to meet deadlines, physical demands, working in
+                isolation, exposure to traumatic incidents
+              </li>
+              <li>
+                <strong>Mental health first aiders:</strong> Trained to recognise signs of mental
+                health difficulties, listen non-judgementally, provide reassurance and signpost to
+                professional support (GP, counsellor, Employee Assistance Programme)
+              </li>
+              <li>
+                <strong>They do NOT:</strong> Diagnose conditions, provide therapy, prescribe
+                medication or force anyone to talk. They offer initial support — similar to physical
+                first aid
+              </li>
+              <li>
+                <strong>Training:</strong> MHFA England provides accredited courses (1-day or
+                2-day). Mates in Mind is a charity specifically supporting mental health in the
+                construction and related industries
+              </li>
+              <li>
+                <strong>Culture change:</strong> Encouraging open conversation about mental health,
+                reducing stigma, and creating an environment where people feel safe to ask for help
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mental Health First Aid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prevalence:</strong> Mental health problems affect approximately 1 in 4
-                  people in any given year. The construction and engineering sectors have
-                  disproportionately high rates of stress, anxiety, depression and suicide
-                </li>
-                <li className="pl-1">
-                  <strong>Risk factors in electrical maintenance:</strong> Long hours, time away
-                  from home, job insecurity, pressure to meet deadlines, physical demands, working
-                  in isolation, exposure to traumatic incidents
-                </li>
-                <li className="pl-1">
-                  <strong>Mental health first aiders:</strong> Trained to recognise signs of mental
-                  health difficulties, listen non-judgementally, provide reassurance and signpost to
-                  professional support (GP, counsellor, Employee Assistance Programme)
-                </li>
-                <li className="pl-1">
-                  <strong>They do NOT:</strong> Diagnose conditions, provide therapy, prescribe
-                  medication or force anyone to talk. They offer initial support — similar to
-                  physical first aid
-                </li>
-                <li className="pl-1">
-                  <strong>Training:</strong> MHFA England provides accredited courses (1-day or
-                  2-day). Mates in Mind is a charity specifically supporting mental health in the
-                  construction and related industries
-                </li>
-                <li className="pl-1">
-                  <strong>Culture change:</strong> Encouraging open conversation about mental
-                  health, reducing stigma, and creating an environment where people feel safe to ask
-                  for help
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Lone Worker First Aid Considerations">
+            <p>
+              Many electrical maintenance technicians work alone — attending individual call-outs,
+              carrying out periodic inspections, or working on remote sites. Lone working presents
+              specific first aid challenges because there is no one nearby to provide assistance or
+              summon help.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Personal first aid kit:</strong> Carry a compact first aid kit appropriate
+                to the risks — burns dressings, bandages, wipes, gloves, eye wash
+              </li>
+              <li>
+                <strong>Mobile phone:</strong> Always charged, with signal confirmed at the work
+                location. Pre-programme 999 and your company's emergency number
+              </li>
+              <li>
+                <strong>Man-down device:</strong> Wearable devices that detect lack of movement and
+                automatically alert the monitoring centre. Essential for high-risk lone work
+              </li>
+              <li>
+                <strong>Welfare check-ins:</strong> Regular scheduled check-ins with a nominated
+                person (supervisor, office, monitoring centre). If a check-in is missed, escalation
+                procedures are activated
+              </li>
+              <li>
+                <strong>what3words:</strong> Know your what3words address so you can communicate
+                your precise location to emergency services even if you are in an unfamiliar
+                location
+              </li>
+              <li>
+                <strong>Risk assessment:</strong> The lone working risk assessment should identify
+                tasks that must NOT be carried out alone — typically any live working, work at
+                height above 2 m, and work in confined spaces
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Lone Worker First Aid Considerations
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Many electrical maintenance technicians work alone — attending individual call-outs,
-                carrying out periodic inspections, or working on remote sites. Lone working presents
-                specific first aid challenges because there is no one nearby to provide assistance
-                or summon help.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Personal first aid kit:</strong> Carry a compact first aid kit appropriate
-                  to the risks — burns dressings, bandages, wipes, gloves, eye wash
-                </li>
-                <li className="pl-1">
-                  <strong>Mobile phone:</strong> Always charged, with signal confirmed at the work
-                  location. Pre-programme 999 and your company's emergency number
-                </li>
-                <li className="pl-1">
-                  <strong>Man-down device:</strong> Wearable devices that detect lack of movement
-                  and automatically alert the monitoring centre. Essential for high-risk lone work
-                </li>
-                <li className="pl-1">
-                  <strong>Welfare check-ins:</strong> Regular scheduled check-ins with a nominated
-                  person (supervisor, office, monitoring centre). If a check-in is missed,
-                  escalation procedures are activated
-                </li>
-                <li className="pl-1">
-                  <strong>what3words:</strong> Know your what3words address so you can communicate
-                  your precise location to emergency services even if you are in an unfamiliar
-                  location
-                </li>
-                <li className="pl-1">
-                  <strong>Risk assessment:</strong> The lone working risk assessment should identify
-                  tasks that must NOT be carried out alone — typically any live working, work at
-                  height above 2 m, and work in confined spaces
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Multi-Site Working</h3>
-              <p className="text-sm text-white mb-3">
-                Electrical maintenance technicians who visit multiple sites face additional
-                challenges for first aid provision:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Site induction:</strong> At every site, identify the first aider, first
-                  aid kit location, AED location and emergency procedures. Do not assume they are
-                  the same as the last site
-                </li>
-                <li className="pl-1">
-                  <strong>Personal kit:</strong> Carry your own first aid kit in your vehicle — you
-                  cannot rely on the host site's provision, especially if you are working in remote
-                  areas of the building
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency contacts:</strong> Note the site emergency contact number, the
-                  nearest hospital A&E, and the access route for emergency vehicles at every site
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination:</strong> On multi-contractor sites (CDM 2015), the principal
-                  contractor coordinates first aid. Ensure you know who they are and how to contact
-                  them
-                </li>
-                <li className="pl-1">
-                  <strong>Vehicle kit:</strong> Keep a comprehensive first aid kit, burn dressings,
-                  eye wash, high-visibility vest and a torch in your vehicle at all times
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Incident Welfare
-              </h3>
-              <p className="text-sm text-white">
-                Witnessing a serious incident — especially an electric shock or arc flash — can have
-                significant psychological effects on colleagues and first responders. Post-incident
-                welfare support should include: an immediate debrief (factual, not therapeutic)
-                within 24 hours, access to counselling services through the Employee Assistance
-                Programme, formal psychological support (e.g., critical incident stress debriefing)
-                if needed, follow-up contact in the days and weeks after the incident, and
-                recognition that delayed reactions are normal and help should be sought if symptoms
-                persist.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="Multi-Site Working and Post-Incident Welfare">
+            <p>
+              <strong>Multi-Site Working.</strong> Electrical maintenance technicians who visit
+              multiple sites face additional challenges for first aid provision:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Site induction:</strong> At every site, identify the first aider, first aid
+                kit location, AED location and emergency procedures. Do not assume they are the same
+                as the last site
+              </li>
+              <li>
+                <strong>Personal kit:</strong> Carry your own first aid kit in your vehicle — you
+                cannot rely on the host site's provision, especially if you are working in remote
+                areas of the building
+              </li>
+              <li>
+                <strong>Emergency contacts:</strong> Note the site emergency contact number, the
+                nearest hospital A&E, and the access route for emergency vehicles at every site
+              </li>
+              <li>
+                <strong>Coordination:</strong> On multi-contractor sites (CDM 2015), the principal
+                contractor coordinates first aid. Ensure you know who they are and how to contact
+                them
+              </li>
+              <li>
+                <strong>Vehicle kit:</strong> Keep a comprehensive first aid kit, burn dressings,
+                eye wash, high-visibility vest and a torch in your vehicle at all times
+              </li>
+            </ul>
+            <p>
+              <strong>Post-Incident Welfare.</strong> Witnessing a serious incident — especially an
+              electric shock or arc flash — can have significant psychological effects on colleagues
+              and first responders. Post-incident welfare support should include: an immediate
+              debrief (factual, not therapeutic) within 24 hours, access to counselling services
+              through the Employee Assistance Programme, formal psychological support (e.g.,
+              critical incident stress debriefing) if needed, follow-up contact in the days and
+              weeks after the incident, and recognition that delayed reactions are normal and help
+              should be sought if symptoms persist.
+            </p>
+            <p className="italic text-white">
               <strong>Note:</strong> Under ST1426, the maintenance technician standard includes
               behaviours relating to personal wellbeing and supporting colleagues. Demonstrating
               awareness of mental health, lone worker safety and first aid provision contributes to
               your professional competence and is assessed through workplace evidence and
               professional discussion.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Appointed person — takes charge, calls 999, maintains kit',
+              'EFAW — 1-day, basic life-saving, valid 3 years',
+              'FAW — 3-day, full first aid, valid 3 years',
+              'AEDs — accessible, signed, usable by anyone',
+              'Chain of survival — recognise, CPR, AED, advanced care',
+              'Lone workers — personal kit, comms, man-down device',
+              'Health and Safety (First-Aid) Regulations 1981',
+              'BS 8599-1 — First aid kit contents',
+              'Resuscitation Council UK Guidelines',
+              'MHFA England / Mates in Mind',
+              'CDM 2015 — Multi-contractor first aid coordination',
+              'ST1426 — Emergency response and wellbeing KSBs',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">First Aid Roles</p>
-                <ul className="space-y-0.5">
-                  <li>Appointed person — takes charge, calls 999, maintains kit</li>
-                  <li>EFAW — 1-day, basic life-saving, valid 3 years</li>
-                  <li>FAW — 3-day, full first aid, valid 3 years</li>
-                  <li>AEDs — accessible, signed, usable by anyone</li>
-                  <li>Chain of survival — recognise, CPR, AED, advanced care</li>
-                  <li>Lone workers — personal kit, comms, man-down device</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>Health and Safety (First-Aid) Regulations 1981</li>
-                  <li>BS 8599-1 — First aid kit contents</li>
-                  <li>Resuscitation Council UK Guidelines</li>
-                  <li>MHFA England / Mates in Mind</li>
-                  <li>CDM 2015 — Multi-contractor first aid coordination</li>
-                  <li>ST1426 — Emergency response and wellbeing KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Reporting Incidents, Accidents and Near Misses
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next module <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Module 2 · Engineering principles and electrical theory
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Reporting Incidents
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

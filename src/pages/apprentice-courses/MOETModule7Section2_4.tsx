@@ -1,8 +1,36 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 4 — Control System Troubleshooting
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Control System Troubleshooting - MOET Module 7 Section 2.4';
@@ -42,10 +70,10 @@ const quickCheckQuestions = [
     id: 'relay-logic-fault',
     question: 'In a relay-based control circuit, how do you determine if a relay coil has failed?',
     options: [
-      "Listen for a clicking sound when the circuit is energised — no click always means the coil has failed",
-      "Measure the coil resistance with a multimeter — an open circuit or wrong reading indicates failure",
-      "Replace the relay and see if the fault clears, since coil testing cannot be done in situ",
-      "Measure the voltage across the contacts — a reading of zero confirms the coil has burnt out",
+      'Listen for a clicking sound when the circuit is energised — no click always means the coil has failed',
+      'Measure the coil resistance with a multimeter — an open circuit or wrong reading indicates failure',
+      'Replace the relay and see if the fault clears, since coil testing cannot be done in situ',
+      'Measure the voltage across the contacts — a reading of zero confirms the coil has burnt out',
     ],
     correctIndex: 1,
     explanation:
@@ -269,116 +297,65 @@ const faqs = [
 ];
 
 const MOETModule7Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Control System Troubleshooting
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 4"
+        title="Control System Troubleshooting"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             PLC and relay logic fault diagnosis, signal tracing and systematic resolution for EPA
-            readiness
+            readiness.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Start physical:</strong> Check sensors, actuators and wiring first
-              </li>
-              <li className="pl-1">
-                <strong>Read logic:</strong> Trace ladder diagrams to find stuck conditions
-              </li>
-              <li className="pl-1">
-                <strong>Signal trace:</strong> Follow voltages through the control path
-              </li>
-              <li className="pl-1">
-                <strong>Communicate:</strong> Explain your reasoning throughout
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Drawings:</strong> Must read circuit and ladder diagrams
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Never bypass interlocks or safety devices
-              </li>
-              <li className="pl-1">
-                <strong>PLC I/O:</strong> Use status displays for diagnosis
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Control system maintenance competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Start physical: check sensors, actuators and wiring first.',
+              'Read logic: trace ladder diagrams to find stuck conditions.',
+              'Signal trace: follow voltages through the control path.',
+              'Communicate: explain your reasoning throughout.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Systematically troubleshoot PLC-controlled and relay-based control systems',
               'Read and interpret ladder logic diagrams to trace control sequences',
               'Check physical inputs, outputs and field devices using test instruments',
               'Trace signal paths through control circuits to locate fault positions',
               'Diagnose common motor starter and contactor faults methodically',
               'Demonstrate control system competence to the EPA assessor with clear communication',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Drawings:</strong> must read circuit and ladder diagrams.
+              </li>
+              <li>
+                <strong>Safety:</strong> never bypass interlocks or safety devices.
+              </li>
+              <li>
+                <strong>PLC I/O:</strong> use status displays for diagnosis.
+              </li>
+              <li>
+                <strong>ST1426:</strong> control system maintenance competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Control System Architecture
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding control system architecture</ContentEyebrow>
+
+          <ConceptBlock title="Understanding control system architecture">
             <p>
               Before you can troubleshoot a control system, you need to understand its architecture.
               Industrial control systems in electrical maintenance typically fall into three
@@ -386,174 +363,137 @@ const MOETModule7Section2_4 = () => {
               Regardless of the technology, the fundamental principles of inputs, processing, and
               outputs remain the same.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Control System Building Blocks
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Input devices:</strong> Push buttons, limit switches, proximity sensors,
-                  thermostats, pressure switches — these detect conditions and provide signals to
-                  the controller
-                </li>
-                <li className="pl-1">
-                  <strong>Controller/processor:</strong> The PLC, relay logic, or combination that
-                  processes input signals according to the programme or circuit design
-                </li>
-                <li className="pl-1">
-                  <strong>Output devices:</strong> Contactors, solenoid valves, indicator lamps,
-                  motors, heaters — these carry out the physical actions
-                </li>
-                <li className="pl-1">
-                  <strong>Power supply:</strong> Provides the correct voltage for control circuits
-                  (typically 24 V DC for PLC I/O, 110 V or 230 V AC for relay circuits)
-                </li>
-                <li className="pl-1">
-                  <strong>Safety circuits:</strong> Emergency stops, guard interlocks, safety relays
-                  — these override all other functions
-                </li>
-              </ul>
+          <ConceptBlock title="Control system building blocks">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Input devices:</strong> push buttons, limit switches, proximity sensors,
+                thermostats, pressure switches — these detect conditions and provide signals to the
+                controller.
+              </li>
+              <li>
+                <strong>Controller/processor:</strong> the PLC, relay logic, or combination that
+                processes input signals according to the programme or circuit design.
+              </li>
+              <li>
+                <strong>Output devices:</strong> contactors, solenoid valves, indicator lamps,
+                motors, heaters — these carry out the physical actions.
+              </li>
+              <li>
+                <strong>Power supply:</strong> provides the correct voltage for control circuits
+                (typically 24 V DC for PLC I/O, 110 V or 230 V AC for relay circuits).
+              </li>
+              <li>
+                <strong>Safety circuits:</strong> emergency stops, guard interlocks, safety relays —
+                these override all other functions.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Relay vs PLC control — key differences for maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Aspect</th>
+                    <th className="py-2 pr-4 font-medium text-white">Relay logic</th>
+                    <th className="py-2 font-medium text-white">PLC control</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fault location</td>
+                    <td className="py-2 pr-4">Physical components and wiring</td>
+                    <td className="py-2">Field devices, wiring, I/O modules or programme</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Diagnosis tools</td>
+                    <td className="py-2 pr-4">Multimeter, circuit diagrams</td>
+                    <td className="py-2">Multimeter, I/O status display, ladder logic</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Modification</td>
+                    <td className="py-2 pr-4">Requires physical rewiring</td>
+                    <td className="py-2">Programme change (not maintenance scope)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Documentation</td>
+                    <td className="py-2 pr-4">Wiring diagrams, circuit schematics</td>
+                    <td className="py-2">Wiring diagrams plus ladder logic printouts</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Fault indication</td>
+                    <td className="py-2 pr-4">Physical relay position, indicator lamps</td>
+                    <td className="py-2">I/O LED status, fault codes, HMI messages</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Relay vs PLC Control — Key Differences for Maintenance
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Relay Logic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PLC Control</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fault location</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical components and wiring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Field devices, wiring, I/O modules or programme
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Diagnosis tools</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multimeter, circuit diagrams
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multimeter, I/O status display, ladder logic
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires physical rewiring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Programme change (not maintenance scope)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Documentation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wiring diagrams, circuit schematics
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wiring diagrams plus ladder logic printouts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fault indication</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical relay position, indicator lamps
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        I/O LED status, fault codes, HMI messages
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Understanding the architecture before diving into testing
+            <p>
+              <strong>Key point:</strong> understanding the architecture before diving into testing
               prevents wasted time. Spend a few minutes reviewing the drawings and understanding how
               the system should work before you start measuring voltages.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Reading Ladder Logic and Circuit Diagrams
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Reading ladder logic and circuit diagrams</ContentEyebrow>
+
+          <ConceptBlock title="Reading ladder logic and circuit diagrams">
             <p>
               The ability to read control circuit diagrams and ladder logic is essential for
               systematic troubleshooting. Without this skill, you are reduced to random testing —
               which is time-consuming, unreliable, and does not demonstrate competence. In the EPA,
               you will be provided with drawings and expected to use them effectively.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ladder Logic Fundamentals
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rungs:</strong> Each horizontal line represents one control function —
-                  like a sentence in the control story
-                </li>
-                <li className="pl-1">
-                  <strong>NO contact (| |):</strong> Normally open — must be activated (TRUE) for
-                  current to flow through
-                </li>
-                <li className="pl-1">
-                  <strong>NC contact (|/|):</strong> Normally closed — current flows until the
-                  condition is activated, then it opens
-                </li>
-                <li className="pl-1">
-                  <strong>Coil ( ):</strong> The output — energised when all conditions in the rung
-                  are met
-                </li>
-                <li className="pl-1">
-                  <strong>Series contacts:</strong> AND logic — all must be true for the rung to
-                  energise
-                </li>
-                <li className="pl-1">
-                  <strong>Parallel contacts:</strong> OR logic — any one being true energises the
-                  rung
-                </li>
-                <li className="pl-1">
-                  <strong>Timers/counters:</strong> Add time delays or counting functions to the
-                  control logic
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Ladder logic fundamentals">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rungs:</strong> each horizontal line represents one control function — like
+                a sentence in the control story.
+              </li>
+              <li>
+                <strong>NO contact (| |):</strong> normally open — must be activated (TRUE) for
+                current to flow through.
+              </li>
+              <li>
+                <strong>NC contact (|/|):</strong> normally closed — current flows until the
+                condition is activated, then it opens.
+              </li>
+              <li>
+                <strong>Coil ( ):</strong> the output — energised when all conditions in the rung
+                are met.
+              </li>
+              <li>
+                <strong>Series contacts:</strong> AND logic — all must be true for the rung to
+                energise.
+              </li>
+              <li>
+                <strong>Parallel contacts:</strong> OR logic — any one being true energises the
+                rung.
+              </li>
+              <li>
+                <strong>Timers/counters:</strong> add time delays or counting functions to the
+                control logic.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Tracing a Fault Using Ladder Logic
-              </p>
-              <p className="text-sm text-white">
-                When a PLC output is not energising, look at the corresponding rung in the ladder
-                logic. Identify each input condition on that rung. Using the PLC's I/O status
-                display, check which conditions are met and which are not. The unmet condition is
-                either the correct state (e.g., a guard interlock correctly preventing operation) or
-                a fault (e.g., a sensor not detecting when it should). This narrows the fault to a
-                specific input device, which you then test physically.
-              </p>
-            </div>
-
+          <ConceptBlock title="Tracing a fault using ladder logic">
+            <p>
+              When a PLC output is not energising, look at the corresponding rung in the ladder
+              logic. Identify each input condition on that rung. Using the PLC&apos;s I/O status
+              display, check which conditions are met and which are not. The unmet condition is
+              either the correct state (e.g., a guard interlock correctly preventing operation) or a
+              fault (e.g., a sensor not detecting when it should). This narrows the fault to a
+              specific input device, which you then test physically.
+            </p>
             <p>
               When reading circuit diagrams for relay-based systems, the same principle applies but
               the tools are different. You trace the circuit on paper, identifying each contact and
@@ -561,382 +501,329 @@ const MOETModule7Section2_4 = () => {
               each component matches the expected state. Where the actual and expected states
               differ, you have found the fault area.
             </p>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Practise reading ladder logic diagrams before the EPA. The
+            <p>
+              <strong>Key point:</strong> practise reading ladder logic diagrams before the EPA. The
               more familiar you are with the symbols and logic, the faster you can trace faults
               during the assessment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Systematic Signal Tracing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Systematic signal tracing</ContentEyebrow>
+
+          <ConceptBlock title="Systematic signal tracing">
             <p>
               Signal tracing is the practical technique of following the electrical signal path
               through a control circuit, measuring voltages at each point to find where the signal
               is lost. This is the core troubleshooting skill for both relay and PLC-based systems,
               and it is what the assessor is primarily looking for during the EPA.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Tracing Procedure
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Start at the supply:</strong> Confirm the control circuit power supply is
-                  present and at the correct voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Identify the output:</strong> Which output device is not operating? This
-                  is your endpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Trace forward:</strong> From the supply, measure voltage at each
-                  connection point along the control path
-                </li>
-                <li className="pl-1">
-                  <strong>Find the dropout:</strong> Where the expected voltage disappears is the
-                  fault area
-                </li>
-                <li className="pl-1">
-                  <strong>Investigate:</strong> Check the component or connection at the dropout
-                  point
-                </li>
-                <li className="pl-1">
-                  <strong>Verify:</strong> After repair, confirm the signal path is complete and the
-                  output operates
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Signal tracing procedure">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Start at the supply:</strong> confirm the control circuit power supply is
+                present and at the correct voltage.
+              </li>
+              <li>
+                <strong>Identify the output:</strong> which output device is not operating? This is
+                your endpoint.
+              </li>
+              <li>
+                <strong>Trace forward:</strong> from the supply, measure voltage at each connection
+                point along the control path.
+              </li>
+              <li>
+                <strong>Find the dropout:</strong> where the expected voltage disappears is the
+                fault area.
+              </li>
+              <li>
+                <strong>Investigate:</strong> check the component or connection at the dropout
+                point.
+              </li>
+              <li>
+                <strong>Verify:</strong> after repair, confirm the signal path is complete and the
+                output operates.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Control Circuit Faults
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Blown control fuse:</strong> No supply to the entire control circuit —
-                  check the control transformer secondary fuse
-                </li>
-                <li className="pl-1">
-                  <strong>Failed relay coil:</strong> Voltage present at the coil but no mechanical
-                  operation — measure coil resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Worn relay contacts:</strong> Relay operates but the contact does not make
-                  — check contact condition
-                </li>
-                <li className="pl-1">
-                  <strong>Loose terminal:</strong> Intermittent or high-resistance connection —
-                  check and re-torque
-                </li>
-                <li className="pl-1">
-                  <strong>Broken conductor:</strong> Open circuit in the wiring — continuity test
-                  end-to-end
-                </li>
-                <li className="pl-1">
-                  <strong>Failed sensor:</strong> No output signal despite the target being present
-                  — check supply and alignment
-                </li>
-                <li className="pl-1">
-                  <strong>Corroded connections:</strong> High resistance causing voltage drop —
-                  clean and re-terminate
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> During signal tracing, explain to the assessor what
+          <ConceptBlock title="Common control circuit faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Blown control fuse:</strong> no supply to the entire control circuit — check
+                the control transformer secondary fuse.
+              </li>
+              <li>
+                <strong>Failed relay coil:</strong> voltage present at the coil but no mechanical
+                operation — measure coil resistance.
+              </li>
+              <li>
+                <strong>Worn relay contacts:</strong> relay operates but the contact does not make —
+                check contact condition.
+              </li>
+              <li>
+                <strong>Loose terminal:</strong> intermittent or high-resistance connection — check
+                and re-torque.
+              </li>
+              <li>
+                <strong>Broken conductor:</strong> open circuit in the wiring — continuity test
+                end-to-end.
+              </li>
+              <li>
+                <strong>Failed sensor:</strong> no output signal despite the target being present —
+                check supply and alignment.
+              </li>
+              <li>
+                <strong>Corroded connections:</strong> high resistance causing voltage drop — clean
+                and re-terminate.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> during signal tracing, explain to the assessor what
               voltage you expect at each point and what the actual reading tells you. This
               demonstrates that you understand the circuit, not just that you can operate a
               multimeter.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Motor Starter and Contactor Diagnostics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Motor starter and contactor diagnostics</ContentEyebrow>
+
+          <ConceptBlock title="Motor starter and contactor diagnostics">
             <p>
               Motor control circuits are among the most common control systems you will encounter in
               maintenance work and the EPA. Understanding DOL (direct on-line), star-delta, and soft
               starter circuits allows you to diagnose faults efficiently. The key is understanding
               how the control circuit governs the power circuit.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DOL Starter Fault Diagnosis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor will not start:</strong> Check control supply, start button, safety
-                  interlocks, overload reset, contactor coil
-                </li>
-                <li className="pl-1">
-                  <strong>Motor starts but will not hold:</strong> Check the hold-on auxiliary
-                  contact — is it making? Check for voltage drop
-                </li>
-                <li className="pl-1">
-                  <strong>Overload trips immediately:</strong> Check motor current, mechanical
-                  binding, overload setting, thermal element
-                </li>
-                <li className="pl-1">
-                  <strong>Contactor chatters:</strong> Low coil voltage, intermittent control
-                  circuit, failing coil
-                </li>
-                <li className="pl-1">
-                  <strong>Motor runs in wrong direction:</strong> Two phases swapped — check at the
-                  contactor output terminals
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="DOL starter fault diagnosis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor will not start:</strong> check control supply, start button, safety
+                interlocks, overload reset, contactor coil.
+              </li>
+              <li>
+                <strong>Motor starts but will not hold:</strong> check the hold-on auxiliary contact
+                — is it making? Check for voltage drop.
+              </li>
+              <li>
+                <strong>Overload trips immediately:</strong> check motor current, mechanical
+                binding, overload setting, thermal element.
+              </li>
+              <li>
+                <strong>Contactor chatters:</strong> low coil voltage, intermittent control circuit,
+                failing coil.
+              </li>
+              <li>
+                <strong>Motor runs in wrong direction:</strong> two phases swapped — check at the
+                contactor output terminals.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Safety: Never Bypass Safety Devices
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Safety: never bypass safety devices"
+            whatHappens={
+              <>
                 During troubleshooting, you may be tempted to bypass safety interlocks, overloads,
                 or emergency stops to test if the system operates. This is never acceptable — in the
                 workplace it creates a serious safety hazard, and in the EPA it is an automatic
-                fail. Always diagnose by testing the safety device itself, not by bypassing it.
-              </p>
-            </div>
+                fail.
+              </>
+            }
+            doInstead={
+              <>Always diagnose by testing the safety device itself, not by bypassing it.</>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Star-Delta Starter Troubleshooting
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Star-delta starters use a timed changeover between star and delta configurations to
-                reduce starting current. Understanding the sequence is essential for diagnosis: the
-                main and star contactors energise first, the timer runs, the star contactor drops
-                out, and the delta contactor pulls in.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fails to start in star:</strong> Check main and star contactor control
-                  circuits, interlocks, and the timer enable signal
-                </li>
-                <li className="pl-1">
-                  <strong>Does not change to delta:</strong> Check timer operation, delta contactor
-                  coil supply, and changeover auxiliary contacts
-                </li>
-                <li className="pl-1">
-                  <strong>Trips during changeover:</strong> Check the changeover timing (typically
-                  5-15 seconds), and that both star and delta contactors are not energising
-                  simultaneously
-                </li>
-                <li className="pl-1">
-                  <strong>Mechanical interlock:</strong> Star and delta contactors must be
-                  mechanically interlocked to prevent simultaneous operation — check the interlock
-                  mechanism
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Control system troubleshooting is a core practical
-              competence in the MOET standard. The EPA practical observation will include control
-              system fault diagnosis, assessed on your systematic approach, safe working, use of
-              drawings, and clear communication.
+          <ConceptBlock title="Star-delta starter troubleshooting">
+            <p>
+              Star-delta starters use a timed changeover between star and delta configurations to
+              reduce starting current. Understanding the sequence is essential for diagnosis: the
+              main and star contactors energise first, the timer runs, the star contactor drops out,
+              and the delta contactor pulls in.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fails to start in star:</strong> check main and star contactor control
+                circuits, interlocks, and the timer enable signal.
+              </li>
+              <li>
+                <strong>Does not change to delta:</strong> check timer operation, delta contactor
+                coil supply, and changeover auxiliary contacts.
+              </li>
+              <li>
+                <strong>Trips during changeover:</strong> check the changeover timing (typically
+                5-15 seconds), and that both star and delta contactors are not energising
+                simultaneously.
+              </li>
+              <li>
+                <strong>Mechanical interlock:</strong> star and delta contactors must be
+                mechanically interlocked to prevent simultaneous operation — check the interlock
+                mechanism.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> control system troubleshooting is a core practical
+            competence in the MOET standard. The EPA practical observation will include control
+            system fault diagnosis, assessed on your systematic approach, safe working, use of
+            drawings, and clear communication.
+          </p>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Communicating Your Diagnostic Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Communicating your diagnostic process</ContentEyebrow>
+
+          <ConceptBlock title="Communicating your diagnostic process">
             <p>
               In the EPA, the assessor cannot see what is happening inside your head. If you work in
               silence, they can only assess the outcome — not the reasoning that led to it.
               Explaining your diagnostic process as you work is the single most effective way to
               demonstrate control system competence and achieve higher grades.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What to Communicate During Diagnosis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Your hypothesis:</strong> "Based on the symptoms, I suspect the input
-                  sensor is not detecting — I will check the PLC I/O status first"
-                </li>
-                <li className="pl-1">
-                  <strong>What you are testing:</strong> "I am measuring the supply voltage at the
-                  sensor terminals to confirm it is receiving 24 V DC"
-                </li>
-                <li className="pl-1">
-                  <strong>Expected vs actual:</strong> "I expected 24 V here but I am reading 0 V,
-                  which tells me the fault is upstream of this point"
-                </li>
-                <li className="pl-1">
-                  <strong>Your reasoning:</strong> "Because the PLC input LED is off, the fault is
-                  likely in the field wiring or sensor rather than the PLC itself"
-                </li>
-                <li className="pl-1">
-                  <strong>Safety awareness:</strong> "Before I open the panel, I need to confirm
-                  whether the control circuit is at 24 V DC or 230 V AC"
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What to communicate during diagnosis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Your hypothesis:</strong> &quot;Based on the symptoms, I suspect the input
+                sensor is not detecting — I will check the PLC I/O status first.&quot;
+              </li>
+              <li>
+                <strong>What you are testing:</strong> &quot;I am measuring the supply voltage at
+                the sensor terminals to confirm it is receiving 24 V DC.&quot;
+              </li>
+              <li>
+                <strong>Expected vs actual:</strong> &quot;I expected 24 V here but I am reading 0
+                V, which tells me the fault is upstream of this point.&quot;
+              </li>
+              <li>
+                <strong>Your reasoning:</strong> &quot;Because the PLC input LED is off, the fault
+                is likely in the field wiring or sensor rather than the PLC itself.&quot;
+              </li>
+              <li>
+                <strong>Safety awareness:</strong> &quot;Before I open the panel, I need to confirm
+                whether the control circuit is at 24 V DC or 230 V AC.&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Mistakes When Communicating
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Working in silence:</strong> The assessor cannot give credit for reasoning
-                  they cannot observe
-                </li>
-                <li className="pl-1">
-                  <strong>Over-narrating:</strong> Describing every hand movement is distracting —
-                  explain your thinking, not your physical actions
-                </li>
-                <li className="pl-1">
-                  <strong>Using jargon incorrectly:</strong> Use technical terms accurately —
-                  misusing terminology suggests gaps in understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Not explaining changes of plan:</strong> If your first hypothesis is
-                  wrong, explain why you are changing approach
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common mistakes when communicating">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Working in silence:</strong> the assessor cannot give credit for reasoning
+                they cannot observe.
+              </li>
+              <li>
+                <strong>Over-narrating:</strong> describing every hand movement is distracting —
+                explain your thinking, not your physical actions.
+              </li>
+              <li>
+                <strong>Using jargon incorrectly:</strong> use technical terms accurately — misusing
+                terminology suggests gaps in understanding.
+              </li>
+              <li>
+                <strong>Not explaining changes of plan:</strong> if your first hypothesis is wrong,
+                explain why you are changing approach.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Practise Speaking While Working
-              </p>
-              <p className="text-sm text-white">
-                Explaining your work while performing it is a skill that requires practice. In your
-                workplace, start explaining your diagnostic reasoning to a colleague or supervisor
-                as you troubleshoot real faults. This builds the habit so it feels natural during
-                the EPA rather than forced or awkward. Ask your training provider to include
-                communication practice in your mock assessments.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Communication is a key differentiator between pass and
-              distinction grades. A candidate who diagnoses a fault correctly in silence may achieve
-              a pass. A candidate who diagnoses the same fault while clearly explaining their
-              reasoning, referencing drawings, and demonstrating safety awareness throughout is far
-              more likely to achieve a distinction.
+          <ConceptBlock title="Practise speaking while working">
+            <p>
+              Explaining your work while performing it is a skill that requires practice. In your
+              workplace, start explaining your diagnostic reasoning to a colleague or supervisor as
+              you troubleshoot real faults. This builds the habit so it feels natural during the EPA
+              rather than forced or awkward. Ask your training provider to include communication
+              practice in your mock assessments.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> communication is a key differentiator between pass and
+            distinction grades. A candidate who diagnoses a fault correctly in silence may achieve a
+            pass. A candidate who diagnoses the same fault while clearly explaining their reasoning,
+            referencing drawings, and demonstrating safety awareness throughout is far more likely
+            to achieve a distinction.
+          </p>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Quick reference — control system troubleshooting">
+            <p>
+              <strong>Systematic approach:</strong> review drawings before testing; check power
+              supply first; use PLC I/O status display; trace signals from supply to output; test
+              one variable at a time; verify the repair before sign-off.
+            </p>
+            <p>
+              <strong>Key safety rules:</strong> never bypass safety interlocks; check control
+              voltage before touching; remove all PLC forces after testing; clear area before
+              forcing outputs; use GS38-compliant test equipment; safe isolate before any physical
+              work.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-            <h3 className="text-sm font-semibold text-elec-yellow mb-3">
-              Quick Reference — Control System Troubleshooting
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <p className="text-xs font-medium text-white mb-1.5">Systematic Approach</p>
-                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                  <li>Review drawings before testing</li>
-                  <li>Check power supply first</li>
-                  <li>Use PLC I/O status display</li>
-                  <li>Trace signals from supply to output</li>
-                  <li>Test one variable at a time</li>
-                  <li>Verify the repair before sign-off</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-xs font-medium text-white mb-1.5">Key Safety Rules</p>
-                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                  <li>Never bypass safety interlocks</li>
-                  <li>Check control voltage before touching</li>
-                  <li>Remove all PLC forces after testing</li>
-                  <li>Clear area before forcing outputs</li>
-                  <li>Use GS38-compliant test equipment</li>
-                  <li>Safe isolate before any physical work</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              'Understand the architecture before testing — relay, PLC, or hybrid — and review drawings first.',
+              'Read ladder logic to find the stuck rung, then test physically the input or output that condition points to.',
+              'Signal tracing: measure voltage stage by stage until the expected reading disappears — that is the fault area.',
+              'Never bypass a safety interlock, overload or emergency stop to test whether a system operates.',
+              'Explain your hypothesis, what you are testing, and expected vs actual readings as you work.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Control Systems" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Component Replacement and Repair
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Completing Work to Industry Standards
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Control Systems" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Component Replacement
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-5">
-              Next: Work to Industry Standards
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -125,10 +125,12 @@ const TimeMaterialsCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
-    const namedMaterials = materials.filter((m) => m.name);
+    // A whitespace-only name (e.g. a row left with a stray space) is not a
+    // real line item — trim before filtering, not just check truthiness.
+    const namedMaterials = materials.filter((m) => m.name.trim());
     return {
       meta: {
-        title: 'Time & Materials Calculator',
+        title: 'Time & Materials',
         subtitle: 'Job cost estimate — labour, materials, markup and VAT',
       },
       headline: [
@@ -154,7 +156,11 @@ const TimeMaterialsCalculator = () => {
             { label: 'Labour', value: fmt(result.labourTotal) },
             { label: 'Materials', value: fmt(result.materialsTotal) },
             { label: `Markup (${markupPercent}%)`, value: fmt(result.markupAmount) },
-            { label: 'Subtotal', value: fmt(result.subtotal) },
+            {
+              label: 'Subtotal',
+              value: fmt(result.subtotal),
+              note: 'Labour + materials + markup, before VAT',
+            },
             { label: `VAT (${vatRate}%)`, value: fmt(result.vatAmount) },
             { label: 'Grand total', value: fmt(result.grandTotal) },
           ],

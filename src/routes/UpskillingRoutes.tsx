@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { isStudyContentPath, studyTitleFromDocument } from '@/lib/studyContentPath';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
@@ -25,18 +26,13 @@ function UpskillingTracker() {
   const { updateLastLocation } = useLastStudyLocation();
 
   useEffect(() => {
-    // Don't track the index page itself
-    if (
-      location.pathname === '/electrician/upskilling' ||
-      location.pathname === '/electrician/upskilling/'
-    ) {
-      return;
-    }
+    // Content pages only. Skipping just the index was not enough — every course
+    // and module landing page still overwrote the lesson the learner was on.
+    if (!isStudyContentPath(location.pathname)) return;
 
-    // Get title from document after a short delay (to let page set title)
+    // Short delay so the page has set its own title before we read it.
     const timer = setTimeout(() => {
-      const title = document.title?.split('|')[0]?.trim() || 'Upskilling Course';
-      updateLastLocation(location.pathname, title);
+      updateLastLocation(location.pathname, studyTitleFromDocument('Upskilling course'));
     }, 100);
 
     return () => clearTimeout(timer);

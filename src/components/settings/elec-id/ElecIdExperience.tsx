@@ -23,6 +23,7 @@ import {
   SectionHeader,
   EmptyState,
 } from '@/components/college/primitives';
+import { hintCn, inputCn, labelCn, textareaCn } from '@/components/settings/formStyles';
 
 interface WorkExperience {
   id: string;
@@ -328,23 +329,23 @@ const ElecIdExperience = () => {
           value={formData.employerName}
           onChange={(e) => setFormData({ ...formData, employerName: e.target.value })}
           placeholder="Company name"
-          className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-white placeholder:text-white"
+          className={inputCn}
         />
         <Input
           value={formData.location}
           onChange={(e) => setFormData({ ...formData, location: e.target.value })}
           placeholder="Location (e.g. London, Remote)"
-          className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-white placeholder:text-white"
+          className={inputCn}
         />
       </div>
 
       <div className="space-y-3">
         <Eyebrow>Your role</Eyebrow>
-        <div className="max-h-[200px] overflow-y-auto rounded-xl border border-white/[0.06] bg-white/[0.02]">
+        <div className="max-h-[200px] overflow-y-auto rounded-xl border border-elec-yellow/35 bg-white/[0.02]">
           {Object.entries(jobTitlesByCategory).map(([category, titles], catIndex) => (
             <div key={category}>
               {catIndex > 0 && <div className="h-px bg-white/[0.06]" />}
-              <div className="sticky top-0 z-10 px-4 py-2 bg-[hsl(0_0%_12%)] border-b border-white/[0.06]">
+              <div className="sticky top-0 z-10 px-4 py-2 bg-white/[0.05] border-b border-white/[0.06]">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                   {category}
                 </span>
@@ -427,33 +428,30 @@ const ElecIdExperience = () => {
           </div>
         </button>
 
-        <div className="grid grid-cols-2 gap-3">
-          <div className="space-y-1.5">
-            <Label className="text-xs text-white">Started</Label>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className={labelCn}>Started</Label>
             <Input
               type="date"
               value={formData.startDate}
               onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white"
+              className={inputCn}
             />
           </div>
-          <div className="space-y-1.5">
-            <Label className="text-xs text-white">{isCurrent ? 'Present' : 'Ended'}</Label>
+          <div>
+            <Label className={labelCn}>{isCurrent ? 'Present' : 'Ended'}</Label>
             <Input
               type="date"
               value={formData.endDate}
               onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
               disabled={isCurrent}
-              className={cn(
-                'h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white',
-                isCurrent && 'opacity-40 cursor-not-allowed'
-              )}
+              className={cn(inputCn, isCurrent && 'opacity-40 cursor-not-allowed')}
             />
           </div>
         </div>
 
         {formData.startDate && (
-          <div className="flex items-center justify-between py-2 px-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+          <div className="flex items-center justify-between py-2 px-4 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
             <span className="text-sm text-white">Duration</span>
             <span className="text-sm font-semibold text-elec-yellow tabular-nums">
               {calculateDuration(formData.startDate, isCurrent ? undefined : formData.endDate)}
@@ -468,9 +466,9 @@ const ElecIdExperience = () => {
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
           placeholder="Describe your key responsibilities, projects, and achievements…"
-          className="bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm min-h-[120px] resize-none text-white placeholder:text-white"
+          className={cn(textareaCn, 'min-h-[120px]')}
         />
-        <p className="text-xs text-white">
+        <p className={hintCn}>
           Tip: mention specific projects, certifications earned, or skills developed.
         </p>
       </div>
@@ -480,7 +478,7 @@ const ElecIdExperience = () => {
   const formFooter = (isEdit: boolean, onClose: () => void) => (
     <div className="flex gap-3">
       <button
-        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation disabled:opacity-60"
         onClick={() => {
           onClose();
           resetForm();
@@ -490,7 +488,7 @@ const ElecIdExperience = () => {
         Cancel
       </button>
       <button
-        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
         onClick={isEdit ? handleEditExperience : handleAddExperience}
         disabled={
           !formData.employerName || !formData.jobTitle || !formData.startDate || isLoading
@@ -516,7 +514,7 @@ const ElecIdExperience = () => {
 
       {/* Add */}
       <Sheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Add work experience" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -546,7 +544,7 @@ const ElecIdExperience = () => {
 
       {/* Edit */}
       <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Edit work experience" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -611,12 +609,12 @@ const ElecIdExperience = () => {
                   className={cn(
                     'ml-3 rounded-2xl border overflow-hidden transition-all',
                     exp.isCurrent
-                      ? 'bg-[hsl(0_0%_12%)] border-elec-yellow/20'
-                      : 'bg-[hsl(0_0%_12%)] border-white/[0.06]'
+                      ? 'bg-white/[0.05] border-elec-yellow/20'
+                      : 'bg-white/[0.05] border-white/[0.06]'
                   )}
                 >
                   {exp.isCurrent && (
-                    <div className="px-4 py-2 bg-elec-yellow/10 border-b border-elec-yellow/20 flex items-center justify-between">
+                    <div className="px-4 py-2 bg-white/[0.06] border-b border-elec-yellow/20 flex items-center justify-between">
                       <span className="text-xs font-semibold text-elec-yellow">
                         Current position
                       </span>
@@ -649,7 +647,7 @@ const ElecIdExperience = () => {
                         className={cn(
                           'shrink-0 text-xs font-semibold px-2 py-0.5 rounded-full border tabular-nums',
                           exp.isCurrent
-                            ? 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20'
+                            ? 'bg-white/[0.06] text-elec-yellow border-elec-yellow/20'
                             : 'bg-white/[0.04] text-white border-white/[0.06]'
                         )}
                       >

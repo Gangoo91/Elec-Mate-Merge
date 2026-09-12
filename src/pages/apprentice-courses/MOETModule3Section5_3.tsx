@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.5 · Subsection 3 — Emergency Generators
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Emergency Generators - MOET Module 3.5.3';
@@ -162,9 +201,9 @@ const quizQuestions = [
     question: 'The exhaust system of a diesel generator must be inspected for:',
     options: [
       'Leaks, corrosion, backpressure and lagging condition',
-      'No harmful effects during normal operation including switching',
-      'Pressure reaches its maximum (stagnation pressure)',
-      '1×IΔn only — the 5×IΔn AC test was deleted in Amendment 4:2026',
+      'Correct fuel injector timing and glow-plug resistance',
+      'Coolant concentration and antifreeze specific gravity',
+      'Alternator winding insulation resistance and polarisation index',
     ],
     correctAnswer: 0,
     explanation:
@@ -253,115 +292,64 @@ const faqs = [
 ];
 
 const MOETModule3Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Emergency Generators
-          </h1>
-          <p className="text-white">
-            Diesel generators, components, start sequences, load testing and maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.5 · Subsection 3"
+        title="Emergency Generators"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Diesel generators, components, start sequences, load testing and maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Components:</strong> Engine, alternator, control panel, fuel system
+          <TLDR
+            points={[
+              'Components: Engine, alternator, control panel, fuel system.',
+              'Start time: 10-30 seconds from mains failure to load transfer.',
+              'Testing: Monthly run under load, annual load bank test.',
+              'Maintenance: Oil, coolant, fuel, batteries, exhaust — all critical.',
+            ]}
+          />
+
+          <ConceptBlock title="Regulatory context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671:</strong> Generator installation requirements (Section 551).
               </li>
-              <li className="pl-1">
-                <strong>Start time:</strong> 10-30 seconds from mains failure to load transfer
+              <li>
+                <strong>BS 7698:</strong> Reciprocating engine driven generating sets.
               </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Monthly run under load, annual load bank test
+              <li>
+                <strong>Environmental Permit:</strong> Emissions limits for larger generators.
               </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Oil, coolant, fuel, batteries, exhaust — all critical
+              <li>
+                <strong>ST1426:</strong> Maintain auxiliary power systems.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Regulatory Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Generator installation requirements (Section 551)
-              </li>
-              <li className="pl-1">
-                <strong>BS 7698:</strong> Reciprocating engine driven generating sets
-              </li>
-              <li className="pl-1">
-                <strong>Environmental Permit:</strong> Emissions limits for larger generators
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maintain auxiliary power systems
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the main components of a diesel generator set and explain their functions',
               'Describe the automatic start sequence from mains failure to load transfer',
               'Explain load bank testing and the prevention of wet stacking',
               'Outline a preventive maintenance programme for standby generators',
               'Describe fuel storage requirements including bunding and fuel polishing',
               'Identify environmental considerations including noise and emissions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Generator components and operation</ContentEyebrow>
 
-        {/* Section 01: Generator Components and Operation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Generator Components and Operation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Standby generators are a life-safety system that must start reliably and transfer load within seconds">
             <p>
               Standby generators provide backup electrical power when the mains supply fails. In
               critical facilities — hospitals, data centres, water treatment works and high-rise
@@ -369,347 +357,301 @@ const MOETModule3Section5_3 = () => {
               transfer load within seconds. Diesel generators are the most common type for standby
               power due to their reliability, fast start capability and fuel availability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Main Components</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Diesel engine:</strong> The prime mover. Converts chemical energy in
-                  diesel fuel to rotational mechanical energy. Available from 10 kW to 3,000+ kW.
-                  Includes cooling system, lubrication system, fuel injection system and exhaust
-                </li>
-                <li className="pl-1">
-                  <strong>Alternator:</strong> Converts mechanical rotation to AC electrical energy
-                  via electromagnetic induction. Typically brushless, self-excited, 4-pole (1,500
-                  rpm for 50 Hz). Rated in kVA (apparent power)
-                </li>
-                <li className="pl-1">
-                  <strong>AVR (Automatic Voltage Regulator):</strong> Controls the alternator
-                  excitation to maintain constant output voltage regardless of load changes
-                </li>
-                <li className="pl-1">
-                  <strong>Governor:</strong> Controls engine speed to maintain constant frequency
-                  (50 Hz). Electronic governors provide ±0.5% speed regulation under varying loads
-                </li>
-                <li className="pl-1">
-                  <strong>Control panel:</strong> Monitors engine and alternator parameters, manages
-                  automatic start/stop sequences, provides alarms and remote monitoring interfaces
-                </li>
-                <li className="pl-1">
-                  <strong>Starting system:</strong> Electric starter motor powered by 12 V or 24 V
-                  batteries. Includes battery charger, cranking control and start-fail protection
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel system:</strong> Base tank, day tank (larger sets), fuel transfer
-                  pump, primary and secondary fuel filters, water separator, return line
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling system:</strong> Radiator, thermostat, water pump, coolant hoses,
-                  fan. Some larger sets use remote radiators or cooling towers
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Main components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Diesel engine:</strong> The prime mover. Converts chemical energy in diesel
+                fuel to rotational mechanical energy. Available from 10 kW to 3,000+ kW. Includes
+                cooling system, lubrication system, fuel injection system and exhaust.
+              </li>
+              <li>
+                <strong>Alternator:</strong> Converts mechanical rotation to AC electrical energy
+                via electromagnetic induction. Typically brushless, self-excited, 4-pole (1,500 rpm
+                for 50 Hz). Rated in kVA (apparent power).
+              </li>
+              <li>
+                <strong>AVR (Automatic Voltage Regulator):</strong> Controls the alternator
+                excitation to maintain constant output voltage regardless of load changes.
+              </li>
+              <li>
+                <strong>Governor:</strong> Controls engine speed to maintain constant frequency (50
+                Hz). Electronic governors provide ±0.5% speed regulation under varying loads.
+              </li>
+              <li>
+                <strong>Control panel:</strong> Monitors engine and alternator parameters, manages
+                automatic start/stop sequences, provides alarms and remote monitoring interfaces.
+              </li>
+              <li>
+                <strong>Starting system:</strong> Electric starter motor powered by 12 V or 24 V
+                batteries. Includes battery charger, cranking control and start-fail protection.
+              </li>
+              <li>
+                <strong>Fuel system:</strong> Base tank, day tank (larger sets), fuel transfer pump,
+                primary and secondary fuel filters, water separator, return line.
+              </li>
+              <li>
+                <strong>Cooling system:</strong> Radiator, thermostat, water pump, coolant hoses,
+                fan. Some larger sets use remote radiators or cooling towers.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Automatic Start Sequence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> ATS detects mains failure (voltage below threshold for a
-                  defined time delay)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Start signal sent to generator control panel after time
-                  delay (5-10 seconds typical)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Engine pre-lubrication (if fitted) and glow plug warm-up
-                  (cold engines)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Engine cranks — typically 3 attempts of 10-15 seconds
-                  each with rest periods
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Engine starts — warm-up period at no load (30-60 seconds)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Generator ready signal — voltage and frequency within
-                  tolerance
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> ATS transfers load from mains to generator
-                </li>
-                <li className="pl-1">
-                  <strong>Step 8:</strong> On mains return — retransfer delay, load back to mains,
-                  cool-down period, engine stop
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Automatic start sequence"
+            onSite="Key point: the total time from mains failure to load on generator is typically 10-30 seconds. For critical loads that cannot tolerate this interruption (IT equipment, medical devices), a UPS is required to bridge the gap between mains failure and generator taking load."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> ATS detects mains failure (voltage below threshold for a
+                defined time delay).
+              </li>
+              <li>
+                <strong>Step 2:</strong> Start signal sent to generator control panel after time
+                delay (5-10 seconds typical).
+              </li>
+              <li>
+                <strong>Step 3:</strong> Engine pre-lubrication (if fitted) and glow plug warm-up
+                (cold engines).
+              </li>
+              <li>
+                <strong>Step 4:</strong> Engine cranks — typically 3 attempts of 10-15 seconds each
+                with rest periods.
+              </li>
+              <li>
+                <strong>Step 5:</strong> Engine starts — warm-up period at no load (30-60 seconds).
+              </li>
+              <li>
+                <strong>Step 6:</strong> Generator ready signal — voltage and frequency within
+                tolerance.
+              </li>
+              <li>
+                <strong>Step 7:</strong> ATS transfers load from mains to generator.
+              </li>
+              <li>
+                <strong>Step 8:</strong> On mains return — retransfer delay, load back to mains,
+                cool-down period, engine stop.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The total time from mains failure to load on generator is
-              typically 10-30 seconds. For critical loads that cannot tolerate this interruption (IT
-              equipment, medical devices), a UPS is required to bridge the gap between mains failure
-              and generator taking load.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02: Load Testing and Wet Stacking Prevention */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Load Testing and Wet Stacking Prevention
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Load testing and wet stacking prevention</ContentEyebrow>
+
+          <ConceptBlock title="A generator never tested under load may fail when called upon during a real emergency">
             <p>
               Regular load testing is essential to verify that the generator can deliver its rated
               output and to prevent the damaging effects of prolonged light-load operation. A
               generator that has never been tested under load may fail when called upon during a
               real emergency.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Load Bank Testing</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purpose:</strong> Apply a controlled, adjustable electrical load to verify
-                  full-rated output capability
-                </li>
-                <li className="pl-1">
-                  <strong>Load bank types:</strong> Resistive (kW only), reactive (kVAr), combined
-                  (kW + kVAr)
-                </li>
-                <li className="pl-1">
-                  <strong>Procedure:</strong> Start at 25% load, step up to 50%, 75% and 100% in
-                  stages, recording voltage, current, frequency, oil pressure, coolant temperature
-                  and exhaust temperature at each step
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Minimum 30 minutes at each load step, or as specified
-                  by the maintenance standard
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency:</strong> Annual load bank test recommended; monthly test runs
-                  at minimum 50% load
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Load bank testing"
+            onSite="Maintenance tip: if a generator has been running at light load for extended periods (e.g., the building has few occupants), schedule a load bank test to clean out the exhaust system and verify the generator can still deliver rated output."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Purpose:</strong> Apply a controlled, adjustable electrical load to verify
+                full-rated output capability.
+              </li>
+              <li>
+                <strong>Load bank types:</strong> Resistive (kW only), reactive (kVAr), combined (kW
+                + kVAr).
+              </li>
+              <li>
+                <strong>Procedure:</strong> Start at 25% load, step up to 50%, 75% and 100% in
+                stages, recording voltage, current, frequency, oil pressure, coolant temperature and
+                exhaust temperature at each step.
+              </li>
+              <li>
+                <strong>Duration:</strong> Minimum 30 minutes at each load step, or as specified by
+                the maintenance standard.
+              </li>
+              <li>
+                <strong>Frequency:</strong> Annual load bank test recommended; monthly test runs at
+                minimum 50% load.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Wet Stacking</p>
-              <p className="text-sm text-white">
-                Wet stacking is a serious condition caused by prolonged light-load or no-load
-                running. The engine does not reach optimal combustion temperature, causing unburned
-                fuel, soot and carbon to accumulate in the exhaust manifold, turbocharger, cylinder
-                liners and valve guides. Symptoms include black oily residue from the exhaust, white
-                or blue exhaust smoke, carbon deposits on spark arrestors, and reduced power output.
-                Severe wet stacking requires engine decarburisation — an expensive and
-                time-consuming repair. Prevention is through regular running at minimum 50-75% rated
-                load.
-              </p>
-            </div>
+          <CommonMistake
+            title="Wet stacking"
+            whatHappens="Wet stacking is a serious condition caused by prolonged light-load or no-load running. The engine does not reach optimal combustion temperature, causing unburned fuel, soot and carbon to accumulate in the exhaust manifold, turbocharger, cylinder liners and valve guides. Symptoms include black oily residue from the exhaust, white or blue exhaust smoke, carbon deposits on spark arrestors, and reduced power output. Severe wet stacking requires engine decarburisation — an expensive and time-consuming repair."
+            doInstead="Prevention is through regular running at minimum 50-75% rated load."
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> If a generator has been running at light load for
-              extended periods (e.g., the building has few occupants), schedule a load bank test to
-              clean out the exhaust system and verify the generator can still deliver rated output.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 03: Preventive Maintenance Programme */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Preventive Maintenance Programme
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Preventive maintenance programme</ContentEyebrow>
+
+          <ConceptBlock title="A comprehensive maintenance programme is essential for generator reliability">
             <p>
               A comprehensive preventive maintenance programme is essential for generator
               reliability. The programme must cover the engine, alternator, control system, fuel
               system, cooling system, starting batteries and exhaust system.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Maintenance Schedule</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Interval</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Tasks</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Weekly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual inspection, check oil/coolant/fuel levels, check battery voltage,
-                        check for leaks, record run hours
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Test run under load (min 30 mins at 50%+ load), check all alarms, inspect
-                        belts and hoses, check battery electrolyte
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">6-monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oil and filter change (or at 250-500 hrs), fuel filter change, air filter
-                        inspection, coolant test, battery load test
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full load bank test, coolant change, fuel polishing, exhaust system
-                        inspection, alternator insulation test, control system calibration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">3-5 yearly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Major service — injector overhaul, valve clearance check, turbocharger
-                        inspection, starting battery replacement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Maintenance schedule">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Interval</th>
+                    <th className="py-2 font-medium text-white">Tasks</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Weekly</td>
+                    <td className="py-2">
+                      Visual inspection, check oil/coolant/fuel levels, check battery voltage, check
+                      for leaks, record run hours
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Monthly</td>
+                    <td className="py-2">
+                      Test run under load (min 30 mins at 50%+ load), check all alarms, inspect
+                      belts and hoses, check battery electrolyte
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">6-monthly</td>
+                    <td className="py-2">
+                      Oil and filter change (or at 250-500 hrs), fuel filter change, air filter
+                      inspection, coolant test, battery load test
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Annually</td>
+                    <td className="py-2">
+                      Full load bank test, coolant change, fuel polishing, exhaust system
+                      inspection, alternator insulation test, control system calibration
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">3-5 yearly</td>
+                    <td className="py-2">
+                      Major service — injector overhaul, valve clearance check, turbocharger
+                      inspection, starting battery replacement
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fuel Management</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fuel testing:</strong> Annual laboratory analysis for microbial
-                  contamination, water content, oxidation stability and particulate level
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel polishing:</strong> Periodic filtration of stored fuel to remove
-                  water, particulates and microbial growth products
-                </li>
-                <li className="pl-1">
-                  <strong>Water drainage:</strong> Drain water from the bottom of fuel tanks
-                  regularly — water is the primary cause of microbial growth
-                </li>
-                <li className="pl-1">
-                  <strong>Biocide treatment:</strong> Add approved biocide to fuel if microbial
-                  contamination is detected
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel rotation:</strong> For infrequently used generators, ensure fuel is
-                  consumed and replenished within 12-18 months
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Fuel management"
+            onSite="ST1426 link: the maintenance technician standard requires competence in maintaining standby generators, including routine inspections, testing and recording. You must understand the start sequence and be able to identify common faults."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fuel testing:</strong> Annual laboratory analysis for microbial
+                contamination, water content, oxidation stability and particulate level.
+              </li>
+              <li>
+                <strong>Fuel polishing:</strong> Periodic filtration of stored fuel to remove water,
+                particulates and microbial growth products.
+              </li>
+              <li>
+                <strong>Water drainage:</strong> Drain water from the bottom of fuel tanks regularly
+                — water is the primary cause of microbial growth.
+              </li>
+              <li>
+                <strong>Biocide treatment:</strong> Add approved biocide to fuel if microbial
+                contamination is detected.
+              </li>
+              <li>
+                <strong>Fuel rotation:</strong> For infrequently used generators, ensure fuel is
+                consumed and replenished within 12-18 months.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in maintaining standby generators, including routine inspections, testing and
-              recording. You must understand the start sequence and be able to identify common
-              faults.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 04: Environmental and Safety Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Environmental and Safety Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Environmental and safety considerations</ContentEyebrow>
+
+          <ConceptBlock title="Environmental impacts must be managed through proper design, installation and maintenance">
             <p>
               Diesel generators have significant environmental impacts that must be managed through
               proper design, installation and maintenance. Regulatory requirements cover noise,
               emissions, fuel storage and waste management.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Environmental Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Noise:</strong> Acoustic enclosures, attenuators, planning conditions. BS
-                  4142 assessment for noise impact on neighbours
-                </li>
-                <li className="pl-1">
-                  <strong>Emissions:</strong> Medium Combustion Plant Directive (MCPD) for
-                  generators 1-50 MWth. Environmental Permit may be required for regular testing
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel storage:</strong> Bunding to 110% of tank capacity. Compliance with
-                  Oil Storage Regulations. Spill kits, drip trays, overfill prevention
-                </li>
-                <li className="pl-1">
-                  <strong>Oil and coolant disposal:</strong> Waste oil and coolant are controlled
-                  waste — disposed of through an approved waste carrier with waste transfer notes
-                </li>
-                <li className="pl-1">
-                  <strong>Exhaust:</strong> Exhaust must discharge to atmosphere in a safe location
-                  — away from air intakes, openable windows and occupied areas
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Environmental requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Noise:</strong> Acoustic enclosures, attenuators, planning conditions. BS
+                4142 assessment for noise impact on neighbours.
+              </li>
+              <li>
+                <strong>Emissions:</strong> Medium Combustion Plant Directive (MCPD) for generators
+                1-50 MWth. Environmental Permit may be required for regular testing.
+              </li>
+              <li>
+                <strong>Fuel storage:</strong> Bunding to 110% of tank capacity. Compliance with Oil
+                Storage Regulations. Spill kits, drip trays, overfill prevention.
+              </li>
+              <li>
+                <strong>Oil and coolant disposal:</strong> Waste oil and coolant are controlled
+                waste — disposed of through an approved waste carrier with waste transfer notes.
+              </li>
+              <li>
+                <strong>Exhaust:</strong> Exhaust must discharge to atmosphere in a safe location —
+                away from air intakes, openable windows and occupied areas.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Hazards</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Carbon monoxide:</strong> Exhaust gases contain CO — fatal in enclosed
-                  spaces. Never run a generator indoors without proper exhaust extraction
-                </li>
-                <li className="pl-1">
-                  <strong>Rotating parts:</strong> Belt drives, fans, flywheels — all guards must be
-                  in place before starting
-                </li>
-                <li className="pl-1">
-                  <strong>Hot surfaces:</strong> Engine, exhaust manifold, turbocharger — severe
-                  burn risk. Allow cool-down before maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical:</strong> Generator output is live when running — safe
-                  isolation procedures must be followed. Back-feed risk if connected without an ATS
-                </li>
-                <li className="pl-1">
-                  <strong>Fuel:</strong> Diesel is combustible — no smoking or naked flames near
-                  fuel storage or during refuelling
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Safety hazards"
+            onSite="Key point: a generator connected to a building without a properly interlocked ATS can back-feed into the mains supply, energising supposedly dead cables and presenting a fatal electrocution risk to electricity network engineers. This is illegal and extremely dangerous."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Carbon monoxide:</strong> Exhaust gases contain CO — fatal in enclosed
+                spaces. Never run a generator indoors without proper exhaust extraction.
+              </li>
+              <li>
+                <strong>Rotating parts:</strong> Belt drives, fans, flywheels — all guards must be
+                in place before starting.
+              </li>
+              <li>
+                <strong>Hot surfaces:</strong> Engine, exhaust manifold, turbocharger — severe burn
+                risk. Allow cool-down before maintenance.
+              </li>
+              <li>
+                <strong>Electrical:</strong> Generator output is live when running — safe isolation
+                procedures must be followed. Back-feed risk if connected without an ATS.
+              </li>
+              <li>
+                <strong>Fuel:</strong> Diesel is combustible — no smoking or naked flames near fuel
+                storage or during refuelling.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A generator connected to a building without a properly
-              interlocked ATS can back-feed into the mains supply, energising supposedly dead cables
-              and presenting a fatal electrocution risk to electricity network engineers. This is
-              illegal and extremely dangerous.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05: Alternator Maintenance and Electrical Connections */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Alternator Maintenance and Electrical Connections
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Alternator maintenance and electrical connections</ContentEyebrow>
+
+          <ConceptBlock title="The alternator converts mechanical energy into AC electrical energy">
             <p>
               The alternator converts the engine's mechanical energy into AC electrical energy. It
               is typically a brushless, self-excited, four-pole synchronous machine running at 1,500
@@ -725,164 +667,199 @@ const MOETModule3Section5_3 = () => {
               instability and can damage connected equipment. Understanding AVR function and testing
               is an important maintenance skill.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Alternator Maintenance Tasks
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Annual megger test of stator and rotor
-                  windings — minimum 2 megohms for LV alternators; trend declining values
-                </li>
-                <li className="pl-1">
-                  <strong>Winding resistance:</strong> Measure phase-to-phase resistance to detect
-                  turn-to-turn faults or connection problems
-                </li>
-                <li className="pl-1">
-                  <strong>AVR adjustment:</strong> Verify output voltage at no-load and full-load;
-                  adjust set-point if drifting from 400 V (three-phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Diode pack:</strong> Brushless alternators use rotating diodes — check for
-                  open or short-circuit failures during annual service
-                </li>
-                <li className="pl-1">
-                  <strong>Bearing condition:</strong> Listen for bearing noise during test runs;
-                  vibration analysis for larger units
-                </li>
-                <li className="pl-1">
-                  <strong>Ventilation:</strong> Clean air inlet filters and ducts; blocked
-                  ventilation causes winding overheating
-                </li>
-                <li className="pl-1">
-                  <strong>Connections:</strong> Retorque all power output connections; thermographic
-                  survey under load
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Alternator maintenance tasks">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation resistance:</strong> Annual megger test of stator and rotor
+                windings — minimum 2 megohms for LV alternators; trend declining values.
+              </li>
+              <li>
+                <strong>Winding resistance:</strong> Measure phase-to-phase resistance to detect
+                turn-to-turn faults or connection problems.
+              </li>
+              <li>
+                <strong>AVR adjustment:</strong> Verify output voltage at no-load and full-load;
+                adjust set-point if drifting from 400 V (three-phase).
+              </li>
+              <li>
+                <strong>Diode pack:</strong> Brushless alternators use rotating diodes — check for
+                open or short-circuit failures during annual service.
+              </li>
+              <li>
+                <strong>Bearing condition:</strong> Listen for bearing noise during test runs;
+                vibration analysis for larger units.
+              </li>
+              <li>
+                <strong>Ventilation:</strong> Clean air inlet filters and ducts; blocked ventilation
+                causes winding overheating.
+              </li>
+              <li>
+                <strong>Connections:</strong> Retorque all power output connections; thermographic
+                survey under load.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Electrical Connection Considerations
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The generator's electrical connection to the building's distribution system must
-                comply with BS 7671 Section 551 and the DNO's connection requirements. Key
-                considerations include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Earthing arrangement:</strong> The generator may require its own earth
-                  electrode; the earthing system must be coordinated with the ATS switching
-                  arrangement
-                </li>
-                <li className="pl-1">
-                  <strong>Protection coordination:</strong> Fault levels on the generator supply
-                  differ from the mains supply — protection settings must be verified for both
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Neutral switching:</strong> Four-pole ATS required in TN-S systems to
-                  prevent neutral current circulation
-                </li>
-                <li className="pl-1">
-                  <strong>Cable sizing:</strong> Generator supply cables must be rated for the
-                  generator's full output current, not just the expected load
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              competence in maintaining standby generators, including the alternator, control system
-              and electrical connections. Practical observation of generator maintenance is part of
-              the EPA assessment.
+          <ConceptBlock
+            title="Electrical connection considerations"
+            onSite="Under ST1426, maintenance technicians must demonstrate competence in maintaining standby generators, including the alternator, control system and electrical connections. Practical observation of generator maintenance is part of the EPA assessment."
+          >
+            <p>
+              The generator's electrical connection to the building's distribution system must
+              comply with BS 7671 Section 551 and the DNO's connection requirements. Key
+              considerations include:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Earthing arrangement:</strong> The generator may require its own earth
+                electrode; the earthing system must be coordinated with the ATS switching
+                arrangement.
+              </li>
+              <li>
+                <strong>Protection coordination:</strong> Fault levels on the generator supply
+                differ from the mains supply — protection settings must be verified for both
+                conditions.
+              </li>
+              <li>
+                <strong>Neutral switching:</strong> Four-pole ATS required in TN-S systems to
+                prevent neutral current circulation.
+              </li>
+              <li>
+                <strong>Cable sizing:</strong> Generator supply cables must be rated for the
+                generator's full output current, not just the expected load.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=WhATjUHgzxQ"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="AC Electrical Generator Basics"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Generator Components</p>
-                <ul className="space-y-0.5">
-                  <li>Diesel engine -- prime mover</li>
-                  <li>Alternator -- mechanical to AC</li>
-                  <li>AVR -- constant output voltage</li>
-                  <li>Governor -- constant frequency (50 Hz)</li>
-                  <li>Control panel -- monitoring and sequencing</li>
-                  <li>Starting batteries -- 12 V or 24 V</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Intervals</p>
-                <ul className="space-y-0.5">
-                  <li>Weekly -- visual, levels, battery voltage</li>
-                  <li>Monthly -- test run 30 min at 50%+ load</li>
-                  <li>6-monthly -- oil/filter change, coolant test</li>
-                  <li>Annual -- load bank test, fuel polishing</li>
-                  <li>3-5 yearly -- injectors, valves, turbo</li>
-                  <li>Bunding -- 110% of tank volume</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="5:56"
+
+            topic="How an alternator actually makes the AC a standby set delivers"
+
+            caption="Six minutes on the machine at the heart of the generator set, before the maintenance detail on this page."
+          />
+
+          <SectionRule />
+
+          <Scenario
+            title="A standby generator that has never actually carried the building"
+
+            situation={
+              <>
+                <p>
+                  A site runs its standby generator monthly. It starts on the first attempt every
+                  time and runs for twenty minutes. The log shows two years of successful tests.
+                </p>
+
+                <p>
+                  During a real outage it starts, runs for ninety seconds, and shuts down on high
+                  coolant temperature.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Look at what the monthly test actually proved. Running off-load proves the engine
+                  starts and runs. It does not prove the cooling system can hold temperature under
+                  load, that the alternator can take the building, or that the transfer switch
+                  works.
+                </p>
+
+                <p>
+                  Introduce an on-load test on a sensible interval, using the building load or a
+                  load bank. Off-load running is also bad for a diesel — it glazes bores and causes
+                  wet stacking, so the reassuring monthly test may itself be doing harm.
+                </p>
+
+                <p>
+                  Test the transfer as part of it. A generator that starts perfectly and never picks
+                  up the load because the changeover fails is no better than one that does not
+                  start.
+                </p>
+
+                <p>
+                  Check the cooling system specifically: radiator cleanliness, coolant level and
+                  condition, louvre operation, and whether anything has been stored against the
+                  airflow path since it was installed.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Two years of green ticks in a log created confidence in something that had never
+                been demonstrated. This is the clearest example in the course of a test that
+                measures what is easy rather than what matters — and standby systems are especially
+                prone to it, because the thing they exist for happens rarely and cannot be
+                scheduled. A maintenance regime is only as good as the question its tests actually
+                answer.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Four main components: the diesel engine (prime mover), the alternator (mechanical to AC via the AVR and governor), the control panel (start/stop sequencing and alarms), and the fuel system.',
+              'Automatic start sequence: mains-failure detection, time delay, engine crank and warm-up, then load transfer — typically 10-30 seconds; loads that cannot tolerate any interruption still need a UPS to bridge that gap.',
+              'Load bank testing steps from 25% to 100% load in stages, minimum 30 minutes per step, and prevents wet stacking — the carbon build-up caused by prolonged light-load or no-load running.',
+              'Maintenance runs from weekly visual checks through monthly load-run tests, 6-monthly oil and filter changes, annual load bank tests and fuel polishing, to 3-5 yearly major overhauls.',
+              'Fuel degrades through microbial growth (diesel bug), water contamination, oxidation and sedimentation — test annually and polish (filter) periodically.',
+              "Environmental controls include bunding to 110% of tank capacity, acoustic enclosures for noise, and an Environmental Permit for larger generators' emissions.",
+              'A generator must never be connected without a properly interlocked ATS — an uninterlocked connection can back-feed into the mains and present a fatal risk to network engineers working on supposedly dead cables.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Battery Technologies
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Transfer Switches
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Battery Technologies
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section5-4">
-              Next: Transfer Switches
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

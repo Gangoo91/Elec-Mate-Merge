@@ -173,7 +173,7 @@ const PhaseRotationCalculator = () => {
 
     return {
       meta: {
-        title: 'Phase Rotation Calculator',
+        title: 'Phase Rotation',
         subtitle: 'Phase sequence check for a three-phase installation',
       },
       headline: [
@@ -201,6 +201,24 @@ const PhaseRotationCalculator = () => {
                     ? 'Motor rotation test'
                     : 'Voltage measurement',
             },
+            // The actual reading/observation the electrician entered was missing
+            // from the report — only the choice of test method was shown.
+            ...(testMethod === 'phase-rotation-meter' && phaseRotationMeter
+              ? [
+                  {
+                    label: 'Meter indication',
+                    value: phaseRotationMeter === 'l1-l2-l3' ? 'L1–L2–L3 (clockwise)' : 'L1–L3–L2 (anti-clockwise)',
+                  },
+                ]
+              : []),
+            ...(testMethod === 'motor-behaviour' && motorBehaviour
+              ? [
+                  {
+                    label: 'Observed motor rotation',
+                    value: motorBehaviour === 'clockwise' ? 'Clockwise (standard)' : 'Anti-clockwise (reversed)',
+                  },
+                ]
+              : []),
             ...(result.voltages
               ? [
                   { label: 'L1 to L2', value: `${result.voltages.l1l2.toFixed(1)} V` },
@@ -211,11 +229,13 @@ const PhaseRotationCalculator = () => {
           ],
         },
         {
+          // Confidence is already the headline — this section adds the
+          // qualifier text behind the sequence/direction rather than restating
+          // the headline figures.
           heading: 'Result',
           rows: [
             { label: 'Sequence', value: result.sequence },
             { label: 'Motor direction', value: result.motorDirection },
-            { label: 'Confidence', value: result.confidence },
             ...(result.voltages
               ? [
                   { label: 'Average voltage', value: `${result.voltages.avg.toFixed(1)} V` },

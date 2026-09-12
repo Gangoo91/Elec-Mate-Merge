@@ -1,8 +1,55 @@
-import { ArrowLeft, FileText, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.5 · Subsection 5 — Test Documentation and Certification
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Documentation requirements: documentation control,
+ *                auditable records."
+ *   Skills    · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * Certificate names (EIC, MEIWC, EICR) and EICR classification codes (C1,
+ * C2, C3, FI) are copied verbatim from the original page — this course has
+ * no canonical certificate registry and has previously overstated the count
+ * elsewhere, so nothing here has been renamed or "tidied". Numeric/legal
+ * detail (retention periods, calibration intervals) is copied verbatim; the
+ * bs7671_facets RAG holds regulation rules, not this kind of procedural
+ * detail, so it could not be checked against it.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Test Documentation and Certification - MOET Module 4.5.5';
@@ -14,10 +61,10 @@ const quickCheckQuestions = [
     id: 'doc-purpose',
     question: 'Why is accurate test documentation essential in electrical maintenance?',
     options: [
-      "It removes the need to carry out testing on any future periodic inspection.",
-      "It allows the technician to round and adjust results to convenient values.",
-      "It provides a permanent compliance record and baseline for comparison between inspections.",
-      "It guarantees the installation will never develop a fault in service.",
+      'It removes the need to carry out testing on any future periodic inspection.',
+      'It allows the technician to round and adjust results to convenient values.',
+      'It provides a permanent compliance record and baseline for comparison between inspections.',
+      'It guarantees the installation will never develop a fault in service.',
     ],
     correctIndex: 2,
     explanation:
@@ -42,7 +89,7 @@ const quickCheckQuestions = [
     options: [
       'To certify a brand-new installation before it is first energised and handed over.',
       'To record only the test results obtained for a single final circuit.',
-      'To set out the manufacturer\'s technical data and ratings for the consumer unit.',
+      "To set out the manufacturer's technical data and ratings for the consumer unit.",
       'To record the condition of an existing installation and classify deficiencies by severity.',
     ],
     correctIndex: 3,
@@ -124,10 +171,10 @@ const quizQuestions = [
     id: 6,
     question: 'Test records should be retained for:',
     options: [
-      "One year from the date the installation was first energised and certified",
-      "Only until the signed certificate has been handed over to the client",
-      "The lifetime of the installation, to enable trend analysis between inspections",
-      "Six months, after which the historic records may be safely destroyed",
+      'One year from the date the installation was first energised and certified',
+      'Only until the signed certificate has been handed over to the client',
+      'The lifetime of the installation, to enable trend analysis between inspections',
+      'Six months, after which the historic records may be safely destroyed',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,321 +206,206 @@ const faqs = [
 ];
 
 const MOETModule4Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <FileText className="h-4 w-4" />
-            <span>Module 4.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Test Documentation and Certification
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 5"
+        title="Test Documentation and Certification"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Recording actual values, completing test schedules, and maintaining accurate
-            certification records
+            certification records.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Record actual values:</strong> Never round, estimate, or record pass/fail
-                only
-              </li>
-              <li className="pl-1">
-                <strong>Calibrated instruments:</strong> All test results require calibrated
-                equipment
-              </li>
-              <li className="pl-1">
-                <strong>Correct certificates:</strong> EIC for new work, EICR for existing
-                installations
-              </li>
-              <li className="pl-1">
-                <strong>Retain records:</strong> Keep for the lifetime of the installation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Record actual values: Never round, estimate, or record pass/fail only',
+              'Calibrated instruments: All test results require calibrated equipment',
+              'Correct certificates: EIC for new work, EICR for existing installations',
+              'Retain records: Keep for the lifetime of the installation',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Legal evidence:</strong> Test records demonstrate due diligence and
                 compliance
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Trend analysis:</strong> Comparing values between inspections reveals
                 deterioration
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Professional duty:</strong> Accurate documentation is a core competency
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to documentation and reporting competencies
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Record actual measured test values accurately and consistently',
               'Complete schedules of test results in accordance with BS 7671',
               'Understand the purpose and content of EICs, MEIWCs, and EICRs',
               'Apply the EICR observation classification system (C1, C2, C3, FI)',
               'Maintain calibration records for test instruments',
               'Retain and organise test documentation for the installation lifetime',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Recording actual values</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Recording Actual Values
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Recording Actual Values">
             <p>
               Always record the actual measured value, not a rounded or adjusted figure. If the
-              insulation resistance reading is 127 MΩ, record 127 MΩ — not {'"'}
-              {'>'}
-              {'"'}1 MΩ{'"'} or {'"'}pass{'"'}. If the RCD trip time is 22 ms, record 22 ms — not{' '}
-              {'"'}
-              {'<'}40 ms{'"'}. Actual values enable meaningful comparison between inspections and
-              provide the data needed for condition-based maintenance decisions. The only exception
-              is where the instrument reads overrange (e.g., {'"'}
-              {'>'}
-              {'"'}200 MΩ{'"'}), in which case the overrange indication should be recorded as such.
+              insulation resistance reading is 127 MΩ, record 127 MΩ — not &quot;&gt;1 MΩ&quot; or
+              &quot;pass&quot;. If the RCD trip time is 22 ms, record 22 ms — not &quot;&lt;40
+              ms&quot;. Actual values enable meaningful comparison between inspections and provide
+              the data needed for condition-based maintenance decisions. The only exception is where
+              the instrument reads overrange (e.g., &quot;&gt;200 MΩ&quot;), in which case the
+              overrange indication should be recorded as such.
             </p>
             <p>
-              Recording {'"'}pass{'"'} or {'"'}fail{'"'} instead of actual values removes all useful
-              information. A circuit with insulation resistance of 2 MΩ and one with 200 MΩ would
-              both be recorded as {'"'}pass{'"'}, yet the first circuit is close to the minimum
-              acceptable value and may be deteriorating. Only by recording actual values can this
-              deterioration be tracked over time.
+              Recording &quot;pass&quot; or &quot;fail&quot; instead of actual values removes all
+              useful information. A circuit with insulation resistance of 2 MΩ and one with 200 MΩ
+              would both be recorded as &quot;pass&quot;, yet the first circuit is close to the
+              minimum acceptable value and may be deteriorating. Only by recording actual values can
+              this deterioration be tracked over time.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Good Practice vs Poor Practice
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Good Record</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Poor Record</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">127 MΩ</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pass / {'>'}
-                        {'"'}1 MΩ{'"'}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD trip time</td>
-                      <td className="border border-white/10 px-3 py-2">22 ms</td>
-                      <td className="border border-white/10 px-3 py-2">Pass / {'<'}300 ms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Zs</td>
-                      <td className="border border-white/10 px-3 py-2">0.48 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">OK / Within limits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuity (R1+R2)</td>
-                      <td className="border border-white/10 px-3 py-2">0.34 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">Satisfactory</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <AppendixTable
+            caption="Good Practice vs Poor Practice"
+            headers={['Test', 'Good Record', 'Poor Record']}
+            rows={[
+              ['Insulation resistance', '127 MΩ', 'Pass / ">1 MΩ"'],
+              ['RCD trip time', '22 ms', 'Pass / "<300 ms"'],
+              ['Zs', '0.48 Ω', 'OK / Within limits'],
+              ['Continuity (R1+R2)', '0.34 Ω', 'Satisfactory'],
+            ]}
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Schedules of Test Results
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Schedules of test results</ContentEyebrow>
+
+          <ConceptBlock title="Schedules of Test Results">
             <p>
               The Schedule of Test Results is the detailed record that accompanies every Electrical
               Installation Certificate (EIC) and Electrical Installation Condition Report (EICR). It
               records the results of all tests performed on each circuit, providing a complete
-              picture of the installation's electrical condition at the time of testing.
+              picture of the installation&apos;s electrical condition at the time of testing.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Information Required for Each Circuit
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Circuit identification:</strong> Circuit number, description, and location
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit details:</strong> Cable type, size, reference method, overcurrent
-                  device type and rating
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> R1+R2 or R2 values in ohms
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Between live conductors and between live
-                  conductors and earth, in MΩ
-                </li>
-                <li className="pl-1">
-                  <strong>Polarity:</strong> Confirmation of correct polarity
-                </li>
-                <li className="pl-1">
-                  <strong>Earth fault loop impedance:</strong> Zs value in ohms
-                </li>
-                <li className="pl-1">
-                  <strong>RCD:</strong> Type, rating, and measured trip time
-                </li>
-                <li className="pl-1">
-                  <strong>Prospective fault current:</strong> Ipf at the origin or relevant point
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Information required for each circuit">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Circuit identification:</strong> Circuit number, description, and location
+              </li>
+              <li>
+                <strong>Circuit details:</strong> Cable type, size, reference method, overcurrent
+                device type and rating
+              </li>
+              <li>
+                <strong>Continuity:</strong> R1+R2 or R2 values in ohms
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> Between live conductors and between live
+                conductors and earth, in MΩ
+              </li>
+              <li>
+                <strong>Polarity:</strong> Confirmation of correct polarity
+              </li>
+              <li>
+                <strong>Earth fault loop impedance:</strong> Zs value in ohms
+              </li>
+              <li>
+                <strong>RCD:</strong> Type, rating, and measured trip time
+              </li>
+              <li>
+                <strong>Prospective fault current:</strong> Ipf at the origin or relevant point
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Documentation Errors
-              </p>
-              <p className="text-sm text-white">
-                Common errors include: leaving fields blank (every field should contain a value,
-                N/A, or a dash with explanation), recording values without units, using incorrect
-                test voltage for insulation resistance, failing to record which circuits were tested
-                on the EICR, and not recording the instrument serial numbers and calibration dates.
-                These errors can invalidate the certificate and may have legal consequences.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common documentation errors">
+            <p>
+              Common errors include: leaving fields blank (every field should contain a value, N/A,
+              or a dash with explanation), recording values without units, using incorrect test
+              voltage for insulation resistance, failing to record which circuits were tested on the
+              EICR, and not recording the instrument serial numbers and calibration dates. These
+              errors can invalidate the certificate and may have legal consequences.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Certificates and Reports
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Certificates and reports</ContentEyebrow>
+
+          <ConceptBlock title="Certificates and Reports">
             <p>
               BS 7671 specifies three main certification documents, each serving a different
               purpose. Using the correct document for the type of work carried out is essential —
               issuing the wrong certificate type is a common error that can have regulatory
               implications.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Installation Certificate (EIC)
-                </h3>
-                <p className="text-sm text-white">
-                  Issued for new installations, complete rewires, and alterations that include new
-                  circuits. The EIC certifies that the work complies with BS 7671 and includes the
-                  design, construction, and inspection/testing stages. It requires up to three
-                  signatories: designer, installer, and inspector/tester (which may be the same
-                  person for smaller works).
-                </p>
-              </div>
+          <ConceptBlock title="Electrical Installation Certificate (EIC)">
+            <p>
+              Issued for new installations, complete rewires, and alterations that include new
+              circuits. The EIC certifies that the work complies with BS 7671 and includes the
+              design, construction, and inspection/testing stages. It requires up to three
+              signatories: designer, installer, and inspector/tester (which may be the same person
+              for smaller works).
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Minor Electrical Installation Works Certificate (MEIWC)
-                </h3>
-                <p className="text-sm text-white">
-                  Issued for minor works that do not include the provision of a new circuit — such
-                  as adding a socket to an existing circuit, replacing a consumer unit on existing
-                  circuits, or adding a fused spur. The MEIWC is a simplified form but still
-                  requires test results and confirmation of compliance.
-                </p>
-              </div>
+          <ConceptBlock title="Minor Electrical Installation Works Certificate (MEIWC)">
+            <p>
+              Issued for minor works that do not include the provision of a new circuit — such as
+              adding a socket to an existing circuit, replacing a consumer unit on existing
+              circuits, or adding a fused spur. The MEIWC is a simplified form but still requires
+              test results and confirmation of compliance.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Installation Condition Report (EICR)
-                </h3>
-                <p className="text-sm text-white">
-                  Issued following the periodic inspection and testing of an existing installation.
-                  The EICR records the condition of the installation at the time of inspection and
-                  includes observations classified by severity: C1 (danger present), C2 (potentially
-                  dangerous), C3 (improvement recommended), and FI (further investigation required).
-                  The overall assessment states whether the installation is satisfactory or
-                  unsatisfactory.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Electrical Installation Condition Report (EICR)">
+            <p>
+              Issued following the periodic inspection and testing of an existing installation. The
+              EICR records the condition of the installation at the time of inspection and includes
+              observations classified by severity: C1 (danger present), C2 (potentially dangerous),
+              C3 (improvement recommended), and FI (further investigation required). The overall
+              assessment states whether the installation is satisfactory or unsatisfactory.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Instrument Calibration and Record Keeping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Instrument calibration and record keeping</ContentEyebrow>
+
+          <ConceptBlock title="Instrument Calibration and Record Keeping">
             <p>
               All test instruments used for certification purposes must be calibrated and within
-              their calibration period. Calibration is the process of verifying an instrument's
+              their calibration period. Calibration is the process of verifying an instrument&apos;s
               accuracy against traceable reference standards — standards that can be traced back to
               national measurement standards. A calibration certificate confirms that the instrument
               reads within acceptable limits of accuracy for each measurement function and range.
@@ -484,110 +416,92 @@ const MOETModule4Section5_5 = () => {
               the validity of test results, the calibration status of the instrument at the time of
               testing can be verified. Most test instruments require annual calibration, although
               the calibration interval may vary depending on the instrument type, usage, and
-              manufacturer's recommendations.
+              manufacturer&apos;s recommendations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Record Retention</p>
-              <p className="text-sm text-white">
-                Test records should be retained for the lifetime of the installation. Previous
-                records enable trend analysis — comparing values between inspections to identify
-                gradual deterioration that might not be apparent from a single set of results. The
-                Electricity at Work Regulations 1989 do not specify a retention period, but best
-                practice is indefinite retention. Digital record-keeping systems make this practical
-                and allow easy retrieval and comparison.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> Accurate test documentation and certification is a core
-              competency for the maintenance technician standard. You will be expected to complete
-              test schedules correctly, select the appropriate certification document, and maintain
-              organised records. Developing good documentation habits during your apprenticeship is
-              essential for professional practice.
+          <ConceptBlock title="Record retention">
+            <p>
+              Test records should be retained for the lifetime of the installation. Previous records
+              enable trend analysis — comparing values between inspections to identify gradual
+              deterioration that might not be apparent from a single set of results. The Electricity
+              at Work Regulations 1989 do not specify a retention period, but best practice is
+              indefinite retention. Digital record-keeping systems make this practical and allow
+              easy retrieval and comparison.
             </p>
-          </div>
-        </section>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> Accurate test documentation and
+              certification is a core competency for the maintenance technician standard. You will
+              be expected to complete test schedules correctly, select the appropriate certification
+              document, and maintain organised records. Developing good documentation habits during
+              your apprenticeship is essential for professional practice.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=DJn8KIQkApo"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Schedule of Inspections"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Certification Documents</p>
-                <ul className="space-y-0.5">
-                  <li>EIC: New installations and new circuits</li>
-                  <li>MEIWC: Minor works, no new circuits</li>
-                  <li>EICR: Periodic inspection of existing installations</li>
-                  <li>All require schedules of test results</li>
-                  <li>Record instrument serial numbers and calibration dates</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">EICR Classification Codes</p>
-                <ul className="space-y-0.5">
-                  <li>C1: Danger present — immediate action required</li>
-                  <li>C2: Potentially dangerous — urgent action required</li>
-                  <li>C3: Improvement recommended</li>
-                  <li>FI: Further investigation required</li>
-                  <li>Retain all records for installation lifetime</li>
-                </ul>
-              </div>
+            channel="Craig Wiltshire"
+
+            duration="2:48"
+
+            topic="What the schedule is for and how it is filled in"
+
+            caption="Short and specific — the schedule of inspections is the part of certification most often completed badly."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Certification documents: EIC for new installations and new circuits; MEIWC for minor works with no new circuits; EICR for periodic inspection of existing installations. All require schedules of test results.',
+              'Record instrument serial numbers and calibration dates on the certification documents.',
+              'EICR classification codes: C1 danger present — immediate action required; C2 potentially dangerous — urgent action required; C3 improvement recommended; FI further investigation required.',
+              'Retain all test records for the lifetime of the installation.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Functional Testing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Commissioning Procedures
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Functional Testing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-6">
-              Next: Commissioning Procedures
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

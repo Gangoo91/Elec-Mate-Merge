@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.1 · Subsection 5 — Isolation and Switching Devices
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import { ContactorSymbol } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Isolation and Switching Devices - MOET Module 3 Section 1.5';
@@ -69,12 +106,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What section of BS 7671 covers isolation and switching requirements?',
-    options: [
-      'Section 411',
-      'Section 537',
-      'Section 514',
-      'Section 612',
-    ],
+    options: ['Section 411', 'Section 537', 'Section 514', 'Section 612'],
     correctAnswer: 1,
     explanation:
       'Section 537 of BS 7671 covers the requirements for isolation, switching, control and monitoring of electrical installations.',
@@ -134,12 +166,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What HSE guidance note covers voltage indicator requirements for proving dead?',
-    options: [
-      'GS6',
-      'GS50',
-      'GS38',
-      'PM29',
-    ],
+    options: ['GS6', 'GS50', 'GS38', 'PM29'],
     correctAnswer: 2,
     explanation:
       'HSE Guidance Note GS38 covers the selection and use of test probes, leads, lamps, voltage-indicating devices and measuring instruments for use by electricians.',
@@ -188,12 +215,7 @@ const quizQuestions = [
     id: 10,
     question:
       'In a generator changeover system, what prevents both incomers closing simultaneously?',
-    options: [
-      'Time delay relay',
-      'Current transformer',
-      'Electrical interlocking',
-      'Key switch',
-    ],
+    options: ['Time delay relay', 'Current transformer', 'Electrical interlocking', 'Key switch'],
     correctAnswer: 2,
     explanation:
       'Electrical interlocking uses auxiliary contacts and control circuits to ensure the mains and generator incomers cannot be closed simultaneously, preventing uncontrolled paralleling.',
@@ -255,635 +277,541 @@ const faqs = [
 ];
 
 const MOETModule3Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3.1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Isolation and Switching Devices
-          </h1>
-          <p className="text-white">
-            Functional switching, isolation, emergency switching, fireman's switch and interlocking
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.1 · Subsection 5"
+        title="Isolation and Switching Devices"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Functional switching, isolation, emergency switching, fireman&apos;s switch and
+            interlocking.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Four categories:</strong> Functional, isolation, emergency, mechanical
-                maintenance
-              </li>
-              <li className="pl-1">
-                <strong>Section 537:</strong> BS 7671 switching and isolation requirements
-              </li>
-              <li className="pl-1">
-                <strong>Safe isolation:</strong> Test-isolate-prove dead-re-test (GS38)
-              </li>
-              <li className="pl-1">
-                <strong>Interlocking:</strong> Mechanical, electrical and trapped key systems
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Isolators:</strong> Rotary, switch-disconnector, fuse-switch types
-              </li>
-              <li className="pl-1">
-                <strong>Emergency stops:</strong> Red on yellow, single-action operation
-              </li>
-              <li className="pl-1">
-                <strong>Fireman's switch:</strong> Red, OFF at top, main entrance
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Safe working practices and isolation KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Four categories: Functional, isolation, emergency, mechanical maintenance.',
+              'Section 537: BS 7671 switching and isolation requirements.',
+              'Safe isolation: Test-isolate-prove dead-re-test (GS38).',
+              'Interlocking: Mechanical, electrical and trapped key systems.',
+              'Isolators: Rotary, switch-disconnector, fuse-switch types.',
+              'Emergency stops: Red on yellow, single-action operation.',
+              "Fireman's switch: Red, OFF at top, main entrance.",
+              'ST1426: Safe working practices and isolation KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between functional switching, isolation and emergency switching',
               'Explain BS 7671 Section 537 requirements for isolation and switching',
               'Describe isolator types and their applications in maintenance',
               "Outline fireman's switch and emergency stop device requirements",
               'Explain interlocking methods in electrical systems',
               'Carry out safe isolation procedures using the test-isolate-test method',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Categories of switching</ContentEyebrow>
 
-        {/* Section 01: Categories of Switching */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Categories of Switching
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Four categories, four different jobs">
             <p>
               BS 7671 Section 537 defines four categories of switching, each serving a distinct
               purpose within an electrical installation. Understanding these categories is essential
               for selecting the correct devices and following proper procedures during maintenance
               work.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Functional Switching (Regulation 537.5)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Normal on/off control of electrical equipment or circuits during everyday use.
-                  Functional switches do not need to provide isolation -- they simply control
-                  whether equipment operates. Examples include light switches, motor control
-                  push-buttons, heating thermostats and socket outlet switches.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Do not need to break all live conductors</li>
-                  <li className="pl-1">Do not need a visible gap or locking facility</li>
-                  <li className="pl-1">
-                    Rated for the normal load current of the controlled circuit
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Functional switching (Regulation 537.5)">
+            <p>
+              Normal on/off control of electrical equipment or circuits during everyday use.
+              Functional switches do not need to provide isolation — they simply control whether
+              equipment operates. Examples include light switches, motor control push-buttons,
+              heating thermostats and socket outlet switches.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Do not need to break all live conductors</li>
+              <li>Do not need a visible gap or locking facility</li>
+              <li>Rated for the normal load current of the controlled circuit</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Isolation (Regulation 537.2)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Disconnection of an installation, circuit or item of equipment from every source
-                  of electrical energy to make it safe for work. This is the most critical switching
-                  category for maintenance technicians.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Must break all live conductors (including neutral where it may become live)
-                  </li>
-                  <li className="pl-1">
-                    Must provide a visible gap or positive indication contacts are open
-                  </li>
-                  <li className="pl-1">
-                    Must be capable of being locked in the open (off) position
-                  </li>
-                  <li className="pl-1">
-                    Must be clearly labelled to identify the circuit or equipment
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Isolation (Regulation 537.2)">
+            <p>
+              Disconnection of an installation, circuit or item of equipment from every source of
+              electrical energy to make it safe for work. This is the most critical switching
+              category for maintenance technicians.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Must break all live conductors (including neutral where it may become live)</li>
+              <li>Must provide a visible gap or positive indication contacts are open</li>
+              <li>Must be capable of being locked in the open (off) position</li>
+              <li>Must be clearly labelled to identify the circuit or equipment</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Emergency Switching (Regulation 537.4)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Rapid disconnection of the supply in the event of danger. Emergency switches must
-                  be immediately accessible, clearly identifiable (red on yellow background), and
-                  operable by a single action.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Emergency stop buttons (mushroom-head) on machinery</li>
-                  <li className="pl-1">Fire alarm trip switches on main distribution boards</li>
-                  <li className="pl-1">Must disconnect all live conductors</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Emergency switching (Regulation 537.4)">
+            <p>
+              Rapid disconnection of the supply in the event of danger. Emergency switches must be
+              immediately accessible, clearly identifiable (red on yellow background), and operable
+              by a single action.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Emergency stop buttons (mushroom-head) on machinery</li>
+              <li>Fire alarm trip switches on main distribution boards</li>
+              <li>Must disconnect all live conductors</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Mechanical Maintenance Switching (Regulation 537.3)
-                </h3>
-                <p className="text-sm text-white">
-                  Switching off the supply to non-electrical parts of equipment for mechanical
-                  maintenance. Distinct from isolation (which is for electrical work). Used when
-                  mechanical work is needed on electrically driven equipment, such as changing belts
-                  on a motor-driven fan or cleaning pump impellers.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Mechanical maintenance switching (Regulation 537.3)">
+            <p>
+              Switching off the supply to non-electrical parts of equipment for mechanical
+              maintenance. Distinct from isolation (which is for electrical work). Used when
+              mechanical work is needed on electrically driven equipment, such as changing belts on
+              a motor-driven fan or cleaning pump impellers.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Suitable Devices for Isolation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Switch-disconnectors:</strong> Purpose-designed for isolation with visible
-                  break
-                </li>
-                <li className="pl-1">
-                  <strong>Fuse-switches:</strong> With fuse links removed for additional safety
-                </li>
-                <li className="pl-1">
-                  <strong>MCBs:</strong> Only if they can be locked off and are rated for isolation
-                  duty
-                </li>
-                <li className="pl-1">
-                  <strong>MCCBs and ACBs:</strong> With locking facilities
-                </li>
-                <li className="pl-1">
-                  <strong>Plug-and-socket:</strong> Where the socket is fixed and cannot be
-                  re-inserted during work
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Suitable devices for isolation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switch-disconnectors:</strong> Purpose-designed for isolation with visible
+                break
+              </li>
+              <li>
+                <strong>Fuse-switches:</strong> With fuse links removed for additional safety
+              </li>
+              <li>
+                <strong>MCBs:</strong> Only if they can be locked off and are rated for isolation
+                duty
+              </li>
+              <li>
+                <strong>MCCBs and ACBs:</strong> With locking facilities
+              </li>
+              <li>
+                <strong>Plug-and-socket:</strong> Where the socket is fixed and cannot be
+                re-inserted during work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Devices NOT Suitable for Isolation
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Using a contactor or solid-state relay for isolation"
+            whatHappens={
+              <>
                 Contactors are NOT suitable for isolation because their contacts may weld closed
                 under fault conditions, or the coil may be re-energised by control circuits, causing
                 the contactor to close unexpectedly while work is in progress. Similarly,
                 semiconductor switching devices (solid-state relays) cannot provide isolation
                 because they do not provide a physical break in the circuit.
-              </p>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Use a device from the suitable list instead — a switch-disconnector, a fuse-switch
+                with the fuse links removed, a lockable MCB, MCCB or ACB rated for isolation duty,
+                or a plug-and-socket arrangement where the socket is fixed and cannot be re-inserted
+                during work.
+              </>
+            }
+          />
+
+          <div className="flex flex-wrap items-start gap-6">
+            <ContactorSymbol />
           </div>
-        </section>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Fireman's Switch and Emergency Devices */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fireman's Switch and Emergency Devices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Fireman&apos;s switch and emergency devices</ContentEyebrow>
+
+          <ConceptBlock title="Fireman's switch (Regulation 537.6)">
             <p>
-              Regulation 537.6 requires a fireman's switch for certain installations to allow
+              Regulation 537.6 requires a fireman&apos;s switch for certain installations to allow
               firefighters to disconnect the supply before entering a building or area. The
-              installations requiring a fireman's switch include exterior electrical installations
-              at a height exceeding 2.8 metres operating above 230 V, high-voltage discharge
-              lighting (neon signs), and photovoltaic (PV) installations.
+              installations requiring a fireman&apos;s switch include exterior electrical
+              installations at a height exceeding 2.8 metres operating above 230 V, high-voltage
+              discharge lighting (neon signs), and photovoltaic (PV) installations.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Colour:</strong> Red
+              </li>
+              <li>
+                <strong>Location:</strong> At the main entrance to the building or as close as
+                practicable
+              </li>
+              <li>
+                <strong>Labelling:</strong> Clearly marked &quot;FIREMAN&apos;S SWITCH&quot;
+              </li>
+              <li>
+                <strong>Operation:</strong> OFF position at the top; operable by hand without key or
+                tool
+              </li>
+              <li>
+                <strong>Function:</strong> Must disconnect all live conductors of the installation
+                it controls
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fireman's Switch Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Colour:</strong> Red
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> At the main entrance to the building or as close as
-                  practicable
-                </li>
-                <li className="pl-1">
-                  <strong>Labelling:</strong> Clearly marked "FIREMAN'S SWITCH"
-                </li>
-                <li className="pl-1">
-                  <strong>Operation:</strong> OFF position at the top; operable by hand without key
-                  or tool
-                </li>
-                <li className="pl-1">
-                  <strong>Function:</strong> Must disconnect all live conductors of the installation
-                  it controls
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Emergency Stop Devices</p>
-              <p className="text-sm text-white mb-3">
-                Emergency stop buttons are required on all motor-driven machinery where there is a
-                risk of danger from the driven equipment. They must comply with BS EN 60204-1 and
-                have specific characteristics:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Red mushroom-head push-button on a yellow background</li>
-                <li className="pl-1">Single-action operation (one hand, one movement)</li>
-                <li className="pl-1">
-                  Latching -- must remain in the stop position until manually reset
-                </li>
-                <li className="pl-1">Direct opening contacts (positive break) for reliability</li>
-                <li className="pl-1">
-                  Located within easy reach of the operator and any other person at risk
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>PV installations:</strong> Solar panels remain live in daylight even when the
-              inverter is disconnected from the grid. The fireman's switch for a PV installation
-              isolates the AC side, but the DC side from the panels to the inverter remains
-              energised during daylight hours. Firefighters must be made aware of this residual
-              hazard through clear labelling.
+          <ConceptBlock title="Emergency stop devices">
+            <p>
+              Emergency stop buttons are required on all motor-driven machinery where there is a
+              risk of danger from the driven equipment. They must comply with BS EN 60204-1 and have
+              specific characteristics:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Red mushroom-head push-button on a yellow background</li>
+              <li>Single-action operation (one hand, one movement)</li>
+              <li>Latching — must remain in the stop position until manually reset</li>
+              <li>Direct opening contacts (positive break) for reliability</li>
+              <li>Located within easy reach of the operator and any other person at risk</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="PV installations carry a residual DC hazard">
+            <p>
+              Solar panels remain live in daylight even when the inverter is disconnected from the
+              grid. The fireman&apos;s switch for a PV installation isolates the AC side, but the DC
+              side from the panels to the inverter remains energised during daylight hours.
+              Firefighters must be made aware of this residual hazard through clear labelling.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03: Isolator Types and Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Isolator Types and Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Isolator types and selection</ContentEyebrow>
+
+          <ConceptBlock title="Choosing the right isolating device">
             <p>
               Several types of device can fulfil the isolation function. The choice depends on the
               current rating, the application, the required IP rating for the environment and the
               specific features needed for the installation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Rotary Isolators</h3>
-                <p className="text-sm text-white">
-                  Commonly used for motor circuits and local equipment isolation. A rotary handle is
-                  turned to the OFF position and can be padlocked in place. Available in IP65
-                  enclosures for outdoor or harsh industrial environments. Typically rated from 16 A
-                  to 125 A. Many incorporate auxiliary contacts for remote indication of the switch
-                  position.
-                </p>
-              </div>
+          <ConceptBlock title="Rotary isolators">
+            <p>
+              Commonly used for motor circuits and local equipment isolation. A rotary handle is
+              turned to the OFF position and can be padlocked in place. Available in IP65 enclosures
+              for outdoor or harsh industrial environments. Typically rated from 16 A to 125 A. Many
+              incorporate auxiliary contacts for remote indication of the switch position.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Switch-Disconnectors
-                </h3>
-                <p className="text-sm text-white">
-                  Combine load switching with isolation in a single device. Commonly used as the
-                  main incomer to distribution boards, providing a visible break and padlocking
-                  facility. Available in three-pole and four-pole (including switched neutral)
-                  configurations. Rated from 63 A to several thousand amperes for main switchboard
-                  applications.
-                </p>
-              </div>
+          <ConceptBlock title="Switch-disconnectors">
+            <p>
+              Combine load switching with isolation in a single device. Commonly used as the main
+              incomer to distribution boards, providing a visible break and padlocking facility.
+              Available in three-pole and four-pole (including switched neutral) configurations.
+              Rated from 63 A to several thousand amperes for main switchboard applications.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Fuse-Switches and Fused Isolators
-                </h3>
-                <p className="text-sm text-white">
-                  Combine the isolation function with fuse protection. When the switch is opened,
-                  the fuse links are physically withdrawn from the busbar connections, providing a
-                  clear visible break. Common in older industrial installations. The fuse links
-                  provide short-circuit protection while the switch mechanism handles load switching
-                  and isolation.
-                </p>
-              </div>
+          <ConceptBlock title="Fuse-switches and fused isolators">
+            <p>
+              Combine the isolation function with fuse protection. When the switch is opened, the
+              fuse links are physically withdrawn from the busbar connections, providing a clear
+              visible break. Common in older industrial installations. The fuse links provide
+              short-circuit protection while the switch mechanism handles load switching and
+              isolation.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Isolator types compared">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Isolator type</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Typical rating</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">
+                      Common application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Rotary isolator</td>
+                    <td className="border border-white/10 px-3 py-2">16 A - 125 A</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Local motor and equipment isolation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Switch-disconnector</td>
+                    <td className="border border-white/10 px-3 py-2">63 A - 3200 A</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      DB main incomer, sub-main isolation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Fuse-switch</td>
+                    <td className="border border-white/10 px-3 py-2">32 A - 800 A</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Industrial switchboards (legacy)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCB with lockout</td>
+                    <td className="border border-white/10 px-3 py-2">6 A - 125 A</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Final circuit isolation in DBs
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Isolator Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Rating</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rotary isolator</td>
-                      <td className="border border-white/10 px-3 py-2">16 A - 125 A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Local motor and equipment isolation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Switch-disconnector</td>
-                      <td className="border border-white/10 px-3 py-2">63 A - 3200 A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        DB main incomer, sub-main isolation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuse-switch</td>
-                      <td className="border border-white/10 px-3 py-2">32 A - 800 A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Industrial switchboards (legacy)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB with lockout</td>
-                      <td className="border border-white/10 px-3 py-2">6 A - 125 A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final circuit isolation in DBs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04: Interlocking */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Interlocking Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Interlocking systems</ContentEyebrow>
+
+          <ConceptBlock title="Linking one device's state to another">
             <p>
               Interlocking is a safety mechanism that prevents hazardous operations by linking the
               operation of one device to the state of another. In electrical systems, interlocking
               prevents access to live equipment, enforces safe switching sequences and prevents
               parallel operation of incompatible supplies.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Mechanical Interlocking
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Uses physical linkages to prevent certain operations. Common examples include:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Door interlocks on switchgear preventing door opening while energised
-                  </li>
-                  <li className="pl-1">
-                    Defeatable interlocks overridable with a special tool for authorised testing
-                  </li>
-                  <li className="pl-1">
-                    Mechanical linkages between two contactors preventing both closing
-                    simultaneously
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Mechanical interlocking">
+            <p>Uses physical linkages to prevent certain operations. Common examples include:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Door interlocks on switchgear preventing door opening while energised</li>
+              <li>Defeatable interlocks overridable with a special tool for authorised testing</li>
+              <li>
+                Mechanical linkages between two contactors preventing both closing simultaneously
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Interlocking
-                </h3>
-                <p className="text-sm text-white">
-                  Uses auxiliary contacts and control circuits to prevent unsafe operations. In a
-                  generator changeover system, the mains incomer and generator incomer are
-                  electrically interlocked so that both cannot be closed simultaneously, which would
-                  parallel the generator with the mains supply. Auxiliary contacts from each
-                  contactor are wired into the control circuit of the other, creating a cross-lock
-                  arrangement.
-                </p>
-              </div>
+          <ConceptBlock title="Electrical interlocking">
+            <p>
+              Uses auxiliary contacts and control circuits to prevent unsafe operations. In a
+              generator changeover system, the mains incomer and generator incomer are electrically
+              interlocked so that both cannot be closed simultaneously, which would parallel the
+              generator with the mains supply. Auxiliary contacts from each contactor are wired into
+              the control circuit of the other, creating a cross-lock arrangement.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Trapped Key Interlocking
-                </h3>
-                <p className="text-sm text-white">
-                  Uses a series of locks and keys to enforce a specific sequence of operations. A
-                  key is trapped in one lock until the correct preceding operation has been
-                  completed. Widely used in HV/LV transformer substations to ensure that the HV
-                  supply is isolated and earthed before the LV switchroom door can be opened, and
-                  that the LV main switch is open before the transformer can be accessed. The
-                  physical key transfer makes the sequence impossible to bypass without deliberate
-                  defeat.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Trapped key interlocking">
+            <p>
+              Uses a series of locks and keys to enforce a specific sequence of operations. A key is
+              trapped in one lock until the correct preceding operation has been completed. Widely
+              used in HV/LV transformer substations to ensure that the HV supply is isolated and
+              earthed before the LV switchroom door can be opened, and that the LV main switch is
+              open before the transformer can be accessed. The physical key transfer makes the
+              sequence impossible to bypass without deliberate defeat.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05: Safe Isolation Procedure */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Safe Isolation Procedure for Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safe isolation procedure for maintenance</ContentEyebrow>
+
+          <ConceptBlock title="The single most critical procedure in electrical maintenance">
             <p>
               Safe isolation is the single most critical procedure in electrical maintenance.
               Failure to follow the correct procedure is the primary cause of electrical accidents.
               The procedure is based on HSE Guidance Note GS38 and ensures that the circuit is
               genuinely dead before work commences.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Five-Step Safe Isolation Procedure
-              </p>
-              <ol className="text-sm text-white space-y-3 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify:</strong> Identify the circuit or equipment using circuit
-                  schedules, drawings or tracing. Confirm identification with the client or site
-                  representative.
-                </li>
-                <li className="pl-1">
-                  <strong>Test the voltage indicator:</strong> Test your approved voltage indicator
-                  on a known live source (proving unit or known live circuit) to confirm it is
-                  working correctly.
-                </li>
-                <li className="pl-1">
-                  <strong>Isolate:</strong> Open the isolating device and verify it is in the open
-                  position. Lock off with a personal padlock and attach a caution notice with your
-                  name, date and contact details.
-                </li>
-                <li className="pl-1">
-                  <strong>Prove dead:</strong> Test between all live conductors and between all live
-                  conductors and earth at the point of work using the proved voltage indicator.
-                </li>
-                <li className="pl-1">
-                  <strong>Re-test the voltage indicator:</strong> Test the voltage indicator again
-                  on the known live source to confirm it is still functioning correctly after
-                  proving dead.
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="The five-step safe isolation procedure">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify:</strong> Identify the circuit or equipment using circuit
+                schedules, drawings or tracing. Confirm identification with the client or site
+                representative.
+              </li>
+              <li>
+                <strong>Test the voltage indicator:</strong> Test your approved voltage indicator on
+                a known live source (proving unit or known live circuit) to confirm it is working
+                correctly.
+              </li>
+              <li>
+                <strong>Isolate:</strong> Open the isolating device and verify it is in the open
+                position. Lock off with a personal padlock and attach a caution notice with your
+                name, date and contact details.
+              </li>
+              <li>
+                <strong>Prove dead:</strong> Test between all live conductors and between all live
+                conductors and earth at the point of work using the proved voltage indicator.
+              </li>
+              <li>
+                <strong>Re-test the voltage indicator:</strong> Test the voltage indicator again on
+                the known live source to confirm it is still functioning correctly after proving
+                dead.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Why the Re-Test is Essential</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Skipping the re-test after proving dead"
+            whatHappens={
+              <>
+                If the voltage indicator worked before proving dead but fails the re-test, it may
+                have developed a fault during the dead test, meaning the circuit could still be
+                live.
+              </>
+            }
+            doInstead={
+              <>
                 The re-test after proving dead eliminates the possibility that a faulty instrument
-                gave a false dead reading. If the voltage indicator worked before proving dead but
-                fails the re-test, it may have developed a fault during the dead test, meaning the
-                circuit could still be live. In this case, you must obtain a new instrument, prove
-                it on a known live source, and repeat the dead test.
-              </p>
-            </div>
+                gave a false dead reading. In this case, you must obtain a new instrument, prove it
+                on a known live source, and repeat the dead test.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Approved Voltage Indicators (GS38)
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Treating a multimeter as a substitute for an approved voltage indicator"
+            whatHappens={
+              <>
+                Multimeters in the voltage range are NOT suitable because a blown fuse or flat
+                battery could give a dangerous false dead reading.
+              </>
+            }
+            doInstead={
+              <>
                 Only approved voltage indicators complying with GS38 should be used for proving
                 dead. These have fused test leads with a maximum of 20 mm exposed metal tip, finger
                 guards on the probes, current-limited circuits, and clear go/no-go indication.
-                Multimeters in the voltage range are NOT suitable because a blown fuse or flat
-                battery could give a dangerous false dead reading.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="An isolator that looks off and is not"
+
+            situation={
+              <>
+                <p>
+                  A rotary isolator on a machine is padlocked in the OFF position. You prove dead at
+                  the machine terminals and get nothing. Satisfied, you begin work — and a colleague
+                  gets a shock from a control circuit inside the same enclosure.
+                </p>
+
+                <p>
+                  The isolator switched the three phases. The control transformer was fed from
+                  upstream of it.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Identify every supply into the enclosure before isolating, not just the obvious
+                  one. Control supplies, interlock feeds, PLC I/O from another panel, UPS-backed
+                  circuits and anything fed from a neighbouring machine are all routes in.
+                </p>
+
+                <p>
+                  Read the drawing specifically to find what the isolator does and does not switch.
+                  An isolator is a device with a defined scope; "the isolator is off" is not the
+                  same as "the enclosure is dead".
+                </p>
+
+                <p>
+                  Prove dead at every point you intend to work on, not at one convenient set of
+                  terminals. A single proving test tells you about that point only.
+                </p>
+
+                <p>
+                  Where an enclosure genuinely has more than one supply, it should be labelled to
+                  say so — and if it is not, that is a defect to raise regardless of how this
+                  particular job ends.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Almost every serious shock during maintenance involves a supply nobody knew was
+                there. Proving dead is not a formality you perform once at the start; it is a test
+                of the specific conductors you are about to touch. An isolator that switches the
+                power circuit and leaves the control transformer live is a completely normal
+                arrangement, which is exactly what makes it dangerous.
               </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Four categories of switching: functional (Reg 537.5), isolation (Reg 537.2), mechanical maintenance (Reg 537.3), emergency (Reg 537.4).',
+              'Isolation must break all live conductors, provide a visible gap or positive contact-position indication, and be capable of being locked off.',
+              'Contactors and solid-state relays are NOT suitable for isolation — contacts may weld, or the device provides no physical break.',
+              "Fireman's switch: red, OFF at top, main entrance, disconnects all live conductors — required for tall exterior installations, HV discharge lighting and PV.",
+              'Emergency stop devices: red mushroom-head on yellow, single-action, latching, to BS EN 60204-1.',
+              'Interlocking: mechanical (physical linkage), electrical (auxiliary contacts and control circuits), trapped key (locks and keys enforcing sequence).',
+              'Safe isolation: identify — test the voltage indicator — isolate and lock off — prove dead — re-test the voltage indicator. Based on HSE GS38.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Busbars and Cabling Systems
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section1-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Protection Coordination
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Four Categories of Switching</p>
-                <ul className="space-y-0.5">
-                  <li>1. Functional switching (Reg 537.5)</li>
-                  <li>2. Isolation (Reg 537.2)</li>
-                  <li>3. Mechanical maintenance (Reg 537.3)</li>
-                  <li>4. Emergency switching (Reg 537.4)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safe Isolation Steps</p>
-                <ul className="space-y-0.5">
-                  <li>1. Identify the circuit</li>
-                  <li>2. Test voltage indicator on known live</li>
-                  <li>3. Isolate, lock off, tag</li>
-                  <li>4. Prove dead at point of work</li>
-                  <li>5. Re-test voltage indicator on known live</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: 3.1.4
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1-6">
-              Next: 3.1.6
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -49,7 +49,7 @@ interface BusinessGroup {
 
 const GROUPS: BusinessGroup[] = [
   {
-    eyebrow: '01',
+    eyebrow: 'Company',
     title: 'Identity',
     rows: [
       { id: 'company', title: 'Company', subtitle: 'Name, logo and contact', icon: Building2 },
@@ -57,7 +57,7 @@ const GROUPS: BusinessGroup[] = [
     ],
   },
   {
-    eyebrow: '02',
+    eyebrow: 'Getting paid',
     title: 'Financials',
     rows: [
       { id: 'payment', title: 'Payment', subtitle: 'Banking and Stripe', icon: CreditCard },
@@ -66,7 +66,7 @@ const GROUPS: BusinessGroup[] = [
     ],
   },
   {
-    eyebrow: '03',
+    eyebrow: 'Quotes and invoices',
     title: 'Documents',
     rows: [
       { id: 'quotes', title: 'Quotes', subtitle: 'Terms and defaults', icon: FileText },
@@ -75,7 +75,7 @@ const GROUPS: BusinessGroup[] = [
     ],
   },
   {
-    eyebrow: '04',
+    eyebrow: 'Bookings',
     title: 'Scheduling',
     rows: [
       {
@@ -87,7 +87,7 @@ const GROUPS: BusinessGroup[] = [
     ],
   },
   {
-    eyebrow: '05',
+    eyebrow: 'On your certificates',
     title: 'Professional',
     rows: [
       {

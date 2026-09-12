@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 4 · Subsection 2 — Communication and Reporting Skills
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. These statements are reused from the ST1426 list already
+ * verified for Module 4 (they cover documentation and reporting generally,
+ * not a single module), matched here by topic to this page's written
+ * communication content:
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Communication and Reporting Skills - MOET Module 7 Section 4.2';
@@ -187,7 +224,8 @@ const quizQuestions = [
   },
   {
     id: 10,
-    question: 'Which set of factors are recognised communication barriers in maintenance environments?',
+    question:
+      'Which set of factors are recognised communication barriers in maintenance environments?',
     options: [
       'Clear subject lines, structured reports, accurate readings and signed records',
       'Closed-loop checks, phonetic alphabet use and confirmed handovers',
@@ -255,116 +293,65 @@ const faqs = [
 ];
 
 const MOETModule7Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Communication and Reporting Skills
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.4 · Subsection 2"
+        title="Communication and Reporting Skills"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Effective communication techniques and professional reporting for maintenance
-            technicians
+            technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Three Cs:</strong> Clear, concise, confirmed
-              </li>
-              <li className="pl-1">
-                <strong>Written:</strong> Reports, job cards, logs, emails
-              </li>
-              <li className="pl-1">
-                <strong>Verbal:</strong> Handovers, briefings, closed-loop checks
-              </li>
-              <li className="pl-1">
-                <strong>Audience:</strong> Adapt language to technical/non-technical readers
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safety-critical:</strong> Isolation status, hazard warnings, PTW comms
-              </li>
-              <li className="pl-1">
-                <strong>Technical:</strong> Fault reports, test results, CMMS entries
-              </li>
-              <li className="pl-1">
-                <strong>Cross-trade:</strong> Multi-discipline coordination on site
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Professional discussion and portfolio evidence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Three Cs: Clear, concise, confirmed.',
+              'Written: Reports, job cards, logs, emails.',
+              'Verbal: Handovers, briefings, closed-loop checks.',
+              'Audience: Adapt language to technical/non-technical readers.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply the principles of clear, concise and confirmed communication in maintenance',
               'Write professional maintenance reports, fault reports and technical documentation',
               'Conduct effective verbal briefings, handovers and closed-loop communications',
               'Adapt communication style and language to different audiences and contexts',
               'Use the phonetic alphabet and standard communication protocols for safety-critical messages',
               'Prepare communication evidence for your EPA portfolio and professional discussion',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety-critical:</strong> isolation status, hazard warnings, PTW comms.
+              </li>
+              <li>
+                <strong>Technical:</strong> fault reports, test results, CMMS entries.
+              </li>
+              <li>
+                <strong>Cross-trade:</strong> multi-discipline coordination on site.
+              </li>
+              <li>
+                <strong>ST1426:</strong> professional discussion and portfolio evidence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Principles of Effective Communication
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Principles of effective communication</ContentEyebrow>
+
+          <ConceptBlock title="Communication is the foundation of safe, efficient work">
             <p>
               Communication is the foundation of safe, efficient maintenance work. Every time you
               report a fault, hand over to a colleague, brief a team before a task, or document test
@@ -378,110 +365,87 @@ const MOETModule7Section4_2 = () => {
               communicate that knowledge and skill to others — colleagues, supervisors, clients and
               assessors.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Cs of Maintenance Communication
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Clear:</strong> Use plain language. Avoid unnecessary jargon. Structure
-                  information logically. Ensure the message can be understood by its intended
-                  audience
-                </li>
-                <li className="pl-1">
-                  <strong>Concise:</strong> Include all necessary information but no more. Eliminate
-                  waffle, repetition and irrelevant detail. Respect the reader's or listener's time
-                </li>
-                <li className="pl-1">
-                  <strong>Confirmed:</strong> Check that the message has been received and
-                  understood. For verbal communication, use closed-loop techniques. For written
-                  communication, request acknowledgement where appropriate
-                </li>
-              </ul>
+          <ConceptBlock title="The three Cs of maintenance communication">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Clear:</strong> use plain language. Avoid unnecessary jargon. Structure
+                information logically. Ensure the message can be understood by its intended
+                audience.
+              </li>
+              <li>
+                <strong>Concise:</strong> include all necessary information but no more. Eliminate
+                waffle, repetition and irrelevant detail. Respect the reader&apos;s or
+                listener&apos;s time.
+              </li>
+              <li>
+                <strong>Confirmed:</strong> check that the message has been received and understood.
+                For verbal communication, use closed-loop techniques. For written communication,
+                request acknowledgement where appropriate.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Communication barriers in maintenance"
+            onSite="The most dangerous communication failure is silence — not speaking up when something is wrong, unclear or unsafe. A professional technician communicates concerns immediately, regardless of who might be affected."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Barrier</th>
+                    <th className="py-2 pr-4 font-medium text-white">Example</th>
+                    <th className="py-2 font-medium text-white">Mitigation</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Environmental noise</td>
+                    <td className="py-2 pr-4 align-top">
+                      Machinery, generators, fans in plant rooms
+                    </td>
+                    <td className="py-2">Move to quieter area; use radio; face the listener</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Time pressure</td>
+                    <td className="py-2 pr-4 align-top">Rushed briefing during a breakdown</td>
+                    <td className="py-2">Prioritise safety information; use closed-loop</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Technical jargon</td>
+                    <td className="py-2 pr-4 align-top">
+                      Using terms the listener does not understand
+                    </td>
+                    <td className="py-2">Adapt language to the audience; explain terms</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Assumptions</td>
+                    <td className="py-2 pr-4 align-top">
+                      Assuming a colleague knows the isolation status
+                    </td>
+                    <td className="py-2">Always state explicitly; never assume knowledge</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Hierarchy</td>
+                    <td className="py-2 pr-4 align-top">
+                      Reluctance to challenge a senior colleague
+                    </td>
+                    <td className="py-2">Promote a safety culture where challenge is valued</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Barriers in Maintenance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Barrier</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Mitigation</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Environmental noise</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Machinery, generators, fans in plant rooms
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Move to quieter area; use radio; face the listener
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Time pressure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rushed briefing during a breakdown
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prioritise safety information; use closed-loop
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technical jargon</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Using terms the listener does not understand
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adapt language to the audience; explain terms
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Assumptions</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assuming a colleague knows the isolation status
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Always state explicitly; never assume knowledge
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hierarchy</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reluctance to challenge a senior colleague
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Promote a safety culture where challenge is valued
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The most dangerous communication failure is silence — not
-              speaking up when something is wrong, unclear or unsafe. A professional technician
-              communicates concerns immediately, regardless of who might be affected.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Verbal communication and handovers</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Verbal Communication and Handovers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Verbal messages leave no permanent record">
             <p>
               Verbal communication is the most immediate and frequently used form of communication
               in maintenance. From toolbox talks and job briefings to radio calls and shift
@@ -489,94 +453,86 @@ const MOETModule7Section4_2 = () => {
               for safe, efficient operations. Unlike written communication, verbal messages leave no
               permanent record — making accuracy and confirmation even more critical.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Closed-Loop Communication
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sender delivers the message:</strong> "Isolate MCB 7 in DB3, Building C,
-                  Ground Floor"
-                </li>
-                <li className="pl-1">
-                  <strong>Receiver repeats back:</strong> "Confirmed — isolating MCB 7 in DB3,
-                  Building C, Ground Floor"
-                </li>
-                <li className="pl-1">
-                  <strong>Sender confirms:</strong> "That is correct — proceed"
-                </li>
-              </ol>
-              <p className="text-sm text-white mt-3">
-                This three-step process eliminates the risk of the receiver misunderstanding the
-                instruction. It is mandatory in HV switching operations and should be used for all
-                safety-critical verbal communications.
-              </p>
-            </div>
+          <ConceptBlock title="Closed-loop communication">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sender delivers the message:</strong> &quot;Isolate MCB 7 in DB3, Building
+                C, Ground Floor&quot;
+              </li>
+              <li>
+                <strong>Receiver repeats back:</strong> &quot;Confirmed — isolating MCB 7 in DB3,
+                Building C, Ground Floor&quot;
+              </li>
+              <li>
+                <strong>Sender confirms:</strong> &quot;That is correct — proceed&quot;
+              </li>
+            </ol>
+            <p>
+              This three-step process eliminates the risk of the receiver misunderstanding the
+              instruction. It is mandatory in HV switching operations and should be used for all
+              safety-critical verbal communications.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Shift Handover Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Work completed:</strong> What tasks have been finished and signed off
-                </li>
-                <li className="pl-1">
-                  <strong>Work in progress:</strong> Current status, what has been done, what
-                  remains
-                </li>
-                <li className="pl-1">
-                  <strong>Safety status:</strong> Current isolations, permits in force,
-                  lock-out/tag-out positions
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment status:</strong> Any equipment in abnormal state, bypasses,
-                  temporary repairs
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding issues:</strong> Faults awaiting parts, deferred tasks,
-                  pending decisions
-                </li>
-                <li className="pl-1">
-                  <strong>Upcoming work:</strong> Planned tasks for the next shift, scheduled
-                  deliveries, contractor visits
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Effective shift handover checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Work completed:</strong> what tasks have been finished and signed off.
+              </li>
+              <li>
+                <strong>Work in progress:</strong> current status, what has been done, what remains.
+              </li>
+              <li>
+                <strong>Safety status:</strong> current isolations, permits in force, lock-out/tag-
+                out positions.
+              </li>
+              <li>
+                <strong>Equipment status:</strong> any equipment in abnormal state, bypasses,
+                temporary repairs.
+              </li>
+              <li>
+                <strong>Outstanding issues:</strong> faults awaiting parts, deferred tasks, pending
+                decisions.
+              </li>
+              <li>
+                <strong>Upcoming work:</strong> planned tasks for the next shift, scheduled
+                deliveries, contractor visits.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Handover Failure Example</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Handover failure"
+            whatHappens={
+              <>
                 In a reported industrial incident, a night-shift technician partially isolated a
                 motor control centre for investigation of an intermittent earth fault. The verbal
                 handover to the day shift was interrupted by an unrelated call, and the incoming
-                technician only heard that "the MCC had been looked at." Assuming the investigation
-                was complete, the day-shift team re-energised the supply without checking isolation
-                status. The earth fault recurred, causing a flashover that damaged equipment and
-                could have caused serious injury. A structured handover process with written backup
-                would have prevented this.
-              </p>
-            </div>
+                technician only heard that &quot;the MCC had been looked at.&quot; Assuming the
+                investigation was complete, the day-shift team re-energised the supply without
+                checking isolation status. The earth fault recurred, causing a flashover that
+                damaged equipment and could have caused serious injury. A structured handover
+                process with written backup would have prevented this.
+              </>
+            }
+            doInstead={
+              <>
+                Never rely on memory alone for shift handovers. Use a structured written handover
+                form to back up the verbal briefing. Both elements are needed — the verbal for
+                emphasis and questions, the written for completeness and permanence.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never rely on memory alone for shift handovers. Use a
-              structured written handover form to back up the verbal briefing. Both elements are
-              needed — the verbal for emphasis and questions, the written for completeness and
-              permanence.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Written Reporting and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Written reporting and documentation</ContentEyebrow>
+
+          <ConceptBlock title="The permanent record of your work">
             <p>
               Written documentation is the permanent record of your work as a maintenance
               technician. Job cards, fault reports, test certificates, CMMS entries, maintenance
@@ -585,94 +541,73 @@ const MOETModule7Section4_2 = () => {
               ability to produce clear, accurate written documentation is a professional competence
               assessed in the EPA.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Structure of a Maintenance Report
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Background/context:</strong> Why the work was carried out — planned
-                  maintenance, fault response, modification
-                </li>
-                <li className="pl-1">
-                  <strong>Scope:</strong> What was examined, tested or repaired — specific
-                  equipment, circuit references, locations
-                </li>
-                <li className="pl-1">
-                  <strong>Findings/observations:</strong> Factual account of what you found —
-                  readings, condition, anomalies
-                </li>
-                <li className="pl-1">
-                  <strong>Analysis/diagnosis:</strong> Your professional interpretation of the
-                  findings — root cause, contributing factors
-                </li>
-                <li className="pl-1">
-                  <strong>Actions taken:</strong> What you did — repairs, replacements, temporary
-                  measures
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendations:</strong> Further work needed, monitoring requirements,
-                  improvement suggestions
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Structure of a maintenance report">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Background/context:</strong> why the work was carried out — planned
+                maintenance, fault response, modification.
+              </li>
+              <li>
+                <strong>Scope:</strong> what was examined, tested or repaired — specific equipment,
+                circuit references, locations.
+              </li>
+              <li>
+                <strong>Findings/observations:</strong> factual account of what you found —
+                readings, condition, anomalies.
+              </li>
+              <li>
+                <strong>Analysis/diagnosis:</strong> your professional interpretation of the
+                findings — root cause, contributing factors.
+              </li>
+              <li>
+                <strong>Actions taken:</strong> what you did — repairs, replacements, temporary
+                measures.
+              </li>
+              <li>
+                <strong>Recommendations:</strong> further work needed, monitoring requirements,
+                improvement suggestions.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Good Practice</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Write at the time of the work, not hours later from memory
-                  </li>
-                  <li className="pl-1">
-                    Use factual, objective language — not opinions or assumptions
-                  </li>
-                  <li className="pl-1">
-                    Include specific details: readings, dates, times, equipment IDs
-                  </li>
-                  <li className="pl-1">Use correct technical terminology consistently</li>
-                  <li className="pl-1">Check spelling and grammar before submitting</li>
-                  <li className="pl-1">Sign and date all documents</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Common Mistakes</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Vague descriptions: "checked the board" rather than specific findings
-                  </li>
-                  <li className="pl-1">
-                    Missing readings: "insulation resistance was fine" without the value
-                  </li>
-                  <li className="pl-1">Opinions stated as facts without evidence</li>
-                  <li className="pl-1">
-                    Incomplete entries: no date, no signature, no equipment reference
-                  </li>
-                  <li className="pl-1">Illegible handwriting on paper records</li>
-                  <li className="pl-1">Copy-pasting previous reports without updating details</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Good practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Write at the time of the work, not hours later from memory.</li>
+              <li>Use factual, objective language — not opinions or assumptions.</li>
+              <li>Include specific details: readings, dates, times, equipment IDs.</li>
+              <li>Use correct technical terminology consistently.</li>
+              <li>Check spelling and grammar before submitting.</li>
+              <li>Sign and date all documents.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Your written work may be read by engineers, managers, HSE
-              inspectors, insurance assessors or legal professionals long after you wrote it. Write
-              every report as though it may need to stand up in court — because occasionally it
-              does.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Common mistakes in written reports"
+            onSite="Your written work may be read by engineers, managers, HSE inspectors, insurance assessors or legal professionals long after you wrote it. Write every report as though it may need to stand up in court — because occasionally it does."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Vague descriptions: &quot;checked the board&quot; rather than specific findings.
+              </li>
+              <li>
+                Missing readings: &quot;insulation resistance was fine&quot; without the value.
+              </li>
+              <li>Opinions stated as facts without evidence.</li>
+              <li>Incomplete entries: no date, no signature, no equipment reference.</li>
+              <li>Illegible handwriting on paper records.</li>
+              <li>Copy-pasting previous reports without updating details.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Adapting Communication to Your Audience
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Adapting communication to your audience</ContentEyebrow>
+
+          <ConceptBlock title="Different audiences, different needs">
             <p>
               As a maintenance technician, you communicate with a wide range of people: fellow
               electricians, mechanical fitters, production operators, building managers, health and
@@ -681,101 +616,79 @@ const MOETModule7Section4_2 = () => {
               The ability to adapt your communication style while maintaining accuracy is a hallmark
               of professionalism.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Audience Adaptation</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Audience</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What They Need</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        How to Communicate
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fellow electrician</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical detail, readings, circuit refs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full technical language; specific data
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Production manager</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Impact on production, downtime, timeline
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plain language; focus on operational impact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building occupant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What is happening, when, disruption expected
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple, reassuring language; practical focus
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">H&amp;S officer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety measures, compliance, risk controls
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reference regulations; detail precautions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EPA assessor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Evidence of knowledge, skill and behaviour
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Structured, confident, technical with context
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Audience adaptation">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Audience</th>
+                    <th className="py-2 pr-4 font-medium text-white">What they need</th>
+                    <th className="py-2 font-medium text-white">How to communicate</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Fellow electrician</td>
+                    <td className="py-2 pr-4 align-top">
+                      Technical detail, readings, circuit refs
+                    </td>
+                    <td className="py-2">Full technical language; specific data</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Production manager</td>
+                    <td className="py-2 pr-4 align-top">
+                      Impact on production, downtime, timeline
+                    </td>
+                    <td className="py-2">Plain language; focus on operational impact</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Building occupant</td>
+                    <td className="py-2 pr-4 align-top">
+                      What is happening, when, disruption expected
+                    </td>
+                    <td className="py-2">Simple, reassuring language; practical focus</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">H&amp;S officer</td>
+                    <td className="py-2 pr-4 align-top">
+                      Safety measures, compliance, risk controls
+                    </td>
+                    <td className="py-2">Reference regulations; detail precautions</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">EPA assessor</td>
+                    <td className="py-2 pr-4 align-top">
+                      Evidence of knowledge, skill and behaviour
+                    </td>
+                    <td className="py-2">Structured, confident, technical with context</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                The Professional Discussion
-              </p>
-              <p className="text-sm text-white">
-                The EPA professional discussion is the ultimate test of your communication skills.
-                You will need to articulate your knowledge, describe your work experience, explain
-                your reasoning and demonstrate professional awareness — all through effective verbal
-                communication. Practice explaining your work to someone who was not there. If they
-                can understand your explanation, you are communicating well.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Simplifying your language for a non-technical audience is
-              not "dumbing down" — it is a sophisticated professional skill. The best communicators
-              make complex information accessible without sacrificing accuracy.
+          <ConceptBlock
+            title="The professional discussion"
+            onSite="Simplifying your language for a non-technical audience is not 'dumbing down' — it is a sophisticated professional skill. The best communicators make complex information accessible without sacrificing accuracy."
+          >
+            <p>
+              The EPA professional discussion is the ultimate test of your communication skills. You
+              will need to articulate your knowledge, describe your work experience, explain your
+              reasoning and demonstrate professional awareness — all through effective verbal
+              communication. Practice explaining your work to someone who was not there. If they can
+              understand your explanation, you are communicating well.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Digital Communication and CMMS
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Digital communication and CMMS</ContentEyebrow>
+
+          <ConceptBlock title="Data quality shapes decisions">
             <p>
               Modern maintenance increasingly relies on digital communication tools. Computerised
               Maintenance Management Systems (CMMS) are now standard in most industrial and
@@ -784,124 +697,110 @@ const MOETModule7Section4_2 = () => {
               Your ability to use digital tools professionally is an increasingly important
               competence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CMMS Data Entry Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Complete the work order fully:</strong> Do not leave fields blank. Every
-                  field exists for a reason — incomplete data degrades system usefulness
-                </li>
-                <li className="pl-1">
-                  <strong>Use correct asset references:</strong> Select the right equipment from the
-                  asset register. Entering work against the wrong asset corrupts maintenance history
-                </li>
-                <li className="pl-1">
-                  <strong>Describe work accurately:</strong> Write clear descriptions of what was
-                  found and what was done, not just "fixed fault"
-                </li>
-                <li className="pl-1">
-                  <strong>Record time accurately:</strong> Actual hours worked provide data for
-                  future planning and costing
-                </li>
-                <li className="pl-1">
-                  <strong>Close out promptly:</strong> Complete the work order as soon as the task
-                  is finished, not days later
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="CMMS data entry best practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Complete the work order fully:</strong> do not leave fields blank. Every
+                field exists for a reason — incomplete data degrades system usefulness.
+              </li>
+              <li>
+                <strong>Use correct asset references:</strong> select the right equipment from the
+                asset register. Entering work against the wrong asset corrupts maintenance history.
+              </li>
+              <li>
+                <strong>Describe work accurately:</strong> write clear descriptions of what was
+                found and what was done, not just &quot;fixed fault&quot;.
+              </li>
+              <li>
+                <strong>Record time accurately:</strong> actual hours worked provide data for future
+                planning and costing.
+              </li>
+              <li>
+                <strong>Close out promptly:</strong> complete the work order as soon as the task is
+                finished, not days later.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Digital Communication Tools
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">CMMS work order management</li>
-                  <li className="pl-1">Professional email communication</li>
-                  <li className="pl-1">Mobile maintenance apps on tablets</li>
-                  <li className="pl-1">Digital photography for fault documentation</li>
-                  <li className="pl-1">Building Management System (BMS) interfaces</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Professional Email Standards
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Clear, specific subject line</li>
-                  <li className="pl-1">Professional greeting and sign-off</li>
-                  <li className="pl-1">Concise body text with relevant detail</li>
-                  <li className="pl-1">Correct spelling and grammar</li>
-                  <li className="pl-1">Appropriate recipients — not excessive cc</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Digital communication tools">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>CMMS work order management.</li>
+              <li>Professional email communication.</li>
+              <li>Mobile maintenance apps on tablets.</li>
+              <li>Digital photography for fault documentation.</li>
+              <li>Building Management System (BMS) interfaces.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The standard requires technicians to "use appropriate
-              digital and information technology and techniques." Your ability to use CMMS systems,
-              write professional emails and produce digital reports demonstrates this competence.
-              Include examples in your EPA portfolio.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Professional email standards"
+            onSite="The standard requires technicians to 'use appropriate digital and information technology and techniques.' Your ability to use CMMS systems, write professional emails and produce digital reports demonstrates this competence. Include examples in your EPA portfolio."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Clear, specific subject line.</li>
+              <li>Professional greeting and sign-off.</li>
+              <li>Concise body text with relevant detail.</li>
+              <li>Correct spelling and grammar.</li>
+              <li>Appropriate recipients — not excessive cc.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge — Communication and Reporting"
-            questions={quizQuestions}
+          <KeyTakeaways
+            points={[
+              'The three Cs: clear, concise, confirmed — never assume a message has been understood.',
+              'Use closed-loop communication (deliver, repeat back, confirm) for safety-critical instructions.',
+              'Never rely on memory alone for shift handovers — back up the verbal briefing in writing.',
+              'Structure reports: background, scope, findings, analysis, actions, recommendations.',
+              'Write every report as though it may need to stand up in court, because occasionally it does.',
+              'Adapt language to your audience while maintaining technical accuracy.',
+              'Complete CMMS entries fully and promptly — incomplete data degrades the whole system.',
+            ]}
           />
-        </section>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Teamwork and Collaboration
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-3">
-              Next: Time Management and Organisation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz
+              title="Test Your Knowledge — Communication and Reporting"
+              questions={quizQuestions}
+            />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Teamwork and Collaboration
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Time Management and Organisation
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

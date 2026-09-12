@@ -1,8 +1,56 @@
-import { ArrowLeft, Link2, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.2 · Subsection 2 — Continuity Testing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *              · "Electrical. Inspect and test electrical aspects of plant.
+ *                 For example, visual checks, insulation and continuity
+ *                 checks, thermographic surveys, and voltage levels."
+ *
+ * Numeric values (R1+R2 test current, published cable resistance figures,
+ * the 80% Zs guidance) are copied verbatim from the original page. The
+ * bs7671_facets RAG holds regulation rules, not numeric tables, so none of
+ * these can be checked against it — see the conversion report for what
+ * should be verified against BS 7671 / the IET On-Site Guide.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Continuity Testing - MOET Module 4.5.2';
@@ -207,7 +255,7 @@ const quizQuestions = [
     options: [
       'Calculate the result from the published resistance tables and cable length, omitting the continuity measurement altogether',
       'Measure from one end only with the far end left open, and double the reading to allow for the unmeasured return leg',
-      'Energise the circuit and measure the current drawn, then derive the conductor resistance using Ohm\'s law',
+      "Energise the circuit and measure the current drawn, then derive the conductor resistance using Ohm's law",
       'Use a temporary link (a known, measured length of conductor) at the far end to join the line and CPC, then test from the near end — recording and subtracting the link resistance',
     ],
     correctAnswer: 3,
@@ -259,121 +307,88 @@ const faqs = [
 ];
 
 const MOETModule4Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Link2 className="h-4 w-4" />
-            <span>Module 4.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Continuity Testing
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 2"
+        title="Continuity Testing"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Protective conductor continuity, ring final circuit testing, and R1+R2 measurements for
-            electrical maintenance
+            electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Verify low-resistance earth fault paths for protective
-                device operation
-              </li>
-              <li className="pl-1">
-                <strong>Instrument:</strong> Low-resistance ohmmeter, minimum 200 mA test current
-              </li>
-              <li className="pl-1">
-                <strong>R1+R2:</strong> Combined line and CPC resistance, used to calculate Zs
-              </li>
-              <li className="pl-1">
-                <strong>Ring circuits:</strong> Three-step test to verify continuity and correct
-                wiring
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Purpose: Verify low-resistance earth fault paths for protective device operation',
+              'Instrument: Low-resistance ohmmeter, minimum 200 mA test current',
+              'R1+R2: Combined line and CPC resistance, used to calculate Zs',
+              'Ring circuits: Three-step test to verify continuity and correct wiring',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>When to test:</strong> Initial verification, periodic inspection, after
                 repairs or modifications
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Critical for safety:</strong> Disconnection time depends on low-impedance
                 fault path
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Common faults:</strong> Loose terminals, broken conductors, incorrect wiring
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to testing, verification, and fault diagnosis
                 competencies
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain why continuity of protective conductors is essential for electrical safety',
               'Select and verify the correct test instrument for continuity testing',
               'Perform R1+R2 measurements on radial circuits and interpret the results',
               'Conduct the three-step ring final circuit continuity test procedure',
               'Test bonding conductors and interpret results against expected values',
               'Use R1+R2 values to calculate earth fault loop impedance (Zs) and verify disconnection times',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Why continuity testing matters</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Continuity Testing Matters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Why Continuity Testing Matters">
             <p>
               The safety of an electrical installation depends fundamentally on the integrity of its
               protective conductors. When a fault occurs — a line conductor contacting an earthed
@@ -388,8 +403,8 @@ const MOETModule4Section5_2 = () => {
               Continuity testing verifies that this critical fault current path is intact and has
               sufficiently low resistance. It is one of the most fundamental tests in electrical
               installation work, yet it is also one of the tests most commonly performed
-              inadequately. A cursory "buzz test" with a basic multimeter may confirm that a
-              connection exists, but it may not reveal a high-resistance joint that would impede
+              inadequately. A cursory &quot;buzz test&quot; with a basic multimeter may confirm that
+              a connection exists, but it may not reveal a high-resistance joint that would impede
               fault current flow. BS 7671 therefore requires the use of a low-resistance ohmmeter
               delivering a minimum test current of 200 mA to ensure reliable detection of defective
               connections.
@@ -402,163 +417,119 @@ const MOETModule4Section5_2 = () => {
               disturbance. Periodic inspection (EICR) includes continuity testing to detect such
               deterioration before it compromises safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Consequences of Failed Continuity
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Continuity Problem
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Safety Consequence
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Broken CPC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No earth fault path — exposed metalwork remains live during a fault until
-                        manually disconnected
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-resistance joint in CPC
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced fault current — protective device operates slowly or not at all,
-                        prolonging danger
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing bonding conductor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Extraneous metalwork not at earth potential — risk of electric shock from
-                        simultaneous contact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Broken ring final circuit
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full load on one leg of the ring — cable overheating, increased fire risk,
-                        higher Zs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Consequences of Failed Continuity"
+            headers={['Continuity Problem', 'Safety Consequence']}
+            rows={[
+              [
+                'Broken CPC',
+                'No earth fault path — exposed metalwork remains live during a fault until manually disconnected',
+              ],
+              [
+                'High-resistance joint in CPC',
+                'Reduced fault current — protective device operates slowly or not at all, prolonging danger',
+              ],
+              [
+                'Missing bonding conductor',
+                'Extraneous metalwork not at earth potential — risk of electric shock from simultaneous contact',
+              ],
+              [
+                'Broken ring final circuit',
+                'Full load on one leg of the ring — cable overheating, increased fire risk, higher Zs',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">A Preventable Incident</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Skipping continuity testing after an intervention"
+            whatHappens={
+              <p>
                 A common scenario in maintenance: a technician replaces a socket outlet and fails to
                 reconnect the earth conductor securely. The circuit appears to work normally —
                 lights and appliances function. However, if a line-to-earth fault occurs on an
                 appliance connected to that socket, the fault current cannot return via the CPC, the
-                MCB does not trip, and the metal casing of the appliance remains at 230 V. This is
-                why continuity testing after every intervention is not optional — it is a
+                MCB does not trip, and the metal casing of the appliance remains at 230 V.
+              </p>
+            }
+            doInstead={
+              <p>
+                This is why continuity testing after every intervention is not optional — it is a
                 safety-critical verification step.
               </p>
-            </div>
-          </div>
-        </section>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Test Instruments and Preparation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Test instruments and preparation</ContentEyebrow>
+
+          <ConceptBlock title="Test Instruments and Preparation">
             <p>
               The accuracy and reliability of continuity testing depends on using the correct
               instrument, properly prepared. BS 7671 and BS EN 61557 specify the requirements for
               instruments used in continuity testing, and understanding these requirements is
               essential for both practical competence and the ST1426 end-point assessment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Instrument Requirements
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Type:</strong> Low-resistance ohmmeter (often part of a multifunction
-                    installation tester)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Test current:</strong> Not less than 200 mA (as required by BS 7671)
-                  </li>
-                  <li className="pl-1">
-                    <strong>No-load voltage:</strong> Between 4 V and 24 V d.c.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Resolution:</strong> Capable of measuring to 0.01 Ω for accurate
-                    readings on short runs
-                  </li>
-                  <li className="pl-1">
-                    <strong>Compliance:</strong> Must comply with BS EN 61557-4 for resistance of
-                    earth connection and equipotential bonding
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Instrument requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Type:</strong> Low-resistance ohmmeter (often part of a multifunction
+                installation tester)
+              </li>
+              <li>
+                <strong>Test current:</strong> Not less than 200 mA (as required by BS 7671)
+              </li>
+              <li>
+                <strong>No-load voltage:</strong> Between 4 V and 24 V d.c.
+              </li>
+              <li>
+                <strong>Resolution:</strong> Capable of measuring to 0.01 Ω for accurate readings on
+                short runs
+              </li>
+              <li>
+                <strong>Compliance:</strong> Must comply with BS EN 61557-4 for resistance of earth
+                connection and equipotential bonding
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lead Nulling (Zeroing)
-                </h3>
-                <p className="text-sm text-white">
-                  Test leads have their own resistance, which must be accounted for. Before taking
-                  measurements, short-circuit the test leads together and either use the
-                  instrument's null function to store the lead resistance (it will then be
-                  automatically subtracted from subsequent readings) or record the lead resistance
-                  and manually subtract it from each measurement. For long test leads (which may be
-                  needed in large buildings), the lead resistance can be significant — failing to
-                  account for it introduces a systematic error into every reading.
-                </p>
-              </div>
+          <ConceptBlock title="Lead nulling (zeroing)">
+            <p>
+              Test leads have their own resistance, which must be accounted for. Before taking
+              measurements, short-circuit the test leads together and either use the
+              instrument&apos;s null function to store the lead resistance (it will then be
+              automatically subtracted from subsequent readings) or record the lead resistance and
+              manually subtract it from each measurement. For long test leads (which may be needed
+              in large buildings), the lead resistance can be significant — failing to account for
+              it introduces a systematic error into every reading.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Pre-Test Preparation
-                </h3>
-                <p className="text-sm text-white">
-                  Before testing, the circuit must be isolated, locked off, and proved dead.
-                  Disconnect the circuit from the distribution board to avoid parallel paths through
-                  other circuits or the earthing system that would give misleadingly low readings.
-                  Check that the instrument battery is adequate (low battery affects the test
-                  current and accuracy). Verify the instrument is within its calibration date. Have
-                  the circuit schedule and cable specification to hand so that measured values can
-                  be compared against expected values.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Pre-test preparation">
+            <p>
+              Before testing, the circuit must be isolated, locked off, and proved dead. Disconnect
+              the circuit from the distribution board to avoid parallel paths through other circuits
+              or the earthing system that would give misleadingly low readings. Check that the
+              instrument battery is adequate (low battery affects the test current and accuracy).
+              Verify the instrument is within its calibration date. Have the circuit schedule and
+              cable specification to hand so that measured values can be compared against expected
+              values.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            R1+R2 Testing of Radial Circuits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>R1+R2 testing of radial circuits</ContentEyebrow>
+
+          <ConceptBlock title="R1+R2 Testing of Radial Circuits">
             <p>
               For radial circuits (those with a single cable run from the distribution board to the
               furthest point), the R1+R2 test is straightforward. The objective is to measure the
@@ -566,76 +537,63 @@ const MOETModule4Section5_2 = () => {
               (R2) from the distribution board to the furthest point of the circuit. This value is
               then used to calculate the earth fault loop impedance at the furthest point.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Method 1 — Long Lead Method
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Connect a long test lead between the line conductor and the CPC at the furthest
-                point of the circuit. At the distribution board, connect the instrument between the
-                line conductor and CPC of the same circuit. The reading gives the R1+R2 directly
-                (minus any lead resistance if the long lead is used as part of the measurement
-                circuit).
-              </p>
-              <p className="text-sm text-white">
-                This method is practical when the furthest point is accessible but may be
-                inconvenient in large installations where the cable run is long and the route is not
-                easily traced.
-              </p>
-            </div>
+          <ConceptBlock title="Method 1 — long lead method">
+            <p>
+              Connect a long test lead between the line conductor and the CPC at the furthest point
+              of the circuit. At the distribution board, connect the instrument between the line
+              conductor and CPC of the same circuit. The reading gives the R1+R2 directly (minus any
+              lead resistance if the long lead is used as part of the measurement circuit).
+            </p>
+            <p>
+              This method is practical when the furthest point is accessible but may be inconvenient
+              in large installations where the cable run is long and the route is not easily traced.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Method 2 — Temporary Link at Far End
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Place a temporary link (a short piece of conductor with known resistance) between
-                the line and CPC at the furthest point. Measure from the distribution board end
-                between the line conductor and CPC. The reading is R1+R2 plus the resistance of the
-                link. Subtract the link resistance to obtain the true R1+R2.
-              </p>
-              <p className="text-sm text-white">
-                This method requires two visits to the far end (to connect and disconnect the link)
-                but avoids trailing long test leads through the building. It is particularly useful
-                for circuits with concealed wiring.
-              </p>
-            </div>
+          <ConceptBlock title="Method 2 — temporary link at far end">
+            <p>
+              Place a temporary link (a short piece of conductor with known resistance) between the
+              line and CPC at the furthest point. Measure from the distribution board end between
+              the line conductor and CPC. The reading is R1+R2 plus the resistance of the link.
+              Subtract the link resistance to obtain the true R1+R2.
+            </p>
+            <p>
+              This method requires two visits to the far end (to connect and disconnect the link)
+              but avoids trailing long test leads through the building. It is particularly useful
+              for circuits with concealed wiring.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Expected Values</h3>
-              <p className="text-sm text-white mb-2">
-                The expected R1+R2 value can be calculated from published conductor resistance
-                tables:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  1.0 mm² copper: R1 = 18.1 mΩ/m, R2 (1.0 mm² CPC) = 18.1 mΩ/m → R1+R2 = 36.2 mΩ/m
-                </li>
-                <li className="pl-1">
-                  2.5 mm² copper: R1 = 7.41 mΩ/m, R2 (1.5 mm² CPC) = 12.1 mΩ/m → R1+R2 = 19.51 mΩ/m
-                </li>
-                <li className="pl-1">
-                  4.0 mm² copper: R1 = 4.61 mΩ/m, R2 (1.5 mm² CPC) = 12.1 mΩ/m → R1+R2 = 16.71 mΩ/m
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                Multiply by the cable length in metres to get the expected R1+R2. Measured values
-                should be close to the calculated value — significant deviations indicate a problem.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Expected values">
+            <p>
+              The expected R1+R2 value can be calculated from published conductor resistance tables:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                1.0 mm² copper: R1 = 18.1 mΩ/m, R2 (1.0 mm² CPC) = 18.1 mΩ/m → R1+R2 = 36.2 mΩ/m
+              </li>
+              <li>
+                2.5 mm² copper: R1 = 7.41 mΩ/m, R2 (1.5 mm² CPC) = 12.1 mΩ/m → R1+R2 = 19.51 mΩ/m
+              </li>
+              <li>
+                4.0 mm² copper: R1 = 4.61 mΩ/m, R2 (1.5 mm² CPC) = 12.1 mΩ/m → R1+R2 = 16.71 mΩ/m
+              </li>
+            </ul>
+            <p>
+              Multiply by the cable length in metres to get the expected R1+R2. Measured values
+              should be close to the calculated value — significant deviations indicate a problem.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Ring Final Circuit Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Ring final circuit testing</ContentEyebrow>
+
+          <ConceptBlock title="Ring Final Circuit Testing">
             <p>
               Ring final circuits require a specific three-step test procedure that goes beyond
               simple continuity verification. The test must confirm that each conductor forms a
@@ -644,78 +602,56 @@ const MOETModule4Section5_2 = () => {
               most complex tests in electrical installation work and is frequently performed
               incorrectly.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>End-to-end resistance.</strong> At the distribution board, identify and
+                separate both ends of each conductor (line, neutral, CPC). Measure the end-to-end
+                resistance of each ring: L1 to L2, N1 to N2, E1 to E2. The line and neutral readings
+                should be very similar (same size conductor, same route). The CPC reading may differ
+                if it is a different size (e.g., 1.5 mm² CPC in a 2.5 mm² twin-and-earth cable).
+                These readings confirm that each conductor forms a continuous ring and provide the
+                baseline values for the subsequent steps.
+              </li>
+              <li>
+                <strong>Cross-connection and socket testing (L-N).</strong> Cross-connect the line
+                conductors: connect L1 to N2 and N1 to L2 at the distribution board. Then measure
+                between line and neutral at each socket outlet. The readings should be approximately
+                equal at every socket — each being approximately one quarter of the sum of the
+                individual end-to-end readings from Step 1. If a reading is substantially higher
+                than expected, it indicates a break in the ring or an incorrectly wired spur. If a
+                reading is substantially lower, it may indicate an interconnection with another
+                circuit.
+              </li>
+              <li>
+                <strong>Cross-connection and socket testing (L-CPC).</strong> Now cross-connect the
+                line and CPC: connect L1 to E2 and E1 to L2 at the distribution board. Measure
+                between line and CPC at each socket outlet. The reading at each socket gives the
+                R1+R2 value for that point. The highest reading (typically at the mid-point of the
+                ring) is the value recorded on the Schedule of Test Results as the R1+R2 for the
+                ring circuit. As with Step 2, all readings should follow a predictable pattern —
+                deviations indicate wiring errors.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — End-to-End Resistance
-                </h3>
-                <p className="text-sm text-white">
-                  At the distribution board, identify and separate both ends of each conductor
-                  (line, neutral, CPC). Measure the end-to-end resistance of each ring: L1 to L2, N1
-                  to N2, E1 to E2. The line and neutral readings should be very similar (same size
-                  conductor, same route). The CPC reading may differ if it is a different size
-                  (e.g., 1.5 mm² CPC in a 2.5 mm² twin-and-earth cable). These readings confirm that
-                  each conductor forms a continuous ring and provide the baseline values for the
-                  subsequent steps.
-                </p>
-              </div>
+          <ConceptBlock title="Common ring circuit faults detected by this test">
+            <p>
+              The three-step test detects: broken rings (one or more conductors not forming a
+              continuous loop), cross-connections (conductors from different rings connected
+              together), figure-of-eight wiring (where the ring crosses over itself), and spurs
+              incorrectly connected as part of the ring. These faults may not be apparent from
+              visual inspection alone and would not be detected by a simple end-to-end continuity
+              test.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Cross-Connection and Socket Testing (L-N)
-                </h3>
-                <p className="text-sm text-white">
-                  Cross-connect the line conductors: connect L1 to N2 and N1 to L2 at the
-                  distribution board. Then measure between line and neutral at each socket outlet.
-                  The readings should be approximately equal at every socket — each being
-                  approximately one quarter of the sum of the individual end-to-end readings from
-                  Step 1. If a reading is substantially higher than expected, it indicates a break
-                  in the ring or an incorrectly wired spur. If a reading is substantially lower, it
-                  may indicate an interconnection with another circuit.
-                </p>
-              </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Cross-Connection and Socket Testing (L-CPC)
-                </h3>
-                <p className="text-sm text-white">
-                  Now cross-connect the line and CPC: connect L1 to E2 and E1 to L2 at the
-                  distribution board. Measure between line and CPC at each socket outlet. The
-                  reading at each socket gives the R1+R2 value for that point. The highest reading
-                  (typically at the mid-point of the ring) is the value recorded on the Schedule of
-                  Test Results as the R1+R2 for the ring circuit. As with Step 2, all readings
-                  should follow a predictable pattern — deviations indicate wiring errors.
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Ring Circuit Faults Detected by This Test
-              </p>
-              <p className="text-sm text-white">
-                The three-step test detects: broken rings (one or more conductors not forming a
-                continuous loop), cross-connections (conductors from different rings connected
-                together), figure-of-eight wiring (where the ring crosses over itself), and spurs
-                incorrectly connected as part of the ring. These faults may not be apparent from
-                visual inspection alone and would not be detected by a simple end-to-end continuity
-                test.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ContentEyebrow>Bonding conductor testing and calculating Zs</ContentEyebrow>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Bonding Conductor Testing and Calculating Zs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Bonding Conductor Testing and Calculating Zs">
             <p>
               Beyond circuit protective conductors, continuity testing extends to the bonding system
               — the main bonding conductors that connect extraneous-conductive-parts (gas pipes,
@@ -724,145 +660,118 @@ const MOETModule4Section5_2 = () => {
               load current under normal conditions but are critical for maintaining equipotential
               conditions that prevent dangerous touch voltages.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Main Bonding Conductor Testing
-              </p>
-              <p className="text-sm text-white">
-                Test the continuity between the main earthing terminal and each bonding connection
-                point (gas meter, water meter, structural steel). The reading should be very low —
-                typically less than 0.05 Ω for a short run of 10 mm² or 16 mm² bonding conductor.
-                Higher readings indicate a poor connection at the bonding clamp or the main earthing
-                terminal. Check that bonding clamps are of the correct type (BS 951), are tight, and
-                are in good condition with no corrosion.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Using R1+R2 to Calculate Zs
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The R1+R2 value obtained from continuity testing is one of the two components of the
-                earth fault loop impedance at the furthest point of the circuit:
-              </p>
-              <p className="text-sm text-white font-mono bg-white/5 p-2 rounded my-2">
-                Zs = Ze + (R1+R2)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ze:</strong> External earth fault loop impedance (measured at the origin
-                  of the installation with the main earth disconnected)
-                </li>
-                <li className="pl-1">
-                  <strong>R1+R2:</strong> From continuity testing (at the furthest point of the
-                  circuit)
-                </li>
-                <li className="pl-1">
-                  <strong>Zs:</strong> Must not exceed the maximum value published in BS 7671 for
-                  the protective device type and rating
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                Note: Published R1+R2 values are at 20°C. Under fault conditions, conductor
-                temperature rises significantly, increasing resistance. BS 7671 accounts for this by
-                applying a correction factor. The measured Zs during a live test should not exceed
-                80% of the maximum tabulated value to account for this temperature effect and supply
-                impedance variations.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The ability to perform continuity testing, interpret
-              results, and use them to verify protective device disconnection times is a core
-              competency for the maintenance technician standard. You must demonstrate not just the
-              practical skill of testing but also the understanding of why the test is done and how
-              the results relate to the safety of the installation.
+          <ConceptBlock title="Main bonding conductor testing">
+            <p>
+              Test the continuity between the main earthing terminal and each bonding connection
+              point (gas meter, water meter, structural steel). The reading should be very low —
+              typically less than 0.05 Ω for a short run of 10 mm² or 16 mm² bonding conductor.
+              Higher readings indicate a poor connection at the bonding clamp or the main earthing
+              terminal. Check that bonding clamps are of the correct type (BS 951), are tight, and
+              are in good condition with no corrosion.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Using R1+R2 to calculate Zs">
+            <p>
+              The R1+R2 value obtained from continuity testing is one of the two components of the
+              earth fault loop impedance at the furthest point of the circuit:
+            </p>
+            <p className="rounded bg-white/5 p-2 font-mono">Zs = Ze + (R1+R2)</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ze:</strong> External earth fault loop impedance (measured at the origin of
+                the installation with the main earth disconnected)
+              </li>
+              <li>
+                <strong>R1+R2:</strong> From continuity testing (at the furthest point of the
+                circuit)
+              </li>
+              <li>
+                <strong>Zs:</strong> Must not exceed the maximum value published in BS 7671 for the
+                protective device type and rating
+              </li>
+            </ul>
+            <p>
+              Note: Published R1+R2 values are at 20°C. Under fault conditions, conductor
+              temperature rises significantly, increasing resistance. BS 7671 accounts for this by
+              applying a correction factor. The measured Zs during a live test should not exceed 80%
+              of the maximum tabulated value to account for this temperature effect and supply
+              impedance variations.
+            </p>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> The ability to perform continuity
+              testing, interpret results, and use them to verify protective device disconnection
+              times is a core competency for the maintenance technician standard. You must
+              demonstrate not just the practical skill of testing but also the understanding of why
+              the test is done and how the results relate to the safety of the installation.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <VideoCard
+            url="https://www.youtube.com/watch?v=NNfyTU1QoYI"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Continuity Test Procedure</p>
-                <ul className="space-y-0.5">
-                  <li>1. Isolate, lock off, prove dead</li>
-                  <li>2. Disconnect circuit from DB</li>
-                  <li>3. Null test leads (zero lead resistance)</li>
-                  <li>4. Test CPC end-to-end or R1+R2</li>
-                  <li>5. Compare against expected values</li>
-                  <li>6. Record results on Schedule of Test Results</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Ring Final Circuit Steps</p>
-                <ul className="space-y-0.5">
-                  <li>Step 1: End-to-end L-L, N-N, E-E</li>
-                  <li>Step 2: Cross-connect L-N, test each socket</li>
-                  <li>Step 3: Cross-connect L-E, test each socket</li>
-                  <li>All readings should follow predictable pattern</li>
-                  <li>Maximum R1+R2 at mid-point of ring</li>
-                </ul>
-              </div>
+            title="Ring Final Test Explanation — As Simple as I Can Make It"
+
+            channel="Craig Wiltshire"
+
+            duration="5:45"
+
+            topic="The three-step ring final continuity test"
+
+            caption="The end-to-end, cross-connect and figure-of-eight sequence, done slowly enough to follow on a first watch."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Test procedure: isolate, lock off, prove dead; disconnect circuit from the DB; null test leads (zero lead resistance); test CPC end-to-end or R1+R2; compare against expected values; record results on the Schedule of Test Results.',
+              'Ring final circuit steps: Step 1 end-to-end L-L, N-N, E-E; Step 2 cross-connect L-N and test each socket; Step 3 cross-connect L-E and test each socket.',
+              'All ring readings should follow a predictable pattern, with the maximum R1+R2 at the mid-point of the ring.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Insulation Resistance Testing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Earth Fault Loop Impedance Testing
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Insulation Resistance Testing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-3">
-              Next: Earth Fault Loop Impedance Testing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

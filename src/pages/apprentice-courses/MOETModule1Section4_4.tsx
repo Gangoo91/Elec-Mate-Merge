@@ -1,8 +1,50 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.4 · Subsection 4 — PUWER (Provision and Use of
+ * Work Equipment Regulations 1998)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and calibration
+ *                 requirements."
+ *              · "Health and safety regulations – key features and impact on
+ *                 role."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Content preserved from the original page; structure, shell and reading
+ * measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
@@ -97,9 +139,9 @@ const quizQuestions = [
     id: 3,
     question: "A maintenance technician's multifunction tester is covered by PUWER because:",
     options: [
-      "It contains a battery and therefore counts as a portable appliance",
-      "It is only covered while it is connected to a live circuit",
-      "It is exempt unless it is used on three-phase installations",
+      'It contains a battery and therefore counts as a portable appliance',
+      'It is only covered while it is connected to a live circuit',
+      'It is exempt unless it is used on three-phase installations',
       "It is 'work equipment' — any apparatus or tool provided for use at work",
     ],
     correctAnswer: 3,
@@ -258,115 +300,64 @@ const faqs = [
 ];
 
 const MOETModule1Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            PUWER — Provision and Use of Work Equipment Regulations 1998
-          </h1>
-          <p className="text-white">
-            Legal requirements for all work equipment used by maintenance technicians
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.4 · Subsection 4"
+        title="PUWER — Provision and Use of Work Equipment Regulations 1998"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Legal requirements for all work equipment used by maintenance technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>PUWER:</strong> Governs all work equipment — from hand tools to plant
-              </li>
-              <li className="pl-1">
-                <strong>Reg 4:</strong> Equipment must be suitable for the purpose
-              </li>
-              <li className="pl-1">
-                <strong>Reg 5:</strong> Maintained in efficient state and good repair
-              </li>
-              <li className="pl-1">
-                <strong>Reg 19:</strong> Means of isolation from energy sources
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'PUWER: Governs all work equipment — from hand tools to plant',
+              'Reg 4: Equipment must be suitable for the purpose',
+              'Reg 5: Maintained in efficient state and good repair',
+              'Reg 19: Means of isolation from energy sources',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical Maintenance Context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Test instruments:</strong> GS38-compliant, calibrated, maintained
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Power tools:</strong> Suitable, guarded, inspected (110 V on site)
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Access equipment:</strong> Ladders, platforms, MEWPs — PUWER applies
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Knowledge of equipment regulations for maintenance
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               "Explain the scope and purpose of PUWER 1998 and its definition of 'work equipment'",
               'Describe the suitability requirement (Reg 4) and how it applies to electrical tools',
               'Explain the maintenance and inspection requirements (Regs 5 and 6)',
               'Identify the information, instruction and training duties (Regs 8 and 9)',
               'Describe the controls and isolation requirements (Regs 14–19)',
               'Apply PUWER to test instruments, power tools and access equipment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Scope of PUWER and suitability (Regulation 4)</ContentEyebrow>
 
-        {/* Section 01: Scope and Suitability */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Scope of PUWER and Suitability (Regulation 4)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Scope of PUWER and Suitability (Regulation 4)">
             <p>
               The Provision and Use of Work Equipment Regulations 1998 (PUWER) implement the
               European Work Equipment Directive and were made under the Health and Safety at Work
@@ -381,583 +372,473 @@ const MOETModule1Section4_4 = () => {
               crimping tools. Understanding PUWER is not optional — it is the law that governs the
               equipment you depend on for your safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Definition of "Work Equipment" (Regulation 2)
-              </p>
-              <p className="text-sm text-white mb-2">
-                "Work equipment" means any machinery, appliance, apparatus, tool or installation for
-                use at work (whether exclusively or not). This includes:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Hand tools — screwdrivers, pliers, cable strippers, spanners
-                </li>
-                <li className="pl-1">Power tools — drills, grinders, saws, crimping machines</li>
-                <li className="pl-1">
-                  Test instruments — voltage indicators, MFTs, loop impedance testers, thermal
-                  cameras
-                </li>
-                <li className="pl-1">
-                  Access equipment — ladders, stepladders, scaffold towers, platforms
-                </li>
-                <li className="pl-1">
-                  Lifting equipment — chain hoists, cable winches (also subject to LOLER)
-                </li>
-                <li className="pl-1">
-                  PPE ancillary equipment — insulating mats, barriers, screening
-                </li>
-                <li className="pl-1">
-                  Installations — fixed plant such as compressors, generators, workshop equipment
-                </li>
-              </ul>
+          <ConceptBlock title='Definition of "Work Equipment" (Regulation 2)'>
+            <p>
+              &quot;Work equipment&quot; means any machinery, appliance, apparatus, tool or
+              installation for use at work (whether exclusively or not). This includes:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Hand tools — screwdrivers, pliers, cable strippers, spanners</li>
+              <li>Power tools — drills, grinders, saws, crimping machines</li>
+              <li>
+                Test instruments — voltage indicators, MFTs, loop impedance testers, thermal cameras
+              </li>
+              <li>Access equipment — ladders, stepladders, scaffold towers, platforms</li>
+              <li>Lifting equipment — chain hoists, cable winches (also subject to LOLER)</li>
+              <li>PPE ancillary equipment — insulating mats, barriers, screening</li>
+              <li>
+                Installations — fixed plant such as compressors, generators, workshop equipment
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Regulation 4 — Suitability"
+            onSite="Example: Using a standard multimeter (not GS38 compliant) to prove dead on a 230 V distribution board breaches Regulation 4 — the equipment is not suitable for the purpose. A GS38-compliant voltage indicator with fused probes, finger guards, and suitable CAT rating is required."
+          >
+            <p>
+              Regulation 4 requires that work equipment is suitable for the purpose for which it is
+              provided. Suitability must consider:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>The initial integrity:</strong> Equipment must be constructed or adapted to
+                be suitable — this includes selecting the correct rating, category, and
+                specification
+              </li>
+              <li>
+                <strong>The working conditions:</strong> The place where the equipment will be used
+                (e.g., a damp cable tunnel, a dusty factory, an explosive atmosphere) must be
+                considered
+              </li>
+              <li>
+                <strong>Health and safety risks:</strong> Selection must account for the risks
+                created by the use of the equipment and ensure they are eliminated or controlled
+              </li>
+              <li>
+                <strong>Used only for suitable operations:</strong> Equipment must be used only for
+                operations and under conditions for which it is suitable
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="PUWER Duties and Duty Holders">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Duty Holder</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">PUWER Duty</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Electrical Maintenance Example
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Employer</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Provide suitable equipment, maintain, inspect, train
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Provide calibrated MFT, maintain power tools, train on new instruments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Self-employed</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Same duties as employer for own equipment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Maintain own test instruments, keep calibration records
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Employee</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Use equipment correctly, report defects
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Pre-use checks, report damaged leads, do not misuse tools
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Regulation 4 — Suitability
-              </p>
-              <p className="text-sm text-white mb-3">
-                Regulation 4 requires that work equipment is suitable for the purpose for which it
-                is provided. Suitability must consider:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>The initial integrity:</strong> Equipment must be constructed or adapted
-                  to be suitable — this includes selecting the correct rating, category, and
-                  specification
-                </li>
-                <li className="pl-1">
-                  <strong>The working conditions:</strong> The place where the equipment will be
-                  used (e.g., a damp cable tunnel, a dusty factory, an explosive atmosphere) must be
-                  considered
-                </li>
-                <li className="pl-1">
-                  <strong>Health and safety risks:</strong> Selection must account for the risks
-                  created by the use of the equipment and ensure they are eliminated or controlled
-                </li>
-                <li className="pl-1">
-                  <strong>Used only for suitable operations:</strong> Equipment must be used only
-                  for operations and under conditions for which it is suitable
-                </li>
-              </ul>
-              <p className="text-sm text-elec-yellow/70 mt-3">
-                <strong>Example:</strong> Using a standard multimeter (not GS38 compliant) to prove
-                dead on a 230 V distribution board breaches Regulation 4 — the equipment is not
-                suitable for the purpose. A GS38-compliant voltage indicator with fused probes,
-                finger guards, and suitable CAT rating is required.
-              </p>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PUWER Duties and Duty Holders
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Duty Holder</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">PUWER Duty</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Maintenance Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provide suitable equipment, maintain, inspect, train
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provide calibrated MFT, maintain power tools, train on new instruments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Self-employed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Same duties as employer for own equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintain own test instruments, keep calibration records
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Employee</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Use equipment correctly, report defects
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-use checks, report damaged leads, do not misuse tools
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>
+            Maintenance (Reg 5), inspection (Reg 6) and specific risks (Reg 7)
+          </ContentEyebrow>
 
-        {/* Section 02: Maintenance and Inspection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Maintenance (Reg 5), Inspection (Reg 6) and Specific Risks (Reg 7)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Maintenance (Reg 5), Inspection (Reg 6) and Specific Risks (Reg 7)">
             <p>
               Regulations 5, 6 and 7 address the ongoing management of work equipment throughout its
               life. For maintenance technicians, these regulations are doubly relevant — they govern
               both the equipment you use and (in many cases) the equipment you maintain for others.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 5 — Maintenance
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Every employer shall ensure that work equipment is maintained in an efficient
-                  state, in efficient working order and in good repair."
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Efficient state:</strong> The equipment functions as intended — test
-                    instruments read accurately, power tools operate at correct speed
-                  </li>
-                  <li className="pl-1">
-                    <strong>Efficient working order:</strong> All safety features are operational —
-                    guards in place, dead-man switches functional, insulation intact
-                  </li>
-                  <li className="pl-1">
-                    <strong>Good repair:</strong> No damage, wear or deterioration that could affect
-                    safety or function
-                  </li>
-                  <li className="pl-1">
-                    <strong>Maintenance log:</strong> Where appropriate to the nature of the
-                    equipment, a maintenance log must be kept up to date
-                  </li>
-                </ul>
-              </div>
+          <RegsCallout
+            source="PUWER 1998 — Regulation 5"
+            clause="Every employer shall ensure that work equipment is maintained in an efficient state, in efficient working order and in good repair."
+            meaning={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
+                  <strong>Efficient state:</strong> The equipment functions as intended — test
+                  instruments read accurately, power tools operate at correct speed
+                </li>
+                <li>
+                  <strong>Efficient working order:</strong> All safety features are operational —
+                  guards in place, dead-man switches functional, insulation intact
+                </li>
+                <li>
+                  <strong>Good repair:</strong> No damage, wear or deterioration that could affect
+                  safety or function
+                </li>
+                <li>
+                  <strong>Maintenance log:</strong> Where appropriate to the nature of the
+                  equipment, a maintenance log must be kept up to date
+                </li>
+              </ul>
+            }
+            cite="Reference: Provision and Use of Work Equipment Regulations 1998, Regulation 5"
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 6 — Inspection
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Regulation 6 requires inspection at specific trigger points:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>After installation/assembly:</strong> Where safety depends on how the
-                    equipment is installed — check it is installed correctly before first use
-                  </li>
-                  <li className="pl-1">
-                    <strong>At suitable intervals:</strong> Regular inspections determined by risk
-                    assessment, manufacturer guidance, and operating conditions
-                  </li>
-                  <li className="pl-1">
-                    <strong>After exceptional circumstances:</strong> Following significant damage,
-                    prolonged disuse, modification, or any event that could have affected safety
-                  </li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  Inspection results must be recorded and kept available until the next inspection
-                  is recorded. The records must show the date, findings, and any actions taken.
-                </p>
-              </div>
+          <ConceptBlock title="Regulation 6 — Inspection">
+            <p>Regulation 6 requires inspection at specific trigger points:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>After installation/assembly:</strong> Where safety depends on how the
+                equipment is installed — check it is installed correctly before first use
+              </li>
+              <li>
+                <strong>At suitable intervals:</strong> Regular inspections determined by risk
+                assessment, manufacturer guidance, and operating conditions
+              </li>
+              <li>
+                <strong>After exceptional circumstances:</strong> Following significant damage,
+                prolonged disuse, modification, or any event that could have affected safety
+              </li>
+            </ul>
+            <p>
+              Inspection results must be recorded and kept available until the next inspection is
+              recorded. The records must show the date, findings, and any actions taken.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 7 — Specific Risks
-                </h3>
-                <p className="text-sm text-white">
-                  Where the use of work equipment involves a specific risk to health or safety, the
-                  employer must restrict its use to designated persons who have received specific
-                  training. Maintenance and repair must also be restricted to designated persons.
-                  For electrical maintenance, this applies to specialised equipment such as HV
-                  phasing sticks, portable earthing equipment, cable fault locators used on
-                  energised systems, and live line tools.
-                </p>
-              </div>
+          <ConceptBlock title="Regulation 7 — Specific Risks">
+            <p>
+              Where the use of work equipment involves a specific risk to health or safety, the
+              employer must restrict its use to designated persons who have received specific
+              training. Maintenance and repair must also be restricted to designated persons. For
+              electrical maintenance, this applies to specialised equipment such as HV phasing
+              sticks, portable earthing equipment, cable fault locators used on energised systems,
+              and live line tools.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Application to Electrical Test Instruments">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Instrument</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      PUWER Requirement
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Practical Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Voltage indicator</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Suitable (Reg 4), maintained (Reg 5)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      GS38 compliant, pre-use visual check, proving unit test
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Multifunction tester</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Suitable, maintained, calibrated
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Annual calibration, pre-use check, intact leads with fused probes
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Insulated tools</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Suitable (VDE rated), maintained
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Pre-use check for damaged insulation, replace if compromised
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Thermal imaging camera</td>
+                    <td className="border border-white/10 px-3 py-2">Suitable, training (Reg 9)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Trained user, calibrated, suitable for voltage rating of panels
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Lock-off kit</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Suitable, maintained (Reg 5)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Correct type for isolation devices on site, locks in good condition
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Application to Electrical Test Instruments
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Instrument</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        PUWER Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Practical Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage indicator</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable (Reg 4), maintained (Reg 5)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        GS38 compliant, pre-use visual check, proving unit test
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Multifunction tester</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable, maintained, calibrated
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Annual calibration, pre-use check, intact leads with fused probes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulated tools</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable (VDE rated), maintained
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-use check for damaged insulation, replace if compromised
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal imaging camera</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable, training (Reg 9)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trained user, calibrated, suitable for voltage rating of panels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lock-off kit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable, maintained (Reg 5)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Correct type for isolation devices on site, locks in good condition
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: Information, Training and Conformity */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Information, Training and Conformity (Regs 8–10)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Information, training and conformity (Regs 8–10)</ContentEyebrow>
+
+          <ConceptBlock title="Information, Training and Conformity (Regs 8–10)">
             <p>
               Regulations 8, 9 and 10 ensure that persons using work equipment have the knowledge
               needed to use it safely, and that the equipment itself meets required product safety
               standards. These regulations are complementary to the EAWR Regulation 16 (competence)
               and the HSWA Section 2(2)(c) (training).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 8 — Information and Instructions
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Employers must ensure that all persons who use, supervise or manage work equipment
-                  have adequate health and safety information, including written instructions where
-                  appropriate. This covers:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Conditions in which the equipment may be used</li>
-                  <li className="pl-1">Foreseeable abnormal situations and the action to take</li>
-                  <li className="pl-1">
-                    Conclusions from experience of using the equipment (lessons learned)
-                  </li>
-                  <li className="pl-1">Manufacturer's instructions where relevant</li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  For test instruments, this means access to the operating manual, understanding of
-                  measurement categories (CAT I–IV), and knowledge of the limitations of each
-                  instrument.
-                </p>
-              </div>
+          <ConceptBlock title="Regulation 8 — Information and Instructions">
+            <p>
+              Employers must ensure that all persons who use, supervise or manage work equipment
+              have adequate health and safety information, including written instructions where
+              appropriate. This covers:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Conditions in which the equipment may be used</li>
+              <li>Foreseeable abnormal situations and the action to take</li>
+              <li>Conclusions from experience of using the equipment (lessons learned)</li>
+              <li>Manufacturer&apos;s instructions where relevant</li>
+            </ul>
+            <p>
+              For test instruments, this means access to the operating manual, understanding of
+              measurement categories (CAT I–IV), and knowledge of the limitations of each
+              instrument.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 9 — Training
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Employers must ensure adequate training is provided for:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Persons who use the equipment — methods of use, risks, precautions
-                  </li>
-                  <li className="pl-1">
-                    Persons who supervise or manage the use — knowledge to ensure safe use by others
-                  </li>
-                  <li className="pl-1">
-                    Training must be adequate — proportionate to the risk and complexity of the
-                    equipment
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  <strong>Example:</strong> Before using a new type of insulation resistance tester,
-                  you should receive training on its operation, its safety features, and any
-                  differences from the previous model. For complex equipment like HV test sets,
-                  formal manufacturer training may be required.
-                </p>
-              </div>
+          <ConceptBlock
+            title="Regulation 9 — Training"
+            onSite="Example: Before using a new type of insulation resistance tester, you should receive training on its operation, its safety features, and any differences from the previous model. For complex equipment like HV test sets, formal manufacturer training may be required."
+          >
+            <p>Employers must ensure adequate training is provided for:</p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Persons who use the equipment — methods of use, risks, precautions</li>
+              <li>
+                Persons who supervise or manage the use — knowledge to ensure safe use by others
+              </li>
+              <li>
+                Training must be adequate — proportionate to the risk and complexity of the
+                equipment
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulation 10 — Conformity with Community Requirements
-                </h3>
-                <p className="text-sm text-white">
-                  Work equipment must conform to relevant product supply legislation. For electrical
-                  equipment, this includes the Electrical Equipment (Safety) Regulations 2016 (LVD),
-                  the Electromagnetic Compatibility Regulations 2016 (EMC), and the Supply of
-                  Machinery (Safety) Regulations 2008 where applicable. Conformity is normally
-                  demonstrated by UKCA or CE marking and a Declaration of Conformity. As a
-                  maintenance technician, you should verify that test instruments and power tools
-                  carry the appropriate markings.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Regulation 10 — Conformity with Community Requirements">
+            <p>
+              Work equipment must conform to relevant product supply legislation. For electrical
+              equipment, this includes the Electrical Equipment (Safety) Regulations 2016 (LVD), the
+              Electromagnetic Compatibility Regulations 2016 (EMC), and the Supply of Machinery
+              (Safety) Regulations 2008 where applicable. Conformity is normally demonstrated by
+              UKCA or CE marking and a Declaration of Conformity. As a maintenance technician, you
+              should verify that test instruments and power tools carry the appropriate markings.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Controls and Isolation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Dangerous Parts, Controls and Isolation (Regs 11–19)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Dangerous parts, controls and isolation (Regs 11–19)</ContentEyebrow>
+
+          <ConceptBlock title="Dangerous Parts, Controls and Isolation (Regs 11–19)">
             <p>
               Regulations 11 to 19 address the physical safety features of work equipment — guarding
               against dangerous parts, controls for operation, and means of isolation. Regulation 19
               (isolation from energy sources) is particularly relevant to electrical maintenance, as
               it complements the safe isolation requirements of EAWR Regulations 12 and 13.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulations 11–13 — Dangerous Parts of Machinery
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  A hierarchy of measures must be applied to prevent access to dangerous parts:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Priority 1:</strong> Fixed enclosing guards (most effective — e.g.,
-                    guards on bench grinders)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Priority 2:</strong> Other guards or protection devices (e.g.,
-                    interlocked guards, light curtains)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Priority 3:</strong> Protection appliances (jigs, holders, push sticks)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Priority 4:</strong> Information, instruction, training and supervision
-                    (least effective — last resort)
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Regulations 11–13 — Dangerous Parts of Machinery">
+            <p>A hierarchy of measures must be applied to prevent access to dangerous parts:</p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Priority 1:</strong> Fixed enclosing guards (most effective — e.g., guards
+                on bench grinders)
+              </li>
+              <li>
+                <strong>Priority 2:</strong> Other guards or protection devices (e.g., interlocked
+                guards, light curtains)
+              </li>
+              <li>
+                <strong>Priority 3:</strong> Protection appliances (jigs, holders, push sticks)
+              </li>
+              <li>
+                <strong>Priority 4:</strong> Information, instruction, training and supervision
+                (least effective — last resort)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Regulations 14–18 — Controls
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Reg 14 — Controls:</strong> Suitable and sufficient controls for
-                    starting, stopping and changing operating conditions. Controls must be clearly
-                    visible and identifiable
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 15 — Stop controls:</strong> Readily accessible, bringing equipment
-                    to a safe condition as quickly as possible
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 16 — Emergency stop:</strong> Where there is a risk, emergency stop
-                    controls must be provided — readily accessible, coloured red on yellow
-                    background
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 17 — Controls (additional):</strong> Controls positioned so the
-                    operator can see that no person is at risk. Audible/visual warnings where
-                    necessary
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reg 18 — Control systems:</strong> Must be safe — failure of the control
-                    system must not create additional risks. Control systems should be designed to
-                    fail safe
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Regulations 14–18 — Controls">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reg 14 — Controls:</strong> Suitable and sufficient controls for starting,
+                stopping and changing operating conditions. Controls must be clearly visible and
+                identifiable
+              </li>
+              <li>
+                <strong>Reg 15 — Stop controls:</strong> Readily accessible, bringing equipment to a
+                safe condition as quickly as possible
+              </li>
+              <li>
+                <strong>Reg 16 — Emergency stop:</strong> Where there is a risk, emergency stop
+                controls must be provided — readily accessible, coloured red on yellow background
+              </li>
+              <li>
+                <strong>Reg 17 — Controls (additional):</strong> Controls positioned so the operator
+                can see that no person is at risk. Audible/visual warnings where necessary
+              </li>
+              <li>
+                <strong>Reg 18 — Control systems:</strong> Must be safe — failure of the control
+                system must not create additional risks. Control systems should be designed to fail
+                safe
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">
-                  Regulation 19 — Isolation from Sources of Energy
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  "Every employer shall ensure that where appropriate work equipment is provided
-                  with suitable means to isolate it from all its sources of energy."
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
+          <RegsCallout
+            source="PUWER 1998 — Regulation 19"
+            clause="Every employer shall ensure that where appropriate work equipment is provided with suitable means to isolate it from all its sources of energy."
+            meaning={
+              <>
+                <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                  <li>
                     Applies to all energy sources — electrical, pneumatic, hydraulic, mechanical
                     (stored energy), thermal
                   </li>
-                  <li className="pl-1">
+                  <li>
                     The means of isolation must be clearly identifiable and readily accessible
                   </li>
-                  <li className="pl-1">Reconnection must not expose any person to risk</li>
-                  <li className="pl-1">
-                    Complements EAWR Regs 12 and 13 for electrical isolation specifically
-                  </li>
+                  <li>Reconnection must not expose any person to risk</li>
+                  <li>Complements EAWR Regs 12 and 13 for electrical isolation specifically</li>
                 </ul>
-                <p className="text-sm text-white mt-2">
+                <p>
                   For maintenance technicians working on motor-driven equipment, you must isolate
                   both the electrical supply (EAWR) and any other energy sources (PUWER Reg 19) —
                   pneumatic, hydraulic, gravitational (raised loads), or stored mechanical energy
                   (springs, flywheels).
                 </p>
-              </div>
-            </div>
+              </>
+            }
+            cite="Reference: Provision and Use of Work Equipment Regulations 1998, Regulation 19"
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Records and Documentation
-              </h3>
-              <p className="text-sm text-white">
-                PUWER requires maintenance logs (Regulation 5(2)) where appropriate, and inspection
-                records (Regulation 6(3)) to be kept until the next inspection. For electrical
-                maintenance technicians, good practice includes maintaining: a tool and instrument
-                register, calibration certificates for test instruments, records of PAT testing for
-                portable power tools, pre-use check records for access equipment, and training
-                records for specialised equipment. These records demonstrate compliance and support
-                a defence of due diligence.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 note:</strong> PUWER is one of the "six-pack" regulations that every
-              maintenance technician must understand. Your EPA will expect you to demonstrate
-              knowledge of equipment suitability, maintenance, inspection, and safe use —
-              particularly as they apply to the specific tools and instruments you use in electrical
-              maintenance.
+          <ConceptBlock title="Records and Documentation">
+            <p>
+              PUWER requires maintenance logs (Regulation 5(2)) where appropriate, and inspection
+              records (Regulation 6(3)) to be kept until the next inspection. For electrical
+              maintenance technicians, good practice includes maintaining: a tool and instrument
+              register, calibration certificates for test instruments, records of PAT testing for
+              portable power tools, pre-use check records for access equipment, and training records
+              for specialised equipment. These records demonstrate compliance and support a defence
+              of due diligence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Relevance to your ST1426 assessment">
+            <p>
+              <em>
+                PUWER is one of the &quot;six-pack&quot; regulations that every maintenance
+                technician must understand. Your EPA will expect you to demonstrate knowledge of
+                equipment suitability, maintenance, inspection, and safe use — particularly as they
+                apply to the specific tools and instruments you use in electrical maintenance.
+              </em>
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Reg 4 — Suitability for purpose',
+              'Reg 5 — Maintenance in efficient state',
+              'Reg 6 — Inspection at suitable intervals',
+              'Reg 7 — Specific risks — designated persons',
+              'Regs 8/9 — Information, instruction, training',
+              'Reg 10 — Product conformity (UKCA/CE)',
+              'Regs 11–13 — Guarding dangerous parts',
+              'Regs 14–18 — Controls and emergency stop',
+              'Reg 19 — Isolation from energy sources',
+              'Voltage indicators — GS38, pre-use check',
+              'MFTs — calibrated, intact leads',
+              'Power tools — guarded, 110 V on site, PAT tested',
+              'Insulated tools — VDE rated, inspect insulation',
+              'Lock-off kits — correct type, good condition',
+              'Access equipment — inspected, suitable height',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 4 — Suitability for purpose</li>
-                  <li>Reg 5 — Maintenance in efficient state</li>
-                  <li>Reg 6 — Inspection at suitable intervals</li>
-                  <li>Reg 7 — Specific risks — designated persons</li>
-                  <li>Regs 8/9 — Information, instruction, training</li>
-                  <li>Reg 10 — Product conformity (UKCA/CE)</li>
-                  <li>Regs 11–13 — Guarding dangerous parts</li>
-                  <li>Regs 14–18 — Controls and emergency stop</li>
-                  <li>Reg 19 — Isolation from energy sources</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Technician Equipment</p>
-                <ul className="space-y-0.5">
-                  <li>Voltage indicators — GS38, pre-use check</li>
-                  <li>MFTs — calibrated, intact leads</li>
-                  <li>Power tools — guarded, 110 V on site, PAT tested</li>
-                  <li>Insulated tools — VDE rated, inspect insulation</li>
-                  <li>Lock-off kits — correct type, good condition</li>
-                  <li>Access equipment — inspected, suitable height</li>
-                </ul>
-              </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  BS 7671 Wiring Regulations
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">LOLER 1998</div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-5">
-              Next: LOLER 1998
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

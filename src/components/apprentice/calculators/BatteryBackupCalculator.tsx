@@ -215,7 +215,7 @@ const BatteryBackupCalculator = () => {
 
     return {
       meta: {
-        title: 'Battery Backup Calculator',
+        title: 'Battery Backup',
         subtitle: `${selectedChemistry.name} battery bank — ${mode === 'runtime' ? 'runtime estimate' : 'capacity sizing'}`,
         standard: 'BS 7671:2018+A4:2026 — Chapter 57 (stationary secondary batteries)',
       },
@@ -237,16 +237,28 @@ const BatteryBackupCalculator = () => {
             { label: 'Battery chemistry', value: selectedChemistry.name },
             { label: 'Nominal voltage', value: `${nominalVoltage} V` },
             { label: 'Capacity', value: `${capacityAh} Ah` },
+            { label: 'Battery health', value: `${batteryHealth}%` },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
             { label: 'Inverter type', value: selectedInverter.name },
-            { label: 'Total connected load', value: `${totalLoad} W` },
             ...(targetHours ? [{ label: 'Target runtime', value: `${targetHours} h` }] : []),
           ],
+        },
+        {
+          heading: 'Connected loads',
+          items: loads
+            .filter((load) => load.name.trim())
+            .map((load) => {
+              const bits = [`${load.watts} W`, load.priority];
+              if (load.dutyCycle < 1) bits.push(`${Math.round(load.dutyCycle * 100)}% duty`);
+              if (load.surgeMultiplier > 1) bits.push(`surge ×${load.surgeMultiplier}`);
+              return `${load.name} — ${bits.join(' · ')}`;
+            }),
+          rows: [{ label: 'Total connected load', value: `${totalLoad} W` }],
         },
         {
           heading: 'Result',
           rows: [
             { label: 'Usable energy', value: `${results.usableEnergyWh.toFixed(0)} Wh` },
-            { label: 'DC current', value: `${results.dcCurrent.toFixed(1)} A` },
             {
               label: 'C-rate',
               value: `${results.cRate.toFixed(2)} C`,
@@ -255,10 +267,6 @@ const BatteryBackupCalculator = () => {
             { label: 'Average load', value: `${results.averagePower.toFixed(0)} W` },
             { label: 'Peak load', value: `${results.peakPower.toFixed(0)} W` },
             { label: 'Surge (inrush) load', value: `${results.surgePower.toFixed(0)} W` },
-            { label: 'Min inverter rating', value: `${results.recommendedVA.toFixed(0)} VA` },
-            mode === 'runtime'
-              ? { label: 'Estimated runtime', value: formatRuntime(results.runtime) }
-              : { label: 'Required capacity', value: `${(results.requiredAh ?? 0).toFixed(0)} Ah` },
           ],
         },
       ],

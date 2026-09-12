@@ -1,8 +1,52 @@
-import { ArrowLeft, Grid, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 3 — Ladder Logic Basics
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Types of diagrams used to represent circuits;
+ *                 symbols and abbreviations used to represent components in
+ *                 electrical schematics."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * The original's safety references (BS EN 60204-1 for fail-safe NC stop
+ * buttons, BS EN ISO 13850 for hardwired E-stops) are kept exactly as
+ * written — these are standard, uncontested machinery-safety citations and
+ * are outside the scope of the brief's verified corrections (which concern
+ * GS38, thermography, test intervals and C&G qualifications).
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Ladder Logic Basics - MOET Module 5 Section 2.3';
@@ -252,119 +296,66 @@ const faqs = [
 ];
 
 const MOETModule5Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Grid className="h-4 w-4" />
-            <span>Module 5.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Ladder Logic Basics
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 3"
+        title="Ladder Logic Basics"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Relay logic concepts, contacts, coils and fundamental programming elements for PLC
-            control
+            control — the visual language that lets an electrician read what a machine is doing.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Structure:</strong> Two power rails with horizontal rungs containing
-                contacts and coils
-              </li>
-              <li className="pl-1">
-                <strong>Contacts:</strong> NO (passes when ON) and NC (passes when OFF) test
-                conditions
-              </li>
-              <li className="pl-1">
-                <strong>Logic:</strong> Series = AND, Parallel = OR, NC contact = NOT
-              </li>
-              <li className="pl-1">
-                <strong>Scan:</strong> Top to bottom, left to right every scan cycle
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Online monitoring:</strong> See live contact and coil states for fault
-                diagnosis
-              </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> Find every location where an address is used
-              </li>
-              <li className="pl-1">
-                <strong>Latching:</strong> Start/stop motor control is the fundamental pattern
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Read and interpret PLC programmes for maintenance
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Structure: Two power rails with horizontal rungs containing contacts and coils.',
+              'Contacts: NO (passes when ON) and NC (passes when OFF) test conditions.',
+              'Logic: Series = AND, Parallel = OR, NC contact = NOT.',
+              'Scan: Top to bottom, left to right every scan cycle.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Read and interpret ladder logic diagrams with contacts, coils and branches',
               'Explain AND, OR and NOT logic functions using series and parallel contacts',
               'Describe latching (seal-in) circuits for motor start/stop control',
               'Understand PLC scan order and how it affects programme execution',
               'Use online monitoring and cross-referencing for systematic fault diagnosis',
               'Apply fail-safe design principles using NC contacts for stop and E-stop functions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Online monitoring:</strong> See live contact and coil states for fault
+                diagnosis.
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> Find every location where an address is used.
+              </li>
+              <li>
+                <strong>Latching:</strong> Start/stop motor control is the fundamental pattern.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Read and interpret PLC programmes for maintenance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Ladder Logic Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Ladder logic fundamentals</ContentEyebrow>
+
+          <ConceptBlock title="Built so electricians could read it on day one">
             <p>
               Ladder logic was created in the late 1960s so that electricians could programme PLCs
               using a format they already understood — relay circuit diagrams. Each rung of the
@@ -380,141 +371,122 @@ const MOETModule5Section2_3 = () => {
               how physical relay circuits work, which is why ladder logic remains the most widely
               used PLC language in discrete manufacturing and machine control worldwide.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Basic Ladder Elements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NO contact --| |--:</strong> Passes power when its associated bit is ON
-                  (energised). Used for start buttons, sensor inputs, and internal flags.
-                </li>
-                <li className="pl-1">
-                  <strong>NC contact --|/|--:</strong> Passes power when its associated bit is OFF
-                  (de-energised). Used for stop buttons, safety interlocks, and fault conditions.
-                </li>
-                <li className="pl-1">
-                  <strong>Output coil --( )--:</strong> Energises when rung logic evaluates to true.
-                  Drives physical outputs or internal memory bits.
-                </li>
-                <li className="pl-1">
-                  <strong>Set (latch) --(S)--:</strong> Turns the output ON and it stays ON until
-                  explicitly reset — survives loss of rung power.
-                </li>
-                <li className="pl-1">
-                  <strong>Reset (unlatch) --(R)--:</strong> Turns OFF a latched output. Must be used
-                  with a corresponding Set instruction.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Basic ladder elements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>NO contact --| |--:</strong> Passes power when its associated bit is ON
+                (energised). Used for start buttons, sensor inputs, and internal flags.
+              </li>
+              <li>
+                <strong>NC contact --|/|--:</strong> Passes power when its associated bit is OFF
+                (de-energised). Used for stop buttons, safety interlocks, and fault conditions.
+              </li>
+              <li>
+                <strong>Output coil --( )--:</strong> Energises when rung logic evaluates to true.
+                Drives physical outputs or internal memory bits.
+              </li>
+              <li>
+                <strong>Set (latch) --(S)--:</strong> Turns the output ON and it stays ON until
+                explicitly reset — survives loss of rung power.
+              </li>
+              <li>
+                <strong>Reset (unlatch) --(R)--:</strong> Turns OFF a latched output. Must be used
+                with a corresponding Set instruction.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The PLC Scan Cycle</p>
-              <p className="text-sm text-white mb-3">
-                The PLC operates in a continuous repeating cycle with three main phases:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Input scan:</strong> Reads all physical input states into the input image
-                  table (a snapshot of inputs at that moment)
-                </li>
-                <li className="pl-1">
-                  <strong>Programme execution:</strong> Evaluates every rung from top to bottom,
-                  left to right, writing results to the output image table
-                </li>
-                <li className="pl-1">
-                  <strong>Output update:</strong> Writes the output image table to the physical
-                  outputs simultaneously
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                This means that inputs are only read once per scan, and outputs are only updated
-                once per scan. A very fast input pulse (shorter than the scan time) could be missed
-                entirely — this is important for high-speed counting applications.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="The PLC scan cycle">
+            <p>The PLC operates in a continuous repeating cycle with three main phases:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Input scan:</strong> Reads all physical input states into the input image
+                table (a snapshot of inputs at that moment).
+              </li>
+              <li>
+                <strong>Programme execution:</strong> Evaluates every rung from top to bottom, left
+                to right, writing results to the output image table.
+              </li>
+              <li>
+                <strong>Output update:</strong> Writes the output image table to the physical
+                outputs simultaneously.
+              </li>
+            </ul>
+            <p>
+              This means that inputs are only read once per scan, and outputs are only updated once
+              per scan. A very fast input pulse (shorter than the scan time) could be missed
+              entirely — this is important for high-speed counting applications.
+            </p>
+            <p>
               <strong>Maintenance tip:</strong> Understanding the scan cycle explains why forcing an
               input in the PLC software may not produce the same result as operating the physical
               switch. The forced value bypasses the input scan and directly writes to the input
               image table.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Logic Functions in Ladder Diagrams
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Logic functions in ladder diagrams</ContentEyebrow>
+
+          <ConceptBlock title="Every digital function comes from series, parallel and NC contacts">
             <p>
               All digital logic can be constructed from the basic ladder elements. The physical
               arrangement of contacts on the rung — series, parallel, or combinations — determines
               the logic function. Understanding these patterns is essential for reading any ladder
               programme, from a simple motor starter to a complex automated production line.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Arrangement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Output ON When</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AND</td>
-                      <td className="border border-white/10 px-3 py-2">Contacts in series</td>
-                      <td className="border border-white/10 px-3 py-2">ALL contacts true</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Guard closed AND start pressed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">OR</td>
-                      <td className="border border-white/10 px-3 py-2">Contacts in parallel</td>
-                      <td className="border border-white/10 px-3 py-2">ANY contact true</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Start button 1 OR start button 2
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NOT</td>
-                      <td className="border border-white/10 px-3 py-2">NC contact</td>
-                      <td className="border border-white/10 px-3 py-2">Associated bit is OFF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Run if fault flag is NOT set
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NAND</td>
-                      <td className="border border-white/10 px-3 py-2">NC contacts in parallel</td>
-                      <td className="border border-white/10 px-3 py-2">NOT all inputs true</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Alarm if NOT both sensors active
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">NOR</td>
-                      <td className="border border-white/10 px-3 py-2">NC contacts in series</td>
-                      <td className="border border-white/10 px-3 py-2">NONE of the inputs true</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Idle if no call for operation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Logic function reference">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Function</th>
+                    <th className="py-2 pr-4 font-medium text-white">Arrangement</th>
+                    <th className="py-2 pr-4 font-medium text-white">Output ON when</th>
+                    <th className="py-2 font-medium text-white">Example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">AND</td>
+                    <td className="py-2 pr-4">Contacts in series</td>
+                    <td className="py-2 pr-4">ALL contacts true</td>
+                    <td className="py-2">Guard closed AND start pressed</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">OR</td>
+                    <td className="py-2 pr-4">Contacts in parallel</td>
+                    <td className="py-2 pr-4">ANY contact true</td>
+                    <td className="py-2">Start button 1 OR start button 2</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">NOT</td>
+                    <td className="py-2 pr-4">NC contact</td>
+                    <td className="py-2 pr-4">Associated bit is OFF</td>
+                    <td className="py-2">Run if fault flag is NOT set</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">NAND</td>
+                    <td className="py-2 pr-4">NC contacts in parallel</td>
+                    <td className="py-2 pr-4">NOT all inputs true</td>
+                    <td className="py-2">Alarm if NOT both sensors active</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">NOR</td>
+                    <td className="py-2 pr-4">NC contacts in series</td>
+                    <td className="py-2 pr-4">NONE of the inputs true</td>
+                    <td className="py-2">Idle if no call for operation</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               Complex logic is built by combining these patterns. For example, a motor may require:
               (Stop NC in series) AND (Guard interlock NC in series) AND (Start button NO in
@@ -522,44 +494,38 @@ const MOETModule5Section2_3 = () => {
               stop is not pressed, the guard is closed, and either the start button is pressed or
               the motor is already running.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Internal Relays (Memory Bits)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Internal relays (M-bits, flags) are virtual coils in PLC memory. They do not drive
-                physical outputs but can be used as contacts anywhere in the programme. They are
-                essential for:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Intermediate logic:</strong> Breaking complex conditions into manageable
-                  stages
-                </li>
-                <li className="pl-1">
-                  <strong>Sequencing:</strong> Step flags for sequential machine operations
-                </li>
-                <li className="pl-1">
-                  <strong>One-shot triggers:</strong> Edge detection for counting and toggling
-                </li>
-                <li className="pl-1">
-                  <strong>Fault flags:</strong> Recording fault conditions for diagnostics
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Internal relays (memory bits)">
+            <p>
+              Internal relays (M-bits, flags) are virtual coils in PLC memory. They do not drive
+              physical outputs but can be used as contacts anywhere in the programme. They are
+              essential for:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Intermediate logic:</strong> Breaking complex conditions into manageable
+                stages.
+              </li>
+              <li>
+                <strong>Sequencing:</strong> Step flags for sequential machine operations.
+              </li>
+              <li>
+                <strong>One-shot triggers:</strong> Edge detection for counting and toggling.
+              </li>
+              <li>
+                <strong>Fault flags:</strong> Recording fault conditions for diagnostics.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Latching Circuits and Motor Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Latching circuits and motor control</ContentEyebrow>
+
+          <ConceptBlock title="The pattern behind almost every motor rung you will read">
             <p>
               The start/stop motor circuit is the most fundamental ladder logic pattern and the one
               you will encounter most frequently in industrial maintenance. Understanding this
@@ -567,82 +533,79 @@ const MOETModule5Section2_3 = () => {
               programme, because the same latching principle is used throughout industrial control
               for pumps, valves, conveyors, and process sequences.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Start/Stop Circuit Elements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stop button:</strong> NC contact in series — breaks the rung when pressed.
-                  Uses NC because a broken wire also opens the contact, providing fail-safe
-                  behaviour as required by BS EN 60204-1.
-                </li>
-                <li className="pl-1">
-                  <strong>Start button:</strong> NO contact in parallel with the seal-in contact.
-                  Momentary — pressed to start, then released.
-                </li>
-                <li className="pl-1">
-                  <strong>Seal-in contact:</strong> An NO contact of the output coil itself, placed
-                  in parallel with the start button. When the coil energises, this contact closes
-                  and maintains the circuit after the start button is released.
-                </li>
-                <li className="pl-1">
-                  <strong>Overload contact:</strong> NC contact in series (from the thermal overload
-                  relay). Opens if the motor draws excessive current, stopping the motor and
-                  requiring manual reset.
-                </li>
-                <li className="pl-1">
-                  <strong>Output coil:</strong> Drives the motor contactor. When energised, the
-                  motor runs. When de-energised, the motor stops.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Start/stop circuit elements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stop button:</strong> NC contact in series — breaks the rung when pressed.
+                Uses NC because a broken wire also opens the contact, providing fail-safe behaviour
+                as required by BS EN 60204-1.
+              </li>
+              <li>
+                <strong>Start button:</strong> NO contact in parallel with the seal-in contact.
+                Momentary — pressed to start, then released.
+              </li>
+              <li>
+                <strong>Seal-in contact:</strong> An NO contact of the output coil itself, placed in
+                parallel with the start button. When the coil energises, this contact closes and
+                maintains the circuit after the start button is released.
+              </li>
+              <li>
+                <strong>Overload contact:</strong> NC contact in series (from the thermal overload
+                relay). Opens if the motor draws excessive current, stopping the motor and requiring
+                manual reset.
+              </li>
+              <li>
+                <strong>Output coil:</strong> Drives the motor contactor. When energised, the motor
+                runs. When de-energised, the motor stops.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Fail-Safe Design Principle</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Using an NO contact for the stop function"
+            whatHappens={
+              <>
+                If NO contacts were used for the stop function, a broken wire would prevent the
+                operator from stopping the machine. This is not optional — it is a legal requirement
+                under the Machinery Directive and BS EN 60204-1.
+              </>
+            }
+            doInstead={
+              <>
                 Stop and E-stop buttons always use NC contacts. If the wire breaks, the circuit
-                opens and the machine stops — this is fail-safe behaviour. If NO contacts were used
-                for the stop function, a broken wire would prevent the operator from stopping the
-                machine. This is not optional — it is a legal requirement under the Machinery
-                Directive and BS EN 60204-1. Emergency stops must also be hardwired through
-                safety-rated devices (safety relays) and must not rely solely on PLC logic (BS EN
-                ISO 13850).
-              </p>
-            </div>
+                opens and the machine stops — this is fail-safe behaviour. Emergency stops must also
+                be hardwired through safety-rated devices (safety relays) and must not rely solely
+                on PLC logic (BS EN ISO 13850).
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Set/Reset vs Seal-In</p>
-              <p className="text-sm text-white mb-3">
-                There are two ways to create latching behaviour in ladder logic:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Seal-in contact:</strong> The output coil maintains itself via its own NO
-                  contact in parallel with start. The stop button breaks the seal-in. This is the
-                  traditional method, most similar to hard-wired relay circuits.
-                </li>
-                <li className="pl-1">
-                  <strong>Set/Reset instructions:</strong> Separate Set (S) and Reset (R) coils
-                  latch and unlatch the output. The output retains its state between scans without
-                  needing a seal-in path. Note: if both Set and Reset are active in the same scan,
-                  the instruction processed last wins.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Set/Reset vs seal-in">
+            <p>There are two ways to create latching behaviour in ladder logic:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Seal-in contact:</strong> The output coil maintains itself via its own NO
+                contact in parallel with start. The stop button breaks the seal-in. This is the
+                traditional method, most similar to hard-wired relay circuits.
+              </li>
+              <li>
+                <strong>Set/Reset instructions:</strong> Separate Set (S) and Reset (R) coils latch
+                and unlatch the output. The output retains its state between scans without needing a
+                seal-in path. Note: if both Set and Reset are active in the same scan, the
+                instruction processed last wins.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Reading Ladder Diagrams for Fault-Finding
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Reading ladder diagrams for fault-finding</ContentEyebrow>
+
+          <ConceptBlock title="A static diagram becomes a live diagnostic tool">
             <p>
               Online monitoring transforms ladder diagrams from static documentation into powerful
               real-time diagnostic tools. By connecting the programming laptop to the running PLC,
@@ -651,228 +614,215 @@ const MOETModule5Section2_3 = () => {
               to right and immediately identify which condition is preventing an output from
               operating.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Systematic Diagnostic Steps
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1. Identify the fault:</strong> Determine which output is not operating
-                  (or is operating unexpectedly).
-                </li>
-                <li className="pl-1">
-                  <strong>2. Find the output coil:</strong> Use cross-referencing to locate the rung
-                  containing the output coil in the programme.
-                </li>
-                <li className="pl-1">
-                  <strong>3. Go online:</strong> Connect to the running PLC and observe the rung in
-                  real time.
-                </li>
-                <li className="pl-1">
-                  <strong>4. Trace power flow:</strong> Follow the rung from left to right. Power
-                  should flow from the left rail through closed contacts to the coil. Find where
-                  power flow stops — that is the blocking condition.
-                </li>
-                <li className="pl-1">
-                  <strong>5. Evaluate the blocking contact:</strong> Is the blocking condition
-                  genuine (e.g., a guard is genuinely open) or is it a fault (e.g., the PLC shows
-                  the guard open but the physical guard is closed)?
-                </li>
-                <li className="pl-1">
-                  <strong>6. Check field wiring:</strong> If the PLC state does not match the
-                  physical device state, the fault is in the field wiring, the sensor, or the input
-                  module — not in the programme.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Systematic diagnostic steps">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Identify the fault:</strong> Determine which output is not operating (or
+                is operating unexpectedly).
+              </li>
+              <li>
+                <strong>2. Find the output coil:</strong> Use cross-referencing to locate the rung
+                containing the output coil in the programme.
+              </li>
+              <li>
+                <strong>3. Go online:</strong> Connect to the running PLC and observe the rung in
+                real time.
+              </li>
+              <li>
+                <strong>4. Trace power flow:</strong> Follow the rung from left to right. Power
+                should flow from the left rail through closed contacts to the coil. Find where power
+                flow stops — that is the blocking condition.
+              </li>
+              <li>
+                <strong>5. Evaluate the blocking contact:</strong> Is the blocking condition genuine
+                (e.g. a guard is genuinely open) or is it a fault (e.g. the PLC shows the guard open
+                but the physical guard is closed)?
+              </li>
+              <li>
+                <strong>6. Check field wiring:</strong> If the PLC state does not match the physical
+                device state, the fault is in the field wiring, the sensor, or the input module —
+                not in the programme.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Cross-Referencing</h3>
-                <p className="text-sm text-white mb-2">
-                  Cross-referencing shows every rung where a specific address (input, output, or
-                  memory bit) is used. This is essential because:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    A blocking contact may be controlled by logic on a different rung
-                  </li>
-                  <li className="pl-1">An output may be referenced in multiple locations</li>
-                  <li className="pl-1">A condition chain may span several programme sections</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Watch Tables</h3>
-                <p className="text-sm text-white mb-2">
-                  Watch tables allow you to monitor specific addresses in a list format:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Group related addresses for a particular machine section</li>
-                  <li className="pl-1">Monitor timer and counter current values</li>
-                  <li className="pl-1">View analogue input/output values in engineering units</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Cross-referencing">
+            <p>
+              Cross-referencing shows every rung where a specific address (input, output, or memory
+              bit) is used. This is essential because:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>A blocking contact may be controlled by logic on a different rung.</li>
+              <li>An output may be referenced in multiple locations.</li>
+              <li>A condition chain may span several programme sections.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Watch tables">
+            <p>Watch tables allow you to monitor specific addresses in a list format:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Group related addresses for a particular machine section.</li>
+              <li>Monitor timer and counter current values.</li>
+              <li>View analogue input/output values in engineering units.</li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> Always use cross-referencing to check if a blocking
               contact is controlled by logic elsewhere in the programme. The fault may be in a
               completely different section — for example, a safety interlock in the housekeeping
               routines may be preventing the output you are investigating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Good Programming Practice and Common Errors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Good programming practice and common errors</ContentEyebrow>
+
+          <ConceptBlock title="Reading programmes better, without needing to write them">
             <p>
               While maintenance technicians are not typically expected to write PLC programmes from
               scratch, understanding good programming practice helps you read programmes more
               effectively, identify potential issues, and communicate precisely with controls
               engineers when modifications are needed.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Programming Errors to Watch For
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Double coil:</strong> The same output address used on two or more rungs.
-                  Only the last rung scanned determines the final state, making the earlier rungs
-                  ineffective. Most PLC software flags this as a warning.
-                </li>
-                <li className="pl-1">
-                  <strong>Missing seal-in:</strong> An output that should latch but has no seal-in
-                  contact or Set instruction. The output only stays ON while the start button is
-                  physically held — releasing it drops the output.
-                </li>
-                <li className="pl-1">
-                  <strong>NO stop button:</strong> Using a normally open contact for a stop
-                  function. If the wire breaks, the machine cannot be stopped — a serious safety
-                  violation.
-                </li>
-                <li className="pl-1">
-                  <strong>No overload protection in logic:</strong> Omitting the overload contact
-                  from the motor rung. Even if the physical overload trips the contactor, the PLC
-                  output remains ON, which can cause repeated attempts to restart against a tripped
-                  overload.
-                </li>
-                <li className="pl-1">
-                  <strong>Race conditions:</strong> Logic where the output depends on the order of
-                  evaluation within the same scan. Rearranging rungs could change the machine
-                  behaviour.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common programming errors to watch for">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Double coil:</strong> The same output address used on two or more rungs.
+                Only the last rung scanned determines the final state, making the earlier rungs
+                ineffective. Most PLC software flags this as a warning.
+              </li>
+              <li>
+                <strong>Missing seal-in:</strong> An output that should latch but has no seal-in
+                contact or Set instruction. The output only stays ON while the start button is
+                physically held — releasing it drops the output.
+              </li>
+              <li>
+                <strong>NO stop button:</strong> Using a normally open contact for a stop function.
+                If the wire breaks, the machine cannot be stopped — a serious safety violation.
+              </li>
+              <li>
+                <strong>No overload protection in logic:</strong> Omitting the overload contact from
+                the motor rung. Even if the physical overload trips the contactor, the PLC output
+                remains ON, which can cause repeated attempts to restart against a tripped overload.
+              </li>
+              <li>
+                <strong>Race conditions:</strong> Logic where the output depends on the order of
+                evaluation within the same scan. Rearranging rungs could change the machine
+                behaviour.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Programme Documentation
-              </p>
-              <p className="text-sm text-white mb-3">
-                Well-documented programmes are far easier to maintain. Look for (and request from
-                controls engineers) the following:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Symbolic names:</strong> Descriptive names instead of raw addresses (e.g.,
-                  "GuardInterlock" instead of "I0.3")
-                </li>
-                <li className="pl-1">
-                  <strong>Rung comments:</strong> Descriptions of what each rung or group of rungs
-                  does
-                </li>
-                <li className="pl-1">
-                  <strong>I/O list:</strong> A complete list mapping every physical I/O point to its
-                  tag name and field device
-                </li>
-                <li className="pl-1">
-                  <strong>Programme structure:</strong> Logical grouping into sections (e.g.,
-                  safety, motor control, sequencing, HMI interface)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Reminder</p>
-              <p className="text-sm text-white">
-                Never force an output or override a safety interlock in the PLC without a proper
-                risk assessment and permit to work. Forced outputs bypass all programme logic
-                including safety interlocks. A forgotten force has caused fatal accidents in
-                industry. Always document any forces applied and remove them immediately after
-                diagnosis. Check the force table before leaving the PLC.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to read and
-              interpret ladder logic programmes, use online monitoring for systematic fault
-              diagnosis, understand programme structure and documentation, and communicate findings
-              to controls engineers. These skills are fundamental to efficient reactive and planned
-              maintenance of automated machinery.
+          <ConceptBlock title="Programme documentation">
+            <p>
+              Well-documented programmes are far easier to maintain. Look for (and request from
+              controls engineers) the following:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Symbolic names:</strong> Descriptive names instead of raw addresses (e.g.
+                &quot;GuardInterlock&quot; instead of &quot;I0.3&quot;).
+              </li>
+              <li>
+                <strong>Rung comments:</strong> Descriptions of what each rung or group of rungs
+                does.
+              </li>
+              <li>
+                <strong>I/O list:</strong> A complete list mapping every physical I/O point to its
+                tag name and field device.
+              </li>
+              <li>
+                <strong>Programme structure:</strong> Logical grouping into sections (e.g. safety,
+                motor control, sequencing, HMI interface).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <CommonMistake
+            title="Forcing an output without a permit"
+            whatHappens={
+              <>
+                Forced outputs bypass all programme logic including safety interlocks. A forgotten
+                force has caused fatal accidents in industry.
+              </>
+            }
+            doInstead={
+              <>
+                Never force an output or override a safety interlock in the PLC without a proper
+                risk assessment and permit to work. Always document any forces applied and remove
+                them immediately after diagnosis. Check the force table before leaving the PLC.
+              </>
+            }
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="ST1426 and this section">
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to read and interpret ladder logic
+              programmes, use online monitoring for systematic fault diagnosis, understand programme
+              structure and documentation, and communicate findings to controls engineers. These
+              skills are fundamental to efficient reactive and planned maintenance of automated
+              machinery.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <KeyTakeaways
+            points={[
+              'A rung reads left (contacts, conditions) to right (coil, output); the PLC scans every rung top to bottom, left to right, once per cycle.',
+              'Series contacts = AND; parallel contacts = OR; an NC contact = NOT — all digital logic is built from these three patterns.',
+              'A seal-in contact — an NO contact of the output coil itself, in parallel with the start button — is the classic way to latch a motor circuit; Set/Reset instructions do the same job without a seal-in path.',
+              'Stop and E-stop functions must always use NC contacts (BS EN 60204-1) so a broken wire stops the machine rather than disabling the stop function; E-stops must be hardwired, not PLC-only (BS EN ISO 13850).',
+              'A double-coil error (the same output on two rungs) means only the last-scanned rung actually controls the output — most PLC software flags it as a warning.',
+              'Online monitoring highlights live contact and coil states so you can trace exactly where power flow stops on a rung; cross-referencing finds every other rung that touches the same address.',
+              'If the PLC-displayed input state disagrees with the physical field device, the fault is in the wiring, sensor or input module — not in the programme logic.',
+              'Never force an output or override a safety interlock without a risk assessment and permit to work, and always remove and check forces before leaving the PLC.',
+            ]}
+          />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Input/Output Devices
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-4">
-              Next: Timers, Counters and Sequencing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Input/Output Devices
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Timers, Counters and Sequencing
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

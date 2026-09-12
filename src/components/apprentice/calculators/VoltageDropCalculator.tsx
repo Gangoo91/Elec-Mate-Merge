@@ -431,10 +431,17 @@ const VoltageDropCalculator = () => {
         {
           heading: 'Design inputs',
           rows: [
+            {
+              label: 'Circuit type',
+              value: circuit === 'lighting' ? 'Lighting' : 'Power / other uses',
+            },
+            { label: 'Cable family', value: family },
+            { label: 'Installation method', value: method },
+            { label: 'Cable size', value: `${cableSize} mm²` },
             { label: 'Design current', value: `${result.atCurrent} A` },
             { label: 'Circuit length', value: `${result.atLength} m` },
             { label: 'System voltage', value: `${result.atVoltage} V` },
-            { label: 'Cable mV/A/m', value: `${result.mvam}` },
+            { label: 'Cable mV/A/m', value: `${result.mvam} mV/A/m` },
             {
               label: 'Supply type',
               value: result.isPrivate ? 'Private supply' : 'Public distribution',
@@ -450,9 +457,12 @@ const VoltageDropCalculator = () => {
               : []),
             { label: 'Total volt drop', value: `${result.totalPercentage.toFixed(2)}%` },
             {
-              label: 'Permitted limit',
+              label: 'Permitted limit (this circuit)',
               value: `${result.circuitLimit}%`,
-              note: result.relaxation ? `Installation limit ${result.installationLimit}%` : undefined,
+              note:
+                result.installationLimit !== result.circuitLimit
+                  ? `Installation limit (from origin) ${result.installationLimit.toFixed(2)}%`
+                  : undefined,
             },
             { label: 'Voltage at the load', value: `${result.voltageAtLoad.toFixed(1)} V` },
             { label: 'Maximum compliant run length', value: `${result.maxLength.toFixed(1)} m` },

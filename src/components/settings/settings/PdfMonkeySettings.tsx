@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { pdfMonkeyService } from '@/components/pdf/PdfMonkeyService';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { hintCn, inputCn, labelCn } from '@/components/settings/formStyles';
 
 interface PdfMonkeySettingsProps {
   onSave?: () => void;
@@ -168,7 +169,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
   return (
     <div className="space-y-5">
       {/* Config card */}
-      <section className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <section className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden">
         <header className="px-5 sm:px-6 py-5 border-b border-white/[0.06]">
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -202,7 +203,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
         </header>
 
         <div className="px-5 sm:px-6 py-5 space-y-5">
-          <div className="rounded-2xl border border-white/[0.06] bg-white/[0.04] p-4">
+          <div className="rounded-2xl border border-elec-yellow/35 bg-white/[0.04] p-4">
             <p className="text-[12.5px] text-white leading-relaxed">
               PDF Monkey lets you use custom branded certificate templates. Configure your API
               credentials to generate certificates using your own templates instead of the
@@ -213,7 +214,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
           <div className="space-y-4">
             {fields.map((field) => (
               <div key={field.id} className="space-y-1.5">
-                <Label htmlFor={field.id} className="text-white font-medium text-[13px]">
+                <Label htmlFor={field.id} className={labelCn}>
                   {field.label}
                 </Label>
                 <Input
@@ -222,9 +223,9 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
                   placeholder={field.placeholder}
                   value={field.value}
                   onChange={(e) => field.setter(e.target.value)}
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
-                <p className="text-[11.5px] text-white">{field.description}</p>
+                <p className={hintCn}>{field.description}</p>
               </div>
             ))}
           </div>
@@ -236,7 +237,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
               type="button"
               onClick={handleSave}
               disabled={!apiKey.trim()}
-              className="h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               Save configuration
             </button>
@@ -244,7 +245,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
               type="button"
               onClick={handleTestConnection}
               disabled={!apiKey.trim() || !templateId.trim() || isTesting}
-              className="h-11 px-5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-11 px-5 rounded-xl border border-elec-yellow/35 bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.06] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isTesting ? 'Testing…' : 'Test connection'}
             </button>
@@ -274,7 +275,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
       </section>
 
       {/* Template requirements */}
-      <section className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <section className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden">
         <header className="px-5 sm:px-6 py-5 border-b border-white/[0.06]">
           <Eyebrow>Template</Eyebrow>
           <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight">

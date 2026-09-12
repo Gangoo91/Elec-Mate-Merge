@@ -27,13 +27,22 @@ interface CreateResult {
   emailed: string[];
   /** Accounts created and granted access, but the email did not go. Admin sends the login by hand. */
   emailFailed: { email: string; reason: string }[];
+  /** Already had an account: switched to free access (and emailed) instead of created. */
+  updated: string[];
 }
 
 /** Optional branded "your access is live" email, tailored to the batch. */
 interface AccessEmail {
   orgName: string;
+  /** Employer (contractor) rather than a college: changes wording + which org column is set. */
+  employer: boolean;
   requester: string | null;
   learnerCode: string | null;
+  electricianCode: string | null;
+  /** Optional opening clause that replaces the generated one. */
+  intro: string | null;
+  /** Andrew offered the account; nobody asked. Changes the email's opening. */
+  offered: boolean;
 }
 
 const FOUNDER = 'founder@elec-mate.com';
@@ -97,23 +106,60 @@ serve(
           );
         accessEmail = {
           orgName,
+          offered: ae.offered === true,
+          employer: ae.employer === true,
+          intro: typeof ae.intro === 'string' && ae.intro.trim() ? ae.intro.trim() : null,
           requester:
             typeof ae.requester === 'string' && ae.requester.trim() ? ae.requester.trim() : null,
           learnerCode:
             typeof ae.learnerCode === 'string' && ae.learnerCode.trim()
               ? ae.learnerCode.trim().toUpperCase()
               : null,
+          electricianCode:
+            typeof ae.electricianCode === 'string' && ae.electricianCode.trim()
+              ? ae.electricianCode.trim().toUpperCase()
+              : null,
         };
       }
 
-      if (!Array.isArray(rawEmails) || rawEmails.length === 0)
-        return json({ error: 'no_emails' }, 400);
+      // Accounts that already exist, sent by the page with the id it knows.
+      // With includeExisting they get free access and the email too; nothing
+      // is created and no password is set or sent.
+      const includeExisting = body.includeExisting === true;
+      const existing: Array<{ id: string; email: string }> = [];
+      if (includeExisting && Array.isArray(body.existing)) {
+        for (const e of body.existing as Array<Record<string, unknown>>) {
+          if (typeof e?.id === 'string' && typeof e?.email === 'string' && isValidEmail(e.email))
+            existing.push({ id: e.id, email: e.email.trim().toLowerCase() });
+        }
+      }
+      // Which app they see. Tutors get the Electrician view (nothing is gated,
+      // and it is what their learners will use once qualified); a cohort gets the
+      // Apprentice view. Either way the onboarding role picker is skipped so the
+      // first login goes straight in. Null leaves the picker for them.
+      const role: 'electrician' | 'apprentice' | null =
+        body.role === 'electrician' || body.role === 'apprentice' ? body.role : null;
+      const previewOnly = body.preview === true;
+      const testSend = body.test === true;
+
+      if (!Array.isArray(rawEmails) || rawEmails.length === 0) {
+        if (!(includeExisting && existing.length > 0) && !previewOnly && !testSend)
+          return json({ error: 'no_emails' }, 400);
+      }
+      // Optional first names keyed by email, for addresses like info@ that carry
+      // no name of their own ("Russell <info@centre.co.uk>" on the page).
+      const names: Record<string, string> = {};
+      if (body.names && typeof body.names === 'object') {
+        for (const [k, v] of Object.entries(body.names as Record<string, unknown>)) {
+          if (typeof v === 'string' && v.trim()) names[String(k).trim().toLowerCase()] = v.trim();
+        }
+      }
       if (password.length < 8)
         return json(
           { error: 'weak_password', message: 'Password must be at least 8 characters.' },
           400
         );
-      if (rawEmails.length > 200)
+      if (Array.isArray(rawEmails) && rawEmails.length > 200)
         return json({ error: 'too_many', message: 'Max 200 per batch.' }, 400);
 
       // Normalise + dedupe
@@ -125,8 +171,9 @@ serve(
         failed: [],
         emailed: [],
         emailFailed: [],
+        updated: [],
       };
-      for (const raw of rawEmails) {
+      for (const raw of Array.isArray(rawEmails) ? (rawEmails as unknown[]) : []) {
         const email = String(raw).trim().toLowerCase();
         if (!email) continue;
         if (!isValidEmail(email)) {
@@ -139,6 +186,41 @@ serve(
         }
         seen.add(email);
         emails.push(email);
+      }
+
+      // ── Preview / test: render exactly what would go out, create nothing ──
+      if (previewOnly || testSend) {
+        if (!accessEmail)
+          return json({ error: 'no_email_config', message: 'Turn the email on first.' }, 400);
+        const sample = emails[0] ?? existing[0]?.email ?? 'tutor@college.ac.uk';
+        const mail = buildStaffAccessEmail({
+          email: sample,
+          password: password || 'ElecMate0000!',
+          orgName: accessEmail.orgName,
+          requester: accessEmail.requester,
+          learnerCode: accessEmail.learnerCode,
+          electricianCode: accessEmail.electricianCode,
+          offered: accessEmail.offered,
+          employer: accessEmail.employer,
+          firstName: names[sample] ?? null,
+          existingAccount: !emails[0] && !!existing[0],
+        });
+        if (previewOnly)
+          return json({
+            preview: { to: sample, subject: mail.subject, html: mail.html, text: mail.text },
+          });
+        const sent = await sendEmail({
+          from: `Andrew at Elec-Mate <${FOUNDER}>`,
+          to: [FOUNDER],
+          replyTo: `Andrew Moore <${FOUNDER}>`,
+          subject: `[TEST to ${sample}] ${mail.subject}`,
+          html: mail.html,
+          text: mail.text,
+          tags: ['college-staff-access', 'test'],
+        });
+        if (sent.error)
+          return json({ error: 'test_failed', message: sent.error.message || 'send failed' }, 500);
+        return json({ test: true, to: FOUNDER, sample, subject: mail.subject });
       }
 
       // ── Create accounts ────────────────────────────────────────────────
@@ -161,7 +243,7 @@ serve(
         }
 
         const newId = created.user?.id;
-        if (newId && (grantAccess || collegeId)) {
+        if (newId && (grantAccess || collegeId || role || accessEmail)) {
           /*
            * Grant free access / attach the college.
            *
@@ -183,6 +265,19 @@ serve(
             update.free_access_reason = freeAccessReason;
           }
           if (collegeId) update.college_id = collegeId;
+          if (role) {
+            update.role = role;
+            update.onboarding_completed = true;
+          }
+          // Which college or provider a tutor/cohort account belongs to, for the
+          // Colleges page. created_via is copied from auth metadata by the trigger.
+          if (accessEmail?.orgName) {
+            if (accessEmail.employer) update.employer_org = accessEmail.orgName;
+            else update.college_org = accessEmail.orgName;
+          }
+          // A name given on the page ("Russell <info@…>") is the person's name, so
+          // the Colleges and Users pages show a person rather than a mailbox.
+          if (names[email]) update.full_name = names[email];
 
           const { data: updated, error: updateError } = await admin
             .from('profiles')
@@ -215,6 +310,11 @@ serve(
               orgName: accessEmail.orgName,
               requester: accessEmail.requester,
               learnerCode: accessEmail.learnerCode,
+              electricianCode: accessEmail.electricianCode,
+              offered: accessEmail.offered,
+              employer: accessEmail.employer,
+              intro: accessEmail.intro,
+              firstName: names[email] ?? null,
             });
             const sent = await sendEmail({
               from: `Andrew at Elec-Mate <${FOUNDER}>`,
@@ -240,10 +340,85 @@ serve(
         }
       }
 
+      // ── Existing accounts: switch to free access, tell them, keep their password ──
+      for (const ex of existing) {
+        const { data: found } = await admin.auth.admin.getUserById(ex.id);
+        const realEmail = (found?.user?.email || '').toLowerCase();
+        if (!found?.user || realEmail !== ex.email) {
+          result.failed.push({ email: ex.email, reason: 'existing account not found by id' });
+          continue;
+        }
+        if (grantAccess || collegeId || role || accessEmail) {
+          const update: Record<string, unknown> = {};
+          if (grantAccess) {
+            update.free_access_granted = true;
+            update.free_access_granted_by = user.id;
+            update.free_access_reason = freeAccessReason;
+          }
+          if (collegeId) update.college_id = collegeId;
+          if (role) {
+            update.role = role;
+            update.onboarding_completed = true;
+          }
+          // Which college or provider a tutor/cohort account belongs to, for the
+          // Colleges page. created_via is copied from auth metadata by the trigger.
+          if (accessEmail?.orgName) {
+            if (accessEmail.employer) update.employer_org = accessEmail.orgName;
+            else update.college_org = accessEmail.orgName;
+          }
+          if (names[ex.email]) update.full_name = names[ex.email];
+          const { error: upErr } = await admin.from('profiles').update(update).eq('id', ex.id);
+          if (upErr) {
+            result.failed.push({ email: ex.email, reason: `access not granted: ${upErr.message}` });
+            continue;
+          }
+        }
+        result.updated.push(ex.email);
+        if (accessEmail) {
+          try {
+            const mail = buildStaffAccessEmail({
+              email: ex.email,
+              password: '',
+              orgName: accessEmail.orgName,
+              requester: accessEmail.requester,
+              learnerCode: accessEmail.learnerCode,
+              electricianCode: accessEmail.electricianCode,
+              offered: accessEmail.offered,
+              employer: accessEmail.employer,
+              intro: accessEmail.intro,
+              firstName: names[ex.email] ?? null,
+              existingAccount: true,
+            });
+            const sent = await sendEmail({
+              from: `Andrew at Elec-Mate <${FOUNDER}>`,
+              to: [ex.email],
+              bcc: [FOUNDER],
+              replyTo: `Andrew Moore <${FOUNDER}>`,
+              subject: mail.subject,
+              html: mail.html,
+              text: mail.text,
+              tags: ['college-staff-access'],
+            });
+            if (sent.error)
+              result.emailFailed.push({
+                email: ex.email,
+                reason: sent.error.message || 'send failed',
+              });
+            else result.emailed.push(ex.email);
+          } catch (err) {
+            result.emailFailed.push({
+              email: ex.email,
+              reason: err instanceof Error ? err.message : 'send failed',
+            });
+          }
+        }
+      }
+
       return json({
         success: true,
         summary: {
           created: result.created.length,
+          updated: result.updated.length,
           skipped: result.skipped.length,
           failed: result.failed.length,
           emailed: result.emailed.length,

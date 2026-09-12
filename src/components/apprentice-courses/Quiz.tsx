@@ -47,7 +47,10 @@ const resolveCorrectIndex = (q: QuizQuestion): number => {
   return i >= 0 ? i : 0;
 };
 
-export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Knowledge check' }) => {
+export const Quiz: React.FC<QuizProps> = ({
+  questions: rawQuestions,
+  title = 'Knowledge check',
+}) => {
   const { user } = useAuth();
   const { recordProgress } = useCourseProgress();
   const hasRecorded = useRef(false);
@@ -169,7 +172,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
     const aced = percentage === 100;
 
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-6 sm:p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_16%)] border border-white/[0.06] p-6 sm:p-8">
         <div
           className={cn(
             'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-80',
@@ -220,8 +223,8 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
                 Tip
               </div>
               <p className="text-[13px] text-white leading-relaxed">
-                70% is the pass mark. Skim the section once more — focus on the bits the explanations
-                covered — then take it again. No limit.
+                70% is the pass mark. Skim the section once more — focus on the bits the
+                explanations covered — then take it again. No limit.
               </p>
             </div>
           )}
@@ -241,7 +244,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
   /* ── Active quiz ──────────────────────────────────────────── */
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+    <div className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_16%)] border border-white/[0.06]">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-80" />
 
       {/* Header — title + progress */}
@@ -268,11 +271,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
                 key={i}
                 className={cn(
                   'flex-1 h-1 rounded-full transition-colors',
-                  isCurrent
-                    ? 'bg-elec-yellow'
-                    : answered
-                      ? 'bg-elec-yellow/40'
-                      : 'bg-white/10'
+                  isCurrent ? 'bg-elec-yellow' : answered ? 'bg-elec-yellow/40' : 'bg-white/10'
                 )}
               />
             );
@@ -307,7 +306,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
                       ? 'bg-red-500/[0.08] border-red-500/40'
                       : selected
                         ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
-                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] hover:bg-[hsl(0_0%_11%)] hover:border-white/[0.14]'
+                        : 'bg-[hsl(0_0%_12%)] border-white/[0.08] hover:bg-[hsl(0_0%_14%)] hover:border-white/[0.14]'
                 )}
               >
                 <div className="flex items-center gap-3">
@@ -335,11 +334,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
                   <span
                     className={cn(
                       'flex-1 text-[14px] leading-snug',
-                      isCorrectOpt
-                        ? 'text-emerald-200'
-                        : isWrongOpt
-                          ? 'text-red-200'
-                          : 'text-white'
+                      isCorrectOpt ? 'text-emerald-200' : isWrongOpt ? 'text-red-200' : 'text-white'
                     )}
                   >
                     {option}
@@ -387,7 +382,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
           <button
             onClick={handlePrevious}
             disabled={currentQuestion === 0}
-            className="inline-flex items-center gap-1.5 h-10 px-3 rounded-full text-[12.5px] font-medium text-white touch-manipulation disabled:opacity-40 hover:bg-white/[0.05] transition-colors"
+            className="inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[12.5px] font-medium text-white touch-manipulation disabled:opacity-40 hover:bg-white/[0.05] transition-colors"
           >
             <ChevronLeft className="h-3.5 w-3.5" />
             Back
@@ -396,7 +391,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
           {!showResult && isAnswered && (
             <button
               onClick={handleSubmitAnswer}
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
             >
               Check
             </button>
@@ -405,7 +400,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Kn
           {showResult && (
             <button
               onClick={handleNext}
-              className="inline-flex items-center gap-1.5 h-10 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
+              className="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-semibold touch-manipulation active:scale-[0.98]"
             >
               {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
               <ChevronRight className="h-3.5 w-3.5" />

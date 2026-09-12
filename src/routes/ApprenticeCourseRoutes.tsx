@@ -3,6 +3,7 @@ import { Suspense, useEffect } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { withTimeout, trackImport } from '@/lib/lazy';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { isStudyContentPath, studyTitleFromDocument } from '@/lib/studyContentPath';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
 // Import Level2Routes for nested routing
@@ -18,18 +19,13 @@ function ApprenticeCoursesTracker() {
   const { updateLastLocation } = useLastStudyLocation();
 
   useEffect(() => {
-    // Don't track the index page itself
-    if (
-      location.pathname === '/study-centre/apprentice' ||
-      location.pathname === '/study-centre/apprentice/'
-    ) {
-      return;
-    }
+    // Content pages only. Skipping just the index was not enough — every course
+    // and module landing page still overwrote the lesson the learner was on.
+    if (!isStudyContentPath(location.pathname)) return;
 
-    // Get title from document after a short delay (to let page set title)
+    // Short delay so the page has set its own title before we read it.
     const timer = setTimeout(() => {
-      const title = document.title?.split('|')[0]?.trim() || 'Apprentice Course';
-      updateLastLocation(location.pathname, title);
+      updateLastLocation(location.pathname, studyTitleFromDocument('Apprentice course'));
     }, 100);
 
     return () => clearTimeout(timer);
@@ -3104,7 +3100,9 @@ const Level2Module8Section2Section4 = lazyWithRetry(() =>
   )
 );
 const Module1 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Module1', () => import('@/pages/apprentice-courses/level2/module1/Module1')))
+  withTimeout(() =>
+    trackImport('Module1', () => import('@/pages/apprentice-courses/level2/module1/Module1'))
+  )
 );
 const Module1Section5_4 = lazyWithRetry(() =>
   withTimeout(() =>
@@ -4278,6 +4276,51 @@ const MOETModule2Section5 = lazyWithRetry(() =>
     trackImport(
       'MOETModule2Section5',
       () => import('@/pages/apprentice-courses/MOETModule2Section5')
+    )
+  )
+);
+const MOETModule2Section6 = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport(
+      'MOETModule2Section6',
+      () => import('@/pages/apprentice-courses/MOETModule2Section6')
+    )
+  )
+);
+const MOETGlossary = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport('MOETGlossary', () => import('@/pages/apprentice-courses/MOETGlossary'))
+  )
+);
+const MOETModule2Section6_1 = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport(
+      'MOETModule2Section6_1',
+      () => import('@/pages/apprentice-courses/MOETModule2Section6_1')
+    )
+  )
+);
+const MOETModule2Section6_2 = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport(
+      'MOETModule2Section6_2',
+      () => import('@/pages/apprentice-courses/MOETModule2Section6_2')
+    )
+  )
+);
+const MOETModule2Section6_3 = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport(
+      'MOETModule2Section6_3',
+      () => import('@/pages/apprentice-courses/MOETModule2Section6_3')
+    )
+  )
+);
+const MOETModule2Section6_4 = lazyWithRetry(() =>
+  withTimeout(() =>
+    trackImport(
+      'MOETModule2Section6_4',
+      () => import('@/pages/apprentice-courses/MOETModule2Section6_4')
     )
   )
 );
@@ -6110,10 +6153,20 @@ const NotFound = lazyWithRetry(() =>
   withTimeout(() => trackImport('NotFound', () => import('@/pages/apprentice-courses/NotFound')))
 );
 const Section1 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section1', () => import('@/pages/apprentice-courses/level2/module1/section1/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section1',
+      () => import('@/pages/apprentice-courses/level2/module1/section1/Landing')
+    )
+  )
 );
 const Section2 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section2', () => import('@/pages/apprentice-courses/level2/module1/section2/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section2',
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Landing')
+    )
+  )
 );
 const Section2_1_ElectricShock = lazyWithRetry(() =>
   withTimeout(() =>
@@ -6124,120 +6177,203 @@ const Section2_1_ElectricShock = lazyWithRetry(() =>
   )
 );
 const Section3 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section3', () => import('@/pages/apprentice-courses/level2/module1/section3/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section3',
+      () => import('@/pages/apprentice-courses/level2/module1/section3/Landing')
+    )
+  )
 );
 const Section4 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section4', () => import('@/pages/apprentice-courses/level2/module1/section4/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section4',
+      () => import('@/pages/apprentice-courses/level2/module1/section4/Landing')
+    )
+  )
 );
 const Section5 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section5', () => import('@/pages/apprentice-courses/level2/module1/section5/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section5',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Landing')
+    )
+  )
 );
 const Section6 = lazyWithRetry(() =>
-  withTimeout(() => trackImport('Section6', () => import('@/pages/apprentice-courses/level2/module1/section6/Landing')))
+  withTimeout(() =>
+    trackImport(
+      'Section6',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Landing')
+    )
+  )
 );
 const subsection1 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection1', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub1'))
+    trackImport(
+      'subsection1',
+      () => import('@/pages/apprentice-courses/level2/module1/section1/Sub1')
+    )
   )
 );
 const subsection10 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection10', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub1'))
+    trackImport(
+      'subsection10',
+      () => import('@/pages/apprentice-courses/level2/module1/section3/Sub1')
+    )
   )
 );
 const subsection11 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection11', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub2'))
+    trackImport(
+      'subsection11',
+      () => import('@/pages/apprentice-courses/level2/module1/section3/Sub2')
+    )
   )
 );
 const subsection12 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection12', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub3'))
+    trackImport(
+      'subsection12',
+      () => import('@/pages/apprentice-courses/level2/module1/section3/Sub3')
+    )
   )
 );
 const subsection13 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection13', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub4'))
+    trackImport(
+      'subsection13',
+      () => import('@/pages/apprentice-courses/level2/module1/section3/Sub4')
+    )
   )
 );
 const subsection14 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection14', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub1'))
+    trackImport(
+      'subsection14',
+      () => import('@/pages/apprentice-courses/level2/module1/section4/Sub1')
+    )
   )
 );
 const subsection15 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection15', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub2'))
+    trackImport(
+      'subsection15',
+      () => import('@/pages/apprentice-courses/level2/module1/section4/Sub2')
+    )
   )
 );
 const subsection16 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection16', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub3'))
+    trackImport(
+      'subsection16',
+      () => import('@/pages/apprentice-courses/level2/module1/section4/Sub3')
+    )
   )
 );
 const subsection17 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection17', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub4'))
+    trackImport(
+      'subsection17',
+      () => import('@/pages/apprentice-courses/level2/module1/section4/Sub4')
+    )
   )
 );
 const subsection18 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection18', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub1'))
+    trackImport(
+      'subsection18',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Sub1')
+    )
   )
 );
 const subsection19 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection19', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub2'))
+    trackImport(
+      'subsection19',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Sub2')
+    )
   )
 );
 const subsection2 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection2', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub2'))
+    trackImport(
+      'subsection2',
+      () => import('@/pages/apprentice-courses/level2/module1/section1/Sub2')
+    )
   )
 );
 const subsection20 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection20', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub3'))
+    trackImport(
+      'subsection20',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Sub3')
+    )
   )
 );
 const subsection21 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection21', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub4'))
+    trackImport(
+      'subsection21',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Sub4')
+    )
   )
 );
 const subsection22 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection22', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub5'))
+    trackImport(
+      'subsection22',
+      () => import('@/pages/apprentice-courses/level2/module1/section5/Sub5')
+    )
   )
 );
 const subsection23 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection23', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub1'))
+    trackImport(
+      'subsection23',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub1')
+    )
   )
 );
 const subsection24 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection24', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub2'))
+    trackImport(
+      'subsection24',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub2')
+    )
   )
 );
 const subsection25 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection25', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub3'))
+    trackImport(
+      'subsection25',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub3')
+    )
   )
 );
 const subsection26 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection26', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub4'))
+    trackImport(
+      'subsection26',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub4')
+    )
   )
 );
 const subsection27 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection27', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub5'))
+    trackImport(
+      'subsection27',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub5')
+    )
   )
 );
 const subsection28 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection28', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub6'))
+    trackImport(
+      'subsection28',
+      () => import('@/pages/apprentice-courses/level2/module1/section6/Sub6')
+    )
   )
 );
 const subsection29 = lazyWithRetry(() =>
@@ -6247,7 +6383,10 @@ const subsection29 = lazyWithRetry(() =>
 );
 const subsection3 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection3', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub3'))
+    trackImport(
+      'subsection3',
+      () => import('@/pages/apprentice-courses/level2/module1/section1/Sub3')
+    )
   )
 );
 const subsection30 = lazyWithRetry(() =>
@@ -6277,7 +6416,10 @@ const subsection34 = lazyWithRetry(() =>
 );
 const subsection4 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection4', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub4'))
+    trackImport(
+      'subsection4',
+      () => import('@/pages/apprentice-courses/level2/module1/section1/Sub4')
+    )
   )
 );
 const subsection5 = lazyWithRetry(() =>
@@ -6287,22 +6429,34 @@ const subsection5 = lazyWithRetry(() =>
 );
 const subsection6 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection6', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub2'))
+    trackImport(
+      'subsection6',
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Sub2')
+    )
   )
 );
 const subsection7 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection7', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub3'))
+    trackImport(
+      'subsection7',
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Sub3')
+    )
   )
 );
 const subsection8 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection8', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub4'))
+    trackImport(
+      'subsection8',
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Sub4')
+    )
   )
 );
 const subsection9 = lazyWithRetry(() =>
   withTimeout(() =>
-    trackImport('subsection9', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub5'))
+    trackImport(
+      'subsection9',
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Sub5')
+    )
   )
 );
 
@@ -7046,6 +7200,8 @@ export default function ApprenticeCourseRoutes() {
         <Route path="m-o-e-t-module2-section3" element={<MOETModule2Section3 />} />
         <Route path="m-o-e-t-module2-section4" element={<MOETModule2Section4 />} />
         <Route path="m-o-e-t-module2-section5" element={<MOETModule2Section5 />} />
+        <Route path="m-o-e-t-module2-section6" element={<MOETModule2Section6 />} />
+        <Route path="m-o-e-t-glossary" element={<MOETGlossary />} />
         <Route path="m-o-e-t-module3" element={<MOETModule3 />} />
         <Route path="m-o-e-t-module3-section1" element={<MOETModule3Section1 />} />
         <Route path="m-o-e-t-module3-section1-1" element={<MOETModule3Section1_1 />} />
@@ -7140,6 +7296,10 @@ export default function ApprenticeCourseRoutes() {
         <Route path="m-o-e-t-module2-section5-2" element={<MOETModule2Section5_2 />} />
         <Route path="m-o-e-t-module2-section5-3" element={<MOETModule2Section5_3 />} />
         <Route path="m-o-e-t-module2-section5-4" element={<MOETModule2Section5_4 />} />
+        <Route path="m-o-e-t-module2-section6-1" element={<MOETModule2Section6_1 />} />
+        <Route path="m-o-e-t-module2-section6-2" element={<MOETModule2Section6_2 />} />
+        <Route path="m-o-e-t-module2-section6-3" element={<MOETModule2Section6_3 />} />
+        <Route path="m-o-e-t-module2-section6-4" element={<MOETModule2Section6_4 />} />
         <Route path="m-o-e-t-module3-section1-2" element={<MOETModule3Section1_2 />} />
         <Route path="m-o-e-t-module3-section1-3" element={<MOETModule3Section1_3 />} />
         <Route path="m-o-e-t-module3-section1-4" element={<MOETModule3Section1_4 />} />

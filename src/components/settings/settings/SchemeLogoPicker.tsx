@@ -4,6 +4,7 @@ import { normaliseScheme } from '@/utils/registrationScheme';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { inputCn, labelCn } from '@/components/settings/formStyles';
 
 interface SchemeLogoPickerProps {
   scheme: string;
@@ -61,7 +62,7 @@ export function SchemeLogoPicker({
 
   return (
     <div className="space-y-4">
-      <Label className="text-white font-medium text-[13px]">Registration scheme</Label>
+      <Label className={labelCn}>Registration scheme</Label>
 
       <div className="grid grid-cols-3 gap-2.5">
         {/* None option */}
@@ -71,7 +72,7 @@ export function SchemeLogoPicker({
           className={cn(
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             isNone
-              ? 'border-elec-yellow/60 bg-elec-yellow/10'
+              ? 'border-elec-yellow/60 bg-white/[0.06]'
               : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
@@ -94,7 +95,7 @@ export function SchemeLogoPicker({
               className={cn(
                 'relative flex items-center justify-center rounded-2xl border p-2 h-16 transition-colors touch-manipulation',
                 isSelected
-                  ? 'bg-elec-yellow/10'
+                  ? 'bg-white/[0.06]'
                   : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
               )}
               style={isSelected ? { borderColor: s.brandColor } : undefined}
@@ -124,7 +125,7 @@ export function SchemeLogoPicker({
           className={cn(
             'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             selected === 'OTHER'
-              ? 'border-elec-yellow/60 bg-elec-yellow/10'
+              ? 'border-elec-yellow/60 bg-white/[0.06]'
               : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
           )}
         >
@@ -140,7 +141,7 @@ export function SchemeLogoPicker({
       {showFields && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
           <div className="space-y-1.5">
-            <Label htmlFor="schemeRegNumber" className="text-white font-medium text-[13px]">
+            <Label htmlFor="schemeRegNumber" className={labelCn}>
               Registration number <span className="text-red-400">*</span>
             </Label>
             <Input
@@ -148,12 +149,12 @@ export function SchemeLogoPicker({
               value={registrationNumber}
               onChange={(e) => onNumberChange(e.target.value)}
               placeholder="Enter registration number"
-              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className={inputCn}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="schemeExpiry" className="text-white font-medium text-[13px]">
+            <Label htmlFor="schemeExpiry" className={labelCn}>
               Expiry date
             </Label>
             <Input
@@ -161,7 +162,7 @@ export function SchemeLogoPicker({
               type="date"
               value={registrationExpiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+              className={inputCn}
             />
           </div>
         </div>

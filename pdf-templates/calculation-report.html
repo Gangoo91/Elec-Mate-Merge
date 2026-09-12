@@ -177,6 +177,7 @@
     padding: 8mm 11mm 8mm;
     border-radius: 0;
     border-bottom: 3px solid var(--gold);
+    margin-bottom: 0;
   }
   .mast-company { display: flex; align-items: center; gap: 3.5mm; }
   .mast-logo { display: block; max-height: 52px; max-width: 200px; object-fit: contain; }
@@ -206,12 +207,18 @@
   .meta {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30mm, 1fr));
-    border-left: 1px solid var(--rule);
-    border-top: 1px solid var(--rule);
+    /* Stands clear of the banner. Flush against it, the hero's closing gold
+       rule read as this box's own top edge and the date looked like part of
+       the navy band. */
+    margin-top: 6mm;
   }
+  /* One cell alone stretched the full page width for a single date. Sized to
+     its content instead, so it reads as a stamp rather than an empty bar. */
+  .meta-cell:only-child { max-width: 62mm; }
   .meta-cell {
     background: #fff; padding: 3mm 4mm;
-    border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+    border: 1px solid var(--rule);
+    margin-right: -1px;
   }
   .meta-k {
     font-size: 8.4px; text-transform: uppercase; letter-spacing: 1.2px;
@@ -253,7 +260,14 @@
   .verdict.warn { color: #b45309; }
 
   /* ── Sections — a filled navy bar, as a schedule heading ──────────── */
-  .sec { margin-top: 6mm; }
+  /* Chrome (PDFMonkey's renderer) has never honoured `break-after/before: avoid`
+     in print — only `break-inside`. Both were tried and the navy bar still
+     stranded itself at the foot of a page with its rows overleaf. A .kv grid
+     already moves wholesale (Chrome does not fragment grid containers), so
+     binding the header to it costs nothing and is the only rule that works.
+     The "let long blocks split" warning above still stands for anything that
+     can exceed a page — notes and item lists are deliberately NOT covered. */
+  .sec { margin-top: 6mm; break-inside: avoid; page-break-inside: avoid; }
   .sec-h {
     font-family: 'Sora', 'Inter', sans-serif;
     font-size: 10px; font-weight: 800; color: #fff;
@@ -267,6 +281,11 @@
     display: grid; grid-template-columns: 1fr 1fr;
     border-left: 1px solid var(--rule);
     border-top: 1px solid var(--rule);
+    /* Paired with `break-after: avoid` on .sec-h. A navy section bar stranded at
+       the foot of a page with its rows overleaf reads as a printing fault, and
+       the header rule alone is not always honoured — grid containers fragment
+       poorly, so the grid states the same intent from its own side. */
+    break-before: avoid; page-break-before: avoid;
   }
   .kv-cell {
     border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
@@ -285,7 +304,8 @@
   .kv-note { font-size: 9.4px; color: #334155; text-align: right; margin-top: 0.8mm; }
 
   ul.items { margin: 0; padding: 3mm 4mm 3mm 8mm;
-             border: 1px solid var(--rule); border-top: 0; }
+             border: 1px solid var(--rule); border-top: 0;
+             break-before: avoid; page-break-before: avoid; }
   ul.items li { margin-bottom: 1.6mm; font-size: 11.5px; }
   ul.items li:last-child { margin-bottom: 0; }
   ul.items li::marker { color: var(--navy); }

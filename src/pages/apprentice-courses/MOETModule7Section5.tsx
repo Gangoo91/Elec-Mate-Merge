@@ -4,36 +4,35 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '7.5.1',
-      title: 'Employer and training provider sign-off',
-      description: 'Securing employer and training provider approval for EPA gateway',
-      icon: CheckSquare,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section5-1',
-    },
-    {
-      number: '7.5.2',
-      title: 'EPA gateway requirements',
-      description: 'Understanding and completing all EPA gateway documentation',
-      icon: DoorOpen,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section5-2',
-    },
-    {
-      number: '7.5.3',
-      title: 'Final revision and confidence building',
-      description: 'Final preparation strategies and building confidence for assessment',
-      icon: BookOpen,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section5-3',
-    },
-    {
-      number: '7.5.4',
-      title: 'What to expect on EPA day',
-      description: 'EPA day procedures, assessment format and what to expect',
-      icon: Calendar,
-      href: '/study-centre/apprentice/m-o-e-t-module7-section5-4',
-    },
-  ];
-
+  {
+    number: '7.5.1',
+    title: 'Employer and training provider sign-off',
+    description: 'Securing employer and training provider approval for EPA gateway',
+    icon: CheckSquare,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section5-1',
+  },
+  {
+    number: '7.5.2',
+    title: 'EPA gateway requirements',
+    description: 'Understanding and completing all EPA gateway documentation',
+    icon: DoorOpen,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section5-2',
+  },
+  {
+    number: '7.5.3',
+    title: 'Final revision and confidence building',
+    description: 'Final preparation strategies and building confidence for assessment',
+    icon: BookOpen,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section5-3',
+  },
+  {
+    number: '7.5.4',
+    title: 'What to expect on EPA day',
+    description: 'EPA day procedures, assessment format and what to expect',
+    icon: Calendar,
+    href: '/study-centre/apprentice/m-o-e-t-module7-section5-4',
+  },
+];
 
 const MOETModule7Section5 = () => {
   useSEO(

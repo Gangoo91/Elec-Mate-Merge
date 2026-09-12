@@ -16,6 +16,7 @@ import { SignatureGenerator } from './SignatureGenerator';
 import { ProfilePhotoUpload } from './ProfilePhotoUpload';
 import { InspectorProfileViewCard } from './InspectorProfileViewCard';
 import { Eyebrow } from '@/components/college/primitives';
+import { inputCn, labelCn, textareaCn } from '@/components/settings/formStyles';
 
 const qualificationOptions = [
   'C&G 2391-50 (Inspection & Testing)',
@@ -134,7 +135,7 @@ export default function InspectorProfileForm() {
 
   if (isLoading) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 md:p-8">
+      <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-6 md:p-8">
         <div className="h-6 w-40 bg-white/[0.04] rounded animate-pulse" />
         <div className="mt-6 space-y-4">
           <div className="h-20 bg-white/[0.04] rounded-xl animate-pulse" />
@@ -169,7 +170,7 @@ export default function InspectorProfileForm() {
     <div className="space-y-6">
       {/* Completion indicator */}
       {!currentProfile && (
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+        <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-5">
           <div className="flex items-center justify-between mb-2">
             <Eyebrow>Profile completion</Eyebrow>
             <span className="text-[13px] font-semibold text-elec-yellow tabular-nums">
@@ -186,7 +187,7 @@ export default function InspectorProfileForm() {
       )}
 
       {/* Form container */}
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 md:p-8 space-y-8 pb-24 lg:pb-8">
+      <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-5 sm:p-6 md:p-8 space-y-8 pb-24 lg:pb-8">
         {/* Section 1: Personal details */}
         <FormSection
           title="1. Personal Details"
@@ -194,7 +195,7 @@ export default function InspectorProfileForm() {
         >
           <div className="space-y-5">
             <div className="space-y-1.5">
-              <Label htmlFor="profileName" className="text-white font-medium text-[13px]">
+              <Label htmlFor="profileName" className={labelCn}>
                 Inspector name <span className="text-red-400">*</span>
               </Label>
               <Input
@@ -202,14 +203,14 @@ export default function InspectorProfileForm() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Full name of inspector"
-                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className={inputCn}
               />
             </div>
 
             <ProfilePhotoUpload
               photoUrl={formData.photoUrl}
               onPhotoChange={(url) => setFormData({ ...formData, photoUrl: url || '' })}
-              label="Profile Photo"
+              label="Profile photo"
             />
           </div>
         </FormSection>
@@ -222,7 +223,7 @@ export default function InspectorProfileForm() {
           <div className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="companyName" className="text-white font-medium text-[13px]">
+                <Label htmlFor="companyName" className={labelCn}>
                   Company name
                 </Label>
                 <Input
@@ -230,11 +231,11 @@ export default function InspectorProfileForm() {
                   value={formData.companyName}
                   onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                   placeholder="Company or organisation name"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="companyPhone" className="text-white font-medium text-[13px]">
+                <Label htmlFor="companyPhone" className={labelCn}>
                   Phone number
                 </Label>
                 <Input
@@ -244,14 +245,14 @@ export default function InspectorProfileForm() {
                   value={formData.companyPhone}
                   onChange={(e) => setFormData({ ...formData, companyPhone: e.target.value })}
                   placeholder="Company phone number"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="companyEmail" className="text-white font-medium text-[13px]">
+                <Label htmlFor="companyEmail" className={labelCn}>
                   Email address
                 </Label>
                 <Input
@@ -261,11 +262,11 @@ export default function InspectorProfileForm() {
                   value={formData.companyEmail}
                   onChange={(e) => setFormData({ ...formData, companyEmail: e.target.value })}
                   placeholder="Company email address"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="companyWebsite" className="text-white font-medium text-[13px]">
+                <Label htmlFor="companyWebsite" className={labelCn}>
                   Website
                 </Label>
                 <Input
@@ -273,13 +274,13 @@ export default function InspectorProfileForm() {
                   value={formData.companyWebsite}
                   onChange={(e) => setFormData({ ...formData, companyWebsite: e.target.value })}
                   placeholder="www.example.co.uk"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="companyAddress" className="text-white font-medium text-[13px]">
+              <Label htmlFor="companyAddress" className={labelCn}>
                 Company address
               </Label>
               <Textarea
@@ -288,13 +289,13 @@ export default function InspectorProfileForm() {
                 onChange={(e) => setFormData({ ...formData, companyAddress: e.target.value })}
                 placeholder="Full company address"
                 rows={3}
-                className="bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus-visible:ring-0 touch-manipulation"
+                className={textareaCn}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="companyRegNumber" className="text-white font-medium text-[13px]">
+                <Label htmlFor="companyRegNumber" className={labelCn}>
                   Company registration number
                 </Label>
                 <Input
@@ -304,11 +305,11 @@ export default function InspectorProfileForm() {
                     setFormData({ ...formData, companyRegistrationNumber: e.target.value })
                   }
                   placeholder="e.g., 12345678"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="vatNumber" className="text-white font-medium text-[13px]">
+                <Label htmlFor="vatNumber" className={labelCn}>
                   VAT number
                 </Label>
                 <Input
@@ -316,7 +317,7 @@ export default function InspectorProfileForm() {
                   value={formData.vatNumber}
                   onChange={(e) => setFormData({ ...formData, vatNumber: e.target.value })}
                   placeholder="e.g., GB123456789"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -324,7 +325,7 @@ export default function InspectorProfileForm() {
             <ProfilePhotoUpload
               photoUrl={formData.companyLogo}
               onPhotoChange={(url) => setFormData({ ...formData, companyLogo: url || '' })}
-              label="Company Logo"
+              label="Company logo"
               isLogo
             />
           </div>
@@ -348,7 +349,7 @@ export default function InspectorProfileForm() {
                     className={cn(
                       'flex items-start gap-3 p-4 min-h-[56px] rounded-2xl border transition-colors text-left touch-manipulation',
                       isSelected
-                        ? 'border-elec-yellow/60 bg-elec-yellow/10'
+                        ? 'border-elec-yellow/60 bg-white/[0.06]'
                         : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
                     )}
                   >
@@ -484,12 +485,12 @@ export default function InspectorProfileForm() {
         </FormSection>
 
         {/* Mobile sticky action bar */}
-        <div className="fixed bottom-16 left-0 right-0 px-5 py-3 bg-[hsl(0_0%_12%)] border-t border-white/[0.06] lg:hidden z-40 flex gap-2">
+        <div className="fixed bottom-16 left-0 right-0 px-5 py-3 bg-white/[0.05] border-t border-white/[0.06] lg:hidden z-40 flex gap-2">
           {currentProfile && (
             <button
               type="button"
               onClick={handleCancel}
-              className="flex-1 h-12 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              className="flex-1 h-12 rounded-xl border border-elec-yellow/35 bg-white/[0.04] text-white text-[14px] font-medium hover:bg-white/[0.06] transition-colors touch-manipulation"
             >
               Cancel
             </button>
@@ -498,7 +499,7 @@ export default function InspectorProfileForm() {
             type="button"
             onClick={handleSave}
             disabled={!formData.name.trim()}
-            className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+            className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
           >
             {currentProfile ? 'Update profile' : 'Create profile'}
           </button>
@@ -510,7 +511,7 @@ export default function InspectorProfileForm() {
             <button
               type="button"
               onClick={handleCancel}
-              className="h-12 px-6 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white text-[14px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              className="h-12 px-6 rounded-xl border border-elec-yellow/35 bg-white/[0.04] text-white text-[14px] font-medium hover:bg-white/[0.06] transition-colors touch-manipulation"
             >
               Cancel
             </button>
@@ -519,7 +520,7 @@ export default function InspectorProfileForm() {
             type="button"
             onClick={handleSave}
             disabled={!formData.name.trim()}
-            className="ml-auto h-12 px-8 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+            className="ml-auto h-12 px-8 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
           >
             {currentProfile ? 'Update profile' : 'Create profile'}
           </button>

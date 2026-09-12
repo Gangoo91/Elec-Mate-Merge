@@ -1,8 +1,46 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 3 · Subsection 6 — Intermittent Faults and
+ * Environmental Factors
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Common electrical plant, equipment, and systems
+ *                 failure modes."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Intermittent Faults and Environmental Factors - MOET Module 4 Section 3.6';
@@ -257,116 +295,66 @@ const faqs = [
 ];
 
 const MOETModule4Section3_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.3.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Intermittent Faults and Environmental Factors
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 6"
+        title="Intermittent Faults and Environmental Factors"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Identifying intermittent faults and environmental influences on electrical equipment
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Intermittent:</strong> Faults that appear and disappear — temperature,
-                vibration, load dependent
-              </li>
-              <li className="pl-1">
-                <strong>Moisture:</strong> Condensation, ingress cause earth leakage, tracking,
-                corrosion
-              </li>
-              <li className="pl-1">
-                <strong>EMC:</strong> VSD noise, radio interference cause false signals in control
-                circuits
-              </li>
-              <li className="pl-1">
-                <strong>Data logging:</strong> Essential tool for capturing events when you are not
-                present
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Pattern recognition:</strong> Timing, weather, load patterns provide
-                diagnostic clues
-              </li>
-              <li className="pl-1">
-                <strong>IP ratings:</strong> Benchmark for acceptable environmental protection
-              </li>
-              <li className="pl-1">
-                <strong>Dry joints:</strong> Leading cause of intermittent faults and electrical
-                fires
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Environmental awareness is part of maintenance competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Intermittent: faults that appear and disappear — temperature, vibration, load dependent.',
+              'Moisture: condensation and ingress cause earth leakage, tracking, corrosion.',
+              'EMC: VSD noise and radio interference cause false signals in control circuits.',
+              'Data logging: essential tool for capturing events when you are not present.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the characteristics and common causes of intermittent electrical faults',
               'Recognise the effects of temperature, humidity and moisture on electrical equipment',
               'Diagnose vibration-induced faults in industrial environments',
               'Understand electromagnetic compatibility issues and their effect on control systems',
               'Apply data logging techniques to capture intermittent fault events',
               'Assess environmental conditions during fault investigation and recommend preventive measures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pattern recognition:</strong> timing, weather and load patterns provide
+                diagnostic clues.
+              </li>
+              <li>
+                <strong>IP ratings:</strong> a benchmark for acceptable environmental protection.
+              </li>
+              <li>
+                <strong>Dry joints:</strong> a leading cause of intermittent faults and electrical
+                fires.
+              </li>
+              <li>
+                <strong>ST1426:</strong> environmental awareness is part of maintenance competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Intermittent Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding intermittent faults</ContentEyebrow>
+
+          <ConceptBlock title="Understanding intermittent faults">
             <p>
               Intermittent faults are the most challenging category of faults that a maintenance
               technician will encounter. Unlike permanent faults — which are present whenever you
@@ -383,69 +371,58 @@ const MOETModule4Section3_6 = () => {
               the fault timing and conditions is your most valuable diagnostic tool for intermittent
               faults.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Categories of Intermittent Fault
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Temperature-dependent:</strong> Fault appears when equipment is hot (or
-                  cold) and clears when temperature changes — typically marginal connections or
-                  degraded insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Moisture-dependent:</strong> Fault appears in damp or humid conditions and
-                  clears when dry — typically insulation leakage or tracking
-                </li>
-                <li className="pl-1">
-                  <strong>Vibration-dependent:</strong> Fault appears when nearby machinery is
-                  running — typically loose connections, cracked solder joints or relay contact
-                  bounce
-                </li>
-                <li className="pl-1">
-                  <strong>Load-dependent:</strong> Fault appears only under heavy load — typically
-                  marginal connections that develop high resistance under high current
-                </li>
-                <li className="pl-1">
-                  <strong>EMC-dependent:</strong> Fault appears when specific equipment operates —
-                  typically electromagnetic interference coupling into sensitive circuits
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Categories of intermittent fault">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Temperature-dependent:</strong> fault appears when equipment is hot (or
+                cold) and clears when temperature changes — typically marginal connections or
+                degraded insulation.
+              </li>
+              <li>
+                <strong>Moisture-dependent:</strong> fault appears in damp or humid conditions and
+                clears when dry — typically insulation leakage or tracking.
+              </li>
+              <li>
+                <strong>Vibration-dependent:</strong> fault appears when nearby machinery is running
+                — typically loose connections, cracked solder joints or relay contact bounce.
+              </li>
+              <li>
+                <strong>Load-dependent:</strong> fault appears only under heavy load — typically
+                marginal connections that develop high resistance under high current.
+              </li>
+              <li>
+                <strong>EMC-dependent:</strong> fault appears when specific equipment operates —
+                typically electromagnetic interference coupling into sensitive circuits.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Danger of Intermittent Faults
-              </p>
-              <p className="text-sm text-white">
-                Intermittent faults are not just an inconvenience — they can be dangerous. A
-                high-resistance connection that intermittently arcs is a fire risk. An intermittent
-                earth fault that occasionally trips an RCD may progress to a permanent fault that
-                exposes someone to electric shock. An intermittent control circuit fault may cause
-                unexpected machine behaviour. Never dismiss an intermittent fault as "not important"
-                — it is a fault that has not yet become permanent.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When investigating an intermittent fault, your first
-              priority is to understand the pattern. Ask: When does it happen? How often? What are
+          <ConceptBlock title="The danger of intermittent faults">
+            <p>
+              Intermittent faults are not just an inconvenience — they can be dangerous. A
+              high-resistance connection that intermittently arcs is a fire risk. An intermittent
+              earth fault that occasionally trips an RCD may progress to a permanent fault that
+              exposes someone to electric shock. An intermittent control circuit fault may cause
+              unexpected machine behaviour. Never dismiss an intermittent fault as &quot;not
+              important&quot; — it is a fault that has not yet become permanent.
+            </p>
+            <p>
+              <strong>Key point:</strong> when investigating an intermittent fault, your first
+              priority is to understand the pattern. Ask: when does it happen? How often? What are
               the conditions? What else is happening at the time? Is there a correlation with time
               of day, weather, production schedule, or other equipment?
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Temperature, Moisture and Condensation Effects
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Temperature, moisture and condensation effects</ContentEyebrow>
+
+          <ConceptBlock title="Temperature, moisture and condensation effects">
             <p>
               Temperature and moisture are the two most significant environmental factors affecting
               electrical equipment reliability. They influence insulation performance, connection
@@ -453,92 +430,78 @@ const MOETModule4Section3_6 = () => {
               these effects is essential for diagnosing environmentally triggered faults and
               recommending preventive measures.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Temperature Effects</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Decreases as temperature increases — a
-                  circuit that passes IR testing when cold may fail when hot
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor resistance:</strong> Increases with temperature — affects
-                  voltage drop and protective device operation
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal expansion:</strong> Causes connections to work loose over time due
-                  to repeated heating and cooling cycles
-                </li>
-                <li className="pl-1">
-                  <strong>Component ratings:</strong> Most components are rated for a maximum
-                  ambient of 40 degrees C — exceeding this reduces capacity and lifespan
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitor life:</strong> Electrolytic capacitor life halves for every 10
-                  degrees C above rated temperature — VSDs in hot environments fail earlier
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Temperature effects">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation resistance:</strong> decreases as temperature increases — a
+                circuit that passes IR testing when cold may fail when hot.
+              </li>
+              <li>
+                <strong>Conductor resistance:</strong> increases with temperature — affects voltage
+                drop and protective device operation.
+              </li>
+              <li>
+                <strong>Thermal expansion:</strong> causes connections to work loose over time due
+                to repeated heating and cooling cycles.
+              </li>
+              <li>
+                <strong>Component ratings:</strong> most components are rated for a maximum ambient
+                of 40 degrees C — exceeding this reduces capacity and lifespan.
+              </li>
+              <li>
+                <strong>Capacitor life:</strong> electrolytic capacitor life halves for every 10
+                degrees C above rated temperature — VSDs in hot environments fail earlier.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Moisture and Condensation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Earth leakage:</strong> Moisture creates conductive paths between live
-                  parts and earth, causing RCD tripping
-                </li>
-                <li className="pl-1">
-                  <strong>Tracking:</strong> Moisture on contaminated surfaces allows current to
-                  track along the surface, creating carbon paths that become permanently conductive
-                </li>
-                <li className="pl-1">
-                  <strong>Corrosion:</strong> Moisture accelerates corrosion of copper conductors,
-                  terminals and contacts, increasing resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Condensation:</strong> Forms when equipment temperature drops below the
-                  dew point — particularly during cooling after shutdown
-                </li>
-                <li className="pl-1">
-                  <strong>IP protection:</strong> Enclosure IP ratings define the level of
-                  protection against water ingress — compromised seals allow moisture entry
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Seasonal and Weather Patterns
-              </p>
-              <p className="text-sm text-white">
-                Some intermittent faults follow seasonal patterns. High humidity in summer causes
-                insulation leakage. Cold winter mornings cause condensation in enclosures. Autumn
-                rain increases moisture ingress. Spring pollen and agricultural dust contaminate
-                ventilation systems. If a fault has a seasonal pattern, this is a powerful
-                diagnostic clue pointing to an environmental root cause.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Preventive measures:</strong> Anti-condensation heaters, properly rated IP
+          <ConceptBlock title="Moisture and condensation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Earth leakage:</strong> moisture creates conductive paths between live parts
+                and earth, causing RCD tripping.
+              </li>
+              <li>
+                <strong>Tracking:</strong> moisture on contaminated surfaces allows current to track
+                along the surface, creating carbon paths that become permanently conductive.
+              </li>
+              <li>
+                <strong>Corrosion:</strong> moisture accelerates corrosion of copper conductors,
+                terminals and contacts, increasing resistance.
+              </li>
+              <li>
+                <strong>Condensation:</strong> forms when equipment temperature drops below the dew
+                point — particularly during cooling after shutdown.
+              </li>
+              <li>
+                <strong>IP protection:</strong> enclosure IP ratings define the level of protection
+                against water ingress — compromised seals allow moisture entry.
+              </li>
+            </ul>
+            <p>
+              Some intermittent faults follow seasonal patterns. High humidity in summer causes
+              insulation leakage. Cold winter mornings cause condensation in enclosures. Autumn rain
+              increases moisture ingress. Spring pollen and agricultural dust contaminate
+              ventilation systems. If a fault has a seasonal pattern, this is a powerful diagnostic
+              clue pointing to an environmental root cause.
+            </p>
+            <p>
+              <strong>Preventive measures:</strong> anti-condensation heaters, properly rated IP
               enclosures, correct cable gland selection, silica gel desiccant packs, ventilation
               management and regular enclosure seal inspection all reduce the risk of
               moisture-related faults.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Vibration, Dust and Physical Environment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Vibration, dust and physical environment</ContentEyebrow>
+
+          <ConceptBlock title="Vibration, dust and physical environment">
             <p>
               The physical environment in which electrical equipment operates has a direct impact on
               its reliability. Industrial environments subject equipment to vibration, dust,
@@ -547,76 +510,68 @@ const MOETModule4Section3_6 = () => {
               recommend preventive measures that address the underlying environmental issue rather
               than just repairing the symptom.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Vibration Effects on Electrical Equipment
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Loose connections:</strong> Vibration works screw terminals loose over
-                  time, creating high-resistance joints
-                </li>
-                <li className="pl-1">
-                  <strong>Contact bounce:</strong> Relay and contactor contacts can momentarily open
-                  under vibration, causing erratic switching
-                </li>
-                <li className="pl-1">
-                  <strong>Solder joint failure:</strong> Cracked or fractured solder joints on PCBs
-                  are a classic vibration-induced fault
-                </li>
-                <li className="pl-1">
-                  <strong>Cable fatigue:</strong> Cables in vibrating environments develop conductor
-                  fractures, especially at termination points
-                </li>
-                <li className="pl-1">
-                  <strong>Component fatigue:</strong> Repeated vibration causes mechanical fatigue
-                  in mounting brackets, DIN rail clips and busbar connections
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Vibration effects on electrical equipment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loose connections:</strong> vibration works screw terminals loose over time,
+                creating high-resistance joints.
+              </li>
+              <li>
+                <strong>Contact bounce:</strong> relay and contactor contacts can momentarily open
+                under vibration, causing erratic switching.
+              </li>
+              <li>
+                <strong>Solder joint failure:</strong> cracked or fractured solder joints on PCBs
+                are a classic vibration-induced fault.
+              </li>
+              <li>
+                <strong>Cable fatigue:</strong> cables in vibrating environments develop conductor
+                fractures, especially at termination points.
+              </li>
+              <li>
+                <strong>Component fatigue:</strong> repeated vibration causes mechanical fatigue in
+                mounting brackets, DIN rail clips and busbar connections.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dust and Contamination</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal insulation:</strong> Dust accumulation on heatsinks, ventilation
-                  grilles and component surfaces reduces cooling effectiveness
-                </li>
-                <li className="pl-1">
-                  <strong>Conductive contamination:</strong> Metal dust, carbon dust and certain
-                  chemical deposits are electrically conductive and can bridge clearances
-                </li>
-                <li className="pl-1">
-                  <strong>Moisture absorption:</strong> Hygroscopic dust absorbs atmospheric
-                  moisture, creating conductive surface films
-                </li>
-                <li className="pl-1">
-                  <strong>Mechanical interference:</strong> Dust can jam moving parts such as relay
-                  armatures, switch mechanisms and fan bearings
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When a fault recurs after repair, always consider whether
+          <ConceptBlock title="Dust and contamination">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal insulation:</strong> dust accumulation on heatsinks, ventilation
+                grilles and component surfaces reduces cooling effectiveness.
+              </li>
+              <li>
+                <strong>Conductive contamination:</strong> metal dust, carbon dust and certain
+                chemical deposits are electrically conductive and can bridge clearances.
+              </li>
+              <li>
+                <strong>Moisture absorption:</strong> hygroscopic dust absorbs atmospheric moisture,
+                creating conductive surface films.
+              </li>
+              <li>
+                <strong>Mechanical interference:</strong> dust can jam moving parts such as relay
+                armatures, switch mechanisms and fan bearings.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> when a fault recurs after repair, always consider whether
               an environmental factor is causing the recurrence. Replacing a component that failed
               due to vibration-induced fatigue without addressing the vibration will result in the
               replacement failing in the same way. Root cause analysis must include the operating
               environment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Electromagnetic Compatibility and Power Quality
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electromagnetic compatibility and power quality</ContentEyebrow>
+
+          <ConceptBlock title="Electromagnetic compatibility and power quality">
             <p>
               Electromagnetic compatibility (EMC) is an increasingly important consideration in
               modern electrical installations. The proliferation of electronic switching equipment —
@@ -625,107 +580,87 @@ const MOETModule4Section3_6 = () => {
               intermittent, difficult to diagnose, and may require specialist instrumentation such
               as power quality analysers and oscilloscopes to identify.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common EMC Issues in Electrical Maintenance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Issue</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effect</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Conducted noise</td>
-                      <td className="border border-white/10 px-3 py-2">VSDs, SMPS, LED drivers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RCD nuisance tripping, meter errors, capacitor failure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Radiated noise</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VSD output cables, welding, radio transmitters
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        False PLC inputs, sensor errors, communication faults
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage transients</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inductive load switching, lightning, supply events
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equipment damage, data loss, PLC resets
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Harmonic distortion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        VSDs, UPS, LED lighting, IT loads
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Neutral overheating, transformer overheating, capacitor failure
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common EMC issues in electrical maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Issue</th>
+                    <th className="py-2 pr-4 font-medium text-white">Source</th>
+                    <th className="py-2 font-medium text-white">Effect</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Conducted noise</td>
+                    <td className="py-2 pr-4">VSDs, SMPS, LED drivers</td>
+                    <td className="py-2">RCD nuisance tripping, meter errors, capacitor failure</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Radiated noise</td>
+                    <td className="py-2 pr-4">VSD output cables, welding, radio transmitters</td>
+                    <td className="py-2">False PLC inputs, sensor errors, communication faults</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Voltage transients</td>
+                    <td className="py-2 pr-4">
+                      Inductive load switching, lightning, supply events
+                    </td>
+                    <td className="py-2">Equipment damage, data loss, PLC resets</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Harmonic distortion</td>
+                    <td className="py-2 pr-4">VSDs, UPS, LED lighting, IT loads</td>
+                    <td className="py-2">
+                      Neutral overheating, transformer overheating, capacitor failure
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EMC Mitigation Measures
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable segregation:</strong> Maintain physical separation between power and
-                  signal cables as specified in BS 7671 Chapter 52
-                </li>
-                <li className="pl-1">
-                  <strong>Screened cables:</strong> Use screened (shielded) cables for signal and
-                  communication wiring, with screens correctly earthed
-                </li>
-                <li className="pl-1">
-                  <strong>EMC filters:</strong> Fit input and output filters to VSDs as recommended
-                  by the manufacturer
-                </li>
-                <li className="pl-1">
-                  <strong>Ferrite cores:</strong> Fit ferrite suppressors on signal cables near
-                  sensitive equipment to attenuate high-frequency noise
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing:</strong> Ensure a clean, low-impedance earth system — essential
-                  for EMC and for safety
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Diagnostic clue:</strong> If a fault coincides with the operation of specific
+          <ConceptBlock title="EMC mitigation measures">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable segregation:</strong> maintain physical separation between power and
+                signal cables as specified in BS 7671 Chapter 52.
+              </li>
+              <li>
+                <strong>Screened cables:</strong> use screened (shielded) cables for signal and
+                communication wiring, with screens correctly earthed.
+              </li>
+              <li>
+                <strong>EMC filters:</strong> fit input and output filters to VSDs as recommended by
+                the manufacturer.
+              </li>
+              <li>
+                <strong>Ferrite cores:</strong> fit ferrite suppressors on signal cables near
+                sensitive equipment to attenuate high-frequency noise.
+              </li>
+              <li>
+                <strong>Earthing:</strong> ensure a clean, low-impedance earth system — essential
+                for EMC and for safety.
+              </li>
+            </ul>
+            <p>
+              <strong>Diagnostic clue:</strong> if a fault coincides with the operation of specific
               equipment (VSD starting, welder operating, process changing), EMC interference should
               be considered. Try to correlate the fault timing with the operating state of nearby
               equipment. A power quality analyser or oscilloscope can confirm the presence of
               interference.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Data Logging and Systematic Intermittent Fault Diagnosis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Data logging and systematic diagnosis</ContentEyebrow>
+
+          <ConceptBlock title="Data logging and systematic intermittent fault diagnosis">
             <p>
               When an intermittent fault cannot be observed directly, data logging becomes an
               essential diagnostic tool. Modern data loggers can record electrical parameters
@@ -734,145 +669,131 @@ const MOETModule4Section3_6 = () => {
               at the moment the fault occurs. This data transforms an elusive, frustrating problem
               into a tangible, analysable event.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Data Logging Strategy</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Define what to measure:</strong> Based on the suspected fault type —
-                  voltage for supply issues, current for overload/imbalance, temperature for thermal
-                  faults, humidity for moisture faults
-                </li>
-                <li className="pl-1">
-                  <strong>Set trigger thresholds:</strong> Configure the logger to flag events when
-                  parameters exceed normal limits — this highlights the significant events in weeks
-                  of data
-                </li>
-                <li className="pl-1">
-                  <strong>Record the context:</strong> Log environmental data alongside electrical
-                  data so you can correlate fault events with conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Maintain an event diary:</strong> Ask operators to note when the fault
-                  occurs (date, time, conditions) alongside the data logger record
-                </li>
-                <li className="pl-1">
-                  <strong>Analyse for patterns:</strong> Look for correlations between fault events
-                  and time of day, day of week, weather, load patterns or other equipment operation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Data logging strategy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Define what to measure:</strong> based on the suspected fault type — voltage
+                for supply issues, current for overload/imbalance, temperature for thermal faults,
+                humidity for moisture faults.
+              </li>
+              <li>
+                <strong>Set trigger thresholds:</strong> configure the logger to flag events when
+                parameters exceed normal limits — this highlights the significant events in weeks of
+                data.
+              </li>
+              <li>
+                <strong>Record the context:</strong> log environmental data alongside electrical
+                data so you can correlate fault events with conditions.
+              </li>
+              <li>
+                <strong>Maintain an event diary:</strong> ask operators to note when the fault
+                occurs (date, time, conditions) alongside the data logger record.
+              </li>
+              <li>
+                <strong>Analyse for patterns:</strong> look for correlations between fault events
+                and time of day, day of week, weather, load patterns or other equipment operation.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When Data Logging Is Essential
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Faults occurring outside working hours</li>
-                  <li className="pl-1">Faults with no clear pattern</li>
-                  <li className="pl-1">Supply quality suspected</li>
-                  <li className="pl-1">Suspected harmonic issues</li>
-                  <li className="pl-1">Multiple possible causes</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Practical Diagnostic Steps
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Gather all operator reports and identify any pattern</li>
-                  <li className="pl-1">Inspect all connections for signs of overheating</li>
-                  <li className="pl-1">Check environmental conditions at the equipment</li>
-                  <li className="pl-1">Install data loggers on suspect circuits</li>
-                  <li className="pl-1">Correlate logged data with fault events</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="When data logging is essential">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Faults occurring outside working hours.</li>
+              <li>Faults with no clear pattern.</li>
+              <li>Supply quality suspected.</li>
+              <li>Suspected harmonic issues.</li>
+              <li>Multiple possible causes.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Intermittent faults test your patience and professionalism.
+          <ConceptBlock title="Practical diagnostic steps">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Gather all operator reports and identify any pattern.</li>
+              <li>Inspect all connections for signs of overheating.</li>
+              <li>Check environmental conditions at the equipment.</li>
+              <li>Install data loggers on suspect circuits.</li>
+              <li>Correlate logged data with fault events.</li>
+            </ul>
+            <p className="italic">
+              <strong>Note:</strong> intermittent faults test your patience and professionalism.
               Resist the temptation to make speculative replacements hoping the fault will go away.
               A systematic, evidence-based approach — even if it takes longer initially — is the
               only reliable path to a permanent solution. Document every observation and test
               result; this record often reveals the pattern that leads to the diagnosis.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=0dDlPS3YI2s"
 
-        <hr className="border-white/5 my-12" />
+            title="High Resistance Joint Fault Explained"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Intermittent Fault Triggers</p>
-                <ul className="space-y-0.5">
-                  <li>Temperature — thermal expansion, insulation degradation</li>
-                  <li>Moisture — earth leakage, tracking, corrosion</li>
-                  <li>Vibration — loose connections, contact bounce</li>
-                  <li>Load — high-resistance joints under current</li>
-                  <li>EMC — interference from switching equipment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Chapter 52 — Cable routing and separation</li>
-                  <li>BS EN 60529 — IP rating classification</li>
-                  <li>BS EN 61000 — EMC standards series</li>
-                  <li>HSG85 — Safe working practices</li>
-                  <li>ST1426 — Environmental awareness KSBs</li>
-                </ul>
-              </div>
+            channel="Craig Wiltshire"
+
+            duration="2:34"
+
+            topic="The classic intermittent fault, explained in under three minutes"
+
+            caption="A high-resistance joint is the intermittent fault you will meet most often — it behaves differently under load, which is what makes it hard to catch."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Temperature — thermal expansion, insulation degradation.',
+              'Moisture — earth leakage, tracking, corrosion.',
+              'Vibration — loose connections, contact bounce.',
+              'Load — high-resistance joints under current.',
+              'EMC — interference from switching equipment.',
+              'BS 7671 Chapter 52 — cable routing and separation.',
+              'BS EN 60529 — IP rating classification.',
+              'BS EN 61000 — EMC standards series.',
+              'HSG85 — safe working practices.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Control Circuit Faults
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-7')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Documentation of Faults
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Control Circuit Faults
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-7">
-              Next: Documentation of Faults
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

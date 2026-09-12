@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 1 · Subsection 3 — Lubrication, Cleaning and Adjustments
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Electrical maintenance tools, measurement, and test
+ *     equipment application, operation, care and calibration
+ *     requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Lubrication, Cleaning and Adjustments - MOET Module 4.1.3';
@@ -110,10 +146,10 @@ const quizQuestions = [
     id: 5,
     question: 'The correct procedure for re-torquing busbar connections is:',
     options: [
-      "Tighten each bolt as firmly as possible by hand using a standard spanner",
+      'Tighten each bolt as firmly as possible by hand using a standard spanner',
       "Use a calibrated torque wrench, apply the manufacturer's specified torque value, and mark the connection to confirm completion",
-      "Apply a fixed torque of 50 Nm to every connection regardless of bolt size",
-      "Loosen each connection slightly to relieve thermal stress before re-tightening",
+      'Apply a fixed torque of 50 Nm to every connection regardless of bolt size',
+      'Loosen each connection slightly to relieve thermal stress before re-tightening',
     ],
     correctAnswer: 1,
     explanation:
@@ -216,116 +252,66 @@ const faqs = [
 ];
 
 const MOETModule4Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Lubrication, Cleaning and Adjustments
-          </h1>
-          <p className="text-white">
-            Hands-on PPM techniques for bearings, contacts, belts, panels and mechanical components
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.1 · Subsection 3"
+        title="Lubrication, Cleaning and Adjustments"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Hands-on PPM techniques for bearings, contacts, belts, panels and mechanical components.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Lubrication:</strong> Correct grease type, quantity and frequency prevent
-                bearing failure
-              </li>
-              <li className="pl-1">
-                <strong>Cleaning:</strong> Dust, dirt and contamination degrade insulation and cause
-                overheating
-              </li>
-              <li className="pl-1">
-                <strong>Adjustments:</strong> Belt tension, alignment and torque require regular
-                checking
-              </li>
-              <li className="pl-1">
-                <strong>Environmental:</strong> Hazardous waste disposal rules apply to used
-                lubricants
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Lubrication: Correct grease type, quantity and frequency prevent bearing failure.',
+              'Cleaning: Dust, dirt and contamination degrade insulation and cause overheating.',
+              'Adjustments: Belt tension, alignment and torque require regular checking.',
+              'Environmental: Hazardous waste disposal rules apply to used lubricants.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Motor greasing:</strong> Calculated quantities, calibrated gun, correct
-                intervals
+                intervals.
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Panel cleaning:</strong> Vacuum with anti-static nozzle, contact cleaner
-                spray
+                spray.
               </li>
-              <li className="pl-1">
-                <strong>Torque checking:</strong> Busbars, terminals — calibrated wrench to spec
+              <li>
+                <strong>Torque checking:</strong> Busbars, terminals — calibrated wrench to spec.
               </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Practical maintenance skills are a core requirement
+              <li>
+                <strong>ST1426:</strong> Practical maintenance skills are a core requirement.
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply correct bearing lubrication techniques for electric motors',
               'Calculate grease quantities and determine re-greasing intervals',
               'Clean electrical panels and components safely using appropriate methods',
               'Check and adjust belt tension and shaft alignment',
               'Re-torque electrical connections using calibrated tools',
               'Dispose of used lubricants and cleaning materials in compliance with environmental regulations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Bearing lubrication</ContentEyebrow>
 
-        {/* Section 01: Bearing Lubrication */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Bearing Lubrication
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The highest-value PPM activity you can perform">
             <p>
               Bearing failure is the single most common cause of electric motor breakdown. In the
               majority of cases, the root cause is lubrication-related — either insufficient
@@ -333,471 +319,414 @@ const MOETModule4Section1_3 = () => {
               lubricant. Getting lubrication right is one of the highest-value PPM activities a
               maintenance technician can perform.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Grease vs Oil Lubrication
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Grease</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Oil</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Application</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most standard motors up to ~3,600 rpm
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-speed motors, very large bearings, high-temp applications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sealing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good — stays in the bearing housing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires oil seals; risk of leakage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contamination protection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good — grease acts as a barrier
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate — requires effective sealing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat dissipation</td>
-                      <td className="border border-white/10 px-3 py-2">Limited</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good — circulating oil removes heat
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic re-greasing via grease nipple
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oil level checks, periodic oil changes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Grease vs oil lubrication">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Factor
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Grease
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">Oil</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Application</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Most standard motors up to ~3,600 rpm
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      High-speed motors, very large bearings, high-temp applications
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Sealing</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Good — stays in the bearing housing
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Requires oil seals; risk of leakage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Contamination protection</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Good — grease acts as a barrier
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Moderate — requires effective sealing
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Heat dissipation</td>
+                    <td className="border border-white/10 px-3 py-2">Limited</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Good — circulating oil removes heat
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Maintenance</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Periodic re-greasing via grease nipple
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Oil level checks, periodic oil changes
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Grease Quantity Calculation
-              </p>
-              <p className="text-sm text-white mb-2">
-                The standard formula for calculating the correct grease quantity for a single
-                re-greasing event is:
-              </p>
-              <div className="bg-white/5 p-3 rounded text-sm font-mono text-elec-yellow/90 mb-2">
-                G = 0.005 x D x B
-              </div>
-              <p className="text-sm text-white mb-2">
-                Where G = grease quantity in grams, D = bearing outside diameter in mm, B = bearing
-                width in mm.
-              </p>
-              <p className="text-sm text-white">
-                For example, a 6310 bearing (OD 110 mm, width 27 mm): G = 0.005 x 110 x 27 = 14.9 g.
-                A calibrated grease gun typically delivers a known quantity per stroke (e.g., 1.5 g
-                per stroke for a standard lever gun), allowing precise application.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Over-Greasing — The Hidden Killer
-              </p>
-              <p className="text-sm text-white">
-                Over-greasing causes more bearing failures than under-greasing. Excess grease cannot
-                escape the bearing housing, creating churning resistance that generates heat. This
-                heat breaks down the grease, reducing its lubricating properties, which generates
-                more heat — a destructive cycle. Symptoms include elevated bearing temperature,
-                grease leaking from seals, and in severe cases, grease being forced past the inner
-                seal and contaminating motor windings.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never mix different grease types. Incompatible greases can
-              react chemically, causing the mixture to soften excessively or harden, destroying its
-              lubricating properties. If changing grease type, the old grease must be completely
-              purged first.
+          <ConceptBlock title="Grease quantity calculation">
+            <p>
+              The standard formula for calculating the correct grease quantity for a single
+              re-greasing event is:
             </p>
-          </div>
-        </section>
+            <div className="rounded bg-white/5 p-3 font-mono text-sm text-elec-yellow/90">
+              G = 0.005 x D x B
+            </div>
+            <p>
+              Where G = grease quantity in grams, D = bearing outside diameter in mm, B = bearing
+              width in mm.
+            </p>
+            <p>
+              For example, a 6310 bearing (OD 110 mm, width 27 mm): G = 0.005 x 110 x 27 = 14.9 g. A
+              calibrated grease gun typically delivers a known quantity per stroke (e.g., 1.5 g per
+              stroke for a standard lever gun), allowing precise application.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Over-greasing — the hidden killer">
+            <p>
+              Over-greasing causes more bearing failures than under-greasing. Excess grease cannot
+              escape the bearing housing, creating churning resistance that generates heat. This
+              heat breaks down the grease, reducing its lubricating properties, which generates more
+              heat — a destructive cycle. Symptoms include elevated bearing temperature, grease
+              leaking from seals, and in severe cases, grease being forced past the inner seal and
+              contaminating motor windings.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02: Contact Cleaning and Thermal Paste */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Contact Cleaning and Thermal Compound
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">Key point: </span>
+            Never mix different grease types. Incompatible greases can react chemically, causing the
+            mixture to soften excessively or harden, destroying its lubricating properties. If
+            changing grease type, the old grease must be completely purged first.
+          </p>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Contact cleaning and thermal compound</ContentEyebrow>
+
+          <ConceptBlock title="Contacts degrade through use">
             <p>
               Electrical contacts degrade through use. Arcing erodes contact surfaces, oxidation
               increases resistance, and contamination from dust and atmospheric pollutants creates
               insulating films. Regular cleaning and inspection of contacts is essential for
               reliable operation and safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Contactor and Relay Contacts
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Silver and silver-alloy contacts: Do not file — silver oxide is conductive;
-                    filing removes the thin contact material layer
-                  </li>
-                  <li className="pl-1">
-                    Copper contacts: May be lightly dressed with a fine file if heavily pitted, then
-                    cleaned with contact cleaner
-                  </li>
-                  <li className="pl-1">
-                    Replacement: Contacts worn to 50% of original thickness or with deep pitting
-                    should be replaced as a matched set
-                  </li>
-                  <li className="pl-1">
-                    Contact gap: Check against manufacturer specification — incorrect gap can cause
-                    chattering or failure to break
-                  </li>
-                  <li className="pl-1">
-                    Spring pressure: Weakened contact springs reduce pressure, increasing resistance
-                    and arcing
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Contactor and relay contacts">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Silver and silver-alloy contacts: Do not file — silver oxide is conductive; filing
+                removes the thin contact material layer
+              </li>
+              <li>
+                Copper contacts: May be lightly dressed with a fine file if heavily pitted, then
+                cleaned with contact cleaner
+              </li>
+              <li>
+                Replacement: Contacts worn to 50% of original thickness or with deep pitting should
+                be replaced as a matched set
+              </li>
+              <li>
+                Contact gap: Check against manufacturer specification — incorrect gap can cause
+                chattering or failure to break
+              </li>
+              <li>
+                Spring pressure: Weakened contact springs reduce pressure, increasing resistance and
+                arcing
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Circuit Breaker Contacts
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    ACB and MCCB contacts: Inspect for erosion, pitting and discolouration during
-                    scheduled maintenance
-                  </li>
-                  <li className="pl-1">
-                    Contact resistance measurement: Use a DLRO (digital low resistance ohmmeter) to
-                    measure micro-ohm resistance across closed contacts
-                  </li>
-                  <li className="pl-1">
-                    Arcing chambers: Inspect and clean arc chutes; replace if cracked or heavily
-                    carbonised
-                  </li>
-                  <li className="pl-1">
-                    Operating mechanism: Clean, lubricate and check for correct operation per
-                    manufacturer's instructions
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Circuit breaker contacts">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                ACB and MCCB contacts: Inspect for erosion, pitting and discolouration during
+                scheduled maintenance
+              </li>
+              <li>
+                Contact resistance measurement: Use a DLRO (digital low resistance ohmmeter) to
+                measure micro-ohm resistance across closed contacts
+              </li>
+              <li>
+                Arcing chambers: Inspect and clean arc chutes; replace if cracked or heavily
+                carbonised
+              </li>
+              <li>
+                Operating mechanism: Clean, lubricate and check for correct operation per
+                manufacturer&apos;s instructions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Thermal Paste Application
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Power semiconductors (thyristors, IGBTs, diodes) in variable speed drives and
-                  power supplies rely on thermal paste to transfer heat to their heat sinks. During
-                  PPM, the condition of thermal paste should be checked and renewed if dried out or
-                  degraded.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Remove old paste completely using isopropyl alcohol and lint-free cloth
-                  </li>
-                  <li className="pl-1">
-                    Apply a thin, even layer — too much is as bad as too little
-                  </li>
-                  <li className="pl-1">
-                    Ensure mounting screws are torqued evenly to specification
-                  </li>
-                  <li className="pl-1">
-                    Use only the paste type specified by the manufacturer (silicone-based, metal
-                    oxide filled)
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Thermal paste application">
+            <p>
+              Power semiconductors (thyristors, IGBTs, diodes) in variable speed drives and power
+              supplies rely on thermal paste to transfer heat to their heat sinks. During PPM, the
+              condition of thermal paste should be checked and renewed if dried out or degraded.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Remove old paste completely using isopropyl alcohol and lint-free cloth</li>
+              <li>Apply a thin, even layer — too much is as bad as too little</li>
+              <li>Ensure mounting screws are torqued evenly to specification</li>
+              <li>
+                Use only the paste type specified by the manufacturer (silicone-based, metal oxide
+                filled)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Belt Tension and Alignment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Belt Tension, Alignment and Torque Checking
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Belt tension, alignment and torque checking</ContentEyebrow>
+
+          <ConceptBlock title="Three adjustments that affect reliability, energy and safety">
             <p>
               Many electrical maintenance technicians work on motor-driven systems where mechanical
               adjustments are integral to reliable operation. Belt tension, shaft alignment and
               connection torque are three critical adjustments that directly affect equipment
               reliability, energy consumption and safety.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Belt Tension</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Too loose:</strong> Belt slips, generates heat, wears rapidly, power
-                    transmission lost
-                  </li>
-                  <li className="pl-1">
-                    <strong>Too tight:</strong> Excessive bearing load, premature bearing failure,
-                    increased energy use
-                  </li>
-                  <li className="pl-1">
-                    <strong>Check method:</strong> Deflection test — measure span, apply force at
-                    midpoint, check deflection against specification
-                  </li>
-                  <li className="pl-1">
-                    <strong>Frequency:</strong> Check tension after first 24-48 hours of running a
-                    new belt, then at each PPM visit
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Shaft Alignment</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Angular misalignment:</strong> Shaft centrelines intersect at an angle —
-                    causes axial vibration
-                  </li>
-                  <li className="pl-1">
-                    <strong>Parallel (offset) misalignment:</strong> Shafts are parallel but offset
-                    — causes radial vibration
-                  </li>
-                  <li className="pl-1">
-                    <strong>Dial indicator method:</strong> Traditional approach using clock gauges
-                    on coupling faces and rims
-                  </li>
-                  <li className="pl-1">
-                    <strong>Laser alignment:</strong> Modern method providing faster, more accurate
-                    results with digital readout
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Belt tension">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Too loose:</strong> Belt slips, generates heat, wears rapidly, power
+                transmission lost
+              </li>
+              <li>
+                <strong>Too tight:</strong> Excessive bearing load, premature bearing failure,
+                increased energy use
+              </li>
+              <li>
+                <strong>Check method:</strong> Deflection test — measure span, apply force at
+                midpoint, check deflection against specification
+              </li>
+              <li>
+                <strong>Frequency:</strong> Check tension after first 24-48 hours of running a new
+                belt, then at each PPM visit
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Connection Torque Checking
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Re-torquing electrical connections is one of the most effective PPM tasks for
-                preventing electrical fires. All bolted electrical connections should be checked at
-                intervals determined by the installation type and operating conditions.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Equipment:</strong> Calibrated torque wrench (insulated for electrical
-                  work); correct socket/spanner
-                </li>
-                <li className="pl-1">
-                  <strong>Values:</strong> Refer to manufacturer's specification — typical values:
-                  M6 = 7-9 Nm, M8 = 18-22 Nm, M10 = 35-45 Nm, M12 = 55-70 Nm (varies with material)
-                </li>
-                <li className="pl-1">
-                  <strong>Technique:</strong> Apply torque smoothly; do not jerk. Re-torque in a
-                  star pattern on multi-bolt connections
-                </li>
-                <li className="pl-1">
-                  <strong>Recording:</strong> Mark completed connections with torque seal or witness
-                  mark; record in maintenance log
-                </li>
-                <li className="pl-1">
-                  <strong>Safety:</strong> Always work on de-energised, isolated equipment; use
-                  insulated tools as a secondary precaution
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Shaft alignment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Angular misalignment:</strong> Shaft centrelines intersect at an angle —
+                causes axial vibration
+              </li>
+              <li>
+                <strong>Parallel (offset) misalignment:</strong> Shafts are parallel but offset —
+                causes radial vibration
+              </li>
+              <li>
+                <strong>Dial indicator method:</strong> Traditional approach using clock gauges on
+                coupling faces and rims
+              </li>
+              <li>
+                <strong>Laser alignment:</strong> Modern method providing faster, more accurate
+                results with digital readout
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Connection torque checking">
+            <p>
+              Re-torquing electrical connections is one of the most effective PPM tasks for
+              preventing electrical fires. All bolted electrical connections should be checked at
+              intervals determined by the installation type and operating conditions.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Equipment:</strong> Calibrated torque wrench (insulated for electrical
+                work); correct socket/spanner
+              </li>
+              <li>
+                <strong>Values:</strong> Refer to manufacturer&apos;s specification — typical
+                values: M6 = 7-9 Nm, M8 = 18-22 Nm, M10 = 35-45 Nm, M12 = 55-70 Nm (varies with
+                material)
+              </li>
+              <li>
+                <strong>Technique:</strong> Apply torque smoothly; do not jerk. Re-torque in a star
+                pattern on multi-bolt connections
+              </li>
+              <li>
+                <strong>Recording:</strong> Mark completed connections with torque seal or witness
+                mark; record in maintenance log
+              </li>
+              <li>
+                <strong>Safety:</strong> Always work on de-energised, isolated equipment; use
+                insulated tools as a secondary precaution
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Panel Cleaning and Environmental Considerations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Panel Cleaning and Environmental Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Panel cleaning and environmental considerations</ContentEyebrow>
+
+          <ConceptBlock title="Dust, dirt and contamination are the enemies of electrical equipment">
             <p>
               Dust, dirt and contamination are the enemies of electrical equipment. They reduce
               insulation resistance, block ventilation, trap moisture and can provide conductive
               paths leading to tracking and flashover. Regular cleaning is a fundamental PPM
               activity.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Panel Interior Cleaning
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Isolate first:</strong> All cleaning of panel interiors must be carried
-                    out on de-energised, isolated equipment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Vacuum:</strong> Use a vacuum cleaner with anti-static nozzle to remove
-                    loose dust and debris
-                  </li>
-                  <li className="pl-1">
-                    <strong>Wipe:</strong> Clean surfaces with lint-free cloths dampened with
-                    approved electrical cleaner
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contacts:</strong> Spray contact cleaner on relay and contactor
-                    contacts; allow to evaporate fully
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ventilation:</strong> Clean or replace air filters; check fan operation
-                    and airflow
-                  </li>
-                  <li className="pl-1">
-                    <strong>Sealing:</strong> Check door seals and cable entry glands for integrity
-                    — gaps allow dust and vermin ingress
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Panel interior cleaning">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolate first:</strong> All cleaning of panel interiors must be carried out
+                on de-energised, isolated equipment
+              </li>
+              <li>
+                <strong>Vacuum:</strong> Use a vacuum cleaner with anti-static nozzle to remove
+                loose dust and debris
+              </li>
+              <li>
+                <strong>Wipe:</strong> Clean surfaces with lint-free cloths dampened with approved
+                electrical cleaner
+              </li>
+              <li>
+                <strong>Contacts:</strong> Spray contact cleaner on relay and contactor contacts;
+                allow to evaporate fully
+              </li>
+              <li>
+                <strong>Ventilation:</strong> Clean or replace air filters; check fan operation and
+                airflow
+              </li>
+              <li>
+                <strong>Sealing:</strong> Check door seals and cable entry glands for integrity —
+                gaps allow dust and vermin ingress
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environmental Compliance
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Used lubricants:</strong> Classified as hazardous waste — collect in
-                    sealed containers, dispose via licensed carrier
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contact cleaner:</strong> Many solvents are volatile organic compounds
-                    (VOCs) — use in ventilated areas, dispose of empty cans correctly
-                  </li>
-                  <li className="pl-1">
-                    <strong>Contaminated cloths:</strong> Oil-soaked rags are a fire hazard and
-                    hazardous waste — store in metal lidded containers
-                  </li>
-                  <li className="pl-1">
-                    <strong>COSHH:</strong> All cleaning chemicals require COSHH assessments; safety
-                    data sheets must be available
-                  </li>
-                  <li className="pl-1">
-                    <strong>Waste documentation:</strong> Hazardous waste consignment notes must be
-                    completed for each collection
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires you to
-              carry out maintenance tasks safely, using appropriate tools and materials, and to
-              comply with environmental regulations including waste disposal requirements. Practical
-              competence in lubrication, cleaning and adjustment is assessed during the end-point
-              assessment.
-            </p>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Grease Quantity Formula</p>
-                <ul className="space-y-0.5">
-                  <li>G = 0.005 x D x B (grams)</li>
-                  <li>D = bearing outside diameter (mm)</li>
-                  <li>B = bearing width (mm)</li>
-                  <li>Use calibrated grease gun</li>
-                  <li>Never mix grease types</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Torque Check Process</p>
-                <ul className="space-y-0.5">
-                  <li>1. Isolate and lock off</li>
-                  <li>2. Use calibrated torque wrench</li>
-                  <li>3. Apply manufacturer's specified torque</li>
-                  <li>4. Star pattern on multi-bolt joints</li>
-                  <li>5. Apply witness mark and record</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Environmental compliance"
+            onSite={
+              <>
+                The maintenance technician standard requires you to carry out maintenance tasks
+                safely, using appropriate tools and materials, and to comply with environmental
+                regulations including waste disposal requirements. Practical competence in
+                lubrication, cleaning and adjustment is assessed during the end-point assessment.
+              </>
+            }
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Scheduling and Records
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section1-4">
-              Next: Electrical Inspection Routines
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Used lubricants:</strong> Classified as hazardous waste — collect in sealed
+                containers, dispose via licensed carrier
+              </li>
+              <li>
+                <strong>Contact cleaner:</strong> Many solvents are volatile organic compounds
+                (VOCs) — use in ventilated areas, dispose of empty cans correctly
+              </li>
+              <li>
+                <strong>Contaminated cloths:</strong> Oil-soaked rags are a fire hazard and
+                hazardous waste — store in metal lidded containers
+              </li>
+              <li>
+                <strong>COSHH:</strong> All cleaning chemicals require COSHH assessments; safety
+                data sheets must be available
+              </li>
+              <li>
+                <strong>Waste documentation:</strong> Hazardous waste consignment notes must be
+                completed for each collection
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Grease quantity formula"
+            points={[
+              'G = 0.005 x D x B (grams).',
+              'D = bearing outside diameter (mm).',
+              'B = bearing width (mm).',
+              'Use calibrated grease gun.',
+              'Never mix grease types.',
+            ]}
+          />
+
+          <KeyTakeaways
+            title="Torque check process"
+            points={[
+              'Isolate and lock off.',
+              'Use calibrated torque wrench.',
+              "Apply manufacturer's specified torque.",
+              'Star pattern on multi-bolt joints.',
+              'Apply witness mark and record.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section1-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Maintenance Scheduling and Records
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section1-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Electrical Inspection Routines
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

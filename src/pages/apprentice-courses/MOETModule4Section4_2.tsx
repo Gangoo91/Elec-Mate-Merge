@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4 · Subsection 2 — Component Removal and
+ * Replacement
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical plant, equipment, and systems
+ *                 maintenance requirements: removing and replacing parts,
+ *                 inspecting, testing, setting up, adjusting, cleaning, and
+ *                 functional testing."
+ *              · "Electrical. Common electrical plant, equipment, and systems
+ *                 failure modes."
+ *              · "Equipment life cycle considerations."
+ *   Skills     · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Component Removal and Replacement - MOET Module 4.4.2';
@@ -16,9 +55,9 @@ const quickCheckQuestions = [
       "What does the 'like-for-like' principle mean when replacing an electrical component?",
     options: [
       "The replacement matches the original's electrical ratings, dimensions and function",
-      "The replacement must come from the same manufacturer as the original component",
-      "The replacement must always be rated higher than the original for added safety",
-      "The replacement must be the cheapest functionally equivalent part held in stock",
+      'The replacement must come from the same manufacturer as the original component',
+      'The replacement must always be rated higher than the original for added safety',
+      'The replacement must be the cheapest functionally equivalent part held in stock',
     ],
     correctIndex: 0,
     explanation:
@@ -86,9 +125,9 @@ const quizQuestions = [
     id: 3,
     question: 'Motor bearings typically need replacement when they exhibit:',
     options: [
-      "A slight discolouration of the grease with no other change in behaviour",
-      "A small reduction in motor running current below the rated full-load value",
-      "An increase in the insulation resistance of the motor stator windings",
+      'A slight discolouration of the grease with no other change in behaviour',
+      'A small reduction in motor running current below the rated full-load value',
+      'An increase in the insulation resistance of the motor stator windings',
       "Excessive noise, vibration, heat, or play beyond the maker's tolerances",
     ],
     correctAnswer: 3,
@@ -195,9 +234,9 @@ const quizQuestions = [
     question:
       'If an exact like-for-like replacement component is no longer available due to obsolescence, the maintenance technician should:',
     options: [
-      "Fit the closest component on the shelf without checking its ratings",
-      "Leave the circuit out of service until the exact original part is sourced",
-      "Modify the original failed component so it physically fits back in the space",
+      'Fit the closest component on the shelf without checking its ratings',
+      'Leave the circuit out of service until the exact original part is sourced',
+      'Modify the original failed component so it physically fits back in the space',
       "Use the maker's recommended equivalent, verify all parameters, and document it",
     ],
     correctAnswer: 3,
@@ -209,9 +248,9 @@ const quizQuestions = [
     question: 'What is the recommended torque for electrical connections, and why does it matter?',
     options: [
       "The maker's specified value — too little overheats, too much damages the terminal",
-      "As tight as possible by hand, since torque figures are only a rough guideline",
-      "A single standard torque of 5 Nm that applies to every electrical terminal type",
-      "Torque does not matter, provided the conductor cannot be pulled out by hand",
+      'As tight as possible by hand, since torque figures are only a rough guideline',
+      'A single standard torque of 5 Nm that applies to every electrical terminal type',
+      'Torque does not matter, provided the conductor cannot be pulled out by hand',
     ],
     correctAnswer: 0,
     explanation:
@@ -248,116 +287,65 @@ const faqs = [
 ];
 
 const MOETModule4Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Component Removal and Replacement
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.4 · Subsection 2"
+        title="Component Removal and Replacement"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Correct procedures for removing and replacing contactors, MCBs, MCCBs, motor bearings,
             relays and drives
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Like-for-like:</strong> Match all ratings, characteristics and dimensions
-              </li>
-              <li className="pl-1">
-                <strong>Label everything:</strong> Photograph and label all connections before
-                removal
-              </li>
-              <li className="pl-1">
-                <strong>De-rating:</strong> Account for temperature, grouping and enclosure effects
-              </li>
-              <li className="pl-1">
-                <strong>Torque:</strong> Use manufacturer-specified values for all connections
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Component Types Covered
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Contactors:</strong> Coil voltage, utilisation category, auxiliary contacts
-              </li>
-              <li className="pl-1">
-                <strong>MCBs/MCCBs:</strong> Trip curves, breaking capacity, adjustable settings
-              </li>
-              <li className="pl-1">
-                <strong>Motor bearings:</strong> Pressing techniques, alignment, lubrication
-              </li>
-              <li className="pl-1">
-                <strong>Relays and drives:</strong> Parameter transfer, functional verification
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Like-for-like: match all ratings, characteristics and dimensions.',
+              'Label everything: photograph and label all connections before removal.',
+              'De-rating: account for temperature, grouping and enclosure effects.',
+              'Torque: use manufacturer-specified values for all connections.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the correct procedure for removing and replacing contactors, including coil voltage and utilisation category selection',
               'Explain MCB and MCCB replacement considerations including trip curves, breaking capacity and adjustable settings',
               'Outline motor bearing replacement techniques including pressing, alignment and lubrication',
               'Identify the critical parameters for relay and variable speed drive replacement',
               'Apply like-for-like principles and recognise when upgrade considerations require a design change assessment',
               'Calculate and apply de-rating factors for temperature, altitude, grouping and enclosure effects',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Component types covered">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Contactors:</strong> coil voltage, utilisation category, auxiliary contacts.
+              </li>
+              <li>
+                <strong>MCBs/MCCBs:</strong> trip curves, breaking capacity, adjustable settings.
+              </li>
+              <li>
+                <strong>Motor bearings:</strong> pressing techniques, alignment, lubrication.
+              </li>
+              <li>
+                <strong>Relays and drives:</strong> parameter transfer, functional verification.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Contactor and Relay Replacement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Contactor and relay replacement</ContentEyebrow>
+
+          <ConceptBlock title="Contactor and relay replacement">
             <p>
               Contactors are electromechanical switching devices used to control motors, heating
               loads, lighting and other high-current circuits. They are among the most frequently
@@ -365,98 +353,93 @@ const MOETModule4Section4_2 = () => {
               due to arcing during switching operations. Correct replacement requires matching
               several critical parameters beyond the simple current rating.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contactor Replacement — Critical Parameters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rated operational current (Ie):</strong> Must match or exceed the full
-                  load current of the controlled load
-                </li>
-                <li className="pl-1">
-                  <strong>Rated operational voltage (Ue):</strong> Must be suitable for the system
-                  voltage (e.g., 400 V AC)
-                </li>
-                <li className="pl-1">
-                  <strong>Coil voltage:</strong> Must match the control circuit voltage exactly
-                  (e.g., 24 V DC, 110 V AC, 230 V AC)
-                </li>
-                <li className="pl-1">
-                  <strong>AC utilisation category:</strong> AC-1 (resistive), AC-3 (motor starting),
-                  AC-4 (plugging/inching) — each has different making and breaking requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Number of poles:</strong> Typically 3-pole for three-phase motor control,
-                  but 4-pole for switching the neutral
-                </li>
-                <li className="pl-1">
-                  <strong>Auxiliary contacts:</strong> Number and configuration of NO (normally
-                  open) and NC (normally closed) auxiliary contacts for control interlocking
-                </li>
-                <li className="pl-1">
-                  <strong>Physical dimensions:</strong> Frame size, mounting centres, terminal
-                  orientation must be compatible with the existing panel layout
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Contactor replacement — critical parameters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rated operational current (Ie):</strong> must match or exceed the full load
+                current of the controlled load.
+              </li>
+              <li>
+                <strong>Rated operational voltage (Ue):</strong> must be suitable for the system
+                voltage (e.g., 400 V AC).
+              </li>
+              <li>
+                <strong>Coil voltage:</strong> must match the control circuit voltage exactly (e.g.,
+                24 V DC, 110 V AC, 230 V AC).
+              </li>
+              <li>
+                <strong>AC utilisation category:</strong> AC-1 (resistive), AC-3 (motor starting),
+                AC-4 (plugging/inching) — each has different making and breaking requirements.
+              </li>
+              <li>
+                <strong>Number of poles:</strong> typically 3-pole for three-phase motor control,
+                but 4-pole for switching the neutral.
+              </li>
+              <li>
+                <strong>Auxiliary contacts:</strong> number and configuration of NO (normally open)
+                and NC (normally closed) auxiliary contacts for control interlocking.
+              </li>
+              <li>
+                <strong>Physical dimensions:</strong> frame size, mounting centres, terminal
+                orientation must be compatible with the existing panel layout.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Relay Replacement Considerations
-              </p>
-              <p className="text-sm text-white mb-3">
-                Control relays, timer relays and protection relays each have specific replacement
-                requirements. The type of relay determines the critical parameters.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Control relays:</strong> Coil voltage, contact configuration (SPDT, DPDT,
-                  4PDT), contact rating, base socket compatibility
-                </li>
-                <li className="pl-1">
-                  <strong>Timer relays:</strong> Timing function (on-delay, off-delay, star-delta,
-                  pulse), timing range, display type, connection diagram
-                </li>
-                <li className="pl-1">
-                  <strong>Protection relays:</strong> Protection function (overcurrent, earth fault,
-                  differential), CT ratio, pickup settings, time-current curves, communication
-                  protocol
-                </li>
-                <li className="pl-1">
-                  <strong>Safety relays:</strong> SIL rating (Safety Integrity Level), category (BS
-                  EN ISO 13849-1), redundancy requirements — safety relays must be certified for the
-                  application
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Relay replacement considerations">
+            <p>
+              Control relays, timer relays and protection relays each have specific replacement
+              requirements. The type of relay determines the critical parameters.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Control relays:</strong> coil voltage, contact configuration (SPDT, DPDT,
+                4PDT), contact rating, base socket compatibility.
+              </li>
+              <li>
+                <strong>Timer relays:</strong> timing function (on-delay, off-delay, star-delta,
+                pulse), timing range, display type, connection diagram.
+              </li>
+              <li>
+                <strong>Protection relays:</strong> protection function (overcurrent, earth fault,
+                differential), CT ratio, pickup settings, time-current curves, communication
+                protocol.
+              </li>
+              <li>
+                <strong>Safety relays:</strong> SIL rating (Safety Integrity Level), category (BS EN
+                ISO 13849-1), redundancy requirements — safety relays must be certified for the
+                application.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Common Mistake — Contact Wear Assessment
-              </p>
-              <p className="text-sm text-white">
-                Before replacing a contactor, inspect the contacts for wear. If the silver contact
-                layer has worn through to the copper base material, replacement is required.
-                However, light pitting and discolouration of the contacts is normal and does NOT
-                require replacement. Never file or dress contactor contacts — this removes the
-                silver layer and accelerates wear. Contact tips are available as replaceable spare
+          <CommonMistake
+            title="Contact wear assessment"
+            whatHappens={
+              <>
+                Before replacing a contactor, inspect the contacts for wear. Never file or dress
+                contactor contacts — this removes the silver layer and accelerates wear.
+              </>
+            }
+            doInstead={
+              <>
+                If the silver contact layer has worn through to the copper base material,
+                replacement is required. Light pitting and discolouration of the contacts is normal
+                and does NOT require replacement. Contact tips are available as replaceable spare
                 parts for many contactor ranges, avoiding the need to replace the entire contactor.
-              </p>
-            </div>
-          </div>
-        </section>
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            MCB and MCCB Replacement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>MCB and MCCB replacement</ContentEyebrow>
+
+          <ConceptBlock title="MCB and MCCB replacement">
             <p>
               Miniature circuit breakers (MCBs) and moulded case circuit breakers (MCCBs) are
               protective devices that must be correctly specified to provide both overload and
@@ -464,106 +447,89 @@ const MOETModule4Section4_2 = () => {
               replacement can result in a failure to protect against faults, potentially leading to
               fire or electrocution.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">MCB Trip Curves</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Curve</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Magnetic Trip Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type B</td>
-                      <td className="border border-white/10 px-3 py-2">3-5 x In</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Domestic, commercial — resistive and lightly inductive loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type C</td>
-                      <td className="border border-white/10 px-3 py-2">5-10 x In</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motors, transformers, fluorescent lighting — moderate inrush
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Type D</td>
-                      <td className="border border-white/10 px-3 py-2">10-20 x In</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Welding equipment, X-ray machines, large motors — high inrush
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="MCB trip curves">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Curve</th>
+                    <th className="py-2 pr-4 font-medium text-white">Magnetic trip range</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Type B</td>
+                    <td className="py-2 pr-4">3-5 x In</td>
+                    <td className="py-2">
+                      Domestic, commercial — resistive and lightly inductive loads
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Type C</td>
+                    <td className="py-2 pr-4">5-10 x In</td>
+                    <td className="py-2">
+                      Motors, transformers, fluorescent lighting — moderate inrush
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Type D</td>
+                    <td className="py-2 pr-4">10-20 x In</td>
+                    <td className="py-2">
+                      Welding equipment, X-ray machines, large motors — high inrush
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                MCCB Adjustable Settings
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ir (overload):</strong> Adjustable from typically 0.63-1.0 x In — sets the
-                  thermal overload trip threshold
-                </li>
-                <li className="pl-1">
-                  <strong>tr (overload time):</strong> Some MCCBs allow adjustment of the thermal
-                  trip time characteristic
-                </li>
-                <li className="pl-1">
-                  <strong>Isd (short-delay):</strong> Adjustable short-circuit trip level — provides
-                  time delay for coordination with downstream devices
-                </li>
-                <li className="pl-1">
-                  <strong>tsd (short-delay time):</strong> Time delay for the short-circuit trip — 0
-                  to 0.4 seconds typically
-                </li>
-                <li className="pl-1">
-                  <strong>Ii (instantaneous):</strong> Non-adjustable or adjustable instantaneous
-                  trip for high fault currents
-                </li>
-                <li className="pl-1">
-                  <strong>Ig (earth fault):</strong> Some MCCBs include adjustable earth fault
-                  protection
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="MCCB adjustable settings">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ir (overload):</strong> adjustable from typically 0.63-1.0 x In — sets the
+                thermal overload trip threshold.
+              </li>
+              <li>
+                <strong>tr (overload time):</strong> some MCCBs allow adjustment of the thermal trip
+                time characteristic.
+              </li>
+              <li>
+                <strong>Isd (short-delay):</strong> adjustable short-circuit trip level — provides
+                time delay for coordination with downstream devices.
+              </li>
+              <li>
+                <strong>tsd (short-delay time):</strong> time delay for the short-circuit trip — 0
+                to 0.4 seconds typically.
+              </li>
+              <li>
+                <strong>Ii (instantaneous):</strong> non-adjustable or adjustable instantaneous trip
+                for high fault currents.
+              </li>
+              <li>
+                <strong>Ig (earth fault):</strong> some MCCBs include adjustable earth fault
+                protection.
+              </li>
+            </ul>
+            <p>
+              The replacement MCB or MCCB must have a breaking capacity (Icn or Icu) that equals or
+              exceeds the prospective fault current (Ipf) at the point of installation. This is a
+              fundamental requirement of BS 7671 Regulation 432.1. If the Ipf has increased since
+              the original installation (e.g., due to a transformer upgrade or network changes), the
+              replacement device may need a higher breaking capacity than the original. Always
+              verify the current Ipf before selecting a replacement.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Breaking Capacity Verification
-              </p>
-              <p className="text-sm text-white">
-                The replacement MCB or MCCB must have a breaking capacity (Icn or Icu) that equals
-                or exceeds the prospective fault current (Ipf) at the point of installation. This is
-                a fundamental requirement of BS 7671 Regulation 432.1. If the Ipf has increased
-                since the original installation (e.g., due to a transformer upgrade or network
-                changes), the replacement device may need a higher breaking capacity than the
-                original. Always verify the current Ipf before selecting a replacement.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Motor Bearing Replacement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Motor bearing replacement</ContentEyebrow>
+
+          <ConceptBlock title="Motor bearing replacement">
             <p>
               Motor bearings are the most common failure point in electric motors. They support the
               rotor shaft, maintain the air gap between rotor and stator, and must handle radial and
@@ -571,222 +537,195 @@ const MOETModule4Section4_2 = () => {
               improper handling or installation is the leading cause of premature bearing failure,
               often resulting in the replacement bearing lasting only a fraction of its design life.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Bearing Replacement Procedure
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Record bearing designation:</strong> Note the bearing number from the old
-                  bearing or motor nameplate (e.g., 6205-2RS, 6308-ZZ)
-                </li>
-                <li className="pl-1">
-                  <strong>Inspect shaft and housing:</strong> Check for scoring, corrosion, wear
-                  marks or damage. Measure shaft and housing dimensions against manufacturer's
-                  tolerance
-                </li>
-                <li className="pl-1">
-                  <strong>Remove old bearing:</strong> Use a bearing puller — never prise with a
-                  screwdriver. Apply force to the inner ring only. Inspect the removed bearing for
-                  failure mode evidence
-                </li>
-                <li className="pl-1">
-                  <strong>Clean surfaces:</strong> Clean the shaft and housing bore thoroughly with
-                  a suitable solvent. Remove all traces of old grease and contaminants
-                </li>
-                <li className="pl-1">
-                  <strong>Install new bearing:</strong> Press the inner ring onto the shaft using a
-                  bearing press or induction heater (80-100°C max). Never apply force through the
-                  rolling elements
-                </li>
-                <li className="pl-1">
-                  <strong>Lubricate:</strong> Apply the correct type and quantity of grease.
-                  Over-greasing causes overheating; under-greasing causes premature wear
-                </li>
-                <li className="pl-1">
-                  <strong>Reassemble:</strong> Ensure correct endplay, check shaft rotates freely,
-                  verify alignment
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Bearing replacement procedure">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Record bearing designation:</strong> note the bearing number from the old
+                bearing or motor nameplate (e.g., 6205-2RS, 6308-ZZ).
+              </li>
+              <li>
+                <strong>Inspect shaft and housing:</strong> check for scoring, corrosion, wear marks
+                or damage. Measure shaft and housing dimensions against manufacturer&apos;s
+                tolerance.
+              </li>
+              <li>
+                <strong>Remove old bearing:</strong> use a bearing puller — never prise with a
+                screwdriver. Apply force to the inner ring only. Inspect the removed bearing for
+                failure mode evidence.
+              </li>
+              <li>
+                <strong>Clean surfaces:</strong> clean the shaft and housing bore thoroughly with a
+                suitable solvent. Remove all traces of old grease and contaminants.
+              </li>
+              <li>
+                <strong>Install new bearing:</strong> press the inner ring onto the shaft using a
+                bearing press or induction heater (80-100°C max). Never apply force through the
+                rolling elements.
+              </li>
+              <li>
+                <strong>Lubricate:</strong> apply the correct type and quantity of grease.
+                Over-greasing causes overheating; under-greasing causes premature wear.
+              </li>
+              <li>
+                <strong>Reassemble:</strong> ensure correct endplay, check shaft rotates freely,
+                verify alignment.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Bearing Failure Modes
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fatigue spalling:</strong> Flaking of raceway surface — natural
-                  end-of-life failure mode
-                </li>
-                <li className="pl-1">
-                  <strong>Brinelling:</strong> Permanent dents in raceways from excessive static
-                  load or installation damage
-                </li>
-                <li className="pl-1">
-                  <strong>Fretting corrosion:</strong> Rust-coloured wear on shaft or housing
-                  contact surfaces from micro-movement (loose fit)
-                </li>
-                <li className="pl-1">
-                  <strong>Contamination:</strong> Ingress of dirt, moisture or process material past
-                  the seals
-                </li>
-                <li className="pl-1">
-                  <strong>Electrical pitting:</strong> Craters caused by bearing currents (common
-                  with VSD-fed motors without shaft grounding)
-                </li>
-                <li className="pl-1">
-                  <strong>Lubrication failure:</strong> Overheating, discolouration and destruction
-                  from insufficient, excessive or incorrect lubricant
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common bearing failure modes">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fatigue spalling:</strong> flaking of raceway surface — natural end-of-life
+                failure mode.
+              </li>
+              <li>
+                <strong>Brinelling:</strong> permanent dents in raceways from excessive static load
+                or installation damage.
+              </li>
+              <li>
+                <strong>Fretting corrosion:</strong> rust-coloured wear on shaft or housing contact
+                surfaces from micro-movement (loose fit).
+              </li>
+              <li>
+                <strong>Contamination:</strong> ingress of dirt, moisture or process material past
+                the seals.
+              </li>
+              <li>
+                <strong>Electrical pitting:</strong> craters caused by bearing currents (common with
+                VSD-fed motors without shaft grounding).
+              </li>
+              <li>
+                <strong>Lubrication failure:</strong> overheating, discolouration and destruction
+                from insufficient, excessive or incorrect lubricant.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Drive Replacement, Upgrade Considerations and De-Rating
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Drive replacement, upgrades and de-rating</ContentEyebrow>
+
+          <ConceptBlock title="Drive replacement, upgrade considerations and de-rating">
             <p>
               Variable speed drives (VSDs) require particular care during replacement because they
-              contain extensive parameter configurations that control the motor's operation.
+              contain extensive parameter configurations that control the motor&apos;s operation.
               Additionally, when considering upgrades or substitute components, de-rating factors
               must be applied to ensure the replacement operates within safe limits in the actual
               installation environment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VSD Replacement Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Back up parameters:</strong> Download all drive parameters using the
-                  manufacturer's software, a parameter copy module, or manual recording. Include
-                  motor data, ramp times, speed limits, protection settings, I/O assignments and
-                  communication settings
-                </li>
-                <li className="pl-1">
-                  <strong>Verify compatibility:</strong> Confirm the replacement drive has the same
-                  power rating, voltage, control mode capability (V/f, vector, servo), communication
-                  protocol and I/O configuration
-                </li>
-                <li className="pl-1">
-                  <strong>Physical installation:</strong> Ensure adequate ventilation clearances,
-                  cable routing and EMC considerations (screened motor cables, cable glands)
-                </li>
-                <li className="pl-1">
-                  <strong>Upload parameters:</strong> Program all parameters into the replacement
-                  drive. If migrating to a different manufacturer, parameters must be translated to
-                  the new drive's parameter structure
-                </li>
-                <li className="pl-1">
-                  <strong>Commission:</strong> Run the motor uncoupled where possible, check
-                  rotation direction, verify speed reference tracking, test all protection
-                  functions, then couple and load test
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="VSD replacement procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Back up parameters:</strong> download all drive parameters using the
+                manufacturer&apos;s software, a parameter copy module, or manual recording. Include
+                motor data, ramp times, speed limits, protection settings, I/O assignments and
+                communication settings.
+              </li>
+              <li>
+                <strong>Verify compatibility:</strong> confirm the replacement drive has the same
+                power rating, voltage, control mode capability (V/f, vector, servo), communication
+                protocol and I/O configuration.
+              </li>
+              <li>
+                <strong>Physical installation:</strong> ensure adequate ventilation clearances,
+                cable routing and EMC considerations (screened motor cables, cable glands).
+              </li>
+              <li>
+                <strong>Upload parameters:</strong> program all parameters into the replacement
+                drive. If migrating to a different manufacturer, parameters must be translated to
+                the new drive&apos;s parameter structure.
+              </li>
+              <li>
+                <strong>Commission:</strong> run the motor uncoupled where possible, check rotation
+                direction, verify speed reference tracking, test all protection functions, then
+                couple and load test.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">De-Rating Factors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ambient temperature:</strong> Standard ratings assume 40°C ambient. Higher
-                  temperatures require de-rating — typically 2-3% per degree above 40°C
-                </li>
-                <li className="pl-1">
-                  <strong>Altitude:</strong> Above 1000 m (some manufacturers 2000 m), reduced air
-                  density impairs cooling. Typical de-rating: 1% per 100 m above the threshold
-                </li>
-                <li className="pl-1">
-                  <strong>Switching frequency:</strong> VSD output switching frequency affects power
-                  loss. Higher switching frequencies improve motor performance but require drive
-                  de-rating
-                </li>
-                <li className="pl-1">
-                  <strong>Grouping:</strong> Multiple components in the same enclosure increase the
-                  ambient temperature for each device
-                </li>
-                <li className="pl-1">
-                  <strong>Enclosure type:</strong> Sealed enclosures (IP54/65) without forced
-                  ventilation require greater de-rating than ventilated enclosures
-                </li>
-                <li className="pl-1">
-                  <strong>Duty cycle:</strong> Continuous duty vs intermittent duty — heavy-duty
-                  applications (frequent starting/stopping) may require de-rating or upsizing
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to correctly remove, replace and commission
+          <ConceptBlock title="De-rating factors">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ambient temperature:</strong> standard ratings assume 40°C ambient. Higher
+                temperatures require de-rating — typically 2-3% per degree above 40°C.
+              </li>
+              <li>
+                <strong>Altitude:</strong> above 1000 m (some manufacturers 2000 m), reduced air
+                density impairs cooling. Typical de-rating: 1% per 100 m above the threshold.
+              </li>
+              <li>
+                <strong>Switching frequency:</strong> VSD output switching frequency affects power
+                loss. Higher switching frequencies improve motor performance but require drive
+                de-rating.
+              </li>
+              <li>
+                <strong>Grouping:</strong> multiple components in the same enclosure increase the
+                ambient temperature for each device.
+              </li>
+              <li>
+                <strong>Enclosure type:</strong> sealed enclosures (IP54/65) without forced
+                ventilation require greater de-rating than ventilated enclosures.
+              </li>
+              <li>
+                <strong>Duty cycle:</strong> continuous duty vs intermittent duty — heavy-duty
+                applications (frequent starting/stopping) may require de-rating or upsizing.
+              </li>
+            </ul>
+            <p>
+              <strong>ST1426 link:</strong> the ability to correctly remove, replace and commission
               electrical components is a core maintenance technician competence. Understanding
               like-for-like principles, de-rating factors and the importance of documentation
               demonstrates the professional approach expected of a qualified maintenance technician.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge — Component Removal and Replacement"
-            questions={quizQuestions}
-          />
-        </section>
+          <Bleed>
+            <Quiz
+              title="Test Your Knowledge — Component Removal and Replacement"
+              questions={quizQuestions}
+            />
+          </Bleed>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Safe Isolation
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4-3">
-              Next: Cable Jointing and Termination
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safe Isolation and Verification
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Cable Jointing and Termination
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

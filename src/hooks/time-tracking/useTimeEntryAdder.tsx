@@ -8,6 +8,16 @@ interface AddTimeEntryParams {
   notes?: string;
   location?: string;
   supervisor?: string;
+  /**
+   * True when the app logged this without the learner asking.
+   *
+   * This used to be hardcoded `false`, so automatic rows were stored as
+   * manual ones. That disguised 5,753 auto-written rows as learner-entered
+   * time and let them past the duplicate guard in `useApprenticeOtj`
+   * (ELE-1724). Callers must say which kind of entry they are making;
+   * a hand-typed logbook entry is the only thing that is manual.
+   */
+  isAutomatic?: boolean;
 }
 
 export const useTimeEntryAdder = (
@@ -16,7 +26,7 @@ export const useTimeEntryAdder = (
 ) => {
   // Function to add a new time entry
   const addTimeEntry = async (params: AddTimeEntryParams) => {
-    const { date, duration, activity, notes = '', location, supervisor } = params;
+    const { date, duration, activity, notes = '', isAutomatic = false } = params;
     try {
       const newEntry: TimeEntry = {
         id: `entry-${Date.now()}`,
@@ -37,21 +47,28 @@ export const useTimeEntryAdder = (
               duration: newEntry.duration,
               activity: newEntry.activity,
               notes: newEntry.notes,
-              is_automatic: false,
+              is_automatic: isAutomatic,
             })
             .select('*')
             .single();
 
           if (!error && data) {
-            const typedData = data as any;
+            const saved = data as {
+              id: string;
+              date: string;
+              duration: number;
+              activity: string;
+              notes: string | null;
+              is_automatic: boolean | null;
+            };
             setManualEntries((prev) => [
               {
-                id: typedData.id,
-                date: typedData.date,
-                duration: typedData.duration,
-                activity: typedData.activity,
-                notes: typedData.notes,
-                isAutomatic: typedData.is_automatic,
+                id: saved.id,
+                date: saved.date,
+                duration: saved.duration,
+                activity: saved.activity,
+                notes: saved.notes ?? '',
+                isAutomatic: saved.is_automatic ?? false,
               },
               ...prev,
             ]);

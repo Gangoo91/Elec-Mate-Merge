@@ -1,8 +1,46 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 5 · Subsection 3 — Zero, Span and Linearity
+ * Adjustments
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only a statement that already appears verbatim in the brief's
+ * verified lists for other modules — and that genuinely fits this page's
+ * content — is used here.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * placed its four InlineCheck questions out of numeric order (0, 3, 2, 1)
+ * because each pairs with the section it follows — that pairing is preserved
+ * here rather than renumbered.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Zero, Span and Linearity Adjustments - MOET Module 5 Section 5.3';
@@ -69,12 +107,7 @@ const quizQuestions = [
     id: 1,
     question:
       'For a 4-20 mA transmitter with a 0-100 degrees C range, what output should be produced at 0 degrees C?',
-    options: [
-      '0 mA',
-      '4.00 mA',
-      '12.00 mA',
-      '20.00 mA',
-    ],
+    options: ['0 mA', '4.00 mA', '12.00 mA', '20.00 mA'],
     correctAnswer: 1,
     explanation:
       'At the zero input (0 degrees C), the transmitter should output exactly 4.00 mA, which represents 0% of the measurement range.',
@@ -83,10 +116,10 @@ const quizQuestions = [
     id: 2,
     question: "What does a 'sensor trim' do on a HART transmitter?",
     options: [
-      "Adjusts the 4-20 mA current output to match a precision milliamp meter",
+      'Adjusts the 4-20 mA current output to match a precision milliamp meter',
       "Resets the transmitter's range to its default upper and lower values",
       "Adjusts the transmitter's sensor reading to match a known reference value, correcting sensor drift",
-      "Applies a fixed damping value to smooth the output signal",
+      'Applies a fixed damping value to smooth the output signal',
     ],
     correctAnswer: 2,
     explanation:
@@ -162,9 +195,9 @@ const quizQuestions = [
     question: "What does 'rangeability' mean for a transmitter?",
     options: [
       "The ratio of the maximum to minimum span that can be set, indicating the flexibility of the transmitter's configuration",
-      "The maximum process pressure the sensor can withstand before damage",
-      "The distance over which a wireless transmitter can send its signal",
-      "The number of test points used during a five-point calibration check",
+      'The maximum process pressure the sensor can withstand before damage',
+      'The distance over which a wireless transmitter can send its signal',
+      'The number of test points used during a five-point calibration check',
     ],
     correctAnswer: 0,
     explanation:
@@ -254,149 +287,101 @@ const faqs = [
 ];
 
 const MOETModule5Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 5.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Zero, Span and Linearity Adjustments
-          </h1>
-          <p className="text-white">
-            Practical procedures for restoring transmitter measurement accuracy
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.5 · Subsection 3"
+        title="Zero, Span and Linearity Adjustments"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Practical procedures for restoring transmitter measurement accuracy.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Zero:</strong> Offset correction at minimum input (4 mA point)
-              </li>
-              <li className="pl-1">
-                <strong>Span:</strong> Gain correction at maximum input (20 mA point)
-              </li>
-              <li className="pl-1">
-                <strong>Sequence:</strong> Always adjust zero before span, then iterate
-              </li>
-              <li className="pl-1">
-                <strong>Linearity:</strong> Mid-range accuracy requiring multi-point correction
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Sensor trim:</strong> HART function correcting input A/D reading
-              </li>
-              <li className="pl-1">
-                <strong>Output trim:</strong> HART function correcting D/A current output
-              </li>
-              <li className="pl-1">
-                <strong>Stabilisation:</strong> Allow equilibrium before recording readings
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Record as-found and as-left data for every
-                adjustment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Zero: offset correction at minimum input (4 mA point).',
+              'Span: gain correction at maximum input (20 mA point).',
+              'Sequence: always adjust zero before span, then iterate.',
+              'Linearity: mid-range accuracy requiring multi-point correction.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain zero, span, and linearity errors and their effects on measurement accuracy',
               'Perform zero and span adjustments in the correct sequence on analogue and digital transmitters',
               'Use HART sensor trim and output trim functions for smart transmitter calibration',
               'Identify and correct linearity errors using multi-point characterisation',
               'Document calibration adjustments with as-found and as-left data',
               'Distinguish between bench and in-situ calibration approaches',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensor trim:</strong> the HART function correcting the input A/D reading.
+              </li>
+              <li>
+                <strong>Output trim:</strong> the HART function correcting the D/A current output.
+              </li>
+              <li>
+                <strong>Stabilisation:</strong> allow equilibrium before recording readings.
+              </li>
+              <li>
+                <strong>Documentation:</strong> record as-found and as-left data for every
+                adjustment.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Zero, Span, and Linearity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding zero, span and linearity</ContentEyebrow>
+
+          <ConceptBlock
+            title="Understanding zero, span, and linearity"
+            onSite="Zero and span correct two-point errors (offset and gain). Linearity is a third, independent error that requires separate assessment at intermediate test points."
+          >
             <p>
               <strong>Zero error (offset)</strong> is a constant shift in the output across the
               entire range. If the zero is high, all readings are shifted upwards by the same
-              amount. Zero error is corrected by adjusting the transmitter's output at the minimum
-              input so that it reads exactly 4.00 mA (or 0.2 bar for pneumatic). This is the first
-              adjustment to make because it affects all subsequent readings.
+              amount. Zero error is corrected by adjusting the transmitter&apos;s output at the
+              minimum input so that it reads exactly 4.00 mA (or 0.2 bar for pneumatic). This is the
+              first adjustment to make because it affects all subsequent readings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Three Types of Transmitter Error
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Zero error:</strong> Constant offset -- the entire output curve is shifted
-                  up or down. Corrected by zero adjustment
-                </li>
-                <li className="pl-1">
-                  <strong>Span error:</strong> Incorrect gain -- the slope of the output curve is
-                  wrong. Output at zero may be correct but full-scale is off. Corrected by span
-                  adjustment
-                </li>
-                <li className="pl-1">
-                  <strong>Linearity error:</strong> The output curve is not straight -- mid-range
-                  readings deviate from the ideal. Cannot be corrected by zero/span alone
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Three types of transmitter error">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Zero error:</strong> constant offset -- the entire output curve is shifted
+                up or down. Corrected by zero adjustment.
+              </li>
+              <li>
+                <strong>Span error:</strong> incorrect gain -- the slope of the output curve is
+                wrong. Output at zero may be correct but full-scale is off. Corrected by span
+                adjustment.
+              </li>
+              <li>
+                <strong>Linearity error:</strong> the output curve is not straight -- mid-range
+                readings deviate from the ideal. Cannot be corrected by zero/span alone.
+              </li>
+            </ul>
             <p>
-              <strong>Span error (gain error)</strong> occurs when the transmitter's sensitivity is
-              incorrect. The output at zero may be correct, but the output at full scale is either
-              too high or too low. This creates an error that increases with the measured value.
-              Span is adjusted by applying the maximum input and adjusting the output to read
-              exactly 20.00 mA (or 1.0 bar). Span adjustment should always follow zero adjustment.
+              <strong>Span error (gain error)</strong> occurs when the transmitter&apos;s
+              sensitivity is incorrect. The output at zero may be correct, but the output at full
+              scale is either too high or too low. This creates an error that increases with the
+              measured value. Span is adjusted by applying the maximum input and adjusting the
+              output to read exactly 20.00 mA (or 1.0 bar). Span adjustment should always follow
+              zero adjustment.
             </p>
-
             <p>
               <strong>Linearity error</strong> is a deviation from the ideal straight-line
               relationship between input and output. The output at zero and full scale may be
@@ -405,62 +390,51 @@ const MOETModule5Section5_3 = () => {
               transmitters or replacement of the sensor element if it has developed non-linear
               behaviour.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Zero and span correct two-point errors (offset and gain).
-              Linearity is a third, independent error that requires separate assessment at
-              intermediate test points.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            HART Sensor Trim and Output Trim
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>HART sensor trim and output trim</ContentEyebrow>
+
+          <ConceptBlock
+            title="HART sensor trim and output trim"
+            onSite="On HART transmitters, sensor trim and output trim do not interact. This means you do not need to iterate between them as you would with analogue zero and span screws. However, always verify at all five test points after completing both trims."
+          >
             <p>
-              Smart transmitters using HART protocol have two independent calibration functions.
-              <strong> Sensor trim</strong> adjusts the transmitter's internal digital reading of
-              the process variable to match a known applied input. It corrects drift in the sensor
-              and analogue-to-digital conversion. The technician applies a known reference (e.g. a
-              precise pressure from a calibrator) and uses the HART communicator to tell the
+              Smart transmitters using HART protocol have two independent calibration functions.{' '}
+              <strong>Sensor trim</strong> adjusts the transmitter&apos;s internal digital reading
+              of the process variable to match a known applied input. It corrects drift in the
+              sensor and analogue-to-digital conversion. The technician applies a known reference
+              (e.g. a precise pressure from a calibrator) and uses the HART communicator to tell the
               transmitter what the true value is.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Sensor Trim (A/D)</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Corrects the input measurement reading</li>
-                  <li className="pl-1">Apply known reference input to the sensor</li>
-                  <li className="pl-1">Use HART communicator to set the true value</li>
-                  <li className="pl-1">Lower and upper sensor trim points</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Output Trim (D/A)</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Corrects the 4-20 mA current output</li>
-                  <li className="pl-1">Measure actual output with precision milliamp meter</li>
-                  <li className="pl-1">Use HART communicator to adjust output</li>
-                  <li className="pl-1">Trim at 4 mA and 20 mA points</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Sensor trim (A/D)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Corrects the input measurement reading.</li>
+              <li>Apply known reference input to the sensor.</li>
+              <li>Use HART communicator to set the true value.</li>
+              <li>Lower and upper sensor trim points.</li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Output trim (D/A)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Corrects the 4-20 mA current output.</li>
+              <li>Measure actual output with precision milliamp meter.</li>
+              <li>Use HART communicator to adjust output.</li>
+              <li>Trim at 4 mA and 20 mA points.</li>
+            </ul>
             <p>
               <strong>Output trim (D/A trim)</strong> adjusts the digital-to-analogue converter so
-              the 4-20 mA current output accurately represents the transmitter's internal digital
-              value. This corrects drift in the output electronics. The technician uses a precision
-              milliamp meter to measure the actual output and uses the HART communicator to trim the
-              output to match.
+              the 4-20 mA current output accurately represents the transmitter&apos;s internal
+              digital value. This corrects drift in the output electronics. The technician uses a
+              precision milliamp meter to measure the actual output and uses the HART communicator
+              to trim the output to match.
             </p>
-
             <p>
               On HART transmitters, sensor trim and output trim are independent -- adjusting one
               does not affect the other. This is a significant advantage over analogue transmitters
@@ -468,25 +442,18 @@ const MOETModule5Section5_3 = () => {
               perform output trim first (at 4 mA and 20 mA points), (2) then perform sensor trim at
               the lower and upper reference points.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> On HART transmitters, sensor trim and output trim do
-              not interact. This means you do not need to iterate between them as you would with
-              analogue zero and span screws. However, always verify at all five test points after
-              completing both trims.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Practical Adjustment Procedure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Practical adjustment procedure</ContentEyebrow>
+
+          <ConceptBlock
+            title="Practical adjustment procedure"
+            onSite="Allow adequate stabilisation time at each test point before taking readings. Pressure transmitters need time for pressure to equalise. Temperature sensors need several minutes in dry-block calibrators. Rushing creates errors that mimic linearity problems."
+          >
             <p>
               For an <strong>analogue transmitter</strong>: (1) Record as-found data at all five
               test points. (2) Apply zero input and adjust the zero screw until the output reads
@@ -495,69 +462,47 @@ const MOETModule5Section5_3 = () => {
               slightly. (5) Iterate between zero and span until both are within tolerance. (6) Check
               all five points for linearity. (7) Record as-left data.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step-by-Step Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Step</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Analogue Transmitter
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        HART Smart Transmitter
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Record as-found at 5 points
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Record as-found at 5 points
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjust zero screw at 4 mA
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output trim at 4 mA and 20 mA
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjust span screw at 20 mA
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Lower sensor trim</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">Re-check zero, iterate</td>
-                      <td className="border border-white/10 px-3 py-2">Upper sensor trim</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check linearity at 5 points
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Verify all 5 points, record as-left
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Step-by-step comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Step</th>
+                    <th className="py-2 pr-4 font-medium text-white">Analogue transmitter</th>
+                    <th className="py-2 font-medium text-white">HART smart transmitter</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">1</td>
+                    <td className="py-2 pr-4">Record as-found at 5 points</td>
+                    <td className="py-2">Record as-found at 5 points</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">2</td>
+                    <td className="py-2 pr-4">Adjust zero screw at 4 mA</td>
+                    <td className="py-2">Output trim at 4 mA and 20 mA</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">3</td>
+                    <td className="py-2 pr-4">Adjust span screw at 20 mA</td>
+                    <td className="py-2">Lower sensor trim</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">4</td>
+                    <td className="py-2 pr-4">Re-check zero, iterate</td>
+                    <td className="py-2">Upper sensor trim</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">5</td>
+                    <td className="py-2 pr-4">Check linearity at 5 points</td>
+                    <td className="py-2">Verify all 5 points, record as-left</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               For a <strong>HART smart transmitter</strong>: (1) Record as-found data at all five
               test points. (2) Perform output trim at 4 mA and 20 mA using a precision milliamp
@@ -566,25 +511,18 @@ const MOETModule5Section5_3 = () => {
               record as-left data. (6) Verify the configuration parameters have not been
               inadvertently changed.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Allow adequate stabilisation time at each test point
-              before taking readings. Pressure transmitters need time for pressure to equalise.
-              Temperature sensors need several minutes in dry-block calibrators. Rushing creates
-              errors that mimic linearity problems.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Linearity Assessment and Correction
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Linearity assessment and correction</ContentEyebrow>
+
+          <ConceptBlock
+            title="Linearity assessment and correction"
+            onSite="When performing a five-point calibration check (0%, 25%, 50%, 75%, 100%), also perform the check in the reverse direction (100% down to 0%) to identify any hysteresis error. Hysteresis appears as a difference between upscale and downscale readings at the same input point."
+          >
             <p>
               After zero and span are within tolerance, linearity must be checked at intermediate
               test points (typically 25%, 50%, and 75% of range). The transmitter output at each
@@ -592,57 +530,46 @@ const MOETModule5Section5_3 = () => {
               input), the output should be exactly 12.00 mA. If it reads 12.15 mA, there is a
               linearity error of +0.15 mA at mid-range.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Linearity Error Correction Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Multi-point characterisation:</strong> Digital transmitters can apply
-                  correction factors at multiple points across the range
-                </li>
-                <li className="pl-1">
-                  <strong>Custom linearisation tables:</strong> Some transmitters accept
-                  user-defined input/output tables for complex non-linear sensors
-                </li>
-                <li className="pl-1">
-                  <strong>Sensor replacement:</strong> If the sensor element itself has developed
-                  non-linearity, replacement is the only solution
-                </li>
-                <li className="pl-1">
-                  <strong>Re-characterisation:</strong> The transmitter manufacturer may need to
-                  re-characterise the sensor-transmitter combination
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Linearity error correction methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Multi-point characterisation:</strong> digital transmitters can apply
+                correction factors at multiple points across the range.
+              </li>
+              <li>
+                <strong>Custom linearisation tables:</strong> some transmitters accept user-defined
+                input/output tables for complex non-linear sensors.
+              </li>
+              <li>
+                <strong>Sensor replacement:</strong> if the sensor element itself has developed
+                non-linearity, replacement is the only solution.
+              </li>
+              <li>
+                <strong>Re-characterisation:</strong> the transmitter manufacturer may need to
+                re-characterise the sensor-transmitter combination.
+              </li>
+            </ul>
             <p>
               Linearity errors can indicate sensor degradation, mechanical damage, or contamination
               of the sensing element. If linearity errors are increasing over successive
               calibrations (trending analysis), this indicates a developing problem that will
               eventually require sensor replacement. Document linearity data at each calibration to
-              enable trend analysis over the instrument's lifetime.
+              enable trend analysis over the instrument&apos;s lifetime.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When performing a five-point calibration check (0%,
-              25%, 50%, 75%, 100%), also perform the check in the reverse direction (100% down to
-              0%) to identify any hysteresis error. Hysteresis appears as a difference between
-              upscale and downscale readings at the same input point.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Bench vs In-Situ Calibration and Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Bench vs in-situ calibration and documentation</ContentEyebrow>
+
+          <ConceptBlock
+            title="Bench vs in-situ calibration and documentation"
+            onSite="The as-found data is the most valuable element of the calibration record. It reveals drift trends, supports calibration interval optimisation, and is essential for out-of-tolerance investigations. Never skip recording as-found data, even when a quick adjustment is tempting."
+          >
             <p>
               <strong>Bench calibration</strong> removes the instrument from the process for testing
               on a workbench under controlled conditions. This allows precise application of
@@ -650,38 +577,34 @@ const MOETModule5Section5_3 = () => {
               points. It is the preferred method for high-accuracy work and when the instrument
               needs repair or extensive adjustment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>As-found data:</strong> Readings at all test points before any adjustment
-                  (reveals drift)
-                </li>
-                <li className="pl-1">
-                  <strong>Adjustments made:</strong> Details of what was adjusted (zero, span,
-                  sensor trim, output trim)
-                </li>
-                <li className="pl-1">
-                  <strong>As-left data:</strong> Readings at all test points after adjustment
-                  (proves compliance)
-                </li>
-                <li className="pl-1">
-                  <strong>Reference standards:</strong> Identification, certificate numbers, and
-                  calibration due dates
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental conditions:</strong> Temperature, humidity at time of
-                  calibration
-                </li>
-                <li className="pl-1">
-                  <strong>Technician:</strong> Name, signature, and date
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Documentation requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>As-found data:</strong> readings at all test points before any adjustment
+                (reveals drift).
+              </li>
+              <li>
+                <strong>Adjustments made:</strong> details of what was adjusted (zero, span, sensor
+                trim, output trim).
+              </li>
+              <li>
+                <strong>As-left data:</strong> readings at all test points after adjustment (proves
+                compliance).
+              </li>
+              <li>
+                <strong>Reference standards:</strong> identification, certificate numbers, and
+                calibration due dates.
+              </li>
+              <li>
+                <strong>Environmental conditions:</strong> temperature, humidity at time of
+                calibration.
+              </li>
+              <li>
+                <strong>Technician:</strong> name, signature, and date.
+              </li>
+            </ul>
             <p>
               <strong>In-situ calibration</strong> tests the instrument installed in the process
               without removal. This accounts for installation effects (head pressure, ambient
@@ -689,90 +612,54 @@ const MOETModule5Section5_3 = () => {
               connections during removal and reinstallation. However, it is subject to process
               conditions and may not achieve the same accuracy as bench calibration.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> The as-found data is the most valuable element of the
-              calibration record. It reveals drift trends, supports calibration interval
-              optimisation, and is essential for out-of-tolerance investigations. Never skip
-              recording as-found data, even when a quick adjustment is tempting.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Adjustment fundamentals: zero is the offset correction at minimum input; span is the gain correction at maximum input; the sequence is zero first, then span, then iterate; linearity is a mid-range multi-point check; hysteresis is the upscale vs downscale difference.',
+              'HART trim functions: sensor trim corrects the input A/D reading; output trim corrects the D/A current output; the two are independent and do not interact; output trim is performed first, then sensor trim; always verify all five test points after trim.',
+            ]}
+          />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Adjustment Fundamentals</p>
-                <ul className="space-y-0.5">
-                  <li>Zero -- offset correction at minimum input</li>
-                  <li>Span -- gain correction at maximum input</li>
-                  <li>Sequence -- zero first, then span, then iterate</li>
-                  <li>Linearity -- mid-range multi-point check</li>
-                  <li>Hysteresis -- upscale vs downscale difference</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">HART Trim Functions</p>
-                <ul className="space-y-0.5">
-                  <li>Sensor trim -- corrects input A/D reading</li>
-                  <li>Output trim -- corrects D/A current output</li>
-                  <li>Independent -- trims do not interact</li>
-                  <li>Output trim first, then sensor trim</li>
-                  <li>Always verify all five test points after trim</li>
-                </ul>
-              </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Test Instruments for Control Systems
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Functional Testing of Loops
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section5-4">
-              Next: Functional Testing of Loops
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

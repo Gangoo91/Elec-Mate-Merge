@@ -5,7 +5,13 @@
  *
  * House style (best-in-class, like Apple / Monzo / Stripe):
  *   - No emojis. The app icon + "Elec-Mate" already brand every push.
- *   - Title = the fact; body = the detail + one clear action ("Tap to …").
+ *   - Title = the fact; body = the next fact. Never "Tap to …": it instructs
+ *     someone to do the one thing the notification already is, and it spends
+ *     the characters that could carry a name, an amount or a date. None of the
+ *     three companies named above have ever written it — Monzo says
+ *     "Sainsbury's £12.40", Stripe says "You received a £237.60 payment".
+ *     The strongest pushes in this app already follow that: "3 jobs today /
+ *     First job at 08:00" needs no instruction and is better for it.
  *   - Specific over decorative: real names, amounts and addresses.
  *   - Sentence case, plain professional English, no slang.
  *

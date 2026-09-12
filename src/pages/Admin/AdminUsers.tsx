@@ -122,6 +122,15 @@ const roleLabel = (role: string | null | undefined) => {
   return r.charAt(0).toUpperCase() + r.slice(1);
 };
 
+/* Two letters for the avatar. Falls back to the email local part so a row
+   without a name still reads as a person rather than a blank disc. */
+const initialsOf = (name?: string | null, email?: string | null) => {
+  const src = (name || '').trim() || (email || '').split('@')[0].replace(/[._-]+/g, ' ').trim();
+  if (!src) return '?';
+  const parts = src.split(/\s+/).filter(Boolean);
+  return (parts.length > 1 ? parts[0][0] + parts[parts.length - 1][0] : src.slice(0, 2)).toUpperCase();
+};
+
 const roleFilters = [
   { value: 'all', label: 'All roles' },
   { value: 'electrician', label: 'Electricians' },
@@ -1553,7 +1562,7 @@ export default function AdminUsers() {
           />
           {/* Column heads — desktop only; the phone card carries its own labels */}
           {paginatedUsers.length > 0 && (
-            <div className="hidden items-center gap-3 border-b border-white/[0.08] pb-2 pl-[38px] text-[11px] font-medium text-white lg:flex">
+            <div className="hidden items-center gap-3 border-b border-white/[0.08] pb-2 pl-[38px] text-[11px] font-medium uppercase tracking-[0.08em] text-white/45 lg:flex">
               <span className="min-w-0 flex-1">Name</span>
               <span className="w-24 shrink-0">Role</span>
               <span className="w-20 shrink-0">Joined</span>
@@ -1572,7 +1581,7 @@ export default function AdminUsers() {
           ) : users?.length === 0 ? (
             <EmptyState title="No one matches" description="Try a different filter or search." />
           ) : (
-            <div>
+            <div className="mt-1.5 space-y-1">
               {paginatedUsers.map((user) => {
                 const joinedDays = user.created_at
                   ? differenceInDays(new Date(), new Date(user.created_at))
@@ -1589,6 +1598,10 @@ export default function AdminUsers() {
                 return (
                   <SwipeableAdminRow
                     key={user.id}
+                    /* The wrapper paints an opaque bg-background block and clips
+                       with overflow-hidden. Left square it shows its own corners
+                       behind the rounded row, so match the row's radius here. */
+                    className="rounded-xl"
                     actions={[
                       {
                         icon: <MessageSquare className="h-4 w-4" />,
@@ -1624,8 +1637,11 @@ export default function AdminUsers() {
                         }
                       }}
                       className={cn(
-                        'group flex min-h-[60px] w-full cursor-pointer touch-manipulation items-center gap-2.5 border-t border-white/[0.08] py-2 text-left text-white transition-colors hover:bg-white/[0.03] active:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60 lg:min-h-14',
-                        isSelected && 'bg-white/[0.04]'
+                        'group relative flex min-h-[60px] w-full cursor-pointer touch-manipulation items-center gap-2.5 rounded-xl px-2 py-2 text-left text-white transition-all duration-150',
+                        'bg-white/[0.025] hover:bg-white/[0.06] active:bg-white/[0.08]',
+                        'ring-1 ring-inset ring-white/[0.06] hover:ring-white/[0.12]',
+                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60 lg:min-h-14',
+                        isSelected && 'bg-elec-yellow/[0.07] ring-elec-yellow/30'
                       )}
                     >
                       <span
@@ -1652,9 +1668,32 @@ export default function AdminUsers() {
                       </span>
 
                       <div className="flex min-w-0 flex-1 items-center gap-x-3">
+                        {/* Identity disc — tinted by role so the list reads at a
+                            glance instead of as rows of identical text. */}
+                        <span className="relative hidden shrink-0 sm:block">
+                          <span
+                            className="flex h-9 w-9 items-center justify-center rounded-full text-[11.5px] font-semibold tracking-[0.02em] ring-1 ring-inset"
+                            style={{
+                              background: `color-mix(in srgb, ${rc} 18%, transparent)`,
+                              color: rc,
+                              // @ts-expect-error -- CSS custom property passthrough
+                              '--tw-ring-color': `color-mix(in srgb, ${rc} 32%, transparent)`,
+                            }}
+                          >
+                            {initialsOf(user.full_name, user.email)}
+                          </span>
+                          {user.isOnline && (
+                            <span
+                              className="absolute -bottom-px -right-px h-2.5 w-2.5 rounded-full border-2 border-[hsl(0_0%_11%)]"
+                              style={{ background: GOOD }}
+                              title="Online now"
+                            />
+                          )}
+                        </span>
+
                         <div className="min-w-0 flex-1">
                           <span className="flex items-center gap-1.5">
-                            <span className="truncate text-[14px] font-medium leading-[18px]">
+                            <span className="truncate text-[14px] font-semibold leading-[18px] text-white">
                               {user.full_name || 'No name'}
                             </span>
                             {user.admin_role && (
@@ -1662,17 +1701,17 @@ export default function AdminUsers() {
                             )}
                             {user.isOnline && (
                               <span
-                                className="h-1.5 w-1.5 shrink-0 rounded-full"
+                                className="h-1.5 w-1.5 shrink-0 rounded-full sm:hidden"
                                 style={{ background: GOOD }}
                                 title="Online now"
                               />
                             )}
                           </span>
-                          <p className="truncate text-[12px] leading-4">
+                          <p className="truncate text-[12px] leading-4 text-white/50">
                             {user.email || (user.username ? `@${user.username}` : '—')}
                           </p>
                           {/* Phone: the columns below fold into one line here */}
-                          <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 text-[11.5px] leading-4 lg:hidden">
+                          <div className="mt-0.5 flex min-w-0 flex-wrap items-center gap-x-1.5 text-[11.5px] leading-4 text-white/55 lg:hidden">
                             <span className="inline-flex items-center gap-1">
                               <span className="h-1.5 w-1.5 rounded-[2px]" style={{ background: rc }} />
                               {roleLabel(user.role)}
@@ -1716,14 +1755,23 @@ export default function AdminUsers() {
                           </div>
                         </div>
 
-                        <span className="hidden w-24 shrink-0 items-center gap-1.5 text-[12px] lg:inline-flex">
-                          <span className="h-2 w-2 shrink-0 rounded-[2px]" style={{ background: rc }} />
-                          <span className="truncate">{roleLabel(user.role)}</span>
+                        <span className="hidden w-24 shrink-0 lg:block">
+                          <span
+                            className="inline-flex max-w-full items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[11.5px] font-medium ring-1 ring-inset"
+                            style={{
+                              background: `color-mix(in srgb, ${rc} 14%, transparent)`,
+                              color: rc,
+                              // @ts-expect-error -- CSS custom property passthrough
+                              '--tw-ring-color': `color-mix(in srgb, ${rc} 26%, transparent)`,
+                            }}
+                          >
+                            <span className="truncate">{roleLabel(user.role)}</span>
+                          </span>
                         </span>
-                        <span className="hidden w-20 shrink-0 text-[12px] tabular-nums lg:block">
+                        <span className="hidden w-20 shrink-0 text-[12px] tabular-nums text-white/55 lg:block">
                           {joinedDays !== null ? (joinedDays === 0 ? 'Today' : `${joinedDays}d ago`) : '—'}
                         </span>
-                        <span className="hidden w-[5.5rem] shrink-0 text-[12px] tabular-nums lg:block">
+                        <span className="hidden w-[5.5rem] shrink-0 text-[12px] tabular-nums text-white/55 lg:block">
                           {enrichmentPending ? (
                             <span className="opacity-40">…</span>
                           ) : user.isOnline ? (
@@ -1741,7 +1789,7 @@ export default function AdminUsers() {
                           {engagementScore !== undefined ? (
                             <>
                               <span
-                                className="h-1 w-10 overflow-hidden rounded-full bg-white/[0.1]"
+                                className="h-1.5 w-10 overflow-hidden rounded-full bg-white/[0.09]"
                                 title={`Engagement ${engagementScore} of 100`}
                               >
                                 <span
@@ -1755,7 +1803,7 @@ export default function AdminUsers() {
                               <span className="text-[12px] font-semibold tabular-nums">{engagementScore}</span>
                             </>
                           ) : (
-                            <span className="text-[12px]">—</span>
+                            <span className="text-[12px] text-white/30">—</span>
                           )}
                         </span>
                         <span className="flex shrink-0 items-center justify-between gap-1.5 lg:w-[8.5rem]">

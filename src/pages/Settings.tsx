@@ -1,48 +1,91 @@
-import React, { useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
-import useSEO from '@/hooks/useSEO';
+/**
+ * Settings — rebuilt on the shared hub shell.
+ *
+ * This page was the last one still drawing its own frame: a `#0a0a0a` page
+ * inside a 10%-lightness app shell (which is what painted the visible black
+ * rectangle on desktop), a 44px hero, the college `PageFrame`, a sticky
+ * underline tab bar on desktop and a separate grid-then-detail flow on
+ * phones. Three dialects on one screen, none of them the one the Electrician,
+ * Business and Apprentice hubs use.
+ *
+ * Now it is the same stack as every other hub:
+ *
+ *   overview  — HubMasthead → identity row → search → alert (only if the
+ *               business setup has something outstanding) → tool grids
+ *   sub-page  — HubMasthead (Back returns to the overview) → the tab
+ *
+ * One layout for phone and desktop. The `?tab=` and `?tab=…&sheet=` deep
+ * links used across the app (36 call sites) keep working unchanged; the
+ * legacy `company` and `profiles` ids are mapped to their current tabs.
+ */
+import React, { Suspense, lazy, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
+import useSEO from '@/hooks/useSEO';
+import { cn } from '@/lib/utils';
+import { LoadingState, itemVariants } from '@/components/college/primitives';
+import { useElecIdProfile } from '@/hooks/useElecIdProfile';
 import {
-  PageFrame,
-  Eyebrow,
-  containerVariants,
-  itemVariants,
-} from '@/components/college/primitives';
+  HubPage,
+  HubBody,
+  HubMasthead,
+  HubAlertLine,
+  HubToolGrid,
+  type HubTool,
+} from '@/components/hub/HubPrimitives';
+import { CARD_BASE, CARD_NEUTRAL, CARD_PRIMARY } from '@/components/ui/card-recipe';
 
-// Tab components
-import AccountTab from '@/components/settings/AccountTab';
-import ElecIdTab from '@/components/settings/ElecIdTab';
-import BusinessTab from '@/components/settings/BusinessTab';
-import NotificationsTab from '@/components/settings/NotificationsTab';
-import PreferencesTab from '@/components/settings/PreferencesTab';
-import PrivacyTab from '@/components/settings/PrivacyTab';
-import BillingTab from '@/components/settings/BillingTab';
-import ReferralsTab from '@/components/settings/ReferralsTab';
-import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
-import SettingsReadiness from '@/components/settings/SettingsReadiness';
+// Tabs load on demand. Statically importing all eight pulled the Elec-ID
+// suite, the twelve business sheets and the security section into the
+// overview's bundle before a single card rendered.
+const AccountTab = lazy(() => import('@/components/settings/AccountTab'));
+const ElecIdTab = lazy(() => import('@/components/settings/ElecIdTab'));
+const BusinessTab = lazy(() => import('@/components/settings/BusinessTab'));
+const NotificationsTab = lazy(() => import('@/components/settings/NotificationsTab'));
+const PreferencesTab = lazy(() => import('@/components/settings/PreferencesTab'));
+const PrivacyTab = lazy(() => import('@/components/settings/PrivacyTab'));
+const BillingTab = lazy(() => import('@/components/settings/BillingTab'));
+const ReferralsTab = lazy(() => import('@/components/settings/ReferralsTab'));
+import SettingsReadiness, { useBusinessReadiness } from '@/components/settings/SettingsReadiness';
 import SettingsSearch from '@/components/settings/SettingsSearch';
 
-const SETTINGS_TABS = [
-  { id: 'account', label: 'Account', component: AccountTab },
-  { id: 'elec-id', label: 'Elec-ID', component: ElecIdTab },
-  { id: 'business', label: 'Business', component: BusinessTab },
-  { id: 'notifications', label: 'Notifications', component: NotificationsTab },
-  { id: 'preferences', label: 'App', component: PreferencesTab },
-  { id: 'privacy', label: 'Privacy', component: PrivacyTab },
-  { id: 'billing', label: 'Billing', component: BillingTab },
-  { id: 'referrals', label: 'Refer a Mate', component: ReferralsTab },
+interface SettingsTab {
+  id: string;
+  label: string;
+  description: string;
+  component: React.ComponentType;
+}
+
+const SETTINGS_TABS: SettingsTab[] = [
+  { id: 'account', label: 'Account', description: 'Profile, sign-in and security', component: AccountTab },
+  { id: 'elec-id', label: 'Elec-ID', description: 'Your digital identity card', component: ElecIdTab },
+  { id: 'business', label: 'Business', description: 'Company, rates, instruments and branding', component: BusinessTab },
+  { id: 'billing', label: 'Billing', description: 'Subscription and payments', component: BillingTab },
+  { id: 'notifications', label: 'Notifications', description: 'Push alerts, categories and quiet hours', component: NotificationsTab },
+  { id: 'preferences', label: 'App', description: 'Dashboard hubs and certificate defaults', component: PreferencesTab },
+  { id: 'privacy', label: 'Privacy', description: 'Data controls and analytics', component: PrivacyTab },
+  { id: 'referrals', label: 'Refer a Mate', description: 'A free month for you and your mate', component: ReferralsTab },
 ];
+
+const TIER_NAMES: Record<string, string> = {
+  apprentice: 'Apprentice',
+  apprentice_yearly: 'Apprentice',
+  electrician: 'Electrician',
+  electrician_yearly: 'Electrician',
+  employer: 'Employer',
+  employer_yearly: 'Employer',
+  pro: 'Pro',
+};
+
+// Old links still in the wild point at ids this page no longer has.
+const TAB_ALIASES: Record<string, string> = { company: 'business', profiles: 'account' };
 
 const SettingsPage = () => {
   const { user, profile, signOut, isSubscribed, subscriptionTier } = useAuth();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
@@ -52,7 +95,7 @@ const SettingsPage = () => {
     noindex: true,
   });
 
-  // Handle Stripe Connect return
+  // Stripe Connect returns here with ?stripe=success|refresh.
   useEffect(() => {
     const stripeParam = searchParams.get('stripe');
     if (stripeParam === 'success') {
@@ -71,341 +114,193 @@ const SettingsPage = () => {
     }
   }, [searchParams, setSearchParams, queryClient]);
 
-  // Tab routing — null = show grid on mobile; desktop always defaults to account
-  const tabParam = searchParams.get('tab');
-  const selectedTab = isMobile ? tabParam : tabParam || 'account';
-  const activeDesktopTab = tabParam || 'account';
+  const rawTab = searchParams.get('tab');
+  const tabId = rawTab ? TAB_ALIASES[rawTab] ?? rawTab : null;
+  const activeTab = tabId ? SETTINGS_TABS.find((t) => t.id === tabId) ?? null : null;
 
-  const setSelectedTab = (tab: string | null) => {
-    if (tab) {
-      setSearchParams({ tab }, { replace: false });
-    } else {
-      searchParams.delete('tab');
-      setSearchParams(searchParams, { replace: false });
-    }
+  const openTab = (id: string) => setSearchParams({ tab: id }, { replace: false });
+  const backToOverview = () => {
+    searchParams.delete('tab');
+    searchParams.delete('sheet');
+    setSearchParams(searchParams, { replace: false });
   };
-  const setActiveDesktopTab = (tab: string) => setSearchParams({ tab }, { replace: false });
-
-  const activeTabConfig = SETTINGS_TABS.find(
-    (tab) => tab.id === (isMobile ? selectedTab : activeDesktopTab)
-  );
-  const TabComponent = activeTabConfig?.component || AccountTab;
 
   const handleSignOut = async () => {
     await signOut();
     window.location.replace('/');
   };
 
-  const handleMobileTabSelect = (tabId: string) => {
-    setSelectedTab(tabId);
-    setActiveDesktopTab(tabId);
-  };
+  const isBusinessRole = profile?.role === 'electrician' || profile?.role === 'employer';
+  const readiness = useBusinessReadiness(isBusinessRole);
+  const { isActivated: elecIdActive, isLoading: elecIdLoading } = useElecIdProfile();
 
-  const handleMobileBack = () => setSelectedTab(null);
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || 'Your account';
+  // Tier ids are storage values ('electrician_yearly', 'employer'); show a name.
+  const tierLabel = isSubscribed ? TIER_NAMES[subscriptionTier ?? ''] ?? 'Pro' : 'Free';
 
-  const handleDesktopTabSelect = (tabId: string) => {
-    setActiveDesktopTab(tabId);
-    setSelectedTab(tabId);
-  };
+  const profileCards = useMemo<HubTool[]>(() => {
+    const warn = readiness.outstanding.find((i) => i.warn);
+    const businessMeta = readiness.loading
+      ? undefined
+      : readiness.outstanding.length === 0
+        ? 'Fully set up'
+        : `${readiness.doneCount} of ${readiness.total} set up`;
+    return [
+      { id: 'account', title: 'Account', description: 'Profile, sign-in and security', onClick: () => openTab('account') },
+      {
+        id: 'elec-id',
+        title: 'Elec-ID',
+        description: 'Your digital identity card',
+        meta: elecIdLoading ? undefined : elecIdActive ? 'Card active' : 'Not set up yet',
+        alert: !elecIdLoading && !elecIdActive,
+        onClick: () => openTab('elec-id'),
+      },
+      {
+        id: 'business',
+        title: 'Business',
+        description: 'Company, rates, instruments and branding',
+        meta: isBusinessRole ? (warn ? warn.warn : businessMeta) : undefined,
+        alert: Boolean(warn),
+        onClick: () => openTab('business'),
+      },
+      {
+        id: 'billing',
+        title: 'Billing',
+        description: 'Subscription and payments',
+        meta: isSubscribed ? `${tierLabel} plan` : 'Free plan',
+        onClick: () => openTab('billing'),
+      },
+    ];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [readiness.loading, readiness.doneCount, readiness.total, readiness.outstanding, isBusinessRole, isSubscribed, tierLabel, elecIdActive, elecIdLoading]);
 
-  const displayName = profile?.full_name || user?.email?.split('@')[0] || '';
-  const tierLabel = isSubscribed ? subscriptionTier || 'Pro' : 'Free';
+  const appCards: HubTool[] = [
+    { id: 'notifications', title: 'Notifications', description: 'Push alerts, categories and quiet hours', onClick: () => openTab('notifications') },
+    { id: 'preferences', title: 'App', description: 'Dashboard hubs and certificate defaults', onClick: () => openTab('preferences') },
+    { id: 'privacy', title: 'Privacy', description: 'Data controls and analytics', onClick: () => openTab('privacy') },
+    { id: 'referrals', title: 'Refer a Mate', description: 'A free month for you and your mate', onClick: () => openTab('referrals') },
+  ];
 
-  /* ────────────────────────────────────────────
-     Mobile view
-     ──────────────────────────────────────────── */
-  if (isMobile) {
+  /* ── Sub-page ─────────────────────────────────────────────────────── */
+  if (activeTab) {
+    const TabComponent = activeTab.component;
     return (
-      <div className="min-h-screen bg-[#0a0a0a]">
-        <AnimatePresence mode="wait" initial={false}>
-          {selectedTab === null ? (
-            <motion.div
-              key="grid"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-            >
-              {/* Back button */}
-              <div className="px-5 pt-4">
-                <Button
-                  variant="ghost"
-                  onClick={() => navigate('/dashboard')}
-                  className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                >
-                  <span className="mr-2">{'\u2190'}</span>
-                  Back to Dashboard
-                </Button>
-              </div>
-
-              {/* Hero */}
-              <div className="relative px-5 pt-4 pb-6">
-                <Eyebrow>Account</Eyebrow>
-                <h1 className="mt-1.5 text-3xl font-semibold text-white tracking-[-0.02em] leading-[1.05]">
-                  Settings
-                </h1>
-                <div className="mt-4 flex items-center gap-3 min-w-0">
-                  <div className="h-10 w-10 rounded-full overflow-hidden bg-white/[0.06] border border-white/[0.08] shrink-0 flex items-center justify-center">
-                    {profile?.avatar_url ? (
-                      <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
-                    ) : (
-                      <span className="text-[15px] font-semibold text-white">
-                        {(displayName || user?.email || '?').charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-[14px] font-semibold text-white tracking-tight truncate">
-                        {displayName || 'Your account'}
-                      </span>
-                      <span
-                        className={cn(
-                          'shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded border',
-                          isSubscribed
-                            ? 'text-elec-yellow border-elec-yellow/30'
-                            : 'text-white/70 border-white/[0.12]'
-                        )}
-                      >
-                        {tierLabel}
-                      </span>
-                    </div>
-                    <div className="mt-0.5 text-[12px] text-white/60 truncate">
-                      {user?.email || 'user@example.com'}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 flex items-center gap-2">
-                  {!isSubscribed && (
-                    <Button
-                      onClick={() => navigate('/subscriptions')}
-                      className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation rounded-full px-5"
-                    >
-                      Upgrade
-                    </Button>
-                  )}
-                  <Button
-                    variant="ghost"
-                    onClick={handleSignOut}
-                    className="h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation rounded-full px-5"
-                  >
-                    Sign Out
-                  </Button>
-                </div>
-
-                <SettingsSearch className="mt-5" />
-              </div>
-
-              {/* Business readiness — electricians and employers only */}
-              {(profile?.role === 'electrician' || profile?.role === 'employer') && (
-                <div className="px-5 pb-5">
-                  <SettingsReadiness
-                    onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet })}
-                  />
-                </div>
-              )}
-
-              {/* Grid */}
-              <div className="px-5 pb-20">
-                <SettingsNavGrid onSelect={handleMobileTabSelect} isSubscribed={isSubscribed} />
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="detail"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-            >
-              {/* Sticky detail header */}
-              <div className="sticky top-0 z-20 bg-[#0a0a0a]/95 backdrop-blur border-b border-white/[0.06]">
-                <div className="px-5 py-3 flex items-center gap-3">
-                  <Button
-                    variant="ghost"
-                    onClick={handleMobileBack}
-                    className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
-                  >
-                    <span className="mr-2">{'\u2190'}</span>
-                    Back
-                  </Button>
-                  <div className="flex-1 min-w-0 text-center">
-                    <h1 className="text-[15px] font-semibold text-white truncate">
-                      {activeTabConfig?.label || 'Settings'}
-                    </h1>
-                  </div>
-                  <div className="w-[72px]" />
-                </div>
-
-                {/* Segmented scrollable pill bar (mobile tabs) */}
-                <div className="px-3 pb-3 overflow-x-auto hide-scrollbar">
-                  <div className="flex items-center gap-1.5">
-                    {SETTINGS_TABS.map((tab) => {
-                      const isActive = tab.id === selectedTab;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => setSelectedTab(tab.id)}
-                          className={cn(
-                            'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
-                            isActive
-                              ? 'bg-elec-yellow text-black'
-                              : 'bg-white/[0.04] text-white hover:text-white'
-                          )}
-                        >
-                          {tab.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Content */}
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                className="px-5 py-6 pb-20"
-              >
-                <motion.div variants={itemVariants}>
-                  <TabComponent />
-                </motion.div>
-              </motion.div>
-            </motion.div>
+      <HubPage>
+        <HubMasthead section="Settings" title={activeTab.label} onBack={backToOverview} />
+        <HubBody pushContext="Get notified about quotes, invoices, tasks and messages">
+          <p className="-mb-4 max-w-prose text-[13px] leading-relaxed text-white sm:-mb-6">
+            {activeTab.description}
+          </p>
+          {activeTab.id === 'business' && isBusinessRole && (
+            <SettingsReadiness
+              onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet }, { replace: true })}
+            />
           )}
-        </AnimatePresence>
-      </div>
+          <motion.div
+            key={activeTab.id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="w-full"
+          >
+            <Suspense fallback={<LoadingState />}>
+              <TabComponent />
+            </Suspense>
+          </motion.div>
+        </HubBody>
+      </HubPage>
     );
   }
 
-  /* ────────────────────────────────────────────
-     Desktop view
-     ──────────────────────────────────────────── */
+  /* ── Overview ─────────────────────────────────────────────────────── */
+  const outstandingWarn = readiness.outstanding.find((i) => i.warn);
+  const alertText = readiness.loading
+    ? null
+    : outstandingWarn
+      ? `Business setup: ${outstandingWarn.warn.charAt(0).toLowerCase()}${outstandingWarn.warn.slice(1)}`
+      : readiness.outstanding.length > 0
+        ? `Business setup ${readiness.doneCount} of ${readiness.total}: ${readiness.outstanding[0].label.toLowerCase()} still needed`
+        : null;
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
-      <div className="px-6 sm:px-8 pt-4 mx-auto max-w-7xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/dashboard')}
-          className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
+    <HubPage>
+      <HubMasthead section="Account" title="Settings" backTo="/dashboard" />
+      <HubBody pushContext="Get notified about quotes, invoices, tasks and messages">
+        {/* Identity row — who is signed in, on what plan. A row, not a hero. */}
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
         >
-          <span className="mr-2">{'\u2190'}</span>
-          Back to Dashboard
-        </Button>
-      </div>
-
-      <PageFrame className="px-6 sm:px-8">
-        {/* Hero */}
-        <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-6 flex items-end justify-between gap-4 sm:gap-6">
-          <div className="min-w-0 flex-1">
-            <Eyebrow>Account</Eyebrow>
-            <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-[44px] font-semibold text-white tracking-[-0.02em] leading-[1.05]">
-              Settings
-            </h1>
-            <div className="mt-4 flex items-center gap-3 min-w-0">
-              <div className="h-10 w-10 rounded-full overflow-hidden bg-white/[0.06] border border-white/[0.08] shrink-0 flex items-center justify-center">
-                {profile?.avatar_url ? (
-                  <img
-                    src={profile.avatar_url}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="text-[15px] font-semibold text-white">
-                    {(displayName || user?.email || '?').charAt(0).toUpperCase()}
-                  </span>
-                )}
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[14px] font-semibold text-white tracking-tight truncate">
-                    {displayName || 'Your account'}
-                  </span>
-                  <span
-                    className={cn(
-                      'shrink-0 text-[10px] font-bold uppercase tracking-[0.12em] px-2 py-0.5 rounded border',
-                      isSubscribed
-                        ? 'text-elec-yellow border-elec-yellow/30'
-                        : 'text-white/70 border-white/[0.12]'
-                    )}
-                  >
-                    {tierLabel}
-                  </span>
-                </div>
-                <div className="mt-0.5 text-[12.5px] text-white/60 truncate">
-                  {user?.email || 'user@example.com'}
-                </div>
-              </div>
+          <div className="flex min-w-0 items-center gap-3.5">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-elec-yellow/35 bg-white/[0.06]">
+              {profile?.avatar_url ? (
+                <img src={profile.avatar_url} alt="" className="h-full w-full object-cover" />
+              ) : (
+                <span className="text-[17px] font-semibold text-white">
+                  {(displayName || user?.email || '?').charAt(0).toUpperCase()}
+                </span>
+              )}
             </div>
-          </div>
-          <div className="shrink-0 flex flex-col items-end gap-3 pb-1">
-            <SettingsSearch className="w-72" />
-            <div className="flex items-center gap-2">
-            {!isSubscribed && (
-              <Button
-                onClick={() => navigate('/subscriptions')}
-                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-full px-5 touch-manipulation"
-              >
-                Upgrade
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              onClick={handleSignOut}
-              className="h-11 rounded-full px-5 bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white font-medium touch-manipulation"
-            >
-              Sign Out
-            </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Business readiness — electricians and employers only */}
-        {(profile?.role === 'electrician' || profile?.role === 'employer') && (
-          <SettingsReadiness
-            className="mb-6"
-            onOpenBusiness={(sheet) => setSearchParams({ tab: 'business', sheet })}
-          />
-        )}
-
-        {/* Desktop tabs — underline style, sticky so long tabs keep their bearings */}
-        <div className="sticky top-0 z-30 -mx-6 sm:-mx-8 px-6 sm:px-8 bg-[#0a0a0a]/90 backdrop-blur border-b border-white/[0.06]">
-          <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar -mb-px">
-            {SETTINGS_TABS.map((tab) => {
-              const isActive = tab.id === activeDesktopTab;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleDesktopTabSelect(tab.id)}
+            <div className="min-w-0">
+              <div className="flex min-w-0 items-center gap-2">
+                <span className="truncate text-[16px] font-semibold tracking-tight text-white">
+                  {displayName}
+                </span>
+                <span
                   className={cn(
-                    'relative px-4 py-3.5 text-[13px] whitespace-nowrap transition-colors touch-manipulation min-h-[44px] tracking-tight',
-                    'border-b-2',
-                    isActive
-                      ? 'text-white font-semibold border-elec-yellow'
-                      : 'text-white/60 font-medium border-transparent hover:text-white'
+                    'shrink-0 rounded border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em]',
+                    isSubscribed
+                      ? 'border-elec-yellow/35 text-elec-yellow'
+                      : 'border-white/[0.14] text-white'
                   )}
                 >
-                  {tab.label}
-                </button>
-              );
-            })}
+                  {tierLabel}
+                </span>
+              </div>
+              <div className="mt-0.5 truncate text-[12.5px] text-white">{user?.email}</div>
+            </div>
           </div>
-        </div>
 
-        {/* Content */}
-        <motion.div
-          key={activeDesktopTab}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
-          className="w-full"
-        >
-          <TabComponent />
+          <div className="flex shrink-0 items-center gap-2">
+            {!isSubscribed && (
+              <button
+                type="button"
+                onClick={() => navigate('/subscriptions')}
+                className={cn(
+                  CARD_BASE,
+                  CARD_PRIMARY,
+                  'h-11 flex-row items-center justify-center rounded-full px-5 text-[13px] font-semibold text-black'
+                )}
+              >
+                Upgrade
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className={cn(
+                CARD_BASE,
+                CARD_NEUTRAL,
+                'h-11 flex-row items-center justify-center rounded-full px-5 text-[13px] font-semibold text-white'
+              )}
+            >
+              Sign out
+            </button>
+          </div>
         </motion.div>
-      </PageFrame>
-    </div>
+
+        <SettingsSearch className="-mt-2 w-full sm:-mt-4 sm:max-w-md" />
+
+        {alertText && (
+          <HubAlertLine text={alertText} action="Finish" onClick={() => openTab('business')} />
+        )}
+
+        <HubToolGrid label="Profile and business" cards={profileCards} columns="four" />
+        <HubToolGrid label="App" cards={appCards} columns="four" />
+      </HubBody>
+    </HubPage>
   );
 };
 

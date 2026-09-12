@@ -237,6 +237,20 @@ const HeatPumpCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
+
+    // FIX (#8): review findings previously dropped their `recommendation` and `regulation` fields
+    // — the regulatory basis for a finding, the same "visible basis" the maximum-demand report
+    // shows for its diversity figures. Description alone left the finding unsupported. General
+    // recommendations were computed and shown on screen but never reached the client PDF either.
+    const reportNotes = [
+      ...result.reviewFindings.map((f) =>
+        [`${f.title}: ${f.description}`, f.recommendation, f.regulation ? `(${f.regulation})` : '']
+          .filter((s) => s && s.trim())
+          .join(' — ')
+      ),
+      ...recommendations,
+    ].filter((n) => n.trim());
+
     return {
       meta: {
         title: 'Heat Pump Load Calculation',
@@ -297,7 +311,11 @@ const HeatPumpCalculator = () => {
             { label: 'Space heating load', value: `${result.spaceHeatingLoad.toFixed(1)} kW` },
             { label: 'DHW load', value: `${result.dhwLoad.toFixed(1)} kW` },
             { label: 'Total heat load', value: `${result.totalHeatLoad.toFixed(1)} kW` },
-            { label: 'COP', value: result.cop.toFixed(2) },
+            {
+              label: 'COP',
+              value: result.cop.toFixed(2),
+              note: 'At the design conditions; the seasonal figure below averages the year',
+            },
             { label: 'Seasonal COP', value: result.performance.seasonalCOP.toFixed(2) },
             { label: 'Electrical power', value: `${result.electricalPower.toFixed(1)} kW` },
             { label: 'Flow temperature', value: `${result.flowTemperature} °C` },
@@ -322,10 +340,26 @@ const HeatPumpCalculator = () => {
             },
           ],
         },
+        // FIX (#8): the fuel comparison was calculated and shown on screen but never reached the
+        // client PDF — a running-cost estimate with no comparison against the fuel it replaces is
+        // half the answer a client is asking for.
+        ...(result.fuelComparison.length
+          ? [
+              {
+                heading: 'Annual running cost vs other fuels',
+                rows: [
+                  ...result.fuelComparison.map((f) => ({
+                    label: f.label,
+                    value: `£${f.annualCost.toFixed(0)}/yr`,
+                    note: f.saving > 0 ? `Heat pump saves £${f.saving.toFixed(0)}/yr` : undefined,
+                  })),
+                  { label: 'Heat pump (this system)', value: `£${result.annualCost.toFixed(0)}/yr` },
+                ],
+              },
+            ]
+          : []),
       ],
-      notes: result.reviewFindings.length
-        ? result.reviewFindings.map((f) => `${f.title}: ${f.description}`)
-        : undefined,
+      notes: reportNotes.length ? reportNotes : undefined,
     };
   };
 

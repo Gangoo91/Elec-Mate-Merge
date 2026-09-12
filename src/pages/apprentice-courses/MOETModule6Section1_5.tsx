@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 1 · Subsection 5 — Introduction to CAD
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Introduction to CAD - MOET Module 6 Section 1.5';
@@ -41,9 +72,9 @@ const quickCheckQuestions = [
     id: 'bim-definition',
     question: 'What does BIM (Building Information Modelling) add beyond standard 3D CAD?',
     options: [
-      "It automatically prints all the project drawings to PDF without any user input",
-      "It compresses the model file size so that large models open faster on a tablet",
-      "It converts every drawing into a single flat 2D layer for improved on-screen clarity",
+      'It automatically prints all the project drawings to PDF without any user input',
+      'It compresses the model file size so that large models open faster on a tablet',
+      'It converts every drawing into a single flat 2D layer for improved on-screen clarity',
       "It adds data to every object — manufacturer, rating, maintenance schedule — a 'digital twin'",
     ],
     correctIndex: 3,
@@ -255,117 +286,52 @@ const faqs = [
 ];
 
 const MOETModule6Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Introduction to CAD
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.1 · Subsection 5"
+        title="Introduction to CAD"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Computer-aided design fundamentals, BIM integration, CAD viewers and digital drawing
-            workflows
+            workflows.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>CAD:</strong> Computer-Aided Design — digital creation and management of
-                drawings
-              </li>
-              <li className="pl-1">
-                <strong>2D vs 3D:</strong> Flat drawings vs full digital models with extracted views
-              </li>
-              <li className="pl-1">
-                <strong>BIM:</strong> 3D models with embedded data — digital twin of the building
-              </li>
-              <li className="pl-1">
-                <strong>File formats:</strong> DWG (AutoCAD native), DXF (interchange), IFC (BIM)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>CAD viewers:</strong> Navigate digital drawings at the point of work
-              </li>
-              <li className="pl-1">
-                <strong>Layers:</strong> Toggle electrical, structural and services information
-              </li>
-              <li className="pl-1">
-                <strong>BIM handover:</strong> Structured data for asset management
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Digital documentation competence increasingly expected
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'CAD: Computer-Aided Design — digital creation and management of drawings.',
+              '2D vs 3D: flat drawings vs full digital models with extracted views.',
+              'BIM: 3D models with embedded data — a digital twin of the building.',
+              'File formats: DWG (AutoCAD native), DXF (interchange), IFC (BIM).',
+              'CAD viewers let you navigate digital drawings at the point of work.',
+              'Layers toggle electrical, structural and services information on or off.',
+              'BIM handover gives the maintenance team structured asset data.',
+              'ST1426: digital documentation competence is increasingly expected.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and benefits of CAD for engineering drawing production and management',
               'Distinguish between 2D CAD draughting and 3D CAD modelling approaches',
               'Describe the concept of BIM and its relevance to maintenance and asset management',
               'Use CAD viewer tools to navigate, measure and print engineering drawings',
               'Identify common CAD file formats and their appropriate applications',
               'Understand how digital drawing technologies are changing maintenance documentation practices',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>What CAD is and why it matters</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is CAD and Why Does It Matter?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="What Is CAD and Why Does It Matter?">
             <p>
               Computer-Aided Design (CAD) has transformed how engineering drawings are created,
               managed and used. In virtually all professional engineering practices, CAD software
@@ -381,465 +347,389 @@ const MOETModule6Section1_5 = () => {
               maintenance organisations, CAD-produced drawings are easier to update, search,
               cross-reference and integrate with asset management systems.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Advantages of CAD for Maintenance Documentation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> Dimensions are precise — no draughting errors or
-                  scaling inaccuracies
-                </li>
-                <li className="pl-1">
-                  <strong>Modification:</strong> Changes are made to the digital file; superseded
-                  versions are archived automatically
-                </li>
-                <li className="pl-1">
-                  <strong>Searchability:</strong> Components can be found by tag number, description
-                  or attribute
-                </li>
-                <li className="pl-1">
-                  <strong>Layers:</strong> Different types of information can be shown or hidden as
-                  needed
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution:</strong> Drawings are shared digitally — no physical copies
-                  to manage
-                </li>
-                <li className="pl-1">
-                  <strong>Integration:</strong> CAD data can link to CMMS, BMS, and asset management
-                  systems
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Key point:</strong> Even if you never create a CAD drawing yourself,
               understanding how CAD works helps you use digital drawings more effectively,
               communicate with designers and drawing offices, and appreciate the capabilities and
               limitations of digital documentation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key Advantages of CAD for Maintenance Documentation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Accuracy:</strong> dimensions are precise — no draughting errors or scaling
+                inaccuracies.
+              </li>
+              <li>
+                <strong>Modification:</strong> changes are made to the digital file; superseded
+                versions are archived automatically.
+              </li>
+              <li>
+                <strong>Searchability:</strong> components can be found by tag number, description
+                or attribute.
+              </li>
+              <li>
+                <strong>Layers:</strong> different types of information can be shown or hidden as
+                needed.
+              </li>
+              <li>
+                <strong>Distribution:</strong> drawings are shared digitally — no physical copies to
+                manage.
+              </li>
+              <li>
+                <strong>Integration:</strong> CAD data can link to CMMS, BMS, and asset management
+                systems.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            2D CAD vs 3D CAD Modelling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>2D CAD vs 3D CAD modelling</ContentEyebrow>
+
+          <ConceptBlock title="2D CAD vs 3D CAD Modelling">
             <p>
               CAD systems operate in either 2D or 3D mode, and the approach significantly affects
               how drawings are created, modified and used. Understanding the difference helps you
               appreciate the capabilities of the drawings you receive and the possibilities for
               accessing information from them.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">2D CAD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">3D CAD</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Output</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flat plan, elevation, section views
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full 3D digital model plus derived 2D views
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Modification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Each view edited independently
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Change the model, all views update automatically
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Visualisation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Requires mental 3D reconstruction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rotate and view from any angle
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clash detection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manual checking between drawings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automatic — software identifies physical conflicts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Data embedding</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited to text annotations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rich data attributes on every component
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="2D CAD compared with 3D CAD">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">2D CAD</th>
+                    <th className="py-2 font-medium text-white">3D CAD</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Output</td>
+                    <td className="py-2 pr-4">Flat plan, elevation, section views</td>
+                    <td className="py-2">Full 3D digital model plus derived 2D views</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Modification</td>
+                    <td className="py-2 pr-4">Each view edited independently</td>
+                    <td className="py-2">Change the model, all views update automatically</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Visualisation</td>
+                    <td className="py-2 pr-4">Requires mental 3D reconstruction</td>
+                    <td className="py-2">Rotate and view from any angle</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Clash detection</td>
+                    <td className="py-2 pr-4">Manual checking between drawings</td>
+                    <td className="py-2">Automatic — software identifies physical conflicts</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Data embedding</td>
+                    <td className="py-2 pr-4">Limited to text annotations</td>
+                    <td className="py-2">Rich data attributes on every component</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Common CAD Software</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>AutoCAD:</strong> Industry standard 2D/3D CAD — DWG format, widely used
-                  across all disciplines
-                </li>
-                <li className="pl-1">
-                  <strong>Revit:</strong> BIM-focused 3D modelling — used for building services
-                  including electrical design
-                </li>
-                <li className="pl-1">
-                  <strong>MicroStation:</strong> Alternative CAD platform popular in infrastructure
-                  and utilities
-                </li>
-                <li className="pl-1">
-                  <strong>EPLAN:</strong> Specialist electrical design CAD for schematics, panel
-                  layouts and wiring
-                </li>
-                <li className="pl-1">
-                  <strong>SolidWorks:</strong> 3D mechanical CAD — used for equipment and component
-                  design
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common CAD Software">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>AutoCAD:</strong> industry standard 2D/3D CAD — DWG format, widely used
+                across all disciplines.
+              </li>
+              <li>
+                <strong>Revit:</strong> BIM-focused 3D modelling — used for building services
+                including electrical design.
+              </li>
+              <li>
+                <strong>MicroStation:</strong> alternative CAD platform popular in infrastructure
+                and utilities.
+              </li>
+              <li>
+                <strong>EPLAN:</strong> specialist electrical design CAD for schematics, panel
+                layouts and wiring.
+              </li>
+              <li>
+                <strong>SolidWorks:</strong> 3D mechanical CAD — used for equipment and component
+                design.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CAD File Formats and Layers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>CAD file formats and layers</ContentEyebrow>
+
+          <ConceptBlock title="CAD File Formats and Layers">
             <p>
               Understanding CAD file formats and the layer system helps you access the right
               information from digital drawings. Different formats serve different purposes, and
               layers allow complex drawings to be filtered so you see only what is relevant to your
               task.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common File Formats</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DWG:</strong> Native AutoCAD format — contains full drawing intelligence
-                  including layers, blocks and attributes
-                </li>
-                <li className="pl-1">
-                  <strong>DXF:</strong> Drawing eXchange Format — open standard for sharing between
-                  different CAD platforms
-                </li>
-                <li className="pl-1">
-                  <strong>PDF:</strong> Static output — universally readable but loses layer control
-                  and dynamic measurement
-                </li>
-                <li className="pl-1">
-                  <strong>IFC:</strong> Industry Foundation Classes — open BIM exchange format
-                </li>
-                <li className="pl-1">
-                  <strong>RVT:</strong> Native Revit (BIM) format — full model with embedded data
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common File Formats">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DWG:</strong> native AutoCAD format — contains full drawing intelligence
+                including layers, blocks and attributes.
+              </li>
+              <li>
+                <strong>DXF:</strong> Drawing eXchange Format — open standard for sharing between
+                different CAD platforms.
+              </li>
+              <li>
+                <strong>PDF:</strong> static output — universally readable but loses layer control
+                and dynamic measurement.
+              </li>
+              <li>
+                <strong>IFC:</strong> Industry Foundation Classes — open BIM exchange format.
+              </li>
+              <li>
+                <strong>RVT:</strong> native Revit (BIM) format — full model with embedded data.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Understanding Layers</h3>
-              <p className="text-sm text-white mb-2">
-                Layers are one of the most useful CAD features for maintenance technicians. A
-                complex building services drawing may contain structural, architectural, mechanical
-                and electrical information all on the same drawing. By turning layers on and off,
-                you can isolate just the electrical information you need.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>E-POWER:</strong> Power distribution cables, switchgear, distribution
-                  boards
-                </li>
-                <li className="pl-1">
-                  <strong>E-LIGHT:</strong> Lighting circuits, luminaires, switching
-                </li>
-                <li className="pl-1">
-                  <strong>E-CONTAINMENT:</strong> Cable trays, trunking, conduit routes
-                </li>
-                <li className="pl-1">
-                  <strong>M-HVAC:</strong> Mechanical services (turn off when not needed)
-                </li>
-                <li className="pl-1">
-                  <strong>A-WALLS:</strong> Architectural walls and partitions (keep on for context)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Understanding Layers">
+            <p>
+              Layers are one of the most useful CAD features for maintenance technicians. A complex
+              building services drawing may contain structural, architectural, mechanical and
+              electrical information all on the same drawing. By turning layers on and off, you can
+              isolate just the electrical information you need.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>E-POWER:</strong> power distribution cables, switchgear, distribution
+                boards.
+              </li>
+              <li>
+                <strong>E-LIGHT:</strong> lighting circuits, luminaires, switching.
+              </li>
+              <li>
+                <strong>E-CONTAINMENT:</strong> cable trays, trunking, conduit routes.
+              </li>
+              <li>
+                <strong>M-HVAC:</strong> mechanical services (turn off when not needed).
+              </li>
+              <li>
+                <strong>A-WALLS:</strong> architectural walls and partitions (keep on for context).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Layer Naming Standards</p>
-              <p className="text-sm text-white">
-                BS 1192 and the Uniclass classification system define standard layer naming
-                conventions for UK construction projects. Layer names typically follow the format:
-                discipline prefix (E for electrical) followed by the element type. Understanding the
-                naming convention allows you to quickly identify which layers contain the
-                information you need, even on an unfamiliar drawing.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Layer Naming Standards">
+            <p>
+              BS 1192 and the Uniclass classification system define standard layer naming
+              conventions for UK construction projects. Layer names typically follow the format:
+              discipline prefix (E for electrical) followed by the element type. Understanding the
+              naming convention allows you to quickly identify which layers contain the information
+              you need, even on an unfamiliar drawing.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BIM and Digital Twin Concepts
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BIM and digital twin concepts</ContentEyebrow>
+
+          <ConceptBlock title="BIM and Digital Twin Concepts">
             <p>
               Building Information Modelling (BIM) represents the next evolution beyond traditional
               CAD. Rather than creating drawings that describe a building, BIM creates a digital
               model of the building that contains both geometry (what it looks like) and data (what
-              it is, what it does, and how to maintain it). This model becomes a 'digital twin' that
-              supports the building throughout its entire lifecycle.
+              it is, what it does, and how to maintain it). This model becomes a &apos;digital
+              twin&apos; that supports the building throughout its entire lifecycle.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BIM Benefits for Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Single source of truth:</strong> One model containing all building
-                  information
-                </li>
-                <li className="pl-1">
-                  <strong>Asset data:</strong> Every component has embedded specifications,
-                  maintenance schedules and linked documents
-                </li>
-                <li className="pl-1">
-                  <strong>3D navigation:</strong> Virtually walk through the building to plan access
-                  and identify equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Clash detection:</strong> Identify conflicts between services before
-                  physical work begins
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity extraction:</strong> Automatically count and list components for
-                  ordering and budgeting
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="BIM Benefits for Maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single source of truth:</strong> one model containing all building
+                information.
+              </li>
+              <li>
+                <strong>Asset data:</strong> every component has embedded specifications,
+                maintenance schedules and linked documents.
+              </li>
+              <li>
+                <strong>3D navigation:</strong> virtually walk through the building to plan access
+                and identify equipment.
+              </li>
+              <li>
+                <strong>Clash detection:</strong> identify conflicts between services before
+                physical work begins.
+              </li>
+              <li>
+                <strong>Quantity extraction:</strong> automatically count and list components for
+                ordering and budgeting.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  BIM for Electrical Data
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Distribution board: rated current, ways, manufacturer, model
-                  </li>
-                  <li className="pl-1">Cables: type, size, route, circuit reference</li>
-                  <li className="pl-1">Luminaires: type, wattage, lamp type, mounting height</li>
-                  <li className="pl-1">All linked to maintenance schedules in CMMS</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  UK BIM Requirements
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">BIM Level 2 mandatory for public projects</li>
-                  <li className="pl-1">ISO 19650 series governs information management</li>
-                  <li className="pl-1">Asset Information Model (AIM) for operations</li>
-                  <li className="pl-1">COBie data drops for asset handover</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="BIM for Electrical Data">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Distribution board: rated current, ways, manufacturer, model.</li>
+              <li>Cables: type, size, route, circuit reference.</li>
+              <li>Luminaires: type, wattage, lamp type, mounting height.</li>
+              <li>All linked to maintenance schedules in CMMS.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="UK BIM Requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>BIM Level 2 mandatory for public projects.</li>
+              <li>ISO 19650 series governs information management.</li>
+              <li>Asset Information Model (AIM) for operations.</li>
+              <li>COBie data drops for asset handover.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Using CAD Viewers in Maintenance Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Using CAD viewers in maintenance practice</ContentEyebrow>
+
+          <ConceptBlock title="Using CAD Viewers in Maintenance Practice">
             <p>
               As a maintenance technician, you do not need to create CAD drawings, but you
               increasingly need to view and navigate them. CAD viewer applications — many of which
               are free — provide the tools you need to access digital drawings at the point of work,
               extract measurements, and find specific equipment within complex drawings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential CAD Viewer Skills
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Zoom and pan:</strong> Navigate to specific areas of large drawings
-                  quickly
-                </li>
-                <li className="pl-1">
-                  <strong>Layer control:</strong> Show only the disciplines relevant to your task
-                </li>
-                <li className="pl-1">
-                  <strong>Measure:</strong> Take distances, angles and areas directly from the
-                  drawing
-                </li>
-                <li className="pl-1">
-                  <strong>Search:</strong> Find components by tag number, description or attribute
-                </li>
-                <li className="pl-1">
-                  <strong>Print/export:</strong> Print specific views or areas at the required scale
-                </li>
-                <li className="pl-1">
-                  <strong>Markup:</strong> Add annotations and comments for red-line review
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Essential CAD Viewer Skills">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Zoom and pan:</strong> navigate to specific areas of large drawings quickly.
+              </li>
+              <li>
+                <strong>Layer control:</strong> show only the disciplines relevant to your task.
+              </li>
+              <li>
+                <strong>Measure:</strong> take distances, angles and areas directly from the
+                drawing.
+              </li>
+              <li>
+                <strong>Search:</strong> find components by tag number, description or attribute.
+              </li>
+              <li>
+                <strong>Print/export:</strong> print specific views or areas at the required scale.
+              </li>
+              <li>
+                <strong>Markup:</strong> add annotations and comments for red-line review.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Workflow Example
-              </h3>
-              <p className="text-sm text-white">
-                You receive a work order to replace a motor starter in MCC-01. Using the CAD viewer
-                on your tablet: search for 'MCC-01' to locate the equipment on the GA drawing;
-                switch to the panel layout layer to see the internal arrangement; zoom into the
-                specific starter position to check dimensions; switch to the schematic layer to
-                understand the circuit; and print the relevant views for reference during the
-                physical work.
-              </p>
-            </div>
+          <Scenario
+            title="Replacing a motor starter in MCC-01"
+            situation="You receive a work order to replace a motor starter in MCC-01."
+            whatToDo={
+              <>
+                Using the CAD viewer on your tablet: search for &apos;MCC-01&apos; to locate the
+                equipment on the GA drawing; switch to the panel layout layer to see the internal
+                arrangement; zoom into the specific starter position to check dimensions; switch to
+                the schematic layer to understand the circuit; and print the relevant views for
+                reference during the physical work.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Digital Drawing Limitations</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Trusting a digital drawing without verifying it on site"
+            whatHappens={
+              <>
                 Digital drawings are only as accurate as their last update. If modifications have
                 been made on site without updating the CAD drawing, the digital version will not
-                match reality. Always verify critical information on site, report discrepancies, and
-                never assume the digital drawing is correct without physical verification — the same
-                principle that applies to paper drawings.
-              </p>
-            </div>
+                match reality.
+              </>
+            }
+            doInstead={
+              <>
+                Always verify critical information on site, report discrepancies, and never assume
+                the digital drawing is correct without physical verification — the same principle
+                that applies to paper drawings.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="ST1426 and digital documentation">
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard requires competence
               in using information technology and documentation systems relevant to the workplace.
               As digital drawing systems become standard, CAD viewer skills and BIM awareness are
               increasingly part of the competence expected from qualified maintenance technicians.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'CAD replaces manual draughting: precise dimensions, fast modification, instant digital sharing.',
+              '2D CAD produces flat plan, elevation and section views; 3D CAD builds a full model from which 2D views are extracted automatically.',
+              "BIM adds data to every object — manufacturer, rating, maintenance schedule — creating a 'digital twin' of the building.",
+              'File formats: DWG (AutoCAD native, most common), DXF (universal interchange), PDF (static, no layer control), IFC (open BIM exchange), RVT (Revit BIM native).',
+              'Layers let you isolate the discipline you need — electrical, structural, mechanical — on a single complex drawing.',
+              'CAD viewer essentials: zoom, pan and navigate; toggle layers; measure distances and areas; search by tag number or description; print or export specific views.',
+              'A digital drawing is only as accurate as its last update — always verify critical information on site.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">CAD File Formats</p>
-                <ul className="space-y-0.5">
-                  <li>DWG — AutoCAD native (most common)</li>
-                  <li>DXF — universal interchange format</li>
-                  <li>PDF — static output, universally readable</li>
-                  <li>IFC — open BIM data exchange</li>
-                  <li>RVT — Revit BIM native format</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CAD Viewer Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Zoom, pan and navigate drawings</li>
-                  <li>Toggle layers on/off for clarity</li>
-                  <li>Measure distances and areas</li>
-                  <li>Search by tag number or description</li>
-                  <li>Print or export specific views</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Drawing Layouts and Title Blocks
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Circuit Diagrams and Symbols
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Drawing Layouts
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1">
-              Back to Section 6.1 Hub
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

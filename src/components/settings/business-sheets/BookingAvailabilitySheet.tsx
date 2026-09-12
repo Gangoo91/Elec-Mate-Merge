@@ -8,6 +8,15 @@ import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOff,
+  hintCn,
+  inputCn,
+  labelCn,
+  textareaCn,
+} from '@/components/settings/formStyles';
 import { QUERY_KEYS } from '@/lib/queryConfig';
 import {
   CONFIRMATION_TOKENS,
@@ -244,8 +253,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
       // stored as null too, so switching the default later reaches everyone
       // who never changed it.
       const trimmed = confirmationTemplate.trim();
-      const templateToStore =
-        trimmed && trimmed !== DEFAULT_CONFIRMATION_TEMPLATE ? trimmed : null;
+      const templateToStore = trimmed && trimmed !== DEFAULT_CONFIRMATION_TEMPLATE ? trimmed : null;
       if (hasCompanyProfile) {
         const { data: updated, error: templateError } = await supabase
           .from('company_profiles')
@@ -278,8 +286,8 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Booking availability">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -304,36 +312,36 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
 
             <section className="space-y-3">
               <Eyebrow>Working hours</Eyebrow>
-              <div className="rounded-xl border border-white/[0.08] divide-y divide-white/[0.06]">
+              <div className="divide-y divide-white/[0.1]">
                 {DAY_ORDER.map(({ key, label }) => {
                   const window = hours[key];
                   const isOpen = !!window;
                   return (
-                    <div key={key} className="px-3 py-3 flex items-center gap-3">
+                    <div key={key} className="py-3 flex items-center gap-3">
                       <Switch
                         checked={isOpen}
                         onCheckedChange={(v) => toggleDay(key, v)}
                         className="data-[state=checked]:bg-elec-yellow"
                       />
-                      <Label className="w-24 text-[14px] text-white font-medium">{label}</Label>
+                      <Label className={cn(labelCn, 'mb-0 w-24 text-[14px]')}>{label}</Label>
                       {isOpen && window ? (
                         <div className="flex-1 flex items-center gap-2">
                           <Input
                             type="time"
                             value={window.start}
                             onChange={(e) => updateDayTime(key, 'start', e.target.value)}
-                            className="h-10 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white text-[13px] touch-manipulation"
+                            className={inputCn}
                           />
-                          <span className="text-white/40 text-[13px]">to</span>
+                          <span className="text-white text-[13px]">to</span>
                           <Input
                             type="time"
                             value={window.end}
                             onChange={(e) => updateDayTime(key, 'end', e.target.value)}
-                            className="h-10 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white text-[13px] touch-manipulation"
+                            className={inputCn}
                           />
                         </div>
                       ) : (
-                        <p className="flex-1 text-[13px] text-white/40">Closed</p>
+                        <p className="flex-1 text-[13px] text-white">Closed</p>
                       )}
                     </div>
                   );
@@ -355,7 +363,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               <section className="space-y-2">
                 <Eyebrow>Your booking link</Eyebrow>
                 <div className="flex items-center gap-2">
-                  <code className="min-w-0 flex-1 truncate rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] px-3 py-2.5 text-[12.5px] text-white">
+                  <code className="min-w-0 flex-1 truncate rounded-xl border border-elec-yellow/35 bg-white/[0.05] px-3 py-2.5 text-[12.5px] text-white">
                     {`${window.location.origin}/book/${userId}`}
                   </code>
                   <button
@@ -378,7 +386,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                     Share
                   </button>
                 </div>
-                <p className="text-[11.5px] text-white">
+                <p className={hintCn}>
                   Send this to a customer and they can pick from your open slots.
                 </p>
               </section>
@@ -394,9 +402,12 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               </p>
 
               {blackouts.length > 0 && (
-                <ul className="divide-y divide-white/[0.06] overflow-hidden rounded-xl border border-white/[0.08]">
+                <ul className="divide-y divide-white/[0.1]">
                   {blackouts.map((b, i) => (
-                    <li key={`${b.start}-${i}`} className="flex items-center gap-3 px-3 py-2.5">
+                    <li
+                      key={`${b.start}-${i}`}
+                      className="flex min-h-[44px] items-center gap-3 py-2.5"
+                    >
                       <div className="min-w-0 flex-1">
                         <p className="text-[13px] font-medium text-white">{formatRange(b)}</p>
                         {b.reason && <p className="text-[12px] text-white">{b.reason}</p>}
@@ -424,16 +435,16 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
 
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div className="space-y-1.5">
-                  <Label className="text-[13px] font-medium text-white">From</Label>
+                  <Label className={labelCn}>From</Label>
                   <Input
                     type="date"
                     value={newStart}
                     onChange={(e) => setNewStart(e.target.value)}
-                    className="h-11 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white [color-scheme:dark]"
+                    className={inputCn}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-[13px] font-medium text-white">
+                  <Label className={labelCn}>
                     To <span className="text-white">(optional)</span>
                   </Label>
                   <Input
@@ -441,19 +452,19 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                     value={newEnd}
                     min={newStart || undefined}
                     onChange={(e) => setNewEnd(e.target.value)}
-                    className="h-11 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white [color-scheme:dark]"
+                    className={inputCn}
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-[13px] font-medium text-white">Reason (optional)</Label>
+                <Label className={labelCn}>Reason (optional)</Label>
                 <Input
                   value={newReason}
                   onChange={(e) => setNewReason(e.target.value)}
                   placeholder="Holiday, training day…"
                   maxLength={60}
-                  className="h-11 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white"
+                  className={inputCn}
                 />
               </div>
 
@@ -465,7 +476,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               >
                 Block these dates
               </button>
-              <p className="text-[11.5px] text-white">
+              <p className={hintCn}>
                 Blocks apply when you save. Existing bookings on these days are not cancelled.
               </p>
             </section>
@@ -474,7 +485,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               <Eyebrow>Booking rules</Eyebrow>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Buffer between jobs</Label>
+                  <Label className={labelCn}>Buffer between jobs</Label>
                   <div className="relative">
                     <Input
                       type="number"
@@ -483,26 +494,26 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                       step={15}
                       value={bufferMinutes}
                       onChange={(e) => setBufferMinutes(Number(e.target.value) || 0)}
-                      className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-12 touch-manipulation"
+                      className={cn(inputCn, 'pr-12')}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white/40">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white">
                       min
                     </span>
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Max bookings/day</Label>
+                  <Label className={labelCn}>Max bookings/day</Label>
                   <Input
                     type="number"
                     min={1}
                     max={20}
                     value={maxPerDay}
                     onChange={(e) => setMaxPerDay(Number(e.target.value) || 1)}
-                    className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[13px]">Minimum notice</Label>
+                  <Label className={labelCn}>Minimum notice</Label>
                   <div className="relative">
                     <Input
                       type="number"
@@ -510,15 +521,15 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                       max={168}
                       value={minNoticeHours}
                       onChange={(e) => setMinNoticeHours(Number(e.target.value) || 0)}
-                      className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white pr-12 touch-manipulation"
+                      className={cn(inputCn, 'pr-12')}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white/40">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-white">
                       hrs
                     </span>
                   </div>
                 </div>
               </div>
-              <p className="text-[12px] text-white leading-relaxed">
+              <p className={hintCn}>
                 Buffer adds padding before and after each existing calendar event so you have travel
                 time. Min notice prevents clients booking a slot too close to now.
               </p>
@@ -528,8 +539,8 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
             <section className="space-y-3">
               <Eyebrow>Confirmation message</Eyebrow>
               <p className="text-[12px] text-white leading-relaxed">
-                What goes into WhatsApp or a text when you tap “Tell the customer” on a booking,
-                and what “Copy message” copies. Use the tokens below and they are filled in for each
+                What goes into WhatsApp or a text when you tap “Tell the customer” on a booking, and
+                what “Copy message” copies. Use the tokens below and they are filled in for each
                 job. The branded email the app sends keeps its standard wording.
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -538,11 +549,15 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                     key={t.token}
                     type="button"
                     onClick={() =>
-                      setConfirmationTemplate((cur) =>
-                        (cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE) + ` ${t.token}`
+                      setConfirmationTemplate(
+                        (cur) => (cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE) + ` ${t.token}`
                       )
                     }
-                    className="h-11 rounded-xl border border-white/[0.12] bg-white/[0.06] px-3 text-[12px] font-medium text-white touch-manipulation active:scale-[0.98]"
+                    className={cn(
+                      chipBase,
+                      chipOff,
+                      'flex-none px-3 text-[12px] active:scale-[0.98]'
+                    )}
                     title={t.means}
                   >
                     {t.token}
@@ -554,14 +569,16 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                 value={confirmationTemplate}
                 onChange={(e) => setConfirmationTemplate(e.target.value.slice(0, 600))}
                 onFocus={() =>
-                  setConfirmationTemplate((cur) => (cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE))
+                  setConfirmationTemplate((cur) =>
+                    cur.trim() ? cur : DEFAULT_CONFIRMATION_TEMPLATE
+                  )
                 }
                 rows={7}
                 placeholder={DEFAULT_CONFIRMATION_TEMPLATE}
-                className="w-full rounded-xl border border-white/[0.08] bg-[hsl(0_0%_12%)] px-3.5 py-3 text-[14px] leading-snug text-white placeholder:text-white/40 caret-elec-yellow focus:border-elec-yellow focus:outline-none focus:ring-0 touch-manipulation"
+                className={textareaCn}
               />
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[11.5px] text-white">
+                <p className={hintCn}>
                   Leave it blank to use the standard message. A rescheduled booking always uses the
                   standard wording so the old time is quoted back.
                 </p>
@@ -573,13 +590,15 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
                   Reset
                 </button>
               </div>
-              <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3.5">
+              <div className="rounded-xl border border-elec-yellow/35 bg-white/[0.04] p-3.5">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">
                   Preview
                 </p>
                 <pre className="mt-2 whitespace-pre-wrap font-sans text-[13px] leading-snug text-white">
                   {renderConfirmationTemplate(
-                    confirmationTemplate.trim() ? confirmationTemplate : DEFAULT_CONFIRMATION_TEMPLATE,
+                    confirmationTemplate.trim()
+                      ? confirmationTemplate
+                      : DEFAULT_CONFIRMATION_TEMPLATE,
                     { ...PREVIEW_VALUES, business: businessName }
                   )}
                 </pre>
@@ -592,7 +611,7 @@ const BookingAvailabilitySheet = ({ open, onOpenChange }: BookingAvailabilityShe
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:brightness-110 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:brightness-110 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

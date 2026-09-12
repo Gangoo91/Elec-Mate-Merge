@@ -1,8 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 6.4 · Subsection 4 — Corrective vs Preventive Actions
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Behaviour  · "Continuous improvement (CI) systems and techniques."
+ *   Knowledge  · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *              · "Equipment life cycle considerations."
+ *
+ * The four InlineCheck placements below intentionally follow the original
+ * page's own (non-sequential) order — quickCheckQuestions[0], [1], [3], [2]
+ * against sections 1-4 respectively. That ordering is preserved exactly, not
+ * "fixed" to run 0-1-2-3, per the instruction to keep original positions.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Corrective vs Preventive Actions - MOET Module 4 Section 6.4';
@@ -153,7 +196,7 @@ const quizQuestions = [
     question: 'The timescale for implementing a preventive action should be based on:',
     options: [
       'The order in which faults were reported, so that the oldest outstanding action is always implemented first',
-      'The seniority of the person who requested the action, with managers\' requests addressed ahead of others',
+      "The seniority of the person who requested the action, with managers' requests addressed ahead of others",
       'A fixed standard period of 12 months applied to every preventive action regardless of its risk or consequence',
       'The risk of recurrence, the severity of consequences, the availability of resources and the opportunity to implement (e.g., next planned shutdown)',
     ],
@@ -220,9 +263,9 @@ const quizQuestions = [
     question: 'A Pareto analysis of historical fault data helps prioritise preventive actions by:',
     options: [
       'Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact',
-      'A relatively weak preventive action because it relies entirely on human behaviour — more effective actions would also include engineering or procedural controls',
-      'A corrective action only — it fixes the immediate problem but does not prevent recurrence because the root cause has not been addressed',
-      'The most effective type of preventive action — elimination removes the failure mode entirely rather than relying on human intervention to manage it',
+      'Listing every recorded fault in the order in which it occurred',
+      'Averaging the repair time evenly across all fault categories',
+      'Ranking fault types alphabetically so that none is overlooked',
     ],
     correctAnswer: 0,
     explanation:
@@ -261,113 +304,69 @@ const faqs = [
 ];
 
 const MOETModule4Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Corrective vs Preventive Actions
-          </h1>
-          <p className="text-white">
-            Implementing effective actions following root cause analysis to prevent fault recurrence
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.6 · Subsection 4"
+        title="Corrective vs Preventive Actions"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Implementing effective actions following root cause analysis to prevent fault
+            recurrence.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Corrective:</strong> Fixes the immediate problem — replaces, repairs,
-                restores
-              </li>
-              <li className="pl-1">
-                <strong>Preventive:</strong> Addresses root cause — changes procedure, design,
-                schedule
-              </li>
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> Eliminate &gt; engineering control &gt; procedural &gt;
-                administrative
-              </li>
-              <li className="pl-1">
-                <strong>Verify:</strong> Monitor to confirm actions prevent recurrence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Corrective: Fixes the immediate problem — replaces, repairs, restores',
+              'Preventive: Addresses root cause — changes procedure, design, schedule',
+              'Hierarchy: Eliminate > engineering control > procedural > administrative',
+              'Verify: Monitor to confirm actions prevent recurrence',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Both needed:</strong> Corrective restores service, preventive improves
                 reliability
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>CAPA system:</strong> Formalised process for tracking actions to completion
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Temporary repairs:</strong> Must be documented, limited and tracked
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Continuous improvement is a core EPA competence
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between corrective actions and preventive actions in maintenance',
               'Apply the hierarchy of controls to select the most effective preventive measures',
               'Understand CAPA systems and their role in maintenance quality management',
               'Manage temporary repairs with proper documentation and follow-up tracking',
               'Verify the effectiveness of corrective and preventive actions after implementation',
               'Write clear, actionable recommendations that link root cause findings to preventive measures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Understanding corrective and preventive actions</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding Corrective and Preventive Actions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Understanding Corrective and Preventive Actions"
+            onSite="Key point: A maintenance organisation that only performs corrective actions is permanently reactive — always responding to failures. One that also implements preventive actions becomes progressively more proactive, with fewer failures, less downtime and lower costs over time. This is the transition from reactive to reliability-centred maintenance."
+          >
             <p>
               Every fault investigation should result in two types of action: a corrective action
               that fixes the immediate problem and restores the equipment to service, and a
@@ -383,154 +382,79 @@ const MOETModule4Section6_4 = () => {
               because the root cause is never addressed. Breaking this cycle requires a disciplined
               approach to root cause analysis followed by effective preventive actions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Corrective vs Preventive Actions
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Corrective Action
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Preventive Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Purpose</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fix the immediate problem
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Prevent recurrence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Timing</td>
-                      <td className="border border-white/10 px-3 py-2">Immediate or urgent</td>
-                      <td className="border border-white/10 px-3 py-2">Planned, may take longer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Addresses</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        The symptom or immediate cause
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">The root cause</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Example</td>
-                      <td className="border border-white/10 px-3 py-2">Replace failed bearing</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improve lubrication schedule, add monitoring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Impact</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Restores this equipment now
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Improves reliability of this and similar equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Corrective vs Preventive Actions"
+            headers={['Aspect', 'Corrective Action', 'Preventive Action']}
+            rows={[
+              ['Purpose', 'Fix the immediate problem', 'Prevent recurrence'],
+              ['Timing', 'Immediate or urgent', 'Planned, may take longer'],
+              ['Addresses', 'The symptom or immediate cause', 'The root cause'],
+              ['Example', 'Replace failed bearing', 'Improve lubrication schedule, add monitoring'],
+              [
+                'Impact',
+                'Restores this equipment now',
+                'Improves reliability of this and similar equipment',
+              ],
+            ]}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A maintenance organisation that only performs corrective
-              actions is permanently reactive — always responding to failures. One that also
-              implements preventive actions becomes progressively more proactive, with fewer
-              failures, less downtime and lower costs over time. This is the transition from
-              reactive to reliability-centred maintenance.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Hierarchy of Preventive Controls
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The hierarchy of preventive controls</ContentEyebrow>
+
+          <ConceptBlock
+            title="The Hierarchy of Preventive Controls"
+            onSite="Practical principle: Always aim for the highest level of control that is reasonably practicable. If elimination is not feasible, implement engineering controls. If those are not sufficient, add procedural controls. Use administrative controls to support the other levels, not as the sole preventive measure."
+          >
             <p>
               Not all preventive actions are equally effective. The hierarchy of controls — a
               well-established principle in safety management — applies equally to maintenance
               reliability. Actions higher in the hierarchy are more effective because they are less
               dependent on human compliance.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Elimination (most effective).</strong> Remove the failure mode entirely
+                through design change. Example: Replace a motor-driven pump with a seal-less
+                magnetic drive pump — eliminates seal failure entirely. Once implemented, no ongoing
+                human intervention is required.
+              </li>
+              <li>
+                <strong>Engineering controls.</strong> Add protection or detection systems.
+                Examples: Install vibration monitoring, add a cooling fan, fit an improved IP-rated
+                enclosure, upgrade the motor to inverter-rated. These reduce risk but may still
+                require human response to warnings.
+              </li>
+              <li>
+                <strong>Procedural controls.</strong> Change how work is done. Examples: Update the
+                PM procedure, increase inspection frequency, add a lubrication task, revise the work
+                instruction. Effective only if procedures are followed consistently — depends on
+                human compliance.
+              </li>
+              <li>
+                <strong>Administrative controls (least effective alone).</strong> Training,
+                awareness, signage, supervision. Examples: Retrain operators, issue a safety alert,
+                add a warning label. These are the least reliable because they depend entirely on
+                human memory, attention and compliance. Most effective when combined with
+                higher-level controls.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <h3 className="text-sm font-medium text-green-400 mb-2">
-                  Level 1 — Elimination (Most Effective)
-                </h3>
-                <p className="text-sm text-white">
-                  Remove the failure mode entirely through design change. Example: Replace a
-                  motor-driven pump with a seal-less magnetic drive pump — eliminates seal failure
-                  entirely. Once implemented, no ongoing human intervention is required.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                <h3 className="text-sm font-medium text-blue-400 mb-2">
-                  Level 2 — Engineering Controls
-                </h3>
-                <p className="text-sm text-white">
-                  Add protection or detection systems. Examples: Install vibration monitoring, add a
-                  cooling fan, fit an improved IP-rated enclosure, upgrade the motor to
-                  inverter-rated. These reduce risk but may still require human response to
-                  warnings.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
-                <h3 className="text-sm font-medium text-yellow-400 mb-2">
-                  Level 3 — Procedural Controls
-                </h3>
-                <p className="text-sm text-white">
-                  Change how work is done. Examples: Update the PM procedure, increase inspection
-                  frequency, add a lubrication task, revise the work instruction. Effective only if
-                  procedures are followed consistently — depends on human compliance.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <h3 className="text-sm font-medium text-orange-400 mb-2">
-                  Level 4 — Administrative Controls (Least Effective Alone)
-                </h3>
-                <p className="text-sm text-white">
-                  Training, awareness, signage, supervision. Examples: Retrain operators, issue a
-                  safety alert, add a warning label. These are the least reliable because they
-                  depend entirely on human memory, attention and compliance. Most effective when
-                  combined with higher-level controls.
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical principle:</strong> Always aim for the highest level of control that
-              is reasonably practicable. If elimination is not feasible, implement engineering
-              controls. If those are not sufficient, add procedural controls. Use administrative
-              controls to support the other levels, not as the sole preventive measure.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>CAPA systems and action tracking</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CAPA Systems and Action Tracking
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="CAPA Systems and Action Tracking"
+            onSite="Key point: An action without an owner and a deadline is a wish, not an action. Every corrective and preventive action must be assigned to a specific, named person with a realistic but firm completion date. Track open actions regularly and escalate overdue items."
+          >
             <p>
               A Corrective Action / Preventive Action (CAPA) system provides the formal framework
               for managing actions from identification through to verified completion. Without a
@@ -538,73 +462,64 @@ const MOETModule4Section6_4 = () => {
               become permanent, and the same faults recur indefinitely. The CAPA process ensures
               accountability, tracking and verification.
             </p>
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify:</strong> The fault or nonconformance is reported and recorded
+              </li>
+              <li>
+                <strong>Investigate:</strong> Root cause analysis is conducted (5 Whys, fishbone,
+                fault tree)
+              </li>
+              <li>
+                <strong>Define actions:</strong> Corrective and preventive actions are specified
+                with clear descriptions
+              </li>
+              <li>
+                <strong>Assign:</strong> Each action is assigned to a named responsible person with
+                a completion deadline
+              </li>
+              <li>
+                <strong>Implement:</strong> The actions are carried out and recorded as complete
+              </li>
+              <li>
+                <strong>Verify:</strong> The effectiveness of the actions is confirmed through
+                monitoring and review
+              </li>
+              <li>
+                <strong>Close:</strong> Once verified as effective, the CAPA is formally closed and
+                the record archived
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The CAPA Process</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify:</strong> The fault or nonconformance is reported and recorded
-                </li>
-                <li className="pl-1">
-                  <strong>Investigate:</strong> Root cause analysis is conducted (5 Whys, fishbone,
-                  fault tree)
-                </li>
-                <li className="pl-1">
-                  <strong>Define actions:</strong> Corrective and preventive actions are specified
-                  with clear descriptions
-                </li>
-                <li className="pl-1">
-                  <strong>Assign:</strong> Each action is assigned to a named responsible person
-                  with a completion deadline
-                </li>
-                <li className="pl-1">
-                  <strong>Implement:</strong> The actions are carried out and recorded as complete
-                </li>
-                <li className="pl-1">
-                  <strong>Verify:</strong> The effectiveness of the actions is confirmed through
-                  monitoring and review
-                </li>
-                <li className="pl-1">
-                  <strong>Close:</strong> Once verified as effective, the CAPA is formally closed
-                  and the record archived
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Danger of Untracked Temporary Repairs
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="The untracked temporary repair"
+            whatHappens={
+              <p>
                 One of the most common reliability problems in industrial installations is the
                 untracked temporary repair. A temporary fix is implemented to restore operation
                 quickly — perhaps a jumper wire, a bypass, a modified setting, or an alternative
-                component. It is meant to be replaced with a permanent repair "next shutdown" but is
-                never formally tracked. Months or years later, no one remembers it is temporary. It
-                eventually fails, often in a more severe way than the original fault. The CAPA
-                system prevents this by ensuring every temporary repair generates a tracked
+                component. It is meant to be replaced with a permanent repair &quot;next
+                shutdown&quot; but is never formally tracked. Months or years later, no one
+                remembers it is temporary. It eventually fails, often in a more severe way than the
+                original fault.
+              </p>
+            }
+            doInstead={
+              <p>
+                The CAPA system prevents this by ensuring every temporary repair generates a tracked
                 follow-up action.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> An action without an owner and a deadline is a wish, not
-              an action. Every corrective and preventive action must be assigned to a specific,
-              named person with a realistic but firm completion date. Track open actions regularly
-              and escalate overdue items.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Verification, Systemic Actions and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Verification, systemic actions and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="Verification, Systemic Actions and Continuous Improvement">
             <p>
               The final and most frequently overlooked step in the CAPA process is verification —
               confirming that the implemented actions are actually effective. Without verification,
@@ -612,147 +527,109 @@ const MOETModule4Section6_4 = () => {
               Verification closes the loop and transforms the CAPA process from a paperwork exercise
               into a genuine improvement tool.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Verification Methods</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Monitoring period:</strong> Define a review period (3-6 months typically)
-                  and monitor the equipment for recurrence
-                </li>
-                <li className="pl-1">
-                  <strong>Test results:</strong> Compare post-action test results with pre-action
-                  baselines — has the measurable condition improved?
-                </li>
-                <li className="pl-1">
-                  <strong>CMMS data:</strong> Check the fault history — has the failure frequency
-                  reduced since the action was implemented?
-                </li>
-                <li className="pl-1">
-                  <strong>Audit:</strong> Verify that procedural changes have been communicated,
-                  trained and are being followed
-                </li>
-                <li className="pl-1">
-                  <strong>Unintended consequences:</strong> Check that the action has not introduced
-                  new failure modes or problems
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Verification methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Monitoring period:</strong> Define a review period (3-6 months typically)
+                and monitor the equipment for recurrence
+              </li>
+              <li>
+                <strong>Test results:</strong> Compare post-action test results with pre-action
+                baselines — has the measurable condition improved?
+              </li>
+              <li>
+                <strong>CMMS data:</strong> Check the fault history — has the failure frequency
+                reduced since the action was implemented?
+              </li>
+              <li>
+                <strong>Audit:</strong> Verify that procedural changes have been communicated,
+                trained and are being followed
+              </li>
+              <li>
+                <strong>Unintended consequences:</strong> Check that the action has not introduced
+                new failure modes or problems
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Systemic Preventive Actions
-              </p>
-              <p className="text-sm text-white mb-3">
-                When a root cause could affect other similar equipment, the preventive action should
-                be applied systemically — not just to the equipment that failed.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Same equipment type:</strong> If a motor bearing failed due to inadequate
-                  PM, review the PM schedule for all similar motors
-                </li>
-                <li className="pl-1">
-                  <strong>Same environment:</strong> If moisture caused a fault in one enclosure,
-                  inspect all enclosures in the same area
-                </li>
-                <li className="pl-1">
-                  <strong>Same procedure:</strong> If a procedural error caused a fault, review the
-                  procedure for all equipment maintained to the same instruction
-                </li>
-                <li className="pl-1">
-                  <strong>Same component:</strong> If a specific component failed prematurely, check
-                  stock and installed instances for the same batch or supplier
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> The CAPA process is a cycle, not a linear sequence. Each
-              completed investigation contributes data that informs future maintenance decisions.
-              Over time, the cumulative effect of systematic corrective and preventive actions is a
-              measurable improvement in equipment reliability, reduced downtime, lower maintenance
-              costs and improved safety. This is continuous improvement in practice — the foundation
-              of world-class maintenance.
+          <ConceptBlock
+            title="Systemic preventive actions"
+            onSite="Note: The CAPA process is a cycle, not a linear sequence. Each completed investigation contributes data that informs future maintenance decisions. Over time, the cumulative effect of systematic corrective and preventive actions is a measurable improvement in equipment reliability, reduced downtime, lower maintenance costs and improved safety. This is continuous improvement in practice — the foundation of world-class maintenance."
+          >
+            <p>
+              When a root cause could affect other similar equipment, the preventive action should
+              be applied systemically — not just to the equipment that failed.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Same equipment type:</strong> If a motor bearing failed due to inadequate
+                PM, review the PM schedule for all similar motors
+              </li>
+              <li>
+                <strong>Same environment:</strong> If moisture caused a fault in one enclosure,
+                inspect all enclosures in the same area
+              </li>
+              <li>
+                <strong>Same procedure:</strong> If a procedural error caused a fault, review the
+                procedure for all equipment maintained to the same instruction
+              </li>
+              <li>
+                <strong>Same component:</strong> If a specific component failed prematurely, check
+                stock and installed instances for the same batch or supplier
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Action types: corrective fixes the immediate problem; preventive addresses root cause; temporary repairs must be documented, tracked and time-limited; systemic actions are applied across similar equipment. Always verify effectiveness after implementation.',
+              'Hierarchy of controls: elimination (design out the failure mode) is most effective, then engineering controls (add protection/detection), then procedural controls (change how work is done), then administrative controls (training, awareness) — higher levels are more effective and less human-dependent.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Action Types</p>
-                <ul className="space-y-0.5">
-                  <li>Corrective — fixes the immediate problem</li>
-                  <li>Preventive — addresses root cause</li>
-                  <li>Temporary — documented, tracked, time-limited</li>
-                  <li>Systemic — applied across similar equipment</li>
-                  <li>Always verify effectiveness after implementation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Hierarchy of Controls</p>
-                <ul className="space-y-0.5">
-                  <li>1. Elimination — design out the failure mode</li>
-                  <li>2. Engineering — add protection/detection</li>
-                  <li>3. Procedural — change how work is done</li>
-                  <li>4. Administrative — training, awareness</li>
-                  <li>Higher levels = more effective, less human-dependent</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Fishbone (Ishikawa) Diagrams
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Recording and Reporting RCA Outcomes
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Fishbone Diagrams
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-5">
-              Next: Recording RCA Outcomes
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

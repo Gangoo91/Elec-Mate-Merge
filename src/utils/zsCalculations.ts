@@ -459,9 +459,20 @@ export function applyScheduleAutoCalc(
 ): void {
   if (!AUTO_CALC_TRIGGER_FIELDS.includes(field)) return;
 
-  const isRing = (updated.circuitType || '').toLowerCase().includes('ring');
-
-  if (isRing && field !== 'r1r2') {
+  // 🔴 The readings ARE the declaration — do NOT gate this on `circuitType`.
+  //
+  // An end-to-end r₁/rₙ/r₂ measurement is a ring-final test and nothing else;
+  // a standalone R2 is stored in `ringContinuityLive`, not here. So a circuit
+  // carrying both readings is a ring whatever the type field happens to say.
+  //
+  // This used to require `circuitType` to contain "ring" as well, and that
+  // failed on 795 of the 1,090 circuits in live data that hold real readings —
+  // they are typed "Sockets", "Other", or left blank, and one is *described*
+  // "Kitchen Ring" with an empty type. Nothing in the schedule obliges the
+  // electrician to set that field, and the r₁/rₙ/r₂ columns are where they
+  // actually work, so the gate silently withheld (R1+R2) — and with it the
+  // derived Zs — on the majority of ring circuits ever entered.
+  if (field !== 'r1r2') {
     const prevDerived = deriveRingR1R2(prev.ringR1, prev.ringR2);
     const current = String(updated.r1r2 || '').trim();
     if (!current || current === prevDerived) {

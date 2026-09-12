@@ -14,6 +14,7 @@ import {
   type LogoTonePreference,
   type LogoTone,
 } from '@/utils/logoTone';
+import { getSchemeInfo, schemeLogoPath } from '@/constants/schemeLogos';
 import CertCoverPreview from './CertCoverPreview';
 
 interface BrandSheetProps {
@@ -124,6 +125,19 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
   }, [open, logoSrc]);
 
   const effectiveTone: LogoTone = logoTonePref === 'auto' ? measuredTone : logoTonePref;
+
+  // The masthead can go dark (light company artwork), and the stored lockup is
+  // the standard dark-ink one. Resolve the reversed asset alongside it so the
+  // preview shows what the certificate will actually print rather than a
+  // wordmark that has disappeared into the band.
+  const schemeInfo = getSchemeInfo(
+    (profile as { registration_scheme?: string })?.registration_scheme || ''
+  );
+  const storedSchemeLogo =
+    (profile as { scheme_logo_data_url?: string })?.scheme_logo_data_url ||
+    (profile as { registration_scheme_logo?: string })?.registration_scheme_logo ||
+    (schemeInfo ? schemeLogoPath(schemeInfo, 'light') : null);
+  const reversedSchemeLogo = schemeInfo ? schemeLogoPath(schemeInfo, 'dark') : null;
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -339,16 +353,8 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
                   coverColor={normaliseHex(coverColor, '#1e40af')}
                   logoTone={effectiveTone}
                   logoUrl={logoSrc}
-                  schemeLogoUrl={
-                    (
-                      profile as {
-                        scheme_logo_data_url?: string;
-                        registration_scheme_logo?: string;
-                      }
-                    )?.scheme_logo_data_url ||
-                    (profile as { registration_scheme_logo?: string })?.registration_scheme_logo ||
-                    null
-                  }
+                  schemeLogoUrl={storedSchemeLogo}
+                  schemeLogoReversedUrl={reversedSchemeLogo}
                   companyName={profile?.company_name}
                 />
               </div>

@@ -1,8 +1,49 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 3 · Subsection 4 — Category and Performance Levels (ISO 13849)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. This page is safety-focused (ISO 13849 verification), so the
+ * statements below are taken verbatim from the brief's Module 1 health-and-
+ * safety list rather than the electrical-theory lists used elsewhere in
+ * Module 5.
+ *   Knowledge  · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Accuracy note: ISO 13849-1/-2 (Categories B/1/2/3/4, Performance Levels,
+ * PFHd, MTTFd, DCavg, CCF, SISTEMA) and IEC 62061 (SIL) citations are
+ * standard, uncontested functional-safety references and are kept exactly as
+ * written. No GS38, thermography, test-interval or C&G-qualification claims
+ * appear on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Category and Performance Levels (ISO 13849) - MOET Module 5 Section 3.4';
@@ -39,12 +80,7 @@ const quickCheckQuestions = [
   {
     id: 'pfhd',
     question: 'What parameter represents the probability of dangerous failure per hour?',
-    options: [
-      'MTTFd',
-      'CCF',
-      'DCavg',
-      'PFHd',
-    ],
+    options: ['MTTFd', 'CCF', 'DCavg', 'PFHd'],
     correctIndex: 3,
     explanation:
       'PFHd (Probability of dangerous Failure per Hour) is the quantitative measure used to determine the achieved Performance Level. Lower PFHd values indicate higher safety integrity.',
@@ -70,12 +106,7 @@ const quizQuestions = [
     id: 1,
     question:
       'Which standard provides the framework for Performance Levels of safety-related control systems?',
-    options: [
-      'IEC 61131-3',
-      'ISO 13849-1',
-      'BS 7671',
-      'IEC 60204-1',
-    ],
+    options: ['IEC 61131-3', 'ISO 13849-1', 'BS 7671', 'IEC 60204-1'],
     correctAnswer: 1,
     explanation:
       "ISO 13849-1 'Safety-related parts of control systems' defines categories, Performance Levels, and the validation process for safety-related control systems of machinery.",
@@ -255,120 +286,68 @@ const faqs = [
 ];
 
 const MOETModule5Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Category and Performance Levels
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.3 · Subsection 4"
+        title="Category and Performance Levels"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             ISO 13849-1 categories, Performance Levels, key parameters and the SISTEMA verification
-            tool
+            tool — the numbers behind whether a safety circuit is good enough.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Categories:</strong> B (baseline), 1 (well-tried), 2 (tested), 3
-                (redundant), 4 (accumulation tolerant)
-              </li>
-              <li className="pl-1">
-                <strong>Performance Levels:</strong> PL a (lowest) to PL e (highest reliability)
-              </li>
-              <li className="pl-1">
-                <strong>Key parameters:</strong> MTTFd, DCavg, CCF determine achieved PL
-              </li>
-              <li className="pl-1">
-                <strong>Requirement:</strong> Achieved PL must meet or exceed PLr from risk
-                assessment
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Replacement:</strong> Components must match or exceed original PL/SIL rating
-              </li>
-              <li className="pl-1">
-                <strong>Proof testing:</strong> Interval determined by PL calculation and validation
-                plan
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Technical File must contain PL calculations and test
-                records
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Understand safety system integrity requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Categories: B (baseline), 1 (well-tried), 2 (tested), 3 (redundant), 4 (accumulation tolerant).',
+              'Performance Levels: PL a (lowest) to PL e (highest reliability).',
+              'Key parameters: MTTFd, DCavg, CCF determine achieved PL.',
+              'Requirement: Achieved PL must meet or exceed PLr from risk assessment.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the five designated architectures (Categories B, 1, 2, 3, 4) and their fault tolerance',
               'Define Performance Levels PL a through PL e and their PFHd ranges',
               'Use the risk graph to determine the Required Performance Level (PLr)',
               'Describe the parameters MTTFd, DCavg and CCF and their role in PL calculation',
               'Outline the verification and validation process for safety control systems',
               'Compare ISO 13849-1 (Performance Levels) with IEC 62061 (Safety Integrity Levels)',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Replacement:</strong> Components must match or exceed original PL/SIL
+                rating.
+              </li>
+              <li>
+                <strong>Proof testing:</strong> Interval determined by PL calculation and validation
+                plan.
+              </li>
+              <li>
+                <strong>Documentation:</strong> Technical File must contain PL calculations and test
+                records.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Understand safety system integrity requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Designated Architectures (Categories)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Designated architectures (Categories)</ContentEyebrow>
+
+          <ConceptBlock title="Category defines the structure; PL is the achieved reliability">
             <p>
               ISO 13849-1 defines five designated architectures, called Categories, that describe
               the structural requirements for safety-related control system parts. Each category
@@ -376,499 +355,401 @@ const MOETModule5Section3_4 = () => {
               required. The category is the starting point — it defines the structure, while the
               reliability parameters determine the achieved Performance Level.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Category Summary</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirement
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Fault Behaviour
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">Basic safety principles</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single fault can cause loss of safety function
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Well-tried components and principles
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single fault can cause loss, but less likely
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic automatic testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault detected by test; may exist between tests
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Redundancy (dual-channel)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single fault tolerated; detected at/before next demand
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Redundancy + accumulation tolerance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Even accumulated faults do not cause loss
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Category summary">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Category</th>
+                    <th className="py-2 pr-4 font-medium text-white">Key requirement</th>
+                    <th className="py-2 font-medium text-white">Fault behaviour</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">B</td>
+                    <td className="py-2 pr-4">Basic safety principles</td>
+                    <td className="py-2">Single fault can cause loss of safety function</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">1</td>
+                    <td className="py-2 pr-4">Well-tried components and principles</td>
+                    <td className="py-2">Single fault can cause loss, but less likely</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">2</td>
+                    <td className="py-2 pr-4">Periodic automatic testing</td>
+                    <td className="py-2">Fault detected by test; may exist between tests</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">3</td>
+                    <td className="py-2 pr-4">Redundancy (dual-channel)</td>
+                    <td className="py-2">Single fault tolerated; detected at/before next demand</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">4</td>
+                    <td className="py-2 pr-4">Redundancy + accumulation tolerance</td>
+                    <td className="py-2">Even accumulated faults do not cause loss</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Practical Examples</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category B/1:</strong> A simple guard interlock on a low-risk machine
-                  using a positive-opening switch (well-tried component)
-                </li>
-                <li className="pl-1">
-                  <strong>Category 2:</strong> A light curtain with periodic self-test — the
-                  controller checks the sensor function at start-up and periodically during
-                  operation
-                </li>
-                <li className="pl-1">
-                  <strong>Category 3:</strong> A dual-channel E-stop circuit monitored by a safety
-                  relay — the most common architecture for E-stops and guard interlocks
-                </li>
-                <li className="pl-1">
-                  <strong>Category 4:</strong> A press safety system using redundant light curtains,
-                  redundant safety controllers and comprehensive diagnostics — highest integrity
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Practical examples">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category B/1:</strong> A simple guard interlock on a low-risk machine using
+                a positive-opening switch (well-tried component).
+              </li>
+              <li>
+                <strong>Category 2:</strong> A light curtain with periodic self-test — the
+                controller checks the sensor function at start-up and periodically during operation.
+              </li>
+              <li>
+                <strong>Category 3:</strong> A dual-channel E-stop circuit monitored by a safety
+                relay — the most common architecture for E-stops and guard interlocks.
+              </li>
+              <li>
+                <strong>Category 4:</strong> A press safety system using redundant light curtains,
+                redundant safety controllers and comprehensive diagnostics — highest integrity.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Performance Levels and PFHd
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Performance Levels and PFHd</ContentEyebrow>
+
+          <ConceptBlock title="Five levels, each a range of dangerous-failure probability">
             <p>
               Performance Level (PL) is the discrete level used to specify the ability of
               safety-related control system parts to perform a safety function under foreseeable
               conditions. The five levels are defined by ranges of PFHd (Probability of dangerous
               Failure per Hour).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">PL</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        PFHd Range (per hour)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PL a</td>
-                      <td className="border border-white/10 px-3 py-2">10^-5 to less than 10^-4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-risk auxiliary functions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PL b</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3 x 10^-6 to less than 10^-5
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Simple guard interlocks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PL c</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        10^-6 to less than 3 x 10^-6
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard machine safety functions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PL d</td>
-                      <td className="border border-white/10 px-3 py-2">10^-7 to less than 10^-6</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        E-stops, interlocks on higher-risk machines
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PL e</td>
-                      <td className="border border-white/10 px-3 py-2">10^-8 to less than 10^-7</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Press safety systems, robotic cell entry
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="PL and PFHd range">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">PL</th>
+                    <th className="py-2 pr-4 font-medium text-white">PFHd range (per hour)</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PL a</td>
+                    <td className="py-2 pr-4">10^-5 to less than 10^-4</td>
+                    <td className="py-2">Low-risk auxiliary functions</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PL b</td>
+                    <td className="py-2 pr-4">3 x 10^-6 to less than 10^-5</td>
+                    <td className="py-2">Simple guard interlocks</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PL c</td>
+                    <td className="py-2 pr-4">10^-6 to less than 3 x 10^-6</td>
+                    <td className="py-2">Standard machine safety functions</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PL d</td>
+                    <td className="py-2 pr-4">10^-7 to less than 10^-6</td>
+                    <td className="py-2">E-stops, interlocks on higher-risk machines</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">PL e</td>
+                    <td className="py-2 pr-4">10^-8 to less than 10^-7</td>
+                    <td className="py-2">Press safety systems, robotic cell entry</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Risk Graph for Determining PLr
-              </p>
-              <p className="text-sm text-white mb-3">
-                The Required Performance Level (PLr) is determined by a risk assessment using three
-                parameters:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>S (Severity):</strong> S1 = slight/reversible injury, S2 =
-                  serious/irreversible injury or death
-                </li>
-                <li className="pl-1">
-                  <strong>F (Frequency/Duration):</strong> F1 = seldom/short exposure, F2 =
-                  frequent/long exposure
-                </li>
-                <li className="pl-1">
-                  <strong>P (Possibility of avoidance):</strong> P1 = possible under certain
-                  conditions, P2 = scarcely possible
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                Example: A guard interlock on a CNC lathe — S2 (amputation risk), F2 (frequent
-                access for loading), P2 (scarcely possible to avoid) gives PLr = e.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Risk graph for determining PLr">
+            <p>
+              The Required Performance Level (PLr) is determined by a risk assessment using three
+              parameters:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S (Severity):</strong> S1 = slight/reversible injury, S2 =
+                serious/irreversible injury or death.
+              </li>
+              <li>
+                <strong>F (Frequency/Duration):</strong> F1 = seldom/short exposure, F2 =
+                frequent/long exposure.
+              </li>
+              <li>
+                <strong>P (Possibility of avoidance):</strong> P1 = possible under certain
+                conditions, P2 = scarcely possible.
+              </li>
+            </ul>
+            <p>
+              Example: A guard interlock on a CNC lathe — S2 (amputation risk), F2 (frequent access
+              for loading), P2 (scarcely possible to avoid) gives PLr = e.
+            </p>
+            <p>
               <strong>Key point:</strong> The achieved PL must meet or exceed the PLr. If the
               calculation shows PL c but PLr is d, the safety system must be redesigned — typically
               by increasing the category (adding redundancy), improving component MTTFd, or
               increasing diagnostic coverage.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Key Parameters: MTTFd, DCavg and CCF
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Key parameters: MTTFd, DCavg and CCF</ContentEyebrow>
+
+          <ConceptBlock title="Three quantitative parameters, one architecture">
             <p>
               Three quantitative parameters, combined with the category architecture, determine the
               achieved Performance Level. Understanding these parameters is essential for
               interpreting safety system documentation and understanding why specific components and
               architectures are used.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  MTTFd — Mean Time To dangerous Failure
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The average time before a component experiences a dangerous failure mode.
-                  Classified into three ranges:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Low:</strong> 3 to 10 years
-                  </li>
-                  <li className="pl-1">
-                    <strong>Medium:</strong> 10 to 30 years
-                  </li>
-                  <li className="pl-1">
-                    <strong>High:</strong> 30 to 100 years
-                  </li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  Values are obtained from manufacturer data, reliability databases (SN 29500, FMEDA
-                  reports) or field experience. The channel MTTFd is calculated from individual
-                  component values using the parts count method.
-                </p>
-              </div>
+          <ConceptBlock title="MTTFd — Mean Time To dangerous Failure">
+            <p>
+              The average time before a component experiences a dangerous failure mode. Classified
+              into three ranges:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Low:</strong> 3 to 10 years.
+              </li>
+              <li>
+                <strong>Medium:</strong> 10 to 30 years.
+              </li>
+              <li>
+                <strong>High:</strong> 30 to 100 years.
+              </li>
+            </ul>
+            <p>
+              Values are obtained from manufacturer data, reliability databases (SN 29500, FMEDA
+              reports) or field experience. The channel MTTFd is calculated from individual
+              component values using the parts count method.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  DCavg — Average Diagnostic Coverage
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The percentage of dangerous failures detected by automatic diagnostic functions:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>None:</strong> DC less than 60%
-                  </li>
-                  <li className="pl-1">
-                    <strong>Low:</strong> 60% to less than 90%
-                  </li>
-                  <li className="pl-1">
-                    <strong>Medium:</strong> 90% to less than 99%
-                  </li>
-                  <li className="pl-1">
-                    <strong>High:</strong> 99% or greater
-                  </li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  Examples: Safety relay pulse testing on inputs (medium DC), feedback loop
-                  monitoring of contactors (high DC), plausibility checking between redundant
-                  sensors (high DC).
-                </p>
-              </div>
+          <ConceptBlock title="DCavg — Average Diagnostic Coverage">
+            <p>The percentage of dangerous failures detected by automatic diagnostic functions:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>None:</strong> DC less than 60%.
+              </li>
+              <li>
+                <strong>Low:</strong> 60% to less than 90%.
+              </li>
+              <li>
+                <strong>Medium:</strong> 90% to less than 99%.
+              </li>
+              <li>
+                <strong>High:</strong> 99% or greater.
+              </li>
+            </ul>
+            <p>
+              Examples: Safety relay pulse testing on inputs (medium DC), feedback loop monitoring
+              of contactors (high DC), plausibility checking between redundant sensors (high DC).
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  CCF — Common Cause Failure
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Measures resistance to faults that could affect both channels simultaneously. ISO
-                  13849-1 Annex F scores measures including:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Physical separation of signal paths</li>
-                  <li className="pl-1">
-                    Diversity of components (different manufacturers/technologies)
-                  </li>
-                  <li className="pl-1">Environmental protection (overvoltage, EMI, temperature)</li>
-                  <li className="pl-1">
-                    Well-designed processes (competence, training, management of change)
-                  </li>
-                </ul>
-                <p className="text-sm text-white mt-2">
-                  A minimum score of 65 out of 100 is required for Categories 2, 3 and 4.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="CCF — Common Cause Failure">
+            <p>
+              Measures resistance to faults that could affect both channels simultaneously. ISO
+              13849-1 Annex F scores measures including:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Physical separation of signal paths.</li>
+              <li>Diversity of components (different manufacturers/technologies).</li>
+              <li>Environmental protection (overvoltage, EMI, temperature).</li>
+              <li>Well-designed processes (competence, training, management of change).</li>
+            </ul>
+            <p>A minimum score of 65 out of 100 is required for Categories 2, 3 and 4.</p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Verification, Validation and SISTEMA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Verification, validation and SISTEMA</ContentEyebrow>
+
+          <ConceptBlock title="Confirming the system does what it is meant to under fault conditions">
             <p>
               ISO 13849-2 specifies validation requirements for safety-related control systems.
               Validation confirms that the safety system meets its specification and achieves the
               required PL under all foreseeable conditions, including fault conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">SISTEMA Software Tool</p>
-              <p className="text-sm text-white mb-3">
-                SISTEMA (Safety Integrity Software Tool for the Evaluation of Machine Applications)
-                from the German IFA is the industry-standard tool for ISO 13849-1 calculations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Free to download from the IFA website</li>
-                <li className="pl-1">
-                  Guides the user through defining subsystems and entering component data
-                </li>
-                <li className="pl-1">
-                  Manages component libraries from major safety device manufacturers
-                </li>
-                <li className="pl-1">
-                  Calculates the achieved PL and generates verification reports
-                </li>
-                <li className="pl-1">Highlights where the achieved PL does not meet the PLr</li>
-              </ul>
-            </div>
+          <ConceptBlock title="SISTEMA software tool">
+            <p>
+              SISTEMA (Safety Integrity Software Tool for the Evaluation of Machine Applications)
+              from the German IFA is the industry-standard tool for ISO 13849-1 calculations:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Free to download from the IFA website.</li>
+              <li>Guides the user through defining subsystems and entering component data.</li>
+              <li>Manages component libraries from major safety device manufacturers.</li>
+              <li>Calculates the achieved PL and generates verification reports.</li>
+              <li>Highlights where the achieved PL does not meet the PLr.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Validation Process</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Analysis:</strong> Review circuit diagrams, component specifications,
-                  failure mode analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> Functional tests under normal and fault conditions,
-                  environmental tests
-                </li>
-                <li className="pl-1">
-                  <strong>Fault simulation:</strong> Introduce simulated faults and verify the
-                  system responds correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Risk assessment, SISTEMA reports, test records,
-                  fault simulation results
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Validation process">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Analysis:</strong> Review circuit diagrams, component specifications,
+                failure mode analysis.
+              </li>
+              <li>
+                <strong>Testing:</strong> Functional tests under normal and fault conditions,
+                environmental tests.
+              </li>
+              <li>
+                <strong>Fault simulation:</strong> Introduce simulated faults and verify the system
+                responds correctly.
+              </li>
+              <li>
+                <strong>Documentation:</strong> Risk assessment, SISTEMA reports, test records,
+                fault simulation results.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance note:</strong> As a maintenance technician, you will not typically
               perform PL calculations, but you must understand the documentation and ensure that any
               component replacement maintains the original PL. Replacing a PL d safety relay with a
               PL c device would reduce the safety integrity and require re-validation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            ISO 13849 vs IEC 62061
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>ISO 13849 vs IEC 62061</ContentEyebrow>
+
+          <ConceptBlock title="Two harmonised standards, different measures">
             <p>
               Two standards are available for designing safety-related control systems for
               machinery. Understanding the differences helps when working with safety documentation
               and communicating with design engineers.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">ISO 13849-1</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">IEC 62061</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Measure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Performance Level (PL a-e)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety Integrity Level (SIL 1-3)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technologies</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        All (mechanical, hydraulic, pneumatic, electrical)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">E/E/PE only</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Architecture</td>
-                      <td className="border border-white/10 px-3 py-2">Categories B, 1, 2, 3, 4</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Subsystem architecture A, B, C, D
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Calculation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simplified (tables) or detailed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed PFHd calculation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tool</td>
-                      <td className="border border-white/10 px-3 py-2">SISTEMA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Manufacturer-specific or spreadsheet
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">ISO 13849-1</th>
+                    <th className="py-2 font-medium text-white">IEC 62061</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Measure</td>
+                    <td className="py-2 pr-4">Performance Level (PL a-e)</td>
+                    <td className="py-2">Safety Integrity Level (SIL 1-3)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Technologies</td>
+                    <td className="py-2 pr-4">
+                      All (mechanical, hydraulic, pneumatic, electrical)
+                    </td>
+                    <td className="py-2">E/E/PE only</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Architecture</td>
+                    <td className="py-2 pr-4">Categories B, 1, 2, 3, 4</td>
+                    <td className="py-2">Subsystem architecture A, B, C, D</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Calculation</td>
+                    <td className="py-2 pr-4">Simplified (tables) or detailed</td>
+                    <td className="py-2">Detailed PFHd calculation</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Tool</td>
+                    <td className="py-2 pr-4">SISTEMA</td>
+                    <td className="py-2">Manufacturer-specific or spreadsheet</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Both standards are harmonised under the Machinery Directive and
-              provide a presumption of conformity. ISO 13849-1 is more widely used in the UK for
-              general machinery applications, particularly where non-electrical technologies are
-              involved. IEC 62061 is preferred for complex programmable electronic safety systems.
+            <p className="italic">
+              Both standards are harmonised under the Machinery Directive and provide a presumption
+              of conformity. ISO 13849-1 is more widely used in the UK for general machinery
+              applications, particularly where non-electrical technologies are involved. IEC 62061
+              is preferred for complex programmable electronic safety systems.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Categories B/1/2/3/4 describe the architecture (fault resistance and diagnostics); the achieved Performance Level is then calculated from category plus MTTFd, DCavg and CCF.',
+              'PL a is the lowest reliability and PL e the highest, each defined by a PFHd (probability of dangerous failure per hour) range — the achieved PL must meet or exceed the required PLr from the risk assessment.',
+              'PLr comes from a risk graph using severity (S1/S2), frequency/duration (F1/F2) and possibility of avoidance (P1/P2) — never assumed, always assessed.',
+              'MTTFd is classified low/medium/high (3-10 / 10-30 / 30-100 years); DCavg is none/low/medium/high (<60% / 60-90% / 90-99% / ≥99%); CCF is scored against a 100-point checklist with a minimum of 65 required for Categories 2-4.',
+              'Category 3 tolerates a single fault via redundancy; Category 4 additionally tolerates an accumulation of faults — the most stringent architecture.',
+              'SISTEMA (free, from the German IFA) is the industry-standard tool for calculating achieved PL and generating verification reports.',
+              'A replacement component must maintain or exceed the original PL/SIL rating — swapping in a lower-rated device reduces safety integrity and requires re-validation.',
+              'ISO 13849-1 (Performance Levels, all technologies) and IEC 62061 (SIL, electrical/electronic/programmable only) are both harmonised under the Machinery Directive — either can be used.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Safety Relays and Controllers
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-5">
-              Next: Functional Safety Principles
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safety Relays and Controllers
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Functional Safety Principles
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

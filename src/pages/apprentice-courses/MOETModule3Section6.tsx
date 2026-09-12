@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '3.6.1',
-      title: 'Solar PV integration',
-      description: 'Solar photovoltaic systems, installation and grid connection',
-      icon: Sun,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section6-1',
-    },
-    {
-      number: '3.6.2',
-      title: 'Wind and other renewables (overview)',
-      description: 'Wind power, hydro and other renewable energy technologies',
-      icon: Wind,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section6-2',
-    },
-    {
-      number: '3.6.3',
-      title: 'Energy storage systems',
-      description: 'Battery storage, grid-scale storage and integration methods',
-      icon: Battery,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section6-3',
-    },
-    {
-      number: '3.6.4',
-      title: 'Smart grids and smart meters',
-      description: 'Smart grid technology, smart metering and demand management',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section6-4',
-    },
-    {
-      number: '3.6.5',
-      title: 'Electric vehicle charging infrastructure',
-      description: 'EV charging systems, installation and grid integration',
-      icon: Car,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section6-5',
-    },
-  ];
-
+  {
+    number: '3.6.1',
+    title: 'Solar PV integration',
+    description: 'Solar photovoltaic systems, installation and grid connection',
+    icon: Sun,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section6-1',
+  },
+  {
+    number: '3.6.2',
+    title: 'Wind and other renewables (overview)',
+    description: 'Wind power, hydro and other renewable energy technologies',
+    icon: Wind,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section6-2',
+  },
+  {
+    number: '3.6.3',
+    title: 'Energy storage systems',
+    description: 'Battery storage, grid-scale storage and integration methods',
+    icon: Battery,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section6-3',
+  },
+  {
+    number: '3.6.4',
+    title: 'Smart grids and smart meters',
+    description: 'Smart grid technology, smart metering and demand management',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section6-4',
+  },
+  {
+    number: '3.6.5',
+    title: 'Electric vehicle charging infrastructure',
+    description: 'EV charging systems, installation and grid integration',
+    icon: Car,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section6-5',
+  },
+];
 
 const MOETModule3Section6 = () => {
   useSEO(

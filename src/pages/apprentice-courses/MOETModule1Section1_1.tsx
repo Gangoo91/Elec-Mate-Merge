@@ -1,8 +1,57 @@
-import { ArrowLeft, ClipboardCheck, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.1 · Subsection 1 — Permit to Work Systems
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Safe systems of work."
+ *              · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *              · "Electrical. Electrical isolation and deisolation
+ *                 requirements: lockout tagout and testing for dead."
+ *              · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Reference conversion for the MOET redesign — the pattern every other
+ * subsection page follows. Content preserved from the original; structure,
+ * shell and reading measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { ControlLayers } from '@/components/study-centre/diagrams/moet';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Permit to Work Systems - MOET Module 1.1.1';
@@ -121,8 +170,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'What must be confirmed BEFORE a permit for work on electrical plant is issued?',
+    question: 'What must be confirmed BEFORE a permit for work on electrical plant is issued?',
     options: [
       'That the specified isolations have actually been applied, secured, and proved — not just planned',
       'That the weather forecast is acceptable',
@@ -260,123 +308,78 @@ const faqs = [
 ];
 
 const MOETModule1Section1_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <ClipboardCheck className="h-4 w-4" />
-            <span>Module 1.1.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Permit to Work Systems
-          </h1>
-          <p className="text-white">
-            The formal safe system of work that controls high-risk maintenance — what a permit is,
-            when one is required, and how the lifecycle keeps people alive
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.1 · Subsection 1"
+        title="Permit to Work Systems"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            The formal safe system of work that controls high-risk maintenance. What a permit is,
+            when one is required, and how the lifecycle keeps people alive — including the two
+            stages that kill people when they get skipped.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>A permit is a control, not a safeguard:</strong> it records that defined
-                precautions ARE in place
-              </li>
-              <li className="pl-1">
-                <strong>Lifecycle:</strong> request → risk assessment → authorisation → issue and
-                acceptance → work → handback and cancellation
-              </li>
-              <li className="pl-1">
-                <strong>Separation of duties:</strong> the issuer verifies; the holder works — never
-                the same person
-              </li>
-              <li className="pl-1">
-                <strong>Guidance:</strong> HSE HSG250 — Guidance on permit-to-work systems
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Context — Why This Matters
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>High-risk maintenance kills</strong> when the people controlling the plant
-                and the people working on it stop communicating
-              </li>
-              <li className="pl-1">
-                <strong>Permits force that communication</strong> — in writing, with signatures and
-                time limits
-              </li>
-              <li className="pl-1">
-                <strong>ST1426 requirement:</strong> working under safe systems of work is a core
-                MOET competency
-              </li>
-              <li className="pl-1">
-                <strong>Legal framework:</strong> Health and Safety at Work etc. Act 1974 and the
-                Electricity at Work Regulations 1989
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'A permit is a control, not a safeguard. It records that defined precautions ARE in place — the paper itself stops nothing.',
+              'Six stages: request → risk assessment → authorisation → issue and acceptance → work → handback and cancellation.',
+              'Separation of duties: the issuer verifies, the holder works. Never the same person.',
+              'HSE HSG250 is the guidance your site procedure is almost certainly built on.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You&apos;ll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Define what a permit to work is — and, just as importantly, what it is not',
-              'Identify the categories of work that require a permit and explain why over-permitting weakens the system',
-              'Describe every stage of the permit lifecycle from request to cancellation',
-              'Explain the roles of issuing authority, authorised person, competent person, and permit holder — and why issuer and worker are separated',
-              'Show how a permit interlocks with safe isolation and lock-out/tag-out on a real maintenance task',
-              'Recognise common permit failure modes and explain how permit records feed maintenance history and your apprenticeship portfolio',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Prerequisites
+            items={[
+              {
+                term: 'Risk assessment',
+                gist: 'The formal look at what could hurt someone on a specific job, and what will be done about it. A permit documents the controls a risk assessment demanded — it never replaces one.',
+                where: '1.3',
+              },
+              {
+                term: 'Safe isolation',
+                gist: 'Identify the supplies, switch off, isolate, and prove dead at the point of work. This is the act that actually makes plant safe; the permit only records that it was done.',
+                where: '1.1.2',
+              },
+              {
+                term: 'Lock-out / tag-out (LOTO)',
+                gist: 'Personal locks, multi-lock hasps and tags that physically stop an isolation being reversed while people are still working on the plant.',
+                where: '1.1.3',
+              },
+              {
+                term: 'The legal duties',
+                gist: 'The Health and Safety at Work etc. Act 1974 sets the general duty to work safely; the Electricity at Work Regulations 1989 set the electrical ones. Permits are how a site discharges those duties on its highest-risk work.',
+                where: '1.4',
+              },
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <LearningOutcomes
+            outcomes={[
+              'Define what a permit to work is — and, just as importantly, what it is not.',
+              'Identify the categories of work that require a permit, and explain why over-permitting weakens the system.',
+              'Describe every stage of the permit lifecycle from request to cancellation.',
+              'Explain the roles of issuing authority, authorised person, competent person and permit holder — and why issuer and worker are separated.',
+              'Show how a permit interlocks with safe isolation and lock-out/tag-out on a real maintenance task.',
+              'Recognise common permit failure modes, and explain how permit records feed maintenance history and your apprenticeship portfolio.',
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: What a Permit to Work Is — and Is Not */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What a Permit to Work Is — and Is Not
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What a permit actually is</ContentEyebrow>
+
+          <ConceptBlock
+            title="A written declaration that the plant has been made safe — not the thing that makes it safe"
+            plainEnglish="Someone has gone and checked, in person, that the isolations and precautions are really on. The permit is their signature on that check, plus the rules for keeping it that way."
+            onSite="If the permit in your hand lists an isolation you cannot physically see locked off, stop. The paper describes a safety that may not exist."
+          >
             <p>
               A permit to work (PTW) is a formal, documented safe system of work used to control
               activities where the risk is high and ordinary procedures are not enough on their own.
@@ -387,8 +390,8 @@ const MOETModule1Section1_1 = () => {
               procedure will almost certainly be built on.
             </p>
             <p>
-              The permit form itself does two jobs at once. First, it is a checklist and record: the
-              work to be done, how the equipment has been prepared, the hazards that remain, the
+              The permit form does two jobs at once. First, it is a checklist and record: the work
+              to be done, how the equipment has been prepared, the hazards that remain, the
               precautions taken against them, the people authorised to do the work, and when the
               authority to work expires. Second — and this is the part people underestimate — it is
               a communication tool. Employers must train their staff in its use, and the form should
@@ -397,834 +400,677 @@ const MOETModule1Section1_1 = () => {
               about to open it up, and it captures that conversation in writing where it cannot be
               misremembered.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                What a Typical Permit Records
-              </p>
-              <div className="grid sm:grid-cols-2 gap-2">
-                {[
-                  'The work to be done — a specific task, not a vague heading',
-                  'How the equipment has been prepared (isolated, drained, purged, earthed)',
-                  'The potential hazards that remain during the work',
-                  'The precautions to be taken against those hazards',
-                  'The person or persons authorised to carry out the work',
-                  'When the permit expires — the time limit on the authority to work',
-                  'An authorisation section signed by the person issuing the permit',
-                  'A work-completed section signed at handback before cancellation',
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-2 text-sm text-white">
-                    <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <ConceptBlock title="What a typical permit records">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>The work to be done — a specific task, not a vague heading.</li>
+              <li>How the equipment has been prepared (isolated, drained, purged, earthed).</li>
+              <li>The potential hazards that remain during the work.</li>
+              <li>The precautions to be taken against those hazards.</li>
+              <li>The person or persons authorised to carry out the work.</li>
+              <li>When the permit expires — the time limit on the authority to work.</li>
+              <li>An authorisation section signed by the person issuing the permit.</li>
+              <li>A work-completed section signed at handback, before cancellation.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-              <p className="text-sm font-medium text-red-400 mb-3">What a Permit Is NOT</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Not a safeguard in itself.</strong> The paper stops nothing. Only the
-                  isolations, locks, earths, barriers, and gas tests it records actually protect
-                  anyone. A permit describing precautions that were never applied is a trap.
-                </li>
-                <li className="pl-1">
-                  <strong>Not a replacement for risk assessment.</strong> The permit is the output
-                  of a risk assessment for a specific task on a specific day — it documents the
-                  controls the assessment demanded. Assessment first, permit second, always.
-                </li>
-                <li className="pl-1">
-                  <strong>Not a general licence.</strong> It authorises one defined task on one
-                  defined item of plant within one defined boundary and time window. Anything
-                  outside that — a different machine, an extra job, an extended area — is not
-                  covered, however convenient it would be.
-                </li>
-                <li className="pl-1">
-                  <strong>Not a transfer of responsibility.</strong> Everyone in the chain — the
-                  employer, the issuing authority, the permit holder, the working party — keeps
-                  their own legal duties under the Health and Safety at Work etc. Act 1974. A
-                  signature shares responsibility; it never offloads it.
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="Treating the permit as the safeguard"
+            whatHappens={
+              <>
+                <p>
+                  The permit gets read as proof that the job is safe. It is four things it is not:
+                </p>
+                <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                  <li>
+                    <strong>Not a safeguard in itself.</strong> The paper stops nothing. Only the
+                    isolations, locks, earths, barriers and gas tests it records actually protect
+                    anyone. A permit describing precautions that were never applied is a trap.
+                  </li>
+                  <li>
+                    <strong>Not a replacement for risk assessment.</strong> The permit is the output
+                    of a risk assessment for a specific task on a specific day — it documents the
+                    controls the assessment demanded. Assessment first, permit second, always.
+                  </li>
+                  <li>
+                    <strong>Not a general licence.</strong> It authorises one defined task on one
+                    item of plant within one boundary and time window.
+                  </li>
+                  <li>
+                    <strong>Not a transfer of responsibility.</strong> Everyone in the chain keeps
+                    their own duties under the Health and Safety at Work etc. Act 1974. A signature
+                    shares responsibility; it never offloads it.
+                  </li>
+                </ul>
+              </>
+            }
+            doInstead={
+              <>
+                Read a permit as a claim to be checked, not a guarantee to be trusted. It authorises{' '}
+                <strong>one</strong> defined task, on <strong>one</strong> item of plant, inside{' '}
+                <strong>one</strong> boundary and time window. Anything outside that is not covered,
+                however convenient it would be.
+              </>
+            }
+          />
 
-            <p>
-              Hold on to one sentence as you work through this page:{' '}
-              <strong>
-                a permit to work is a record that the plant has been made safe and a set of rules
-                for keeping it that way — it is not the thing that makes it safe.
-              </strong>{' '}
-              Every failure mode you will meet in section 07 is, at root, someone forgetting that
-              sentence.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 2: When a Permit Is Required */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            When a Permit Is Required — and When It Is Not
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>When a permit is required</ContentEyebrow>
+
+          <ConceptBlock
+            title="Reserved for work where the standard controls are not enough on their own"
+            onSite="You do not decide which jobs need permits — the site rules do. Your job is to know them, recognise when a task falls into a permit-controlled category, and refuse to start until a valid permit has been issued and accepted."
+          >
             <p>
               Permits are reserved for work where the consequences of getting it wrong are severe
-              and where the standard controls — training, procedures, safe isolation — need an
-              extra, formally managed layer on top. Your site&apos;s rules will name the
-              permit-controlled activities precisely, but across UK industry the same families of
-              work appear again and again.
+              and where training, procedures and safe isolation need an extra, formally managed
+              layer on top. Your site&apos;s rules name the permit-controlled activities precisely,
+              but across UK industry the same families of work appear again and again:
             </p>
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>High voltage electrical work.</strong> Switching, earthing and maintenance
+                on HV equipment is permit-controlled on virtually every site that has it. The permit
+                system ensures the equipment is isolated — and, where necessary, earthed — before
+                the task begins, and re-energised safely and deliberately afterwards. HV permits are
+                typically issued only by senior authorised persons appointed in writing under the
+                site electrical safety rules.
+              </li>
+              <li>
+                <strong>Confined space entry.</strong> Tanks, vessels, ducts, pits and chambers
+                where atmosphere, access and escape are all hazardous. Entry permits specify gas
+                testing, ventilation, rescue arrangements, and a top-man in communication with those
+                inside. Many sites use a dedicated entry permit form so these precautions get proper
+                emphasis.
+              </li>
+              <li>
+                <strong>Hot work.</strong> Welding, grinding, brazing and flame cutting outside
+                designated workshop areas — controlling combustibles, extinguishers at the point of
+                work, a fire watch during and after, and checks of adjacent areas sparks could
+                reach.
+              </li>
+              <li>
+                <strong>Work on stored-energy systems.</strong> Pressurised pipework and vessels,
+                hydraulic and pneumatic systems, capacitor banks, battery systems, springs under
+                tension, suspended loads. Opening the breaker is not enough when the danger is
+                energy already stored in the plant — the permit specifies how each energy source is
+                released, restrained or discharged, and how that is verified before work begins.
+              </li>
+              <li>
+                <strong>Work near live plant or interacting hazards.</strong> Work at height above
+                operating machinery, excavation near buried services, or any task where several
+                trades and hazards share the same space at the same time. Here the permit earns its
+                keep as a coordination tool — it is often the only document everyone involved has
+                actually read and signed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              {[
-                {
-                  title: 'High voltage electrical work',
-                  colour: 'text-red-400',
-                  border: 'border-red-500/30',
-                  bg: 'bg-red-500/10',
-                  content:
-                    'Switching, earthing, and maintenance on high voltage equipment is permit-controlled on virtually every site that has it. The permit system ensures the equipment is isolated — and, where necessary, earthed — before the task begins, and that it is re-energised safely and deliberately afterwards. HV permits are typically issued only by senior authorised persons appointed in writing under the site electrical safety rules.',
-                },
-                {
-                  title: 'Confined space entry',
-                  colour: 'text-purple-400',
-                  border: 'border-purple-500/30',
-                  bg: 'bg-purple-500/10',
-                  content:
-                    'Tanks, vessels, ducts, pits, and chambers where atmosphere, access, and escape are all hazardous. Entry permits specify gas testing, ventilation, rescue arrangements, and a top-man in communication with those inside. Many sites use a dedicated confined-space entry permit form so that these specific precautions get proper emphasis rather than being squeezed into a general form.',
-                },
-                {
-                  title: 'Hot work',
-                  colour: 'text-amber-400',
-                  border: 'border-amber-500/30',
-                  bg: 'bg-amber-500/10',
-                  content:
-                    'Welding, grinding, brazing, and flame cutting outside designated workshop areas. The permit controls removal or protection of combustible materials, fire extinguishers at the point of work, a fire watch during and after the task, and checks of adjacent areas that sparks could reach. Like confined-space entry, hot work commonly has its own dedicated permit form.',
-                },
-                {
-                  title: 'Work on stored-energy systems',
-                  colour: 'text-blue-400',
-                  border: 'border-blue-500/30',
-                  bg: 'bg-blue-500/10',
-                  content:
-                    'Pressurised pipework and vessels, hydraulic and pneumatic systems, capacitor banks, battery systems, springs under tension, and suspended loads. Opening the circuit breaker is not enough when the danger is energy already stored in the plant — the permit specifies how each energy source is released, restrained, or discharged, and how that is verified before work begins.',
-                },
-                {
-                  title: 'Work near live plant or exceptional interacting hazards',
-                  colour: 'text-green-400',
-                  border: 'border-green-500/30',
-                  bg: 'bg-green-500/10',
-                  content:
-                    'Work at height above or beside operating machinery, excavation near buried services, maintenance in areas where flammable liquids or gases are processed, or any task where several trades and hazards share the same space at the same time. Here the permit earns its keep as a coordination tool — it is often the only document that everyone involved has actually read and signed.',
-                },
-              ].map((item) => (
-                <div
-                  key={item.title}
-                  className={`p-4 rounded-lg ${item.bg} border-l-2 ${item.border}`}
-                >
-                  <p className={`text-sm font-medium ${item.colour} mb-2`}>{item.title}</p>
-                  <p className="text-sm text-white">{item.content}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Why Not Permit Everything?
-              </p>
-              <p className="text-sm text-white mb-2">
-                If permits make dangerous work safer, why not require one for every job? Because a
-                permit system runs on attention, and attention is finite. A permit is meant to be a
-                signal: <em>this task is different — stop, check, verify</em>. When every lamp
-                change and filter swap needs a permit, issuing becomes an assembly line,
-                verification visits become signatures from a desk, and the working party learns
-                that permits are paperwork rather than protection.
-              </p>
-              <p className="text-sm text-white">
-                The result is the worst of both worlds: routine jobs are slowed down for no safety
-                gain, and the genuinely lethal jobs — the HV switching, the vessel entry — receive
-                the same devalued rubber stamp as everything else. A good permit system is
-                deliberately selective. Routine maintenance runs on safe working procedures and
-                safe isolation; permits are saved for the work that truly needs an independent,
-                documented layer of control.
-              </p>
-            </div>
-
+          <ConceptBlock
+            title="Why not permit everything?"
+            plainEnglish="A permit is meant to mean 'this one is different — stop and check'. If everything needs one, it stops meaning anything."
+          >
             <p>
-              As a maintenance technician you do not decide which jobs need permits — the site
-              rules do. Your responsibilities are to know those rules, to recognise when a task you
-              have been given falls into a permit-controlled category, and to refuse to start such
-              a task until a valid permit has been issued and accepted. &quot;I did not realise it
-              needed a permit&quot; has appeared in too many incident investigations already.
+              If permits make dangerous work safer, why not require one for every job? Because a
+              permit system runs on attention, and attention is finite. When every lamp change and
+              filter swap needs a permit, issuing becomes an assembly line, verification visits
+              become signatures from a desk, and the working party learns that permits are paperwork
+              rather than protection.
             </p>
-          </div>
-        </section>
+            <p>
+              The result is the worst of both worlds: routine jobs slowed down for no safety gain,
+              and the genuinely lethal jobs — the HV switching, the vessel entry — receiving the
+              same devalued rubber stamp as everything else. A good permit system is deliberately
+              selective.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 3: The Permit Lifecycle */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            The Permit Lifecycle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The permit lifecycle</ContentEyebrow>
+
+          <ConceptBlock title="Six stages, each one a positive confirmation">
             <p>
               Every permit follows the same lifecycle, whatever the form looks like on your site.
               Each stage exists because skipping it has killed people. Learn the sequence until you
               can recite it — you will be expected to know it at End-Point Assessment, and more
               importantly you will be expected to live it on site.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              {[
-                {
-                  step: '1',
-                  title: 'Request and Definition',
-                  colour: 'text-blue-400',
-                  border: 'border-blue-500/30',
-                  bg: 'bg-blue-500/10',
-                  content:
-                    'The work is requested — typically through the maintenance planning system — and defined precisely: which item of plant, which task, which boundary. Vague scope is the enemy of every later stage. "Repair pump 3" is not a permit task; "replace the mechanical seal on cooling water pump P-103" is.',
-                },
-                {
-                  step: '2',
-                  title: 'Risk Assessment and Precaution Planning',
-                  colour: 'text-purple-400',
-                  border: 'border-purple-500/30',
-                  bg: 'bg-purple-500/10',
-                  content:
-                    'The hazards of the task are assessed and the precautions specified: which points of isolation, which drains and vents, which gas tests, which PPE, which rescue arrangements. This is where the method statement and the permit requirements are decided. The permit will document the outcome of this assessment — it never substitutes for it.',
-                },
-                {
-                  step: '3',
-                  title: 'Preparation and Authorisation',
-                  colour: 'text-green-400',
-                  border: 'border-green-500/30',
-                  bg: 'bg-green-500/10',
-                  content:
-                    'The plant is actually prepared: isolated, locked, tagged, drained, purged, proved dead or gas-tested as required. The authorised person then verifies — at the plant, not from a desk — that every precaution the assessment demanded is genuinely in place. Only precautions that exist may be written on a permit.',
-                },
-                {
-                  step: '4',
-                  title: 'Issue and Acceptance',
-                  colour: 'text-amber-400',
-                  border: 'border-amber-500/30',
-                  bg: 'bg-amber-500/10',
-                  content:
-                    'The issuing authority signs the permit, authorising the defined work under the recorded conditions and time limits. The permit holder reads it, walks the job if needed, and signs acceptance — a personal declaration that they understand the hazards, the precautions, and the boundary, and will keep the working party inside it. Both signatures are commitments, not formalities.',
-                },
-                {
-                  step: '5',
-                  title: 'Work Within the Permit',
-                  colour: 'text-red-400',
-                  border: 'border-red-500/30',
-                  bg: 'bg-red-500/10',
-                  content:
-                    'The task is carried out exactly as permitted. The permit (or a copy) is displayed at the point of work. If anything changes — the scope grows, an unexpected hazard appears, the time limit approaches, the job must pause — work stops and the issuing authority decides what happens next. Nobody in the working party ever amends the permit.',
-                },
-                {
-                  step: '6',
-                  title: 'Handback and Cancellation',
-                  colour: 'text-elec-yellow',
-                  border: 'border-elec-yellow/30',
-                  bg: 'bg-elec-yellow/10',
-                  content:
-                    'The permit holder signs the work-complete section: task finished (or left in a defined safe state), working party, tools, and temporary equipment clear. The issuing authority verifies, cancels the permit, and only then authorises removal of isolations and return to service. The cancelled permit is retained as a record.',
-                },
-              ].map((item) => (
-                <div
-                  key={item.step}
-                  className={`p-4 rounded-lg ${item.bg} border-l-2 ${item.border}`}
-                >
-                  <p className={`text-sm font-medium ${item.colour} mb-2`}>
-                    Stage {item.step}: {item.title}
-                  </p>
-                  <p className="text-sm text-white">{item.content}</p>
-                </div>
-              ))}
-            </div>
+          <ConceptBlock title="What happens at each stage">
+            <ul className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Request and definition.</strong> The work is requested through the
+                maintenance planning system and defined precisely: which plant, which task, which
+                boundary. Vague scope is the enemy of every later stage. &quot;Repair pump 3&quot;
+                is not a permit task; &quot;replace the mechanical seal on cooling water pump
+                P-103&quot; is.
+              </li>
+              <li>
+                <strong>Risk assessment and precaution planning.</strong> Hazards assessed,
+                precautions specified — points of isolation, drains and vents, gas tests, PPE,
+                rescue arrangements. This is where the method statement and the permit requirements
+                are decided. The permit documents the outcome of this assessment; it never
+                substitutes for it.
+              </li>
+              <li>
+                <strong>Preparation and authorisation.</strong> The plant is actually prepared:
+                isolated, locked, tagged, drained, purged, proved dead or gas-tested as required.
+                The authorised person then verifies — at the plant, not from a desk — that every
+                precaution is genuinely in place. Only precautions that exist may be written on a
+                permit.
+              </li>
+              <li>
+                <strong>Issue and acceptance.</strong> The issuing authority signs, authorising the
+                defined work under the recorded conditions and time limits. The permit holder reads
+                it, walks the job if needed, and signs acceptance. Both signatures are commitments,
+                not formalities.
+              </li>
+              <li>
+                <strong>Work within the permit.</strong> The task is carried out exactly as
+                permitted, with the permit displayed at the point of work. If anything changes, work
+                stops and the issuing authority decides what happens next. Nobody in the working
+                party ever amends the permit.
+              </li>
+              <li>
+                <strong>Handback and cancellation.</strong> The holder signs work-complete: task
+                finished or left in a defined safe state, working party, tools and temporary
+                equipment clear. The issuing authority verifies, cancels the permit, and only then
+                authorises removal of isolations and return to service.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Critical Principle</p>
-              <p className="text-sm text-white">
-                The lifecycle is a <strong>chain of positive confirmations</strong>. At no point
-                does the system rely on anyone assuming that something was probably done. The
-                precautions are verified before issue; the holder confirms understanding before
-                work; the holder confirms clearance before cancellation; the issuer confirms
-                cancellation before re-energisation. Break any link — issue before verifying,
-                re-energise before cancelling — and the whole chain fails at once.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 4: Roles and Responsibilities */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Roles and Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The lifecycle is a chain of positive confirmations"
+            onSite="At no point does the system rely on anyone assuming something was probably done."
+          >
             <p>
-              A permit system names people, not job titles in the abstract. Exact titles vary
-              between sites — some say &quot;issuing authority&quot;, others &quot;permit
-              issuer&quot; or &quot;senior authorised person&quot; — but the functions are always
-              the same, and so is the golden rule that separates them.
+              The precautions are verified before issue; the holder confirms understanding before
+              work; the holder confirms clearance before cancellation; the issuer confirms
+              cancellation before re-energisation. Break any link — issue before verifying,
+              re-energise before cancelling — and the whole chain fails at once.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-blue-400 mb-2">Issuing Authority</h3>
-                <p className="text-sm text-white">
-                  The person formally empowered by the site to issue permits for a class of work.
-                  They own the system for that job: they confirm the risk assessment and
-                  precautions, verify the plant preparation at the point of work, sign the
-                  authorisation, control any suspension or revalidation, and cancel the permit at
-                  handback. They must be appointed in writing and trained for the role — permit
-                  issue is a named, accountable duty, never something anyone senior simply picks
-                  up.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/30">
-                <h3 className="text-sm font-medium text-purple-400 mb-2">Authorised Person</h3>
-                <p className="text-sm text-white">
-                  On electrical systems in particular, the authorised person is the individual
-                  appointed under the site&apos;s electrical safety rules to carry out isolation,
-                  switching, and earthing on defined equipment. For high voltage work this
-                  appointment is formal and specific — named equipment, named operations. The
-                  authorised person applies and secures the isolations that the permit will record,
-                  and proves them effective. On many sites the issuing authority and authorised
-                  person are the same individual for LV work; on HV systems the roles and their
-                  appointments are usually distinct and tightly defined.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/30">
-                <h3 className="text-sm font-medium text-green-400 mb-2">Competent Person</h3>
-                <p className="text-sm text-white">
-                  Anyone carrying out the work must be competent for it — possessing the training,
-                  knowledge, and experience the task demands, or working under appropriate
-                  supervision while gaining them. This duty comes straight from the Electricity at
-                  Work Regulations 1989 for electrical work and applies across the working party.
-                  As an apprentice you are a member of the working party under supervision: named
-                  on the permit briefing, bound by its conditions, and entitled — and expected — to
-                  stop and ask when anything is unclear.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/30">
-                <h3 className="text-sm font-medium text-amber-400 mb-2">Permit Holder</h3>
-                <p className="text-sm text-white">
-                  The competent person in charge of carrying out the work — usually the supervisor
-                  or lead technician of the working party. The holder signs acceptance, briefs the
-                  working party on the hazards, precautions, and boundary, keeps the permit at the
-                  point of work, ensures nobody strays outside its scope, and signs the
-                  work-complete declaration at handback. While the permit is live, the holder is
-                  personally responsible for what happens inside its boundary.
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Golden Rule: Issuer and Worker Are Separated
-              </p>
-              <p className="text-sm text-white mb-2">
-                The person who issues the permit should not be the person who works under it. This
-                is not bureaucracy — it is the entire safety argument of the system. The issuer
-                checks the plant with fresh eyes and no stake in starting the job quickly. The
-                holder accepts conditions someone else has independently verified. Two different
-                people must each be satisfied, on their own judgement, before work begins.
-              </p>
-              <p className="text-sm text-white">
-                Collapse the two roles into one and you lose the independent check: the same person
-                who missed a second supply into the panel also signs the permit saying there
-                isn&apos;t one. Where a very small site genuinely cannot separate the roles for a
-                particular job, that situation should be recognised in the site procedure as an
-                exception with compensating controls — never quietly accepted as normal practice.
-              </p>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ContentEyebrow>Roles and responsibilities</ContentEyebrow>
 
-        {/* Section 5: Permits, Safe Isolation and LOTO */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            How Permits Interlock with Safe Isolation and LOTO
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="A permit system names people, not job titles in the abstract"
+            plainEnglish="Titles vary between sites. The four functions never do — and neither does the rule that separates them."
+          >
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Issuing authority.</strong> Formally empowered by the site to issue permits
+                for a class of work. They confirm the risk assessment and precautions, verify the
+                plant preparation at the point of work, sign the authorisation, control any
+                suspension or revalidation, and cancel the permit at handback. Appointed in writing
+                and trained — permit issue is a named, accountable duty, never something anyone
+                senior simply picks up.
+              </li>
+              <li>
+                <strong>Authorised person.</strong> Appointed under the site&apos;s electrical
+                safety rules to carry out isolation, switching and earthing on defined equipment.
+                They apply and secure the isolations the permit records, and prove them effective.
+                On many sites this is the same individual as the issuing authority for LV work; on
+                HV the roles are usually distinct and tightly defined.
+              </li>
+              <li>
+                <strong>Competent person.</strong> Anyone carrying out the work must have the
+                training, knowledge and experience the task demands, or be working under appropriate
+                supervision while gaining them. This duty comes straight from the Electricity at
+                Work Regulations 1989. As an apprentice you are a member of the working party under
+                supervision — named on the permit briefing, bound by its conditions, and entitled
+                and expected to stop and ask when anything is unclear.
+              </li>
+              <li>
+                <strong>Permit holder.</strong> The competent person in charge of the work. Signs
+                acceptance, briefs the working party on hazards, precautions and boundary, keeps the
+                permit at the point of work, ensures nobody strays outside its scope, and signs the
+                work-complete declaration. While the permit is live, the holder is personally
+                responsible for what happens inside its boundary.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Collapsing the issuer and the worker into one person"
+            whatHappens={
+              <>
+                You lose the independent check — the entire safety argument of the system. The same
+                person who missed a second supply into the panel also signs the permit saying there
+                isn&apos;t one. There is no second pair of eyes, because the assumptions that caused
+                the error also signed it off as safe.
+              </>
+            }
+            doInstead={
+              <>
+                Keep them separate — this is the golden rule of every permit system, and it is not
+                bureaucracy. The issuer checks the plant with fresh eyes and no stake in starting
+                the job quickly; the holder accepts conditions someone else has independently
+                verified. Two different people must each be satisfied, on their own judgement,
+                before work begins. Where a very small site genuinely cannot separate the roles for
+                a particular job, that should be a documented exception with compensating controls —
+                never quietly accepted as normal practice.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Permits, safe isolation and LOTO</ContentEyebrow>
+
+          <ConceptBlock title="A permit never works alone">
             <p>
-              A permit never works alone. On electrical maintenance it sits on top of two things
-              you will study in the next pages of this module: the safe isolation procedure
-              (module 1.1.2) and lock-out/tag-out (module 1.1.3). The three form one layered
-              system:
+              On electrical maintenance a permit sits on top of two things you will study in the
+              next pages of this module: the safe isolation procedure (1.1.2) and lock-out/tag-out
+              (1.1.3). The three form one layered system — and learners routinely collapse them into
+              a single idea, which is exactly the confusion that gets people hurt.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <div className="space-y-3">
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-blue-400 mb-1">
-                    Safe isolation makes the plant dead
-                  </p>
-                  <p className="text-xs text-white">
-                    The correct supplies are identified, switched off, isolated, and proved dead at
-                    the point of work. This is the technical act that removes the hazard.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-green-400 mb-1">
-                    Lock-out/tag-out keeps it dead
-                  </p>
-                  <p className="text-xs text-white">
-                    Personal locks, multi-lock hasps, and tags physically secure each point of
-                    isolation so it cannot be re-closed while anyone is working. BS
-                    7671:2018+A4:2026 makes the underlying requirement explicit: Regulation 464.2
-                    requires suitable means to prevent electrically powered equipment from being
-                    inadvertently reactivated during mechanical maintenance — typically isolation
-                    with lock-off devices, removable fuses with lockable carriers, padlocked
-                    isolators, or withdrawal of control keys. Chapter 46 of BS 7671 covers these
-                    isolation and switching measures for preventing or removing danger.
-                  </p>
-                </div>
-                <div className="bg-black/30 p-3 rounded">
-                  <p className="text-sm font-medium text-elec-yellow mb-1">
-                    The permit manages the whole state
-                  </p>
-                  <p className="text-xs text-white">
-                    The permit records which isolations and locks protect which task, who verified
-                    them, who is working, and until when. It is the management wrapper that means
-                    someone is formally in control of the safe state from the moment it is created
-                    to the moment it is deliberately dismantled.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <ControlLayers />
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm font-medium text-elec-yellow mb-3">
-                Worked Site Example: Contactor Replacement in a Motor Control Centre
-              </p>
-              <div className="space-y-2 text-sm text-white">
+          <ConceptBlock title="What each layer contributes">
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safe isolation makes the plant dead.</strong> The correct supplies are
+                identified, switched off, isolated and proved dead at the point of work. This is the
+                technical act that removes the hazard.
+              </li>
+              <li>
+                <strong>Lock-out/tag-out keeps it dead.</strong> Personal locks, multi-lock hasps
+                and tags physically secure each point of isolation so it cannot be re-closed while
+                anyone is working.
+              </li>
+              <li>
+                <strong>The permit manages the whole state.</strong> It records which isolations and
+                locks protect which task, who verified them, who is working, and until when — the
+                management wrapper that means someone is formally in control of the safe state from
+                the moment it is created to the moment it is deliberately dismantled.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 464.2"
+            clause="Suitable means shall be provided to prevent electrically powered equipment from inadvertently or unintentionally reactivating during mechanical maintenance, unless the means of switching off is continuously under the control of any person performing such maintenance."
+            meaning={
+              <>
+                This is the regulation behind the padlock. In practice: isolation with lock-off
+                devices, removable fuses with lockable carriers, padlocked isolators, or withdrawal
+                of control keys. Chapter 46 covers isolation and switching measures for preventing
+                or removing danger more broadly.
+              </>
+            }
+            cite="Reference: BS 7671:2018+A4:2026, Chapter 46"
+          />
+
+          <Scenario
+            title="Contactor replacement in a motor control centre"
+            situation={
+              <>
+                A packaging line keeps tripping. The fault is a burnt-out contactor in compartment
+                4B of the 400&nbsp;V motor control centre — a panel where the main busbars stay live
+                because three other production lines feed from the same board.
+              </>
+            }
+            whatToDo={
+              <>
                 <p>
-                  A packaging line keeps tripping. The fault is traced to a burnt-out contactor in
-                  compartment 4B of the 400&nbsp;V motor control centre — a panel where the main
-                  busbars stay live because three other production lines feed from the same board.
-                  Here is how the layers work together:
+                  <strong>Request:</strong> a work order is raised for &quot;replace contactor,
+                  MCC-2 compartment 4B, conveyor drive M-412&quot;. Because the task involves
+                  opening a compartment in a board with adjacent live equipment, site rules require
+                  a permit.
                 </p>
-                <div className="bg-black/30 p-3 rounded space-y-1.5">
-                  <p>
-                    <strong>1. Request:</strong> a work order is raised for &quot;replace
-                    contactor, MCC-2 compartment 4B, conveyor drive M-412&quot;. Because the task
-                    involves opening a compartment in a board with adjacent live equipment, site
-                    rules require a permit.
-                  </p>
-                  <p>
-                    <strong>2. Assessment:</strong> the risk assessment identifies the hazards:
-                    adjacent live busbars, a control-circuit supply entering the compartment from a
-                    separate MCB, and stored energy in the drive&apos;s DC link capacitors. The
-                    precautions: isolate the outgoing circuit AND the separate control supply,
-                    allow the specified capacitor discharge time, prove dead, and barrier off the
-                    live sections of the board.
-                  </p>
-                  <p>
-                    <strong>3. Preparation:</strong> the authorised person opens and locks off the
-                    circuit isolator for M-412 and the control-supply MCB — two separate points of
-                    isolation, each with a lock and tag. After the discharge period they prove the
-                    compartment dead at the point of work using the full prove–test–prove sequence.
-                  </p>
-                  <p>
-                    <strong>4. Issue and acceptance:</strong> the permit lists both isolation
-                    points and lock numbers, defines the boundary (&quot;work confined to
-                    compartment 4B; all other compartments remain live — do not open&quot;), and
-                    sets an expiry at end of shift. The lead technician — the permit holder —
-                    walks the isolations with the issuer, signs acceptance, and briefs the fitter
-                    and the apprentice. Each member of the working party adds a personal lock to
-                    the multi-lock hasp on the main circuit isolator.
-                  </p>
-                  <p>
-                    <strong>5. Work:</strong> the contactor is replaced. Midway, the fitter
-                    suggests also swapping a suspect relay in compartment 5A &quot;while the
-                    board&apos;s open&quot;. The holder refuses — 5A is outside the permit
-                    boundary and its circuit is not isolated. A new work order is raised instead.
-                  </p>
-                  <p>
-                    <strong>6. Handback:</strong> tools are counted out, covers refitted, the
-                    working party removes their personal locks, and the holder signs work
-                    complete. The issuing authority checks the compartment, cancels the permit,
-                    removes the isolation locks, and re-energises. The line restarts under
-                    control — nobody near the board, covers on, everyone accounted for.
-                  </p>
-                </div>
                 <p>
-                  Notice what each layer contributed. Safe isolation made compartment 4B dead.
-                  LOTO — including every worker&apos;s personal lock — kept it dead. The permit
-                  defined the boundary that stopped the &quot;while we&apos;re here&quot; job in
-                  the live compartment, and its handback stage guaranteed the plant was only
-                  re-energised onto an empty, closed panel.
+                  <strong>Assessment:</strong> hazards identified — adjacent live busbars, a
+                  control-circuit supply entering the compartment from a separate MCB, and stored
+                  energy in the drive&apos;s DC link capacitors. Precautions: isolate the outgoing
+                  circuit AND the separate control supply, allow the specified capacitor discharge
+                  time, prove dead, barrier off the live sections.
                 </p>
-              </div>
-            </div>
-          </div>
-        </section>
+                <p>
+                  <strong>Preparation:</strong> the authorised person locks off the circuit isolator
+                  for M-412 and the control-supply MCB — two separate points, each with a lock and
+                  tag. After the discharge period they prove the compartment dead using the full
+                  prove–test–prove sequence.
+                </p>
+                <p>
+                  <strong>Issue and acceptance:</strong> the permit lists both isolation points and
+                  lock numbers, defines the boundary (&quot;work confined to compartment 4B; all
+                  other compartments remain live — do not open&quot;), and expires at end of shift.
+                  The lead technician walks the isolations with the issuer, signs acceptance, and
+                  briefs the fitter and the apprentice. Each member of the working party adds a
+                  personal lock to the multi-lock hasp.
+                </p>
+                <p>
+                  <strong>Work:</strong> the contactor is replaced. Midway, the fitter suggests also
+                  swapping a suspect relay in compartment 5A &quot;while the board&apos;s
+                  open&quot;. The holder refuses — 5A is outside the boundary and its circuit is not
+                  isolated. A new work order is raised instead.
+                </p>
+                <p>
+                  <strong>Handback:</strong> tools counted out, covers refitted, personal locks
+                  removed, holder signs work complete. The issuing authority checks the compartment,
+                  cancels the permit, removes the isolation locks, and re-energises.
+                </p>
+              </>
+            }
+            whyItMatters={
+              <>
+                Safe isolation made compartment 4B dead. LOTO — including every worker&apos;s
+                personal lock — kept it dead. The permit defined the boundary that stopped the
+                &quot;while we&apos;re here&quot; job in the live compartment, and its handback
+                stage guaranteed the plant was only re-energised onto an empty, closed panel. Three
+                layers, three different failures prevented.
+              </>
+            }
+          />
 
-        {/* Section 6: Time Limits, Revalidation, Handover, Suspension */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">06</span>
-            Time Limits, Revalidation, Shift Handover, and Suspension
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              A permit is valid for a defined window, and real maintenance rarely fits neatly
-              inside one. Jobs overrun, shifts end, alarms sound, and other work interferes. The
-              permit system has a formal answer for each of these situations — and in every case
-              the answer runs through the issuing authority, never through improvisation at the
-              point of work.
-            </p>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=SfnQdvbQlgI"
+            title="Safe Working Practice, RAMS and Safe Isolation"
+            channel="A121 Training"
+            duration="9:16"
+            topic="How RAMS, safe systems of work and isolation fit together on site"
+            caption="Covers the documentation layer this page describes, from the installation side — the same principles a maintenance permit formalises."
+          />
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-blue-400 mb-2">
-                  Time Limits and Revalidation
-                </h3>
-                <p className="text-sm text-white">
-                  Every permit carries an expiry — commonly the end of the shift or working day.
-                  The limit exists because the verified conditions decay with time: plant states
-                  change, people change, and a permit checked this morning says nothing reliable
-                  about tonight. When work will overrun, the holder tells the issuing authority{' '}
-                  <em>before</em> expiry. The issuer re-checks that the precautions are still
-                  intact and effective, then formally revalidates the permit or issues a fresh
-                  one. Working past expiry, or amending the time yourself, is working without
-                  authorisation — full stop.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-purple-400 mb-2">Shift Handover</h3>
-                <p className="text-sm text-white mb-2">
-                  Responsibility under a permit is personal, so it cannot drift from one crew to
-                  the next by leaving the form taped to the panel. A proper handover has three
-                  parts: the outgoing holder formally signs off, stating exactly what has been
-                  done and the state the plant is left in; the incoming holder is briefed
-                  face-to-face on the hazards, precautions, isolations, and any changes; and the
-                  incoming holder signs acceptance of the existing permit or, on many sites, of a
-                  newly issued one.
-                </p>
-                <p className="text-sm text-white">
-                  Sites that insist on reissue at shift change do it deliberately: it forces the
-                  incoming holder to make their own positive check of the isolations rather than
-                  inheriting someone else&apos;s assurances. Poor shift handover is a recurring
-                  thread in major accident investigations across every industry — treat this stage
-                  with the same seriousness as first issue.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-amber-400 mb-2">Suspension</h3>
-                <p className="text-sm text-white mb-2">
-                  Sometimes permitted work must pause while the permit and its precautions stay in
-                  place: an evacuation, a conflicting operation, a plant trip elsewhere, or an
-                  instruction from operations. Suspension is a formal state — recorded by the
-                  issuing authority — that says: <em>the work has stopped; the safe conditions
-                  are preserved; work may not resume until re-authorised.</em>
-                </p>
-                <p className="text-sm text-white">
-                  The dangerous moment is the restart. During the pause, anything may have changed:
-                  valves operated during the emergency, supplies switched, other permits issued on
-                  connected plant. Before lifting a suspension, the issuing authority re-verifies
-                  every precaution on the permit exactly as they would before first issue. The
-                  working party never simply drifts back to the job because the alarm stopped.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-green-400 mb-2">
-                  Interacting Permits and Shared Isolations
-                </h3>
-                <p className="text-sm text-white">
-                  Large jobs often run several permits at once, and two permits may rely on the
-                  same point of isolation. The issuing authority keeps the register that
-                  cross-references them, and the physical system backs it up: a multi-lock hasp on
-                  the shared isolator carries a lock for each permit (and each worker), so the
-                  isolation physically cannot be removed until the last permit depending on it has
-                  been cancelled. When you hand back your permit, your locks come off — nobody
-                  else&apos;s.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ContentEyebrow>Time limits, handover and suspension</ContentEyebrow>
 
-        {/* Section 7: Common Failure Modes */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">07</span>
-            How Permit Systems Fail
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Real maintenance rarely fits neatly inside one permit window"
+            onSite="In every one of these situations the answer runs through the issuing authority — never through improvisation at the point of work."
+          >
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time limits and revalidation.</strong> Every permit carries an expiry,
+                commonly end of shift. The limit exists because verified conditions decay with time:
+                plant states change, people change, and a permit checked this morning says nothing
+                reliable about tonight. When work will overrun, the holder tells the issuing
+                authority <em>before</em> expiry; the issuer re-checks the precautions and formally
+                revalidates or reissues. Working past expiry, or amending the time yourself, is
+                working without authorisation — full stop.
+              </li>
+              <li>
+                <strong>Shift handover.</strong> Responsibility under a permit is personal, so it
+                cannot drift to the next crew by leaving the form taped to the panel. Outgoing
+                holder signs off stating what has been done and the state the plant is in; incoming
+                holder is briefed face-to-face on hazards, precautions, isolations and changes;
+                incoming holder signs acceptance of the existing permit or a newly issued one. Sites
+                that insist on reissue do it deliberately — it forces a fresh positive check rather
+                than inheriting someone else&apos;s assurances. Poor shift handover is a recurring
+                thread in major accident investigations across every industry; treat it with the
+                same seriousness as first issue.
+              </li>
+              <li>
+                <strong>Suspension.</strong> Sometimes work pauses while the permit and precautions
+                stay in place: an evacuation, a conflicting operation, a plant trip. Suspension is a
+                formal state, recorded by the issuing authority, that says:{' '}
+                <em>
+                  the work has stopped; the safe conditions are preserved; work may not resume until
+                  re-authorised.
+                </em>{' '}
+                The dangerous moment is the restart — valves may have been operated, supplies
+                switched, other permits issued on connected plant. Before lifting a suspension the
+                issuer re-verifies every precaution exactly as before first issue.
+              </li>
+              <li>
+                <strong>Interacting permits and shared isolations.</strong> Two permits may rely on
+                the same point of isolation. The issuing authority keeps the register that
+                cross-references them, and the physical system backs it up: a multi-lock hasp on the
+                shared isolator carries a lock for each permit and each worker, so the isolation
+                physically cannot be removed until the last permit depending on it is cancelled.
+                When you hand back your permit, your locks come off — nobody else&apos;s.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>How permit systems fail</ContentEyebrow>
+
+          <ConceptBlock title="The form is almost never the problem">
             <p>
               Permit systems rarely fail because the form is badly designed. They fail because the
               behaviours around the form decay. Every failure mode below has featured in real
               incident investigations, and every one is recognisable long before it hurts anyone —
               if you know what to look for.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Failure Modes and Site Scenarios
-              </p>
-              <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>The desk-signed permit.</strong> An issuer under time pressure signs a
-                  batch of permits in the office without visiting the plant. One records an
-                  isolation on a pump that was never actually locked off — the operator was
-                  interrupted before applying it. The fitter opens the coupling guard of a machine
-                  that can still start.{' '}
-                  <span className="text-green-400">
-                    Lesson: precautions are verified at the plant, every time. A permit is only as
-                    honest as its last physical check.
-                  </span>
-                </li>
-                <li className="pl-1">
-                  <strong>Boundary creep.</strong> A crew permitted to work on one conveyor drive
-                  notices a slack chain on the neighbouring conveyor and adjusts it &quot;while
-                  we&apos;re here&quot;. That conveyor is not isolated — it is running on automatic
-                  and starts on a sensor signal.{' '}
-                  <span className="text-green-400">
-                    Lesson: the permit boundary is a hard edge. Extra work means a new permit, not
-                    a quick favour.
-                  </span>
-                </li>
-                <li className="pl-1">
-                  <strong>The verbal amendment.</strong> The holder phones the issuer to ask about
-                  extending the job into an adjacent panel. The issuer says &quot;should be fine,
-                  I&apos;ll sort the paperwork later&quot;. The panel contains a supply from a
-                  different board that nobody assessed.{' '}
-                  <span className="text-green-400">
-                    Lesson: if it is not written, signed, and verified, it is not permitted. There
-                    is no such thing as a verbal permit or a verbal amendment.
-                  </span>
-                </li>
-                <li className="pl-1">
-                  <strong>The forgotten live permit.</strong> A job finishes early on a Friday. The
-                  crew removes their tools and goes home without handing back; the permit stays
-                  live all weekend. Operations, unable to restore the plant, either lose two days
-                  of production — or, far worse, someone removes the locks without authority
-                  because &quot;the job&apos;s obviously done&quot;.{' '}
-                  <span className="text-green-400">
-                    Lesson: handback is part of the job. The task is not finished until the permit
-                    is cancelled.
-                  </span>
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong plant, right paperwork.</strong> Two identical air handling units
-                  sit side by side: AHU-7A and AHU-7B. The permit and the isolation are for 7A; the
-                  fitter, working from memory, opens 7B. The paperwork was perfect and the wrong
-                  machine was live.{' '}
-                  <span className="text-green-400">
-                    Lesson: verify plant identity at the point of work against the permit — tag
-                    numbers, not habit — and prove dead before touching conductors, every time.
-                  </span>
-                </li>
-                <li className="pl-1">
-                  <strong>Rubber-stamp culture.</strong> A site requires permits for almost
-                  everything, so supervisors sign twenty a morning. When a genuinely high-risk
-                  vessel entry comes through, it gets the same ninety-second treatment as the
-                  routine jobs, and the gas test recorded on the form was done the previous day.{' '}
-                  <span className="text-green-400">
-                    Lesson: over-permitting is not extra safety — it is dilution. Guard the
-                    system&apos;s meaning by reserving it for the work that needs it.
-                  </span>
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="The desk-signed permit"
+            whatHappens={
+              <>
+                An issuer under time pressure signs a batch of permits in the office without
+                visiting the plant. One records an isolation on a pump that was never actually
+                locked off — the operator was interrupted before applying it. The fitter opens the
+                coupling guard of a machine that can still start.
+              </>
+            }
+            doInstead={
+              <>
+                Precautions are verified at the plant, every time. A permit is only as honest as its
+                last physical check.
+              </>
+            }
+          />
 
-            <p>
-              Notice the common thread: in every scenario the paperwork existed. What failed was a
-              human behaviour the paperwork depends on — verification, boundary discipline,
-              formality, closure. As an apprentice you are not yet issuing permits, but you are
-              part of the culture that keeps them honest. If you see a permit signed from a desk,
-              a boundary quietly ignored, or locks coming off before cancellation, you are watching
-              a fatality rehearsal. Say something.
-            </p>
-          </div>
-        </section>
+          <CommonMistake
+            title="Boundary creep"
+            whatHappens={
+              <>
+                A crew permitted to work on one conveyor drive notices a slack chain on the
+                neighbouring conveyor and adjusts it &quot;while we&apos;re here&quot;. That
+                conveyor is not isolated — it is running on automatic and starts on a sensor signal.
+              </>
+            }
+            doInstead={
+              <>
+                The permit boundary is a hard edge. Extra work means a new permit, not a quick
+                favour.
+              </>
+            }
+          />
 
-        {/* Section 8: Records and Portfolio */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">08</span>
-            Permit Evidence: Maintenance Records and Your Portfolio
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              A cancelled permit is not waste paper — it is part of the plant&apos;s history and
-              part of yours. Permits are numbered and retained precisely so that the control of
-              high-risk work can be demonstrated afterwards: to auditors, to incident
-              investigators, and to the assessors deciding whether you have met the MOET standard.
-            </p>
+          <CommonMistake
+            title="The verbal amendment"
+            whatHappens={
+              <>
+                The holder phones the issuer to ask about extending the job into an adjacent panel.
+                The issuer says &quot;should be fine, I&apos;ll sort the paperwork later&quot;. The
+                panel contains a supply from a different board that nobody assessed.
+              </>
+            }
+            doInstead={
+              <>
+                If it is not written, signed and verified, it is not permitted. There is no such
+                thing as a verbal permit or a verbal amendment.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Where Permit Evidence Lands
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Maintenance records:</strong> the work order in the maintenance
-                  management system cross-references the permit number, so the plant history shows
-                  not just what was done but under what controls. Isolation certificates, gas test
-                  results, and test-for-dead records are linked the same way.
-                </li>
-                <li className="pl-1">
-                  <strong>Audit and investigation:</strong> retained permits let the site
-                  demonstrate that its safe systems of work operate in practice, and give
-                  investigators the exact state of controls at the time of any incident.
-                </li>
-                <li className="pl-1">
-                  <strong>System improvement:</strong> reviewing completed permits reveals
-                  patterns — repeated late handbacks, recurring boundary changes, precautions
-                  that are always added by hand — which feed improvements to the forms and the
-                  procedures.
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="The forgotten live permit"
+            whatHappens={
+              <>
+                A job finishes early on a Friday. The crew removes their tools and goes home without
+                handing back; the permit stays live all weekend. Operations either lose two days of
+                production — or, far worse, someone removes the locks without authority because
+                &quot;the job&apos;s obviously done&quot;.
+              </>
+            }
+            doInstead={
+              <>
+                Handback is part of the job. The task is not finished until the permit is cancelled.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                ST1426 Apprentices: Build the Evidence as You Go
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Keep (suitably approved) copies of permits you worked under, with your name in
-                  the working party or briefing record.
-                </li>
-                <li className="pl-1">
-                  Record the permit briefings and toolbox talks you attended, and what your role
-                  in the task was.
-                </li>
-                <li className="pl-1">
-                  Photograph lock-off arrangements you applied (where site rules allow) and link
-                  them to the permit and work order numbers in your portfolio.
-                </li>
-                <li className="pl-1">
-                  Practise explaining the lifecycle out loud — at End-Point Assessment, walking an
-                  assessor through a real permit you worked under is the strongest evidence there
-                  is that you understand safe systems of work.
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="Wrong plant, right paperwork"
+            whatHappens={
+              <>
+                Two identical air handling units sit side by side: AHU-7A and AHU-7B. The permit and
+                the isolation are for 7A; the fitter, working from memory, opens 7B. The paperwork
+                was perfect and the wrong machine was live.
+              </>
+            }
+            doInstead={
+              <>
+                Verify plant identity at the point of work against the permit — tag numbers, not
+                habit — and prove dead before touching conductors, every time.
+              </>
+            }
+          />
 
-            <p>
-              Elec-Mate&apos;s site documentation tools can hold this evidence alongside your other
-              maintenance records, so that by the time your EPA arrives the story of your
-              competence is already written — one permitted job at a time.
-            </p>
-          </div>
-        </section>
+          <CommonMistake
+            title="Rubber-stamp culture"
+            whatHappens={
+              <>
+                A site requires permits for almost everything, so supervisors sign twenty a morning.
+                When a genuinely high-risk vessel entry comes through, it gets the same
+                ninety-second treatment as the routine jobs, and the gas test recorded on the form
+                was done the previous day.
+              </>
+            }
+            doInstead={
+              <>
+                Over-permitting is not extra safety — it is dilution. Guard the system&apos;s
+                meaning by reserving it for the work that needs it.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Permit Lifecycle — 6 Stages</p>
-                <ul className="space-y-0.5">
-                  <li>1. Request and definition</li>
-                  <li>2. Risk assessment and precaution planning</li>
-                  <li>3. Preparation and authorisation (verify at the plant)</li>
-                  <li>4. Issue and acceptance (both signatures)</li>
-                  <li>5. Work within the permitted boundary</li>
-                  <li>6. Handback and cancellation before re-energisation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Permit-Controlled Work</p>
-                <ul className="space-y-0.5">
-                  <li>High voltage electrical work</li>
-                  <li>Confined space entry</li>
-                  <li>Hot work outside designated areas</li>
-                  <li>Stored-energy systems</li>
-                  <li>Work near live plant / interacting hazards</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Roles</p>
-                <ul className="space-y-0.5">
-                  <li>Issuing authority — verifies, issues, cancels</li>
-                  <li>Authorised person — isolates, earths, proves</li>
-                  <li>Permit holder — accepts, briefs, hands back</li>
-                  <li>Competent person(s) — carry out the work</li>
-                  <li>Issuer and worker are always separated</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>HSE HSG250 — permit-to-work guidance</li>
-                  <li>Health and Safety at Work etc. Act 1974</li>
-                  <li>Electricity at Work Regulations 1989</li>
-                  <li>BS 7671:2018+A4:2026 — Ch. 46; Reg 464.2 (prevent inadvertent reactivation)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="The common thread"
+            onSite="If you see a permit signed from a desk, a boundary quietly ignored, or locks coming off before cancellation, you are watching a fatality rehearsal. Say something."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 1.1
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
+            <p>
+              In every scenario above the paperwork existed. What failed was a human behaviour the
+              paperwork depends on — verification, boundary discipline, formality, closure. As an
+              apprentice you are not yet issuing permits, but you are part of the culture that keeps
+              them honest.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Records and your portfolio</ContentEyebrow>
+
+          <ConceptBlock
+            title="A cancelled permit is part of the plant's history — and part of yours"
+            plainEnglish="Permits are numbered and kept so that control of high-risk work can be proved afterwards: to auditors, to investigators, and to the assessor deciding whether you have met the standard."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-2">
-              Next: Isolation Procedures
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Maintenance records.</strong> The work order cross-references the permit
+                number, so the plant history shows not just what was done but under what controls.
+                Isolation certificates, gas test results and test-for-dead records link the same
+                way.
+              </li>
+              <li>
+                <strong>Audit and investigation.</strong> Retained permits let the site demonstrate
+                its safe systems of work operate in practice, and give investigators the exact state
+                of controls at the time of any incident.
+              </li>
+              <li>
+                <strong>System improvement.</strong> Reviewing completed permits reveals patterns —
+                repeated late handbacks, recurring boundary changes, precautions always added by
+                hand — which feed improvements to the forms and procedures.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Build the evidence as you go"
+            onSite="At End-Point Assessment, walking an assessor through a real permit you worked under is far more convincing than reciting the lifecycle from memory."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Keep suitably approved copies of permits you worked under, with your name in the
+                working party or briefing record.
+              </li>
+              <li>
+                Record the permit briefings and toolbox talks you attended, and what your role in
+                the task was.
+              </li>
+              <li>
+                Photograph lock-off arrangements you applied, where site rules allow, and link them
+                to the permit and work order numbers in your portfolio.
+              </li>
+              <li>Practise explaining the lifecycle out loud.</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Lifecycle: request → risk assessment → preparation and authorisation → issue and acceptance → work → handback and cancellation.',
+              'Verify at the plant before issue. Cancel before re-energising. Those two gates are where permit systems kill people.',
+              'Permit-controlled work: HV electrical, confined space entry, hot work, stored-energy systems, work near live plant or interacting hazards.',
+              'Roles: issuing authority verifies, issues and cancels; authorised person isolates, earths and proves; permit holder accepts, briefs and hands back; competent persons carry out the work.',
+              'Issuer and worker are always separated — that independent check is the whole safety argument.',
+              'Safe isolation makes it dead, LOTO keeps it dead, the permit manages the state. The permit alone protects nobody.',
+              'Key references: HSE HSG250; HASAWA 1974; EAWR 1989; BS 7671:2018+A4:2026 Chapter 46 and Regulation 464.2.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Permit to work knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safe systems of work
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section1-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Isolation Procedures
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -372,12 +372,15 @@ const BS7671ZsLookupCalculator = () => {
           standard: 'BS 7671:2018+A4:2026',
         },
         headline: [
-          { label: 'Measured Zs', value: `${complianceCheck.measuredZs}`, unit: 'Ω' },
+          // The lead figure must be the calculated result, not the value the
+          // electrician typed in — so "Compliant devices found" comes first
+          // and the measured Zs (an input) follows as context.
           {
             label: 'Compliant devices found',
             value: `${compliant.length}`,
             verdict: compliant.length > 0 ? 'pass' : 'fail',
           },
+          { label: 'Measured Zs', value: `${complianceCheck.measuredZs}`, unit: 'Ω' },
         ],
         sections:
           compliant.length > 0

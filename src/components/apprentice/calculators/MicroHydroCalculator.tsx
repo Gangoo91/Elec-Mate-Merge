@@ -311,7 +311,7 @@ const MicroHydroCalculator = () => {
 
     return {
       meta: {
-        title: 'Micro-Hydro Calculator',
+        title: 'Micro-Hydro',
         subtitle: 'System sizing, penstock specification and economics',
       },
       headline: [
@@ -329,21 +329,24 @@ const MicroHydroCalculator = () => {
           rows: [
             { label: 'Flow rate', value: `${result.flowValue} m³/s` },
             { label: 'Head', value: `${result.headValue} m` },
-            { label: 'Recommended turbine', value: result.recommendedTurbine },
-            { label: 'Availability factor', value: `${(result.availabilityPct * 100).toFixed(0)} %` },
+            {
+              label: 'Turbine selection',
+              value: turbineType === 'auto' ? 'Auto-select best turbine' : result.recommendedTurbine,
+            },
+            { label: 'Penstock length', value: `${penstockLength} m` },
+            { label: 'Availability factor', value: `${availabilityFactor} %` },
+            { label: 'Electricity rate', value: `£${electricityRate}/kWh` },
           ],
         },
         {
           heading: 'Result',
           rows: [
-            { label: 'Theoretical power', value: `${result.theoreticalPower.toFixed(1)} kW` },
-            { label: 'Practical power', value: `${result.practicalPower.toFixed(1)} kW` },
             {
-              label: 'Turbine efficiency',
-              value: `${(result.turbineEfficiency * 100).toFixed(0)} %`,
+              label: 'Recommended turbine',
+              value: `${result.recommendedTurbine} — ${(result.turbineEfficiency * 100).toFixed(0)}% efficiency`,
               note: result.turbineSuitability,
             },
-            { label: 'Annual generation', value: `${(result.annualGeneration / 1000).toFixed(1)} MWh` },
+            { label: 'Theoretical power', value: `${result.theoreticalPower.toFixed(1)} kW` },
             {
               label: 'Penstock',
               value: `${result.penstock.diameter} mm ${result.penstock.material} × ${result.penstock.length} m`,
@@ -352,7 +355,6 @@ const MicroHydroCalculator = () => {
             { label: 'Estimated cost', value: `£${Math.round(result.estimatedCost).toLocaleString()}` },
             { label: 'Cost per kW', value: `£${Math.round(result.costPerKw).toLocaleString()}` },
             { label: 'Annual revenue', value: `£${Math.round(result.annualRevenue).toLocaleString()}` },
-            { label: 'Payback period', value: `${result.paybackPeriod.toFixed(1)} years` },
             { label: 'Viability', value: result.viabilityAssessment },
           ],
         },

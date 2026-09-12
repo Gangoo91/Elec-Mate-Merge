@@ -203,6 +203,7 @@ const EVChargingCalculator = () => {
             { label: 'Cable run length', value: `${inputs.runLength} m` },
             { label: 'Ambient temperature', value: `${inputs.ambientTemp} °C` },
             { label: 'Existing load current', value: `${inputs.existingLoadCurrent} A` },
+            { label: 'Diversity factor', value: inputs.diversityFactor },
             {
               label: 'Electricity rate',
               value: `${formatCurrency(parseFloat(inputs.electricityRate))}/kWh`,
@@ -217,8 +218,6 @@ const EVChargingCalculator = () => {
             { label: 'Charging cost', value: formatCurrency(results.cost) },
             { label: 'Peak demand', value: `${results.peakDemand.toFixed(1)} kW` },
             { label: 'Circuit current', value: `${results.circuitCurrent.toFixed(1)} A` },
-            { label: 'Design current', value: `${results.designCurrent.toFixed(1)} A` },
-            { label: 'Recommended cable', value: results.recommendedCable },
             {
               label: 'Voltage drop',
               value: `${results.voltageDrop.toFixed(1)} V (${((results.voltageDrop / 230) * 100).toFixed(1)}%)`,
@@ -232,7 +231,7 @@ const EVChargingCalculator = () => {
           ],
         },
       ],
-      notes: [...results.warnings, ...results.recommendations],
+      notes: [...results.warnings, ...results.recommendations].filter((n) => n.trim()),
     };
   };
 

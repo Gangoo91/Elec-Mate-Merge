@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 4 · Subsection 5 — Professional Conduct and Attitude
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page covers general professional behaviours (reliability,
+ * integrity, accountability, CPD). None of the ST1426 statements verified
+ * elsewhere in this conversion (Modules 1-4) describe these behaviours
+ * specifically, and the published KSB numbering has not been verified against
+ * a primary source, so no KSB quote is included here rather than inventing
+ * one. Flagged in the conversion report.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Professional Conduct and Attitude - MOET Module 7 Section 4.5';
@@ -254,116 +285,65 @@ const faqs = [
 ];
 
 const MOETModule7Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Professional Conduct and Attitude
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.4 · Subsection 5"
+        title="Professional Conduct and Attitude"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Demonstrating reliability, integrity and professionalism as a competent engineering
-            maintenance technician
+            maintenance technician.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Reliability:</strong> Consistent, dependable performance
-              </li>
-              <li className="pl-1">
-                <strong>Integrity:</strong> Quality work, honesty, doing right unseen
-              </li>
-              <li className="pl-1">
-                <strong>Accountability:</strong> Owning your work and its outcomes
-              </li>
-              <li className="pl-1">
-                <strong>Development:</strong> Commitment to continuous learning
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Holistic:</strong> Assessed across all three EPA components
-              </li>
-              <li className="pl-1">
-                <strong>Observation:</strong> Safety, communication, attitude noted
-              </li>
-              <li className="pl-1">
-                <strong>Discussion:</strong> Explore situations requiring professionalism
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Core behaviour throughout the standard
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Reliability: Consistent, dependable performance.',
+              'Integrity: Quality work, honesty, doing right unseen.',
+              'Accountability: Owning your work and its outcomes.',
+              'Development: Commitment to continuous learning.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand the components of professional conduct in engineering maintenance',
               'Demonstrate reliability, integrity and accountability in your daily work',
               'Maintain professional safety standards regardless of external pressure',
               'Show commitment to continuous professional development from the start',
               'Evidence professional conduct effectively in your EPA portfolio',
               'Handle challenging professional situations with maturity and appropriate action',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Holistic:</strong> assessed across all three EPA components.
+              </li>
+              <li>
+                <strong>Observation:</strong> safety, communication, attitude noted.
+              </li>
+              <li>
+                <strong>Discussion:</strong> explore situations requiring professionalism.
+              </li>
+              <li>
+                <strong>ST1426:</strong> core behaviour throughout the standard.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Professional Conduct Means
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What professional conduct means</ContentEyebrow>
+
+          <ConceptBlock title="How you behave every day, not a switch for assessments">
             <p>
               Professional conduct is not a separate skill you switch on for assessments — it is how
               you behave every day. It encompasses your attitude to work, your treatment of others,
@@ -371,7 +351,6 @@ const MOETModule7Section4_5 = () => {
               technicians demonstrate professional conduct so consistently that it becomes invisible
               — it is simply how they work.
             </p>
-
             <p>
               In engineering maintenance, professional conduct has particular weight because of the
               safety implications of the work. A technician who cuts corners, fabricates test
@@ -379,197 +358,159 @@ const MOETModule7Section4_5 = () => {
               are creating genuine danger for themselves, their colleagues, and the public.
               Professional conduct in engineering is, at its core, a safety behaviour.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Pillars of Professional Conduct
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reliability:</strong> Being dependable — arriving on time, meeting
-                  commitments, completing work to standard, being consistent
-                </li>
-                <li className="pl-1">
-                  <strong>Integrity:</strong> Being honest and ethical — accurate reporting, quality
-                  work regardless of supervision, admitting errors
-                </li>
-                <li className="pl-1">
-                  <strong>Accountability:</strong> Owning your work — taking responsibility for
-                  outcomes, not deflecting blame, learning from mistakes
-                </li>
-                <li className="pl-1">
-                  <strong>Respect:</strong> Treating everyone with dignity — colleagues, clients,
-                  supervisors, contractors, the public
-                </li>
-                <li className="pl-1">
-                  <strong>Safety commitment:</strong> Making safety non-negotiable — consistent safe
-                  practices, challenging unsafe behaviour
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous improvement:</strong> Always learning — seeking development,
-                  reflecting on practice, improving your skills
-                </li>
-              </ul>
+          <ConceptBlock title="The pillars of professional conduct">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reliability:</strong> being dependable — arriving on time, meeting
+                commitments, completing work to standard, being consistent.
+              </li>
+              <li>
+                <strong>Integrity:</strong> being honest and ethical — accurate reporting, quality
+                work regardless of supervision, admitting errors.
+              </li>
+              <li>
+                <strong>Accountability:</strong> owning your work — taking responsibility for
+                outcomes, not deflecting blame, learning from mistakes.
+              </li>
+              <li>
+                <strong>Respect:</strong> treating everyone with dignity — colleagues, clients,
+                supervisors, contractors, the public.
+              </li>
+              <li>
+                <strong>Safety commitment:</strong> making safety non-negotiable — consistent safe
+                practices, challenging unsafe behaviour.
+              </li>
+              <li>
+                <strong>Continuous improvement:</strong> always learning — seeking development,
+                reflecting on practice, improving your skills.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Professional conduct vs compliance"
+            onSite="Professional conduct is about character, not performance. The assessor is looking for genuine, embedded professional behaviour — not someone who is on their best behaviour for the assessment and different the rest of the time."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Compliance (minimum)</th>
+                    <th className="py-2 font-medium text-white">Professional conduct (standard)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Follows rules when observed</td>
+                    <td className="py-2">Follows rules consistently, observed or not</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Does what is required</td>
+                    <td className="py-2">Actively seeks to do work well</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Reports only what is asked for</td>
+                    <td className="py-2">Proactively reports hazards and issues</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Attends mandatory training</td>
+                    <td className="py-2">Actively seeks development opportunities</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Admits mistakes when caught</td>
+                    <td className="py-2">Acknowledges mistakes promptly and learns</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Professional Conduct vs Compliance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Compliance (Minimum)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Professional Conduct (Standard)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Follows rules when observed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Follows rules consistently, observed or not
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Does what is required</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actively seeks to do work well
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reports only what is asked for
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proactively reports hazards and issues
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Attends mandatory training
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Actively seeks development opportunities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Admits mistakes when caught
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acknowledges mistakes promptly and learns
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Professional conduct is about character, not performance.
-              The assessor is looking for genuine, embedded professional behaviour — not someone who
-              is on their best behaviour for the assessment and different the rest of the time.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Safety as professional conduct</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Safety as Professional Conduct
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="A professional obligation, not just a set of rules">
             <p>
               In engineering maintenance, safety is not just a set of rules — it is a professional
               obligation. A professional technician treats safe working practices as non-negotiable,
               regardless of time pressure, convenience, or what others around them are doing. This
               is perhaps the most important aspect of professional conduct in our industry.
             </p>
-
             <p>
               The test of genuine safety commitment is what you do when nobody is watching. If you
               follow the same procedures whether your supervisor is present or not, your safety
               behaviour is genuine professional conduct. If it changes when you are unsupervised, it
               is mere compliance — and compliance fails when pressure mounts.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safety as Professional Behaviour
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Consistent practice:</strong> Follow safe isolation, PPE requirements and
-                  permit procedures every time, without exception
-                </li>
-                <li className="pl-1">
-                  <strong>Challenge unsafe acts:</strong> Speak up when you see unsafe behaviour —
-                  this requires professional courage
-                </li>
-                <li className="pl-1">
-                  <strong>Report hazards:</strong> Proactively identify and report safety concerns,
-                  even if they are not your direct responsibility
-                </li>
-                <li className="pl-1">
-                  <strong>Resist pressure:</strong> Never compromise safety to meet deadlines, save
-                  time, or please others
-                </li>
-                <li className="pl-1">
-                  <strong>Lead by example:</strong> Your safe behaviour influences those around you,
-                  especially less experienced workers
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Safety as professional behaviour"
+            onSite="The test of professional safety conduct is what you do when no one is watching. If you follow the same safe procedures whether the supervisor is present or not, your safety behaviour is genuine. If it changes, it is compliance rather than conduct."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Consistent practice:</strong> follow safe isolation, PPE requirements and
+                permit procedures every time, without exception.
+              </li>
+              <li>
+                <strong>Challenge unsafe acts:</strong> speak up when you see unsafe behaviour —
+                this requires professional courage.
+              </li>
+              <li>
+                <strong>Report hazards:</strong> proactively identify and report safety concerns,
+                even if they are not your direct responsibility.
+              </li>
+              <li>
+                <strong>Resist pressure:</strong> never compromise safety to meet deadlines, save
+                time, or please others.
+              </li>
+              <li>
+                <strong>Lead by example:</strong> your safe behaviour influences those around you,
+                especially less experienced workers.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Integrity in Testing and Recording
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Integrity in testing and recording"
+            whatHappens={
+              <>
                 Fabricating test results, signing off work you have not fully completed, or
                 recording readings you did not take are serious professional misconduct with real
                 safety consequences. If an insulation resistance reading is recorded as satisfactory
                 when it was not actually measured, a dangerous fault could remain undetected.
+              </>
+            }
+            doInstead={
+              <>
                 Professional integrity in testing and recording is not just about honesty — it is
-                about protecting lives.
-              </p>
-            </div>
+                about protecting lives. Record only what you have genuinely measured, and never sign
+                off work you have not fully completed.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The test of professional safety conduct is what you do
-              when no one is watching. If you follow the same safe procedures whether the supervisor
-              is present or not, your safety behaviour is genuine. If it changes, it is compliance
-              rather than conduct.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Continuous Professional Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Continuous professional development</ContentEyebrow>
+
+          <ConceptBlock
+            title="Development continues throughout your career"
+            onSite="CPD is a shared responsibility between you and your employer, but you should take ownership. Do not wait for training to be offered — seek it out. The apprentice who reads a technical article, watches a manufacturer's video, or practises a new skill in their own time demonstrates the professional commitment the assessor is looking for."
+          >
             <p>
               Professional development is not something that ends when you pass the EPA — it
               continues throughout your career. Starting your CPD habits during the apprenticeship
               demonstrates professional maturity and ensures you are well prepared for the
               expectations of a qualified technician.
             </p>
-
             <p>
               The engineering industry evolves continuously. Regulations are updated (BS 7671 has
               regular amendments), new technologies emerge (renewable energy systems, smart building
@@ -577,65 +518,50 @@ const MOETModule7Section4_5 = () => {
               incidents and research. A professional technician stays current — not just through
               employer-provided training, but through their own initiative.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CPD Activities During Your Apprenticeship
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Industry publications:</strong> Read IET Wiring Matters, trade magazines,
-                  and relevant technical content
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation updates:</strong> Stay informed about changes to BS 7671,
-                  health and safety regulations, and industry standards
-                </li>
-                <li className="pl-1">
-                  <strong>Additional training:</strong> Attend voluntary training courses,
-                  manufacturer training, webinars or seminars
-                </li>
-                <li className="pl-1">
-                  <strong>Technical research:</strong> Investigate topics beyond the minimum
-                  curriculum — new technologies, alternative approaches
-                </li>
-                <li className="pl-1">
-                  <strong>Professional registration:</strong> Consider EngTech registration with the
-                  IET or IMechE after completing your apprenticeship
-                </li>
-                <li className="pl-1">
-                  <strong>Reflective practice:</strong> Regularly reflect on your development — what
-                  have you learned? What do you need to learn next?
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="CPD activities during your apprenticeship">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Industry publications:</strong> read IET Wiring Matters, trade magazines,
+                and relevant technical content.
+              </li>
+              <li>
+                <strong>Regulation updates:</strong> stay informed about changes to BS 7671, health
+                and safety regulations, and industry standards.
+              </li>
+              <li>
+                <strong>Additional training:</strong> attend voluntary training courses,
+                manufacturer training, webinars or seminars.
+              </li>
+              <li>
+                <strong>Technical research:</strong> investigate topics beyond the minimum
+                curriculum — new technologies, alternative approaches.
+              </li>
+              <li>
+                <strong>Professional registration:</strong> consider EngTech registration with the
+                IET or IMechE after completing your apprenticeship.
+              </li>
+              <li>
+                <strong>Reflective practice:</strong> regularly reflect on your development — what
+                have you learned? What do you need to learn next?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> CPD is a shared responsibility between you and your
-              employer, but you should take ownership. Do not wait for training to be offered — seek
-              it out. The apprentice who reads a technical article, watches a manufacturer's video,
-              or practises a new skill in their own time demonstrates the professional commitment
-              the assessor is looking for.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Handling Mistakes and Accountability
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Handling mistakes and accountability</ContentEyebrow>
+
+          <ConceptBlock title="How you handle mistakes reveals your character">
             <p>
               How you handle mistakes reveals more about your professional character than how you
               handle success. Everyone makes errors — especially when learning. The defining factor
               is your response: do you own it, fix it, learn from it, and prevent it recurring? Or
               do you hide it, blame others, and risk it happening again?
             </p>
-
             <p>
               In engineering maintenance, accountability has particular significance because of the
               safety implications. A mistake that is acknowledged and corrected is a learning
@@ -643,70 +569,60 @@ const MOETModule7Section4_5 = () => {
               honest reporting that the industry strives for depends on individuals being willing to
               acknowledge errors without fear of disproportionate punishment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Professional Response to a Mistake
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Acknowledge immediately:</strong> Do not wait — the longer you leave it,
-                  the worse the consequences
-                </li>
-                <li className="pl-1">
-                  <strong>Assess the impact:</strong> Is there a safety risk? Does someone need to
-                  know urgently?
-                </li>
-                <li className="pl-1">
-                  <strong>Take corrective action:</strong> Fix what you can, safely and within your
-                  competence
-                </li>
-                <li className="pl-1">
-                  <strong>Inform your supervisor:</strong> Especially if there are safety or quality
-                  implications
-                </li>
-                <li className="pl-1">
-                  <strong>Learn from it:</strong> What caused the error? How can you prevent it
-                  recurring?
-                </li>
-                <li className="pl-1">
-                  <strong>Document the learning:</strong> A reflective account about a mistake is
-                  excellent EPA evidence
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock
+            title="The professional response to a mistake"
+            onSite="Accountability is not about self-punishment — it is about professional ownership. 'I made an error, I have corrected it, I have informed those who need to know, and I have taken steps to prevent it happening again.' That is the professional response."
+          >
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Acknowledge immediately:</strong> do not wait — the longer you leave it, the
+                worse the consequences.
+              </li>
+              <li>
+                <strong>Assess the impact:</strong> is there a safety risk? Does someone need to
+                know urgently?
+              </li>
+              <li>
+                <strong>Take corrective action:</strong> fix what you can, safely and within your
+                competence.
+              </li>
+              <li>
+                <strong>Inform your supervisor:</strong> especially if there are safety or quality
+                implications.
+              </li>
+              <li>
+                <strong>Learn from it:</strong> what caused the error? How can you prevent it
+                recurring?
+              </li>
+              <li>
+                <strong>Document the learning:</strong> a reflective account about a mistake is
+                excellent EPA evidence.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Mistakes as Portfolio Evidence
-              </p>
-              <p className="text-sm text-white">
-                A well-written reflective account about a mistake — what happened, why, what you did
-                about it, and what you learned — is actually some of the strongest EPA evidence you
-                can provide. It demonstrates self-awareness, accountability, learning orientation,
-                and professional maturity. The assessor is not looking for perfection — they are
-                looking for professionals who can handle imperfection with integrity and growth.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Accountability is not about self-punishment — it is about
-              professional ownership. "I made an error, I have corrected it, I have informed those
-              who need to know, and I have taken steps to prevent it happening again." That is the
-              professional response.
+          <ConceptBlock title="Mistakes as portfolio evidence">
+            <p>
+              A well-written reflective account about a mistake — what happened, why, what you did
+              about it, and what you learned — is actually some of the strongest EPA evidence you
+              can provide. It demonstrates self-awareness, accountability, learning orientation, and
+              professional maturity. The assessor is not looking for perfection — they are looking
+              for professionals who can handle imperfection with integrity and growth.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Evidencing Professional Conduct in Your EPA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Evidencing professional conduct in your EPA</ContentEyebrow>
+
+          <ConceptBlock
+            title="Consistency across the whole assessment"
+            onSite="Professional conduct is assessed holistically — it is not a tick-box exercise. The assessor forms an impression of your professionalism from your entire portfolio, your behaviour during the practical observation, and your responses during the professional discussion. Consistency is key: your evidence, behaviour and responses should all tell the same story of a developing professional."
+          >
             <p>
               Professional conduct evidence should be woven throughout your portfolio, not presented
               as a separate section. The most powerful evidence comes from specific situations where
@@ -714,132 +630,90 @@ const MOETModule7Section4_5 = () => {
               challenged unsafe behaviour, supported a colleague, or went beyond the minimum
               expectation.
             </p>
-
             <p>
               The assessor forms their impression of your professionalism from your entire
               portfolio, your behaviour during the practical observation, and your responses during
               the professional discussion. Consistency across all three is what distinguishes
               genuine professional conduct from a performance put on for the assessment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Your Professional Conduct Evidence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Witness statements:</strong> Ask supervisors to comment on your
-                  professionalism, reliability and attitude specifically
-                </li>
-                <li className="pl-1">
-                  <strong>Activity logs:</strong> Include descriptions of professional behaviours in
-                  your log entries — communication, safety, teamwork
-                </li>
-                <li className="pl-1">
-                  <strong>Reflective accounts:</strong> Write about situations that tested your
-                  professional conduct and what you learned
-                </li>
-                <li className="pl-1">
-                  <strong>CPD records:</strong> Document voluntary learning activities, courses
-                  attended, publications read
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback:</strong> Include any positive feedback received from
-                  supervisors, clients or colleagues
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Professional conduct is assessed holistically — it is
-              not a tick-box exercise. The assessor forms an impression of your professionalism from
-              your entire portfolio, your behaviour during the practical observation, and your
-              responses during the professional discussion. Consistency is key: your evidence,
-              behaviour and responses should all tell the same story of a developing professional.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                Professional conduct is how you behave every day, not just during assessments
+          <ConceptBlock title="Building your professional conduct evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Witness statements:</strong> ask supervisors to comment on your
+                professionalism, reliability and attitude specifically.
               </li>
-              <li className="pl-1">
-                Safety is the most critical aspect of professional conduct in engineering
+              <li>
+                <strong>Activity logs:</strong> include descriptions of professional behaviours in
+                your log entries — communication, safety, teamwork.
               </li>
-              <li className="pl-1">
-                Integrity means doing the right thing even when nobody is watching
+              <li>
+                <strong>Reflective accounts:</strong> write about situations that tested your
+                professional conduct and what you learned.
               </li>
-              <li className="pl-1">
-                Acknowledge mistakes promptly — hiding them creates safety risks
+              <li>
+                <strong>CPD records:</strong> document voluntary learning activities, courses
+                attended, publications read.
               </li>
-              <li className="pl-1">
-                Take ownership of your CPD — do not wait for training to be provided
-              </li>
-              <li className="pl-1">
-                Challenge unsafe behaviour constructively — it is a professional obligation
-              </li>
-              <li className="pl-1">
-                Consider EngTech registration after completing your apprenticeship
+              <li>
+                <strong>Feedback:</strong> include any positive feedback received from supervisors,
+                clients or colleagues.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Professional conduct is how you behave every day, not just during assessments.',
+              'Safety is the most critical aspect of professional conduct in engineering.',
+              'Integrity means doing the right thing even when nobody is watching.',
+              'Acknowledge mistakes promptly — hiding them creates safety risks.',
+              'Take ownership of your CPD — do not wait for training to be provided.',
+              'Challenge unsafe behaviour constructively — it is a professional obligation.',
+              'Consider EngTech registration after completing your apprenticeship.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Professional Conduct" questions={quizQuestions} />
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Initiative and Problem-Solving
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Professional Conduct" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Initiative and Problem-Solving
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Employer and Training Provider Sign-Off
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

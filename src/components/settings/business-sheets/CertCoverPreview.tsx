@@ -21,7 +21,14 @@ interface CertCoverPreviewProps {
   coverColor: string;
   logoTone: LogoTone;
   logoUrl?: string | null;
+  /** The standard lockup — dark ink, for a white masthead. */
   schemeLogoUrl?: string | null;
+  /**
+   * The reversed lockup — white ink, for a masthead that has gone dark because
+   * the company's own logo is light artwork. Without this the preview shows a
+   * dark wordmark on a dark band and reports a fault the PDF does not have.
+   */
+  schemeLogoReversedUrl?: string | null;
   companyName?: string | null;
   className?: string;
 }
@@ -46,10 +53,17 @@ export const CertCoverPreview = ({
   logoTone,
   logoUrl,
   schemeLogoUrl,
+  schemeLogoReversedUrl,
   companyName,
   className,
 }: CertCoverPreviewProps) => {
   const c = coverPalette(coverStyle, coverColor, '#fbbf24', logoTone);
+
+  // Same rule the payload applies: the masthead's ground picks the lockup.
+  // Falls back to the standard artwork when no reversed asset exists for the
+  // scheme, which is what the certificate itself does.
+  const schemeLogo =
+    c.schemeLogoVariant === 'reversed' ? schemeLogoReversedUrl || schemeLogoUrl : schemeLogoUrl;
 
   const masthead = (
     <div
@@ -63,8 +77,8 @@ export const CertCoverPreview = ({
           {companyName || 'Your company'}
         </span>
       )}
-      {schemeLogoUrl ? (
-        <img src={schemeLogoUrl} alt="" className="max-h-[11px] max-w-[26%] object-contain" />
+      {schemeLogo ? (
+        <img src={schemeLogo} alt="" className="max-h-[11px] max-w-[26%] object-contain" />
       ) : null}
     </div>
   );
@@ -196,9 +210,20 @@ export const CertCoverPreview = ({
               'Part 3 — Earthing & bonding',
             ].map((t) => (
               <div key={t}>
+                {/* The section band is deliberately NOT the cover colour. Every
+                    template hardcodes `.section-title` to this slate gradient
+                    with white text, so the headings stay readable whatever the
+                    electrician picks — and in print mode `cover_from` is #ffffff,
+                    which would render white-on-white here and misrepresent a
+                    document that is actually fine. Only the accent rule tracks
+                    the brand, exactly as `border-left: 3px solid var(--accent-color)`
+                    does in the templates. */}
                 <div
                   className="px-1 py-0.5 text-[4px] font-bold uppercase tracking-wider text-white"
-                  style={{ background: c.cover_from }}
+                  style={{
+                    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+                    borderLeft: `1px solid ${c.accent}`,
+                  }}
                 >
                   {t}
                 </div>

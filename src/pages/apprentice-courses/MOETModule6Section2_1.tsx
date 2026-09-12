@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 2 · Subsection 1 — Circuit Diagrams and Symbols
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Reference conversion for the MOET redesign. Content preserved from the
+ * original; structure, shell and reading measure rebuilt on the
+ * study-centre learning kit.
+ *
+ * ✎ CONTENT FIX (12 Sep): the three-phase labelling quiz question had three
+ *   distractors pasted in from unrelated courses — equipment calibration, site
+ *   compound ground conditions, and asset test history. None were labelling
+ *   options, so the question was answerable with no knowledge. Replaced with
+ *   real labelling conventions (legacy R/Y/B, US A/B/C). correctAnswer unchanged.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Circuit Diagrams and Symbols - MOET Module 6 Section 2.1';
@@ -134,12 +172,7 @@ const quizQuestions = [
   {
     id: 6,
     question: "The IEC 81346 reference designation prefix letter 'K' indicates:",
-    options: [
-      'A switch',
-      'A motor',
-      'A relay or contactor',
-      'A transformer',
-    ],
+    options: ['A switch', 'A motor', 'A relay or contactor', 'A transformer'],
     correctAnswer: 2,
     explanation:
       'In IEC 81346, the prefix letter K designates relays and contactors. Other common prefix letters include M (motor), Q (circuit breaker or switch-disconnector), F (fuse or protective device), T (transformer), and S (switch or selector).',
@@ -162,9 +195,9 @@ const quizQuestions = [
     question: 'On a power circuit diagram, the three-phase supply lines are typically labelled:',
     options: [
       'L1, L2, L3 (with N for neutral and PE for protective earth)',
-      'Verify equipment is calibrated and functioning correctly',
-      'Adjacent to delivery access with good ground conditions',
-      'Equipment details, location, and test history',
+      'R, Y, B (with Blk for neutral), following the pre-2004 colour names',
+      'A, B, C (with 0 for neutral and G for ground)',
+      'P1, P2, P3 (with CN for the combined neutral and earth)',
     ],
     correctAnswer: 0,
     explanation:
@@ -238,108 +271,64 @@ const faqs = [
 ];
 
 const MOETModule6Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Circuit Diagrams and Symbols
-          </h1>
-          <p className="text-white">
-            IEC 60617 symbols, power and control circuits, signal flow and reference designation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.2 · Subsection 1"
+        title="Circuit Diagrams and Symbols"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            IEC 60617 symbols, power and control circuits, signal flow and reference designation.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>IEC 60617:</strong> International standard for graphical symbols
-              </li>
-              <li className="pl-1">
-                <strong>Power circuits:</strong> Main load current paths (L1, L2, L3, N, PE)
-              </li>
-              <li className="pl-1">
-                <strong>Control circuits:</strong> Low-current signal and switching logic
-              </li>
-              <li className="pl-1">
-                <strong>IEC 81346:</strong> Systematic equipment reference designation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Circuit diagrams are essential for tracing faults
-              </li>
-              <li className="pl-1">
-                <strong>Cross-referencing:</strong> Coils to contacts, sheets to sheets
-              </li>
-              <li className="pl-1">
-                <strong>Motor control:</strong> DOL, star-delta, VSD circuits common in industry
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Electrical schematic interpretation competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'IEC 60617: International standard for graphical symbols.',
+              'Power circuits: Main load current paths (L1, L2, L3, N, PE).',
+              'Control circuits: Low-current signal and switching logic.',
+              'IEC 81346: Systematic equipment reference designation.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify and interpret IEC 60617 graphical symbols on circuit diagrams',
               'Distinguish between power circuits and control circuits on schematics',
               'Follow signal flow conventions to understand circuit operation',
               'Use cross-referencing to trace related components across diagram sheets',
               'Apply IEC 81346 reference designation to identify equipment on drawings and on site',
               'Read and interpret common motor control circuit diagrams',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Circuit diagrams are essential for tracing faults.
+              </li>
+              <li>
+                <strong>Cross-referencing:</strong> Coils to contacts, sheets to sheets.
+              </li>
+              <li>
+                <strong>Motor control:</strong> DOL, star-delta, VSD circuits common in industry.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Electrical schematic interpretation competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            IEC 60617 Graphical Symbols
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>IEC 60617 graphical symbols</ContentEyebrow>
+
+          <ConceptBlock title="IEC 60617 Graphical Symbols">
             <p>
               IEC 60617 is the international standard that defines the graphical symbols used on
               electrical and electronic circuit diagrams. It provides a universal visual language
@@ -347,329 +336,260 @@ const MOETModule6Section2_1 = () => {
               country or organisation produced them. Mastering these symbols is fundamental to
               reading any electrical schematic.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Symbols for Maintenance Technicians
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">IEC Prefix</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Symbol Description
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor</td>
-                      <td className="border border-white/10 px-3 py-2">M</td>
-                      <td className="border border-white/10 px-3 py-2">Circle with M inside</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contactor/Relay coil</td>
-                      <td className="border border-white/10 px-3 py-2">K</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangle (or circle) with designation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuse</td>
-                      <td className="border border-white/10 px-3 py-2">F</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangle with line through
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit breaker</td>
-                      <td className="border border-white/10 px-3 py-2">Q</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch symbol with arc/trip mechanism
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer</td>
-                      <td className="border border-white/10 px-3 py-2">T</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two coils with core symbol
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Push button (NO)</td>
-                      <td className="border border-white/10 px-3 py-2">S</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Open contact with actuator arrow
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Overload relay</td>
-                      <td className="border border-white/10 px-3 py-2">F</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal element symbol with trip contact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Lamp/indicator</td>
-                      <td className="border border-white/10 px-3 py-2">H</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circle with cross or specific lamp symbol
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <AppendixTable
+            caption="Common Symbols for Maintenance Technicians"
+            headers={['Component', 'IEC Prefix', 'Symbol Description']}
+            rows={[
+              ['Motor', 'M', 'Circle with M inside'],
+              ['Contactor/Relay coil', 'K', 'Rectangle (or circle) with designation'],
+              ['Fuse', 'F', 'Rectangle with line through'],
+              ['Circuit breaker', 'Q', 'Switch symbol with arc/trip mechanism'],
+              ['Transformer', 'T', 'Two coils with core symbol'],
+              ['Push button (NO)', 'S', 'Open contact with actuator arrow'],
+              ['Overload relay', 'F', 'Thermal element symbol with trip contact'],
+              ['Lamp/indicator', 'H', 'Circle with cross or specific lamp symbol'],
+            ]}
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Power Circuits and Control Circuits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Power circuits and control circuits</ContentEyebrow>
+
+          <ConceptBlock
+            title="Power Circuits and Control Circuits"
+            onSite="Fault-Finding Implication: When a motor fails to start, the fault is more often in the control circuit than the power circuit. A tripped overload, a faulty push button, a broken interlock, or a failed timer in the control circuit will prevent the contactor from energising — even though the power circuit is completely healthy. Always check both circuits systematically."
+          >
             <p>
               Most industrial and commercial electrical systems are divided into two distinct
               circuit types: the power circuit (which carries the main load current) and the control
               circuit (which carries the signals that control the power circuit). Understanding this
               separation is essential for systematic fault-finding.
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Power Circuit</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Carries main load current (amps to hundreds of amps)</li>
-                  <li className="pl-1">
-                    Contains: isolators, fuses, MCCBs, contactors, overloads, motors
-                  </li>
-                  <li className="pl-1">Typically drawn with thicker lines</li>
-                  <li className="pl-1">Three-phase: L1, L2, L3 supply to load</li>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-1.5 font-semibold text-white">Power Circuit</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Carries main load current (amps to hundreds of amps)</li>
+                  <li>Contains: isolators, fuses, MCCBs, contactors, overloads, motors</li>
+                  <li>Typically drawn with thicker lines</li>
+                  <li>Three-phase: L1, L2, L3 supply to load</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Control Circuit</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Carries signal current (milliamps to a few amps)</li>
-                  <li className="pl-1">
-                    Contains: push buttons, selectors, relays, timers, PLCs, interlocks
-                  </li>
-                  <li className="pl-1">Typically drawn with thinner lines</li>
-                  <li className="pl-1">Often at reduced voltage (24 V DC or 110 V AC)</li>
+              <div>
+                <p className="mb-1.5 font-semibold text-white">Control Circuit</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Carries signal current (milliamps to a few amps)</li>
+                  <li>Contains: push buttons, selectors, relays, timers, PLCs, interlocks</li>
+                  <li>Typically drawn with thinner lines</li>
+                  <li>Often at reduced voltage (24 V DC or 110 V AC)</li>
                 </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Fault-Finding Implication</p>
-              <p className="text-sm text-white">
-                When a motor fails to start, the fault is more often in the control circuit than the
-                power circuit. A tripped overload, a faulty push button, a broken interlock, or a
-                failed timer in the control circuit will prevent the contactor from energising —
-                even though the power circuit is completely healthy. Always check both circuits
-                systematically.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Signal Flow and Cross-Referencing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Signal flow and cross-referencing</ContentEyebrow>
+
+          <ConceptBlock title="Signal Flow and Cross-Referencing">
             <p>
               Circuit diagrams follow conventions for signal flow that make them logical to read.
               Understanding these conventions allows you to trace the operation of any circuit from
               input to output, which is the foundation of systematic fault-finding.
             </p>
+            <p className="font-semibold text-white">Signal Flow Conventions</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Left to right:</strong> Input signals on the left, outputs on the right
+              </li>
+              <li>
+                <strong>Top to bottom:</strong> Supply at top, earth/return at bottom
+              </li>
+              <li>
+                <strong>Power flow:</strong> Supply lines (L1, L2, L3) typically horizontal at top
+              </li>
+              <li>
+                <strong>Control logic:</strong> Read vertically down between supply rails, left to
+                right for sequence
+              </li>
+            </ul>
+            <p className="font-semibold text-white">Cross-Referencing System</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Coil to contacts:</strong> A relay coil shows references to where its
+                contacts are used
+              </li>
+              <li>
+                <strong>Sheet references:</strong> Components spanning multiple sheets show
+                sheet/column references
+              </li>
+              <li>
+                <strong>Contact mirror:</strong> A table below the coil symbol lists all its
+                contacts with their locations
+              </li>
+              <li>
+                <strong>Terminal references:</strong> Link circuit diagram designations to physical
+                terminal numbers
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Flow Conventions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Left to right:</strong> Input signals on the left, outputs on the right
-                </li>
-                <li className="pl-1">
-                  <strong>Top to bottom:</strong> Supply at top, earth/return at bottom
-                </li>
-                <li className="pl-1">
-                  <strong>Power flow:</strong> Supply lines (L1, L2, L3) typically horizontal at top
-                </li>
-                <li className="pl-1">
-                  <strong>Control logic:</strong> Read vertically down between supply rails, left to
-                  right for sequence
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cross-Referencing System
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Coil to contacts:</strong> A relay coil shows references to where its
-                  contacts are used
-                </li>
-                <li className="pl-1">
-                  <strong>Sheet references:</strong> Components spanning multiple sheets show
-                  sheet/column references
-                </li>
-                <li className="pl-1">
-                  <strong>Contact mirror:</strong> A table below the coil symbol lists all its
-                  contacts with their locations
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal references:</strong> Link circuit diagram designations to
-                  physical terminal numbers
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ContentEyebrow>IEC 81346 reference designation</ContentEyebrow>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            IEC 81346 Reference Designation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="IEC 81346 Reference Designation">
             <p>
               IEC 81346 provides a hierarchical reference designation system that gives every item
               in an installation a unique identifier. This system links what you see on the circuit
               diagram to what you see labelled on the equipment in the field. Understanding it is
               essential for navigating between drawings and physical equipment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common IEC 81346 Prefix Letters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Letter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Component Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">M</td>
-                      <td className="border border-white/10 px-3 py-2">Motor</td>
-                      <td className="border border-white/10 px-3 py-2">M101 — motor number 101</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">K</td>
-                      <td className="border border-white/10 px-3 py-2">Relay, contactor</td>
-                      <td className="border border-white/10 px-3 py-2">KM1 — main contactor 1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Q</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit breaker, switch-disconnector
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Q1 — main isolator</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F</td>
-                      <td className="border border-white/10 px-3 py-2">Fuse, protective device</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        F1 — control circuit fuse
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch, selector, push button
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">S1 — start button</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">T</td>
-                      <td className="border border-white/10 px-3 py-2">Transformer</td>
-                      <td className="border border-white/10 px-3 py-2">T1 — control transformer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">H</td>
-                      <td className="border border-white/10 px-3 py-2">Indicator, lamp, alarm</td>
-                      <td className="border border-white/10 px-3 py-2">H1 — run indicator lamp</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Common IEC 81346 Prefix Letters"
+            headers={['Letter', 'Component Type', 'Example']}
+            rows={[
+              ['M', 'Motor', 'M101 — motor number 101'],
+              ['K', 'Relay, contactor', 'KM1 — main contactor 1'],
+              ['Q', 'Circuit breaker, switch-disconnector', 'Q1 — main isolator'],
+              ['F', 'Fuse, protective device', 'F1 — control circuit fuse'],
+              ['S', 'Switch, selector, push button', 'S1 — start button'],
+              ['T', 'Transformer', 'T1 — control transformer'],
+              ['H', 'Indicator, lamp, alarm', 'H1 — run indicator lamp'],
+            ]}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in interpreting electrical schematics and identifying equipment using reference
-              designations. This is a core skill for fault-finding, reporting, and maintenance
-              record-keeping.
+          <ConceptBlock title="ST1426 link">
+            <p>
+              The maintenance technician standard requires competence in interpreting electrical
+              schematics and identifying equipment using reference designations. This is a core
+              skill for fault-finding, reporting, and maintenance record-keeping.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="A symbol read as a normally-open contact when it was normally-closed"
 
-        <hr className="border-white/5 my-12" />
+            situation={
+              <>
+                <p>
+                  You are fault-finding a control circuit from a drawing. A pressure switch is shown
+                  in a rung feeding a contactor coil. Reading the symbol as normally-open, you
+                  expect the contact to close on rising pressure and energise the coil.
+                </p>
 
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+                <p>
+                  On the machine the coil is energised at rest and drops out when pressure rises,
+                  which is the opposite of what you expect. You start suspecting the drawing is out
+                  of date.
+                </p>
+              </>
+            }
 
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-2">
-              Next: Single-Line Diagrams
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            whatToDo={
+              <>
+                <p>
+                  Check the symbol carefully before doubting the drawing. Normally-open and
+                  normally-closed contacts differ by a single stroke across the contact, and at the
+                  scale most drawings are printed or viewed at, that stroke is easy to miss.
+                </p>
+
+                <p>
+                  Confirm against the device itself. A pressure switch is usually marked with its
+                  contact configuration at the terminals, and many carry both a NO and a NC set —
+                  which one is wired is the question the drawing is answering.
+                </p>
+
+                <p>
+                  Remember that "normally" means de-energised and at rest, not "normally during
+                  production". A contact drawn closed is closed with the machine off and no pressure
+                  applied, which is often the opposite of the state you are looking at on a running
+                  plant.
+                </p>
+
+                <p>
+                  If the drawing genuinely is wrong, mark it up and get it corrected through the
+                  drawing revision process rather than annotating a personal copy.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Assuming the drawing is wrong is the most expensive assumption in fault-finding,
+                because it removes your only reliable map and leaves you tracing wires. In practice
+                the drawing is usually right and the reading is wrong, and the single most common
+                reading error is contact state. Getting fluent with the symbols — to the point where
+                NO and NC are read without effort — is what makes a schematic faster than a
+                multimeter.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'IEC 60617 provides the internationally standardised graphical symbols used on electrical circuit diagrams.',
+              'Power circuits carry the main load current (L1, L2, L3, N, PE); control circuits carry low-current signal and switching logic.',
+              'Signal flow runs left to right and/or top to bottom; cross-referencing links coils to contacts across sheets.',
+              'IEC 81346 provides a systematic reference designation system — M (motor), K (relay/contactor), Q (circuit breaker), F (fuse), S (switch), T (transformer), H (indicator).',
+              'Faults can occur in either circuit — understanding both power and control circuits is essential for effective fault-finding.',
+              'ST1426 requires competence in interpreting electrical schematics and identifying equipment using reference designations.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Electrical schematics and wiring diagrams
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Wiring Diagrams
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

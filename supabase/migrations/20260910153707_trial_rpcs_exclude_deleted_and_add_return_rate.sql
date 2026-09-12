@@ -1,15 +1,11 @@
 -- Deleted certificates and quotes are not work produced.
 --
--- `get_trial_cohort` counted every row in `reports` and `quotes` inside the
--- trial window with no `deleted_at` filter. 14 of the 67 in-window certificates
--- are binned — 21% — and each one was adding up to 12.5 points to a trial score
--- via `calculateTrialScore`, promoting rows into the "engaged" band, into the
--- admin chase queue, and out of the "nothing made yet" figure. On the score
--- bands it moved five trials out of the top band alone. 496 reports and 68
--- quotes are deleted platform-wide, so the error only grows.
---
--- The same filter is applied in `get_trial_insights`, which has to band the same
--- score the list shows or the two panels disagree about the same person.
+-- Both trial RPCs counted every row in `reports` and `quotes` inside the trial
+-- window with no `deleted_at` filter. 14 of the 67 in-window certificates are
+-- binned — 21% — and each one was adding up to 12.5 points to a trial score,
+-- promoting rows into the "engaged" band, into the rescue queue, and out of the
+-- "nothing made yet" figure. 496 reports and 68 quotes are deleted platform-wide,
+-- so this only grows.
 create or replace function public.get_trial_cohort()
 returns table(user_id uuid, email text, full_name text, trial_start timestamp with time zone, trial_end timestamp with time zone, status text, days_remaining integer, subscription_tier text, subscription_source text, active_days integer, sessions integer, page_views integer, feature_uses integer, seconds_tracked integer, reports_made integer, quotes_made integer, last_seen timestamp with time zone)
 language plpgsql

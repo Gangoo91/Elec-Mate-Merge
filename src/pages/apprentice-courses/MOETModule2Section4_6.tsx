@@ -1,8 +1,45 @@
-import { ArrowLeft, Bolt, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 6 — Surge Protection Devices
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Surge Protection Devices - MOET Module 2 Section 4.6';
@@ -165,9 +202,9 @@ const quizQuestions = [
     question: 'In a TT earthing system, SPDs should be connected in which configuration?',
     options: [
       "Line to neutral and neutral to earth (L-N + N-PE) — the '3+1' or 'CT2' configuration",
-      "Line to earth only (L-PE), as the neutral and earth are closely coupled",
-      "Line to line only (L-L), with no connection to neutral or earth",
-      "Earth to the building structural steel, bypassing the main earthing terminal",
+      'Line to earth only (L-PE), as the neutral and earth are closely coupled',
+      'Line to line only (L-L), with no connection to neutral or earth',
+      'Earth to the building structural steel, bypassing the main earthing terminal',
     ],
     correctAnswer: 0,
     explanation:
@@ -220,7 +257,7 @@ const faqs = [
   {
     question: 'Do all new installations now require SPDs?',
     answer:
-      'BS 7671:2018 Amendment 2 requires SPD protection unless a risk assessment determines that the consequences of transient overvoltages are not serious. In practice, because virtually all modern installations contain sensitive electronic equipment (smart meters, heating controls, alarms, IT equipment), most new installations will require SPD protection. The risk assessment should be documented on the electrical installation certificate.',
+      'Under BS 7671:2018+A4:2026, Regulation 443.4 requires SPD protection unless a risk assessment determines that the consequences of transient overvoltages are not serious. In practice, because virtually all modern installations contain sensitive electronic equipment (smart meters, heating controls, alarms, IT equipment), most new installations will require SPD protection. The risk assessment should be documented on the electrical installation certificate.',
   },
   {
     question: 'Can I retrofit an SPD to an existing consumer unit?',
@@ -240,111 +277,69 @@ const faqs = [
 ];
 
 const MOETModule2Section4_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Bolt className="h-4 w-4" />
-            <span>Module 2.4.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Surge Protection Devices
-          </h1>
-          <p className="text-white">
-            Lightning and switching surge protection for electrical installations
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 6"
+        title="Surge Protection Devices"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Lightning and switching surge protection for electrical installations — SPD types, the
+            BS 7671:2018+A4:2026 risk assessment that decides whether one is required, and what to
+            check on an existing device during periodic inspection.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>SPDs:</strong> Clamp transient overvoltages to safe levels
-              </li>
-              <li className="pl-1">
-                <strong>Types:</strong> 1 (origin/lightning), 2 (DB/general), 3 (point of use)
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Amendment 2 requires SPDs unless risk assessment says
-                otherwise
-              </li>
-              <li className="pl-1">
-                <strong>Backup:</strong> Dedicated fuse/MCB to disconnect failed SPD
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Inspection:</strong> Check status indicator, backup device, connections
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Red indicator means SPD needs replacing
-              </li>
-              <li className="pl-1">
-                <strong>Configuration:</strong> Must match earthing system (TN vs TT)
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to protection and installation knowledge KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'SPDs clamp transient overvoltages to safe levels.',
+              'Types: 1 (origin/lightning), 2 (DB/general), 3 (point of use).',
+              'BS 7671: Regulation 443.4 requires SPDs unless a risk assessment says otherwise.',
+              'Backup: a dedicated fuse/MCB disconnects a failed SPD.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the causes of transient overvoltages and their effects on electrical installations',
               'Describe the three types of SPD (Type 1, 2 and 3) and their positions in the installation',
               'Understand voltage protection level (Up) and maximum discharge current (Imax) ratings',
-              'Apply BS 7671 Amendment 2 requirements for SPD risk assessment and installation',
+              'Apply the BS 7671:2018+A4:2026 requirements for SPD risk assessment and installation',
               'Select correct SPD configuration for TN and TT earthing systems',
               'Inspect SPDs during periodic inspection and identify when replacement is needed',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Transient overvoltages — causes and effects</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Transient Overvoltages — Causes and Effects
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="A very short voltage spike with real destructive energy">
             <p>
               A transient overvoltage is a very short-duration voltage spike superimposed on the
               normal supply waveform. These events can reach several thousand volts but last only
@@ -362,54 +357,46 @@ const MOETModule2Section4_6 = () => {
               switching) or from within the installation (motor starting, contactor operation)
               produce lower but still potentially damaging surges.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Surge Sources</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct lightning strike:</strong> To building, LPS or incoming services —
-                  highest energy, requires Type 1 SPD
-                </li>
-                <li className="pl-1">
-                  <strong>Indirect lightning:</strong> Strike nearby induces surges on supply cables
-                  — requires Type 2 SPD
-                </li>
-                <li className="pl-1">
-                  <strong>Switching operations:</strong> Utility switching, large motor starting,
-                  capacitor switching — Type 2 SPD
-                </li>
-                <li className="pl-1">
-                  <strong>Internal sources:</strong> Contactor operation, VFD switching, arc welding
-                  — Type 2 or 3 SPD
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common surge sources">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct lightning strike:</strong> To building, LPS or incoming services —
+                highest energy, requires Type 1 SPD
+              </li>
+              <li>
+                <strong>Indirect lightning:</strong> Strike nearby induces surges on supply cables —
+                requires Type 2 SPD
+              </li>
+              <li>
+                <strong>Switching operations:</strong> Utility switching, large motor starting,
+                capacitor switching — Type 2 SPD
+              </li>
+              <li>
+                <strong>Internal sources:</strong> Contactor operation, VFD switching, arc welding —
+                Type 2 or 3 SPD
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Consequences of Unprotected Surges
-              </p>
-              <p className="text-sm text-white">
-                Electronic equipment — fire and security alarm panels, boiler controls, LED drivers,
-                smart home systems, industrial PLCs, variable speed drives — is particularly
-                vulnerable to transient overvoltages. Damage may be immediate (catastrophic failure)
-                or cumulative (progressive insulation degradation leading to premature failure). The
-                cost of replacing damaged equipment and the consequential losses (downtime, data
-                loss, safety system failure) far exceed the cost of SPD installation.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Consequences of unprotected surges"
+            onSite="Electronic equipment — fire and security alarm panels, boiler controls, LED drivers, smart home systems, industrial PLCs, variable speed drives — is particularly vulnerable to transient overvoltages. Damage may be immediate (catastrophic failure) or cumulative (progressive insulation degradation leading to premature failure). The cost of replacing damaged equipment and the consequential losses (downtime, data loss, safety system failure) far exceed the cost of SPD installation."
+          >
+            <p>
+              A surge does not always announce itself with an obvious failure — cumulative damage is
+              just as real a cost as a single catastrophic event.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            SPD Types and Operating Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>SPD types and operating principles</ContentEyebrow>
+
+          <ConceptBlock title="A low-impedance path that appears only when needed">
             <p>
               Surge protection devices work by providing a low-impedance path to divert surge energy
               away from the protected equipment. Under normal voltage conditions, the SPD presents a
@@ -418,306 +405,261 @@ const MOETModule2Section4_6 = () => {
               current to earth and clamping the voltage across the protected equipment to a safe
               level.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Type 1 SPD (Class I / Category B)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Installed at the origin of the installation, typically upstream of the main
-                  distribution board. Designed to handle direct lightning current energy using the
-                  10/350 microsecond test impulse waveform. Usually uses spark gap technology which
-                  can handle very high energy but has a higher voltage protection level. Required
-                  where a lightning protection system is installed.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Impulse current (Iimp): typically 12.5 to 25 kA per pole (10/350 wave)
-                  </li>
-                  <li className="pl-1">Technology: spark gap, combined spark gap + MOV</li>
-                  <li className="pl-1">
-                    Location: origin, before main switch or integral with main switch
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Type 1 SPD (Class I / Category B)">
+            <p>
+              Installed at the origin of the installation, typically upstream of the main
+              distribution board. Designed to handle direct lightning current energy using the
+              10/350 microsecond test impulse waveform. Usually uses spark gap technology which can
+              handle very high energy but has a higher voltage protection level. Required where a
+              lightning protection system is installed.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Impulse current (Iimp): typically 12.5 to 25 kA per pole (10/350 wave)</li>
+              <li>Technology: spark gap, combined spark gap + MOV</li>
+              <li>Location: origin, before main switch or integral with main switch</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Type 2 SPD (Class II / Category C)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The most commonly installed type in domestic and commercial installations.
-                  Installed at distribution boards to protect against indirect lightning effects and
-                  switching surges using the 8/20 microsecond test impulse. Typically uses metal
-                  oxide varistor (MOV) technology which provides good clamping voltage and moderate
-                  energy handling.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Maximum discharge current (Imax): typically 10 to 40 kA per pole (8/20 wave)
-                  </li>
-                  <li className="pl-1">Voltage protection level (Up): typically 1.0 to 1.5 kV</li>
-                  <li className="pl-1">Technology: metal oxide varistor (MOV)</li>
-                  <li className="pl-1">Location: consumer unit, distribution board</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Type 2 SPD (Class II / Category C)">
+            <p>
+              The most commonly installed type in domestic and commercial installations. Installed
+              at distribution boards to protect against indirect lightning effects and switching
+              surges using the 8/20 microsecond test impulse. Typically uses metal oxide varistor
+              (MOV) technology which provides good clamping voltage and moderate energy handling.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Maximum discharge current (Imax): typically 10 to 40 kA per pole (8/20 wave)</li>
+              <li>Voltage protection level (Up): typically 1.0 to 1.5 kV</li>
+              <li>Technology: metal oxide varistor (MOV)</li>
+              <li>Location: consumer unit, distribution board</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Type 3 SPD (Class III / Category D)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Fine protection devices installed at the point of use, close to sensitive
-                  equipment. They handle the residual surge energy that passes through Type 1 and
-                  Type 2 devices and provide the lowest clamping voltage. Often built into plug-in
-                  adaptors or power strips.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Must be installed downstream of Type 2 SPD</li>
-                  <li className="pl-1">Low energy handling — for residual surges only</li>
-                  <li className="pl-1">Lowest voltage protection level (Up): below 1.0 kV</li>
-                  <li className="pl-1">Location: at socket outlets, equipment terminals</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Type 3 SPD (Class III / Category D)">
+            <p>
+              Fine protection devices installed at the point of use, close to sensitive equipment.
+              They handle the residual surge energy that passes through Type 1 and Type 2 devices
+              and provide the lowest clamping voltage. Often built into plug-in adaptors or power
+              strips.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Must be installed downstream of Type 2 SPD</li>
+              <li>Low energy handling — for residual surges only</li>
+              <li>Lowest voltage protection level (Up): below 1.0 kV</li>
+              <li>Location: at socket outlets, equipment terminals</li>
+            </ul>
+            <p className="text-elec-yellow/70">
               <strong>Key point:</strong> In larger installations, a coordinated cascade of Type 1,
               2 and 3 SPDs provides the best protection. Each successive device handles lower energy
               surges and provides tighter clamping. The manufacturer must confirm coordination
               between devices.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            BS 7671 Requirements and Risk Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 requirements and risk assessment</ContentEyebrow>
+
+          <ConceptBlock title="Regulation 443.4 and the Section 534 installation rules">
             <p>
-              BS 7671:2018 Amendment 2 introduced significant changes to SPD requirements through
-              revised Chapter 44 and Section 534. Regulation 443.4 now effectively requires SPD
-              protection for most installations unless a documented risk assessment demonstrates
-              that the consequences of transient overvoltages would not be serious.
+              BS 7671:2018+A4:2026 restructured the SPD requirements across Chapter 44 and Section
+              534 — Section 534 is now organised around 534.4, and 534.4.10 sets the minimum
+              cross-sectional area of the conductor between the SPD and the main earthing terminal
+              (16 mm² copper for Type 1, 6 mm² for Type 2). Regulation 443.4 now effectively
+              requires SPD protection for most installations unless a documented risk assessment
+              demonstrates that the consequences of transient overvoltages would not be serious.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When SPDs Are Required (Reg 443.4)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Where overvoltage could result in serious injury or loss of life
-                </li>
-                <li className="pl-1">
-                  Where overvoltage could result in interruption of public services or cultural
-                  heritage
-                </li>
-                <li className="pl-1">
-                  Where the installation includes commercial or industrial activities where failure
-                  could cause disruption
-                </li>
-                <li className="pl-1">Where significant numbers of individuals could be affected</li>
-                <li className="pl-1">
-                  In practice: most installations with electronic equipment, alarms, IT, or safety
-                  systems
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="When SPDs are required (Reg 443.4)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Where overvoltage could result in serious injury or loss of life</li>
+              <li>
+                Where overvoltage could result in interruption of public services or cultural
+                heritage
+              </li>
+              <li>
+                Where the installation includes commercial or industrial activities where failure
+                could cause disruption
+              </li>
+              <li>Where significant numbers of individuals could be affected</li>
+              <li>
+                In practice: most installations with electronic equipment, alarms, IT, or safety
+                systems
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Requirements (Section 534)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Connection length:</strong> Total conductor length (L + PE connections)
-                  should not exceed 500 mm where practical
-                </li>
-                <li className="pl-1">
-                  <strong>Backup protection:</strong> Each SPD requires a dedicated backup
-                  protective device as specified by the manufacturer
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing configuration:</strong> Must match the installation's earthing
-                  system (TN: L-PE; TT: L-N + N-PE)
-                </li>
-                <li className="pl-1">
-                  <strong>Status indication:</strong> SPDs should have a visible status indicator
-                  for periodic inspection
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination with RCDs:</strong> SPDs must not cause unwanted RCD tripping
-                  during surge events
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Installation requirements (Section 534)"
+            onSite="During periodic inspection, you must check whether SPD protection is present where required. If an installation predates the introduction of the SPD requirement and has no SPD, this should be noted as a recommendation (C3) unless a risk assessment has been documented."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Connection length:</strong> Total conductor length (L + PE connections)
+                should not exceed 500 mm where practical
+              </li>
+              <li>
+                <strong>Backup protection:</strong> Each SPD requires a dedicated backup protective
+                device as specified by the manufacturer
+              </li>
+              <li>
+                <strong>Earthing configuration:</strong> Must match the installation's earthing
+                system (TN: L-PE; TT: L-N + N-PE)
+              </li>
+              <li>
+                <strong>Status indication:</strong> SPDs should have a visible status indicator for
+                periodic inspection
+              </li>
+              <li>
+                <strong>Coordination with RCDs:</strong> SPDs must not cause unwanted RCD tripping
+                during surge events
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance relevance:</strong> During periodic inspection, you must check
-              whether SPD protection is present where required. If an installation was built before
-              Amendment 2 and has no SPD, this should be noted as a recommendation (C3) unless a
-              risk assessment has been documented.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Installation, Inspection and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Installation, inspection and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Correct installation is critical to effectiveness">
             <p>
               Correct installation of SPDs is critical for their effectiveness. Poor installation —
               particularly excessively long connection leads — can significantly reduce the
               protection provided. During periodic inspection, SPDs must be assessed for condition
               and functionality.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Installation Best Practices
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Keep connections short:</strong> The combined length of line and earth
-                  connections should not exceed 500 mm. Excess length adds inductance, increasing
-                  the effective clamping voltage.
-                </li>
-                <li className="pl-1">
-                  <strong>Install backup protection:</strong> Use the backup fuse or MCB rating
-                  specified by the SPD manufacturer. Incorrect backup can either fail to protect the
-                  SPD (too high) or cause nuisance tripping (too low).
-                </li>
-                <li className="pl-1">
-                  <strong>Match earthing system:</strong> TN systems use L-PE (or L-N + N-PE)
-                  connection. TT systems must use L-N + N-PE with a gas discharge tube on the N-PE
-                  path to avoid RCD interference.
-                </li>
-                <li className="pl-1">
-                  <strong>Position:</strong> Install as close to the origin as possible for Type 2.
-                  Downstream of the main switch to allow isolation for maintenance.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Installation best practices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Keep connections short:</strong> The combined length of line and earth
+                connections should not exceed 500 mm. Excess length adds inductance, increasing the
+                effective clamping voltage.
+              </li>
+              <li>
+                <strong>Install backup protection:</strong> Use the backup fuse or MCB rating
+                specified by the SPD manufacturer. Incorrect backup can either fail to protect the
+                SPD (too high) or cause nuisance tripping (too low).
+              </li>
+              <li>
+                <strong>Match earthing system:</strong> TN systems use L-PE (or L-N + N-PE)
+                connection. TT systems must use L-N + N-PE with a gas discharge tube on the N-PE
+                path to avoid RCD interference.
+              </li>
+              <li>
+                <strong>Position:</strong> Install as close to the origin as possible for Type 2.
+                Downstream of the main switch to allow isolation for maintenance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Periodic Inspection Checks
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Status indicator: green (healthy) or red (replace)</li>
-                  <li className="pl-1">Backup device: intact and not tripped/blown</li>
-                  <li className="pl-1">Connections: secure, no signs of overheating</li>
-                  <li className="pl-1">Physical condition: no burning, cracking, discolouration</li>
-                  <li className="pl-1">Rating: appropriate for earthing system and risk level</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">SPD End of Life</h3>
-                <p className="text-sm text-white">
-                  MOV-based SPDs degrade with each surge event. Over time, the MOV material
-                  gradually loses its ability to clamp voltage effectively. When the SPD reaches end
-                  of life, the status indicator changes to fault, and the device must be replaced.
-                  Some SPDs also incorporate a thermal disconnector that isolates the MOV if it
-                  overheats, providing an additional layer of safety.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> SPD technology is increasingly important in modern
-              electrical maintenance. Understanding SPD selection, installation verification and
-              periodic inspection requirements is part of the electrical engineering maintenance
-              technician's skillset, as specified in the ST1426 standard.
+          <ConceptBlock title="Periodic inspection checks and SPD end of life">
+            <p>
+              <strong>Periodic inspection checks:</strong> status indicator — green (healthy) or red
+              (replace); backup device — intact and not tripped/blown; connections — secure, no
+              signs of overheating; physical condition — no burning, cracking, discolouration;
+              rating — appropriate for earthing system and risk level.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>SPD end of life:</strong> MOV-based SPDs degrade with each surge event. Over
+              time, the MOV material gradually loses its ability to clamp voltage effectively. When
+              the SPD reaches end of life, the status indicator changes to fault, and the device
+              must be replaced. Some SPDs also incorporate a thermal disconnector that isolates the
+              MOV if it overheats, providing an additional layer of safety.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <CommonMistake
+            title="Assuming an SPD protects against sustained overvoltage"
+            whatHappens={
+              <>
+                SPDs are designed to handle transient overvoltages lasting microseconds to
+                milliseconds. A sustained overvoltage — such as 400 V appearing on a 230 V circuit
+                due to a broken neutral on a three-phase supply — will cause the SPD to operate
+                continuously and overheat.
+              </>
+            }
+            doInstead={
+              <>
+                Rely on the backup fuse to disconnect an overheating SPD, and specify a dedicated
+                overvoltage relay or similar device where protection against sustained overvoltage
+                is actually needed — an SPD alone will not provide it.
+              </>
+            }
+          />
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Increasingly important in modern maintenance"
+            onSite="SPD technology is increasingly important in modern electrical maintenance. Understanding SPD selection, installation verification and periodic inspection requirements is part of the electrical engineering maintenance technician's skillset, as specified in the ST1426 standard."
+          >
+            <p>
+              Treat an SPD like any other protective device: verify it is present where required,
+              correctly installed, and shows a healthy status every time you inspect the board it
+              sits on.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">SPD Types</p>
-                <ul className="space-y-0.5">
-                  <li>Type 1 — Origin, direct lightning (10/350 wave)</li>
-                  <li>Type 2 — DB, indirect lightning/switching (8/20 wave)</li>
-                  <li>Type 3 — Point of use, fine protection</li>
-                  <li>Connection length: &le; 500 mm total</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key BS 7671 References</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 443.4 — SPD requirement and risk assessment</li>
-                  <li>Section 534 — SPD selection and installation</li>
-                  <li>Reg 534.2.1 — Connection requirements</li>
-                  <li>BS EN 62305 — Lightning protection risk assessment</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              'An SPD diverts transient overvoltage energy to earth, clamping the voltage across protected equipment — it does not disconnect a supply.',
+              'Type 1 (origin, direct lightning, 10/350 wave), Type 2 (distribution board, indirect lightning/switching, 8/20 wave), Type 3 (point of use, fine protection).',
+              'BS 7671:2018+A4:2026 Regulation 443.4 requires SPD protection unless a documented risk assessment says the consequences are not serious.',
+              'Section 534.4.10 sets the minimum conductor CSA between the SPD and the MET: 16 mm squared copper for Type 1, 6 mm squared for Type 2.',
+              'Keep SPD connections as short as possible (under 500 mm total) — excess length adds inductance that raises the effective clamping voltage.',
+              'A dedicated backup fuse or MCB protects against an SPD failing short-circuit at end of life or under sustained overvoltage.',
+              'TT systems need an L-N + N-PE ("3+1"/CT2) configuration with a spark-gap N-PE device, to avoid affecting RCD operation.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Bonding Requirements
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Conductors and Insulation Materials
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Bonding Requirements
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 4 · Subsection 4 — Professional Behaviour and
+ * Teamwork
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * This is the last subsection of the last section of the entire module.
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Professional Behaviour and Teamwork - MOET Module 6 Section 4.4';
@@ -151,9 +182,9 @@ const quizQuestions = [
     question: 'Time management on maintenance tasks demonstrates professionalism because:',
     options: [
       "More work done safely, schedules kept, and everyone's time used responsibly",
-      "It allows safety-critical checks to be shortened so that deadlines are always met",
-      "It proves that you can complete a task faster than any other member of the team",
-      "It removes the need to communicate delays, since everything is finished on time",
+      'It allows safety-critical checks to be shortened so that deadlines are always met',
+      'It proves that you can complete a task faster than any other member of the team',
+      'It removes the need to communicate delays, since everything is finished on time',
     ],
     correctAnswer: 0,
     explanation:
@@ -243,112 +274,49 @@ const faqs = [
 ];
 
 const MOETModule6Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Header */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Professional Behaviour and Teamwork
-          </h1>
-          <p className="text-white">
-            Professional standards, ethical conduct, teamwork skills, and continuous development
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.4 · Subsection 4"
+        title="Professional Behaviour and Teamwork"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Professional standards, ethical conduct, teamwork skills, and continuous development —
+            the behaviours pillar of your ST1426 end-point assessment, and the last subsection of
+            the module.
           </p>
-        </header>
 
-        {/* Summary boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Professionalism:</strong> Ownership of work quality, safety, and conduct
-              </li>
-              <li className="pl-1">
-                <strong>Teamwork:</strong> Communication, mutual support, shared responsibility
-              </li>
-              <li className="pl-1">
-                <strong>Ethics:</strong> Honest reporting, accurate records, declaring limitations
-              </li>
-              <li className="pl-1">
-                <strong>CPD:</strong> Continuous learning to maintain competence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safety culture:</strong> Speaking up, reporting near misses
-              </li>
-              <li className="pl-1">
-                <strong>Accountability:</strong> Standing behind your work and decisions
-              </li>
-              <li className="pl-1">
-                <strong>Mentoring:</strong> Supporting less experienced colleagues
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Behaviours pillar of end-point assessment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Professionalism: Ownership of work quality, safety, and conduct.',
+              'Teamwork: Communication, mutual support, shared responsibility.',
+              'Ethics: Honest reporting, accurate records, declaring limitations.',
+              'CPD: Continuous learning to maintain competence.',
+            ]}
+          />
 
-        {/* Learning outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Demonstrate professional behaviour consistent with the ST1426 behaviours standard',
               'Work effectively as part of a maintenance team with clear communication and mutual support',
               'Apply ethical principles to decision-making, record-keeping, and certification',
               'Identify and commit to Continuing Professional Development throughout your career',
               'Handle workplace challenges including conflict, mistakes, and competing priorities professionally',
               'Understand your legal duties under HASAWA 1974 and the Equality Act 2010',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>What professional behaviour means</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Professional Behaviour Means
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="What Professional Behaviour Means">
             <p>
               Professional behaviour in electrical maintenance is not an abstract concept — it is a
               set of concrete, observable actions that directly affect safety, quality, and the
@@ -363,157 +331,144 @@ const MOETModule6Section4_4 = () => {
               your conduct — treating colleagues, clients, and the public with respect and
               integrity.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The ST1426 Behaviours</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety orientation:</strong> Prioritising safety in every decision and
-                  action
-                </li>
-                <li className="pl-1">
-                  <strong>Strong work ethic:</strong> Reliable, punctual, thorough, and committed to
-                  quality
-                </li>
-                <li className="pl-1">
-                  <strong>Professional judgement:</strong> Making sound decisions based on knowledge
-                  and experience
-                </li>
-                <li className="pl-1">
-                  <strong>Personal responsibility:</strong> Accountability for your actions and
-                  their consequences
-                </li>
-                <li className="pl-1">
-                  <strong>Effective communication:</strong> Clear, honest, and appropriate to the
-                  audience
-                </li>
-                <li className="pl-1">
-                  <strong>Teamwork:</strong> Working cooperatively and supporting colleagues
-                </li>
-                <li className="pl-1">
-                  <strong>Commitment to CPD:</strong> Actively maintaining and developing competence
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Behaviours Are Not Optional
-              </p>
-              <p className="text-sm text-white">
-                In the ST1426 end-point assessment, behaviours are assessed through professional
-                discussion and employer testimony. A technically competent technician who behaves
-                unprofessionally — cutting corners, failing to communicate, or disrespecting
-                colleagues — will not pass the assessment. The standard recognises that behaviour
-                and competence are inseparable.
-              </p>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="The ST1426 Behaviours">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety orientation:</strong> Prioritising safety in every decision and
+                action.
+              </li>
+              <li>
+                <strong>Strong work ethic:</strong> Reliable, punctual, thorough, and committed to
+                quality.
+              </li>
+              <li>
+                <strong>Professional judgement:</strong> Making sound decisions based on knowledge
+                and experience.
+              </li>
+              <li>
+                <strong>Personal responsibility:</strong> Accountability for your actions and their
+                consequences.
+              </li>
+              <li>
+                <strong>Effective communication:</strong> Clear, honest, and appropriate to the
+                audience.
+              </li>
+              <li>
+                <strong>Teamwork:</strong> Working cooperatively and supporting colleagues.
+              </li>
+              <li>
+                <strong>Commitment to CPD:</strong> Actively maintaining and developing competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Working as Part of a Team
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Behaviours Are Not Optional">
+            <p>
+              In the ST1426 end-point assessment, behaviours are assessed through professional
+              discussion and employer testimony. A technically competent technician who behaves
+              unprofessionally — cutting corners, failing to communicate, or disrespecting
+              colleagues — will not pass the assessment. The standard recognises that behaviour and
+              competence are inseparable.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Working as part of a team</ContentEyebrow>
+
+          <ConceptBlock title="Working as Part of a Team">
             <p>
               Maintenance work is rarely a solo activity. Even when you are working independently on
               a task, you are part of a wider team: your shift colleagues, the planning team, the
               supervisor, contractors, and the facilities management team. Effective teamwork means
               understanding how your work connects to everyone else&apos;s.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Characteristics of Effective Maintenance Teams
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Clear communication:</strong> Team members share information proactively —
-                  especially about hazards, progress, and changes
-                </li>
-                <li className="pl-1">
-                  <strong>Mutual support:</strong> Team members help each other, share the workload
-                  fairly, and cover for absences
-                </li>
-                <li className="pl-1">
-                  <strong>Shared situational awareness:</strong> Everyone knows what is happening
-                  across the team — who is working where, what permits are active, what is isolated
-                </li>
-                <li className="pl-1">
-                  <strong>Collective safety responsibility:</strong> Safety is everyone&apos;s
-                  concern, not just the supervisor&apos;s. Anyone can and should raise a safety
-                  concern
-                </li>
-                <li className="pl-1">
-                  <strong>Constructive challenge:</strong> Team members feel safe to question
-                  decisions, suggest improvements, and report errors without fear of blame
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Your Role in the Team
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-elec-yellow/80 font-medium">Responsibility</th>
-                      <th className="py-2 text-elec-yellow/80 font-medium">What This Looks Like</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Communicate your plan</td>
-                      <td className="py-2">
-                        Tell colleagues what you are working on, where, and when you expect to
-                        finish
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Share safety information</td>
-                      <td className="py-2">
-                        Warn colleagues about hazards you have identified, even outside your
-                        immediate work area
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Offer help</td>
-                      <td className="py-2">
-                        If you see a colleague struggling or if you have capacity, offer assistance
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Accept feedback</td>
-                      <td className="py-2">
-                        Listen to constructive criticism without defensiveness — it is an
-                        opportunity to improve
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4 font-medium">Support new team members</td>
-                      <td className="py-2">
-                        Share knowledge, explain procedures, and help them integrate into the team
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Characteristics of Effective Maintenance Teams">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Clear communication:</strong> Team members share information proactively —
+                especially about hazards, progress, and changes.
+              </li>
+              <li>
+                <strong>Mutual support:</strong> Team members help each other, share the workload
+                fairly, and cover for absences.
+              </li>
+              <li>
+                <strong>Shared situational awareness:</strong> Everyone knows what is happening
+                across the team — who is working where, what permits are active, what is isolated.
+              </li>
+              <li>
+                <strong>Collective safety responsibility:</strong> Safety is everyone&apos;s
+                concern, not just the supervisor&apos;s. Anyone can and should raise a safety
+                concern.
+              </li>
+              <li>
+                <strong>Constructive challenge:</strong> Team members feel safe to question
+                decisions, suggest improvements, and report errors without fear of blame.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Ethics and Integrity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Your Role in the Team">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Responsibility</th>
+                    <th className="py-2 font-medium text-white">What This Looks Like</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Communicate your plan</td>
+                    <td className="py-2">
+                      Tell colleagues what you are working on, where, and when you expect to finish
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Share safety information</td>
+                    <td className="py-2">
+                      Warn colleagues about hazards you have identified, even outside your immediate
+                      work area
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Offer help</td>
+                    <td className="py-2">
+                      If you see a colleague struggling or if you have capacity, offer assistance
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Accept feedback</td>
+                    <td className="py-2">
+                      Listen to constructive criticism without defensiveness — it is an opportunity
+                      to improve
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Support new team members</td>
+                    <td className="py-2">
+                      Share knowledge, explain procedures, and help them integrate into the team
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Ethics and integrity</ContentEyebrow>
+
+          <ConceptBlock title="Ethics and Integrity">
             <p>
               Ethical behaviour in electrical maintenance is not abstract philosophy — it has
               direct, practical consequences. A fabricated test result could lead to a fatal
@@ -521,62 +476,55 @@ const MOETModule6Section4_4 = () => {
               fire. A failure to report a safety hazard could cause an incident. Ethics in this
               profession is about honesty, accuracy, and the courage to do the right thing.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Consequences of Dishonesty
-              </p>
-              <p className="text-sm text-white">
-                Fabricating test results, signing certificates for work not done, or failing to
-                report defects are not just professional misconduct — they are criminal offences.
-                Under the Fraud Act 2006, making a false representation (such as a fabricated test
-                certificate) is punishable by up to 10 years imprisonment. Under HASAWA 1974,
-                failing to report a known hazard that leads to injury can result in prosecution of
-                the individual, not just the employer.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Ethical Principles for Maintenance Technicians
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Honesty in reporting:</strong> Record what you actually found and measured
-                  — never what you think should be there
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy in records:</strong> Test results, work completed, materials used
-                  — all must be truthful and verifiable
-                </li>
-                <li className="pl-1">
-                  <strong>Competence boundaries:</strong> Declare honestly when work is beyond your
-                  competence or qualification
-                </li>
-                <li className="pl-1">
-                  <strong>Certification integrity:</strong> Never sign a certificate for work you
-                  have not personally completed or verified
-                </li>
-                <li className="pl-1">
-                  <strong>Conflict of interest:</strong> If you find a reason to recommend
-                  additional work, ensure the recommendation is genuine and necessary
-                </li>
-                <li className="pl-1">
-                  <strong>Confidentiality:</strong> Respect client confidentiality — do not share
-                  site information, access codes, or system details inappropriately
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="The Consequences of Dishonesty">
+            <p>
+              Fabricating test results, signing certificates for work not done, or failing to report
+              defects are not just professional misconduct — they are criminal offences. Under the
+              Fraud Act 2006, making a false representation (such as a fabricated test certificate)
+              is punishable by up to 10 years imprisonment. Under HASAWA 1974, failing to report a
+              known hazard that leads to injury can result in prosecution of the individual, not
+              just the employer.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Continuing Professional Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Ethical Principles for Maintenance Technicians">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Honesty in reporting:</strong> Record what you actually found and measured —
+                never what you think should be there.
+              </li>
+              <li>
+                <strong>Accuracy in records:</strong> Test results, work completed, materials used —
+                all must be truthful and verifiable.
+              </li>
+              <li>
+                <strong>Competence boundaries:</strong> Declare honestly when work is beyond your
+                competence or qualification.
+              </li>
+              <li>
+                <strong>Certification integrity:</strong> Never sign a certificate for work you have
+                not personally completed or verified.
+              </li>
+              <li>
+                <strong>Conflict of interest:</strong> If you find a reason to recommend additional
+                work, ensure the recommendation is genuine and necessary.
+              </li>
+              <li>
+                <strong>Confidentiality:</strong> Respect client confidentiality — do not share site
+                information, access codes, or system details inappropriately.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Continuing professional development</ContentEyebrow>
+
+          <ConceptBlock title="Continuing Professional Development">
             <p>
               Completing your apprenticeship is the beginning of your professional journey, not the
               end. The electrical industry evolves continuously — regulations change, technologies
@@ -584,161 +532,147 @@ const MOETModule6Section4_4 = () => {
               separates a technician who remains competent from one who gradually becomes obsolete
               and, ultimately, unsafe.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CPD Pathways After ST1426
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BS 7671 updates:</strong> Stay current with amendments — Amendment 2
-                  (2022) is current; further amendments are expected
-                </li>
-                <li className="pl-1">
-                  <strong>Inspection and testing:</strong> City &amp; Guilds 2391-52 qualification
-                  for inspection, testing, and certification
-                </li>
-                <li className="pl-1">
-                  <strong>Specialist skills:</strong> EV charging installation (C&amp;G 2919), solar
-                  PV, battery storage, heat pump systems
-                </li>
-                <li className="pl-1">
-                  <strong>Management qualifications:</strong> ILM Level 3 in Management for those
-                  moving into supervisory roles
-                </li>
-                <li className="pl-1">
-                  <strong>Manufacturer training:</strong> Specific training on equipment you
-                  maintain (BMS, VSD, PLC systems)
-                </li>
-                <li className="pl-1">
-                  <strong>Professional registration:</strong> EngTech registration with the IET
-                  demonstrates professional standing
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Informal CPD</h3>
-              <p className="text-sm text-white mb-2">
-                Formal courses are not the only way to develop. Valuable informal CPD includes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Reading industry publications (IET Wiring Matters, Electrical Review)
-                </li>
-                <li className="pl-1">Attending manufacturer product demonstrations and webinars</li>
-                <li className="pl-1">
-                  Participating in toolbox talks — both attending and delivering
-                </li>
-                <li className="pl-1">Learning from colleagues with different specialisms</li>
-                <li className="pl-1">
-                  Reviewing incident reports and lessons learned from other organisations
-                </li>
-                <li className="pl-1">Keeping a CPD log to track your development activities</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Workplace Conduct and Legal Duties
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="CPD Pathways After ST1426">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671 updates:</strong> Stay current with amendments — the 18th Edition is
+                now at Amendment 4:2026.
+              </li>
+              <li>
+                <strong>Inspection and testing:</strong> City &amp; Guilds 2391-52 qualification for
+                inspection, testing, and certification.
+              </li>
+              <li>
+                <strong>Specialist skills:</strong> EV charging installation (C&amp;G 2919), solar
+                PV, battery storage, heat pump systems.
+              </li>
+              <li>
+                <strong>Management qualifications:</strong> ILM Level 3 in Management for those
+                moving into supervisory roles.
+              </li>
+              <li>
+                <strong>Manufacturer training:</strong> Specific training on equipment you maintain
+                (BMS, VSD, PLC systems).
+              </li>
+              <li>
+                <strong>Professional registration:</strong> EngTech registration with the IET
+                demonstrates professional standing.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Informal CPD">
+            <p>Formal courses are not the only way to develop. Valuable informal CPD includes:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Reading industry publications (IET Wiring Matters, Electrical Review).</li>
+              <li>Attending manufacturer product demonstrations and webinars.</li>
+              <li>Participating in toolbox talks — both attending and delivering.</li>
+              <li>Learning from colleagues with different specialisms.</li>
+              <li>Reviewing incident reports and lessons learned from other organisations.</li>
+              <li>Keeping a CPD log to track your development activities.</li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Workplace conduct and legal duties</ContentEyebrow>
+
+          <ConceptBlock title="Workplace Conduct and Legal Duties">
             <p>
               Your workplace conduct is governed by both professional standards and law.
               Understanding your legal duties helps you make sound decisions and protects you if
               your actions are ever questioned.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Key Legal Duties</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>HASAWA 1974, Section 7:</strong> Take reasonable care for your own health
-                  and safety and that of others affected by your work. Cooperate with your employer
-                  on safety matters
-                </li>
-                <li className="pl-1">
-                  <strong>HASAWA 1974, Section 8:</strong> Do not intentionally or recklessly
-                  interfere with or misuse anything provided for safety
-                </li>
-                <li className="pl-1">
-                  <strong>EAWR 1989, Regulation 3:</strong> Only carry out electrical work if you
-                  are competent to do so, or are under appropriate supervision
-                </li>
-                <li className="pl-1">
-                  <strong>Equality Act 2010:</strong> Do not discriminate against colleagues or
-                  clients on the basis of protected characteristics (age, disability, gender, race,
-                  religion, sexual orientation, etc.)
-                </li>
-                <li className="pl-1">
-                  <strong>Fraud Act 2006:</strong> Do not make false representations — including
-                  fabricated test results or certificates
-                </li>
-              </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Key Legal Duties">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HASAWA 1974, Section 7:</strong> Take reasonable care for your own health
+                and safety and that of others affected by your work. Cooperate with your employer on
+                safety matters.
+              </li>
+              <li>
+                <strong>HASAWA 1974, Section 8:</strong> Do not intentionally or recklessly
+                interfere with or misuse anything provided for safety.
+              </li>
+              <li>
+                <strong>EAWR 1989, Regulation 3:</strong> Only carry out electrical work if you are
+                competent to do so, or are under appropriate supervision.
+              </li>
+              <li>
+                <strong>Equality Act 2010:</strong> Do not discriminate against colleagues or
+                clients on the basis of protected characteristics (age, disability, gender, race,
+                religion, sexual orientation, etc.).
+              </li>
+              <li>
+                <strong>Fraud Act 2006:</strong> Do not make false representations — including
+                fabricated test results or certificates.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Your Professional Legacy">
+            <p>
+              Every piece of work you complete, every record you create, and every interaction you
+              have builds your professional reputation. The electrical installations you maintain
+              will serve buildings and protect people for decades. The records you create may be
+              referenced for years to come. The apprentices you eventually mentor will carry your
+              professional standards into the future. Take pride in doing excellent work — it
+              matters more than you may realise.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Safety culture: Speaking up, reporting near misses.',
+              'Accountability: Standing behind your work and decisions.',
+              'Mentoring: Supporting less experienced colleagues.',
+              'ST1426: Behaviours pillar of end-point assessment.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section4-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Liaising with Non-Technical Staff
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Module complete <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Back to Module 6 Overview
+                </div>
+              </button>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">Your Professional Legacy</p>
-              <p className="text-sm text-white">
-                Every piece of work you complete, every record you create, and every interaction you
-                have builds your professional reputation. The electrical installations you maintain
-                will serve buildings and protect people for decades. The records you create may be
-                referenced for years to come. The apprentices you eventually mentor will carry your
-                professional standards into the future. Take pride in doing excellent work — it
-                matters more than you may realise.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Liaising with Non-Technical Staff
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6">
-              Back to Module 6 Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

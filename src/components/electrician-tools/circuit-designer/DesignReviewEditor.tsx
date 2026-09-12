@@ -1529,7 +1529,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
         insulationResistance:
           circuit.expectedTests?.insulationResistance?.minResistance || '≥1.0MΩ',
         insulationRegulation:
-          circuit.expectedTests?.insulationResistance?.regulation || 'BS 7671 Table 6.1',
+          circuit.expectedTests?.insulationResistance?.regulation || 'BS 7671 Table 64',
 
         // On-site verification required (legacy fields)
         r1r2: includeExpectedResults

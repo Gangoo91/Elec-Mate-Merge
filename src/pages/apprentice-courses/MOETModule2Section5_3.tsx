@@ -1,8 +1,46 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 5.3 · Subsection 3 — Selection and Use of Power
+ * Tools
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Selection and Use of Power Tools - MOET Module 2 Section 5.3';
@@ -42,10 +80,10 @@ const quickCheckQuestions = [
     id: 'angle-grinder',
     question: 'Before using an angle grinder, the most critical safety check is:',
     options: [
-      "That the guard is fitted, the disc is undamaged and RPM-rated, and PPE is worn",
-      "Confirming the grinder takes the right disc diameter, whatever its speed rating",
-      "Checking the supply lead reaches without an extension and the plug is undamaged",
-      "Running the grinder for a full minute at no load to warm the motor before cutting",
+      'That the guard is fitted, the disc is undamaged and RPM-rated, and PPE is worn',
+      'Confirming the grinder takes the right disc diameter, whatever its speed rating',
+      'Checking the supply lead reaches without an extension and the plug is undamaged',
+      'Running the grinder for a full minute at no load to warm the motor before cutting',
     ],
     correctIndex: 0,
     explanation:
@@ -140,7 +178,7 @@ const quizQuestions = [
       "Be lower than the grinder's no-load speed so the disc is never over-driven",
       "Be exactly half the grinder's no-load speed for safe steady cutting",
       "Be equal to or greater than the grinder's no-load speed, or it may shatter",
-      "Match the diameter of the disc in millimetres rather than the grinder speed",
+      'Match the diameter of the disc in millimetres rather than the grinder speed',
     ],
     correctAnswer: 2,
     explanation:
@@ -257,108 +295,77 @@ const faqs = [
 ];
 
 const MOETModule2Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 2.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Selection and Use of Power Tools
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.5 · Subsection 3"
+        title="Selection and Use of Power Tools"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Safe selection, operation and maintenance of power tools for electrical maintenance work
+            — the supply that keeps a shock survivable, and the checks that stop a disc or a drill
+            from becoming the incident.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>110 V CTE:</strong> Standard for site tools — 55 V max to earth
-              </li>
-              <li className="pl-1">
-                <strong>SDS drills:</strong> Pneumatic hammer for masonry and concrete
-              </li>
-              <li className="pl-1">
-                <strong>Guards/PPE:</strong> Always fitted and worn — disc failure is lethal
-              </li>
-              <li className="pl-1">
-                <strong>PAT:</strong> 3-monthly testing for construction site tools
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Daily use:</strong> Drills, grinders and saws are core maintenance tools
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> PUWER compliance and risk assessment required
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Match the tool to the task and environment
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to safe working practices and tool use KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              '110 V CTE: standard for site tools — 55 V max to earth',
+              'SDS drills: pneumatic hammer for masonry and concrete',
+              'Guards/PPE: always fitted and worn — disc failure is lethal',
+              'PAT: 3-monthly testing for construction site tools',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'PUWER',
+
+                gist: 'Work equipment must be suitable, maintained, inspected and used only by people who have been trained.',
+
+                where: '1.4.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain why 110 V CTE is the standard supply for construction and maintenance site power tools',
               'Select the correct drill type and bit for different materials (masonry, metal, wood, plasterboard)',
               'Identify the safety requirements for angle grinders including disc speed ratings and guard positioning',
               'Understand PAT testing requirements and inspection frequencies for power tools',
               'Apply PUWER regulations and risk assessment principles to power tool use',
               'Manage hand-arm vibration exposure when using power tools regularly',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Power supply safety — 110 V CTE and classification</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Power Supply Safety — 110 V CTE and Classification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Power Supply Safety — 110 V CTE and Classification">
             <p>
               The electrical supply to portable power tools is the first and most important safety
               consideration. On construction and maintenance sites, the risk of cable damage, wet
@@ -374,269 +381,228 @@ const MOETModule2Section5_3 = () => {
               fatal electric shock under most conditions. Even if a fault develops in the tool or
               the cable is cut, the maximum shock voltage is limited to 55 V.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Tool Classes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Protection Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Earth</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class I</td>
-                      <td className="border border-white/10 px-3 py-2">Basic insulation + earth</td>
-                      <td className="border border-white/10 px-3 py-2">Yes — 3-core cable</td>
-                      <td className="border border-white/10 px-3 py-2">Earth symbol</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class II</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Double / reinforced insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No — 2-core cable</td>
-                      <td className="border border-white/10 px-3 py-2">Double square</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class III</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SELV (Safety Extra-Low Voltage)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Diamond in rectangle</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">Power tool classes</p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Class</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Protection method
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Earth</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Class I</td>
+                    <td className="border border-white/10 px-3 py-2">Basic insulation + earth</td>
+                    <td className="border border-white/10 px-3 py-2">Yes — 3-core cable</td>
+                    <td className="border border-white/10 px-3 py-2">Earth symbol</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Class II</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Double / reinforced insulation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">No — 2-core cable</td>
+                    <td className="border border-white/10 px-3 py-2">Double square</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Class III</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      SELV (Safety Extra-Low Voltage)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">No</td>
+                    <td className="border border-white/10 px-3 py-2">Diamond in rectangle</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">110 V Identification</p>
-              <p className="text-sm text-white">
-                110 V CTE tools and equipment are identified by yellow plugs, sockets and cables.
-                The plug format (BS 4343 / IEC 60309) is different from the standard UK 13 A
-                domestic plug — it has three pins in a different configuration that physically
-                prevents connection to a 230 V socket. Never modify plugs or use adaptors to connect
-                110 V tools to 230 V supplies or vice versa.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="110 V CTE identification">
+            <p className="text-[13px] text-elec-yellow/70">
+              <strong>Identification:</strong> 110 V CTE tools and equipment are identified by
+              yellow plugs, sockets and cables. The plug format (BS 4343 / IEC 60309) is different
+              from the standard UK 13 A domestic plug — it has three pins in a different
+              configuration that physically prevents connection to a 230 V socket. Never modify
+              plugs or use adaptors to connect 110 V tools to 230 V supplies or vice versa.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Drilling — Types, Bits and Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Drilling — types, bits and techniques</ContentEyebrow>
+
+          <ConceptBlock
+            title="Drilling — Types, Bits and Techniques"
+            onSite="Always scan for concealed services (cables, pipes) with a CAT scanner before drilling into any wall, floor or ceiling. Striking a live cable can be fatal. Check both sides of the wall where possible and refer to installation drawings."
+          >
             <p>
               Drilling is the most frequent power tool operation in electrical maintenance —
               creating fixings for containment, accessories, enclosures and cable supports.
               Selecting the correct drill type and bit for the material is essential for efficiency,
               quality and safety.
             </p>
-
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Standard Drill / Driver
-                </h3>
-                <p className="text-sm text-white">
-                  A combination drill/driver with keyless chuck handles general-purpose drilling in
-                  wood, metal and light masonry, plus screw-driving. Variable speed control and
-                  torque settings allow the tool to be matched to the task. Cordless 18 V versions
-                  are the most common choice for electrical maintenance, offering adequate power
-                  without trailing cables. For metal drilling, use HSS (high-speed steel) bits at
-                  moderate speed with cutting fluid. For wood, use lip-and-spur bits or flat (spade)
-                  bits.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  SDS Rotary Hammer Drill
-                </h3>
-                <p className="text-sm text-white">
-                  The SDS (Slotted Drive System) rotary hammer drill is the standard tool for
-                  drilling into concrete, brick, block and stone. The dedicated pneumatic hammering
-                  mechanism delivers powerful blows independently of the rotation, making it far
-                  more effective than a standard hammer drill on hard materials. Most SDS drills
-                  have three modes: drill only (for non-masonry), hammer drill (for masonry), and
-                  hammer only (for light chiselling with flat or pointed chisels). SDS-Plus handles
-                  bits up to approximately 25 mm diameter.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Core Drill</h3>
-                <p className="text-sm text-white">
-                  For large-diameter holes through masonry walls (cable entry, conduit passage), a
-                  diamond core drill is used. These produce clean, accurate holes from 25 mm
-                  upwards. The diamond-tipped core bit rotates at relatively low speed and requires
-                  water cooling (or dry-cut cores for smaller sizes). The drill must be mounted on a
-                  stand for stability and the operator needs training in the safe setup and use of
-                  the equipment.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical safety point:</strong> Always scan for concealed services (cables,
-              pipes) with a CAT scanner before drilling into any wall, floor or ceiling. Striking a
-              live cable can be fatal. Check both sides of the wall where possible and refer to
-              installation drawings.
+            <p>
+              <strong>Standard drill / driver.</strong> A combination drill/driver with keyless
+              chuck handles general-purpose drilling in wood, metal and light masonry, plus
+              screw-driving. Variable speed control and torque settings allow the tool to be matched
+              to the task. Cordless 18 V versions are the most common choice for electrical
+              maintenance, offering adequate power without trailing cables. For metal drilling, use
+              HSS (high-speed steel) bits at moderate speed with cutting fluid. For wood, use
+              lip-and-spur bits or flat (spade) bits.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>SDS rotary hammer drill.</strong> The SDS (Slotted Drive System) rotary hammer
+              drill is the standard tool for drilling into concrete, brick, block and stone. The
+              dedicated pneumatic hammering mechanism delivers powerful blows independently of the
+              rotation, making it far more effective than a standard hammer drill on hard materials.
+              Most SDS drills have three modes: drill only (for non-masonry), hammer drill (for
+              masonry), and hammer only (for light chiselling with flat or pointed chisels).
+              SDS-Plus handles bits up to approximately 25 mm diameter.
+            </p>
+            <p>
+              <strong>Core drill.</strong> For large-diameter holes through masonry walls (cable
+              entry, conduit passage), a diamond core drill is used. These produce clean, accurate
+              holes from 25 mm upwards. The diamond-tipped core bit rotates at relatively low speed
+              and requires water cooling (or dry-cut cores for smaller sizes). The drill must be
+              mounted on a stand for stability and the operator needs training in the safe setup and
+              use of the equipment.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cutting Tools — Grinders, Saws and Nibblers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cutting tools — grinders, saws and nibblers</ContentEyebrow>
+
+          <ConceptBlock title="Cutting Tools — Grinders, Saws and Nibblers">
             <p>
               Cutting metal containment (cable tray, trunking, conduit), making openings in
               enclosures, and adapting structures are common tasks requiring power cutting tools.
               Each tool has specific safety requirements that must be followed without exception.
             </p>
+            <p>
+              <strong>Angle grinder.</strong> Available in 115 mm and 230 mm disc sizes. Used for
+              cutting metal (thin cutting discs), grinding welds and burrs (grinding discs), and
+              cutting masonry (diamond cutting discs). The angle grinder is one of the most
+              dangerous power tools — the disc rotates at very high speed and a failure can be
+              catastrophic. The guard must always be fitted and positioned correctly. The disc RPM
+              rating must equal or exceed the grinder's no-load speed. Never use a cutting disc for
+              grinding or vice versa. Dead-man (paddle) switches are preferred — the tool stops when
+              released.
+            </p>
+            <p>
+              <strong>Reciprocating saw.</strong> A versatile cutting tool for cable tray, trunking,
+              conduit, plasterboard and general demolition. Interchangeable blades suit different
+              materials — fine-tooth for metal, coarse-tooth for wood and plasterboard. The orbital
+              action setting should be reduced for metal cutting (less aggressive) and increased for
+              wood (faster cutting). The shoe (base plate) should be held firmly against the
+              workpiece to reduce vibration.
+            </p>
+            <p>
+              <strong>Nibbler / jigsaw.</strong> For cutting openings in thin sheet metal (enclosure
+              panels, trunking lids), a nibbler removes a narrow strip of material producing clean,
+              burr-free edges. A jigsaw with a fine metal-cutting blade is an alternative for curved
+              and straight cuts in sheet material. Both tools produce less noise and vibration than
+              an angle grinder and are generally safer for enclosed work.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Angle Grinder</h3>
-                <p className="text-sm text-white">
-                  Available in 115 mm and 230 mm disc sizes. Used for cutting metal (thin cutting
-                  discs), grinding welds and burrs (grinding discs), and cutting masonry (diamond
-                  cutting discs). The angle grinder is one of the most dangerous power tools — the
-                  disc rotates at very high speed and a failure can be catastrophic. The guard must
-                  always be fitted and positioned correctly. The disc RPM rating must equal or
-                  exceed the grinder's no-load speed. Never use a cutting disc for grinding or vice
-                  versa. Dead-man (paddle) switches are preferred — the tool stops when released.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Reciprocating Saw</h3>
-                <p className="text-sm text-white">
-                  A versatile cutting tool for cable tray, trunking, conduit, plasterboard and
-                  general demolition. Interchangeable blades suit different materials — fine-tooth
-                  for metal, coarse-tooth for wood and plasterboard. The orbital action setting
-                  should be reduced for metal cutting (less aggressive) and increased for wood
-                  (faster cutting). The shoe (base plate) should be held firmly against the
-                  workpiece to reduce vibration.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Nibbler / Jigsaw</h3>
-                <p className="text-sm text-white">
-                  For cutting openings in thin sheet metal (enclosure panels, trunking lids), a
-                  nibbler removes a narrow strip of material producing clean, burr-free edges. A
-                  jigsaw with a fine metal-cutting blade is an alternative for curved and straight
-                  cuts in sheet material. Both tools produce less noise and vibration than an angle
-                  grinder and are generally safer for enclosed work.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Angle Grinder Safety Rules</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Guard always fitted — positioned to deflect sparks/debris away from the operator
+          <CommonMistake
+            title="Angle grinder safety rules"
+            whatHappens={
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                <li>
+                  Guard removed or not positioned to deflect sparks/debris away from the operator
                 </li>
-                <li className="pl-1">Disc RPM rating must equal or exceed grinder no-load speed</li>
-                <li className="pl-1">
-                  Inspect disc before fitting — reject any with cracks, chips or damage
+                <li>Disc RPM rating lower than the grinder's no-load speed</li>
+                <li>Disc fitted without inspection — cracks, chips or damage go unnoticed</li>
+                <li>A cutting disc used for grinding, or a grinding disc used for cutting</li>
+                <li>
+                  No PPE — safety goggles/face shield, leather gloves, hearing protection, dust mask
                 </li>
-                <li className="pl-1">
-                  Use correct disc type — cutting discs for cutting, grinding discs for grinding
-                </li>
-                <li className="pl-1">
-                  PPE: safety goggles/face shield, leather gloves, hearing protection, dust mask
-                </li>
-                <li className="pl-1">
-                  Secure the workpiece — never cut while holding the item in your other hand
-                </li>
-                <li className="pl-1">Allow the disc to reach full speed before starting the cut</li>
+                <li>Workpiece unsecured — cutting while holding the item in the other hand</li>
+                <li>Cutting started before the disc reaches full speed</li>
               </ul>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead={
+              <>
+                Guard always fitted; disc RPM rating equal to or greater than the grinder's no-load
+                speed; inspect every disc before fitting; use the correct disc type for the job;
+                full PPE every time; secure the workpiece; let the disc reach full speed before
+                starting the cut.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            PAT Testing, PUWER and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>PAT testing, PUWER and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="PAT Testing, PUWER and Maintenance">
             <p>
               Power tools are subject to multiple regulatory requirements designed to ensure they
               remain safe throughout their working life. The two key frameworks are PAT (Portable
               Appliance Testing) under the Electricity at Work Regulations 1989 and PUWER (Provision
               and Use of Work Equipment Regulations) 1998.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PAT Testing Schedule for Power Tools
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                PAT testing schedule for power tools
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Check Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">User check</td>
-                      <td className="border border-white/10 px-3 py-2">Before every use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual check for damage to tool, cable, plug
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Formal visual inspection</td>
-                      <td className="border border-white/10 px-3 py-2">Weekly / monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed visual inspection, recorded
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combined inspection and test
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3-monthly (110 V site tools)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual + earth continuity + insulation resistance + functional
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">After repair</td>
-                      <td className="border border-white/10 px-3 py-2">Every time</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full combined inspection and test
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Check type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">User check</td>
+                    <td className="border border-white/10 px-3 py-2">Before every use</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Visual check for damage to tool, cable, plug
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Formal visual inspection</td>
+                    <td className="border border-white/10 px-3 py-2">Weekly / monthly</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Detailed visual inspection, recorded
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Combined inspection and test
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      3-monthly (110 V site tools)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Visual + earth continuity + insulation resistance + functional
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">After repair</td>
+                    <td className="border border-white/10 px-3 py-2">Every time</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Full combined inspection and test
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               PUWER requires that all work equipment is suitable for its intended use, maintained in
               a safe condition, inspected at suitable intervals, and used only by persons who have
@@ -645,86 +611,83 @@ const MOETModule2Section5_3 = () => {
               appropriate guards and safety devices, and that operators have been trained in their
               safe use.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hand-Arm Vibration Management
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Hand-arm vibration management
               </p>
-              <p className="text-sm text-white mb-2">
+              <p className="mb-2 text-sm text-white">
                 The Control of Vibration at Work Regulations 2005 set daily exposure limits:
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Exposure action value:</strong> 2.5 m/s² A(8) — employer must take action
                   to reduce exposure
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Exposure limit value:</strong> 5 m/s² A(8) — must not be exceeded
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Mitigation:</strong> Use low-vibration tools, limit exposure time, rotate
                   tasks, provide anti-vibration gloves, and implement health surveillance for
                   regularly exposed workers
                 </li>
               </ul>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Record keeping proves compliance">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Record keeping:</strong> Maintain a register of all power tools including
               make, model, serial number, date of purchase, PAT test dates and results, repair
               history, and date of disposal. This provides evidence of compliance with PUWER and the
               Electricity at Work Regulations and is essential for defending any enforcement action.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Cordless Tools and Battery Safety
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cordless tools and battery safety</ContentEyebrow>
+
+          <ConceptBlock title="Cordless Tools and Battery Safety">
             <p>
               Cordless lithium-ion power tools have transformed electrical maintenance work. Modern
               18 V and 36 V platforms offer performance comparable to corded tools for most tasks,
               while eliminating the hazards of trailing cables, the need for 110 V transformers, and
               the restriction of working within cable reach of a power source.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Battery Safety Essentials
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Battery safety essentials
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Charging:</strong> Use only the manufacturer's charger designed for the
                   specific battery type. Never charge damaged, swollen or overheated batteries.
                   Charge in a ventilated area away from flammable materials.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Storage:</strong> Store batteries at room temperature (10-25°C), away from
                   direct sunlight and heat sources. Remove batteries from tools during long-term
                   storage. Store at 40-60% charge for long periods.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Damage:</strong> Withdraw any battery that has been dropped, crushed, or
                   shows physical damage (cracks, swelling, leaking). Damaged lithium-ion batteries
                   pose a fire risk (thermal runaway).
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Transport:</strong> Protect battery terminals from short-circuit during
                   transport. Use the manufacturer's protective caps or carry batteries in a
                   dedicated case.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Disposal:</strong> Lithium-ion batteries must be recycled through an
                   approved scheme — never dispose of in general waste or by incineration.
                 </li>
               </ul>
             </div>
-
             <p>
               The main limitation of cordless tools is battery capacity — heavy-use applications
               (continuous SDS drilling, angle grinding) drain batteries quickly. Having spare
@@ -733,84 +696,59 @@ const MOETModule2Section5_3 = () => {
               heavy-duty use (core drilling, continuous grinding), corded 110 V tools remain the
               better choice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              '110 V CTE (centre-tapped earth) is the standard site supply for portable power tools — the centre tap limits voltage to earth to 55 V, well below a generally lethal level.',
+              'Power tool classes: Class I — basic insulation + earth (3-core); Class II — double/reinforced insulation, no earth (2-core); Class III — SELV, no earth.',
+              'SDS rotary hammer drills use a pneumatic hammer independent of rotation — far more effective in masonry than a standard hammer drill. SDS-Plus handles bits up to ~25 mm.',
+              "An angle grinder disc's RPM rating must equal or exceed the grinder's no-load speed, the guard must always be fitted, and full PPE is required — disc failure can be lethal.",
+              'PAT schedule: user check before every use, formal visual inspection weekly/monthly, combined inspection and test every 3 months for 110 V site tools, full test after any repair.',
+              'Hand-arm vibration: exposure action value 2.5 m/s² A(8), exposure limit value 5 m/s² A(8) (Control of Vibration at Work Regulations 2005).',
+              'Key references: PUWER 1998; EAW 1989; Vibration Regs 2005; BS 7671 Section 704 — construction sites; IET CoP — PAT testing; HSG47 — underground services avoidance.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Common Power Tools</p>
-                <ul className="space-y-0.5">
-                  <li>Drill/Driver — wood, metal, screwdriving</li>
-                  <li>SDS Hammer Drill — masonry, concrete</li>
-                  <li>Angle Grinder — cutting/grinding metal</li>
-                  <li>Reciprocating Saw — containment, openings</li>
-                  <li>Jigsaw/Nibbler — sheet metal, curves</li>
-                  <li>Core Drill — large wall penetrations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>PUWER 1998 — Work equipment suitability</li>
-                  <li>EAW 1989 — Electrical equipment safety</li>
-                  <li>Vibration Regs 2005 — HAV exposure limits</li>
-                  <li>BS 7671 Section 704 — Construction sites</li>
-                  <li>IET CoP — PAT testing guidance</li>
-                  <li>HSG47 — Underground services avoidance</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Selection and Use of Hand Tools
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Test Equipment
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Hand Tools
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-4">
-              Next: Test Equipment
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -72,7 +72,7 @@ export function OCRPreview({
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-4 space-y-4',
+        'bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden p-4 space-y-4',
         className
       )}
     >
@@ -109,9 +109,9 @@ export function OCRPreview({
       {/* Processing */}
       {isProcessing && (
         <div className="space-y-3">
-          <div className="relative h-32 rounded-xl overflow-hidden bg-white/[0.04] border border-white/[0.06]">
+          <div className="relative h-32 rounded-xl overflow-hidden bg-white/[0.04] border border-elec-yellow/35">
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-full h-0.5 bg-elec-yellow/60 animate-scan" />
+              <div className="w-full h-0.5 bg-elec-yellow animate-scan" />
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">

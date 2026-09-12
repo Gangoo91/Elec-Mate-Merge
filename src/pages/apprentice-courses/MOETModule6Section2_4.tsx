@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 2 · Subsection 4 — Labelling and Numbering
+ * Standards
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Labelling and Numbering Standards - MOET Module 6 Section 2.4';
@@ -72,12 +103,7 @@ const quizQuestions = [
     id: 1,
     question:
       'Which BS EN standard provides the reference designation system for industrial components (replacing the older letter code systems)?',
-    options: [
-      'IEC 60617',
-      'BS EN 81346',
-      'BS EN 62491',
-      'BS EN 61082',
-    ],
+    options: ['IEC 60617', 'BS EN 81346', 'BS EN 62491', 'BS EN 61082'],
     correctAnswer: 1,
     explanation:
       "BS EN 81346 'Industrial systems, installations and equipment and industrial products — Structuring principles and reference designations' provides the standardised system for designating components. It replaced the older DIN 40719 and BS 3939 letter code systems.",
@@ -85,12 +111,7 @@ const quizQuestions = [
   {
     id: 2,
     question: "In the designation KM3, what does the 'K' represent?",
-    options: [
-      'A motor',
-      'A circuit breaker',
-      'A contactor or relay',
-      'A transformer',
-    ],
+    options: ['A motor', 'A circuit breaker', 'A contactor or relay', 'A transformer'],
     correctAnswer: 2,
     explanation:
       "Under BS EN 81346, the letter 'K' designates contactors and relays. 'M' stands for motor, 'Q' for switching device (circuit breaker/isolator), and 'T' for transformer. KM3 therefore identifies the third contactor in the system.",
@@ -114,9 +135,9 @@ const quizQuestions = [
     question: 'Terminal strips in a control panel are typically labelled with:',
     options: [
       'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
-      'At each end of every wire or conductor, close to the termination point',
-      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
-      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
+      'The name of the electrician who terminated each conductor',
+      'The cable colour code used for each conductor in the strip',
+      'The rated current of the protective device feeding that terminal',
     ],
     correctAnswer: 0,
     explanation:
@@ -260,121 +281,66 @@ const faqs = [
 ];
 
 const MOETModule6Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Labelling and Numbering Standards
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.2 · Subsection 4"
+        title="Labelling and Numbering Standards"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Component designation, wire numbering and identification systems for electrical
-            maintenance
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Labels:</strong> Unambiguous identification of every component, cable and
-                circuit
-              </li>
-              <li className="pl-1">
-                <strong>Wire numbers:</strong> Identify electrical nodes — same number at every
-                connection point on that node
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS EN 81346 for component designation, BS EN 62491 for
-                cable marking
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Regulation 514 covers conductor and circuit identification
-                requirements
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Correct labels enable rapid circuit tracing
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Wrong identification = working on the wrong circuit
-              </li>
-              <li className="pl-1">
-                <strong>Compliance:</strong> Labelling deficiencies are common C2 observations on
-                EICR
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to documentation and technical drawing KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Labels: Unambiguous identification of every component, cable and circuit.',
+              'Wire numbers: Identify electrical nodes — same number at every connection point on that node.',
+              'Standards: BS EN 81346 for component designation, BS EN 62491 for cable marking.',
+              'BS 7671: Regulation 514 covers conductor and circuit identification requirements.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and importance of standardised labelling systems',
               'Interpret component designations using BS EN 81346 letter codes',
               'Describe wire numbering systems and their relationship to circuit nodes',
               'Apply terminal strip identification conventions in control panels',
               'Identify cable marking requirements under BS EN 62491 and BS 7671',
               'Maintain and replace labels during routine maintenance activities',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Correct labels enable rapid circuit tracing
+              </li>
+              <li>
+                <strong>Safety:</strong> Wrong identification = working on the wrong circuit
+              </li>
+              <li>
+                <strong>Compliance:</strong> Labelling deficiencies are common C2 observations on
+                EICR
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to documentation and technical drawing KSBs
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Labelling and Numbering Matter
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Why labelling and numbering matter</ContentEyebrow>
+
+          <ConceptBlock title="Why Labelling and Numbering Matter">
             <p>
               Every electrical installation — from a domestic consumer unit to an industrial motor
               control centre — relies on labelling to ensure that maintenance, fault-finding and
@@ -388,64 +354,60 @@ const MOETModule6Section2_4 = () => {
               identification leads to wasted time, incorrect repairs, and potentially dangerous
               situations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Labelling Chain</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design drawings:</strong> Components, cables and circuits are designated
-                  during the design phase
-                </li>
-                <li className="pl-1">
-                  <strong>Panel build:</strong> Components are physically labelled to match the
-                  drawings during manufacture
-                </li>
-                <li className="pl-1">
-                  <strong>Site installation:</strong> Cables are labelled at both ends, circuits
-                  identified at distribution boards
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> Labels are verified against drawings and corrected
-                  if necessary
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Technicians rely on labels for safe identification
-                  throughout the installation life
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The Labelling Chain">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design drawings:</strong> Components, cables and circuits are designated
+                during the design phase
+              </li>
+              <li>
+                <strong>Panel build:</strong> Components are physically labelled to match the
+                drawings during manufacture
+              </li>
+              <li>
+                <strong>Site installation:</strong> Cables are labelled at both ends, circuits
+                identified at distribution boards
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Labels are verified against drawings and corrected
+                if necessary
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Technicians rely on labels for safe identification
+                throughout the installation life
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Regulatory Requirement</p>
-              <p className="text-sm text-white">
-                BS 7671 Regulation 514.1.1 states that identification labels shall be durable and
-                legible. Regulation 514.8.1 requires that every distribution board circuit be
-                identified with a durable label. Failure to provide adequate labelling is a
-                non-compliance that will be recorded on an Electrical Installation Condition Report
-                (EICR) — often as a C3 (improvement recommended) or C2 (potentially dangerous)
-                observation if the absence of labels could lead to incorrect identification of
-                circuits.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Labelling is not optional. It is a regulatory requirement
-              under BS 7671 and a fundamental safety measure. The maintenance technician has a
-              responsibility to maintain, replace, and report missing or illegible labels during
-              every site visit.
+          <ConceptBlock title="Regulatory Requirement">
+            <p>
+              BS 7671 Regulation 514.1.1 states that identification labels shall be durable and
+              legible. Regulation 514.8.1 requires that every distribution board circuit be
+              identified with a durable label. Failure to provide adequate labelling is a
+              non-compliance that will be recorded on an Electrical Installation Condition Report
+              (EICR) — often as a C3 (improvement recommended) or C2 (potentially dangerous)
+              observation if the absence of labels could lead to incorrect identification of
+              circuits.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key point">
+            <p>
+              Labelling is not optional. It is a regulatory requirement under BS 7671 and a
+              fundamental safety measure. The maintenance technician has a responsibility to
+              maintain, replace, and report missing or illegible labels during every site visit.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Component Designation Systems (BS EN 81346)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Component designation systems (BS EN 81346)</ContentEyebrow>
+
+          <ConceptBlock title="Component Designation Systems (BS EN 81346)">
             <p>
               BS EN 81346 provides the international standard for structuring and designating
               components within industrial systems. It replaces older national standards and
@@ -453,145 +415,67 @@ const MOETModule6Section2_4 = () => {
               maintenance technicians, understanding these designations is essential for reading
               drawings and identifying components on site.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Component Designation Letters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Letter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Component Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">K</td>
-                      <td className="border border-white/10 px-3 py-2">Contactors and relays</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        KM1 (contactor 1), KA3 (auxiliary relay 3)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Q</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switching devices (power circuits)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Q1 (isolator), QF2 (circuit breaker 2)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">F</td>
-                      <td className="border border-white/10 px-3 py-2">Protective devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        F1 (fuse 1), FA1 (overload relay 1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">M</td>
-                      <td className="border border-white/10 px-3 py-2">Motors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        M1 (motor 1), M2 (motor 2)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">T</td>
-                      <td className="border border-white/10 px-3 py-2">Transformers</td>
-                      <td className="border border-white/10 px-3 py-2">T1 (transformer 1)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">S</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switches (control circuits)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        S1 (push button 1), SA1 (selector switch 1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">H</td>
-                      <td className="border border-white/10 px-3 py-2">Signalling devices</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        H1 (indicator lamp 1), HA1 (alarm horn 1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">X</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Terminal strips and connectors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        X1 (terminal strip 1), XP1 (plug connector 1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">R</td>
-                      <td className="border border-white/10 px-3 py-2">Resistors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        R1 (resistor 1), RV1 (variable resistor 1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">P</td>
-                      <td className="border border-white/10 px-3 py-2">Measuring instruments</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        P1 (ammeter), PV1 (voltmeter)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Common Component Designation Letters"
+            headers={['Letter', 'Component Type', 'Examples']}
+            rows={[
+              ['K', 'Contactors and relays', 'KM1 (contactor 1), KA3 (auxiliary relay 3)'],
+              ['Q', 'Switching devices (power circuits)', 'Q1 (isolator), QF2 (circuit breaker 2)'],
+              ['F', 'Protective devices', 'F1 (fuse 1), FA1 (overload relay 1)'],
+              ['M', 'Motors', 'M1 (motor 1), M2 (motor 2)'],
+              ['T', 'Transformers', 'T1 (transformer 1)'],
+              ['S', 'Switches (control circuits)', 'S1 (push button 1), SA1 (selector switch 1)'],
+              ['H', 'Signalling devices', 'H1 (indicator lamp 1), HA1 (alarm horn 1)'],
+              [
+                'X',
+                'Terminal strips and connectors',
+                'X1 (terminal strip 1), XP1 (plug connector 1)',
+              ],
+              ['R', 'Resistors', 'R1 (resistor 1), RV1 (variable resistor 1)'],
+              ['P', 'Measuring instruments', 'P1 (ammeter), PV1 (voltmeter)'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Hierarchical Designation
-              </p>
-              <p className="text-sm text-white mb-2">
-                BS EN 81346 uses a hierarchical structure to locate components within a system. A
-                full designation might read:
-              </p>
-              <p className="text-sm text-white font-mono bg-white/5 p-2 rounded mb-2">
-                =MCC1+DR3-KM1
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>=MCC1:</strong> System level — Motor Control Centre 1
-                </li>
-                <li className="pl-1">
-                  <strong>+DR3:</strong> Location level — Drawer 3
-                </li>
-                <li className="pl-1">
-                  <strong>-KM1:</strong> Component level — Contactor 1
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                This structured approach means a technician can navigate from the system level down
-                to the specific component, even in a facility with hundreds of similar devices.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When you encounter a designation on site that you do
-              not recognise, always cross-reference it with the as-built drawings. Do not guess —
-              incorrect identification of components is a common cause of maintenance errors.
+          <ConceptBlock title="Hierarchical Designation">
+            <p>
+              BS EN 81346 uses a hierarchical structure to locate components within a system. A full
+              designation might read:
             </p>
-          </div>
-        </section>
+            <p className="rounded bg-white/5 p-2 font-mono">=MCC1+DR3-KM1</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>=MCC1:</strong> System level — Motor Control Centre 1
+              </li>
+              <li>
+                <strong>+DR3:</strong> Location level — Drawer 3
+              </li>
+              <li>
+                <strong>-KM1:</strong> Component level — Contactor 1
+              </li>
+            </ul>
+            <p>
+              This structured approach means a technician can navigate from the system level down to
+              the specific component, even in a facility with hundreds of similar devices.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Practical tip">
+            <p>
+              When you encounter a designation on site that you do not recognise, always
+              cross-reference it with the as-built drawings. Do not guess — incorrect identification
+              of components is a common cause of maintenance errors.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Wire Numbering Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Wire numbering systems</ContentEyebrow>
+
+          <ConceptBlock title="Wire Numbering Systems">
             <p>
               Wire numbering is arguably the most critical labelling system in a control panel or
               complex installation. Every wire in a control circuit is assigned a unique number that
@@ -599,449 +483,318 @@ const MOETModule6Section2_4 = () => {
               termination point along the wire, allowing technicians to trace circuits and verify
               correct connections during maintenance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Wire Numbering Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Node-based:</strong> A wire number identifies an electrical node (point of
-                  equal potential), not a physical wire
-                </li>
-                <li className="pl-1">
-                  <strong>Consistent:</strong> The same number appears at every termination point on
-                  that node — the wire number does not change when it passes through a terminal
-                  strip
-                </li>
-                <li className="pl-1">
-                  <strong>Unique:</strong> Each node has a unique number within the circuit or panel
-                </li>
-                <li className="pl-1">
-                  <strong>Sequential:</strong> Numbers are typically assigned sequentially, often
-                  grouped by circuit function (e.g., 100-series for control, 200-series for
-                  interlocks)
-                </li>
-                <li className="pl-1">
-                  <strong>Physically marked:</strong> Wire ferrules or labels display the number at
-                  each end of every wire
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Wire Numbering Principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Node-based:</strong> A wire number identifies an electrical node (point of
+                equal potential), not a physical wire
+              </li>
+              <li>
+                <strong>Consistent:</strong> The same number appears at every termination point on
+                that node — the wire number does not change when it passes through a terminal strip
+              </li>
+              <li>
+                <strong>Unique:</strong> Each node has a unique number within the circuit or panel
+              </li>
+              <li>
+                <strong>Sequential:</strong> Numbers are typically assigned sequentially, often
+                grouped by circuit function (e.g., 100-series for control, 200-series for
+                interlocks)
+              </li>
+              <li>
+                <strong>Physically marked:</strong> Wire ferrules or labels display the number at
+                each end of every wire
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Numbering Conventions
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Number Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1-99</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power circuit connections (L1, L2, L3, N, E)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">100-199</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control circuit — main control functions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">200-299</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interlock and safety circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">300-399</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Indication and alarm circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">400-499</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Analogue signal circuits (4-20 mA, 0-10 V)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-sm text-white mt-2">
-                Note: These ranges are conventional, not mandatory. Always refer to the
-                project-specific numbering schedule.
-              </p>
-            </div>
+          <AppendixTable
+            caption="Common Numbering Conventions"
+            headers={['Number Range', 'Typical Use']}
+            rows={[
+              ['1-99', 'Power circuit connections (L1, L2, L3, N, E)'],
+              ['100-199', 'Control circuit — main control functions'],
+              ['200-299', 'Interlock and safety circuits'],
+              ['300-399', 'Indication and alarm circuits'],
+              ['400-499', 'Analogue signal circuits (4-20 mA, 0-10 V)'],
+            ]}
+            notes="Note: These ranges are conventional, not mandatory. Always refer to the project-specific numbering schedule."
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">When Wire Numbers Change</p>
-              <p className="text-sm text-white">
-                A wire number changes when the electrical potential changes — i.e., when the wire
-                passes through a component that changes its state or voltage. For example, on one
-                side of a contactor coil the wire number might be 101; on the other side it will be
-                a different number (e.g., 102) because the electrical potential is different.
-                Through a terminal strip (which does not change the electrical state), the wire
-                number stays the same.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Before disconnecting any wire during maintenance,
-              always note the wire number on both the wire ferrule and the drawing. When
-              reconnecting, verify the wire number matches the drawing. This simple discipline
-              prevents the vast majority of reconnection errors.
+          <ConceptBlock title="When Wire Numbers Change">
+            <p>
+              A wire number changes when the electrical potential changes — i.e., when the wire
+              passes through a component that changes its state or voltage. For example, on one side
+              of a contactor coil the wire number might be 101; on the other side it will be a
+              different number (e.g., 102) because the electrical potential is different. Through a
+              terminal strip (which does not change the electrical state), the wire number stays the
+              same.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Maintenance tip">
+            <p>
+              Before disconnecting any wire during maintenance, always note the wire number on both
+              the wire ferrule and the drawing. When reconnecting, verify the wire number matches
+              the drawing. This simple discipline prevents the vast majority of reconnection errors.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Terminal Strip and Cable Identification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Terminal strip and cable identification</ContentEyebrow>
+
+          <ConceptBlock title="Terminal Strip and Cable Identification">
             <p>
               Terminal strips are the interface between internal panel wiring and external field
               cables. They provide a structured, accessible point for testing, disconnection and
               reconnection. Correct identification of terminal strips and the cables connected to
               them is essential for efficient and safe maintenance.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Terminal Strip Conventions
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Designation:</strong> Terminal strips are labelled X1, X2, X3, etc. (using
-                  the 'X' prefix from BS EN 81346)
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal numbers:</strong> Individual terminals are numbered sequentially:
-                  X1:1, X1:2, X1:3, etc.
-                </li>
-                <li className="pl-1">
-                  <strong>Grouping:</strong> Terminals are often grouped by circuit function —
-                  power, control, earth, spare
-                </li>
-                <li className="pl-1">
-                  <strong>Marking:</strong> Each terminal position has a permanent label strip
-                  showing the terminal number
-                </li>
-                <li className="pl-1">
-                  <strong>Separation:</strong> Earth terminals are typically on a separate rail,
-                  often identified with green/yellow marking
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Terminal Strip Conventions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Designation:</strong> Terminal strips are labelled X1, X2, X3, etc. (using
+                the 'X' prefix from BS EN 81346)
+              </li>
+              <li>
+                <strong>Terminal numbers:</strong> Individual terminals are numbered sequentially:
+                X1:1, X1:2, X1:3, etc.
+              </li>
+              <li>
+                <strong>Grouping:</strong> Terminals are often grouped by circuit function — power,
+                control, earth, spare
+              </li>
+              <li>
+                <strong>Marking:</strong> Each terminal position has a permanent label strip showing
+                the terminal number
+              </li>
+              <li>
+                <strong>Separation:</strong> Earth terminals are typically on a separate rail, often
+                identified with green/yellow marking
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable Identification (BS EN 62491)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                BS EN 62491 establishes the requirements for cable and core identification. Key
-                requirements include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unique cable reference:</strong> Every cable has a unique alphanumeric
-                  designation (e.g., C001, MC-45)
-                </li>
-                <li className="pl-1">
-                  <strong>Both ends marked:</strong> Cable labels must be fitted at both origin and
-                  destination
-                </li>
-                <li className="pl-1">
-                  <strong>Core identification:</strong> Individual cores are identified by colour
-                  coding (per BS 7671) and additionally by ferrules where multiple cables terminate
-                  on the same equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Durability:</strong> Labels must be resistant to the environment — heat,
-                  moisture, UV, chemicals
-                </li>
-                <li className="pl-1">
-                  <strong>Legibility:</strong> Text size and contrast must allow reading under
-                  normal maintenance conditions
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Conductor Colour Identification (BS 7671)
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Current (Harmonised)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Old UK</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line (single phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Neutral</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L1 (three phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L2 (three phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                      <td className="border border-white/10 px-3 py-2">Yellow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L3 (three phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth (CPC)</td>
-                      <td className="border border-white/10 px-3 py-2">Green/yellow</td>
-                      <td className="border border-white/10 px-3 py-2">Green/yellow</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Important:</strong> When both old and new colour systems are present in the
-              same installation, a warning label must be fitted at the distribution board (BS 7671
-              Regulation 514.14). This situation is very common in maintenance work on existing
-              buildings.
+          <ConceptBlock title="Cable Identification (BS EN 62491)">
+            <p>
+              BS EN 62491 establishes the requirements for cable and core identification. Key
+              requirements include:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Unique cable reference:</strong> Every cable has a unique alphanumeric
+                designation (e.g., C001, MC-45)
+              </li>
+              <li>
+                <strong>Both ends marked:</strong> Cable labels must be fitted at both origin and
+                destination
+              </li>
+              <li>
+                <strong>Core identification:</strong> Individual cores are identified by colour
+                coding (per BS 7671) and additionally by ferrules where multiple cables terminate on
+                the same equipment
+              </li>
+              <li>
+                <strong>Durability:</strong> Labels must be resistant to the environment — heat,
+                moisture, UV, chemicals
+              </li>
+              <li>
+                <strong>Legibility:</strong> Text size and contrast must allow reading under normal
+                maintenance conditions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Conductor Colour Identification (BS 7671)">
+            <p>
+              The current and historical conductor colour codes used in UK installations are set out
+              below.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Maintaining Labels in Practice
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <AppendixTable
+            caption="Conductor Colour Identification (BS 7671)"
+            headers={['Conductor', 'Current (Harmonised)', 'Old UK']}
+            rows={[
+              ['Line (single phase)', 'Brown', 'Red'],
+              ['Neutral', 'Blue', 'Black'],
+              ['L1 (three phase)', 'Brown', 'Red'],
+              ['L2 (three phase)', 'Black', 'Yellow'],
+              ['L3 (three phase)', 'Grey', 'Blue'],
+              ['Earth (CPC)', 'Green/yellow', 'Green/yellow'],
+            ]}
+          />
+
+          <ConceptBlock title="Important">
+            <p>
+              When both old and new colour systems are present in the same installation, a warning
+              label must be fitted at the distribution board (BS 7671 Regulation 514.14). This
+              situation is very common in maintenance work on existing buildings.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Maintaining labels in practice</ContentEyebrow>
+
+          <ConceptBlock title="Maintaining Labels in Practice">
             <p>
               As a maintenance technician, you will encounter labelling issues on almost every site.
               Labels fade, fall off, or were never fitted in the first place. Part of your
               professional responsibility is to maintain the labelling system as part of routine
               maintenance activities.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Label Maintenance Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual check:</strong> During every maintenance visit, check that labels
-                  are present, legible, and correctly positioned
-                </li>
-                <li className="pl-1">
-                  <strong>Record deficiencies:</strong> Note missing or illegible labels in the
-                  maintenance report or job card
-                </li>
-                <li className="pl-1">
-                  <strong>Replace immediately:</strong> Where possible, replace damaged labels
-                  during the visit rather than leaving it for another time
-                </li>
-                <li className="pl-1">
-                  <strong>Use correct materials:</strong> Replace labels with the same type and
-                  quality — engraved phenolic for switchgear, printed ferrules for wire ends
-                </li>
-                <li className="pl-1">
-                  <strong>Update records:</strong> If any labels are replaced or corrected, update
-                  the as-built drawings and cable schedules accordingly
-                </li>
-                <li className="pl-1">
-                  <strong>Verify accuracy:</strong> When replacing a label, verify the information
-                  is correct by cross-referencing with drawings — do not simply copy a faded label
-                  that might itself have been wrong
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Label Maintenance Checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual check:</strong> During every maintenance visit, check that labels are
+                present, legible, and correctly positioned
+              </li>
+              <li>
+                <strong>Record deficiencies:</strong> Note missing or illegible labels in the
+                maintenance report or job card
+              </li>
+              <li>
+                <strong>Replace immediately:</strong> Where possible, replace damaged labels during
+                the visit rather than leaving it for another time
+              </li>
+              <li>
+                <strong>Use correct materials:</strong> Replace labels with the same type and
+                quality — engraved phenolic for switchgear, printed ferrules for wire ends
+              </li>
+              <li>
+                <strong>Update records:</strong> If any labels are replaced or corrected, update the
+                as-built drawings and cable schedules accordingly
+              </li>
+              <li>
+                <strong>Verify accuracy:</strong> When replacing a label, verify the information is
+                correct by cross-referencing with drawings — do not simply copy a faded label that
+                might itself have been wrong
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Label Types and Applications
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Label Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Durability</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Engraved phenolic (Traffolyte)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switchgear, distribution boards, control panels
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Excellent — 25+ years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Printed ferrules</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wire identification at termination points
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good — 10-15 years inside panels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Heat-shrink markers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable identification, harsh environments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Excellent — moisture and chemical resistant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wrap-around labels</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable identification at terminations and along routes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Good — self-laminating types best
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adhesive labels (printed)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit charts, temporary identification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fair — may peel in heat or moisture
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Label Types and Applications"
+            headers={['Label Type', 'Application', 'Durability']}
+            rows={[
+              [
+                'Engraved phenolic (Traffolyte)',
+                'Switchgear, distribution boards, control panels',
+                'Excellent — 25+ years',
+              ],
+              [
+                'Printed ferrules',
+                'Wire identification at termination points',
+                'Good — 10-15 years inside panels',
+              ],
+              [
+                'Heat-shrink markers',
+                'Cable identification, harsh environments',
+                'Excellent — moisture and chemical resistant',
+              ],
+              [
+                'Wrap-around labels',
+                'Cable identification at terminations and along routes',
+                'Good — self-laminating types best',
+              ],
+              [
+                'Adhesive labels (printed)',
+                'Circuit charts, temporary identification',
+                'Fair — may peel in heat or moisture',
+              ],
+            ]}
+          />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Labelling Defects
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Missing circuit chart at distribution board</li>
-                  <li className="pl-1">Faded or illegible cable labels in plant rooms</li>
-                  <li className="pl-1">Wire ferrules missing inside control panels</li>
-                  <li className="pl-1">Incorrect labels from previous modifications</li>
-                  <li className="pl-1">No dual-colour warning label on mixed installations</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Best Practice Actions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Carry a portable label printer on maintenance visits</li>
-                  <li className="pl-1">Photograph labels before and after replacement</li>
-                  <li className="pl-1">Use the client's labelling convention, not your own</li>
-                  <li className="pl-1">
-                    Report systemic labelling failures to the responsible person
-                  </li>
-                  <li className="pl-1">Include labelling checks in maintenance checklists</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Common Labelling Defects">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Missing circuit chart at distribution board</li>
+              <li>Faded or illegible cable labels in plant rooms</li>
+              <li>Wire ferrules missing inside control panels</li>
+              <li>Incorrect labels from previous modifications</li>
+              <li>No dual-colour warning label on mixed installations</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in maintaining documentation and records. Labelling maintenance is a direct practical
-              application of this requirement — keeping the physical installation aligned with its
-              documentation.
+          <ConceptBlock title="Best Practice Actions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Carry a portable label printer on maintenance visits</li>
+              <li>Photograph labels before and after replacement</li>
+              <li>Use the client's labelling convention, not your own</li>
+              <li>Report systemic labelling failures to the responsible person</li>
+              <li>Include labelling checks in maintenance checklists</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="ST1426 link">
+            <p>
+              The maintenance technician standard requires competence in maintaining documentation
+              and records. Labelling maintenance is a direct practical application of this
+              requirement — keeping the physical installation aligned with its documentation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Labelling is not optional — it is a regulatory requirement under BS 7671 and a fundamental safety measure.',
+              'BS EN 81346 designates components with letter codes (K contactors/relays, Q switching devices, F protective devices, M motors, T transformers, S switches, H signalling devices, X terminal strips, R resistors, P measuring instruments).',
+              'A wire number identifies an electrical node — it stays the same at every termination point on that node, and only changes where the electrical potential changes.',
+              'Terminal strips use a designator (X1, X2…) plus sequential terminal numbers; cable identification follows BS EN 62491.',
+              'Conductor colours: brown/black/grey (harmonised three phase) or brown/blue (single phase), with green/yellow for earth. Mixed old and new colour systems require a warning label per Regulation 514.14.',
+              'Maintaining labels — checking, recording, replacing and updating records — is a routine part of the maintenance technician role.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Control Circuit Wiring
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              Back to Section 6.2 Hub
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Piping and Instrumentation Diagrams (P&ID)
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section3-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Recording Work Completed
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

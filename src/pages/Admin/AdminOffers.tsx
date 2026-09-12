@@ -379,6 +379,21 @@ export default function AdminOffers() {
     });
   }, [offers, activeTab, search]);
 
+  /*
+    Render a window, not the whole table.
+
+    The list used to be capped at 1,000 by PostgREST and nobody noticed. With
+    the edge function paging properly it returns all 2,357, and rendering every
+    one put 21,515 nodes in the DOM and made the page visibly sluggish — script
+    evaluation started timing out. Almost all of those rows are scheme codes
+    generated in bulk (613 college, 1,746 employer); nobody scrolls to row
+    1,800, they search for a code. So show a window and say plainly how many
+    are behind it.
+  */
+  const RENDER_CAP = 100;
+  const visibleOffers = filteredOffers.slice(0, RENDER_CAP);
+  const hiddenCount = filteredOffers.length - visibleOffers.length;
+
   return (
     <PullToRefresh
       onRefresh={async () => {
@@ -455,10 +470,19 @@ export default function AdminOffers() {
             <ListCardHeader
               tone="yellow"
               title="Offers"
-              meta={<Pill tone="yellow">{filteredOffers.length}</Pill>}
+              meta={
+                <span className="flex items-center gap-2">
+                  <Pill tone="yellow">{filteredOffers.length}</Pill>
+                  {hiddenCount > 0 && (
+                    <span className="text-[11px] text-white">
+                      showing first {RENDER_CAP} — search to find the rest
+                    </span>
+                  )}
+                </span>
+              }
             />
             <ListBody>
-              {filteredOffers.map((offer) => {
+              {visibleOffers.map((offer) => {
                 const tone = getStatusTone(offer);
                 const label = getStatusLabel(offer);
                 const expiresText = offer.expires_at

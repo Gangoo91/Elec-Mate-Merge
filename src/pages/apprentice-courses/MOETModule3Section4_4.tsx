@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.4 · Subsection 4 — Energy-Efficient Lighting Technologies
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Industry 4.0 - the integration of physical systems with internet
+ *     connectivity and cloud computing: technologies, systems, and
+ *     benefits."
+ *   · "Equipment life cycle considerations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. Any
+ * Approved Document L efficacy figure this page cites is the original
+ * page's own figure — it has not been re-derived or checked against the
+ * live Approved Document L text as part of this conversion.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy-Efficient Lighting Technologies - MOET Module 3.4.4';
@@ -69,12 +107,7 @@ const quizQuestions = [
     id: 1,
     question:
       'Compared to a 100 W incandescent lamp, an LED lamp producing the same luminous flux (approximately 1,500 lumens) typically consumes:',
-    options: [
-      '80-90 W',
-      '10-15 W',
-      '40-60 W',
-      '1-2 W',
-    ],
+    options: ['80-90 W', '10-15 W', '40-60 W', '1-2 W'],
     correctAnswer: 1,
     explanation:
       'An LED lamp producing approximately 1,500 lumens (equivalent to a 100 W incandescent) typically consumes only 10-15 W, representing an energy saving of 85-90%. This dramatic improvement in efficacy is the primary driver for the widespread adoption of LED technology in both new installations and retrofit applications.',
@@ -82,12 +115,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical rated life of a quality commercial LED luminaire?',
-    options: [
-      '500,000 hours',
-      '5,000 hours',
-      '50,000-100,000 hours',
-      '10,000-15,000 hours',
-    ],
+    options: ['500,000 hours', '5,000 hours', '50,000-100,000 hours', '10,000-15,000 hours'],
     correctAnswer: 2,
     explanation:
       'Quality commercial LED luminaires typically have a rated life of 50,000-100,000 hours (L70), meaning the LED will produce at least 70% of its initial light output at the rated hour point. At 12 hours per day operation, 50,000 hours equates to approximately 11 years. This significantly exceeds the life of fluorescent (15,000-20,000 hours) and incandescent (1,000-2,000 hours) lamps.',
@@ -259,111 +287,51 @@ const faqs = [
 ];
 
 const MOETModule3Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy-Efficient Lighting Technologies
-          </h1>
-          <p className="text-white">
-            LED technology, efficacy, colour metrics, smart controls and disposal
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.4 · Subsection 4"
+        title="Energy-Efficient Lighting Technologies"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            LED technology, efficacy, colour metrics, smart controls and disposal.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>LED efficacy:</strong> 100-200 lm/W vs 15 lm/W incandescent
-              </li>
-              <li className="pl-1">
-                <strong>LED life:</strong> 50,000-100,000 hours (L70) — up to 10x fluorescent
-              </li>
-              <li className="pl-1">
-                <strong>CCT:</strong> 2700 K warm, 4000 K cool, 6500 K daylight
-              </li>
-              <li className="pl-1">
-                <strong>Disposal:</strong> Fluorescent = hazardous waste (mercury); LED = WEEE
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Regulatory Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Building Regs Part L:</strong> Minimum lighting efficacy standards
-              </li>
-              <li className="pl-1">
-                <strong>WEEE Regulations:</strong> Lamp disposal and recycling requirements
-              </li>
-              <li className="pl-1">
-                <strong>EU Ecodesign:</strong> Phase-out of inefficient lighting products
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maintain energy-efficient systems, record data
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'LED efficacy: 100-200 lm/W vs 15 lm/W incandescent.',
+              'LED life: 50,000-100,000 hours (L70) — up to 10x fluorescent.',
+              'CCT: 2700 K warm, 4000 K cool, 6500 K daylight.',
+              'Disposal: Fluorescent = hazardous waste (mercury); LED = WEEE.',
+              'Building Regs Part L: Minimum lighting efficacy standards.',
+              'WEEE Regulations: Lamp disposal and recycling requirements.',
+              'EU Ecodesign: Phase-out of inefficient lighting products.',
+              'ST1426: Maintain energy-efficient systems, record data.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain LED technology principles including efficacy, CCT and CRI',
               'Compare LED performance with fluorescent and incandescent technologies',
               'Describe LED driver types and dimming compatibility',
               'Evaluate retrofit vs new-build LED options for different applications',
               'Calculate simple payback for LED lighting projects',
               'Explain smart lighting controls, IoT integration and lamp disposal requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>LED technology and performance metrics</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            LED Technology and Performance Metrics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="How an LED produces white light">
             <p>
               Light Emitting Diodes (LEDs) have revolutionised the lighting industry, offering
               dramatic improvements in energy efficiency, longevity and controllability compared to
@@ -378,111 +346,96 @@ const MOETModule3Section4_4 = () => {
               creates the perception of white light. The composition of the phosphor determines the
               colour temperature and colour rendering properties of the LED.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Light Source Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Technology</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Efficacy (lm/W)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Rated Life (hrs)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">CRI</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Incandescent</td>
-                      <td className="border border-white/10 px-3 py-2">10-15</td>
-                      <td className="border border-white/10 px-3 py-2">1,000-2,000</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Halogen</td>
-                      <td className="border border-white/10 px-3 py-2">15-25</td>
-                      <td className="border border-white/10 px-3 py-2">2,000-4,000</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CFL</td>
-                      <td className="border border-white/10 px-3 py-2">50-70</td>
-                      <td className="border border-white/10 px-3 py-2">6,000-15,000</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">T8 fluorescent</td>
-                      <td className="border border-white/10 px-3 py-2">80-100</td>
-                      <td className="border border-white/10 px-3 py-2">15,000-20,000</td>
-                      <td className="border border-white/10 px-3 py-2">80-90</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED (current)</td>
-                      <td className="border border-white/10 px-3 py-2">100-200</td>
-                      <td className="border border-white/10 px-3 py-2">50,000-100,000</td>
-                      <td className="border border-white/10 px-3 py-2">80-98</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Light source comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Technology</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Efficacy (lm/W)</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">
+                      Rated life (hrs)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-white">CRI</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Incandescent</td>
+                    <td className="border border-white/10 px-3 py-2">10-15</td>
+                    <td className="border border-white/10 px-3 py-2">1,000-2,000</td>
+                    <td className="border border-white/10 px-3 py-2">100</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Halogen</td>
+                    <td className="border border-white/10 px-3 py-2">15-25</td>
+                    <td className="border border-white/10 px-3 py-2">2,000-4,000</td>
+                    <td className="border border-white/10 px-3 py-2">100</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CFL</td>
+                    <td className="border border-white/10 px-3 py-2">50-70</td>
+                    <td className="border border-white/10 px-3 py-2">6,000-15,000</td>
+                    <td className="border border-white/10 px-3 py-2">80-90</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">T8 fluorescent</td>
+                    <td className="border border-white/10 px-3 py-2">80-100</td>
+                    <td className="border border-white/10 px-3 py-2">15,000-20,000</td>
+                    <td className="border border-white/10 px-3 py-2">80-90</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">LED (current)</td>
+                    <td className="border border-white/10 px-3 py-2">100-200</td>
+                    <td className="border border-white/10 px-3 py-2">50,000-100,000</td>
+                    <td className="border border-white/10 px-3 py-2">80-98</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Performance Metrics
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Luminous efficacy (lm/W):</strong> Light output per watt consumed — the
-                  primary efficiency measure
-                </li>
-                <li className="pl-1">
-                  <strong>Colour temperature (CCT):</strong> Measured in Kelvin (K). Warm white:
-                  2700-3000 K; Cool white: 4000 K; Daylight: 5000-6500 K
-                </li>
-                <li className="pl-1">
-                  <strong>CRI (Colour Rendering Index):</strong> 0-100 scale measuring colour
-                  accuracy. 80+ for general use, 90+ for colour-critical areas
-                </li>
-                <li className="pl-1">
-                  <strong>L70 life:</strong> Hours at which light output has depreciated to 70% of
-                  initial lumens
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor:</strong> A measure of how efficiently the driver draws
-                  current from the supply. Should be &gt;0.9 for commercial luminaires
-                </li>
-                <li className="pl-1">
-                  <strong>UGR (Unified Glare Rating):</strong> Measure of discomfort glare. Must not
-                  exceed 19 for offices (CIBSE SLL)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Key performance metrics"
+            onSite="When specifying LEDs, always compare lumens (light output) not watts (power consumption). A 10 W LED can produce the same light as a 60 W incandescent lamp. The lumen output determines the lighting level; the wattage determines the energy cost."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Luminous efficacy (lm/W):</strong> Light output per watt consumed — the
+                primary efficiency measure
+              </li>
+              <li>
+                <strong>Colour temperature (CCT):</strong> Measured in Kelvin (K). Warm white:
+                2700-3000 K; Cool white: 4000 K; Daylight: 5000-6500 K
+              </li>
+              <li>
+                <strong>CRI (Colour Rendering Index):</strong> 0-100 scale measuring colour
+                accuracy. 80+ for general use, 90+ for colour-critical areas
+              </li>
+              <li>
+                <strong>L70 life:</strong> Hours at which light output has depreciated to 70% of
+                initial lumens
+              </li>
+              <li>
+                <strong>Power factor:</strong> A measure of how efficiently the driver draws current
+                from the supply. Should be &gt;0.9 for commercial luminaires
+              </li>
+              <li>
+                <strong>UGR (Unified Glare Rating):</strong> Measure of discomfort glare. Must not
+                exceed 19 for offices (CIBSE SLL)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When specifying LEDs, always compare lumens (light output)
-              not watts (power consumption). A 10 W LED can produce the same light as a 60 W
-              incandescent lamp. The lumen output determines the lighting level; the wattage
-              determines the energy cost.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            LED Drivers and Retrofit Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>LED drivers and retrofit considerations</ContentEyebrow>
+
+          <ConceptBlock title="The most critical component for LED reliability">
             <p>
               Every LED luminaire requires a driver — the electronic component that converts the
               mains AC supply to the regulated DC current required by the LED module. The driver is
@@ -490,89 +443,88 @@ const MOETModule3Section4_4 = () => {
               first component to fail in an LED luminaire. Understanding driver types, dimming
               compatibility and retrofit options is essential for maintenance technicians.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">LED Driver Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Constant-current driver:</strong> Maintains a fixed output current (e.g.,
-                  350 mA, 500 mA, 700 mA). Output voltage varies with the connected LED load. Most
-                  common type for commercial luminaires
-                </li>
-                <li className="pl-1">
-                  <strong>Constant-voltage driver:</strong> Maintains a fixed output voltage
-                  (typically 12 V or 24 V DC). Current varies with the connected load. Used for LED
-                  strip, signage and display lighting
-                </li>
-                <li className="pl-1">
-                  <strong>Dimmable drivers:</strong> Available with DALI, 1-10 V, phase-cut
-                  (leading/trailing edge), or wireless (Bluetooth/Zigbee) dimming interfaces
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency drivers:</strong> Combined LED driver and emergency battery pack
-                  in a single unit. Provides maintained or non-maintained emergency lighting
-                  function
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="LED driver types"
+            onSite="LED driver failure is the most common cause of LED luminaire failure. Symptoms include flickering, dimming, colour shift, or complete failure. Many drivers are replaceable — check if the driver is a standard component before condemning the entire luminaire."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Constant-current driver:</strong> Maintains a fixed output current (e.g.,
+                350 mA, 500 mA, 700 mA). Output voltage varies with the connected LED load. Most
+                common type for commercial luminaires
+              </li>
+              <li>
+                <strong>Constant-voltage driver:</strong> Maintains a fixed output voltage
+                (typically 12 V or 24 V DC). Current varies with the connected load. Used for LED
+                strip, signage and display lighting
+              </li>
+              <li>
+                <strong>Dimmable drivers:</strong> Available with DALI, 1-10 V, phase-cut
+                (leading/trailing edge), or wireless (Bluetooth/Zigbee) dimming interfaces
+              </li>
+              <li>
+                <strong>Emergency drivers:</strong> Combined LED driver and emergency battery pack
+                in a single unit. Provides maintained or non-maintained emergency lighting function
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Retrofit vs New-Build</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Retrofit LED tube:</strong> LED tube designed to fit existing fluorescent
-                  luminaire. May require ballast bypass or be compatible with existing ballast.
-                  Lowest upfront cost but potential compatibility issues
-                </li>
-                <li className="pl-1">
-                  <strong>Retrofit LED panel:</strong> LED panel designed to fit existing 600x600 mm
-                  ceiling grid, replacing the complete fluorescent luminaire. Better performance and
-                  warranty than tube retrofit
-                </li>
-                <li className="pl-1">
-                  <strong>New-build LED luminaire:</strong> Purpose-designed LED luminaire with
-                  integrated driver and optics. Best performance, longest warranty, but highest
-                  upfront cost
-                </li>
-                <li className="pl-1">
-                  <strong>Conversion kit:</strong> LED module and driver kit that can be fitted
-                  inside an existing luminaire body, replacing the lamp and control gear. Reuses the
-                  existing housing
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Retrofit vs new-build">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Retrofit LED tube:</strong> LED tube designed to fit existing fluorescent
+                luminaire. May require ballast bypass or be compatible with existing ballast. Lowest
+                upfront cost but potential compatibility issues
+              </li>
+              <li>
+                <strong>Retrofit LED panel:</strong> LED panel designed to fit existing 600x600 mm
+                ceiling grid, replacing the complete fluorescent luminaire. Better performance and
+                warranty than tube retrofit
+              </li>
+              <li>
+                <strong>New-build LED luminaire:</strong> Purpose-designed LED luminaire with
+                integrated driver and optics. Best performance, longest warranty, but highest
+                upfront cost
+              </li>
+              <li>
+                <strong>Conversion kit:</strong> LED module and driver kit that can be fitted inside
+                an existing luminaire body, replacing the lamp and control gear. Reuses the existing
+                housing
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Retrofit Safety Warning</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Bypassing the ballast without labelling the change"
+            whatHappens={
+              <>
                 When retrofitting LED tubes into existing fluorescent luminaires, the existing
                 wiring may need to be modified (ballast bypass). This modification changes the
                 luminaire from its original design, which may affect the CE/UKCA marking and the
-                manufacturer's warranty. The person carrying out the modification takes
-                responsibility for the safety of the modified luminaire. Always follow the LED tube
-                manufacturer's installation instructions precisely and label the modified luminaire
-                accordingly.
-              </p>
-            </div>
+                manufacturer&apos;s warranty. The person carrying out the modification takes
+                responsibility for the safety of the modified luminaire.
+              </>
+            }
+            doInstead={
+              <>
+                Always follow the LED tube manufacturer&apos;s installation instructions precisely
+                and label the modified luminaire accordingly.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> LED driver failure is the most common cause of LED
-              luminaire failure. Symptoms include flickering, dimming, colour shift, or complete
-              failure. Many drivers are replaceable — check if the driver is a standard component
-              before condemning the entire luminaire.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Smart Lighting and IoT Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Smart lighting and IoT integration</ContentEyebrow>
+
+          <ConceptBlock
+            title="From light source to data-gathering platform"
+            onSite="Smart lighting systems require maintenance technicians to develop new skills in networking, wireless protocols and software configuration, in addition to traditional electrical skills. The convergence of IT and OT (operational technology) in building services is a significant trend in the maintenance sector."
+          >
             <p>
               Smart lighting systems extend beyond simple energy saving to provide building
               intelligence, occupant comfort and facilities management data. The integration of LED
@@ -580,221 +532,197 @@ const MOETModule3Section4_4 = () => {
               analytics is transforming the role of the luminaire from a simple light source to a
               data-gathering platform.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Smart Lighting Features
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wireless control:</strong> Bluetooth Mesh, Zigbee or Thread protocols for
-                  wireless commissioning and control without dedicated control wiring
-                </li>
-                <li className="pl-1">
-                  <strong>Occupancy analytics:</strong> Built-in sensors track space utilisation
-                  patterns — desk occupancy, meeting room usage, traffic flow
-                </li>
-                <li className="pl-1">
-                  <strong>Daylight harvesting:</strong> Integrated photocells automatically dim
-                  luminaires in response to available daylight
-                </li>
-                <li className="pl-1">
-                  <strong>Tunable white:</strong> Adjustable CCT (2700-6500 K) for human-centric
-                  lighting programmes that follow the circadian rhythm
-                </li>
-                <li className="pl-1">
-                  <strong>Asset tracking:</strong> Bluetooth beacons in luminaires enable indoor
-                  positioning and asset tracking
-                </li>
-                <li className="pl-1">
-                  <strong>Predictive maintenance:</strong> Real-time monitoring of driver
-                  temperature, operating hours and light output to predict failure before it occurs
-                </li>
-                <li className="pl-1">
-                  <strong>Cloud dashboards:</strong> Centralised monitoring of energy consumption,
-                  fault status and maintenance scheduling
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Smart lighting features">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wireless control:</strong> Bluetooth Mesh, Zigbee or Thread protocols for
+                wireless commissioning and control without dedicated control wiring
+              </li>
+              <li>
+                <strong>Occupancy analytics:</strong> Built-in sensors track space utilisation
+                patterns — desk occupancy, meeting room usage, traffic flow
+              </li>
+              <li>
+                <strong>Daylight harvesting:</strong> Integrated photocells automatically dim
+                luminaires in response to available daylight
+              </li>
+              <li>
+                <strong>Tunable white:</strong> Adjustable CCT (2700-6500 K) for human-centric
+                lighting programmes that follow the circadian rhythm
+              </li>
+              <li>
+                <strong>Asset tracking:</strong> Bluetooth beacons in luminaires enable indoor
+                positioning and asset tracking
+              </li>
+              <li>
+                <strong>Predictive maintenance:</strong> Real-time monitoring of driver temperature,
+                operating hours and light output to predict failure before it occurs
+              </li>
+              <li>
+                <strong>Cloud dashboards:</strong> Centralised monitoring of energy consumption,
+                fault status and maintenance scheduling
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Payback Calculation Example
-              </p>
-              <p className="text-sm text-white mb-3">
-                Replacing 200 x 4ft T8 fluorescent fittings (58 W + 15% ballast loss = 67 W each)
-                with 200 x LED panels (30 W each), operating 2,750 hours/year:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Old consumption:</strong> 200 x 67 W x 2,750 hrs = 36,850 kWh/year
-                </li>
-                <li className="pl-1">
-                  <strong>New consumption:</strong> 200 x 30 W x 2,750 hrs = 16,500 kWh/year
-                </li>
-                <li className="pl-1">
-                  <strong>Annual saving:</strong> 20,350 kWh x £0.30/kWh = £6,105/year
-                </li>
-                <li className="pl-1">
-                  <strong>Installation cost:</strong> 200 x £85 (supply and fit) = £17,000
-                </li>
-                <li className="pl-1">
-                  <strong>Simple payback:</strong> £17,000 / £6,105 = 2.8 years
-                </li>
-                <li className="pl-1">
-                  <strong>Carbon saving:</strong> 20,350 kWh x 0.207 kg CO₂/kWh = 4,212 kg CO₂/year
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Smart lighting systems require maintenance technicians to
-              develop new skills in networking, wireless protocols and software configuration, in
-              addition to traditional electrical skills. The convergence of IT and OT (operational
-              technology) in building services is a significant trend in the maintenance sector.
+          <ConceptBlock title="Payback calculation example">
+            <p>
+              Replacing 200 x 4ft T8 fluorescent fittings (58 W + 15% ballast loss = 67 W each) with
+              200 x LED panels (30 W each), operating 2,750 hours/year:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Old consumption:</strong> 200 x 67 W x 2,750 hrs = 36,850 kWh/year
+              </li>
+              <li>
+                <strong>New consumption:</strong> 200 x 30 W x 2,750 hrs = 16,500 kWh/year
+              </li>
+              <li>
+                <strong>Annual saving:</strong> 20,350 kWh x £0.30/kWh = £6,105/year
+              </li>
+              <li>
+                <strong>Installation cost:</strong> 200 x £85 (supply and fit) = £17,000
+              </li>
+              <li>
+                <strong>Simple payback:</strong> £17,000 / £6,105 = 2.8 years
+              </li>
+              <li>
+                <strong>Carbon saving:</strong> 20,350 kWh x 0.207 kg CO₂/kWh = 4,212 kg CO₂/year
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Lamp Disposal and Environmental Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Lamp disposal and environmental considerations</ContentEyebrow>
+
+          <ConceptBlock title="Different lamp types, different disposal routes">
             <p>
               The disposal of lighting products is governed by the Waste Electrical and Electronic
               Equipment (WEEE) Regulations and the Hazardous Waste Regulations. Different lamp types
               have different disposal requirements, and maintenance technicians must understand
               which products require specialist handling and recycling.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lamp Disposal Categories
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Mercury-containing lamps (hazardous waste):</strong> Fluorescent tubes,
-                  CFLs, metal halide, sodium lamps. Must be collected in approved containers, stored
-                  safely, and disposed of through a WEEE-compliant contractor. Breakage releases
-                  mercury vapour — handle with care
-                </li>
-                <li className="pl-1">
-                  <strong>LED lamps (WEEE waste):</strong> Contain electronic components (driver,
-                  capacitors, semiconductors). Should be recycled through WEEE routes. Do not
-                  contain mercury but may contain small quantities of other materials requiring
-                  controlled disposal
-                </li>
-                <li className="pl-1">
-                  <strong>Incandescent and halogen (general waste):</strong> Do not contain
-                  hazardous substances and can be disposed of in general waste. However, recycling
-                  is environmentally preferred where facilities exist
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Lamp disposal categories">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mercury-containing lamps (hazardous waste):</strong> Fluorescent tubes,
+                CFLs, metal halide, sodium lamps. Must be collected in approved containers, stored
+                safely, and disposed of through a WEEE-compliant contractor. Breakage releases
+                mercury vapour — handle with care
+              </li>
+              <li>
+                <strong>LED lamps (WEEE waste):</strong> Contain electronic components (driver,
+                capacitors, semiconductors). Should be recycled through WEEE routes. Do not contain
+                mercury but may contain small quantities of other materials requiring controlled
+                disposal
+              </li>
+              <li>
+                <strong>Incandescent and halogen (general waste):</strong> Do not contain hazardous
+                substances and can be disposed of in general waste. However, recycling is
+                environmentally preferred where facilities exist
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Broken Fluorescent Lamp Procedure
-              </p>
-              <p className="text-sm text-white">
-                If a fluorescent lamp breaks: ventilate the area immediately (open windows, turn off
-                HVAC to prevent mercury vapour being distributed through the building); do not use a
-                vacuum cleaner (this disperses mercury vapour); use damp paper towels or sticky tape
-                to pick up glass fragments and phosphor powder; place all debris in a sealed plastic
-                bag; dispose of through the hazardous waste route. Wear gloves during clean-up. If a
-                large number of lamps break, evacuate the area and seek specialist advice.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Environmental Benefits of LED
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energy reduction:</strong> 50-90% less energy than the technology replaced
-                  — direct carbon emission reduction
-                </li>
-                <li className="pl-1">
-                  <strong>No mercury:</strong> LEDs contain no mercury, eliminating the hazardous
-                  waste issue associated with fluorescent lamps
-                </li>
-                <li className="pl-1">
-                  <strong>Longer life:</strong> Fewer lamp replacements means less manufacturing,
-                  transport and disposal
-                </li>
-                <li className="pl-1">
-                  <strong>Reduced maintenance:</strong> Less frequent access equipment use, fewer
-                  vehicle trips, reduced working at height risk
-                </li>
-                <li className="pl-1">
-                  <strong>Better controllability:</strong> Instant dimming, no warm-up time, full
-                  compatibility with daylight and occupancy controls
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires awareness
-              of environmental legislation affecting electrical maintenance, including waste
-              disposal requirements. You must be able to correctly identify lamp types and ensure
-              they are disposed of through the appropriate waste stream.
+          <ConceptBlock title="If a fluorescent lamp breaks">
+            <p>
+              Ventilate the area immediately (open windows, turn off HVAC to prevent mercury vapour
+              being distributed through the building); do not use a vacuum cleaner (this disperses
+              mercury vapour); use damp paper towels or sticky tape to pick up glass fragments and
+              phosphor powder; place all debris in a sealed plastic bag; dispose of through the
+              hazardous waste route. Wear gloves during clean-up. If a large number of lamps break,
+              evacuate the area and seek specialist advice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Environmental benefits of LED"
+            onSite="The maintenance technician standard requires awareness of environmental legislation affecting electrical maintenance, including waste disposal requirements. You must be able to correctly identify lamp types and ensure they are disposed of through the appropriate waste stream."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Socket Outlet Circuits
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4">
-              Back to Section 4 Hub
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Energy reduction:</strong> 50-90% less energy than the technology replaced —
+                direct carbon emission reduction
+              </li>
+              <li>
+                <strong>No mercury:</strong> LEDs contain no mercury, eliminating the hazardous
+                waste issue associated with fluorescent lamps
+              </li>
+              <li>
+                <strong>Longer life:</strong> Fewer lamp replacements means less manufacturing,
+                transport and disposal
+              </li>
+              <li>
+                <strong>Reduced maintenance:</strong> Less frequent access equipment use, fewer
+                vehicle trips, reduced working at height risk
+              </li>
+              <li>
+                <strong>Better controllability:</strong> Instant dimming, no warm-up time, full
+                compatibility with daylight and occupancy controls
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'LED efficacy 100-200 lm/W vs approximately 15 lm/W incandescent, 80-100 lm/W T8 fluorescent.',
+              'LED rated life 50,000-100,000 hours (L70 — output depreciated to 70% of initial lumens), well beyond fluorescent (15,000-20,000 hrs).',
+              'CCT: 2700-3000 K warm white, 4000 K cool white, 5000-6500 K daylight. CRI: 80+ general use, 90+ colour-critical.',
+              'Every LED needs a driver — constant-current for most commercial luminaires, constant-voltage for strip/signage — and it is the most common point of failure.',
+              'Retrofit into an existing fluorescent luminaire needs the correct LED tube type for the ballast, or a ballast bypass, followed properly and labelled.',
+              'Mercury-containing lamps (fluorescent, CFL, metal halide, sodium) are hazardous waste; LED lamps go through WEEE; incandescent/halogen may go to general waste.',
+              'Smart lighting (wireless control, occupancy analytics, daylight harvesting, tunable white, predictive maintenance) turns the luminaire into a data platform, not just a light source.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section4-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Socket Outlet and Small Power Circuits
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section5-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Uninterruptible Power Supply (UPS)
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

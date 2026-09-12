@@ -1,8 +1,42 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 3 · Subsection 1 — Building a Work-Based Portfolio
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This subsection covers evidence and documentation for
+ * the EPA professional discussion, which the following ST1426 statements
+ * genuinely fit (reused from the Module 1/4 conversions where they were
+ * verified — quoted rather than numbered, as the published K/S/B numbering
+ * has not been verified against a primary source):
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Building a Work-Based Portfolio - MOET Module 7 Section 3.1';
@@ -27,10 +61,10 @@ const quickCheckQuestions = [
     id: 'evidence-quality',
     question: "What makes a piece of portfolio evidence 'good quality'?",
     options: [
-      "It covers as many activities as possible in the shortest possible description",
+      'It covers as many activities as possible in the shortest possible description',
       "It is specific, relevant to the standard's KSBs, clearly described, and demonstrates genuine competence through real workplace activities",
-      "It is written by your supervisor rather than by you, to ensure objectivity",
-      "It consists mainly of attendance certificates from training courses you have completed",
+      'It is written by your supervisor rather than by you, to ensure objectivity',
+      'It consists mainly of attendance certificates from training courses you have completed',
     ],
     correctIndex: 1,
     explanation:
@@ -255,116 +289,65 @@ const faqs = [
 ];
 
 const MOETModule7Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Building a Work-Based Portfolio
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.3 · Subsection 1"
+        title="Building a Work-Based Portfolio"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Structuring and organising comprehensive evidence to support your EPA professional
-            discussion
+            discussion.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Evidence base for professional discussion
-              </li>
-              <li className="pl-1">
-                <strong>Content:</strong> Work logs, reports, photos, witness statements
-              </li>
-              <li className="pl-1">
-                <strong>Organisation:</strong> Mapped to KSBs with cross-references
-              </li>
-              <li className="pl-1">
-                <strong>Quality:</strong> Specific, relevant, authentic evidence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Professional discussion:</strong> Portfolio drives the conversation
-              </li>
-              <li className="pl-1">
-                <strong>Coverage:</strong> Must address all KSBs in the standard
-              </li>
-              <li className="pl-1">
-                <strong>Progressive:</strong> Build throughout your apprenticeship
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps directly to standard requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Purpose: evidence base for professional discussion.',
+              'Content: work logs, reports, photos, witness statements.',
+              'Organisation: mapped to KSBs with cross-references.',
+              'Quality: specific, relevant, authentic evidence.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand the purpose and role of the portfolio in the EPA process',
               'Select and create high-quality evidence from workplace activities',
               'Organise evidence effectively using KSB mapping matrices',
               'Write reflective accounts that demonstrate depth of understanding',
               'Build the portfolio progressively throughout your apprenticeship',
               'Prepare portfolio evidence that supports confident professional discussion',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Professional discussion:</strong> portfolio drives the conversation.
+              </li>
+              <li>
+                <strong>Coverage:</strong> must address all KSBs in the standard.
+              </li>
+              <li>
+                <strong>Progressive:</strong> build throughout your apprenticeship.
+              </li>
+              <li>
+                <strong>ST1426:</strong> maps directly to standard requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Portfolio Purpose and Structure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Portfolio purpose and structure</ContentEyebrow>
+
+          <ConceptBlock title="Portfolio purpose and structure">
             <p>
               The work-based portfolio is not a separate assessment — it is the foundation for the
               professional discussion component of the EPA. It provides the evidence that you have
@@ -372,526 +355,434 @@ const MOETModule7Section3_1 = () => {
               genuine workplace experience. The assessor reviews your portfolio before the
               discussion and uses it to structure their questions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Portfolio Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>KSB mapping matrix:</strong> A cross-reference document linking evidence
-                  to standard requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Work activity logs:</strong> Detailed records of significant maintenance
-                  activities you have completed
-                </li>
-                <li className="pl-1">
-                  <strong>Reflective accounts:</strong> Written reflections on key learning
-                  experiences using the STAR format
-                </li>
-                <li className="pl-1">
-                  <strong>Witness statements:</strong> Third-party confirmations of your competence
-                  from supervisors or colleagues
-                </li>
-                <li className="pl-1">
-                  <strong>Supporting documents:</strong> Photographs, completed forms, test results,
-                  risk assessments, reports
-                </li>
-                <li className="pl-1">
-                  <strong>Training records:</strong> Evidence of formal and informal learning
-                  completed during the apprenticeship
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Essential portfolio components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>KSB mapping matrix:</strong> a cross-reference document linking evidence to
+                standard requirements.
+              </li>
+              <li>
+                <strong>Work activity logs:</strong> detailed records of significant maintenance
+                activities you have completed.
+              </li>
+              <li>
+                <strong>Reflective accounts:</strong> written reflections on key learning
+                experiences using the STAR format.
+              </li>
+              <li>
+                <strong>Witness statements:</strong> third-party confirmations of your competence
+                from supervisors or colleagues.
+              </li>
+              <li>
+                <strong>Supporting documents:</strong> photographs, completed forms, test results,
+                risk assessments, reports.
+              </li>
+              <li>
+                <strong>Training records:</strong> evidence of formal and informal learning
+                completed during the apprenticeship.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Start Early — Do Not Leave It to the Last Minute
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Start early — do not leave it to the last minute"
+            whatHappens={
+              <>
                 The most common portfolio problem is leaving evidence gathering too late. Activities
                 completed months ago are difficult to document accurately — details are forgotten,
-                photographs were not taken, and witnesses may not remember specifics. Start building
-                your portfolio from the first week of your apprenticeship and update it regularly.
-              </p>
-            </div>
+                photographs were not taken, and witnesses may not remember specifics.
+              </>
+            }
+            doInstead={
+              <>
+                Start building your portfolio from the first week of your apprenticeship and update
+                it regularly.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Think of the portfolio as your professional story. It
-              tells the assessor who you are as a technician, what you have learned, and how you
-              have developed. Make it a story worth reading.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> think of the portfolio as your professional story. It tells
+            the assessor who you are as a technician, what you have learned, and how you have
+            developed. Make it a story worth reading.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Selecting and Creating Quality Evidence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Selecting and creating quality evidence</ContentEyebrow>
+
+          <ConceptBlock title="Selecting and creating quality evidence">
             <p>
               Not all workplace activities make equally effective portfolio evidence. The best
               evidence is specific, demonstrates genuine competence, and clearly links to the
-              standard's requirements. Learning to identify and capture good evidence is a skill in
-              itself.
+              standard&apos;s requirements. Learning to identify and capture good evidence is a
+              skill in itself.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Evidence and Their Effectiveness
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Evidence Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Demonstrates
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Effectiveness</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reflective account</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding, reasoning, learning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Very high — shows depth</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Witness statement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Third-party verification of competence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High — independent confirmation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Annotated photographs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Workmanship quality, safe practices
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">High — visual evidence</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Work activity log</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Range and breadth of experience
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Medium — needs detail</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Certificates only</td>
-                      <td className="border border-white/10 px-3 py-2">Attendance at training</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low — does not show application
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Types of evidence and their effectiveness">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Evidence type</th>
+                    <th className="py-2 pr-4 font-medium text-white">What it demonstrates</th>
+                    <th className="py-2 font-medium text-white">Effectiveness</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Reflective account</td>
+                    <td className="py-2 pr-4">Understanding, reasoning, learning</td>
+                    <td className="py-2">Very high — shows depth</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Witness statement</td>
+                    <td className="py-2 pr-4">Third-party verification of competence</td>
+                    <td className="py-2">High — independent confirmation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Annotated photographs</td>
+                    <td className="py-2 pr-4">Workmanship quality, safe practices</td>
+                    <td className="py-2">High — visual evidence</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Work activity log</td>
+                    <td className="py-2 pr-4">Range and breadth of experience</td>
+                    <td className="py-2">Medium — needs detail</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Certificates only</td>
+                    <td className="py-2 pr-4">Attendance at training</td>
+                    <td className="py-2">Low — does not show application</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Capturing Evidence in Real Time
-              </p>
-              <p className="text-sm text-white">
-                The best time to capture evidence is during or immediately after the activity. Take
-                photographs before, during and after maintenance tasks. Note down test readings,
-                component details, and your reasoning while it is fresh. Ask your supervisor for a
-                witness statement within a few days. Evidence captured in real time is always more
-                detailed and convincing than retrospective accounts written weeks later.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Quality over quantity. A well-written reflective account
+          <ConceptBlock title="Capturing evidence in real time">
+            <p>
+              The best time to capture evidence is during or immediately after the activity. Take
+              photographs before, during and after maintenance tasks. Note down test readings,
+              component details, and your reasoning while it is fresh. Ask your supervisor for a
+              witness statement within a few days. Evidence captured in real time is always more
+              detailed and convincing than retrospective accounts written weeks later.
+            </p>
+            <p>
+              <strong>Key point:</strong> quality over quantity. A well-written reflective account
               of a single maintenance task can demonstrate multiple KSBs more effectively than ten
               brief log entries without detail or reflection.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Writing Reflective Accounts
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Writing reflective accounts</ContentEyebrow>
+
+          <ConceptBlock title="Writing reflective accounts">
             <p>
               Reflective accounts are the most powerful form of portfolio evidence because they
               demonstrate not just what you did, but why you did it and what you learned. They show
               the assessor that you can think critically about your practice — a key professional
               behaviour.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The STAR+R Framework</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Situation:</strong> What was the context? Where were you working, what
-                  equipment, what was the task?
-                </li>
-                <li className="pl-1">
-                  <strong>Task:</strong> What specifically were you asked to do? What was the
-                  problem or objective?
-                </li>
-                <li className="pl-1">
-                  <strong>Action:</strong> What did you actually do, step by step? What decisions
-                  did you make and why?
-                </li>
-                <li className="pl-1">
-                  <strong>Result:</strong> What was the outcome? Was the task successful? What were
-                  the test results?
-                </li>
-                <li className="pl-1">
-                  <strong>Reflection:</strong> What did you learn? What would you do differently?
-                  How does this link to the standard?
-                </li>
-              </ul>
+          <ConceptBlock title="The STAR+R framework">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Situation:</strong> what was the context? Where were you working, what
+                equipment, what was the task?
+              </li>
+              <li>
+                <strong>Task:</strong> what specifically were you asked to do? What was the problem
+                or objective?
+              </li>
+              <li>
+                <strong>Action:</strong> what did you actually do, step by step? What decisions did
+                you make and why?
+              </li>
+              <li>
+                <strong>Result:</strong> what was the outcome? Was the task successful? What were
+                the test results?
+              </li>
+              <li>
+                <strong>Reflection:</strong> what did you learn? What would you do differently? How
+                does this link to the standard?
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Example reflective account structure">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Section</th>
+                    <th className="py-2 pr-4 font-medium text-white">Content</th>
+                    <th className="py-2 font-medium text-white">KSBs demonstrated</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Situation</td>
+                    <td className="py-2 pr-4">
+                      AHU-3 supply fan tripping on thermal overload intermittently
+                    </td>
+                    <td className="py-2">Context setting</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Task</td>
+                    <td className="py-2 pr-4">Diagnose and repair the fault under supervision</td>
+                    <td className="py-2">K — fault diagnosis knowledge</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Action</td>
+                    <td className="py-2 pr-4">Safe isolation, IR testing, current measurements</td>
+                    <td className="py-2">S — testing skills, B — safety</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Result</td>
+                    <td className="py-2 pr-4">
+                      Winding fault identified, motor replaced, verified operational
+                    </td>
+                    <td className="py-2">S — repair skills</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Reflection</td>
+                    <td className="py-2 pr-4">
+                      Learned systematic approach saves time vs guessing; would check vibration data
+                      first next time
+                    </td>
+                    <td className="py-2">B — continuous improvement</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example Reflective Account Structure
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        KSBs Demonstrated
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Situation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AHU-3 supply fan tripping on thermal overload intermittently
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Context setting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Task</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Diagnose and repair the fault under supervision
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        K — fault diagnosis knowledge
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Action</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe isolation, IR testing, current measurements
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        S — testing skills, B — safety
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Result</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Winding fault identified, motor replaced, verified operational
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">S — repair skills</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reflection</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Learned systematic approach saves time vs guessing; would check vibration
-                        data first next time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        B — continuous improvement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Aim for 3-5 detailed reflective accounts covering
+            <p>
+              <strong>Key point:</strong> aim for 3-5 detailed reflective accounts covering
               different types of maintenance activity: fault diagnosis, planned maintenance,
               component replacement, safety practice, and teamwork.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            KSB Mapping and Gap Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>KSB mapping and gap analysis</ContentEyebrow>
+
+          <ConceptBlock title="KSB mapping and gap analysis">
             <p>
               The KSB mapping matrix is the backbone of your portfolio organisation. It provides a
               clear, at-a-glance view of which evidence covers which requirements, and — critically
               — reveals any gaps that need to be addressed before the EPA.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Creating Your KSB Mapping Matrix
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>List all KSBs:</strong> Copy every knowledge, skill and behaviour
-                  requirement from the ST1426 standard
-                </li>
-                <li className="pl-1">
-                  <strong>Assign evidence:</strong> For each KSB, note which portfolio evidence
-                  demonstrates it
-                </li>
-                <li className="pl-1">
-                  <strong>Identify gaps:</strong> Any KSB without evidence needs attention — plan
-                  activities to fill the gap
-                </li>
-                <li className="pl-1">
-                  <strong>Review regularly:</strong> Update the matrix as you add new evidence
-                  throughout the apprenticeship
-                </li>
-                <li className="pl-1">
-                  <strong>Discuss with your mentor:</strong> Review the matrix with your training
-                  provider to confirm coverage
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Creating your KSB mapping matrix">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>List all KSBs:</strong> copy every knowledge, skill and behaviour
+                requirement from the ST1426 standard.
+              </li>
+              <li>
+                <strong>Assign evidence:</strong> for each KSB, note which portfolio evidence
+                demonstrates it.
+              </li>
+              <li>
+                <strong>Identify gaps:</strong> any KSB without evidence needs attention — plan
+                activities to fill the gap.
+              </li>
+              <li>
+                <strong>Review regularly:</strong> update the matrix as you add new evidence
+                throughout the apprenticeship.
+              </li>
+              <li>
+                <strong>Discuss with your mentor:</strong> review the matrix with your training
+                provider to confirm coverage.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Gap Analysis Timing</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Quarterly:</strong> Quick review of coverage — are you building evidence
-                  across all areas?
-                </li>
-                <li className="pl-1">
-                  <strong>Six months before EPA:</strong> Detailed gap analysis — identify all red
-                  and amber areas
-                </li>
-                <li className="pl-1">
-                  <strong>Three months before EPA:</strong> Focused evidence gathering for remaining
-                  gaps
-                </li>
-                <li className="pl-1">
-                  <strong>One month before EPA:</strong> Final review — ensure every KSB has strong
-                  evidence
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A well-built mapping matrix gives you confidence going
+          <ConceptBlock title="Gap analysis timing">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Quarterly:</strong> quick review of coverage — are you building evidence
+                across all areas?
+              </li>
+              <li>
+                <strong>Six months before EPA:</strong> detailed gap analysis — identify all red and
+                amber areas.
+              </li>
+              <li>
+                <strong>Three months before EPA:</strong> focused evidence gathering for remaining
+                gaps.
+              </li>
+              <li>
+                <strong>One month before EPA:</strong> final review — ensure every KSB has strong
+                evidence.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> a well-built mapping matrix gives you confidence going
               into the professional discussion because you know your evidence covers all
               requirements and you can talk about each piece in detail.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Preparing Your Portfolio for the Professional Discussion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Preparing your portfolio for the professional discussion</ContentEyebrow>
+
+          <ConceptBlock title="Preparing your portfolio for the professional discussion">
             <p>
               The portfolio is not assessed in isolation — it serves as the evidence base for the
               professional discussion. How you prepare to discuss your evidence is just as important
               as the evidence itself. The assessor will ask probing questions about your portfolio
               entries, so you need to know your own evidence inside out.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Discussion Preparation Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Review every piece of evidence:</strong> Re-read each entry and refresh
-                  your memory of the details
-                </li>
-                <li className="pl-1">
-                  <strong>Practise expanding on entries:</strong> For each piece, prepare to explain
-                  what, why, how, and what you learned
-                </li>
-                <li className="pl-1">
-                  <strong>Anticipate probing questions:</strong> What would the assessor ask? "Why
-                  did you choose that approach?" "What would you do differently?"
-                </li>
-                <li className="pl-1">
-                  <strong>Link to the standard:</strong> Be ready to explain how each activity
-                  demonstrates specific KSBs
-                </li>
-                <li className="pl-1">
-                  <strong>Know your weak areas:</strong> If any evidence is thin, prepare a strong
-                  verbal explanation to compensate
-                </li>
-                <li className="pl-1">
-                  <strong>Practise with your training provider:</strong> Conduct mock professional
-                  discussions before the real assessment
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Final Portfolio Quality Check
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  All KSBs covered in the mapping matrix with at least one strong piece of evidence
-                </li>
-                <li className="pl-1">
-                  Evidence reference codes are consistent and match actual documents
-                </li>
-                <li className="pl-1">
-                  Reflective accounts follow the STAR+R structure with genuine reflection
-                </li>
-                <li className="pl-1">
-                  Witness statements are signed, dated and from credible observers
-                </li>
-                <li className="pl-1">
-                  Photographs are annotated with dates, descriptions and KSB references
-                </li>
-                <li className="pl-1">Confidential information has been appropriately redacted</li>
-                <li className="pl-1">The portfolio is well-organised and easy to navigate</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Authenticity Matters</p>
-              <p className="text-sm text-white">
-                The assessor is trained to identify genuine evidence from fabricated or inflated
-                accounts. Write in your own words, be honest about your level of involvement
-                (observed, assisted, or led), and include challenges as well as successes.
-                Authentic, straightforward evidence of real learning is far more convincing than
-                polished but generic descriptions. The professional discussion will quickly reveal
-                whether you genuinely experienced what your portfolio claims.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The portfolio directly supports the professional
-              discussion component of the EPA. A well-built, well-mapped portfolio gives you
-              confidence going into the discussion because you know your evidence covers all
-              requirements and you can talk about each piece in detail.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Portfolio purpose:</strong> Evidence base for the professional discussion,
-                not a standalone assessment
+          <ConceptBlock title="Discussion preparation checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Review every piece of evidence:</strong> re-read each entry and refresh your
+                memory of the details.
               </li>
-              <li className="pl-1">
-                <strong>Key components:</strong> KSB matrix, activity logs, reflective accounts,
-                witness statements, photographs
+              <li>
+                <strong>Practise expanding on entries:</strong> for each piece, prepare to explain
+                what, why, how, and what you learned.
               </li>
-              <li className="pl-1">
-                <strong>STAR+R format:</strong> Situation, Task, Action, Result, Reflection
+              <li>
+                <strong>Anticipate probing questions:</strong> what would the assessor ask?
+                &quot;Why did you choose that approach?&quot; &quot;What would you do
+                differently?&quot;
               </li>
-              <li className="pl-1">
-                <strong>Start early:</strong> Build progressively from week one of your
-                apprenticeship
+              <li>
+                <strong>Link to the standard:</strong> be ready to explain how each activity
+                demonstrates specific KSBs.
               </li>
-              <li className="pl-1">
-                <strong>Quality over quantity:</strong> Five detailed, well-mapped entries beat
-                twenty superficial ones
+              <li>
+                <strong>Know your weak areas:</strong> if any evidence is thin, prepare a strong
+                verbal explanation to compensate.
               </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> One piece of evidence can map to multiple KSBs
-              </li>
-              <li className="pl-1">
-                <strong>Gap analysis:</strong> Regular review against KSBs to identify missing
-                evidence
-              </li>
-              <li className="pl-1">
-                <strong>Confidentiality:</strong> Redact client names and commercially sensitive
-                information
+              <li>
+                <strong>Practise with your training provider:</strong> conduct mock professional
+                discussions before the real assessment.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Final portfolio quality check">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                All KSBs covered in the mapping matrix with at least one strong piece of evidence.
+              </li>
+              <li>Evidence reference codes are consistent and match actual documents.</li>
+              <li>Reflective accounts follow the STAR+R structure with genuine reflection.</li>
+              <li>Witness statements are signed, dated and from credible observers.</li>
+              <li>Photographs are annotated with dates, descriptions and KSB references.</li>
+              <li>Confidential information has been appropriately redacted.</li>
+              <li>The portfolio is well-organised and easy to navigate.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Portfolio Building" questions={quizQuestions} />
-        </section>
+          <ConceptBlock title="Authenticity matters">
+            <p>
+              The assessor is trained to identify genuine evidence from fabricated or inflated
+              accounts. Write in your own words, be honest about your level of involvement
+              (observed, assisted, or led), and include challenges as well as successes. Authentic,
+              straightforward evidence of real learning is far more convincing than polished but
+              generic descriptions. The professional discussion will quickly reveal whether you
+              genuinely experienced what your portfolio claims.
+            </p>
+          </ConceptBlock>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-2">
-              Next: Witness Statements
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> the portfolio directly supports the professional
+            discussion component of the EPA. A well-built, well-mapped portfolio gives you
+            confidence going into the discussion because you know your evidence covers all
+            requirements and you can talk about each piece in detail.
+          </p>
+
+          <SectionRule />
+
+          <VideoCard
+            url="https://www.youtube.com/watch?v=HqkVPC9LYxw"
+
+            title="Top 7 Rejected Evidence for NVQ"
+
+            channel="Craig Wiltshire"
+
+            duration="4:58"
+
+            topic="Why portfolio evidence gets sent back"
+
+            caption="Framed from the assessor side. Knowing what gets rejected is more useful than another list of what to collect, and it will save you re-doing work."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Portfolio purpose: evidence base for the professional discussion, not a standalone assessment.',
+              'Key components: KSB matrix, activity logs, reflective accounts, witness statements, photographs.',
+              'STAR+R format: Situation, Task, Action, Result, Reflection.',
+              'Start early: build progressively from week one of your apprenticeship.',
+              'Quality over quantity: five detailed, well-mapped entries beat twenty superficial ones.',
+              'Cross-reference: one piece of evidence can map to multiple KSBs.',
+              'Gap analysis: regular review against KSBs to identify missing evidence.',
+              'Confidentiality: redact client names and commercially sensitive information.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Portfolio Building" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Portfolio development and evidence gathering
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Collecting Witness Statements
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

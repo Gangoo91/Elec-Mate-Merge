@@ -261,7 +261,7 @@ const TrunkingSizeCalculator = () => {
         {
           heading: 'Result',
           rows: [
-            { label: 'Recommended size', value: result.recommendedSize, note: result.statusLabel },
+            { label: 'Fill status', value: result.statusLabel },
             { label: 'Total cable area', value: `${result.totalCableArea.toFixed(1)} mm²` },
             ...(isTrunking
               ? [
@@ -269,7 +269,6 @@ const TrunkingSizeCalculator = () => {
                     label: 'Trunking internal area',
                     value: `${result.recommendedArea.toFixed(0)} mm²`,
                   },
-                  { label: 'Fill', value: `${result.fillPercent.toFixed(1)}%` },
                   {
                     label: 'Grouping factor (Cg)',
                     value: result.groupingFactor.toFixed(2),

@@ -97,7 +97,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   if (isLoading) {
     return (
       <section className="space-y-5">
-        <SectionHeader eyebrow="Available now" title="Mental Health Mates online" />
+        <SectionHeader eyebrow="Open to a chat" title="Mental Health Mates" />
         <SupporterListSkeleton />
       </section>
     );
@@ -106,7 +106,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   if (isError) {
     return (
       <section className="space-y-5">
-        <SectionHeader eyebrow="Available now" title="Mental Health Mates online" />
+        <SectionHeader eyebrow="Open to a chat" title="Mental Health Mates" />
         <EmptyState
           title="Couldn't load supporters"
           description="Something went wrong on our side. Try again in a moment."
@@ -120,7 +120,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
   if (supporters.length === 0) {
     return (
       <section className="space-y-5">
-        <SectionHeader eyebrow="Available now" title="Mental Health Mates online" />
+        <SectionHeader eyebrow="Open to a chat" title="Mental Health Mates" />
         <EmptyState
           title="No one available right now"
           description="All Mental Health Mates are offline. Check back later — or set up your own profile and help someone else."
@@ -155,8 +155,18 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
     <section className="space-y-5">
       <div className="flex items-end justify-between gap-4">
         <SectionHeader
-          eyebrow={`Available now · ${supporters.length}`}
-          title="Mental Health Mates online"
+          /*
+            "Open to a chat", not "online".
+
+            `is_available` is a switch a supporter sets on their own profile
+            and then leaves; nothing clears it and nothing measures presence.
+            On 11 Sep 2026 this list advertised two Mates as online who had
+            last opened the app three and five months earlier and had never
+            sent a message between them. Someone reaching out at their lowest
+            was being told a person was sitting there waiting.
+          */
+          eyebrow={`Open to a chat · ${supporters.length}`}
+          title="Mental Health Mates"
         />
         <TextAction onClick={() => refetch()}>Refresh →</TextAction>
       </div>

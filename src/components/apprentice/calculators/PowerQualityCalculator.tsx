@@ -202,11 +202,16 @@ const PowerQualityCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
+    // Mirrors the clamp applied when the engine's inputs are built.
+    const typedDpf = parseFloat(displacementPF);
+    const enteredDpfUsable = typedDpf > 0 && typedDpf <= 1;
+    const effectiveDpf = enteredDpfUsable ? typedDpf : 0.95;
+
     return {
       meta: {
         title: 'Power Quality & THD',
-        subtitle: 'Harmonic analysis for BS 7671 18th Edition compliance',
-        standard: 'BS 7671 (18th Edition) · IEEE 519 · G5/5',
+        subtitle: 'Harmonic analysis against BS 7671, IEEE 519 and ENA G5/5 limits',
+        standard: 'BS 7671:2018+A4:2026 · IEEE 519 · ENA G5/5',
       },
       headline: [
         {
@@ -239,9 +244,35 @@ const PowerQualityCalculator = () => {
             { label: 'Fundamental current (I₁)', value: `${fundamentalCurrent} A` },
             { label: 'Fundamental voltage (V₁)', value: `${fundamentalVoltage} V` },
             { label: 'Frequency', value: `${frequency} Hz` },
-            { label: 'Displacement PF', value: displacementPF },
+            {
+              // The engine silently substitutes 0.95 for anything outside 0 < PF <= 1
+              // (see the inputs built above). Printing the typed value would tell a
+              // client the analysis used a figure it did not — so report what was
+              // actually used, and say so when it differs from what was entered.
+              label: 'Displacement PF',
+              value: String(effectiveDpf),
+              note:
+                enteredDpfUsable
+                  ? undefined
+                  : `Entered ${displacementPF} — outside 0 to 1, so ${effectiveDpf} was used`,
+            },
           ],
         },
+        // FIX (#8): the harmonic spectrum entered order-by-order (3rd, 5th, 7th…) drove the whole
+        // analysis but never reached the client PDF — only the rolled-up THDi/K-Factor did, with
+        // no visible basis for them.
+        ...(result.harmonicSpectrum.length
+          ? [
+              {
+                heading: 'Harmonic spectrum entered',
+                rows: result.harmonicSpectrum.map((h) => ({
+                  label: `${getOrdinal(h.order)} harmonic`,
+                  value: `${h.currentMagnitude.toFixed(2)} A (${h.currentPercentage.toFixed(1)}% of I₁)`,
+                  note: `G5/5 limit ${h.limit}% — ${h.compliance === 'pass' ? 'within limit' : h.compliance === 'warning' ? 'approaching limit' : 'exceeds limit'}`,
+                })),
+              },
+            ]
+          : []),
         {
           heading: 'Result',
           rows: [
@@ -252,7 +283,11 @@ const PowerQualityCalculator = () => {
             },
             { label: 'RMS current', value: `${result.rmsCurrentTotal.toFixed(2)} A` },
             { label: 'Crest factor', value: result.crestFactorCurrent.toFixed(2) },
-            { label: 'K-Factor', value: result.kFactor.toFixed(1) },
+            {
+              label: 'K-Factor',
+              value: result.kFactor.toFixed(1),
+              note: 'How much extra heating the harmonics cause in a supplying transformer',
+            },
             { label: 'True power factor', value: result.truePowerFactor.toFixed(2) },
             { label: 'Transformer derating', value: `${result.transformerDerating}%` },
             ...(systemType === 'three-phase'
@@ -279,7 +314,7 @@ const PowerQualityCalculator = () => {
     <CalculatorCard
       category={CAT}
       title="Power Quality & THD Calculator"
-      description="Comprehensive harmonic analysis for BS 7671 18th Edition compliance"
+      description="Comprehensive harmonic analysis against BS 7671, IEEE 519 and ENA G5/5 limits"
     >
       <CalculatorPanes
         form={

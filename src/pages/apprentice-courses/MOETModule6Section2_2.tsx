@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 2 · Subsection 2 — Wiring Diagrams
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Wiring Diagrams - MOET Module 6 Section 2.2';
@@ -188,10 +219,10 @@ const quizQuestions = [
     question:
       "When reading a utility company's single-line diagram, the 'point of common coupling' (PCC) refers to:",
     options: [
-      "The point where the highest prospective fault current occurs on the network",
-      "The location at which the main earthing terminal is connected to the supply",
+      'The point where the highest prospective fault current occurs on the network',
+      'The location at which the main earthing terminal is connected to the supply',
       "The electrical point where the utility supply connects to the customer's installation",
-      "The point at which the standby generator connects to the essential services board",
+      'The point at which the standby generator connects to the essential services board',
     ],
     correctAnswer: 2,
     explanation:
@@ -256,115 +287,53 @@ const faqs = [
 ];
 
 const MOETModule6Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Wiring Diagrams
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.2 · Subsection 2"
+        title="Wiring Diagrams"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Single-line diagrams, power distribution schematics, load schedules and interconnection
-            drawings
+            drawings — the documents that let you read a distribution system before you touch it.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>SLD:</strong> Single line represents all conductors of a circuit
-              </li>
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> Supply → main switchboard → DBs → final circuits
-              </li>
-              <li className="pl-1">
-                <strong>Switchgear:</strong> Standard symbols with ratings and designations
-              </li>
-              <li className="pl-1">
-                <strong>Interconnection:</strong> Cable links between separate equipment items
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> SLD is the first reference for supply problems
-              </li>
-              <li className="pl-1">
-                <strong>Isolation planning:</strong> Identify all supply paths before isolating
-              </li>
-              <li className="pl-1">
-                <strong>Protection:</strong> Understand discrimination hierarchy
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Power distribution interpretation competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'SLD: single line represents all conductors of a circuit',
+              'Hierarchy: supply → main switchboard → DBs → final circuits',
+              'Switchgear: standard symbols with ratings and designations',
+              'Interconnection: cable links between separate equipment items',
+              'Fault-finding: SLD is the first reference for supply problems',
+              'ST1426: power distribution interpretation competence',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and conventions of single-line diagrams for power distribution',
               'Interpret switchgear symbols and their ratings on SLDs to IEC 60617',
               'Trace power flow from supply source through distribution to loads',
               'Read and use load schedules as companion documents to SLDs',
               'Interpret interconnection wiring diagrams for cable routes between equipment',
               'Use wiring diagrams for isolation planning and fault-finding',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Single-line diagrams</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Single-Line Diagrams — Purpose and Conventions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Single-line diagrams — purpose and conventions"
+            onSite="The SLD is the first drawing you should consult when investigating any power supply problem. It gives you the complete supply path from source to load, enabling systematic fault location. Always start with the SLD before moving to detailed circuit or wiring diagrams."
+          >
             <p>
               A single-line diagram (SLD), also known as a one-line diagram, is the most important
               drawing for understanding any electrical distribution system. It provides a simplified
@@ -385,57 +354,42 @@ const MOETModule6Section2_2 = () => {
               hierarchy: incoming supply at the top, flowing downward through each level of
               distribution to the loads at the bottom.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What an SLD Shows</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incoming supply:</strong> Utility connection, voltage, available fault
-                  level
-                </li>
-                <li className="pl-1">
-                  <strong>Transformers:</strong> Voltage ratio, rating (kVA/MVA), vector group,
-                  impedance
-                </li>
-                <li className="pl-1">
-                  <strong>Main switchgear:</strong> Type (ACB/MCCB), rating, breaking capacity
-                </li>
-                <li className="pl-1">
-                  <strong>Busbars:</strong> Voltage, rated current, section switches
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution boards:</strong> Location, circuits fed, protection
-                </li>
-                <li className="pl-1">
-                  <strong>Standby generation:</strong> Generator, ATS, essential circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Major loads:</strong> Motors, UPS systems, large fixed equipment
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What an SLD shows">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Incoming supply:</strong> utility connection, voltage, available fault level
+              </li>
+              <li>
+                <strong>Transformers:</strong> voltage ratio, rating (kVA/MVA), vector group,
+                impedance
+              </li>
+              <li>
+                <strong>Main switchgear:</strong> type (ACB/MCCB), rating, breaking capacity
+              </li>
+              <li>
+                <strong>Busbars:</strong> voltage, rated current, section switches
+              </li>
+              <li>
+                <strong>Distribution boards:</strong> location, circuits fed, protection
+              </li>
+              <li>
+                <strong>Standby generation:</strong> generator, ATS, essential circuits
+              </li>
+              <li>
+                <strong>Major loads:</strong> motors, UPS systems, large fixed equipment
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Maintenance Priority</p>
-              <p className="text-sm text-white">
-                The SLD is the first drawing you should consult when investigating any power supply
-                problem. It gives you the complete supply path from source to load, enabling
-                systematic fault location. Always start with the SLD before moving to detailed
-                circuit or wiring diagrams.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Switchgear Representation and Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Switchgear representation and ratings</ContentEyebrow>
+
+          <ConceptBlock title="Switchgear representation and ratings">
             <p>
               Every item of switchgear on the SLD is represented by its standard symbol (BS EN
               60617) and annotated with key technical data. Understanding these annotations is
@@ -443,74 +397,41 @@ const MOETModule6Section2_2 = () => {
               capability of the distribution system. When replacing a protective device, the SLD
               tells you exactly what rating, type and breaking capacity is required.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Annotations
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Relevance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        ACB (Air Circuit Breaker)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        In/Icu/Ics, trip settings
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Main incomer protection; trip settings must match design
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Frame size, trip unit, breaking capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sub-main protection; replacement must match ratings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Type (B/C/D), rated current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Final circuit protection; type affects motor starting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuse switch</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rated current, fuse type, breaking capacity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fuse replacement must be like-for-like
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD/RCBO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rated current, sensitivity (mA), type
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Regular testing and trip time verification required
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Switchgear devices — key annotations and maintenance relevance"
+            headers={['Device', 'Key annotations', 'Maintenance relevance']}
+            rows={[
+              [
+                'ACB (Air Circuit Breaker)',
+                'In/Icu/Ics, trip settings',
+                'Main incomer protection; trip settings must match design',
+              ],
+              [
+                'MCCB',
+                'Frame size, trip unit, breaking capacity',
+                'Sub-main protection; replacement must match ratings',
+              ],
+              [
+                'MCB',
+                'Type (B/C/D), rated current',
+                'Final circuit protection; type affects motor starting',
+              ],
+              [
+                'Fuse switch',
+                'Rated current, fuse type, breaking capacity',
+                'Fuse replacement must be like-for-like',
+              ],
+              [
+                'RCD/RCBO',
+                'Rated current, sensitivity (mA), type',
+                'Regular testing and trip time verification required',
+              ],
+            ]}
+          />
 
+          <ConceptBlock title="Reference designations">
             <p>
               Reference designations on the SLD follow BS EN 81346, providing a unique identifier
               for every item of equipment. For example, a circuit breaker might be designated -Q1
@@ -518,18 +439,15 @@ const MOETModule6Section2_2 = () => {
               SLD to all other documentation — wiring diagrams, maintenance records, and spare parts
               lists.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Load Schedules and Power Flow
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Load schedules and power flow</ContentEyebrow>
+
+          <ConceptBlock title="Load schedules and power flow">
             <p>
               A load schedule is the companion document to the SLD. While the SLD shows the
               distribution architecture graphically, the load schedule provides the detailed
@@ -538,37 +456,41 @@ const MOETModule6Section2_2 = () => {
               tracing, the load schedule tells you exactly what each circuit supplies, what cable is
               used, and what protection is installed.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Load Schedule Columns
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Circuit reference:</strong> DB designation and way number (e.g., DB-A/1)
-                </li>
-                <li className="pl-1">
-                  <strong>Load description:</strong> What the circuit supplies (e.g., "AHU-1 Supply
-                  Fan Motor")
-                </li>
-                <li className="pl-1">
-                  <strong>Rated power:</strong> Connected load in kW or VA
-                </li>
-                <li className="pl-1">
-                  <strong>Design current:</strong> Calculated design current in amps
-                </li>
-                <li className="pl-1">
-                  <strong>Protective device:</strong> Type and rating (e.g., "32 A Type C MCB")
-                </li>
-                <li className="pl-1">
-                  <strong>Cable:</strong> Type, size, and installation method (e.g., "4C 6 mm² SWA")
-                </li>
-                <li className="pl-1">
-                  <strong>Earth:</strong> CPC size
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Typical load schedule columns">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Circuit reference:</strong> DB designation and way number (e.g., DB-A/1)
+              </li>
+              <li>
+                <strong>Load description:</strong> what the circuit supplies (e.g., &quot;AHU-1
+                Supply Fan Motor&quot;)
+              </li>
+              <li>
+                <strong>Rated power:</strong> connected load in kW or VA
+              </li>
+              <li>
+                <strong>Design current:</strong> calculated design current in amps
+              </li>
+              <li>
+                <strong>Protective device:</strong> type and rating (e.g., &quot;32 A Type C
+                MCB&quot;)
+              </li>
+              <li>
+                <strong>Cable:</strong> type, size, and installation method (e.g., &quot;4C 6 mm²
+                SWA&quot;)
+              </li>
+              <li>
+                <strong>Earth:</strong> CPC size
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock
+            title="Reading power flow"
+            onSite="Always cross-reference the SLD with the load schedule for complete information. The SLD shows you where in the hierarchy a circuit sits; the load schedule gives you the specific technical data. Using one without the other can lead to incomplete understanding of the distribution system."
+          >
             <p>
               Power flow on the SLD is understood by reading from top to bottom. The total connected
               load at each distribution board can be cross-referenced with the load schedule to
@@ -576,80 +498,68 @@ const MOETModule6Section2_2 = () => {
               a protective device trips, the load schedule tells you which loads are affected and
               what to check.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Cross-Reference Always</p>
-              <p className="text-sm text-white">
-                Always cross-reference the SLD with the load schedule for complete information. The
-                SLD shows you where in the hierarchy a circuit sits; the load schedule gives you the
-                specific technical data. Using one without the other can lead to incomplete
-                understanding of the distribution system.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Interconnection and Cable Wiring Diagrams
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Interconnection and cable wiring diagrams</ContentEyebrow>
+
+          <ConceptBlock title="Interconnection and cable wiring diagrams">
             <p>
               While SLDs show the distribution architecture, interconnection wiring diagrams show
               the physical cable connections between separate items of equipment. These are
               essential for maintenance tasks that involve tracing cables, reconnecting equipment
               after repair, or verifying that field wiring matches the design documentation.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Interconnection Diagrams Show
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Cable type, size and identification</li>
-                  <li className="pl-1">Terminal references at each end</li>
-                  <li className="pl-1">Core identification (colour or number)</li>
-                  <li className="pl-1">Equipment at each end of the cable</li>
-                  <li className="pl-1">Cable gland and entry details</li>
+          <ConceptBlock title="Interconnection diagrams vs cable schedules">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-1.5 text-[13.5px] font-semibold text-elec-yellow/80">
+                  Interconnection diagrams show
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Cable type, size and identification</li>
+                  <li>Terminal references at each end</li>
+                  <li>Core identification (colour or number)</li>
+                  <li>Equipment at each end of the cable</li>
+                  <li>Cable gland and entry details</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cable Schedule Content
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Unique cable reference number</li>
-                  <li className="pl-1">From/to equipment references</li>
-                  <li className="pl-1">Cable type and specification</li>
-                  <li className="pl-1">Route description and length</li>
-                  <li className="pl-1">Installation method (tray, trunking, buried)</li>
+              <div>
+                <p className="mb-1.5 text-[13.5px] font-semibold text-elec-yellow/80">
+                  Cable schedule content
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Unique cable reference number</li>
+                  <li>From/to equipment references</li>
+                  <li>Cable type and specification</li>
+                  <li>Route description and length</li>
+                  <li>Installation method (tray, trunking, buried)</li>
                 </ul>
               </div>
             </div>
+          </ConceptBlock>
 
+          <ConceptBlock title="Cable schedules on large sites">
             <p>
               On large industrial sites, a separate cable schedule drawing provides a comprehensive
               list of all cables with their routes, types and termination points. This is invaluable
               for maintenance planning — when you need to isolate a cable for repair, the cable
               schedule tells you exactly where it runs and where both ends are terminated.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Network Diagrams and Utility Interfaces
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Network diagrams and utility interfaces</ContentEyebrow>
+
+          <ConceptBlock title="Network diagrams and utility interfaces">
             <p>
               On larger sites — industrial estates, hospital campuses, university sites — the power
               distribution extends beyond a single building. Network diagrams show the
@@ -657,39 +567,41 @@ const MOETModule6Section2_2 = () => {
               points across the entire site. Understanding these diagrams is essential for
               maintenance technicians working on campus-wide or industrial distribution systems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Network Diagram Features
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ring main:</strong> Closed loop feeding multiple substations — resilient
-                  supply
-                </li>
-                <li className="pl-1">
-                  <strong>Radial feeder:</strong> Single feed from one point — simpler but less
-                  resilient
-                </li>
-                <li className="pl-1">
-                  <strong>Bus-section switch:</strong> Allows splitting or joining busbars for
-                  maintenance
-                </li>
-                <li className="pl-1">
-                  <strong>Normally open points:</strong> Points where the ring is broken for
-                  operational purposes
-                </li>
-                <li className="pl-1">
-                  <strong>Alternative feeds:</strong> Backup supply paths available if the primary
-                  fails
-                </li>
-                <li className="pl-1">
-                  <strong>PCC (Point of Common Coupling):</strong> Boundary between utility and
-                  customer
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Network diagram features">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ring main:</strong> closed loop feeding multiple substations — resilient
+                supply
+              </li>
+              <li>
+                <strong>Radial feeder:</strong> single feed from one point — simpler but less
+                resilient
+              </li>
+              <li>
+                <strong>Bus-section switch:</strong> allows splitting or joining busbars for
+                maintenance
+              </li>
+              <li>
+                <strong>Normally open points:</strong> points where the ring is broken for
+                operational purposes
+              </li>
+              <li>
+                <strong>Alternative feeds:</strong> backup supply paths available if the primary
+                fails
+              </li>
+              <li>
+                <strong>PCC (Point of Common Coupling):</strong> boundary between utility and
+                customer
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock
+            title="Isolation planning on interconnected systems"
+            onSite="Understanding the distribution network is essential for planning safe isolation on interconnected systems. Wiring diagram interpretation — from SLDs through to interconnection drawings — is a core competence for the maintenance and operations engineering technician (ST1426)."
+          >
             <p>
               When working on interconnected systems, the network diagram is essential for planning
               safe isolation. A maintenance technician must be able to identify all possible supply
@@ -697,41 +609,15 @@ const MOETModule6Section2_2 = () => {
               there is a risk of back-feeds from alternative supply routes that the SLD for a single
               building might not show.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Understanding the distribution network is essential for
-              planning safe isolation on interconnected systems. Wiring diagram interpretation —
-              from SLDs through to interconnection drawings — is a core competence for the
-              maintenance and operations engineering technician.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
+          <ConceptBlock title="Quick reference">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <p className="font-medium text-white mb-1">Drawing Types</p>
-                <ul className="space-y-0.5">
+                <p className="mb-1.5 text-[13.5px] font-semibold text-white">Drawing types</p>
+                <ul className="space-y-0.5 text-[13.5px]">
                   <li>SLD — overall distribution architecture</li>
                   <li>Load schedule — circuit technical data</li>
                   <li>Interconnection — cables between equipment</li>
@@ -740,8 +626,8 @@ const MOETModule6Section2_2 = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
+                <p className="mb-1.5 text-[13.5px] font-semibold text-white">Key standards</p>
+                <ul className="space-y-0.5 text-[13.5px]">
                   <li>BS EN 61082 — document preparation</li>
                   <li>IEC 60617 — graphical symbols</li>
                   <li>BS EN 81346 — reference designations</li>
@@ -750,40 +636,76 @@ const MOETModule6Section2_2 = () => {
                 </ul>
               </div>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Circuit Diagrams
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-3">
-              Next: P&amp;ID Diagrams
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=PeJw7OgKPlk"
+
+            title="Your Intermediate Switch Diagram Is Wrong"
+
+            channel="Toolbox Talk For Electricians"
+
+            duration="12:37"
+
+            topic="A wiring diagram everyone draws, drawn wrong"
+
+            caption="Worth watching because it is a reading error, not a drawing error — the diagram looks right until you trace the switched line through it. That is exactly the skill this page is teaching."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'A single-line diagram (SLD) uses one line to represent all conductors of a circuit, giving a clear overview of the whole distribution architecture.',
+              'Read power flow top to bottom: incoming supply → main switchboard → sub-distribution boards → final circuits → loads.',
+              'Switchgear symbols follow BS EN 60617; reference designations follow BS EN 81346, linking the SLD to every other document.',
+              'A load schedule is the SLD’s companion — it supplies the circuit reference, rating, cable size and protective device for every circuit.',
+              'Interconnection diagrams show cable connections between separate equipment items, with terminal references at both ends; cable schedules record the routes.',
+              'Network diagrams show ring mains, radial feeders and bus-section switches — essential for isolation planning on multi-building sites.',
+              'The SLD is always the first drawing to consult when investigating a power supply problem.',
+              'Key references: BS EN 61082 (document preparation), IEC 60617 (symbols), BS EN 81346 (designations).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Circuit Diagrams and Symbols
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Piping and Instrumentation Diagrams (P&amp;ID)
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

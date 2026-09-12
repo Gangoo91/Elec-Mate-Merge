@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.2 · Subsection 5 — Motor Maintenance and Testing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Motor Maintenance and Testing - MOET Module 3 Section 2.5';
@@ -84,12 +122,7 @@ const quizQuestions = [
     id: 2,
     question:
       'When performing an insulation resistance test on a motor, the test voltage for a 400 V rated motor should be:',
-    options: [
-      '1,000 V DC',
-      '230 V DC',
-      '500 V DC',
-      '5,000 V DC',
-    ],
+    options: ['1,000 V DC', '230 V DC', '500 V DC', '5,000 V DC'],
     correctAnswer: 2,
     explanation:
       'For motors rated up to 1,000 V, the standard insulation resistance test voltage is 500 V DC. Higher test voltages (1,000 V or 2,500 V) are used for higher-voltage motors. Using too high a test voltage on a low-voltage motor can stress or damage the insulation. BS 7671 and IEEE 43 both specify appropriate test voltages for different motor ratings.',
@@ -176,10 +209,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should motor bearings typically be re-greased?',
     options: [
-      "Only once during the entire service life of the motor",
+      'Only once during the entire service life of the motor',
       "According to the manufacturer's schedule, typically every 2,000-8,000 operating hours depending on size and speed",
-      "Every time the motor is started from cold",
-      "Whenever the insulation resistance reading falls below 1 megohm",
+      'Every time the motor is started from cold',
+      'Whenever the insulation resistance reading falls below 1 megohm',
     ],
     correctAnswer: 1,
     explanation:
@@ -257,115 +290,67 @@ const faqs = [
 ];
 
 const MOETModule3Section2_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.2.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Motor Maintenance and Testing
-          </h1>
-          <p className="text-white">
-            Preventive maintenance, testing procedures and fault diagnosis for electric motors
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.2 · Subsection 5"
+        title="Motor Maintenance and Testing"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Preventive maintenance, testing procedures and fault diagnosis for electric motors.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>PM schedules:</strong> Time-based inspections, cleaning and lubrication
+          <TLDR
+            points={[
+              'PM schedules: Time-based inspections, cleaning and lubrication.',
+              'IR testing: 500 V DC, minimum 1 megohm, trend over time.',
+              'Vibration: Detects misalignment, bearing wear, imbalance.',
+              'Thermography: Non-contact detection of hot spots and cooling issues.',
+            ]}
+          />
+
+          <ConceptBlock title="Why this matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bearings:</strong> Most common motor failure point — grease correctly.
               </li>
-              <li className="pl-1">
-                <strong>IR testing:</strong> 500 V DC, minimum 1 megohm, trend over time
+              <li>
+                <strong>PI test:</strong> R10/R1 ratio reveals insulation bulk condition.
               </li>
-              <li className="pl-1">
-                <strong>Vibration:</strong> Detects misalignment, bearing wear, imbalance
+              <li>
+                <strong>MCSA:</strong> Online detection of rotor faults without stopping.
               </li>
-              <li className="pl-1">
-                <strong>Thermography:</strong> Non-contact detection of hot spots and cooling issues
+              <li>
+                <strong>ST1426:</strong> Maps to plant maintenance and condition monitoring KSBs.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Bearings:</strong> Most common motor failure point — grease correctly
-              </li>
-              <li className="pl-1">
-                <strong>PI test:</strong> R10/R1 ratio reveals insulation bulk condition
-              </li>
-              <li className="pl-1">
-                <strong>MCSA:</strong> Online detection of rotor faults without stopping
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to plant maintenance and condition monitoring KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Develop a preventive maintenance schedule for electric motors',
               'Perform insulation resistance and polarisation index testing',
               'Interpret vibration analysis data to identify common motor faults',
               'Apply thermographic survey techniques to running motors',
               'Carry out bearing maintenance including correct re-greasing procedures',
               'Use motor current signature analysis for online condition monitoring',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Preventive maintenance strategy</ContentEyebrow>
 
-        {/* Section 01: Preventive Maintenance Strategy */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Preventive Maintenance Strategy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Motors are the workhorses of industrial and commercial installations"
+            onSite="Always perform safe isolation before any motor maintenance. Even mechanical tasks such as coupling alignment require the motor to be isolated, locked off and proved dead — the motor could be started remotely by a PLC or BMS if the supply is not securely isolated."
+          >
             <p>
               Electric motors are the workhorses of industrial and commercial installations. They
               account for approximately 70% of industrial electricity consumption in the UK, and
@@ -380,183 +365,151 @@ const MOETModule3Section2_5 = () => {
               stator winding insulation breakdown (approximately 35%), and rotor faults
               (approximately 10%). A good maintenance programme addresses all three.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Preventive Maintenance Schedule
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Tasks</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Monthly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visual inspection, check for unusual noise/vibration/smell, check terminal
-                        box condition, verify cooling airflow, check mounting bolts
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Quarterly</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Measure supply voltage and current (all three phases), check earth
-                        continuity, thermographic survey, vibration spot-check
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Annually</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance test (500 V DC), winding resistance measurement, full
-                        vibration analysis, bearing re-greasing (or per manufacturer schedule),
-                        alignment check
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Major overhaul</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Strip-down inspection, bearing replacement, rewind assessment, surge
-                        comparison test, dynamic balancing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Frequency</th>
+                    <th className="py-2 font-medium text-white">Tasks</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Monthly</td>
+                    <td className="py-2">
+                      Visual inspection, check for unusual noise/vibration/smell, check terminal box
+                      condition, verify cooling airflow, check mounting bolts
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Quarterly</td>
+                    <td className="py-2">
+                      Measure supply voltage and current (all three phases), check earth continuity,
+                      thermographic survey, vibration spot-check
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Annually</td>
+                    <td className="py-2">
+                      Insulation resistance test (500 V DC), winding resistance measurement, full
+                      vibration analysis, bearing re-greasing (or per manufacturer schedule),
+                      alignment check
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Major overhaul</td>
+                    <td className="py-2">
+                      Strip-down inspection, bearing replacement, rewind assessment, surge
+                      comparison test, dynamic balancing
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always perform safe isolation before any motor
-              maintenance. Even mechanical tasks such as coupling alignment require the motor to be
-              isolated, locked off and proved dead — the motor could be started remotely by a PLC or
-              BMS if the supply is not securely isolated.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02: Insulation Resistance and Winding Tests */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Insulation Resistance and Winding Tests
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Insulation resistance and winding tests</ContentEyebrow>
+
+          <ConceptBlock
+            title="The most fundamental electrical test for motor condition assessment"
+            onSite="Never perform insulation resistance testing on a motor connected to a VSD, soft starter or any electronic equipment. The 500 V DC test voltage will destroy semiconductor components. Always disconnect the motor cables at the VSD output terminals before testing."
+          >
             <p>
               Insulation resistance (IR) testing is the most fundamental electrical test for motor
               condition assessment. It measures the resistance of the winding insulation to earth
               and between phases, detecting moisture ingress, contamination and insulation
               deterioration before a catastrophic failure occurs.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolate and prove dead:</strong> Disconnect the motor from its supply and
+                any connected electronic equipment (VSDs, soft starters, capacitors)
+              </li>
+              <li>
+                <strong>Discharge:</strong> Ensure the winding is discharged before connecting the
+                test instrument
+              </li>
+              <li>
+                <strong>Connect:</strong> Test each phase winding to earth, and between phases
+              </li>
+              <li>
+                <strong>Test voltage:</strong> 500 V DC for motors rated up to 1,000 V; 1,000 V DC
+                for motors rated 1,001-2,500 V; 2,500 V or 5,000 V for higher-voltage motors
+              </li>
+              <li>
+                <strong>Duration:</strong> Apply voltage for 1 minute (standard IR reading); extend
+                to 10 minutes for PI test
+              </li>
+              <li>
+                <strong>Record:</strong> Note the reading, ambient temperature, humidity and motor
+                temperature
+              </li>
+              <li>
+                <strong>Temperature correct:</strong> Correct all readings to a common reference
+                temperature (40 degrees C) for valid trending
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Insulation Resistance Testing Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Isolate and prove dead:</strong> Disconnect the motor from its supply and
-                  any connected electronic equipment (VSDs, soft starters, capacitors)
-                </li>
-                <li className="pl-1">
-                  <strong>Discharge:</strong> Ensure the winding is discharged before connecting the
-                  test instrument
-                </li>
-                <li className="pl-1">
-                  <strong>Connect:</strong> Test each phase winding to earth, and between phases
-                </li>
-                <li className="pl-1">
-                  <strong>Test voltage:</strong> 500 V DC for motors rated up to 1,000 V; 1,000 V DC
-                  for motors rated 1,001-2,500 V; 2,500 V or 5,000 V for higher-voltage motors
-                </li>
-                <li className="pl-1">
-                  <strong>Duration:</strong> Apply voltage for 1 minute (standard IR reading);
-                  extend to 10 minutes for PI test
-                </li>
-                <li className="pl-1">
-                  <strong>Record:</strong> Note the reading, ambient temperature, humidity and motor
-                  temperature
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature correct:</strong> Correct all readings to a common reference
-                  temperature (40 degrees C) for valid trending
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Polarisation Index (PI) and Dielectric Absorption Ratio (DAR)
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The PI and DAR tests provide deeper insight into insulation condition than a simple
-                IR reading. They measure how the insulation responds over time to the applied DC
-                voltage — healthy insulation shows an increasing resistance as the dielectric
-                absorbs charge, while contaminated insulation shows little change.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Good</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Investigate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DAR</td>
-                      <td className="border border-white/10 px-3 py-2">R60s / R30s</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 1.25</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 1.1</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PI</td>
-                      <td className="border border-white/10 px-3 py-2">R10min / R1min</td>
-                      <td className="border border-white/10 px-3 py-2">&gt; 2.0</td>
-                      <td className="border border-white/10 px-3 py-2">&lt; 1.5</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Winding Resistance Measurement
-              </h3>
-              <p className="text-sm text-white">
-                Winding resistance measurement using a micro-ohmmeter compares the DC resistance of
-                each phase winding. In a healthy three-phase motor, all three phases should be
-                within 1-2% of each other. A significantly lower resistance on one phase indicates
-                shorted turns; a higher resistance indicates a poor connection or a partially open
-                winding. This test requires the motor to be isolated and disconnected.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Never perform insulation resistance testing on a motor
-              connected to a VSD, soft starter or any electronic equipment. The 500 V DC test
-              voltage will destroy semiconductor components. Always disconnect the motor cables at
-              the VSD output terminals before testing.
+          <ConceptBlock title="Polarisation index (PI) and dielectric absorption ratio (DAR)">
+            <p>
+              The PI and DAR tests provide deeper insight into insulation condition than a simple IR
+              reading. They measure how the insulation responds over time to the applied DC voltage
+              — healthy insulation shows an increasing resistance as the dielectric absorbs charge,
+              while contaminated insulation shows little change.
             </p>
-          </div>
-        </section>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Test</th>
+                    <th className="py-2 pr-4 font-medium text-white">Formula</th>
+                    <th className="py-2 pr-4 font-medium text-white">Good</th>
+                    <th className="py-2 font-medium text-white">Investigate</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">DAR</td>
+                    <td className="py-2 pr-4">R60s / R30s</td>
+                    <td className="py-2 pr-4">&gt; 1.25</td>
+                    <td className="py-2">&lt; 1.1</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">PI</td>
+                    <td className="py-2 pr-4">R10min / R1min</td>
+                    <td className="py-2 pr-4">&gt; 2.0</td>
+                    <td className="py-2">&lt; 1.5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Winding resistance measurement">
+            <p>
+              Winding resistance measurement using a micro-ohmmeter compares the DC resistance of
+              each phase winding. In a healthy three-phase motor, all three phases should be within
+              1-2% of each other. A significantly lower resistance on one phase indicates shorted
+              turns; a higher resistance indicates a poor connection or a partially open winding.
+              This test requires the motor to be isolated and disconnected.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03: Vibration Analysis and Thermography */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Vibration Analysis and Thermography
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Vibration analysis and thermography</ContentEyebrow>
+
+          <ConceptBlock
+            title="The most powerful predictive maintenance tool for rotating machinery"
+            onSite="Vibration data is most valuable when trended over time. Establish baseline readings when the motor is known to be in good condition, then compare subsequent readings against this baseline. ISO 10816 provides vibration severity classification for different motor types and sizes."
+          >
             <p>
               Vibration analysis is the most powerful predictive maintenance tool for rotating
               machinery. Every motor has a characteristic vibration signature, and changes in this
@@ -564,111 +517,89 @@ const MOETModule3Section2_5 = () => {
               surveys complement vibration analysis by identifying temperature anomalies that
               indicate electrical or mechanical problems.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Vibration Fault Signatures
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Vibration Characteristic
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Imbalance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dominant at 1x running speed, radial direction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1x RPM</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Misalignment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dominant at 1x and 2x running speed, axial component
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1x, 2x RPM</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Bearing defect</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Characteristic bearing frequencies (BPFO, BPFI, BSF)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Bearing-specific</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Looseness</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sub-harmonics and harmonics of running speed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.5x, 1x, 2x, 3x RPM</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical (rotor)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sidebands at slip frequency around 1x RPM, disappears when power removed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1x RPM +/- slip</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Fault</th>
+                    <th className="py-2 pr-4 font-medium text-white">Vibration characteristic</th>
+                    <th className="py-2 font-medium text-white">Frequency</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Imbalance</td>
+                    <td className="py-2 pr-4">Dominant at 1x running speed, radial direction</td>
+                    <td className="py-2">1x RPM</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Misalignment</td>
+                    <td className="py-2 pr-4">
+                      Dominant at 1x and 2x running speed, axial component
+                    </td>
+                    <td className="py-2">1x, 2x RPM</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Bearing defect</td>
+                    <td className="py-2 pr-4">
+                      Characteristic bearing frequencies (BPFO, BPFI, BSF)
+                    </td>
+                    <td className="py-2">Bearing-specific</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Looseness</td>
+                    <td className="py-2 pr-4">Sub-harmonics and harmonics of running speed</td>
+                    <td className="py-2">0.5x, 1x, 2x, 3x RPM</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Electrical (rotor)</td>
+                    <td className="py-2 pr-4">
+                      Sidebands at slip frequency around 1x RPM, disappears when power removed
+                    </td>
+                    <td className="py-2">1x RPM +/- slip</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Infrared Thermography for Motors
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Thermographic surveys provide a non-contact thermal image of the motor, revealing
-                temperature distribution across the frame, bearings, terminal box and coupling.
-                Surveys should be performed on motors running under normal load conditions for
-                meaningful results.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bearing hot spots:</strong> One bearing significantly hotter than the
-                  other indicates developing wear, over-greasing or lubrication failure
-                </li>
-                <li className="pl-1">
-                  <strong>Winding hot spots:</strong> Uneven frame temperature may indicate a
-                  winding fault or cooling blockage
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal box:</strong> Hot connections indicate loose or corroded
-                  terminations — a fire and failure risk
-                </li>
-                <li className="pl-1">
-                  <strong>Cooling system:</strong> Blocked fins, dirty filters or failed fans show
-                  as elevated frame temperature
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Vibration data is most valuable when trended over time.
-              Establish baseline readings when the motor is known to be in good condition, then
-              compare subsequent readings against this baseline. ISO 10816 provides vibration
-              severity classification for different motor types and sizes.
+          <ConceptBlock title="Infrared thermography for motors">
+            <p>
+              Thermographic surveys provide a non-contact thermal image of the motor, revealing
+              temperature distribution across the frame, bearings, terminal box and coupling.
+              Surveys should be performed on motors running under normal load conditions for
+              meaningful results.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bearing hot spots:</strong> One bearing significantly hotter than the other
+                indicates developing wear, over-greasing or lubrication failure
+              </li>
+              <li>
+                <strong>Winding hot spots:</strong> Uneven frame temperature may indicate a winding
+                fault or cooling blockage
+              </li>
+              <li>
+                <strong>Terminal box:</strong> Hot connections indicate loose or corroded
+                terminations — a fire and failure risk
+              </li>
+              <li>
+                <strong>Cooling system:</strong> Blocked fins, dirty filters or failed fans show as
+                elevated frame temperature
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 04: Bearing Maintenance and Lubrication */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Bearing Maintenance and Lubrication
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Bearing maintenance and lubrication</ContentEyebrow>
+
+          <ConceptBlock
+            title="Bearing failure is the single most common cause of motor failure"
+            onSite="For sealed-for-life (2RS) bearings, no re-greasing is required or possible. These bearings must be replaced when they reach end of life, which is determined by operating hours, speed and temperature. Motors with sealed bearings are typically smaller frame sizes (up to approximately IEC 160)."
+          >
             <p>
               Bearing failure is the single most common cause of motor failure, accounting for
               approximately 50% of all motor breakdowns. Proper lubrication is the most important
@@ -676,262 +607,258 @@ const MOETModule3Section2_5 = () => {
               over-greasing) is one of the most common maintenance errors. Understanding correct
               bearing maintenance procedures is essential for every maintenance technician.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Check the datasheet:</strong> Use only the grease type and quantity
+                specified by the motor manufacturer
+              </li>
+              <li>
+                <strong>Clean the grease nipple:</strong> Wipe clean before attaching the grease gun
+                to prevent dirt ingress
+              </li>
+              <li>
+                <strong>Open the drain plug:</strong> If fitted, open the grease drain plug to allow
+                old grease to escape
+              </li>
+              <li>
+                <strong>Add grease slowly:</strong> Use a hand-operated grease gun (not pneumatic)
+                and pump slowly whilst the motor is running
+              </li>
+              <li>
+                <strong>Correct quantity:</strong> Add only the specified amount — typically
+                measured in grams, not number of pumps
+              </li>
+              <li>
+                <strong>Run and check:</strong> Run the motor for 30 minutes after re-greasing, then
+                check the bearing temperature has returned to normal
+              </li>
+              <li>
+                <strong>Close drain:</strong> Close the drain plug after excess grease has been
+                expelled
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Correct Re-greasing Procedure
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Check the datasheet:</strong> Use only the grease type and quantity
-                  specified by the motor manufacturer
-                </li>
-                <li className="pl-1">
-                  <strong>Clean the grease nipple:</strong> Wipe clean before attaching the grease
-                  gun to prevent dirt ingress
-                </li>
-                <li className="pl-1">
-                  <strong>Open the drain plug:</strong> If fitted, open the grease drain plug to
-                  allow old grease to escape
-                </li>
-                <li className="pl-1">
-                  <strong>Add grease slowly:</strong> Use a hand-operated grease gun (not pneumatic)
-                  and pump slowly whilst the motor is running
-                </li>
-                <li className="pl-1">
-                  <strong>Correct quantity:</strong> Add only the specified amount — typically
-                  measured in grams, not number of pumps
-                </li>
-                <li className="pl-1">
-                  <strong>Run and check:</strong> Run the motor for 30 minutes after re-greasing,
-                  then check the bearing temperature has returned to normal
-                </li>
-                <li className="pl-1">
-                  <strong>Close drain:</strong> Close the drain plug after excess grease has been
-                  expelled
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="Over-greasing"
+            whatHappens={
+              <>
+                Forces grease past the bearing seal, generates excessive heat, and accelerates
+                bearing wear — the most common lubrication error.
+              </>
+            }
+            doInstead={
+              <>
+                Follow the manufacturer's specified grease type and quantity exactly — typically
+                measured in grams, not number of pumps.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Lubrication Errors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Over-greasing:</strong> Forces grease past the bearing seal, generates
-                  excessive heat, and accelerates bearing wear — the most common error
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong grease type:</strong> Mixing incompatible grease types causes the
-                  base oil to separate from the thickener, losing lubrication effectiveness
-                </li>
-                <li className="pl-1">
-                  <strong>Under-greasing:</strong> Metal-to-metal contact causes rapid wear and
-                  generates high-frequency noise
-                </li>
-                <li className="pl-1">
-                  <strong>Contamination:</strong> Dirt or moisture introduced during re-greasing
-                  causes abrasive wear
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Other common lubrication errors">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wrong grease type:</strong> Mixing incompatible grease types causes the base
+                oil to separate from the thickener, losing lubrication effectiveness
+              </li>
+              <li>
+                <strong>Under-greasing:</strong> Metal-to-metal contact causes rapid wear and
+                generates high-frequency noise
+              </li>
+              <li>
+                <strong>Contamination:</strong> Dirt or moisture introduced during re-greasing
+                causes abrasive wear
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> For sealed-for-life (2RS) bearings, no re-greasing is
-              required or possible. These bearings must be replaced when they reach end of life,
-              which is determined by operating hours, speed and temperature. Motors with sealed
-              bearings are typically smaller frame sizes (up to approximately IEC 160).
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 05: Advanced Testing and Fault Diagnosis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Advanced Testing and Fault Diagnosis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Advanced testing and fault diagnosis</ContentEyebrow>
+
+          <ConceptBlock title="Surge comparison testing">
             <p>
-              Beyond basic insulation resistance testing, several advanced techniques allow
-              maintenance technicians to detect specific fault types and assess motor condition more
-              precisely. These techniques are increasingly used in condition-based maintenance
-              programmes for critical motor assets.
+              Surge comparison testing applies a high-voltage, high-frequency pulse to two windings
+              simultaneously and compares the reflected waveforms on an oscilloscope display.
+              Identical windings produce identical overlapping waveforms. Turn-to-turn insulation
+              faults cause a difference in inductance, resulting in a phase shift and amplitude
+              change between the waveforms. This test detects developing inter-turn faults that
+              standard 500 V insulation resistance testing cannot find — the turn-to-turn voltage
+              stress during normal operation can be far higher than the test voltage between the
+              winding and earth.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Surge Comparison Testing
-              </h3>
-              <p className="text-sm text-white">
-                Surge comparison testing applies a high-voltage, high-frequency pulse to two
-                windings simultaneously and compares the reflected waveforms on an oscilloscope
-                display. Identical windings produce identical overlapping waveforms. Turn-to-turn
-                insulation faults cause a difference in inductance, resulting in a phase shift and
-                amplitude change between the waveforms. This test detects developing inter-turn
-                faults that standard 500 V insulation resistance testing cannot find — the
-                turn-to-turn voltage stress during normal operation can be far higher than the test
-                voltage between the winding and earth.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Motor Current Signature Analysis (MCSA)
-              </h3>
-              <p className="text-sm text-white mb-3">
-                MCSA is a powerful online condition monitoring technique that analyses the frequency
-                spectrum of the motor supply current while the motor is running under normal load.
-                It requires no physical contact with the motor — only a current clamp on one supply
-                phase. The technique can detect:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Broken rotor bars:</strong> Sidebands at +/- slip frequency around the
-                  supply frequency (50 Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>Air gap eccentricity:</strong> Characteristic frequency patterns related
-                  to rotor slot passing frequency
-                </li>
-                <li className="pl-1">
-                  <strong>Bearing defects:</strong> Bearing characteristic frequencies modulated
-                  onto the supply current
-                </li>
-                <li className="pl-1">
-                  <strong>Mechanical load faults:</strong> Driven equipment problems (misalignment,
-                  gear mesh faults) reflected in the current spectrum
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Systematic Fault Diagnosis
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When a motor fault is reported, a systematic approach prevents wasted time and
-                missed diagnoses. Work through the following sequence:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1 — Supply:</strong> Check all three phase voltages at the motor
-                  terminals; check for voltage imbalance (should be less than 2%)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2 — Current:</strong> Measure current on all three phases under load;
-                  compare with the nameplate full-load current
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3 — Insulation:</strong> Isolate and test insulation resistance (all
-                  phases to earth, phase to phase)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4 — Winding resistance:</strong> Measure and compare all three phase
-                  winding resistances
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5 — Mechanical:</strong> Check alignment, coupling condition, bearing
-                  noise and vibration
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6 — Thermal:</strong> Thermographic survey to identify hot spots and
-                  temperature distribution
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to carry out
-              condition monitoring activities, interpret test results, and make recommendations for
-              corrective action. Understanding these testing techniques and their applications is a
-              core competence requirement.
+          <ConceptBlock title="Motor current signature analysis (MCSA)">
+            <p>
+              MCSA is a powerful online condition monitoring technique that analyses the frequency
+              spectrum of the motor supply current while the motor is running under normal load. It
+              requires no physical contact with the motor — only a current clamp on one supply
+              phase. The technique can detect:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Broken rotor bars:</strong> Sidebands at +/- slip frequency around the
+                supply frequency (50 Hz)
+              </li>
+              <li>
+                <strong>Air gap eccentricity:</strong> Characteristic frequency patterns related to
+                rotor slot passing frequency
+              </li>
+              <li>
+                <strong>Bearing defects:</strong> Bearing characteristic frequencies modulated onto
+                the supply current
+              </li>
+              <li>
+                <strong>Mechanical load faults:</strong> Driven equipment problems (misalignment,
+                gear mesh faults) reflected in the current spectrum
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Systematic fault diagnosis"
+            onSite="Under ST1426, maintenance technicians are expected to carry out condition monitoring activities, interpret test results, and make recommendations for corrective action. Understanding these testing techniques and their applications is a core competence requirement."
+          >
+            <p>
+              When a motor fault is reported, a systematic approach prevents wasted time and missed
+              diagnoses. Work through the following sequence:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1 — Supply:</strong> Check all three phase voltages at the motor
+                terminals; check for voltage imbalance (should be less than 2%)
+              </li>
+              <li>
+                <strong>Step 2 — Current:</strong> Measure current on all three phases under load;
+                compare with the nameplate full-load current
+              </li>
+              <li>
+                <strong>Step 3 — Insulation:</strong> Isolate and test insulation resistance (all
+                phases to earth, phase to phase)
+              </li>
+              <li>
+                <strong>Step 4 — Winding resistance:</strong> Measure and compare all three phase
+                winding resistances
+              </li>
+              <li>
+                <strong>Step 5 — Mechanical:</strong> Check alignment, coupling condition, bearing
+                noise and vibration
+              </li>
+              <li>
+                <strong>Step 6 — Thermal:</strong> Thermographic survey to identify hot spots and
+                temperature distribution
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Scenario
+            title="A motor that passes insulation resistance and fails a week later"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Testing Methods</p>
-                <ul className="space-y-0.5">
-                  <li>IR test: 500 V DC, minimum 1 megohm (LV motors)</li>
-                  <li>PI test: R10min / R1min, good if &gt; 2.0</li>
-                  <li>DAR test: R60s / R30s, good if &gt; 1.25</li>
-                  <li>Winding resistance: all phases within 1-2%</li>
-                  <li>Surge comparison: detects turn-to-turn faults</li>
-                  <li>MCSA: online detection of rotor and bearing faults</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Safe isolation before all motor maintenance</li>
-                  <li>Bearings = 50% of all motor failures</li>
-                  <li>Re-grease per manufacturer schedule (2,000-8,000 hrs)</li>
-                  <li>Disconnect VSD before insulation testing</li>
-                  <li>Trend IR readings over time (temperature-corrected)</li>
-                  <li>ISO 10816 vibration severity classification</li>
-                </ul>
-              </div>
+            situation={
+              <>
+                <p>
+                  A 15 kW pump motor is tested during a planned shutdown. Insulation resistance
+                  reads 180 MΩ at 500 V, well above the minimum. Winding resistance is balanced
+                  across the three phases. It is signed off as healthy.
+                </p>
+
+                <p>Nine days later it fails to earth on starting.</p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Look at the trend, not the single reading. If the previous two tests read 900 MΩ
+                  and 450 MΩ, then 180 MΩ is not a pass — it is the third point on a curve heading
+                  downwards, and the number being above the minimum is beside the point.
+                </p>
+
+                <p>
+                  Record the winding temperature at test. Insulation resistance falls roughly by
+                  half for every 10 °C rise, so a reading taken on a warm motor and compared against
+                  one taken cold is not a comparison at all.
+                </p>
+
+                <p>
+                  Consider a polarisation index or a timed absorption test where the trend is
+                  questionable. A healthy winding’s reading climbs over the first minute as
+                  absorption current decays; contaminated or wet insulation stays flat.
+                </p>
+
+                <p>
+                  Check what the motor sits in. A motor in a wet or dusty location degrading over
+                  months is a different problem from one that has had a single ingress event, and
+                  the fix is different too.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                A pass against a minimum tells you the motor is not failed today. It says nothing
+                about whether it will be running next month, and a minimum figure was never intended
+                to be used as a health target. This is the same lesson as the vibration trending
+                elsewhere in the course — the direction and the rate of change carry more
+                information than the level, and a maintenance regime built on pass-or-fail
+                thresholds will keep being surprised.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Testing methods: IR test 500 V DC, minimum 1 megohm (LV motors); PI test R10min/R1min, good if > 2.0; DAR test R60s/R30s, good if > 1.25; winding resistance within 1-2% across phases; surge comparison detects turn-to-turn faults; MCSA gives online detection of rotor and bearing faults.',
+              'Safe isolation before all motor maintenance. Bearings account for 50% of all motor failures.',
+              'Re-grease per manufacturer schedule (2,000-8,000 hours). Always disconnect the VSD before insulation testing.',
+              'Trend IR readings over time, temperature-corrected. ISO 10816 provides vibration severity classification.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section2-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  VSDs and Soft Starters
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Back to section <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Section 3.2 hub
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: VSDs and Soft Starters
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

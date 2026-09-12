@@ -1,8 +1,42 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.5 · Subsection 3 — Energy Efficiency in Maintenance
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Skills · "Apply sustainability principles."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy Efficiency in Maintenance - MOET Module 1 Section 5.3';
@@ -70,12 +104,7 @@ const quizQuestions = [
     id: 1,
     question:
       'A maintenance technician discovers that a 55 kW motor is running with poor shaft alignment. The estimated energy waste is 3%. Over 8,000 operating hours per year at £0.25/kWh, what is the approximate annual energy cost of this misalignment?',
-    options: [
-      '£165',
-      '£3,300',
-      '£330',
-      '£33,000',
-    ],
+    options: ['£165', '£3,300', '£330', '£33,000'],
     correctAnswer: 1,
     explanation:
       'Energy waste = 55 kW x 0.03 (3%) = 1.65 kW wasted. Annual cost = 1.65 kW x 8,000 hours x £0.25/kWh = £3,300. This demonstrates why motor alignment is a significant energy efficiency activity — a relatively quick maintenance task can yield substantial energy savings on large motors.',
@@ -262,117 +291,52 @@ const faqs = [
 ];
 
 const MOETModule1Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy Efficiency in Maintenance
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.5 · Subsection 3"
+        title="Energy Efficiency in Maintenance"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Maintaining equipment for optimal performance, reducing energy waste and supporting
-            sustainability
+            sustainability.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Maintenance = efficiency:</strong> Well-maintained equipment uses less
-                energy
-              </li>
-              <li className="pl-1">
-                <strong>ISO 50001:</strong> Framework for energy management systems
-              </li>
-              <li className="pl-1">
-                <strong>Key areas:</strong> Motors, drives, lighting, PFC, BEMS, compressed air
-              </li>
-              <li className="pl-1">
-                <strong>Monitoring:</strong> Sub-metering and power quality analysis reveal waste
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Motor alignment:</strong> Misalignment wastes 2-5% energy
-              </li>
-              <li className="pl-1">
-                <strong>VSD maintenance:</strong> Fan/pump speed control saves 30-50%
-              </li>
-              <li className="pl-1">
-                <strong>PFC:</strong> Reduces reactive power penalties and losses
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Energy awareness is a core KSB for maintenance technicians
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Maintenance = efficiency: Well-maintained equipment uses less energy.',
+              'ISO 50001: Framework for energy management systems.',
+              'Key areas: Motors, drives, lighting, PFC, BEMS, compressed air.',
+              'Monitoring: Sub-metering and power quality analysis reveal waste.',
+              'Motor alignment: Misalignment wastes 2-5% energy.',
+              'VSD maintenance: Fan/pump speed control saves 30-50%.',
+              'PFC: Reduces reactive power penalties and losses.',
+              'ST1426: Energy awareness is a core KSB for maintenance technicians.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the role of maintenance in energy management and ISO 50001',
               'Identify how motor alignment, belt tension and lubrication affect energy efficiency',
               'Describe the energy efficiency benefits of VSD maintenance and power factor correction',
               'Explain the importance of LED lighting system maintenance for sustained savings',
               'Understand compressed air leak detection and BEMS maintenance as efficiency activities',
               'Apply energy auditing and sub-metering knowledge during routine maintenance visits',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Energy Management and the Role of Maintenance</ContentEyebrow>
 
-        {/* Section 01: Energy Management and the Role of Maintenance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Energy Management and the Role of Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Energy Management and the Role of Maintenance">
             <p>
               Energy is one of the largest operating costs for most commercial and industrial
               buildings. In the UK, buildings account for approximately 40% of total energy
@@ -389,101 +353,88 @@ const MOETModule1Section5_3 = () => {
               prevents overheating. The discipline of energy management simply brings focus and
               measurement to these activities.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ISO 50001 Energy Management System
-              </p>
-              <p className="text-sm text-white mb-2">
-                ISO 50001 provides the international framework for establishing, implementing,
-                maintaining and improving an energy management system (EnMS). It follows the
-                familiar Plan-Do-Check-Act cycle:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Plan:</strong> Establish energy policy, objectives, targets and action
-                  plans based on an energy review
-                </li>
-                <li className="pl-1">
-                  <strong>Do:</strong> Implement the action plans — this is where maintenance plays
-                  a central role
-                </li>
-                <li className="pl-1">
-                  <strong>Check:</strong> Monitor, measure and analyse energy performance against
-                  targets
-                </li>
-                <li className="pl-1">
-                  <strong>Act:</strong> Take corrective action and continually improve energy
-                  performance
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                Maintenance activities feature in every stage: identifying energy baseline
-                performance, implementing improvements, monitoring results, and sustaining
-                performance. Many organisations with ISO 50001 certification depend heavily on their
-                maintenance teams to deliver energy efficiency improvements.
-              </p>
-            </div>
+          <ConceptBlock title="ISO 50001 Energy Management System">
+            <p>
+              ISO 50001 provides the international framework for establishing, implementing,
+              maintaining and improving an energy management system (EnMS). It follows the familiar
+              Plan-Do-Check-Act cycle:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Plan:</strong> Establish energy policy, objectives, targets and action plans
+                based on an energy review
+              </li>
+              <li>
+                <strong>Do:</strong> Implement the action plans — this is where maintenance plays a
+                central role
+              </li>
+              <li>
+                <strong>Check:</strong> Monitor, measure and analyse energy performance against
+                targets
+              </li>
+              <li>
+                <strong>Act:</strong> Take corrective action and continually improve energy
+                performance
+              </li>
+            </ul>
+            <p>
+              Maintenance activities feature in every stage: identifying energy baseline
+              performance, implementing improvements, monitoring results, and sustaining
+              performance. Many organisations with ISO 50001 certification depend heavily on their
+              maintenance teams to deliver energy efficiency improvements.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Efficiency Regulations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Building Regulations Part L:</strong> Sets minimum energy efficiency
-                  standards for buildings — applies to both new build and refurbishment work
-                </li>
-                <li className="pl-1">
-                  <strong>Energy Savings Opportunity Scheme (ESOS):</strong> Requires large
-                  undertakings to carry out mandatory energy audits every 4 years
-                </li>
-                <li className="pl-1">
-                  <strong>Streamlined Energy and Carbon Reporting (SECR):</strong> Requires
-                  qualifying companies to report energy use and carbon emissions
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum Energy Efficiency Standards (MEES):</strong> Sets minimum EPC
-                  ratings for commercial and residential properties
-                </li>
-                <li className="pl-1">
-                  <strong>EU Ecodesign (retained in UK law):</strong> Sets minimum efficiency
-                  standards for electric motors, fans, pumps, lighting and other products
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Energy Efficiency Regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Building Regulations Part L:</strong> Sets minimum energy efficiency
+                standards for buildings — applies to both new build and refurbishment work
+              </li>
+              <li>
+                <strong>Energy Savings Opportunity Scheme (ESOS):</strong> Requires large
+                undertakings to carry out mandatory energy audits every 4 years
+              </li>
+              <li>
+                <strong>Streamlined Energy and Carbon Reporting (SECR):</strong> Requires qualifying
+                companies to report energy use and carbon emissions
+              </li>
+              <li>
+                <strong>Minimum Energy Efficiency Standards (MEES):</strong> Sets minimum EPC
+                ratings for commercial and residential properties
+              </li>
+              <li>
+                <strong>EU Ecodesign (retained in UK law):</strong> Sets minimum efficiency
+                standards for electric motors, fans, pumps, lighting and other products
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                The Business Case for Energy Efficiency
-              </p>
-              <p className="text-sm text-white">
-                With electricity costs at approximately £0.25-0.35/kWh for commercial users (and
-                significantly higher for some), energy waste translates directly to financial waste.
-                A 10% reduction in energy consumption can have the same bottom-line impact as a
-                significant increase in revenue. Maintenance-led energy efficiency is often the
-                lowest-cost route to savings because it uses existing skills and access, requires
-                minimal capital investment, and delivers immediate results.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="The Business Case for Energy Efficiency">
+            <p>
+              With electricity costs at approximately £0.25-0.35/kWh for commercial users (and
+              significantly higher for some), energy waste translates directly to financial waste. A
+              10% reduction in energy consumption can have the same bottom-line impact as a
+              significant increase in revenue. Maintenance-led energy efficiency is often the
+              lowest-cost route to savings because it uses existing skills and access, requires
+              minimal capital investment, and delivers immediate results.
+            </p>
+            <p>
               <strong>Key point:</strong> You do not need to be an energy manager to contribute to
               energy efficiency. Every maintenance technician who develops the habit of looking for
               energy waste and acting on it is making a valuable contribution.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Maintaining Equipment for Optimal Efficiency */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Maintaining Equipment for Optimal Efficiency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Maintaining Equipment for Optimal Efficiency</ContentEyebrow>
+
+          <ConceptBlock title="Maintaining Equipment for Optimal Efficiency">
             <p>
               The efficiency of electrical equipment degrades over time unless it is properly
               maintained. Motors lose efficiency from misalignment and bearing wear. Transformers
@@ -491,145 +442,127 @@ const MOETModule1Section5_3 = () => {
               systems lose output from dirt and component ageing. Your maintenance work directly
               determines how efficiently these systems operate.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Motor Alignment</h3>
-                <p className="text-sm text-white mb-2">
-                  Shaft misalignment between a motor and its driven equipment is one of the most
-                  common causes of energy waste in industrial systems. Misalignment increases
-                  bearing friction, generates vibration, accelerates coupling wear, and forces the
-                  motor to work harder to overcome these additional mechanical losses.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Angular misalignment:</strong> Shafts are at an angle — causes axial
-                    vibration and coupling fatigue
-                  </li>
-                  <li className="pl-1">
-                    <strong>Parallel (offset) misalignment:</strong> Shafts are parallel but not
-                    coaxial — causes radial vibration
-                  </li>
-                  <li className="pl-1">
-                    <strong>Energy impact:</strong> 2-5% increase in energy consumption; severe
-                    misalignment can be much higher
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best practice:</strong> Laser alignment during installation and after
-                    any motor work; check alignment as part of planned maintenance
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Motor Alignment">
+            <p>
+              Shaft misalignment between a motor and its driven equipment is one of the most common
+              causes of energy waste in industrial systems. Misalignment increases bearing friction,
+              generates vibration, accelerates coupling wear, and forces the motor to work harder to
+              overcome these additional mechanical losses.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Angular misalignment:</strong> Shafts are at an angle — causes axial
+                vibration and coupling fatigue
+              </li>
+              <li>
+                <strong>Parallel (offset) misalignment:</strong> Shafts are parallel but not coaxial
+                — causes radial vibration
+              </li>
+              <li>
+                <strong>Energy impact:</strong> 2-5% increase in energy consumption; severe
+                misalignment can be much higher
+              </li>
+              <li>
+                <strong>Best practice:</strong> Laser alignment during installation and after any
+                motor work; check alignment as part of planned maintenance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Belt Tension and Drive Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  V-belt and flat belt drives are widely used to connect motors to fans, pumps and
-                  compressors. Belt condition and tension directly affect power transmission
-                  efficiency.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Loose belts:</strong> Slip on pulleys, converting energy to heat and
-                    noise — 3-5% power loss typical
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tight belts:</strong> Overload bearings on both motor and driven
-                    equipment, increasing friction losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Worn belts:</strong> Ride deeper in pulleys, changing the drive ratio
-                    and reducing efficiency
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best practice:</strong> Check tension with a gauge (not by feel),
-                    replace worn belts in matched sets, consider synchronous belt upgrades for
-                    fixed-speed applications
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Belt Tension and Drive Systems">
+            <p>
+              V-belt and flat belt drives are widely used to connect motors to fans, pumps and
+              compressors. Belt condition and tension directly affect power transmission efficiency.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Loose belts:</strong> Slip on pulleys, converting energy to heat and noise —
+                3-5% power loss typical
+              </li>
+              <li>
+                <strong>Tight belts:</strong> Overload bearings on both motor and driven equipment,
+                increasing friction losses
+              </li>
+              <li>
+                <strong>Worn belts:</strong> Ride deeper in pulleys, changing the drive ratio and
+                reducing efficiency
+              </li>
+              <li>
+                <strong>Best practice:</strong> Check tension with a gauge (not by feel), replace
+                worn belts in matched sets, consider synchronous belt upgrades for fixed-speed
+                applications
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Bearing Lubrication
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Correct lubrication is essential for minimising bearing friction and the
-                  associated energy losses. Both under-lubrication and over-lubrication waste
-                  energy.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Under-lubrication:</strong> Metal-to-metal contact increases friction,
-                    heat and energy consumption
-                  </li>
-                  <li className="pl-1">
-                    <strong>Over-lubrication:</strong> Excess grease increases churning resistance
-                    and can cause overheating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Wrong lubricant:</strong> Incompatible greases can break down, losing
-                    their lubricating properties
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best practice:</strong> Follow manufacturer specifications for grease
-                    type, quantity and interval; use calculated relubrication programmes rather than
-                    time-based guesswork
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Bearing Lubrication">
+            <p>
+              Correct lubrication is essential for minimising bearing friction and the associated
+              energy losses. Both under-lubrication and over-lubrication waste energy.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Under-lubrication:</strong> Metal-to-metal contact increases friction, heat
+                and energy consumption
+              </li>
+              <li>
+                <strong>Over-lubrication:</strong> Excess grease increases churning resistance and
+                can cause overheating
+              </li>
+              <li>
+                <strong>Wrong lubricant:</strong> Incompatible greases can break down, losing their
+                lubricating properties
+              </li>
+              <li>
+                <strong>Best practice:</strong> Follow manufacturer specifications for grease type,
+                quantity and interval; use calculated relubrication programmes rather than
+                time-based guesswork
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Insulation Degradation and Energy Loss
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  As electrical insulation ages, its resistance decreases, allowing leakage currents
-                  to flow. These leakage currents represent wasted energy and can also cause
-                  nuisance tripping of RCDs, leading to production losses.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Cables:</strong> Aged insulation, moisture ingress and physical damage
-                    all reduce insulation resistance
-                  </li>
-                  <li className="pl-1">
-                    <strong>Motors:</strong> Winding insulation degradation increases stator leakage
-                    currents and iron losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Transformers:</strong> Oil degradation and moisture in solid insulation
-                    increase dielectric losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Best practice:</strong> Regular insulation resistance testing identifies
-                    deterioration trends before they become critical
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Insulation Degradation and Energy Loss">
+            <p>
+              As electrical insulation ages, its resistance decreases, allowing leakage currents to
+              flow. These leakage currents represent wasted energy and can also cause nuisance
+              tripping of RCDs, leading to production losses.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cables:</strong> Aged insulation, moisture ingress and physical damage all
+                reduce insulation resistance
+              </li>
+              <li>
+                <strong>Motors:</strong> Winding insulation degradation increases stator leakage
+                currents and iron losses
+              </li>
+              <li>
+                <strong>Transformers:</strong> Oil degradation and moisture in solid insulation
+                increase dielectric losses
+              </li>
+              <li>
+                <strong>Best practice:</strong> Regular insulation resistance testing identifies
+                deterioration trends before they become critical
+              </li>
+            </ul>
+            <p>
               <strong>Practical tip:</strong> When you complete any maintenance task on a motor or
               drive system, take a moment to measure the running current with a clamp meter. Compare
               it with the motor nameplate full load current — if the motor is drawing significantly
               more current than expected for its load, there may be an efficiency problem worth
               investigating.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 03: Power Systems Efficiency — PFC, VSDs and Power Quality */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Power Systems Efficiency — PFC, VSDs and Power Quality
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Power Systems Efficiency — PFC, VSDs and Power Quality</ContentEyebrow>
+
+          <ConceptBlock title="Power Systems Efficiency — PFC, VSDs and Power Quality">
             <p>
               Beyond individual items of equipment, the efficiency of the power distribution system
               itself has a significant impact on overall energy consumption. Power factor, harmonic
@@ -637,277 +570,253 @@ const MOETModule1Section5_3 = () => {
               correction equipment, variable speed drives, and power quality monitoring systems is a
               specialist area where maintenance technicians can make a substantial contribution.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Factor Correction (PFC) Maintenance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Power factor is the ratio of real power (kW) to apparent power (kVA). A power factor
-                below 1.0 means the system is drawing reactive current (kVAr) that does no useful
-                work but still causes losses in cables, transformers and generators. PFC capacitors
-                supply reactive power locally, reducing the reactive current drawn from the supply.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Financial impact:</strong> Many electricity suppliers charge reactive
-                  power penalties when the power factor falls below 0.95
-                </li>
-                <li className="pl-1">
-                  <strong>Capacitor maintenance:</strong> Check for swelling, leaking, overheating;
-                  measure capacitance and compare with rated value; check fuses and contactors
-                </li>
-                <li className="pl-1">
-                  <strong>Controller maintenance:</strong> Verify the automatic controller is
-                  switching stages correctly to match demand; check step sequence and power factor
-                  target setting
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonic filters:</strong> If detuned reactors are fitted, check inductor
-                  condition and tuning frequency — harmonic resonance can damage capacitors and
-                  other equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Common faults:</strong> Failed capacitors (reducing correction), stuck
-                  contactors (permanent connection causing leading power factor), failed controller
-                  (manual or no correction)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Variable Speed Drive (VSD) Maintenance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                VSDs (also known as variable frequency drives or inverters) are one of the most
-                effective energy efficiency technologies. For centrifugal loads such as fans and
-                pumps, the affinity laws show that power consumption varies with the cube of speed —
-                a 20% speed reduction gives approximately 49% power reduction. Maintaining VSDs in
-                optimal condition is critical for sustaining these savings.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cooling:</strong> Clean fan filters and heat sinks regularly — overheating
-                  reduces efficiency and component life
-                </li>
-                <li className="pl-1">
-                  <strong>DC bus capacitors:</strong> These degrade over time (electrolyte drying);
-                  a degraded capacitor increases ripple current and reduces efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Parameter check:</strong> Verify that motor parameters,
-                  acceleration/deceleration ramps and speed limits are correctly configured
-                </li>
-                <li className="pl-1">
-                  <strong>Bypass mode:</strong> If a VSD has been put into bypass (running the motor
-                  at full speed directly), the energy savings are completely lost — investigate and
-                  resolve
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonics:</strong> VSDs generate harmonic currents; ensure any input
-                  filters or line reactors are in good condition
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Power Quality Monitoring
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Poor power quality is a hidden source of energy waste. During maintenance, power
-                quality measurements can reveal issues that are not visible during routine
-                inspection:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Voltage imbalance:</strong> Even 2% imbalance on a three-phase motor
-                  increases losses by approximately 25%; caused by unequal single-phase loading or
-                  loose connections
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonic distortion:</strong> Non-linear loads (VFDs, UPS, LED drivers, IT
-                  equipment) generate harmonics that cause additional heating in cables,
-                  transformers and motors
-                </li>
-                <li className="pl-1">
-                  <strong>Neutral current:</strong> Triplen harmonics (3rd, 9th, 15th) add in the
-                  neutral, potentially overloading neutral conductors and causing losses
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage regulation:</strong> Voltage above or below nominal affects motor
-                  efficiency and lamp life
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Voltage Optimisation</p>
-              <p className="text-sm text-white">
-                Many UK sites receive supply voltages at the upper end of the permitted range
-                (around 240-245 V against a nominal 230 V). Voltage optimisation equipment reduces
-                the supply voltage closer to the nominal value, reducing energy consumption on
-                resistive loads (heating, lighting) and improving motor efficiency. If your site has
-                voltage optimisation equipment, maintaining it in good condition and verifying its
-                performance is an important efficiency activity.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When a VSD is put into bypass mode during fault-finding
-              and left there, the energy savings are completely lost. A 30 kW pump running at 80%
-              speed via a VSD uses approximately 15 kW. The same pump at full speed uses 30 kW.
-              Leaving it in bypass costs an additional 15 kW x 8,760 hours x £0.30 = £39,420 per
-              year. Always return VSDs to automatic control after fault resolution.
+          <ConceptBlock title="Power Factor Correction (PFC) Maintenance">
+            <p>
+              Power factor is the ratio of real power (kW) to apparent power (kVA). A power factor
+              below 1.0 means the system is drawing reactive current (kVAr) that does no useful work
+              but still causes losses in cables, transformers and generators. PFC capacitors supply
+              reactive power locally, reducing the reactive current drawn from the supply.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Financial impact:</strong> Many electricity suppliers charge reactive power
+                penalties when the power factor falls below 0.95
+              </li>
+              <li>
+                <strong>Capacitor maintenance:</strong> Check for swelling, leaking, overheating;
+                measure capacitance and compare with rated value; check fuses and contactors
+              </li>
+              <li>
+                <strong>Controller maintenance:</strong> Verify the automatic controller is
+                switching stages correctly to match demand; check step sequence and power factor
+                target setting
+              </li>
+              <li>
+                <strong>Harmonic filters:</strong> If detuned reactors are fitted, check inductor
+                condition and tuning frequency — harmonic resonance can damage capacitors and other
+                equipment
+              </li>
+              <li>
+                <strong>Common faults:</strong> Failed capacitors (reducing correction), stuck
+                contactors (permanent connection causing leading power factor), failed controller
+                (manual or no correction)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Variable Speed Drive (VSD) Maintenance">
+            <p>
+              VSDs (also known as variable frequency drives or inverters) are one of the most
+              effective energy efficiency technologies. For centrifugal loads such as fans and
+              pumps, the affinity laws show that power consumption varies with the cube of speed — a
+              20% speed reduction gives approximately 49% power reduction. Maintaining VSDs in
+              optimal condition is critical for sustaining these savings.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cooling:</strong> Clean fan filters and heat sinks regularly — overheating
+                reduces efficiency and component life
+              </li>
+              <li>
+                <strong>DC bus capacitors:</strong> These degrade over time (electrolyte drying); a
+                degraded capacitor increases ripple current and reduces efficiency
+              </li>
+              <li>
+                <strong>Parameter check:</strong> Verify that motor parameters,
+                acceleration/deceleration ramps and speed limits are correctly configured
+              </li>
+              <li>
+                <strong>Bypass mode:</strong> If a VSD has been put into bypass (running the motor
+                at full speed directly), the energy savings are completely lost — investigate and
+                resolve
+              </li>
+              <li>
+                <strong>Harmonics:</strong> VSDs generate harmonic currents; ensure any input
+                filters or line reactors are in good condition
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Lighting, BEMS and Compressed Air */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Lighting, BEMS and Compressed Air Efficiency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Power Quality Monitoring">
+            <p>
+              Poor power quality is a hidden source of energy waste. During maintenance, power
+              quality measurements can reveal issues that are not visible during routine inspection:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Voltage imbalance:</strong> Even 2% imbalance on a three-phase motor
+                increases losses by approximately 25%; caused by unequal single-phase loading or
+                loose connections
+              </li>
+              <li>
+                <strong>Harmonic distortion:</strong> Non-linear loads (VFDs, UPS, LED drivers, IT
+                equipment) generate harmonics that cause additional heating in cables, transformers
+                and motors
+              </li>
+              <li>
+                <strong>Neutral current:</strong> Triplen harmonics (3rd, 9th, 15th) add in the
+                neutral, potentially overloading neutral conductors and causing losses
+              </li>
+              <li>
+                <strong>Voltage regulation:</strong> Voltage above or below nominal affects motor
+                efficiency and lamp life
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Voltage Optimisation">
+            <p>
+              Many UK sites receive supply voltages at the upper end of the permitted range (around
+              240-245 V against a nominal 230 V). Voltage optimisation equipment reduces the supply
+              voltage closer to the nominal value, reducing energy consumption on resistive loads
+              (heating, lighting) and improving motor efficiency. If your site has voltage
+              optimisation equipment, maintaining it in good condition and verifying its performance
+              is an important efficiency activity.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Leaving a VSD in bypass after fault-finding"
+            whatHappens={
+              <>
+                When a VSD is put into bypass mode during fault-finding and left there, the energy
+                savings are completely lost. A 30 kW pump running at 80% speed via a VSD uses
+                approximately 15 kW. The same pump at full speed uses 30 kW. Leaving it in bypass
+                costs an additional 15 kW x 8,760 hours x £0.30 = £39,420 per year.
+              </>
+            }
+            doInstead={<>Always return VSDs to automatic control after fault resolution.</>}
+          />
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Lighting, BEMS and Compressed Air Efficiency</ContentEyebrow>
+
+          <ConceptBlock title="Lighting, BEMS and Compressed Air Efficiency">
             <p>
               Three areas where maintenance has a particularly high impact on energy efficiency are
               lighting systems, building energy management systems (BEMS), and compressed air
               networks. Each of these is a major energy consumer, and each is highly sensitive to
               maintenance quality.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                LED Lighting Maintenance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The widespread adoption of LED lighting has significantly reduced lighting energy
-                consumption, but the savings are only sustained if the complete lighting system —
-                luminaires, drivers, controls and sensors — is properly maintained.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Luminaire cleaning:</strong> Dust and dirt on lenses and reflectors reduce
-                  light output by 10-30%, leading to complaints and potentially to increased
-                  lighting levels that waste energy
-                </li>
-                <li className="pl-1">
-                  <strong>Driver health:</strong> LED drivers degrade over time; a failing driver
-                  may draw more power for the same light output, reducing system efficacy
-                </li>
-                <li className="pl-1">
-                  <strong>Control systems:</strong> Occupancy sensors, daylight sensors, time clocks
-                  and dimming controls are the primary source of lighting energy savings — a failed
-                  sensor can mean lights running 24/7
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting:</strong> Emergency luminaires with degraded batteries
-                  draw continuous charging current without providing adequate emergency performance
-                  — replace batteries on schedule
-                </li>
-                <li className="pl-1">
-                  <strong>Commissioning:</strong> After any lighting maintenance, verify that
-                  control parameters (sensitivity, time delays, dimming levels) are correctly set
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="LED Lighting Maintenance">
+            <p>
+              The widespread adoption of LED lighting has significantly reduced lighting energy
+              consumption, but the savings are only sustained if the complete lighting system —
+              luminaires, drivers, controls and sensors — is properly maintained.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Luminaire cleaning:</strong> Dust and dirt on lenses and reflectors reduce
+                light output by 10-30%, leading to complaints and potentially to increased lighting
+                levels that waste energy
+              </li>
+              <li>
+                <strong>Driver health:</strong> LED drivers degrade over time; a failing driver may
+                draw more power for the same light output, reducing system efficacy
+              </li>
+              <li>
+                <strong>Control systems:</strong> Occupancy sensors, daylight sensors, time clocks
+                and dimming controls are the primary source of lighting energy savings — a failed
+                sensor can mean lights running 24/7
+              </li>
+              <li>
+                <strong>Emergency lighting:</strong> Emergency luminaires with degraded batteries
+                draw continuous charging current without providing adequate emergency performance —
+                replace batteries on schedule
+              </li>
+              <li>
+                <strong>Commissioning:</strong> After any lighting maintenance, verify that control
+                parameters (sensitivity, time delays, dimming levels) are correctly set
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building Energy Management Systems (BEMS)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                A BEMS (also called a BMS — Building Management System) centrally monitors and
-                controls heating, cooling, ventilation and lighting. A well-maintained BEMS can
-                reduce building energy consumption by 10-20%, but a neglected BEMS can actually
-                increase consumption if it malfunctions or is overridden.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Sensor calibration:</strong> Temperature, humidity, CO2 and light level
-                  sensors drift over time; uncalibrated sensors cause systems to heat, cool or
-                  ventilate incorrectly
-                </li>
-                <li className="pl-1">
-                  <strong>Actuator maintenance:</strong> Stuck or sluggish actuators on valves and
-                  dampers prevent proper control, causing simultaneous heating and cooling (a major
-                  energy waste)
-                </li>
-                <li className="pl-1">
-                  <strong>Time schedules:</strong> Verify that operating schedules match actual
-                  building occupancy — systems running outside occupied hours waste significant
-                  energy
-                </li>
-                <li className="pl-1">
-                  <strong>Overrides:</strong> Check for manual overrides that have been left in
-                  place — a common finding that defeats automatic energy-saving controls
-                </li>
-                <li className="pl-1">
-                  <strong>Trend logging:</strong> Review BEMS trend data to identify abnormal
-                  patterns — equipment cycling excessively, systems fighting each other, setpoints
-                  drifting
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Building Energy Management Systems (BEMS)">
+            <p>
+              A BEMS (also called a BMS — Building Management System) centrally monitors and
+              controls heating, cooling, ventilation and lighting. A well-maintained BEMS can reduce
+              building energy consumption by 10-20%, but a neglected BEMS can actually increase
+              consumption if it malfunctions or is overridden.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensor calibration:</strong> Temperature, humidity, CO2 and light level
+                sensors drift over time; uncalibrated sensors cause systems to heat, cool or
+                ventilate incorrectly
+              </li>
+              <li>
+                <strong>Actuator maintenance:</strong> Stuck or sluggish actuators on valves and
+                dampers prevent proper control, causing simultaneous heating and cooling (a major
+                energy waste)
+              </li>
+              <li>
+                <strong>Time schedules:</strong> Verify that operating schedules match actual
+                building occupancy — systems running outside occupied hours waste significant energy
+              </li>
+              <li>
+                <strong>Overrides:</strong> Check for manual overrides that have been left in place
+                — a common finding that defeats automatic energy-saving controls
+              </li>
+              <li>
+                <strong>Trend logging:</strong> Review BEMS trend data to identify abnormal patterns
+                — equipment cycling excessively, systems fighting each other, setpoints drifting
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Compressed Air Leak Detection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Compressed air is essential in many industrial and commercial environments, but it
-                is extremely energy-intensive — typically, only 8-10% of the electrical energy input
-                to a compressor is converted to useful pneumatic energy. The rest is lost as heat.
-                Leaks make this already poor efficiency even worse.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Scale of the problem:</strong> Industry studies consistently show 20-30%
-                  of compressed air output lost to leaks in poorly maintained systems
-                </li>
-                <li className="pl-1">
-                  <strong>Detection:</strong> Ultrasonic leak detectors can identify leaks that are
-                  inaudible in a noisy environment; systematic surveys should be conducted quarterly
-                </li>
-                <li className="pl-1">
-                  <strong>Common leak points:</strong> Pipe joints, quick-connect couplings, hose
-                  connections, solenoid valves, FRL units (filter-regulator-lubricator), condensate
-                  drains
-                </li>
-                <li className="pl-1">
-                  <strong>Tagging:</strong> Identified leaks should be tagged with location and
-                  estimated size, prioritised, and scheduled for repair
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure reduction:</strong> Reducing system pressure by 1 bar can save
-                  approximately 7% of compressor energy — verify that pressure is not set higher
-                  than equipment requires
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Compressed Air Leak Detection">
+            <p>
+              Compressed air is essential in many industrial and commercial environments, but it is
+              extremely energy-intensive — typically, only 8-10% of the electrical energy input to a
+              compressor is converted to useful pneumatic energy. The rest is lost as heat. Leaks
+              make this already poor efficiency even worse.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scale of the problem:</strong> Industry studies consistently show 20-30% of
+                compressed air output lost to leaks in poorly maintained systems
+              </li>
+              <li>
+                <strong>Detection:</strong> Ultrasonic leak detectors can identify leaks that are
+                inaudible in a noisy environment; systematic surveys should be conducted quarterly
+              </li>
+              <li>
+                <strong>Common leak points:</strong> Pipe joints, quick-connect couplings, hose
+                connections, solenoid valves, FRL units (filter-regulator-lubricator), condensate
+                drains
+              </li>
+              <li>
+                <strong>Tagging:</strong> Identified leaks should be tagged with location and
+                estimated size, prioritised, and scheduled for repair
+              </li>
+              <li>
+                <strong>Pressure reduction:</strong> Reducing system pressure by 1 bar can save
+                approximately 7% of compressor energy — verify that pressure is not set higher than
+                equipment requires
+              </li>
+            </ul>
+            <p>
               <strong>Practical example:</strong> A compressed air leak with a 3 mm diameter hole at
               7 bar pressure wastes approximately 1.5 kW of compressor power continuously. Over a
               year (8,760 hours) at £0.30/kWh, that single leak costs £3,942. A systematic leak
               survey and repair programme can save thousands of pounds annually.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Energy Auditing and Metering */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Energy Auditing During Maintenance and Sub-Metering
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Energy Auditing During Maintenance and Sub-Metering</ContentEyebrow>
+
+          <ConceptBlock title="Energy Auditing During Maintenance and Sub-Metering">
             <p>
               Every maintenance visit is an opportunity for informal energy auditing. You are
               already on site, you have access to equipment, and you have the technical knowledge to
@@ -915,196 +824,158 @@ const MOETModule1Section5_3 = () => {
               your primary maintenance task adds significant value to your work and your
               organisation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Observations During Maintenance
-              </h3>
-              <p className="text-sm text-white mb-2">
-                While carrying out routine maintenance tasks, look for the following energy
-                efficiency indicators:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Equipment running unnecessarily:</strong> Motors, pumps, fans or
-                  compressors running when not required — check time controls and operating
-                  schedules
-                </li>
-                <li className="pl-1">
-                  <strong>Oversized equipment:</strong> Motors significantly larger than necessary
-                  for their load operate at poor efficiency; transformers lightly loaded have
-                  proportionally higher losses
-                </li>
-                <li className="pl-1">
-                  <strong>Poor power factor:</strong> If a PFC panel is visible, check the power
-                  factor display — a reading below 0.95 indicates wasted reactive power
-                </li>
-                <li className="pl-1">
-                  <strong>Excessive heat:</strong> Hot surfaces on motors, transformers, cables or
-                  connections indicate energy being wasted as heat — investigate the cause
-                </li>
-                <li className="pl-1">
-                  <strong>Vibration and noise:</strong> Abnormal vibration or noise from rotating
-                  equipment indicates mechanical problems that waste energy
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting waste:</strong> Lights on in unoccupied areas, broken sensors,
-                  overridden time controls, daylight dimming not working
-                </li>
-                <li className="pl-1">
-                  <strong>HVAC issues:</strong> Heating and cooling running simultaneously, filters
-                  blocked, dampers stuck, controls overridden
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Energy Observations During Maintenance">
+            <p>
+              While carrying out routine maintenance tasks, look for the following energy efficiency
+              indicators:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Equipment running unnecessarily:</strong> Motors, pumps, fans or compressors
+                running when not required — check time controls and operating schedules
+              </li>
+              <li>
+                <strong>Oversized equipment:</strong> Motors significantly larger than necessary for
+                their load operate at poor efficiency; transformers lightly loaded have
+                proportionally higher losses
+              </li>
+              <li>
+                <strong>Poor power factor:</strong> If a PFC panel is visible, check the power
+                factor display — a reading below 0.95 indicates wasted reactive power
+              </li>
+              <li>
+                <strong>Excessive heat:</strong> Hot surfaces on motors, transformers, cables or
+                connections indicate energy being wasted as heat — investigate the cause
+              </li>
+              <li>
+                <strong>Vibration and noise:</strong> Abnormal vibration or noise from rotating
+                equipment indicates mechanical problems that waste energy
+              </li>
+              <li>
+                <strong>Lighting waste:</strong> Lights on in unoccupied areas, broken sensors,
+                overridden time controls, daylight dimming not working
+              </li>
+              <li>
+                <strong>HVAC issues:</strong> Heating and cooling running simultaneously, filters
+                blocked, dampers stuck, controls overridden
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Sub-Metering</h3>
-              <p className="text-sm text-white mb-2">
-                Sub-metering is the practice of installing additional energy meters downstream of
-                the main fiscal meter to measure consumption by individual circuits, departments,
-                floors or major items of equipment. As a maintenance technician, you may be asked to
-                install, commission and maintain sub-meters.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>CT-connected meters:</strong> Most common for retrofit — current
-                  transformers clip around existing cables without breaking the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Pulse output meters:</strong> Generate a pulse per kWh for connection to
-                  BMS or data logging systems
-                </li>
-                <li className="pl-1">
-                  <strong>Smart meters and IoT:</strong> Modern sub-meters with wireless
-                  connectivity provide real-time data to cloud platforms for analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance considerations:</strong> Verify CT ratios are correct, check
-                  meter calibration, ensure data connectivity is reliable, and protect meters from
-                  environmental damage
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Sub-Metering">
+            <p>
+              Sub-metering is the practice of installing additional energy meters downstream of the
+              main fiscal meter to measure consumption by individual circuits, departments, floors
+              or major items of equipment. As a maintenance technician, you may be asked to install,
+              commission and maintain sub-meters.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CT-connected meters:</strong> Most common for retrofit — current
+                transformers clip around existing cables without breaking the circuit
+              </li>
+              <li>
+                <strong>Pulse output meters:</strong> Generate a pulse per kWh for connection to BMS
+                or data logging systems
+              </li>
+              <li>
+                <strong>Smart meters and IoT:</strong> Modern sub-meters with wireless connectivity
+                provide real-time data to cloud platforms for analysis
+              </li>
+              <li>
+                <strong>Maintenance considerations:</strong> Verify CT ratios are correct, check
+                meter calibration, ensure data connectivity is reliable, and protect meters from
+                environmental damage
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Recording and Reporting
-                </h3>
-                <p className="text-sm text-white">
-                  Record your energy efficiency observations in your maintenance reports. Many
-                  organisations have a specific section for energy/environmental observations. Even
-                  a brief note — "PFC panel showing power factor of 0.82; 3 of 6 stages appear to
-                  have failed capacitors" — can trigger an investigation that saves thousands of
-                  pounds. Your observations are valuable data for energy managers and facilities
-                  teams.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Benchmarking</h3>
-                <p className="text-sm text-white">
-                  Energy benchmarking compares a building's energy consumption against similar
-                  buildings or against its own historical performance. CIBSE TM46 provides energy
-                  benchmarks for different building types. When you notice that energy consumption
-                  seems high for the type of building or process, it may indicate significant
-                  efficiency improvement opportunities. Share your insights with the facilities or
-                  energy management team.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Recording and Reporting">
+            <p>
+              Record your energy efficiency observations in your maintenance reports. Many
+              organisations have a specific section for energy/environmental observations. Even a
+              brief note — &quot;PFC panel showing power factor of 0.82; 3 of 6 stages appear to
+              have failed capacitors&quot; — can trigger an investigation that saves thousands of
+              pounds. Your observations are valuable data for energy managers and facilities teams.
+            </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Benchmarking">
+            <p>
+              Energy benchmarking compares a building&apos;s energy consumption against similar
+              buildings or against its own historical performance. CIBSE TM46 provides energy
+              benchmarks for different building types. When you notice that energy consumption seems
+              high for the type of building or process, it may indicate significant efficiency
+              improvement opportunities. Share your insights with the facilities or energy
+              management team.
+            </p>
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard expects you to
               contribute to continuous improvement in your organisation. Identifying and reporting
               energy efficiency opportunities during maintenance is a direct demonstration of this
               competency. It shows that you think beyond the immediate repair task and consider the
               wider performance of the systems you maintain.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              '1. Motor alignment — saves 2-5% energy.',
+              '2. VSD maintenance — sustains 30-50% savings on fans/pumps.',
+              '3. PFC maintenance — avoids reactive power penalties.',
+              '4. Compressed air leak repair — saves 20-30% of compressor energy.',
+              '5. BEMS calibration — saves 10-20% of building energy.',
+              '6. Lighting controls — prevents 24/7 operation.',
+              'ISO 50001 — Energy management systems.',
+              'Building Regulations Part L — Energy efficiency.',
+              'CIBSE TM46 — Energy benchmarks.',
+              'EU Ecodesign — Motor efficiency classes (IE2/IE3/IE4).',
+              'EH40 — Affinity laws for fans and pumps.',
+              'ST1426 — Continuous improvement KSBs.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">High-Impact Maintenance Activities</p>
-                <ul className="space-y-0.5">
-                  <li>1. Motor alignment — saves 2-5% energy</li>
-                  <li>2. VSD maintenance — sustains 30-50% savings on fans/pumps</li>
-                  <li>3. PFC maintenance — avoids reactive power penalties</li>
-                  <li>4. Compressed air leak repair — saves 20-30% of compressor energy</li>
-                  <li>5. BEMS calibration — saves 10-20% of building energy</li>
-                  <li>6. Lighting controls — prevents 24/7 operation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>ISO 50001 — Energy management systems</li>
-                  <li>Building Regulations Part L — Energy efficiency</li>
-                  <li>CIBSE TM46 — Energy benchmarks</li>
-                  <li>EU Ecodesign — Motor efficiency classes (IE2/IE3/IE4)</li>
-                  <li>EH40 — Affinity laws for fans and pumps</li>
-                  <li>ST1426 — Continuous improvement KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Energy efficiency knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Hazardous Substances — COSHH Awareness
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Environmental Legislation and Local Policies
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: COSHH Awareness
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-4">
-              Next: Environmental Legislation
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

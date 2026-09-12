@@ -1,8 +1,38 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 2 · Subsection 3 — Piping and Instrumentation
+ * Diagrams (P&ID)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Piping and Instrumentation Diagrams (P&ID) - MOET Module 6 Section 2.3';
@@ -80,7 +110,8 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'On a P&ID, a circle (balloon) with a single horizontal line through the middle represents:',
+    question:
+      'On a P&ID, a circle (balloon) with a single horizontal line through the middle represents:',
     options: [
       'A field-mounted instrument with no panel connection',
       'A manual valve that is normally left in the closed position',
@@ -256,115 +287,52 @@ const faqs = [
 ];
 
 const MOETModule6Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Piping and Instrumentation Diagrams
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.2 · Subsection 3"
+        title="Piping and Instrumentation Diagrams (P&ID)"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             P&amp;ID symbols, instrument identification, control loops and cross-referencing with
             electrical documentation
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>P&amp;ID:</strong> Shows process equipment, piping, instruments and controls
-              </li>
-              <li className="pl-1">
-                <strong>Tag numbers:</strong> ISA 5.1 letter code identifies variable and function
-              </li>
-              <li className="pl-1">
-                <strong>Control loops:</strong> Sensor → controller → final control element
-              </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> Tag numbers link to electrical drawings and CMMS
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Instruments:</strong> Transmitters, switches, analysers to maintain
-              </li>
-              <li className="pl-1">
-                <strong>Actuators:</strong> Electric valve actuators and VSD-driven motors
-              </li>
-              <li className="pl-1">
-                <strong>Safety systems:</strong> SIL-rated loops with mandatory proof testing
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Technical drawing interpretation competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'P&ID: Shows process equipment, piping, instruments and controls.',
+              'Tag numbers: ISA 5.1 letter code identifies variable and function.',
+              'Control loops: Sensor → controller → final control element.',
+              'Cross-reference: Tag numbers link to electrical drawings and CMMS.',
+              'Instruments: Transmitters, switches, analysers to maintain.',
+              'Actuators: Electric valve actuators and VSD-driven motors.',
+              'Safety systems: SIL-rated loops with mandatory proof testing.',
+              'ST1426: Technical drawing interpretation competence.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and content of piping and instrumentation diagrams',
               'Interpret ISA 5.1 / BS EN 62424 instrument identification and tag numbering',
               'Identify common P&ID symbols for valves, actuators, instruments and equipment',
               'Trace control loops from sensor through controller to final control element',
               'Cross-reference P&ID instrument tags with electrical drawings and loop diagrams',
               'Understand the relevance of P&IDs for electrical fault-finding and safe isolation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Purpose and content of P&amp;IDs</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Purpose and Content of P&amp;IDs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Purpose and content of P&amp;IDs">
             <p>
               A piping and instrumentation diagram (P&amp;ID) is the definitive reference document
               for any process system. It shows the functional relationship between all the equipment
@@ -380,61 +348,53 @@ const MOETModule6Section2_3 = () => {
               electrical drawings. The P&amp;ID is prepared to BS EN 62424 (IEC 62424) and uses
               symbols from ISA 5.1 and BS EN ISO 10628.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What a P&amp;ID Shows</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Process equipment:</strong> Vessels, tanks, pumps, compressors, heat
-                  exchangers
-                </li>
-                <li className="pl-1">
-                  <strong>Piping:</strong> All process and utility piping with sizes and
-                  specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Valves:</strong> Manual, control, safety, isolation — with type and tag
-                </li>
-                <li className="pl-1">
-                  <strong>Instrumentation:</strong> All sensors, transmitters, controllers,
-                  indicators
-                </li>
-                <li className="pl-1">
-                  <strong>Control systems:</strong> DCS/PLC connections, safety systems (SIS)
-                </li>
-                <li className="pl-1">
-                  <strong>Interlocks:</strong> Safety trips and permissive conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Line identification:</strong> Pipe size, fluid, specification class
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What a P&ID shows">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Process equipment:</strong> Vessels, tanks, pumps, compressors, heat
+                exchangers.
+              </li>
+              <li>
+                <strong>Piping:</strong> All process and utility piping with sizes and
+                specifications.
+              </li>
+              <li>
+                <strong>Valves:</strong> Manual, control, safety, isolation — with type and tag.
+              </li>
+              <li>
+                <strong>Instrumentation:</strong> All sensors, transmitters, controllers,
+                indicators.
+              </li>
+              <li>
+                <strong>Control systems:</strong> DCS/PLC connections, safety systems (SIS).
+              </li>
+              <li>
+                <strong>Interlocks:</strong> Safety trips and permissive conditions.
+              </li>
+              <li>
+                <strong>Line identification:</strong> Pipe size, fluid, specification class.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Why Electricians Need P&amp;IDs
-              </p>
-              <p className="text-sm text-white">
-                The P&amp;ID identifies every electrical and electronic device in the process:
-                motors, actuators, transmitters, switches, analysers, and control equipment. When a
-                process problem occurs, the P&amp;ID tells you which instruments and actuators are
-                involved, enabling you to focus your electrical fault-finding on the relevant
-                equipment.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Why electricians need P&amp;IDs">
+            <p>
+              The P&amp;ID identifies every electrical and electronic device in the process: motors,
+              actuators, transmitters, switches, analysers, and control equipment. When a process
+              problem occurs, the P&amp;ID tells you which instruments and actuators are involved,
+              enabling you to focus your electrical fault-finding on the relevant equipment.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Instrument Identification and Tag Numbers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Instrument identification and tag numbers</ContentEyebrow>
+
+          <ConceptBlock title="Instrument identification and tag numbers">
             <p>
               Every instrument on a P&amp;ID has a unique tag number following the ISA 5.1
               (ANSI/ISA-5.1) or BS EN 62424 convention. The tag number is your key for
@@ -442,80 +402,65 @@ const MOETModule6Section2_3 = () => {
               drawings, loop diagrams, datasheets, calibration records, and CMMS records.
               Understanding the tag numbering system is essential.
             </p>
-
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        First Letter (Variable)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Functions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">F</td>
-                      <td className="border border-white/10 px-3 py-2">Flow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        FT (transmitter), FI (indicator), FIC (indicating controller)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">T</td>
-                      <td className="border border-white/10 px-3 py-2">Temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        TT (transmitter), TI (indicator), TSH (switch high)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">P</td>
-                      <td className="border border-white/10 px-3 py-2">Pressure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PT (transmitter), PI (indicator), PSL (switch low)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">L</td>
-                      <td className="border border-white/10 px-3 py-2">Level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LT (transmitter), LIC (indicating controller), LAH (alarm high)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">A</td>
-                      <td className="border border-white/10 px-3 py-2">Analysis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AT (transmitter), AE (element/sensor), AIC (indicating controller)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">First letter (variable)</th>
+                    <th className="py-2 pr-4 font-medium text-white">Meaning</th>
+                    <th className="py-2 font-medium text-white">Common functions</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">F</td>
+                    <td className="py-2 pr-4">Flow</td>
+                    <td className="py-2">
+                      FT (transmitter), FI (indicator), FIC (indicating controller)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">T</td>
+                    <td className="py-2 pr-4">Temperature</td>
+                    <td className="py-2">TT (transmitter), TI (indicator), TSH (switch high)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">P</td>
+                    <td className="py-2 pr-4">Pressure</td>
+                    <td className="py-2">PT (transmitter), PI (indicator), PSL (switch low)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">L</td>
+                    <td className="py-2 pr-4">Level</td>
+                    <td className="py-2">
+                      LT (transmitter), LIC (indicating controller), LAH (alarm high)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">A</td>
+                    <td className="py-2 pr-4">Analysis</td>
+                    <td className="py-2">
+                      AT (transmitter), AE (element/sensor), AIC (indicating controller)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               The loop number following the letters uniquely identifies the control loop. For
               example, FT-301 is the flow transmitter in loop 301, and FV-301 is the flow control
               valve in the same loop. This consistent numbering allows you to quickly identify all
               the components that make up a single control loop.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Control Loops and Signal Paths
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Control loops and signal paths</ContentEyebrow>
+
+          <ConceptBlock title="Control loops and signal paths">
             <p>
               A control loop is the complete system that maintains a process variable at its desired
               setpoint. The P&amp;ID shows every element of the control loop: the sensing element,
@@ -523,116 +468,84 @@ const MOETModule6Section2_3 = () => {
               final control element (usually a valve or motor). Understanding how these elements
               connect is essential for systematic fault-finding.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Control Loop Elements</p>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">01</span>
-                  <div>
-                    <p className="text-sm font-medium">Sensing Element</p>
-                    <p className="text-sm text-white">
-                      Measures the process variable (e.g., thermocouple, pressure tapping, orifice
-                      plate)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">02</span>
-                  <div>
-                    <p className="text-sm font-medium">Transmitter</p>
-                    <p className="text-sm text-white">
-                      Converts measurement to a standard signal (4-20 mA, HART, fieldbus)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">03</span>
-                  <div>
-                    <p className="text-sm font-medium">Controller</p>
-                    <p className="text-sm text-white">
-                      Compares measurement to setpoint, calculates correction (PID algorithm)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">04</span>
-                  <div>
-                    <p className="text-sm font-medium">Final Control Element</p>
-                    <p className="text-sm text-white">
-                      Adjusts the process (control valve, VSD motor, damper actuator)
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Control loop elements">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Sensing element.</strong> Measures the process variable (e.g., thermocouple,
+                pressure tapping, orifice plate).
+              </li>
+              <li>
+                <strong>Transmitter.</strong> Converts measurement to a standard signal (4-20 mA,
+                HART, fieldbus).
+              </li>
+              <li>
+                <strong>Controller.</strong> Compares measurement to setpoint, calculates correction
+                (PID algorithm).
+              </li>
+              <li>
+                <strong>Final control element.</strong> Adjusts the process (control valve, VSD
+                motor, damper actuator).
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Signal Line Conventions
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Solid line:</strong> Process piping
-                </li>
-                <li className="pl-1">
-                  <strong>Dashed line:</strong> Electrical signal
-                </li>
-                <li className="pl-1">
-                  <strong>Line with crosses:</strong> Pneumatic signal (compressed air)
-                </li>
-                <li className="pl-1">
-                  <strong>Dashed line with dots:</strong> Hydraulic signal
-                </li>
-                <li className="pl-1">
-                  <strong>Triple dash:</strong> Software/data link (DCS/PLC internal)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Signal line conventions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Solid line:</strong> Process piping.
+              </li>
+              <li>
+                <strong>Dashed line:</strong> Electrical signal.
+              </li>
+              <li>
+                <strong>Line with crosses:</strong> Pneumatic signal (compressed air).
+              </li>
+              <li>
+                <strong>Dashed line with dots:</strong> Hydraulic signal.
+              </li>
+              <li>
+                <strong>Triple dash:</strong> Software/data link (DCS/PLC internal).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Valves, Actuators and Motors on P&amp;IDs
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Valves, actuators and motors on P&amp;IDs</ContentEyebrow>
+
+          <ConceptBlock title="Valves, actuators and motors on P&amp;IDs">
             <p>
               Valves and actuators are among the most common items of equipment maintained by
               electrical technicians in process environments. The P&amp;ID shows every valve, its
               type, its actuator type, and its failure mode. Understanding these symbols allows you
               to identify the full scope of electrical maintenance required for the process system.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Valve Types</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Gate valve — on/off isolation</li>
-                  <li className="pl-1">Globe valve — throttling/control</li>
-                  <li className="pl-1">Ball valve — quarter-turn on/off</li>
-                  <li className="pl-1">Butterfly valve — large pipe control</li>
-                  <li className="pl-1">Check valve — non-return (no actuator)</li>
-                  <li className="pl-1">Relief valve — overpressure safety</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Actuator Types</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Electric (MOV) — motor-driven, position feedback</li>
-                  <li className="pl-1">Pneumatic — air-operated, positioner</li>
-                  <li className="pl-1">Hydraulic — high-force applications</li>
-                  <li className="pl-1">Solenoid — small, fast on/off</li>
-                  <li className="pl-1">Manual — handwheel or lever</li>
-                  <li className="pl-1">Failure mode: FC, FO, or FIP</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Valve types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Gate valve — on/off isolation.</li>
+              <li>Globe valve — throttling/control.</li>
+              <li>Ball valve — quarter-turn on/off.</li>
+              <li>Butterfly valve — large pipe control.</li>
+              <li>Check valve — non-return (no actuator).</li>
+              <li>Relief valve — overpressure safety.</li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Actuator types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Electric (MOV) — motor-driven, position feedback.</li>
+              <li>Pneumatic — air-operated, positioner.</li>
+              <li>Hydraulic — high-force applications.</li>
+              <li>Solenoid — small, fast on/off.</li>
+              <li>Manual — handwheel or lever.</li>
+              <li>Failure mode: FC, FO, or FIP.</li>
+            </ul>
             <p>
               Motors driving pumps, compressors, fans and conveyors are also shown on the P&amp;ID
               with their tag numbers. The motor tag links to the electrical drawings showing the
@@ -640,153 +553,139 @@ const MOETModule6Section2_3 = () => {
               indicated where applicable, as these require specific electrical maintenance
               procedures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Cross-Referencing P&amp;IDs with Electrical Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cross-referencing P&amp;IDs with electrical documentation</ContentEyebrow>
+
+          <ConceptBlock title="Cross-referencing P&amp;IDs with electrical documentation">
             <p>
               The P&amp;ID does not stand alone — it is part of a documentation hierarchy. For
               effective maintenance, you must be able to cross-reference between the P&amp;ID, loop
               diagrams, electrical drawings, instrument datasheets, and the CMMS. The instrument tag
               number is the golden thread that links all these documents together.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P&amp;ID → Loop diagram:</strong> Tag number links to detailed wiring for
+                that loop.
+              </li>
+              <li>
+                <strong>P&amp;ID → Instrument datasheet:</strong> Tag number links to
+                specifications, ranges, calibration data.
+              </li>
+              <li>
+                <strong>P&amp;ID → Electrical SLD:</strong> Motor tags appear on both drawings.
+              </li>
+              <li>
+                <strong>P&amp;ID → Cable schedule:</strong> Tag number links to cable reference and
+                route.
+              </li>
+              <li>
+                <strong>P&amp;ID → CMMS:</strong> Tag number is the asset identifier for maintenance
+                records.
+              </li>
+              <li>
+                <strong>P&amp;ID → Cause &amp; effect:</strong> Interlocks shown on P&amp;ID are
+                detailed in C&amp;E matrix.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Cross-References
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>P&amp;ID → Loop diagram:</strong> Tag number links to detailed wiring for
-                  that loop
-                </li>
-                <li className="pl-1">
-                  <strong>P&amp;ID → Instrument datasheet:</strong> Tag number links to
-                  specifications, ranges, calibration data
-                </li>
-                <li className="pl-1">
-                  <strong>P&amp;ID → Electrical SLD:</strong> Motor tags appear on both drawings
-                </li>
-                <li className="pl-1">
-                  <strong>P&amp;ID → Cable schedule:</strong> Tag number links to cable reference
-                  and route
-                </li>
-                <li className="pl-1">
-                  <strong>P&amp;ID → CMMS:</strong> Tag number is the asset identifier for
-                  maintenance records
-                </li>
-                <li className="pl-1">
-                  <strong>P&amp;ID → Cause &amp; effect:</strong> Interlocks shown on P&amp;ID are
-                  detailed in C&amp;E matrix
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Instrumented Systems</p>
-              <p className="text-sm text-white">
-                P&amp;IDs identify safety instrumented functions (SIFs) with their SIL ratings per
-                BS EN 61511. These loops have mandatory proof-test intervals and specific
-                maintenance procedures. As a maintenance technician, you must follow SIS test
-                procedures exactly, record all results, and never bypass or defeat a safety function
-                without formal authorisation through the management of change process.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to interpret P&amp;IDs and cross-reference
-              with electrical documentation demonstrates the technical drawing competence required
-              by the maintenance and operations engineering technician standard. This skill is
-              essential for working effectively in any process-based industry.
+          <ConceptBlock
+            title="Safety instrumented systems"
+            onSite="The ability to interpret P&ID and cross-reference with electrical documentation demonstrates the technical drawing competence required by the maintenance and operations engineering technician standard. This skill is essential for working effectively in any process-based industry."
+          >
+            <p>
+              P&amp;IDs identify safety instrumented functions (SIFs) with their SIL ratings per BS
+              EN 61511. These loops have mandatory proof-test intervals and specific maintenance
+              procedures. As a maintenance technician, you must follow SIS test procedures exactly,
+              record all results, and never bypass or defeat a safety function without formal
+              authorisation through the management of change process.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ContentEyebrow>Quick reference</ContentEyebrow>
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="ISA 5.1 letter code quick reference">
+            <p>
+              <strong>ISA 5.1 first letters:</strong>
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>F — Flow</li>
+              <li>T — Temperature</li>
+              <li>P — Pressure</li>
+              <li>L — Level</li>
+              <li>A — Analysis (composition)</li>
+            </ul>
+            <p>
+              <strong>ISA 5.1 function letters:</strong>
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>T — Transmitter</li>
+              <li>I — Indicator</li>
+              <li>C — Controller</li>
+              <li>V — Valve (final element)</li>
+              <li>S — Switch, A — Alarm, H — High, L — Low</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">ISA 5.1 First Letters</p>
-                <ul className="space-y-0.5">
-                  <li>F — Flow</li>
-                  <li>T — Temperature</li>
-                  <li>P — Pressure</li>
-                  <li>L — Level</li>
-                  <li>A — Analysis (composition)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">ISA 5.1 Function Letters</p>
-                <ul className="space-y-0.5">
-                  <li>T — Transmitter</li>
-                  <li>I — Indicator</li>
-                  <li>C — Controller</li>
-                  <li>V — Valve (final element)</li>
-                  <li>S — Switch, A — Alarm, H — High, L — Low</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'P&ID: the definitive reference for a process system — equipment, piping, instrumentation and control shown together.',
+              'ISA 5.1 / BS EN 62424 tag numbers: first letter is the measured variable, subsequent letters are the function, then a loop number.',
+              'Control loop: sensing element → transmitter → controller → final control element.',
+              'Signal lines: solid = process piping, dashed = electrical, crosses = pneumatic, dashed with dots = hydraulic, triple dash = software/data link.',
+              'Valves and actuators carry a failure mode notation — FC, FO or FIP — that matters during a power or air supply failure.',
+              'The tag number is the cross-reference: it links the P&ID to loop diagrams, datasheets, electrical drawings, cable schedules and the CMMS.',
+              'Safety instrumented functions (SIFs) carry a SIL rating per BS EN 61511 — mandatory proof-test intervals, never bypassed without management of change.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Wiring Diagrams
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section2-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Labelling and Numbering Standards
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Wiring Diagrams
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section2-4">
-              Next: Labelling Standards
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

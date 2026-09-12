@@ -1,8 +1,52 @@
-import { ArrowLeft, Wrench, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 6 — Troubleshooting PLC Systems
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *              · "Record information."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * last subsection of Section 5.2, so the "next" action returns to the
+ * section overview, matching the original page's own navigation.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Troubleshooting PLC Systems - MOET Module 5 Section 2.6';
@@ -254,111 +298,65 @@ const faqs = [
 ];
 
 const MOETModule5Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Wrench className="h-4 w-4" />
-            <span>Module 5.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Troubleshooting PLC Systems
-          </h1>
-          <p className="text-white">
-            Diagnostic tools, systematic fault-finding and PLC system maintenance techniques
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 6"
+        title="Troubleshooting PLC Systems"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Diagnostic tools, systematic fault-finding and PLC system maintenance techniques — how
+            to find the real fault instead of guessing at hardware.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Systematic:</strong> Observe, gather info, analyse, test, fix, verify
-              </li>
-              <li className="pl-1">
-                <strong>LEDs:</strong> RUN, STOP, FAULT, COMM — first diagnostic indicator
-              </li>
-              <li className="pl-1">
-                <strong>Diagnostic buffer:</strong> Timestamped fault history log
-              </li>
-              <li className="pl-1">
-                <strong>Online monitoring:</strong> Real-time programme state verification
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Field faults:</strong> Wiring and device issues are the most common cause
-              </li>
-              <li className="pl-1">
-                <strong>Spares:</strong> Keep critical CPU, PSU and I/O modules on site
-              </li>
-              <li className="pl-1">
-                <strong>PM:</strong> Connections, cooling, battery status, backup verification
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Systematic diagnosis and documentation competency
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Systematic: Observe, gather info, analyse, test, fix, verify.',
+              'LEDs: RUN, STOP, FAULT, COMM — first diagnostic indicator.',
+              'Diagnostic buffer: Timestamped fault history log.',
+              'Online monitoring: Real-time programme state verification.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply a systematic six-step fault-finding methodology to PLC systems',
               'Read and interpret PLC status LEDs and diagnostic buffer error codes',
               'Use online monitoring for programme-level fault diagnosis',
               'Identify common hardware, software and communication fault types',
               'Perform preventive maintenance on PLC installations and enclosures',
               'Document faults and corrective actions accurately per ST1426 requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Field faults:</strong> Wiring and device issues are the most common cause.
+              </li>
+              <li>
+                <strong>Spares:</strong> Keep critical CPU, PSU and I/O modules on site.
+              </li>
+              <li>
+                <strong>PM:</strong> Connections, cooling, battery status, backup verification.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Systematic diagnosis and documentation competency.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Systematic Troubleshooting Approach
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Systematic troubleshooting approach</ContentEyebrow>
+
+          <ConceptBlock title="A structured process beats guessing every time">
             <p>
               Effective PLC troubleshooting follows a systematic process that avoids the common trap
               of rushing to replace hardware without proper diagnosis. A structured approach
@@ -367,192 +365,141 @@ const MOETModule5Section2_6 = () => {
               PLC fault, from a simple blown output fuse to a complex intermittent communication
               error.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Six-Step Diagnostic Process
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1. Observe:</strong> Note the symptoms. Check all status LEDs on the PLC,
-                  I/O modules, power supply, and communication modules. Talk to the machine operator
-                  — what happened, when did it start, has anything changed recently?
-                </li>
-                <li className="pl-1">
-                  <strong>2. Gather information:</strong> Read the diagnostic buffer for timestamped
-                  error codes. Check HMI alarm history. Review recent maintenance records. Note any
-                  recent programme changes, hardware replacements, or production changes.
-                </li>
-                <li className="pl-1">
-                  <strong>3. Analyse:</strong> Categorise the fault — is it hardware (module
-                  failure, wiring), software (programme logic, data), communication (network,
-                  fieldbus), or environmental (heat, EMI, moisture)? Narrow down to the specific
-                  subsystem.
-                </li>
-                <li className="pl-1">
-                  <strong>4. Test:</strong> Use online monitoring to check programme logic. Use a
-                  multimeter to verify voltages, continuity, and insulation. Use substitution
-                  testing (swap with a known-good spare) where appropriate.
-                </li>
-                <li className="pl-1">
-                  <strong>5. Fix:</strong> Address the root cause — replace the faulty component,
-                  repair the wiring, correct the programme, or resolve the environmental issue. Do
-                  not just treat the symptom.
-                </li>
-                <li className="pl-1">
-                  <strong>6. Verify and document:</strong> Test the repair thoroughly. Clear any
-                  fault codes. Monitor for recurrence. Document the fault, diagnosis, and corrective
-                  action in the maintenance log.
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="The six-step diagnostic process">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Observe:</strong> Note the symptoms. Check all status LEDs on the PLC,
+                I/O modules, power supply, and communication modules. Talk to the machine operator —
+                what happened, when did it start, has anything changed recently?
+              </li>
+              <li>
+                <strong>2. Gather information:</strong> Read the diagnostic buffer for timestamped
+                error codes. Check HMI alarm history. Review recent maintenance records. Note any
+                recent programme changes, hardware replacements, or production changes.
+              </li>
+              <li>
+                <strong>3. Analyse:</strong> Categorise the fault — is it hardware (module failure,
+                wiring), software (programme logic, data), communication (network, fieldbus), or
+                environmental (heat, EMI, moisture)? Narrow down to the specific subsystem.
+              </li>
+              <li>
+                <strong>4. Test:</strong> Use online monitoring to check programme logic. Use a
+                multimeter to verify voltages, continuity, and insulation. Use substitution testing
+                (swap with a known-good spare) where appropriate.
+              </li>
+              <li>
+                <strong>5. Fix:</strong> Address the root cause — replace the faulty component,
+                repair the wiring, correct the programme, or resolve the environmental issue. Do not
+                just treat the symptom.
+              </li>
+              <li>
+                <strong>6. Verify and document:</strong> Test the repair thoroughly. Clear any fault
+                codes. Monitor for recurrence. Document the fault, diagnosis, and corrective action
+                in the maintenance log.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> Resist the temptation to skip straight to step 5
               (fix). The most experienced maintenance technicians spend the majority of their time
               on steps 1-3 (observation and analysis). Thorough diagnosis before intervention saves
               time, avoids replacing good components, and identifies root causes that prevent
               recurrence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Hardware and Communication Faults
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Hardware and communication faults</ContentEyebrow>
+
+          <ConceptBlock title="Two categories, each with distinctive symptoms">
             <p>
               Hardware faults encompass power supply failure, I/O module damage, backplane bus
               errors, and battery depletion. Communication faults affect the links between the PLC
               and HMIs, SCADA systems, remote I/O racks, and other networked devices. Both
               categories have distinctive symptoms that help narrow down the fault location quickly.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Hardware Fault Indicators
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Power supply failure — no LEDs lit, check mains supply and fuses
-                  </li>
-                  <li className="pl-1">
-                    I/O module failure — module fault LED, specific channel not responding
-                  </li>
-                  <li className="pl-1">
-                    Backplane bus fault — CPU fault LED, modules not communicating
-                  </li>
-                  <li className="pl-1">
-                    Low battery warning — BAT LED, risk of data loss on power cycle
-                  </li>
-                  <li className="pl-1">
-                    Overheating — erratic behaviour, check enclosure ventilation and ambient
-                    temperature
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Communication Fault Indicators
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Damaged or loose Ethernet or serial cables — COMM LED error pattern
-                  </li>
-                  <li className="pl-1">
-                    Incorrect IP address or subnet configuration — cannot connect online
-                  </li>
-                  <li className="pl-1">
-                    Network switch failure — multiple devices lose connectivity simultaneously
-                  </li>
-                  <li className="pl-1">
-                    EMI on communication cables — intermittent data errors and timeouts
-                  </li>
-                  <li className="pl-1">
-                    Protocol mismatch — device added with wrong communication settings
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Hardware fault indicators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Power supply failure — no LEDs lit, check mains supply and fuses.</li>
+              <li>I/O module failure — module fault LED, specific channel not responding.</li>
+              <li>Backplane bus fault — CPU fault LED, modules not communicating.</li>
+              <li>Low battery warning — BAT LED, risk of data loss on power cycle.</li>
+              <li>
+                Overheating — erratic behaviour, check enclosure ventilation and ambient
+                temperature.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Communication fault indicators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Damaged or loose Ethernet or serial cables — COMM LED error pattern.</li>
+              <li>Incorrect IP address or subnet configuration — cannot connect online.</li>
+              <li>Network switch failure — multiple devices lose connectivity simultaneously.</li>
+              <li>EMI on communication cables — intermittent data errors and timeouts.</li>
+              <li>Protocol mismatch — device added with wrong communication settings.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Status LED interpretation">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">LED</th>
+                    <th className="py-2 pr-4 font-medium text-white">Colour</th>
+                    <th className="py-2 font-medium text-white">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">RUN</td>
+                    <td className="py-2 pr-4">Green (solid)</td>
+                    <td className="py-2">Programme executing normally</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">STOP</td>
+                    <td className="py-2 pr-4">Amber/Yellow</td>
+                    <td className="py-2">Programme halted — outputs in default state</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">FAULT/ERROR</td>
+                    <td className="py-2 pr-4">Red</td>
+                    <td className="py-2">Hardware or software error — read diagnostic buffer</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">COMM</td>
+                    <td className="py-2 pr-4">Green (flashing)</td>
+                    <td className="py-2">Network communication active</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BAT</td>
+                    <td className="py-2 pr-4">Red/Amber</td>
+                    <td className="py-2">Backup battery low — replace promptly</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">FORCE</td>
+                    <td className="py-2 pr-4">Amber</td>
+                    <td className="py-2">I/O forces active — investigate immediately</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Status LED Interpretation
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">LED</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RUN</td>
-                      <td className="border border-white/10 px-3 py-2">Green (solid)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Programme executing normally
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">STOP</td>
-                      <td className="border border-white/10 px-3 py-2">Amber/Yellow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Programme halted — outputs in default state
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">FAULT/ERROR</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hardware or software error — read diagnostic buffer
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">COMM</td>
-                      <td className="border border-white/10 px-3 py-2">Green (flashing)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Network communication active
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BAT</td>
-                      <td className="border border-white/10 px-3 py-2">Red/Amber</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Backup battery low — replace promptly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">FORCE</td>
-                      <td className="border border-white/10 px-3 py-2">Amber</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        I/O forces active — investigate immediately
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Programme-Level Diagnosis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Programme-level diagnosis</ContentEyebrow>
+
+          <ConceptBlock title="When the hardware checks out, look at the logic">
             <p>
               When hardware is confirmed working correctly (LEDs normal, modules responding,
               communications active), the fault may lie in the programme logic. Online monitoring
@@ -560,63 +507,62 @@ const MOETModule5Section2_6 = () => {
               pinpoint whether the issue is a programme error, incorrect data, or a field device not
               providing the expected input signal.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Programme Diagnosis Techniques
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Online logic view:</strong> Trace power flow through ladder rungs — find
-                  the blocking contact that prevents the output from energising
-                </li>
-                <li className="pl-1">
-                  <strong>Watch tables:</strong> Monitor specific timer/counter values, analogue
-                  readings, and data registers in a focused list
-                </li>
-                <li className="pl-1">
-                  <strong>Cross-reference:</strong> Find every location where a specific address is
-                  used — trace the logic chain across programme sections
-                </li>
-                <li className="pl-1">
-                  <strong>Force I/O:</strong> Temporarily override an input or output for diagnostic
-                  testing — use with extreme caution and risk assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Scan time monitoring:</strong> Check for abnormal increases that could
-                  indicate programme faults or communication bottlenecks
-                </li>
-                <li className="pl-1">
-                  <strong>Programme comparison:</strong> Compare the running programme against the
-                  backup to detect unauthorised or undocumented changes
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Programme diagnosis techniques">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Online logic view:</strong> Trace power flow through ladder rungs — find the
+                blocking contact that prevents the output from energising.
+              </li>
+              <li>
+                <strong>Watch tables:</strong> Monitor specific timer/counter values, analogue
+                readings, and data registers in a focused list.
+              </li>
+              <li>
+                <strong>Cross-reference:</strong> Find every location where a specific address is
+                used — trace the logic chain across programme sections.
+              </li>
+              <li>
+                <strong>Force I/O:</strong> Temporarily override an input or output for diagnostic
+                testing — use with extreme caution and risk assessment.
+              </li>
+              <li>
+                <strong>Scan time monitoring:</strong> Check for abnormal increases that could
+                indicate programme faults or communication bottlenecks.
+              </li>
+              <li>
+                <strong>Programme comparison:</strong> Compare the running programme against the
+                backup to detect unauthorised or undocumented changes.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Warning: Forced I/O</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Forcing an I/O point and forgetting it"
+            whatHappens={
+              <>
                 Forcing an I/O point bypasses ALL programme logic including safety interlocks. A
                 forced output will remain in its forced state regardless of what the programme logic
-                dictates. Use forces only as a last resort for diagnostic purposes, with a proper
-                risk assessment, with the machine in a safe state, and ALWAYS remove forces
-                immediately after diagnosis. Check the force table before disconnecting from every
-                PLC session. A forgotten force has been the root cause of fatal industrial
-                accidents.
-              </p>
-            </div>
-          </div>
-        </section>
+                dictates. A forgotten force has been the root cause of fatal industrial accidents.
+              </>
+            }
+            doInstead={
+              <>
+                Use forces only as a last resort for diagnostic purposes, with a proper risk
+                assessment, with the machine in a safe state, and ALWAYS remove forces immediately
+                after diagnosis. Check the force table before disconnecting from every PLC session.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Preventive Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Preventive maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Solid-state, but not immune to its environment">
             <p>
               PLCs are highly reliable solid-state devices, but they operate in industrial
               environments that subject them to heat, dust, vibration, and electrical noise. A
@@ -624,62 +570,55 @@ const MOETModule5Section2_6 = () => {
               unexpected failures, and ensures that backup and recovery systems are ready when
               needed.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PLC Preventive Maintenance Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Terminal connections:</strong> Check tightness on all I/O terminals, power
-                  supply terminals, and communication connectors (annually or per site schedule)
-                </li>
-                <li className="pl-1">
-                  <strong>Enclosure cooling:</strong> Clean ventilation filters, verify fan
-                  operation, check enclosure door seals for damage
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature:</strong> Verify the enclosure internal temperature is within
-                  the PLC operating specification (typically 0-55 degrees C)
-                </li>
-                <li className="pl-1">
-                  <strong>Battery:</strong> Check battery status LED and replace when indicated —
-                  note the battery type and keep spares
-                </li>
-                <li className="pl-1">
-                  <strong>Programme backup:</strong> Verify the stored backup matches the running
-                  programme by performing an online comparison
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostic log:</strong> Review the diagnostic buffer for recurring
-                  warnings that may indicate developing faults
-                </li>
-                <li className="pl-1">
-                  <strong>Force table:</strong> Check that no forces are inadvertently left active
-                  from previous maintenance sessions
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="PLC preventive maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Terminal connections:</strong> Check tightness on all I/O terminals, power
+                supply terminals, and communication connectors (annually or per site schedule).
+              </li>
+              <li>
+                <strong>Enclosure cooling:</strong> Clean ventilation filters, verify fan operation,
+                check enclosure door seals for damage.
+              </li>
+              <li>
+                <strong>Temperature:</strong> Verify the enclosure internal temperature is within
+                the PLC operating specification (typically 0-55 degrees C).
+              </li>
+              <li>
+                <strong>Battery:</strong> Check battery status LED and replace when indicated — note
+                the battery type and keep spares.
+              </li>
+              <li>
+                <strong>Programme backup:</strong> Verify the stored backup matches the running
+                programme by performing an online comparison.
+              </li>
+              <li>
+                <strong>Diagnostic log:</strong> Review the diagnostic buffer for recurring warnings
+                that may indicate developing faults.
+              </li>
+              <li>
+                <strong>Force table:</strong> Check that no forces are inadvertently left active
+                from previous maintenance sessions.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> During planned shutdowns, take the opportunity to
               perform a thorough PLC system check including uploading the programme for comparison
               with the backup, checking all module seating, verifying power supply output voltages,
               and inspecting cables for damage. These checks take minimal time but can prevent
               costly unplanned breakdowns.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Documentation and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Documentation and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="A requirement under ST1426, not just good practice">
             <p>
               Thorough documentation of every PLC fault and repair is not just good practice — it is
               a requirement under ST1426 and a cornerstone of effective maintenance management. Good
@@ -687,116 +626,177 @@ const MOETModule5Section2_6 = () => {
               reducing future diagnosis times and identifying systemic issues that need engineering
               attention.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What to Document</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fault description:</strong> What were the symptoms? What was the machine
-                  doing (or not doing)?
-                </li>
-                <li className="pl-1">
-                  <strong>Diagnostic steps:</strong> What did you check? What tools did you use?
-                  What did each check reveal?
-                </li>
-                <li className="pl-1">
-                  <strong>Root cause:</strong> What was the actual cause of the fault? (Not just the
-                  symptom.)
-                </li>
-                <li className="pl-1">
-                  <strong>Corrective action:</strong> What did you do to fix it? Any parts replaced
-                  (include part numbers)?
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> How did you confirm the repair was successful?
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendations:</strong> Any follow-up actions needed? Design
-                  improvements? Spare parts to order?
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What to document">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault description:</strong> What were the symptoms? What was the machine
+                doing (or not doing)?
+              </li>
+              <li>
+                <strong>Diagnostic steps:</strong> What did you check? What tools did you use? What
+                did each check reveal?
+              </li>
+              <li>
+                <strong>Root cause:</strong> What was the actual cause of the fault? (Not just the
+                symptom.)
+              </li>
+              <li>
+                <strong>Corrective action:</strong> What did you do to fix it? Any parts replaced
+                (include part numbers)?
+              </li>
+              <li>
+                <strong>Verification:</strong> How did you confirm the repair was successful?
+              </li>
+              <li>
+                <strong>Recommendations:</strong> Any follow-up actions needed? Design improvements?
+                Spare parts to order?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Continuous Improvement</p>
-              <p className="text-sm text-white mb-3">
-                Maintenance data analysis reveals patterns that drive improvement:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Repeat failures:</strong> If the same fault recurs, the root cause has not
-                  been properly addressed — escalate for engineering review
-                </li>
-                <li className="pl-1">
-                  <strong>Common failure modes:</strong> Identify I/O modules, sensors, or devices
-                  that fail frequently and investigate design improvements
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental factors:</strong> Correlate faults with temperature,
-                  humidity, or specific production activities
-                </li>
-                <li className="pl-1">
-                  <strong>PM effectiveness:</strong> Review whether preventive maintenance tasks are
-                  catching issues before they cause breakdowns
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              demonstrate systematic fault diagnosis, correct use of diagnostic tools, safe working
-              practices, accurate documentation of findings and actions, and contribution to
-              continuous improvement of maintenance processes. These competencies are assessed both
-              in the workplace and through the end-point assessment.
+          <ConceptBlock title="Continuous improvement">
+            <p>Maintenance data analysis reveals patterns that drive improvement:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Repeat failures:</strong> If the same fault recurs, the root cause has not
+                been properly addressed — escalate for engineering review.
+              </li>
+              <li>
+                <strong>Common failure modes:</strong> Identify I/O modules, sensors, or devices
+                that fail frequently and investigate design improvements.
+              </li>
+              <li>
+                <strong>Environmental factors:</strong> Correlate faults with temperature, humidity,
+                or specific production activities.
+              </li>
+              <li>
+                <strong>PM effectiveness:</strong> Review whether preventive maintenance tasks are
+                catching issues before they cause breakdowns.
+              </li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to demonstrate systematic fault
+              diagnosis, correct use of diagnostic tools, safe working practices, accurate
+              documentation of findings and actions, and contribution to continuous improvement of
+              maintenance processes. These competencies are assessed both in the workplace and
+              through the end-point assessment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="A conveyor that stops once a shift and restarts on its own"
 
-        <hr className="border-white/5 my-12" />
+            situation={
+              <>
+                <p>
+                  A packing line conveyor trips out roughly once a shift. The operator presses reset
+                  and it runs again, sometimes for hours. No fault is latched on the HMI and the PLC
+                  is not in STOP.
+                </p>
 
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+                <p>
+                  It has been looked at twice. Both times nothing was found, because by the time
+                  anyone arrived it was running.
+                </p>
+              </>
+            }
 
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: PLC Programming Software
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            whatToDo={
+              <>
+                <p>
+                  Stop trying to catch it live and make the PLC catch it for you. If the program has
+                  a first-out or fault-capture routine, read it. If it does not, the diagnostic
+                  buffer and the I/O status word still hold the state at the last stop.
+                </p>
+
+                <p>
+                  Look for an input that drops for one scan. A safety gate switch with a worn
+                  actuator, a proximity sensor on the edge of its range, or a loose field terminal
+                  will open for a few milliseconds — long enough for the PLC to see it, too short
+                  for anyone to observe.
+                </p>
+
+                <p>
+                  Check whether the stop correlates with anything physical: the line running full, a
+                  specific product changeover, a nearby VFD starting. Intermittent faults nearly
+                  always correlate with something, and the correlation is the diagnosis.
+                </p>
+
+                <p>
+                  If the input is confirmed as dropping, do not simply extend a debounce timer in
+                  software. That hides the fault and leaves a safety circuit responding late.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                An intermittent fault that resets itself is the one most likely to be closed as "no
+                fault found", and the one most likely to come back. The PLC sees every scan and you
+                do not — using its own diagnostics instead of standing at the machine is the
+                difference between a two-week recurring callout and a bearing-loose-terminal found
+                in twenty minutes. Recording what you found, including the scan-level evidence, is
+                also what stops the next technician starting from nothing.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Follow the six steps in order: observe, gather information, analyse, test, fix, verify and document — most experienced technicians spend most of their time on the first three.',
+              'Status LEDs (RUN, STOP, FAULT/ERROR, COMM, BAT, FORCE) are the first diagnostic indicator; the diagnostic buffer is the timestamped history that shows what happened and when.',
+              'If a hardware fault is ruled out (LEDs normal, modules responding, comms active), the fault is most likely in the programme logic — online monitoring is the primary tool for finding it.',
+              'A forced I/O point bypasses all programme logic, including safety interlocks, and stays forced regardless of the logic — use forces only as a last resort, with a risk assessment, and always check the force table before disconnecting.',
+              'An output LED that is ON but whose field device is not operating points downstream of the PLC — the output fuse, wiring, connections or the field device itself.',
+              'A rising scan time can signal a programme fault, a communication timeout or added complexity, and in extreme cases trips the watchdog timer into a fault state.',
+              'Preventive maintenance covers terminal tightness, enclosure cooling, temperature, battery status, backup verification, the diagnostic log and the force table.',
+              'Documentation must cover fault description, diagnostic steps, root cause, corrective action, verification and recommendations — this is an ST1426 requirement, not optional paperwork.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  PLC Programming Software
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Back to overview <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Section 5.2 overview
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

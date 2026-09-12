@@ -297,7 +297,7 @@ const GeneratorSizingCalculator = () => {
 
     return {
       meta: {
-        title: 'Generator Sizing Calculator',
+        title: 'Generator Sizing',
         subtitle: 'Standby generator kVA rating with motor starting allowance',
         standard: 'BS 7671:2018+A4:2026 — Section 551 (low voltage generating sets)',
       },
@@ -314,7 +314,7 @@ const GeneratorSizingCalculator = () => {
             { label: 'Voltage', value: `${voltage} V` },
             { label: 'Motor starting method', value: startingMethod === 'sequence' ? 'Sequential motor starting' : 'Simultaneous (worst case)' },
             { label: 'Diversity factor', value: diversity },
-            { label: 'Fuel type', value: fuelType },
+            { label: 'Fuel type', value: fuelTypeOptions.find((f) => f.value === fuelType)?.label ?? fuelType },
             { label: 'Altitude', value: `${altitude} m` },
             { label: 'Ambient temperature', value: `${ambientTemp} °C` },
           ],
@@ -324,12 +324,15 @@ const GeneratorSizingCalculator = () => {
           ),
         },
         {
+          // Generator rating and peak starting load are already the headline —
+          // this section carries the rest of the working instead of restating
+          // them. (The pre-rounded "recommended rating" is kept because it's a
+          // different figure from the headline's standard-size rating — it's
+          // the step in between.)
           heading: 'Result',
           rows: [
             { label: 'Running load', value: `${result.totalRunningKW.toFixed(1)} kW / ${result.totalRunningKVA.toFixed(1)} kVA` },
-            { label: 'Peak starting load', value: `${result.peakStartingKVA.toFixed(1)} kVA` },
             { label: 'Recommended rating (with margin)', value: `${result.recommendedKVA.toFixed(1)} kVA` },
-            { label: 'Nearest standard size', value: `${result.nearestStandardKVA} kVA (${result.recommendedKW.toFixed(0)} kW)` },
             { label: 'Transfer switch rating', value: `${result.transferSwitchRating} A` },
             { label: 'Fuel consumption', value: `${result.fuelConsumptionPerHour.toFixed(1)} L/hr (${result.fuelConsumption8Hours.toFixed(0)} L over 8 hr)` },
           ],

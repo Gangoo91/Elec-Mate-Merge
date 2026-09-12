@@ -1,8 +1,65 @@
-import { ArrowLeft, Gauge, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4.3 · Subsection 3 — Use of Electrical Test Instruments
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical maintenance tools, measurement, and test
+ *     equipment application, operation, care and calibration
+ *     requirements."
+ *   · "Electrical. Use electrical diagnostic equipment and apply fault
+ *     finding and rectification techniques."
+ *   · "Record information."
+ *
+ * ⚠️ ACCURACY FLAGS (report, not fixed here):
+ *   1. GS38 probe tip — this page's "4 mm" is CORRECT and must stay.
+ *      Verified against the primary source (HSE GS38, Electrical test
+ *      equipment for use on low voltage electrical systems): probes and
+ *      clips shall be "insulated to leave an exposed metal tip not
+ *      exceeding 4 mm measured across any surface of the tip". GS38
+ *      contains no 2 mm figure and draws no distinction between probe
+ *      types. An earlier conversion brief wrongly gave 2 mm; that was my
+ *      error and the affected Module 1 pages have been corrected to 4 mm.
+ *      Do not "fix" 4 mm to 2 mm anywhere in this course.
+ *   2. The BS 7671 Table 64 insulation-resistance test voltages and
+ *      minimum values in Section 03 are copied verbatim from the original
+ *      page; they could not be verified against the RAG at conversion
+ *      time.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * ✎ ACCURACY FIX (12 Sep): the insulation-resistance table was cited as
+ *   "BS 7671 Table 6.1". Verified against the RAG (BS 7671:2018+A4:2026):
+ *   the correct reference is **Table 64** — SELV/PELV 250 V DC min 0.5 MΩ;
+ *   circuits up to and including 500 V (except SELV/PELV) 500 V DC min 1.0 MΩ;
+ *   above 500 V, 1000 V DC min 1.0 MΩ. Values themselves were correct.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Use of Electrical Test Instruments - MOET Module 4 Section 3.3';
@@ -28,15 +85,10 @@ const quickCheckQuestions = [
     id: 'insulation-resistance-test',
     question:
       'When performing an insulation resistance test on a 230 V circuit, the standard test voltage is:',
-    options: [
-      '250 V DC',
-      '500 V DC',
-      '230 V AC',
-      '1000 V DC',
-    ],
+    options: ['250 V DC', '500 V DC', '230 V AC', '1000 V DC'],
     correctIndex: 1,
     explanation:
-      'For circuits rated up to 500 V (which includes standard 230 V single-phase and 400 V three-phase LV systems), BS 7671 Table 6.1 specifies a test voltage of 500 V DC. The minimum acceptable insulation resistance is 1 megohm (1 MΩ), although higher values are expected in healthy installations.',
+      'For circuits rated up to 500 V (which includes standard 230 V single-phase and 400 V three-phase LV systems), BS 7671 Table 64 specifies a test voltage of 500 V DC. The minimum acceptable insulation resistance is 1 megohm (1 MΩ), although higher values are expected in healthy installations.',
   },
   {
     id: 'clamp-meter-use',
@@ -74,10 +126,10 @@ const quizQuestions = [
     question:
       'The purpose of proving a voltage indicator before and after use (as required by GS38) is to:',
     options: [
-      "Calibrate the indicator so it reads the exact supply voltage",
+      'Calibrate the indicator so it reads the exact supply voltage',
       "Confirm the instrument is functioning correctly and that a 'dead' reading can be trusted",
       "Discharge any stored energy held in the indicator's internal capacitors",
-      "Record the test result automatically for the certificate",
+      'Record the test result automatically for the certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -268,118 +320,64 @@ const faqs = [
 ];
 
 const MOETModule4Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Gauge className="h-4 w-4" />
-            <span>Module 4.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Use of Electrical Test Instruments
-          </h1>
-          <p className="text-white">
-            Selection and application of test equipment for accurate and safe fault diagnosis
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 3"
+        title="Use of Electrical Test Instruments"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Selection and application of test equipment for accurate and safe fault diagnosis.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>GS38:</strong> Two-pole tester with fused leads, 4 mm max tip, prove
-                before/after
+          <TLDR
+            points={[
+              'GS38: Two-pole tester with fused leads, 4 mm max tip, prove before/after.',
+              'Multimeter: CAT III minimum for distribution level, true-RMS for non-sinusoidal.',
+              'Insulation tester: 500 V DC for LV circuits, minimum 1 MΩ pass.',
+              'Clamp meter: Individual conductors for current, both together for leakage.',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Calibration:</strong> Annual minimum, check date before use.
               </li>
-              <li className="pl-1">
-                <strong>Multimeter:</strong> CAT III minimum for distribution level, true-RMS for
-                non-sinusoidal
+              <li>
+                <strong>CAT ratings:</strong> Match instrument to measurement location.
               </li>
-              <li className="pl-1">
-                <strong>Insulation tester:</strong> 500 V DC for LV circuits, minimum 1 MΩ pass
+              <li>
+                <strong>Lead condition:</strong> Inspect test leads before every use.
               </li>
-              <li className="pl-1">
-                <strong>Clamp meter:</strong> Individual conductors for current, both together for
-                leakage
+              <li>
+                <strong>ST1426:</strong> Instrument selection and use assessed at EPA.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Calibration:</strong> Annual minimum, check date before use
-              </li>
-              <li className="pl-1">
-                <strong>CAT ratings:</strong> Match instrument to measurement location
-              </li>
-              <li className="pl-1">
-                <strong>Lead condition:</strong> Inspect test leads before every use
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Instrument selection and use assessed at EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Select appropriate test instruments for specific fault-finding tasks',
               'Apply GS38 requirements for safe use of voltage indicators',
               'Carry out insulation resistance, continuity and voltage measurements correctly',
               'Interpret test readings accurately and identify abnormal results',
               'Understand CAT ratings and their importance for personal safety',
               'Maintain and verify test instruments in accordance with industry standards',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Voltage indicators and GS38 compliance</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Voltage Indicators and GS38 Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The most safety-critical instrument a maintenance technician uses">
             <p>
               The voltage indicator — commonly called a two-pole tester or volt stick (though the
               latter is a distinct device) — is the most safety-critical instrument a maintenance
@@ -395,81 +393,74 @@ const MOETModule4Section3_3 = () => {
               understand and comply with GS38 — it is not optional guidance, and non-compliance is
               routinely cited in HSE enforcement actions following electrical incidents.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                GS38 Requirements for Voltage Indicators
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Test leads:</strong> Fused at the instrument end (typically 500 mA HRC
-                  fuse) with shrouded connectors that prevent accidental contact
-                </li>
-                <li className="pl-1">
-                  <strong>Probe tips:</strong> Maximum 4 mm of exposed conductive tip, with finger
-                  guards or barriers to prevent the user's fingers sliding onto the tip
-                </li>
-                <li className="pl-1">
-                  <strong>Lead length:</strong> As short as practicable, with substantial insulation
-                  and no damage or exposed conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Proving:</strong> The instrument must be proved on a known live source (or
-                  proving unit) immediately before and after use to confirm it is functioning
-                </li>
-                <li className="pl-1">
-                  <strong>Condition:</strong> Inspect the instrument and leads before every use —
-                  cracked cases, damaged leads, corroded probes or low battery indicators all
-                  warrant withdrawal from service
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="GS38 requirements for voltage indicators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Test leads:</strong> Fused at the instrument end (typically 500 mA HRC fuse)
+                with shrouded connectors that prevent accidental contact.
+              </li>
+              <li>
+                <strong>Probe tips:</strong> Maximum 4 mm of exposed conductive tip, with finger
+                guards or barriers to prevent the user's fingers sliding onto the tip.
+              </li>
+              <li>
+                <strong>Lead length:</strong> As short as practicable, with substantial insulation
+                and no damage or exposed conductors.
+              </li>
+              <li>
+                <strong>Proving:</strong> The instrument must be proved on a known live source (or
+                proving unit) immediately before and after use to confirm it is functioning.
+              </li>
+              <li>
+                <strong>Condition:</strong> Inspect the instrument and leads before every use —
+                cracked cases, damaged leads, corroded probes or low battery indicators all warrant
+                withdrawal from service.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Prove-Test-Prove Sequence</p>
-              <p className="text-sm text-white">
-                The prove-test-prove sequence is non-negotiable. Before testing a circuit for the
-                absence of voltage: (1) prove the voltage indicator on a known live source — it must
-                indicate voltage; (2) test the circuit that should be dead — it should show no
-                voltage; (3) prove the indicator again on the known source — it must still indicate
-                voltage. If the indicator fails to detect voltage on the proving source at either
-                stage, the instrument is faulty and the 'dead' reading cannot be trusted.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Two-Pole vs Non-Contact Voltage Indicators
-              </p>
-              <p className="text-sm text-white">
-                A two-pole voltage indicator (such as a Fluke T6, Megger TPT420 or Martindale VT28)
-                makes direct contact with conductors and provides a reliable measurement. A
-                non-contact voltage indicator (NCVI or "volt stick") detects the electric field
-                around a conductor without making contact. NCVIs are useful as an initial screening
-                tool but are subject to false readings caused by induced voltages, capacitive
-                coupling, screened cables and dead-front equipment. GS38 is clear: NCVIs must never
-                be used as the sole means of proving dead.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Many experienced technicians have been seriously injured
-              by trusting a non-contact voltage indicator that gave a false "dead" reading. Always
-              confirm with a two-pole tester using the prove-test-prove sequence. This takes less
-              than a minute and could save your life.
+          <ConceptBlock title="The prove-test-prove sequence">
+            <p>
+              The prove-test-prove sequence is non-negotiable. Before testing a circuit for the
+              absence of voltage: (1) prove the voltage indicator on a known live source — it must
+              indicate voltage; (2) test the circuit that should be dead — it should show no
+              voltage; (3) prove the indicator again on the known source — it must still indicate
+              voltage. If the indicator fails to detect voltage on the proving source at either
+              stage, the instrument is faulty and the 'dead' reading cannot be trusted.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock
+            title="Two-pole vs non-contact voltage indicators"
+            onSite={
+              <>
+                Many experienced technicians have been seriously injured by trusting a non-contact
+                voltage indicator that gave a false "dead" reading. Always confirm with a two-pole
+                tester using the prove-test-prove sequence. This takes less than a minute and could
+                save your life.
+              </>
+            }
+          >
+            <p>
+              A two-pole voltage indicator (such as a Fluke T6, Megger TPT420 or Martindale VT28)
+              makes direct contact with conductors and provides a reliable measurement. A
+              non-contact voltage indicator (NCVI or "volt stick") detects the electric field around
+              a conductor without making contact. NCVIs are useful as an initial screening tool but
+              are subject to false readings caused by induced voltages, capacitive coupling,
+              screened cables and dead-front equipment. GS38 is clear: NCVIs must never be used as
+              the sole means of proving dead.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Multimeters and CAT Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Multimeters and CAT ratings</ContentEyebrow>
+
+          <ConceptBlock title="The most versatile diagnostic tool in the kit">
             <p>
               The digital multimeter is the most versatile diagnostic tool in the maintenance
               technician's kit. It can measure voltage (AC and DC), current, resistance, continuity,
@@ -484,58 +475,51 @@ const MOETModule4Section3_3 = () => {
               the instrument is safe. Understanding these parameters is essential for effective and
               safe fault diagnosis.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CAT Ratings Explained</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Examples</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT I</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protected electronic equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Signal-level electronics, telecoms circuits, low-energy components
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT II</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase socket outlet level
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Appliance testing, socket outlets, portable equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT III</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution level (fixed installation)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution boards, motor control centres, fixed wiring, industrial panels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT IV</td>
-                      <td className="border border-white/10 px-3 py-2">Origin of supply</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service heads, electricity meters, main switchgear, outdoor cables
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="CAT ratings explained">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Category</th>
+                    <th className="py-2 pr-4 font-medium text-white">Location</th>
+                    <th className="py-2 font-medium text-white">Examples</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">CAT I</td>
+                    <td className="py-2 pr-4">Protected electronic equipment</td>
+                    <td className="py-2">
+                      Signal-level electronics, telecoms circuits, low-energy components
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">CAT II</td>
+                    <td className="py-2 pr-4">Single-phase socket outlet level</td>
+                    <td className="py-2">Appliance testing, socket outlets, portable equipment</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">CAT III</td>
+                    <td className="py-2 pr-4">Distribution level (fixed installation)</td>
+                    <td className="py-2">
+                      Distribution boards, motor control centres, fixed wiring, industrial panels
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">CAT IV</td>
+                    <td className="py-2 pr-4">Origin of supply</td>
+                    <td className="py-2">
+                      Service heads, electricity meters, main switchgear, outdoor cables
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
+          <ConceptBlock title="Why CAT ratings matter">
             <p>
               The CAT rating defines the transient overvoltage withstand capability of the
               instrument. Closer to the supply source, the available fault energy is higher and
@@ -545,52 +529,42 @@ const MOETModule4Section3_3 = () => {
               potentially exploding in the user's hand — because it was not designed for that level
               of fault energy.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                True-RMS vs Average-Responding Meters
-              </p>
-              <p className="text-sm text-white mb-3">
-                This distinction is critical for modern electrical systems. Average-responding
-                meters are calibrated for pure sine waves only. If the waveform is distorted — as it
-                is with variable speed drives, LED lighting, electronic ballasts and switched-mode
-                power supplies — an average-responding meter will give an inaccurate reading.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>True-RMS:</strong> Calculates the actual heating effect of the waveform
-                  regardless of its shape — always accurate
-                </li>
-                <li className="pl-1">
-                  <strong>Average-responding:</strong> Measures the average value and multiplies by
-                  1.11 (the form factor of a pure sine wave) — only accurate on pure sine waves
-                </li>
-                <li className="pl-1">
-                  <strong>Practical impact:</strong> An average-responding meter may under-read by
-                  10 to 40 percent on distorted waveforms, potentially leading to incorrect
-                  diagnosis or dangerous underestimation of current
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Recommendation:</strong> For general maintenance fault finding, invest in a
-              good quality CAT III or CAT IV rated true-RMS multimeter from a reputable
-              manufacturer. It will give accurate readings in all situations and provide the safety
-              margin needed for distribution-level work.
+          <ConceptBlock
+            title="True-RMS vs average-responding meters"
+            onSite="For general maintenance fault finding, invest in a good quality CAT III or CAT IV rated true-RMS multimeter from a reputable manufacturer. It will give accurate readings in all situations and provide the safety margin needed for distribution-level work."
+          >
+            <p>
+              This distinction is critical for modern electrical systems. Average-responding meters
+              are calibrated for pure sine waves only. If the waveform is distorted — as it is with
+              variable speed drives, LED lighting, electronic ballasts and switched-mode power
+              supplies — an average-responding meter will give an inaccurate reading.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>True-RMS:</strong> Calculates the actual heating effect of the waveform
+                regardless of its shape — always accurate.
+              </li>
+              <li>
+                <strong>Average-responding:</strong> Measures the average value and multiplies by
+                1.11 (the form factor of a pure sine wave) — only accurate on pure sine waves.
+              </li>
+              <li>
+                <strong>Practical impact:</strong> An average-responding meter may under-read by 10
+                to 40 percent on distorted waveforms, potentially leading to incorrect diagnosis or
+                dangerous underestimation of current.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Insulation Resistance Testing for Fault Diagnosis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Insulation resistance testing for fault diagnosis</ContentEyebrow>
+
+          <ConceptBlock title="Detecting degraded insulation before it causes a fault">
             <p>
               Insulation resistance testing is one of the most important diagnostic techniques for
               identifying degraded or failed insulation in cables, motors, transformers and other
@@ -599,49 +573,37 @@ const MOETModule4Section3_3 = () => {
               insulation problems long before they cause a fault, and is essential for diagnosing
               earth faults, RCD tripping and insulation breakdown.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Test Voltages and Minimum Values (BS 7671 Table 6.1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Circuit Nominal Voltage
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Test Voltage (DC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Minimum Insulation Resistance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SELV and PELV</td>
-                      <td className="border border-white/10 px-3 py-2">250 V</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Up to 500 V (including 230/400 V)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">500 V</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Above 500 V</td>
-                      <td className="border border-white/10 px-3 py-2">1000 V</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Test voltages and minimum values (BS 7671 Table 64)">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Circuit nominal voltage</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test voltage (DC)</th>
+                    <th className="py-2 font-medium text-white">Minimum insulation resistance</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">SELV and PELV</td>
+                    <td className="py-2 pr-4">250 V</td>
+                    <td className="py-2">0.5 MΩ</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Up to 500 V (including 230/400 V)</td>
+                    <td className="py-2 pr-4">500 V</td>
+                    <td className="py-2">1.0 MΩ</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Above 500 V</td>
+                    <td className="py-2 pr-4">1000 V</td>
+                    <td className="py-2">1.0 MΩ</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               In practice, healthy insulation on a new installation typically reads in the hundreds
               of megohms or even gigohms. A reading at or near the 1 MΩ minimum is cause for
@@ -649,65 +611,51 @@ const MOETModule4Section3_3 = () => {
               resistance test is invaluable for locating earth faults, identifying water-damaged
               cables, and detecting insulation breakdown in motor windings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Diagnostic Insulation Testing Techniques
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Phase-to-earth:</strong> Tests the insulation between each live conductor
-                  and the circuit protective conductor — locates earth faults
-                </li>
-                <li className="pl-1">
-                  <strong>Phase-to-phase:</strong> Tests insulation between live conductors —
-                  detects inter-phase insulation breakdown
-                </li>
-                <li className="pl-1">
-                  <strong>Phase-to-neutral:</strong> Tests insulation between line and neutral —
-                  useful for identifying faults in twin-and-earth cables
-                </li>
-                <li className="pl-1">
-                  <strong>Sectional testing:</strong> Isolate sections of the circuit progressively
-                  to narrow down the location of a fault — disconnect at junction boxes, accessories
-                  or distribution boards
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Diagnostic insulation testing techniques">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase-to-earth:</strong> Tests the insulation between each live conductor
+                and the circuit protective conductor — locates earth faults.
+              </li>
+              <li>
+                <strong>Phase-to-phase:</strong> Tests insulation between live conductors — detects
+                inter-phase insulation breakdown.
+              </li>
+              <li>
+                <strong>Phase-to-neutral:</strong> Tests insulation between line and neutral —
+                useful for identifying faults in twin-and-earth cables.
+              </li>
+              <li>
+                <strong>Sectional testing:</strong> Isolate sections of the circuit progressively to
+                narrow down the location of a fault — disconnect at junction boxes, accessories or
+                distribution boards.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Protecting Sensitive Equipment
-              </p>
-              <p className="text-sm text-white">
-                Before applying the insulation resistance test voltage, disconnect all electronic
-                equipment that could be damaged by the 500 V DC test signal. This includes: variable
-                speed drives, PLCs and their I/O modules, electronic relays, LED drivers, dimmer
-                switches, RCDs with electronic components, smoke detectors, data and communications
-                equipment. Failure to disconnect these devices will damage them and produce
-                misleading test results.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always discharge the circuit after an insulation
-              resistance test. The test charges the cable capacitance to the test voltage, and this
-              stored energy can deliver a significant shock if the conductors are touched
-              immediately after testing. Most modern insulation testers have an automatic discharge
-              function, but verify the voltage has dropped to zero before touching any conductors.
+          <ConceptBlock
+            title="Protecting sensitive equipment"
+            onSite="Always discharge the circuit after an insulation resistance test. The test charges the cable capacitance to the test voltage, and this stored energy can deliver a significant shock if the conductors are touched immediately after testing. Most modern insulation testers have an automatic discharge function, but verify the voltage has dropped to zero before touching any conductors."
+          >
+            <p>
+              Before applying the insulation resistance test voltage, disconnect all electronic
+              equipment that could be damaged by the 500 V DC test signal. This includes: variable
+              speed drives, PLCs and their I/O modules, electronic relays, LED drivers, dimmer
+              switches, RCDs with electronic components, smoke detectors, data and communications
+              equipment. Failure to disconnect these devices will damage them and produce misleading
+              test results.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Clamp Meters, Oscilloscopes and Specialist Instruments
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Clamp meters, oscilloscopes and specialist instruments</ContentEyebrow>
+
+          <ConceptBlock title="Instruments that fill a specific diagnostic niche">
             <p>
               Beyond the core instruments, maintenance technicians have access to a range of
               specialist tools that provide diagnostic information impossible to obtain with a
@@ -716,109 +664,94 @@ const MOETModule4Section3_3 = () => {
               when and how to use these instruments significantly expands your fault-finding
               capability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Clamp Meters</p>
-              <p className="text-sm text-white mb-3">
-                The clamp meter measures current without breaking the circuit — the jaws clamp
-                around a conductor and measure the magnetic field produced by the current flow. This
-                makes it invaluable for live diagnostics where disconnecting the circuit would
-                remove the fault condition.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Individual phase current:</strong> Clamp around one conductor to measure
-                  load current — compare phases to detect imbalance
-                </li>
-                <li className="pl-1">
-                  <strong>Earth leakage:</strong> Clamp around line and neutral together — any
-                  reading indicates leakage current to earth
-                </li>
-                <li className="pl-1">
-                  <strong>Motor starting current:</strong> Use the inrush/peak function to capture
-                  the starting current surge
-                </li>
-                <li className="pl-1">
-                  <strong>Harmonic current:</strong> True-RMS clamp meters with harmonic analysis
-                  can identify non-linear loads causing neutral overloading
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Oscilloscopes</p>
-              <p className="text-sm text-white mb-3">
-                For diagnosing waveform-related faults, nothing replaces an oscilloscope. While a
-                multimeter gives you a single number (the RMS value), an oscilloscope shows you the
-                complete waveform — its shape, timing, distortion, noise and transients. Portable
-                digital storage oscilloscopes (DSOs) are now compact and affordable enough for field
-                use.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>VSD output waveforms:</strong> Verify PWM switching patterns and identify
-                  misfiring IGBTs
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage transients:</strong> Capture and measure voltage spikes that cause
-                  equipment malfunction
-                </li>
-                <li className="pl-1">
-                  <strong>Control signals:</strong> Analyse 4-20 mA loops, 0-10 V signals, and
-                  communication bus waveforms
-                </li>
-                <li className="pl-1">
-                  <strong>Timing analysis:</strong> Measure the timing of relay operations, sensor
-                  responses and sequential controls
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Power Quality Analysers
-                </h3>
-                <p className="text-sm text-white">
-                  These instruments measure and record voltage, current, power, power factor,
-                  harmonics and transients over time. They are essential for diagnosing intermittent
-                  supply problems, harmonic distortion, voltage sags and swells, and power factor
-                  issues. Data logging capability allows them to capture events that occur only
-                  occasionally.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Thermal Imaging Cameras
-                </h3>
-                <p className="text-sm text-white">
-                  Infrared cameras detect temperature differences across surfaces, identifying hot
-                  spots caused by loose connections, overloaded conductors, failing components and
-                  poor insulation. They can survey an entire distribution board in seconds without
-                  any physical contact or isolation, making them exceptionally efficient for
-                  preventive diagnostics.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When using any test instrument, record the measurement
-              conditions as well as the result. A motor current of 15 A is meaningless without
-              context — what was the rated current, what load was the motor driving, what was the
-              supply voltage? Always record the conditions alongside the reading.
+          <ConceptBlock title="Clamp meters">
+            <p>
+              The clamp meter measures current without breaking the circuit — the jaws clamp around
+              a conductor and measure the magnetic field produced by the current flow. This makes it
+              invaluable for live diagnostics where disconnecting the circuit would remove the fault
+              condition.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Individual phase current:</strong> Clamp around one conductor to measure
+                load current — compare phases to detect imbalance.
+              </li>
+              <li>
+                <strong>Earth leakage:</strong> Clamp around line and neutral together — any reading
+                indicates leakage current to earth.
+              </li>
+              <li>
+                <strong>Motor starting current:</strong> Use the inrush/peak function to capture the
+                starting current surge.
+              </li>
+              <li>
+                <strong>Harmonic current:</strong> True-RMS clamp meters with harmonic analysis can
+                identify non-linear loads causing neutral overloading.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Oscilloscopes">
+            <p>
+              For diagnosing waveform-related faults, nothing replaces an oscilloscope. While a
+              multimeter gives you a single number (the RMS value), an oscilloscope shows you the
+              complete waveform — its shape, timing, distortion, noise and transients. Portable
+              digital storage oscilloscopes (DSOs) are now compact and affordable enough for field
+              use.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VSD output waveforms:</strong> Verify PWM switching patterns and identify
+                misfiring IGBTs.
+              </li>
+              <li>
+                <strong>Voltage transients:</strong> Capture and measure voltage spikes that cause
+                equipment malfunction.
+              </li>
+              <li>
+                <strong>Control signals:</strong> Analyse 4-20 mA loops, 0-10 V signals, and
+                communication bus waveforms.
+              </li>
+              <li>
+                <strong>Timing analysis:</strong> Measure the timing of relay operations, sensor
+                responses and sequential controls.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ConceptBlock title="Power quality analysers">
+              <p>
+                These instruments measure and record voltage, current, power, power factor,
+                harmonics and transients over time. They are essential for diagnosing intermittent
+                supply problems, harmonic distortion, voltage sags and swells, and power factor
+                issues. Data logging capability allows them to capture events that occur only
+                occasionally.
+              </p>
+            </ConceptBlock>
+            <ConceptBlock
+              title="Thermal imaging cameras"
+              onSite="When using any test instrument, record the measurement conditions as well as the result. A motor current of 15 A is meaningless without context — what was the rated current, what load was the motor driving, what was the supply voltage? Always record the conditions alongside the reading."
+            >
+              <p>
+                Infrared cameras detect temperature differences across surfaces, identifying hot
+                spots caused by loose connections, overloaded conductors, failing components and
+                poor insulation. They can survey an entire distribution board in seconds without any
+                physical contact or isolation, making them exceptionally efficient for preventive
+                diagnostics.
+              </p>
+            </ConceptBlock>
           </div>
-        </section>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Instrument Care, Calibration and Record Keeping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Instrument care, calibration and record keeping</ContentEyebrow>
+
+          <ConceptBlock title="A safety and quality requirement, not administrative overhead">
             <p>
               Test instruments are precision measurement devices that require proper care and
               regular calibration to maintain accuracy and safety. An out-of-calibration instrument
@@ -826,38 +759,37 @@ const MOETModule4Section3_3 = () => {
               missed hazards and potentially dangerous decisions. Instrument management is not
               administrative overhead; it is a fundamental safety and quality requirement.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calibration Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency:</strong> Annual calibration is the industry standard minimum.
-                  Instruments used heavily or in harsh environments may need more frequent
-                  calibration
-                </li>
-                <li className="pl-1">
-                  <strong>Standards:</strong> Calibration should be traceable to national standards
-                  (UKAS accreditation in the UK)
-                </li>
-                <li className="pl-1">
-                  <strong>Records:</strong> Maintain calibration certificates showing the date of
-                  calibration, the reference standards used, and the results (including any
-                  corrections applied)
-                </li>
-                <li className="pl-1">
-                  <strong>Labelling:</strong> Each instrument should carry a label showing the
-                  calibration date and the next due date
-                </li>
-                <li className="pl-1">
-                  <strong>Out-of-tolerance:</strong> If an instrument is found to be out of
-                  tolerance at calibration, all measurements taken since the last valid calibration
-                  may need to be reviewed
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Calibration requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency:</strong> Annual calibration is the industry standard minimum.
+                Instruments used heavily or in harsh environments may need more frequent
+                calibration.
+              </li>
+              <li>
+                <strong>Standards:</strong> Calibration should be traceable to national standards
+                (UKAS accreditation in the UK).
+              </li>
+              <li>
+                <strong>Records:</strong> Maintain calibration certificates showing the date of
+                calibration, the reference standards used, and the results (including any
+                corrections applied).
+              </li>
+              <li>
+                <strong>Labelling:</strong> Each instrument should carry a label showing the
+                calibration date and the next due date.
+              </li>
+              <li>
+                <strong>Out-of-tolerance:</strong> If an instrument is found to be out of tolerance
+                at calibration, all measurements taken since the last valid calibration may need to
+                be reviewed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
+          <ConceptBlock title="Between calibrations">
             <p>
               Between calibrations, regularly check your instruments against a known reference. A
               proving unit for voltage indicators, a decade resistance box for ohmmeters, and a
@@ -865,113 +797,76 @@ const MOETModule4Section3_3 = () => {
               every use, inspect the instrument and leads for physical damage, check the battery
               condition, and verify the calibration date.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Recording Test Results</p>
-              <p className="text-sm text-white mb-3">
-                Every diagnostic measurement should be recorded contemporaneously — at the time it
-                is taken, not from memory afterwards. Include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">The measurement taken (what was being measured and where)</li>
-                <li className="pl-1">
-                  The instrument used (make, model, serial number, calibration date)
-                </li>
-                <li className="pl-1">The reading obtained (with units)</li>
-                <li className="pl-1">The expected or normal value for comparison</li>
-                <li className="pl-1">The conditions at the time (load, temperature, humidity)</li>
-                <li className="pl-1">Your interpretation of the result</li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Well-maintained instruments and thorough record keeping are
-              hallmarks of a professional maintenance technician. They demonstrate competence,
-              support quality assurance, and provide evidence of compliance with BS 7671, the
-              Electricity at Work Regulations 1989 and the ST1426 standard.
+          <ConceptBlock
+            title="Recording test results"
+            onSite="Well-maintained instruments and thorough record keeping are hallmarks of a professional maintenance technician. They demonstrate competence, support quality assurance, and provide evidence of compliance with BS 7671, the Electricity at Work Regulations 1989 and the ST1426 standard."
+          >
+            <p>
+              Every diagnostic measurement should be recorded contemporaneously — at the time it is
+              taken, not from memory afterwards. Include:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>The measurement taken (what was being measured and where).</li>
+              <li>The instrument used (make, model, serial number, calibration date).</li>
+              <li>The reading obtained (with units).</li>
+              <li>The expected or normal value for comparison.</li>
+              <li>The conditions at the time (load, temperature, humidity).</li>
+              <li>Your interpretation of the result.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Voltage indicator: GS38, prove-test-prove sequence.',
+              'Multimeter: CAT III or above for distribution level, true-RMS for non-sinusoidal waveforms.',
+              'Insulation tester: 500 V DC for LV circuits, minimum 1 MΩ pass.',
+              'Clamp meter: individual conductors for current, both together for leakage current.',
+              'Oscilloscope: waveform analysis, transients.',
+              'Key references: GS38 test equipment requirements; BS 7671 Table 64 IR test voltages and minima; BS EN 61010 safety of test instruments; EAWR 1989 Reg 14 live working controls; ST1426 instrument selection KSBs.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Core Diagnostic Instruments</p>
-                <ul className="space-y-0.5">
-                  <li>Voltage indicator — GS38, prove-test-prove</li>
-                  <li>Multimeter — CAT III+, true-RMS for non-sinusoidal</li>
-                  <li>Insulation tester — 500 V DC for LV, min 1 MΩ</li>
-                  <li>Clamp meter — individual conductors for current</li>
-                  <li>Oscilloscope — waveform analysis, transients</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>GS38 — Test equipment requirements</li>
-                  <li>BS 7671 Table 6.1 — IR test voltages and minima</li>
-                  <li>BS EN 61010 — Safety of test instruments</li>
-                  <li>EAWR 1989 Reg 14 — Live working controls</li>
-                  <li>ST1426 — Instrument selection KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Systematic Diagnostic Approach
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Common Faults in Motors and Drives
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Systematic Diagnostic Approach
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-4">
-              Next: Motor and Drive Faults
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

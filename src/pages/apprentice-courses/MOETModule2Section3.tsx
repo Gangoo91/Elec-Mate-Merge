@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '2.3.1',
-      title: 'Transformers: principles and applications',
-      description: 'Transformer operation, types and practical applications',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section3-1',
-    },
-    {
-      number: '2.3.2',
-      title: 'Induction motors (single & three-phase)',
-      description: 'Induction motor principles, construction and characteristics',
-      icon: Cog,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section3-2',
-    },
-    {
-      number: '2.3.3',
-      title: 'Synchronous motors and generators',
-      description: 'Synchronous machine operation and applications',
-      icon: RotateCw,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section3-3',
-    },
-    {
-      number: '2.3.4',
-      title: 'DC motors and their control',
-      description: 'DC motor types, characteristics and control methods',
-      icon: Battery,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section3-4',
-    },
-    {
-      number: '2.3.5',
-      title: 'Motor starting methods',
-      description: 'Various motor starting techniques and protection',
-      icon: Play,
-      href: '/study-centre/apprentice/m-o-e-t-module2-section3-5',
-    },
-  ];
-
+  {
+    number: '2.3.1',
+    title: 'Transformers: principles and applications',
+    description: 'Transformer operation, types and practical applications',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section3-1',
+  },
+  {
+    number: '2.3.2',
+    title: 'Induction motors (single & three-phase)',
+    description: 'Induction motor principles, construction and characteristics',
+    icon: Cog,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section3-2',
+  },
+  {
+    number: '2.3.3',
+    title: 'Synchronous motors and generators',
+    description: 'Synchronous machine operation and applications',
+    icon: RotateCw,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section3-3',
+  },
+  {
+    number: '2.3.4',
+    title: 'DC motors and their control',
+    description: 'DC motor types, characteristics and control methods',
+    icon: Battery,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section3-4',
+  },
+  {
+    number: '2.3.5',
+    title: 'Motor starting methods',
+    description: 'Various motor starting techniques and protection',
+    icon: Play,
+    href: '/study-centre/apprentice/m-o-e-t-module2-section3-5',
+  },
+];
 
 const MOETModule2Section3 = () => {
   useSEO(

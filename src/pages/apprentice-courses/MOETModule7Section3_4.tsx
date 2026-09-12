@@ -1,8 +1,58 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 3 · Subsection 4 — Mapping Evidence to Standards
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This subsection covers evidence and documentation for
+ * the EPA professional discussion, which the following ST1426 statements
+ * genuinely fit (reused from the Module 1/4 conversions where they were
+ * verified — quoted rather than numbered, as the published K/S/B numbering
+ * has not been verified against a primary source):
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * ⚠️ CORRECTED: the original page invented specific K/S/B code numbers in
+ * several places — "K3", "S5", "S9", "B4", "K12", "K7" — in the "Example
+ * Matrix Extract" table and the "Example Discussion Questions" list. The
+ * conversion brief explicitly forbids writing K/S/B code numbers because the
+ * published numbering is unverified. This is body prose, not quiz data, so
+ * the fabricated numbers have been removed; the Knowledge/Skill/Behaviour
+ * LETTER categories (K/S/B, already used elsewhere on this page as plain
+ * category labels, e.g. "Knowledge (K)") and every descriptive area name
+ * ("fault diagnosis", "commissioning", "continuous improvement", "testing
+ * principles" etc.) are preserved unchanged.
+ *
+ * This is the last subsection of Section 3. The original page's "next"
+ * button pointed back to the section hub because Module 7 Section 4 had not
+ * been written yet. Section 4 (4.1 Teamwork and Collaboration) now exists in
+ * the same module, so the next button below points there instead, matching
+ * how every other section-to-section boundary in this course is handled.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Mapping Evidence to Standards - MOET Module 7 Section 3.4';
@@ -258,632 +308,482 @@ const faqs = [
 ];
 
 const MOETModule7Section3_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.3.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Mapping Evidence to Standards
-          </h1>
-          <p className="text-white">
-            Creating and maintaining a KSB mapping matrix for comprehensive EPA portfolio coverage
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.3 · Subsection 4"
+        title="Mapping Evidence to Standards"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Creating and maintaining a KSB mapping matrix for comprehensive EPA portfolio coverage.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Tool:</strong> KSB mapping matrix linking evidence to standard
-              </li>
-              <li className="pl-1">
-                <strong>Coverage:</strong> Every K, S and B in the ST1426 standard
-              </li>
-              <li className="pl-1">
-                <strong>Cross-referencing:</strong> One evidence item can map to multiple KSBs
-              </li>
-              <li className="pl-1">
-                <strong>Gap analysis:</strong> Reveals areas needing more evidence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Assessor navigation:</strong> Matrix helps assessor find evidence quickly
-              </li>
-              <li className="pl-1">
-                <strong>Discussion planning:</strong> Assessor uses matrix to plan questions
-              </li>
-              <li className="pl-1">
-                <strong>Completeness:</strong> Demonstrates all standard areas covered
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Direct traceability to standard requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Tool: KSB mapping matrix linking evidence to standard.',
+              'Coverage: every K, S and B in the ST1426 standard.',
+              'Cross-referencing: one evidence item can map to multiple KSBs.',
+              'Gap analysis: reveals areas needing more evidence.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Create a comprehensive KSB mapping matrix covering the full ST1426 standard',
               'Cross-reference evidence to multiple KSBs to maximise portfolio efficiency',
               'Conduct regular gap analysis to identify areas needing additional evidence',
               'Use colour coding and reference systems for clear, professional presentation',
               'Distinguish between knowledge, skills and behaviours in your evidence mapping',
               'Prepare your mapping matrix for assessor review and professional discussion',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Assessor navigation:</strong> matrix helps assessor find evidence quickly.
+              </li>
+              <li>
+                <strong>Discussion planning:</strong> assessor uses matrix to plan questions.
+              </li>
+              <li>
+                <strong>Completeness:</strong> demonstrates all standard areas covered.
+              </li>
+              <li>
+                <strong>ST1426:</strong> direct traceability to standard requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding KSB Mapping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding KSB mapping</ContentEyebrow>
+
+          <ConceptBlock title="Understanding KSB mapping">
             <p>
               The KSB mapping matrix is the single most important organisational tool in your
               portfolio. It transforms a collection of documents into a structured demonstration of
               competence. Without mapping, even excellent evidence can be overlooked because the
               assessor cannot see how it links to the standard.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Components of KSBs
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Knowledge (K):</strong> What you understand — technical theory,
-                  regulations, standards, principles. Evidenced through explanations of why you did
-                  something, not just what you did
-                </li>
-                <li className="pl-1">
-                  <strong>Skills (S):</strong> What you can do — practical abilities demonstrated
-                  through workplace activities. Evidenced through activity logs, witness statements
-                  and photographs showing competent performance
-                </li>
-                <li className="pl-1">
-                  <strong>Behaviours (B):</strong> How you conduct yourself — professionalism,
-                  safety awareness, communication, teamwork. Evidenced through descriptions of your
-                  approach and conduct during activities, and confirmed by witness observations
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The three components of KSBs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Knowledge (K):</strong> what you understand — technical theory, regulations,
+                standards, principles. Evidenced through explanations of why you did something, not
+                just what you did.
+              </li>
+              <li>
+                <strong>Skills (S):</strong> what you can do — practical abilities demonstrated
+                through workplace activities. Evidenced through activity logs, witness statements
+                and photographs showing competent performance.
+              </li>
+              <li>
+                <strong>Behaviours (B):</strong> how you conduct yourself — professionalism, safety
+                awareness, communication, teamwork. Evidenced through descriptions of your approach
+                and conduct during activities, and confirmed by witness observations.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">All KSBs Must Be Covered</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="All KSBs must be covered"
+            whatHappens={
+              <>
                 The assessor will check that every KSB in the standard has been addressed. A single
-                uncovered KSB could affect your grade or delay your assessment. Start mapping early
-                so you have maximum time to fill any gaps that emerge.
-              </p>
-            </div>
+                uncovered KSB could affect your grade or delay your assessment.
+              </>
+            }
+            doInstead={
+              <>Start mapping early so you have maximum time to fill any gaps that emerge.</>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The mapping matrix is your evidence of evidence. It is the
-              document that ties everything together and proves to the assessor that your portfolio
-              is complete, well-organised, and ready for the professional discussion.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> the mapping matrix is your evidence of evidence. It is the
+            document that ties everything together and proves to the assessor that your portfolio is
+            complete, well-organised, and ready for the professional discussion.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Building Your Mapping Matrix
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Building your mapping matrix</ContentEyebrow>
+
+          <ConceptBlock title="Building your mapping matrix">
             <p>
               Creating an effective matrix involves listing every requirement from the standard,
               cataloguing your evidence, and then systematically linking the two. The format should
               make it easy to see coverage at a glance and quickly locate specific evidence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Step-by-Step Matrix Construction
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> List every KSB from the ST1426 standard — use the
-                  official assessment plan, not a summary
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Create a reference system for your evidence (e.g., WL-01,
-                  RA-01, WS-01, PH-01)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> For each piece of evidence, identify all KSBs it
-                  genuinely demonstrates
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Enter the evidence references against each relevant KSB
-                  in the matrix
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Apply colour coding — green for well-evidenced, amber for
-                  adequate, red for gaps
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Create a brief description column noting what each
-                  evidence item shows for each KSB
-                </li>
-              </ul>
+          <ConceptBlock title="Step-by-step matrix construction">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> list every KSB from the ST1426 standard — use the official
+                assessment plan, not a summary.
+              </li>
+              <li>
+                <strong>Step 2:</strong> create a reference system for your evidence (e.g., WL-01,
+                RA-01, WS-01, PH-01).
+              </li>
+              <li>
+                <strong>Step 3:</strong> for each piece of evidence, identify all KSBs it genuinely
+                demonstrates.
+              </li>
+              <li>
+                <strong>Step 4:</strong> enter the evidence references against each relevant KSB in
+                the matrix.
+              </li>
+              <li>
+                <strong>Step 5:</strong> apply colour coding — green for well-evidenced, amber for
+                adequate, red for gaps.
+              </li>
+              <li>
+                <strong>Step 6:</strong> create a brief description column noting what each evidence
+                item shows for each KSB.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Example matrix extract">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Requirement</th>
+                    <th className="py-2 pr-4 font-medium text-white">Evidence</th>
+                    <th className="py-2 font-medium text-white">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Knowledge (K)</td>
+                    <td className="py-2 pr-4">Electrical principles and theory</td>
+                    <td className="py-2 pr-4">RA-01, WL-03, WL-07</td>
+                    <td className="py-2 text-green-400">Strong</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Skill (S)</td>
+                    <td className="py-2 pr-4">Fault diagnosis techniques</td>
+                    <td className="py-2 pr-4">WL-04, WS-02, PH-03</td>
+                    <td className="py-2 text-green-400">Strong</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Skill (S)</td>
+                    <td className="py-2 pr-4">Commissioning activities</td>
+                    <td className="py-2 pr-4">WL-08</td>
+                    <td className="py-2 text-yellow-400">Adequate</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Behaviour (B)</td>
+                    <td className="py-2 pr-4">Continuous improvement</td>
+                    <td className="py-2 pr-4">--</td>
+                    <td className="py-2 text-red-400">Gap</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example Matrix Extract</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">KSB Ref</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Requirement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Evidence</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">K3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical principles and theory
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">RA-01, WL-03, WL-07</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Strong</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S5</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault diagnosis techniques
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">WL-04, WS-02, PH-03</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Strong</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">S9</td>
-                      <td className="border border-white/10 px-3 py-2">Commissioning activities</td>
-                      <td className="border border-white/10 px-3 py-2">WL-08</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Adequate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">B4</td>
-                      <td className="border border-white/10 px-3 py-2">Continuous improvement</td>
-                      <td className="border border-white/10 px-3 py-2">--</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">Gap</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The matrix is a living document. Update it every time you
+            <p>
+              <strong>Key point:</strong> the matrix is a living document. Update it every time you
               add new evidence to your portfolio. A current, accurate matrix is one of the most
               powerful tools for EPA preparation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Conducting Gap Analysis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Conducting gap analysis</ContentEyebrow>
+
+          <ConceptBlock title="Conducting gap analysis">
             <p>
               Gap analysis is the process of reviewing your mapping matrix to identify KSBs that
               lack sufficient evidence. It should be conducted regularly — at least quarterly and at
               every progress review — with a comprehensive review at least three months before the
               EPA.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Conducting Effective Gap Analysis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Red gaps:</strong> KSBs with no evidence at all — these are your top
-                  priority. Plan specific activities to generate evidence
-                </li>
-                <li className="pl-1">
-                  <strong>Amber areas:</strong> KSBs with only one piece of evidence or evidence
-                  that lacks detail — seek to strengthen with additional logs, reflective accounts
-                  or witness statements
-                </li>
-                <li className="pl-1">
-                  <strong>Green areas:</strong> Well-evidenced KSBs — ensure the evidence is still
-                  current and that you can discuss it confidently
-                </li>
-                <li className="pl-1">
-                  <strong>Action planning:</strong> For each gap, agree specific actions with your
-                  employer and training provider, including deadlines
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Conducting effective gap analysis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Red gaps:</strong> KSBs with no evidence at all — these are your top
+                priority. Plan specific activities to generate evidence.
+              </li>
+              <li>
+                <strong>Amber areas:</strong> KSBs with only one piece of evidence or evidence that
+                lacks detail — seek to strengthen with additional logs, reflective accounts or
+                witness statements.
+              </li>
+              <li>
+                <strong>Green areas:</strong> well-evidenced KSBs — ensure the evidence is still
+                current and that you can discuss it confidently.
+              </li>
+              <li>
+                <strong>Action planning:</strong> for each gap, agree specific actions with your
+                employer and training provider, including deadlines.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Behaviour Gaps</p>
-              <p className="text-sm text-white">
-                Behaviours (B) are often the hardest KSBs to evidence explicitly. Apprentices
-                frequently forget to describe their professional conduct, communication approach and
-                teamwork in activity logs. Review your entries — if they only describe technical
-                actions without mentioning how you communicated, collaborated or demonstrated
-                initiative, add reflective commentary to strengthen the behaviour evidence.
-              </p>
-            </div>
+          <ConceptBlock title="Common behaviour gaps">
+            <p>
+              Behaviours (B) are often the hardest KSBs to evidence explicitly. Apprentices
+              frequently forget to describe their professional conduct, communication approach and
+              teamwork in activity logs. Review your entries — if they only describe technical
+              actions without mentioning how you communicated, collaborated or demonstrated
+              initiative, add reflective commentary to strengthen the behaviour evidence.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Gap Analysis Timeline</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Months 1-6:</strong> Create initial matrix framework. Begin populating
-                  with early evidence. Identify which KSBs will be hardest to evidence given your
-                  workplace
-                </li>
-                <li className="pl-1">
-                  <strong>Months 6-12:</strong> First formal gap analysis. Discuss coverage with
-                  training provider. Plan activities to address gaps in knowledge and skills areas
-                </li>
-                <li className="pl-1">
-                  <strong>Months 12-18:</strong> Quarterly gap reviews. Focus on behaviour evidence
-                  and cross-referencing. Seek witness statements for activities already completed
-                </li>
-                <li className="pl-1">
-                  <strong>3 months before EPA:</strong> Comprehensive review. All KSBs should have
-                  at least one piece of evidence. Final push to close remaining gaps
-                </li>
-                <li className="pl-1">
-                  <strong>1 month before EPA:</strong> Final check. Matrix should be complete. Focus
-                  shifts to preparing to discuss evidence confidently
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Gap analysis is only useful if you act on the findings.
+          <ConceptBlock title="Gap analysis timeline">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Months 1-6:</strong> create initial matrix framework. Begin populating with
+                early evidence. Identify which KSBs will be hardest to evidence given your
+                workplace.
+              </li>
+              <li>
+                <strong>Months 6-12:</strong> first formal gap analysis. Discuss coverage with
+                training provider. Plan activities to address gaps in knowledge and skills areas.
+              </li>
+              <li>
+                <strong>Months 12-18:</strong> quarterly gap reviews. Focus on behaviour evidence
+                and cross-referencing. Seek witness statements for activities already completed.
+              </li>
+              <li>
+                <strong>3 months before EPA:</strong> comprehensive review. All KSBs should have at
+                least one piece of evidence. Final push to close remaining gaps.
+              </li>
+              <li>
+                <strong>1 month before EPA:</strong> final check. Matrix should be complete. Focus
+                shifts to preparing to discuss evidence confidently.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> gap analysis is only useful if you act on the findings.
               Identifying a gap three months before the EPA gives you time to address it.
               Identifying it three days before does not.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Preparing Your Matrix for the Assessor
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Preparing your matrix for the assessor</ContentEyebrow>
+
+          <ConceptBlock title="Preparing your matrix for the assessor">
             <p>
               The final version of your mapping matrix should be clear, complete and easy to
               navigate. The assessor will use it as their primary tool for reviewing your portfolio
               and planning the professional discussion, so presentation matters.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Final Matrix Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Every KSB from the ST1426 standard is listed</li>
-                <li className="pl-1">
-                  Every KSB has at least one piece of evidence mapped against it
-                </li>
-                <li className="pl-1">
-                  Evidence reference codes are consistent and match the actual portfolio documents
-                </li>
-                <li className="pl-1">
-                  Brief descriptions explain what each evidence item demonstrates for each KSB
-                </li>
-                <li className="pl-1">
-                  The matrix is clearly formatted and easy to read (printed or on screen)
-                </li>
-                <li className="pl-1">
-                  You can locate every referenced evidence item quickly when asked
-                </li>
-                <li className="pl-1">
-                  You can discuss every piece of evidence confidently and in detail
-                </li>
-              </ul>
+          <ConceptBlock title="Final matrix checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Every KSB from the ST1426 standard is listed.</li>
+              <li>Every KSB has at least one piece of evidence mapped against it.</li>
+              <li>
+                Evidence reference codes are consistent and match the actual portfolio documents.
+              </li>
+              <li>Brief descriptions explain what each evidence item demonstrates for each KSB.</li>
+              <li>The matrix is clearly formatted and easy to read (printed or on screen).</li>
+              <li>You can locate every referenced evidence item quickly when asked.</li>
+              <li>You can discuss every piece of evidence confidently and in detail.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Evidence reference code system"
+            onSite="The mapping matrix is the navigational tool for your entire portfolio. A well-constructed matrix demonstrates not just that you have gathered evidence, but that you understand the standard's requirements and can organise your evidence to meet them — itself a demonstration of professional competence."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Prefix</th>
+                    <th className="py-2 pr-4 font-medium text-white">Evidence type</th>
+                    <th className="py-2 font-medium text-white">Example</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">WL</td>
+                    <td className="py-2 pr-4">Work Log / Activity Log</td>
+                    <td className="py-2">WL-01, WL-02, WL-03...</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">RA</td>
+                    <td className="py-2 pr-4">Reflective Account</td>
+                    <td className="py-2">RA-01, RA-02, RA-03...</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">WS</td>
+                    <td className="py-2 pr-4">Witness Statement</td>
+                    <td className="py-2">WS-01, WS-02, WS-03...</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PH</td>
+                    <td className="py-2 pr-4">Photographic Evidence</td>
+                    <td className="py-2">PH-01, PH-02, PH-03...</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">CT</td>
+                    <td className="py-2 pr-4">Certificate / Qualification</td>
+                    <td className="py-2">CT-01, CT-02, CT-03...</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Evidence Reference Code System
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Prefix</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Evidence Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">WL</td>
-                      <td className="border border-white/10 px-3 py-2">Work Log / Activity Log</td>
-                      <td className="border border-white/10 px-3 py-2">WL-01, WL-02, WL-03...</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RA</td>
-                      <td className="border border-white/10 px-3 py-2">Reflective Account</td>
-                      <td className="border border-white/10 px-3 py-2">RA-01, RA-02, RA-03...</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">WS</td>
-                      <td className="border border-white/10 px-3 py-2">Witness Statement</td>
-                      <td className="border border-white/10 px-3 py-2">WS-01, WS-02, WS-03...</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PH</td>
-                      <td className="border border-white/10 px-3 py-2">Photographic Evidence</td>
-                      <td className="border border-white/10 px-3 py-2">PH-01, PH-02, PH-03...</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CT</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Certificate / Qualification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">CT-01, CT-02, CT-03...</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The mapping matrix is the navigational tool for your
-              entire portfolio. A well-constructed matrix demonstrates not just that you have
-              gathered evidence, but that you understand the standard's requirements and can
-              organise your evidence to meet them — itself a demonstration of professional
-              competence.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ContentEyebrow>Using your matrix in the professional discussion</ContentEyebrow>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Using Your Matrix in the Professional Discussion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Using your matrix in the professional discussion">
             <p>
               The mapping matrix does not just serve as a preparation tool — it plays an active role
               during the professional discussion itself. The assessor will have reviewed your matrix
               before the discussion and will use it to plan their questioning strategy, focusing on
               areas where they need to verify competence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                How the Assessor Uses Your Matrix
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identifying discussion topics:</strong> The assessor selects activities
-                  from your matrix that cover multiple KSBs, enabling efficient evidence
-                  verification
-                </li>
-                <li className="pl-1">
-                  <strong>Probing weaker areas:</strong> KSBs with fewer evidence references may
-                  receive more detailed questioning to confirm competence
-                </li>
-                <li className="pl-1">
-                  <strong>Verifying cross-references:</strong> The assessor may ask you to explain
-                  how a single activity demonstrates multiple KSBs to confirm genuine understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Checking authenticity:</strong> Questions about mapped evidence test
-                  whether you genuinely performed the activities described, not just documented them
-                </li>
-                <li className="pl-1">
-                  <strong>Distinguishing pass from distinction:</strong> Deeper follow-up questions
-                  on mapped evidence assess whether your understanding goes beyond competent to
-                  exceptional
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="How the assessor uses your matrix">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identifying discussion topics:</strong> the assessor selects activities from
+                your matrix that cover multiple KSBs, enabling efficient evidence verification.
+              </li>
+              <li>
+                <strong>Probing weaker areas:</strong> KSBs with fewer evidence references may
+                receive more detailed questioning to confirm competence.
+              </li>
+              <li>
+                <strong>Verifying cross-references:</strong> the assessor may ask you to explain how
+                a single activity demonstrates multiple KSBs to confirm genuine understanding.
+              </li>
+              <li>
+                <strong>Checking authenticity:</strong> questions about mapped evidence test whether
+                you genuinely performed the activities described, not just documented them.
+              </li>
+              <li>
+                <strong>Distinguishing pass from distinction:</strong> deeper follow-up questions on
+                mapped evidence assess whether your understanding goes beyond competent to
+                exceptional.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example Discussion Questions Triggered by the Matrix
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  "I can see you have mapped WL-04 to both S5 (fault diagnosis) and K12 (testing
-                  principles). Can you explain how that activity demonstrates both?"
-                </li>
-                <li className="pl-1">
-                  "Your matrix shows B4 (continuous improvement) is evidenced by RA-02. Tell me
-                  about the improvement you suggested and what happened as a result."
-                </li>
-                <li className="pl-1">
-                  "I notice S9 (commissioning) has only one piece of evidence. Can you describe any
-                  other commissioning experience you have had?"
-                </li>
-                <li className="pl-1">
-                  "Your evidence for K7 comes from a witness statement. Can you expand on the
-                  underpinning knowledge that activity required?"
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Example discussion questions triggered by the matrix">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                &quot;I can see you have mapped WL-04 to both a skill (fault diagnosis) and a
+                knowledge point (testing principles). Can you explain how that activity demonstrates
+                both?&quot;
+              </li>
+              <li>
+                &quot;Your matrix shows the continuous improvement behaviour is evidenced by RA-02.
+                Tell me about the improvement you suggested and what happened as a result.&quot;
+              </li>
+              <li>
+                &quot;I notice the commissioning skill has only one piece of evidence. Can you
+                describe any other commissioning experience you have had?&quot;
+              </li>
+              <li>
+                &quot;Your evidence for that knowledge requirement comes from a witness statement.
+                Can you expand on the underpinning knowledge that activity required?&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Preparing for Matrix-Based Questions
-              </p>
-              <p className="text-sm text-white">
-                Before the professional discussion, review every entry in your matrix and make sure
-                you can explain: what the evidence is, how the activity demonstrates the mapped
-                KSB(s), the underpinning knowledge behind your actions, what you would do
-                differently with the benefit of experience, and how the activity demonstrates
-                professional behaviours. If you cannot confidently discuss a mapped item, either
-                strengthen the evidence or prepare additional talking points.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Your mapping matrix is your navigation chart for the
+          <ConceptBlock title="Preparing for matrix-based questions">
+            <p>
+              Before the professional discussion, review every entry in your matrix and make sure
+              you can explain: what the evidence is, how the activity demonstrates the mapped
+              KSB(s), the underpinning knowledge behind your actions, what you would do differently
+              with the benefit of experience, and how the activity demonstrates professional
+              behaviours. If you cannot confidently discuss a mapped item, either strengthen the
+              evidence or prepare additional talking points.
+            </p>
+            <p>
+              <strong>Key point:</strong> your mapping matrix is your navigation chart for the
               professional discussion. Know it thoroughly — every reference, every cross-link, every
               KSB. The assessor will use it as their guide, so make sure you can follow the same map
               with confidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Start early: create the matrix framework from day one using the official ST1426 standard.',
+              'Cover everything: list every K, S and B — no exceptions.',
+              'Cross-reference: map each evidence item to all KSBs it genuinely demonstrates.',
+              'Reference codes: use consistent codes (WL-01, RA-01, WS-01, PH-01) for easy navigation.',
+              'Colour code: green = strong, amber = adequate, red = gap needing attention.',
+              'Review regularly: update at every progress meeting and when adding new evidence.',
+              'Gap analysis: conduct formal review at 6 months, 12 months, and 3 months before EPA.',
+              'Discussion prep: be ready to discuss every mapped evidence item confidently and in detail.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Start early:</strong> Create matrix framework from day one using the
-                official ST1426 standard
-              </li>
-              <li className="pl-1">
-                <strong>Cover everything:</strong> List every K, S and B — no exceptions
-              </li>
-              <li className="pl-1">
-                <strong>Cross-reference:</strong> Map each evidence item to all KSBs it genuinely
-                demonstrates
-              </li>
-              <li className="pl-1">
-                <strong>Reference codes:</strong> Use consistent codes (WL-01, RA-01, WS-01, PH-01)
-                for easy navigation
-              </li>
-              <li className="pl-1">
-                <strong>Colour code:</strong> Green = strong, amber = adequate, red = gap needing
-                attention
-              </li>
-              <li className="pl-1">
-                <strong>Review regularly:</strong> Update at every progress meeting and when adding
-                new evidence
-              </li>
-              <li className="pl-1">
-                <strong>Gap analysis:</strong> Conduct formal review at 6 months, 12 months, and 3
-                months before EPA
-              </li>
-              <li className="pl-1">
-                <strong>Discussion prep:</strong> Be ready to discuss every mapped evidence item
-                confidently and in detail
-              </li>
-            </ul>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Evidence Mapping" questions={quizQuestions} />
+          </Bleed>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Evidence Mapping" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Logging Activities
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Logging On-the-Job Activities
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Teamwork and Collaboration
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

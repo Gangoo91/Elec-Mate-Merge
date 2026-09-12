@@ -102,12 +102,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 86,
     question:
       'A pressure transmitter has a range of 0-10 bar and outputs 4-20 mA. What output signal should the transmitter produce at 5 bar?',
-    options: [
-      '10 mA',
-      '8 mA',
-      '12 mA',
-      '16 mA',
-    ],
+    options: ['10 mA', '8 mA', '12 mA', '16 mA'],
     correctAnswer: 2,
     explanation:
       'At 5 bar (50% of range), the output should be at the midpoint of the 4-20 mA range. The span is 16 mA (20 - 4). At 50%: output = 4 + (0.5 x 16) = 4 + 8 = 12 mA. This linear relationship allows the formula: mA = 4 + (measured value / full scale) x 16. Checking this calculation is a standard part of instrument calibration verification.',
@@ -376,12 +371,7 @@ export const questionsPart3: StandardMockQuestion[] = [
     id: 101,
     question:
       "On an electrical schematic diagram, what does the symbol '-|>|-' (triangle between two lines) typically represent?",
-    options: [
-      'A resistor',
-      'A diode',
-      'A capacitor',
-      'An inductor',
-    ],
+    options: ['A resistor', 'A diode', 'A capacitor', 'An inductor'],
     correctAnswer: 1,
     explanation:
       'The triangle symbol between two lines represents a diode, which allows current to flow in one direction only (from anode to cathode). The triangle points in the direction of conventional current flow. Diodes are commonly found in rectifier circuits, protection circuits (flyback/freewheeling diodes across relay coils), and LED indicator circuits. Reading electrical schematics is an essential skill for maintenance technicians.',

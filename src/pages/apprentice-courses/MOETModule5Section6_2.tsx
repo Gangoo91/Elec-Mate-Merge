@@ -1,8 +1,47 @@
-import { ArrowLeft, Network, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 6 · Subsection 2 — Industrial Ethernet
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only statements that already appear verbatim in the brief's
+ * verified lists for other modules — and that genuinely fit this page's
+ * content — are used here.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Industry 4.0 - the integration of physical systems with
+ *                 internet connectivity and cloud computing: technologies,
+ *                 systems, and benefits."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * page had no "Quick Reference" block (unlike some sibling pages), so
+ * KeyTakeaways here condenses facts already stated in the body prose rather
+ * than a separate summary box.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Industrial Ethernet (Profinet, EtherNet/IP) - MOET Module 5 Section 6.2';
@@ -254,123 +293,71 @@ const faqs = [
 ];
 
 const MOETModule5Section6_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Network className="h-4 w-4" />
-            <span>Module 5.6.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Industrial Ethernet
-          </h1>
-          <p className="text-white">
-            Profinet, EtherNet/IP, Modbus TCP, and the convergence of automation and IT networking
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.6 · Subsection 2"
+        title="Industrial Ethernet"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Profinet, EtherNet/IP, Modbus TCP, and the convergence of automation and IT networking.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Industrial Ethernet</strong> adds real-time protocols and ruggedised
-                hardware to standard Ethernet
-              </li>
-              <li className="pl-1">
-                <strong>Profinet</strong> is the leading protocol globally, with RT and IRT variants
-                for different performance needs
-              </li>
-              <li className="pl-1">
-                <strong>EtherNet/IP</strong> dominates in Rockwell Automation ecosystems using the
-                CIP application layer
-              </li>
-              <li className="pl-1">
-                <strong>OPC UA</strong> and <strong>TSN</strong> are enabling converged, secure,
-                vendor-neutral networking
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Using managed switch diagnostics, port mirroring,
-                and Wireshark for network analysis
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Configuring IP addresses, importing GSDML files,
-                verifying ring redundancy
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Matching device type, firmware version, IP settings,
-                and GSDML configuration
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to industrial networking and Ethernet communication
-                knowledge requirements
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Industrial Ethernet adds real-time protocols and ruggedised hardware to standard Ethernet.',
+              'Profinet is the leading protocol globally, with RT and IRT variants for different performance needs.',
+              'EtherNet/IP dominates in Rockwell Automation ecosystems using the CIP application layer.',
+              'OPC UA and TSN are enabling converged, secure, vendor-neutral networking.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain how Industrial Ethernet differs from standard office Ethernet',
               'Compare Profinet, EtherNet/IP, and Modbus TCP protocols and their applications',
               'Describe network components: managed switches, cables, connectors, and redundancy',
               'Explain MRP ring redundancy and its importance for network availability',
               'Outline OPC UA for vertical integration and TSN for converged networking',
               'Apply network segmentation principles for security and performance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> using managed switch diagnostics, port mirroring,
+                and Wireshark for network analysis.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> configuring IP addresses, importing GSDML files,
+                verifying ring redundancy.
+              </li>
+              <li>
+                <strong>Replacement:</strong> matching device type, firmware version, IP settings,
+                and GSDML configuration.
+              </li>
+              <li>
+                <strong>ST1426:</strong> maps to industrial networking and Ethernet communication
+                knowledge requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Industrial Ethernet Fundamentals
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Industrial Ethernet fundamentals</ContentEyebrow>
+
+          <ConceptBlock
+            title="Industrial Ethernet fundamentals"
+            onSite="When troubleshooting Industrial Ethernet, standard IT network tools (ping, Wireshark, SNMP browsers) are useful starting points. However, understanding the specific automation protocol (Profinet, EtherNet/IP) and its diagnostic features is essential for resolving control-level communication issues."
+          >
             <p>
               Industrial Ethernet builds on standard IEEE 802.3 Ethernet technology — the same
               physical layer and data link layer used in office networks — but adds real-time
@@ -379,340 +366,306 @@ const MOETModule5Section6_2 = () => {
               (high bandwidth, wide availability, established tooling) whilst meeting the
               deterministic requirements of industrial control.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Determinism Challenge
-              </p>
-              <p className="text-sm text-white mb-3">
-                Standard Ethernet is inherently non-deterministic — the original CSMA/CD mechanism
-                does not guarantee when a frame will be delivered. Industrial protocols solve this
-                through various mechanisms:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Profinet RT:</strong> Uses priority-tagged frames and dedicated bandwidth
-                  allocation within standard switched Ethernet
-                </li>
-                <li className="pl-1">
-                  <strong>Profinet IRT:</strong> Uses time-synchronised switching hardware for
-                  sub-microsecond jitter — requires IRT-capable switches
-                </li>
-                <li className="pl-1">
-                  <strong>EtherNet/IP:</strong> Uses implicit messaging with configurable RPI
-                  (Requested Packet Interval) over UDP/IP
-                </li>
-                <li className="pl-1">
-                  <strong>TSN (IEEE 802.1):</strong> Provides standard time-aware scheduling for
-                  deterministic traffic alongside best-effort traffic
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Network Convergence Benefits
-              </p>
-              <p className="text-sm text-white mb-3">
-                Industrial Ethernet provides the bandwidth to converge multiple functions on a
-                single network infrastructure:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Real-time I/O control:</strong> Cyclic exchange of process data between
-                  controllers and field devices
-                </li>
-                <li className="pl-1">
-                  <strong>Safety communication:</strong> PROFIsafe and CIP Safety over the same
-                  network as standard I/O
-                </li>
-                <li className="pl-1">
-                  <strong>Motion control:</strong> Coordinated multi-axis servo drives with
-                  sub-millisecond synchronisation
-                </li>
-                <li className="pl-1">
-                  <strong>Video and camera data:</strong> Machine vision and CCTV over the same
-                  infrastructure
-                </li>
-                <li className="pl-1">
-                  <strong>Energy monitoring:</strong> Power metering and energy management data
-                </li>
-                <li className="pl-1">
-                  <strong>IT integration:</strong> MES, ERP, and cloud connectivity via standard IT
-                  protocols
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> When troubleshooting Industrial Ethernet, standard
-              IT network tools (ping, Wireshark, SNMP browsers) are useful starting points. However,
-              understanding the specific automation protocol (Profinet, EtherNet/IP) and its
-              diagnostic features is essential for resolving control-level communication issues.
+          <ConceptBlock title="The determinism challenge">
+            <p>
+              Standard Ethernet is inherently non-deterministic — the original CSMA/CD mechanism
+              does not guarantee when a frame will be delivered. Industrial protocols solve this
+              through various mechanisms:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Profinet RT:</strong> uses priority-tagged frames and dedicated bandwidth
+                allocation within standard switched Ethernet.
+              </li>
+              <li>
+                <strong>Profinet IRT:</strong> uses time-synchronised switching hardware for
+                sub-microsecond jitter — requires IRT-capable switches.
+              </li>
+              <li>
+                <strong>EtherNet/IP:</strong> uses implicit messaging with configurable RPI
+                (Requested Packet Interval) over UDP/IP.
+              </li>
+              <li>
+                <strong>TSN (IEEE 802.1):</strong> provides standard time-aware scheduling for
+                deterministic traffic alongside best-effort traffic.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Network convergence benefits">
+            <p>
+              Industrial Ethernet provides the bandwidth to converge multiple functions on a single
+              network infrastructure:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Real-time I/O control:</strong> cyclic exchange of process data between
+                controllers and field devices.
+              </li>
+              <li>
+                <strong>Safety communication:</strong> PROFIsafe and CIP Safety over the same
+                network as standard I/O.
+              </li>
+              <li>
+                <strong>Motion control:</strong> coordinated multi-axis servo drives with
+                sub-millisecond synchronisation.
+              </li>
+              <li>
+                <strong>Video and camera data:</strong> machine vision and CCTV over the same
+                infrastructure.
+              </li>
+              <li>
+                <strong>Energy monitoring:</strong> power metering and energy management data.
+              </li>
+              <li>
+                <strong>IT integration:</strong> MES, ERP, and cloud connectivity via standard IT
+                protocols.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Profinet, EtherNet/IP, and Modbus TCP
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Profinet, EtherNet/IP, and Modbus TCP</ContentEyebrow>
+
+          <ConceptBlock title="Profinet, EtherNet/IP, and Modbus TCP">
             <p>
               Three Industrial Ethernet protocols dominate the automation landscape. Understanding
               their differences, strengths, and typical applications is essential for any
               maintenance technician working with modern control systems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Profinet</p>
-              <p className="text-sm text-white mb-3">
-                Profinet is the most widely installed Industrial Ethernet protocol globally. It
-                provides three performance classes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Profinet RT (Real-Time):</strong> Cycle times 1-10 ms, suitable for most
-                  factory and process automation — uses standard Ethernet switches
-                </li>
-                <li className="pl-1">
-                  <strong>Profinet IRT (Isochronous Real-Time):</strong> Cycle times below 1 ms with
-                  sub-microsecond jitter — requires IRT-capable hardware for motion control
-                </li>
-                <li className="pl-1">
-                  <strong>PROFIsafe:</strong> Safety communication up to SIL 3 over the same network
-                  as standard I/O
-                </li>
-                <li className="pl-1">
-                  <strong>Integration:</strong> Seamless connection to existing Profibus DP and PA
-                  installations via proxy devices
-                </li>
-                <li className="pl-1">
-                  <strong>Device description:</strong> GSDML files (XML-based, equivalent to GSD
-                  files in Profibus)
-                </li>
-              </ul>
+          <ConceptBlock title="Profinet">
+            <p>
+              Profinet is the most widely installed Industrial Ethernet protocol globally. It
+              provides three performance classes:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Profinet RT (Real-Time):</strong> cycle times 1-10 ms, suitable for most
+                factory and process automation — uses standard Ethernet switches.
+              </li>
+              <li>
+                <strong>Profinet IRT (Isochronous Real-Time):</strong> cycle times below 1 ms with
+                sub-microsecond jitter — requires IRT-capable hardware for motion control.
+              </li>
+              <li>
+                <strong>PROFIsafe:</strong> safety communication up to SIL 3 over the same network
+                as standard I/O.
+              </li>
+              <li>
+                <strong>Integration:</strong> seamless connection to existing Profibus DP and PA
+                installations via proxy devices.
+              </li>
+              <li>
+                <strong>Device description:</strong> GSDML files (XML-based, equivalent to GSD files
+                in Profibus).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="EtherNet/IP">
+            <p>
+              EtherNet/IP uses the CIP (Common Industrial Protocol) application layer over standard
+              TCP/IP and UDP/IP:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Implicit messaging:</strong> real-time I/O data via UDP multicast with
+                configurable RPI.
+              </li>
+              <li>
+                <strong>Explicit messaging:</strong> configuration, diagnostics, and parameter
+                access via TCP.
+              </li>
+              <li>
+                <strong>CIP Safety:</strong> safety communication for safety-rated I/O and drives.
+              </li>
+              <li>
+                <strong>Ecosystem:</strong> dominant in Rockwell Automation (Allen-Bradley) and
+                widely used in North America.
+              </li>
+              <li>
+                <strong>Device description:</strong> EDS (Electronic Data Sheet) files.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Modbus TCP">
+            <p>
+              Modbus TCP is the simplest of the three — an open, lightweight protocol with massive
+              device support:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Protocol:</strong> standard Modbus register and coil transactions
+                encapsulated in TCP/IP packets.
+              </li>
+              <li>
+                <strong>Strengths:</strong> open, vendor-neutral, widely supported, easy to
+                implement and troubleshoot.
+              </li>
+              <li>
+                <strong>Limitations:</strong> no built-in determinism, limited diagnostics, no
+                safety communication.
+              </li>
+              <li>
+                <strong>Typical use:</strong> SCADA integration, energy metering, BMS, simple device
+                monitoring.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Protocol comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">Profinet</th>
+                    <th className="py-2 pr-4 font-medium text-white">EtherNet/IP</th>
+                    <th className="py-2 font-medium text-white">Modbus TCP</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Organisation</td>
+                    <td className="py-2 pr-4">PI / Siemens</td>
+                    <td className="py-2 pr-4">ODVA / Rockwell</td>
+                    <td className="py-2">Open / Modbus.org</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Real-time</td>
+                    <td className="py-2 pr-4">RT and IRT</td>
+                    <td className="py-2 pr-4">Implicit messaging</td>
+                    <td className="py-2">Non-deterministic</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safety</td>
+                    <td className="py-2 pr-4">PROFIsafe (SIL 3)</td>
+                    <td className="py-2 pr-4">CIP Safety</td>
+                    <td className="py-2">None</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Device files</td>
+                    <td className="py-2 pr-4">GSDML (XML)</td>
+                    <td className="py-2 pr-4">EDS</td>
+                    <td className="py-2">Not required</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Fieldbus integration</td>
+                    <td className="py-2 pr-4">Profibus proxy</td>
+                    <td className="py-2 pr-4">DeviceNet proxy</td>
+                    <td className="py-2">Modbus RTU gateway</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">EtherNet/IP</p>
-              <p className="text-sm text-white mb-3">
-                EtherNet/IP uses the CIP (Common Industrial Protocol) application layer over
-                standard TCP/IP and UDP/IP:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Implicit messaging:</strong> Real-time I/O data via UDP multicast with
-                  configurable RPI
-                </li>
-                <li className="pl-1">
-                  <strong>Explicit messaging:</strong> Configuration, diagnostics, and parameter
-                  access via TCP
-                </li>
-                <li className="pl-1">
-                  <strong>CIP Safety:</strong> Safety communication for safety-rated I/O and drives
-                </li>
-                <li className="pl-1">
-                  <strong>Ecosystem:</strong> Dominant in Rockwell Automation (Allen-Bradley) and
-                  widely used in North America
-                </li>
-                <li className="pl-1">
-                  <strong>Device description:</strong> EDS (Electronic Data Sheet) files
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modbus TCP</p>
-              <p className="text-sm text-white mb-3">
-                Modbus TCP is the simplest of the three — an open, lightweight protocol with massive
-                device support:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Protocol:</strong> Standard Modbus register and coil transactions
-                  encapsulated in TCP/IP packets
-                </li>
-                <li className="pl-1">
-                  <strong>Strengths:</strong> Open, vendor-neutral, widely supported, easy to
-                  implement and troubleshoot
-                </li>
-                <li className="pl-1">
-                  <strong>Limitations:</strong> No built-in determinism, limited diagnostics, no
-                  safety communication
-                </li>
-                <li className="pl-1">
-                  <strong>Typical use:</strong> SCADA integration, energy metering, BMS, simple
-                  device monitoring
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protocol Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Profinet</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">EtherNet/IP</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Modbus TCP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Organisation</td>
-                      <td className="border border-white/10 px-3 py-2">PI / Siemens</td>
-                      <td className="border border-white/10 px-3 py-2">ODVA / Rockwell</td>
-                      <td className="border border-white/10 px-3 py-2">Open / Modbus.org</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Real-time</td>
-                      <td className="border border-white/10 px-3 py-2">RT and IRT</td>
-                      <td className="border border-white/10 px-3 py-2">Implicit messaging</td>
-                      <td className="border border-white/10 px-3 py-2">Non-deterministic</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety</td>
-                      <td className="border border-white/10 px-3 py-2">PROFIsafe (SIL 3)</td>
-                      <td className="border border-white/10 px-3 py-2">CIP Safety</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Device files</td>
-                      <td className="border border-white/10 px-3 py-2">GSDML (XML)</td>
-                      <td className="border border-white/10 px-3 py-2">EDS</td>
-                      <td className="border border-white/10 px-3 py-2">Not required</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fieldbus integration</td>
-                      <td className="border border-white/10 px-3 py-2">Profibus proxy</td>
-                      <td className="border border-white/10 px-3 py-2">DeviceNet proxy</td>
-                      <td className="border border-white/10 px-3 py-2">Modbus RTU gateway</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ContentEyebrow>Network infrastructure and redundancy</ContentEyebrow>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Network Infrastructure and Redundancy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Network infrastructure and redundancy">
             <p>
               The physical infrastructure of an Industrial Ethernet network — switches, cables,
               connectors, and redundancy mechanisms — is critical for achieving the reliability
               required in industrial automation. A single cable break or switch failure must not
               cause a plant-wide shutdown.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Managed Industrial Switches
-              </p>
-              <p className="text-sm text-white mb-3">
-                Managed switches are the backbone of Industrial Ethernet networks, providing
-                capabilities far beyond simple packet forwarding:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>VLAN segmentation:</strong> Isolating control traffic from other network
-                  traffic
-                </li>
-                <li className="pl-1">
-                  <strong>QoS (Quality of Service):</strong> Prioritising real-time automation
-                  frames over non-critical traffic
-                </li>
-                <li className="pl-1">
-                  <strong>Port mirroring:</strong> Copying traffic to a diagnostic port for analysis
-                  with Wireshark or protocol analysers
-                </li>
-                <li className="pl-1">
-                  <strong>SNMP monitoring:</strong> Remote monitoring of switch health, port status,
-                  and traffic statistics
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental rating:</strong> DIN-rail mounting, -40 to +75 degrees C,
-                  vibration and EMI resistance
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Managed industrial switches">
+            <p>
+              Managed switches are the backbone of Industrial Ethernet networks, providing
+              capabilities far beyond simple packet forwarding:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VLAN segmentation:</strong> isolating control traffic from other network
+                traffic.
+              </li>
+              <li>
+                <strong>QoS (Quality of Service):</strong> prioritising real-time automation frames
+                over non-critical traffic.
+              </li>
+              <li>
+                <strong>Port mirroring:</strong> copying traffic to a diagnostic port for analysis
+                with Wireshark or protocol analysers.
+              </li>
+              <li>
+                <strong>SNMP monitoring:</strong> remote monitoring of switch health, port status,
+                and traffic statistics.
+              </li>
+              <li>
+                <strong>Environmental rating:</strong> DIN-rail mounting, -40 to +75 degrees C,
+                vibration and EMI resistance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Redundancy Protocols
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>MRP:</strong> Ring topology, recovery less than 200 ms (Profinet
-                    standard)
-                  </li>
-                  <li className="pl-1">
-                    <strong>RSTP:</strong> Star/mesh topology, recovery 1-5 seconds
-                  </li>
-                  <li className="pl-1">
-                    <strong>PRP:</strong> Parallel paths, zero recovery time (sends each frame
-                    twice)
-                  </li>
-                  <li className="pl-1">
-                    <strong>HSR:</strong> High-availability seamless redundancy for ring topologies
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Cabling</h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Cat 5e:</strong> Supports 100 Mbit/s Fast Ethernet
-                  </li>
-                  <li className="pl-1">
-                    <strong>Cat 6A:</strong> Supports up to 10 Gbit/s
-                  </li>
-                  <li className="pl-1">
-                    <strong>M12 D-coded:</strong> IP67 field connectors for Ethernet
-                  </li>
-                  <li className="pl-1">
-                    <strong>Fibre optic:</strong> Long distances, electrical isolation, EMI immunity
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Redundancy protocols">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>MRP:</strong> ring topology, recovery less than 200 ms (Profinet standard).
+              </li>
+              <li>
+                <strong>RSTP:</strong> star/mesh topology, recovery 1-5 seconds.
+              </li>
+              <li>
+                <strong>PRP:</strong> parallel paths, zero recovery time (sends each frame twice).
+              </li>
+              <li>
+                <strong>HSR:</strong> high-availability seamless redundancy for ring topologies.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Practical Maintenance Note</p>
-              <p className="text-sm text-white">
-                When replacing a managed industrial switch, ensure the replacement is configured
-                with the same VLAN settings, port assignments, MRP role (manager or client), IP
-                addresses, and redundancy parameters as the original. A misconfigured replacement
-                switch can cause network-wide communication failures. Always maintain a backup of
-                every switch configuration and document changes in the network management system.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Industrial cabling">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cat 5e:</strong> supports 100 Mbit/s Fast Ethernet.
+              </li>
+              <li>
+                <strong>Cat 6A:</strong> supports up to 10 Gbit/s.
+              </li>
+              <li>
+                <strong>M12 D-coded:</strong> IP67 field connectors for Ethernet.
+              </li>
+              <li>
+                <strong>Fibre optic:</strong> long distances, electrical isolation, EMI immunity.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Practical maintenance note">
+            <p>
+              When replacing a managed industrial switch, ensure the replacement is configured with
+              the same VLAN settings, port assignments, MRP role (manager or client), IP addresses,
+              and redundancy parameters as the original. A misconfigured replacement switch can
+              cause network-wide communication failures. Always maintain a backup of every switch
+              configuration and document changes in the network management system.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            OPC UA and Vertical Integration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>OPC UA and vertical integration</ContentEyebrow>
+
+          <ConceptBlock
+            title="OPC UA and vertical integration"
+            onSite="OPC UA over TSN is expected to become the unified standard for industrial communication, potentially replacing the proprietary aspects of current protocols. Understanding both OPC UA and TSN concepts is increasingly important for maintenance technicians working with modern automation systems."
+          >
             <p>
               OPC UA (Unified Architecture) is a platform-independent, secure communication standard
               that enables data exchange from the field level through manufacturing execution
@@ -720,212 +673,186 @@ const MOETModule5Section6_2 = () => {
               plants seek to integrate operational technology (OT) with information technology (IT)
               for data-driven decision making.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">OPC UA Key Features</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Platform independent:</strong> Runs on any operating system — Windows,
-                  Linux, embedded devices
-                </li>
-                <li className="pl-1">
-                  <strong>Built-in security:</strong> Authentication, authorisation, encryption, and
-                  audit logging as standard
-                </li>
-                <li className="pl-1">
-                  <strong>Information modelling:</strong> Rich data models that describe not just
-                  values but their context, relationships, and meaning
-                </li>
-                <li className="pl-1">
-                  <strong>Vendor neutral:</strong> Supported by all major automation vendors —
-                  Siemens, Rockwell, ABB, Schneider, Honeywell
-                </li>
-                <li className="pl-1">
-                  <strong>Companion specifications:</strong> Standardised data models for specific
-                  industries (PackML for packaging, EUROMAP for plastics)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="OPC UA key features">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Platform independent:</strong> runs on any operating system — Windows,
+                Linux, embedded devices.
+              </li>
+              <li>
+                <strong>Built-in security:</strong> authentication, authorisation, encryption, and
+                audit logging as standard.
+              </li>
+              <li>
+                <strong>Information modelling:</strong> rich data models that describe not just
+                values but their context, relationships, and meaning.
+              </li>
+              <li>
+                <strong>Vendor neutral:</strong> supported by all major automation vendors —
+                Siemens, Rockwell, ABB, Schneider, Honeywell.
+              </li>
+              <li>
+                <strong>Companion specifications:</strong> standardised data models for specific
+                industries (PackML for packaging, EUROMAP for plastics).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TSN — The Future of Converged Networking
-              </p>
-              <p className="text-sm text-white mb-3">
-                Time-Sensitive Networking (TSN) is a set of IEEE 802.1 standards being adopted for
-                industrial automation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Time synchronisation (802.1AS):</strong> Sub-microsecond clock
-                  synchronisation across all network devices
-                </li>
-                <li className="pl-1">
-                  <strong>Scheduled traffic (802.1Qbv):</strong> Time-aware scheduling that
-                  guarantees bandwidth for real-time traffic
-                </li>
-                <li className="pl-1">
-                  <strong>Frame replication (802.1CB):</strong> Redundancy for critical frames
-                  without protocol-specific mechanisms
-                </li>
-                <li className="pl-1">
-                  <strong>OPC UA over TSN:</strong> Combines OPC UA's rich data modelling with TSN's
-                  deterministic transport
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> OPC UA over TSN is expected to become the unified standard
-              for industrial communication, potentially replacing the proprietary aspects of current
-              protocols. Understanding both OPC UA and TSN concepts is increasingly important for
-              maintenance technicians working with modern automation systems.
+          <ConceptBlock title="TSN — the future of converged networking">
+            <p>
+              Time-Sensitive Networking (TSN) is a set of IEEE 802.1 standards being adopted for
+              industrial automation:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time synchronisation (802.1AS):</strong> sub-microsecond clock
+                synchronisation across all network devices.
+              </li>
+              <li>
+                <strong>Scheduled traffic (802.1Qbv):</strong> time-aware scheduling that guarantees
+                bandwidth for real-time traffic.
+              </li>
+              <li>
+                <strong>Frame replication (802.1CB):</strong> redundancy for critical frames without
+                protocol-specific mechanisms.
+              </li>
+              <li>
+                <strong>OPC UA over TSN:</strong> combines OPC UA&apos;s rich data modelling with
+                TSN&apos;s deterministic transport.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Network Segmentation and Security
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Network segmentation and security</ContentEyebrow>
+
+          <ConceptBlock
+            title="Network segmentation and security"
+            onSite="Under ST1426, maintenance technicians are expected to understand Industrial Ethernet principles, identify network components, explain the role of managed switches and redundancy, and carry out basic network diagnostics using standard IT tools and vendor-specific automation tools."
+          >
             <p>
               As Industrial Ethernet connects the factory floor to enterprise systems, network
               security and proper segmentation become essential. An unsecured industrial network is
               vulnerable to cyber attacks, accidental disruption from IT traffic, and uncontrolled
               device access that could compromise safety and production.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Segmentation Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Control network isolation:</strong> Separate the control (OT) network from
-                  the enterprise (IT) network using firewalls and DMZs
-                </li>
-                <li className="pl-1">
-                  <strong>Cell segmentation:</strong> Divide the control network into cells or
-                  zones, each containing a logical group of devices
-                </li>
-                <li className="pl-1">
-                  <strong>VLAN implementation:</strong> Use VLANs on managed switches to create
-                  logical network segments
-                </li>
-                <li className="pl-1">
-                  <strong>Firewall rules:</strong> Define explicit allow rules for required traffic
-                  between zones; deny all other traffic by default
-                </li>
-                <li className="pl-1">
-                  <strong>IEC 62443 compliance:</strong> Follow the zones and conduits model defined
-                  in the industrial cybersecurity standard
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Segmentation principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Control network isolation:</strong> separate the control (OT) network from
+                the enterprise (IT) network using firewalls and DMZs.
+              </li>
+              <li>
+                <strong>Cell segmentation:</strong> divide the control network into cells or zones,
+                each containing a logical group of devices.
+              </li>
+              <li>
+                <strong>VLAN implementation:</strong> use VLANs on managed switches to create
+                logical network segments.
+              </li>
+              <li>
+                <strong>Firewall rules:</strong> define explicit allow rules for required traffic
+                between zones; deny all other traffic by default.
+              </li>
+              <li>
+                <strong>IEC 62443 compliance:</strong> follow the zones and conduits model defined
+                in the industrial cybersecurity standard.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Consideration</p>
-              <p className="text-sm text-white">
-                Never connect the industrial control network directly to the internet or to an
-                unsecured office network. A cyber attack that disrupts the control network could
-                cause safety incidents, equipment damage, environmental releases, or production
-                shutdowns. All data exchange between the OT and IT domains must pass through a
-                properly configured DMZ with industrial firewalls and controlled access policies per
-                IEC 62443.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Troubleshooting Industrial Ethernet
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Switch diagnostics:</strong> Check port status, error counters, link
-                  speed, and duplex settings via the switch web interface or SNMP
-                </li>
-                <li className="pl-1">
-                  <strong>Ping and traceroute:</strong> Verify basic IP connectivity between devices
-                </li>
-                <li className="pl-1">
-                  <strong>Wireshark:</strong> Capture and analyse network traffic via port mirroring
-                  on the managed switch
-                </li>
-                <li className="pl-1">
-                  <strong>Protocol-specific tools:</strong> Siemens PRONETA for Profinet, Rockwell
-                  Logix tools for EtherNet/IP
-                </li>
-                <li className="pl-1">
-                  <strong>Cable testing:</strong> Use industrial Ethernet cable testers to verify
-                  cable quality, length, and connector integrity
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand Industrial Ethernet principles, identify network components, explain the
-              role of managed switches and redundancy, and carry out basic network diagnostics using
-              standard IT tools and vendor-specific automation tools.
+          <ConceptBlock title="Safety consideration">
+            <p>
+              Never connect the industrial control network directly to the internet or to an
+              unsecured office network. A cyber attack that disrupts the control network could cause
+              safety incidents, equipment damage, environmental releases, or production shutdowns.
+              All data exchange between the OT and IT domains must pass through a properly
+              configured DMZ with industrial firewalls and controlled access policies per IEC 62443.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Troubleshooting Industrial Ethernet">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switch diagnostics:</strong> check port status, error counters, link speed,
+                and duplex settings via the switch web interface or SNMP.
+              </li>
+              <li>
+                <strong>Ping and traceroute:</strong> verify basic IP connectivity between devices.
+              </li>
+              <li>
+                <strong>Wireshark:</strong> capture and analyse network traffic via port mirroring
+                on the managed switch.
+              </li>
+              <li>
+                <strong>Protocol-specific tools:</strong> Siemens PRONETA for Profinet, Rockwell
+                Logix tools for EtherNet/IP.
+              </li>
+              <li>
+                <strong>Cable testing:</strong> use industrial Ethernet cable testers to verify
+                cable quality, length, and connector integrity.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Profinet is the leading global Industrial Ethernet protocol, with RT (1-10 ms) and IRT (sub-millisecond) variants; PROFIsafe carries safety up to SIL 3.',
+              'EtherNet/IP uses the CIP application layer and dominates Rockwell Automation ecosystems; CIP Safety is its safety protocol.',
+              'Modbus TCP is open and simple but has no built-in determinism, diagnostics or safety communication.',
+              'MRP gives ring-topology recovery under 200 ms; RSTP, PRP and HSR are the alternative redundancy protocols.',
+              'OPC UA is a secure, vendor-neutral standard for vertical integration from the field to the enterprise.',
+              'TSN (IEEE 802.1) brings deterministic, time-synchronised communication to standard Ethernet.',
+              'The control (OT) network must be isolated from the office (IT) network via firewalls and DMZs, following IEC 62443.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Fieldbus and Profibus
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section6-3">
-              Next: Wireless and IoT in Industry
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section6-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Fieldbus and Profibus Systems
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section6-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Wireless and IoT in Industry
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

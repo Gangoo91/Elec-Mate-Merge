@@ -1,145 +1,90 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+/**
+ * React binding for the shared off-the-job training tracker.
+ *
+ * This hook used to own the timer, the activity listeners and the writer, so
+ * every component that called it got a private copy of all three. It now reads
+ * one shared instance (`trainingTracker`), which is what makes the header's
+ * recording indicator agree with the page the learner is on, and what
+ * guarantees a single writer.
+ *
+ * The returned functions are module-level constants. They keep the same
+ * identity for the life of the app, so they are safe in a dependency array —
+ * the previous versions were rebuilt on every render, which is what made an
+ * effect cleanup fire continuously and fabricate training hours (ELE-1724).
+ *
+ * The running clock is deliberately NOT returned here. Subscribing to it
+ * re-renders the caller every second, and most callers only need to know
+ * whether tracking is on. Use `useTrainingSessionTime` where the seconds are
+ * actually shown.
+ */
+import { useCallback, useEffect, useSyncExternalStore } from 'react';
 import { useAuthState } from '@/hooks/time-tracking/useAuthState';
 import { useToast } from '@/components/ui/use-toast';
-import { useActivityTracking } from '@/hooks/training-tracking/useActivityTracking';
-import { useTrainingTimer } from '@/hooks/training-tracking/useTrainingTimer';
-import { useAutoSave } from '@/hooks/training-tracking/useAutoSave';
+import { trainingTracker } from '@/hooks/training-tracking/trainingTracker';
+
+/** The live session clock, in seconds. Re-renders the caller once a second. */
+export const useTrainingSessionTime = (): number =>
+  useSyncExternalStore(trainingTracker.subscribeTick, trainingTracker.getSessionSeconds, () => 0);
 
 export const useAutomatedTraining = (autoStart = false) => {
-  const [currentActivity, setCurrentActivity] = useState<string | null>(null);
-  const [isTracking, setIsTracking] = useState(false);
-
-  const { addTimeEntry } = useTimeEntries();
+  const status = useSyncExternalStore(
+    trainingTracker.subscribeStatus,
+    trainingTracker.getStatus,
+    trainingTracker.getStatus
+  );
   const { userId } = useAuthState();
   const { toast } = useToast();
 
-  // Use our new hooks
-  const { sessionTime, isRunning, startTimer, pauseTimer, resetTimer } = useTrainingTimer();
-
-  const handleInactivity = useCallback(() => {
-    if (isTracking) {
-      pauseTracking();
-      toast({
-        title: 'Training paused',
-        description: 'Tracking paused due to inactivity',
-      });
-    }
-  }, [isTracking, toast]);
-
-  const { isActive, resetActivity } = useActivityTracking({
-    onInactive: handleInactivity,
-  });
-
-  const { saveCurrentProgress, resetAutoSave, isSaving } = useAutoSave({
-    sessionTime,
-    isTracking,
-    currentActivity,
-    minimumEntryDuration: 30, // Only create entries after 30 minutes
-    onSave: (minutes, activity) => {
-      addTimeEntry({ duration: minutes, activity, notes: 'Auto-tracked training time' });
-    },
-  });
-
-  // Start tracking function
   const startTracking = useCallback(
     (activity: string) => {
       if (!userId) {
         toast({
-          title: 'Authentication required',
+          title: 'Sign in required',
           description: 'Please sign in to track your training time',
           variant: 'destructive',
         });
         return;
       }
-
-      setIsTracking(true);
-      setCurrentActivity(activity);
-      startTimer();
-      resetActivity();
-      console.log(`Started tracking: ${activity}`);
+      trainingTracker.start(activity);
     },
-    [userId, toast, startTimer, resetActivity]
+    [userId, toast]
   );
 
-  // Pause tracking function
   const pauseTracking = useCallback(() => {
-    setIsTracking(false);
-    pauseTimer();
+    trainingTracker.pause();
+  }, []);
 
-    // We don't save on pause anymore, only when stopping completely
-    // or when reaching the minimum time threshold
-    console.log('Tracking paused');
-  }, [pauseTimer]);
-
-  // Resume tracking function
   const resumeTracking = useCallback(() => {
-    if (!userId) {
+    trainingTracker.resume();
+  }, []);
+
+  const stopTracking = useCallback(async () => {
+    const minutes = await trainingTracker.stop();
+    // Only tell the learner something was saved when something was. The old
+    // version announced "training time saved" even when it had written a
+    // five-minute row for a few seconds of activity.
+    if (minutes > 0) {
       toast({
-        title: 'Authentication required',
-        description: 'Please sign in to track your training time',
-        variant: 'destructive',
+        title: 'Training time saved',
+        description: `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} recorded`,
       });
-      return;
     }
+    return minutes;
+  }, [toast]);
 
-    if (currentActivity) {
-      setIsTracking(true);
-      startTimer();
-      resetActivity();
-      console.log('Tracking resumed');
-    }
-  }, [currentActivity, userId, toast, startTimer, resetActivity]);
-
-  // Stop and save tracking function
-  const stopTracking = useCallback(() => {
-    setIsTracking(false);
-
-    // Save remaining time (even if less than minimumEntryDuration)
-    if (currentActivity) {
-      const savedMinutes = saveCurrentProgress();
-
-      if (savedMinutes > 0) {
-        toast({
-          title: 'Training complete',
-          description: `${savedMinutes} minutes of training time saved`,
-        });
-      }
-    }
-
-    // Reset values
-    resetTimer();
-    setCurrentActivity(null);
-    resetAutoSave();
-
-    console.log('Tracking stopped and saved');
-  }, [currentActivity, resetTimer, saveCurrentProgress, resetAutoSave, toast]);
-
-  // Auto-start based on the autoStart prop
+  // `autoStart` is kept for the existing call signature. It starts a generic
+  // session only when nothing else is already tracking, so it can never
+  // relabel a session a page has already named.
   useEffect(() => {
-    if (autoStart && userId && !currentActivity) {
-      startTracking('Application Study');
-    }
-  }, [autoStart, userId, startTracking, currentActivity]);
-
-  // Handle cleanup when component unmounts
-  useEffect(() => {
-    return () => {
-      // If still tracking when unmounting, save the remaining time
-      if (isTracking && currentActivity) {
-        const savedMinutes = saveCurrentProgress();
-        if (savedMinutes > 0) {
-          console.log(`Saved ${savedMinutes} minutes before unmounting`);
-        }
-      }
-    };
-  }, [isTracking, currentActivity, saveCurrentProgress]);
+    if (!autoStart || !userId) return;
+    if (status.isTracking || status.currentActivity) return;
+    trainingTracker.start('Application Study');
+  }, [autoStart, userId, status.isTracking, status.currentActivity]);
 
   return {
-    isTracking,
-    sessionTime,
-    currentActivity,
-    isSaving,
+    isTracking: status.isTracking,
+    currentActivity: status.currentActivity,
+    isSaving: status.isSaving,
     startTracking,
     pauseTracking,
     resumeTracking,

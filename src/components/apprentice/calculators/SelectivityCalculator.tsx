@@ -1,5 +1,7 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
+import type { CalcReport, CalcRow } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Copy, Check, ChevronDown, CheckCircle, XCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -163,6 +165,207 @@ const SelectivityCalculator = () => {
   }, []);
 
   const canCalculate = !!upstreamRating && !!downstreamRating && !!faultCurrent;
+
+  // ── Client PDF ───────────────────────────────────────────────────────────
+  // Two devices are compared, so every figure has to say which one it belongs
+  // to. Upstream is the device nearer the supply, downstream the device nearer
+  // the load; the whole point of the study is that the downstream one clears
+  // the fault first and the upstream one stays in.
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const deviceLabel = (value: string) =>
+      DEVICE_TYPES.find((d) => d.value === value)?.label ?? value;
+    // "MCB (Miniature Circuit Breaker)" → "MCB" for running prose.
+    const deviceShort = (value: string) => deviceLabel(value).split(' (')[0];
+    const curveLabel = (value: string) => MCB_CURVES.find((c) => c.value === value)?.label ?? value;
+
+    const upMs = (result.operatingTimes.upstream * 1000).toFixed(0);
+    const downMs = (result.operatingTimes.downstream * 1000).toFixed(0);
+    const timeMargin = (
+      (result.operatingTimes.upstream - result.operatingTimes.downstream) *
+      1000
+    ).toFixed(0);
+
+    const complianceText =
+      result.complianceStatus === 'compliant'
+        ? 'Compliant'
+        : result.complianceStatus === 'requires-verification'
+          ? 'Requires verification'
+          : 'Non-compliant';
+    const riskText = `${result.riskLevel.charAt(0).toUpperCase()}${result.riskLevel.slice(1)}`;
+
+    // Breaking capacity is assumed by the engine when it is left blank, and the
+    // breaking-capacity check is made against that assumption — so the client
+    // has to be able to see which figures were assumed.
+    const upstreamRows: CalcRow[] = [
+      { label: 'Device type', value: deviceLabel(upstreamDevice) },
+      { label: 'Rating', value: `${upstreamRating} A` },
+    ];
+    if ((upstreamDevice === 'mcb' || upstreamDevice === 'rcbo') && upstreamCurve) {
+      upstreamRows.push({ label: 'Trip curve', value: curveLabel(upstreamCurve) });
+    }
+    if (upstreamMagneticSetting) {
+      upstreamRows.push({ label: 'Custom magnetic setting', value: `${upstreamMagneticSetting} A` });
+    }
+    if (upstreamTimeDelay) {
+      upstreamRows.push({ label: 'Time delay', value: `${upstreamTimeDelay} s` });
+    }
+    upstreamRows.push({
+      label: 'Breaking capacity',
+      value: `${upstreamBreakingCapacity || '10'} kA`,
+      note: upstreamBreakingCapacity ? undefined : 'Assumed — not entered',
+    });
+
+    const downstreamRows: CalcRow[] = [
+      { label: 'Device type', value: deviceLabel(downstreamDevice) },
+      { label: 'Rating', value: `${downstreamRating} A` },
+    ];
+    if ((downstreamDevice === 'mcb' || downstreamDevice === 'rcbo') && downstreamCurve) {
+      downstreamRows.push({ label: 'Trip curve', value: curveLabel(downstreamCurve) });
+    }
+    if (downstreamMagneticSetting) {
+      downstreamRows.push({
+        label: 'Custom magnetic setting',
+        value: `${downstreamMagneticSetting} A`,
+      });
+    }
+    downstreamRows.push({
+      label: 'Breaking capacity',
+      value: `${downstreamBreakingCapacity || '6'} kA`,
+      note: downstreamBreakingCapacity ? undefined : 'Assumed — not entered',
+    });
+
+    const cascadeRows: CalcRow[] = [
+      {
+        label: 'Back-up protection',
+        value: result.cascadeProtection.eligible ? 'Eligible' : 'Not applicable',
+        note: result.cascadeProtection.eligible
+          ? `${deviceShort(downstreamDevice)} ${downstreamRating} A backed up by ${deviceShort(upstreamDevice)} ${upstreamRating} A`
+          : 'Both devices must independently withstand the prospective fault current',
+      },
+    ];
+    if (result.cascadeProtection.eligible) {
+      cascadeRows.push({
+        label: 'Combined breaking capacity',
+        value: `${result.cascadeProtection.combinedBreakingCapacity} kA`,
+      });
+    }
+
+    const notes = [
+      'Upstream is the device nearer the supply; downstream is the device nearer the load. Selectivity means the downstream device clears the fault on its own and the upstream device stays closed.',
+      'Selectivity is judged on a rating ratio of at least 1.6:1 and an operating-time margin of at least 100 ms.',
+      result.cascadeProtection.eligible
+        ? 'Reg 536.4.3: back-up protection allows a downstream device with a lower breaking capacity to be protected by an upstream device, provided the manufacturer has verified that combination.'
+        : '',
+      'Device behaviour here is modelled from typical characteristics. Selectivity between a specific pair of devices is ultimately proved by the manufacturer’s time/current curves or selectivity tables.',
+      ...result.recommendations,
+    ].filter((t) => t.trim());
+
+    const actions = result.immediateActions.filter((t) => t.trim());
+    const concerns = result.concerns.filter((t) => t.trim());
+
+    return {
+      meta: {
+        title: 'Protection Device Selectivity',
+        subtitle: `${deviceShort(upstreamDevice)} ${upstreamRating} A upstream against ${deviceShort(downstreamDevice)} ${downstreamRating} A downstream, at ${faultCurrent} A prospective fault current`,
+        standard: 'BS 7671 — Reg 536.4.1 (selectivity), Reg 536.4.3 (back-up protection)',
+      },
+      headline: [
+        {
+          label: 'Selectivity',
+          value: result.isSelective ? 'Achieved' : 'Not achieved',
+          verdict: result.isSelective ? 'pass' : 'fail',
+        },
+        { label: 'Selectivity ratio', value: `${result.selectivityRatio.toFixed(2)}:1` },
+        { label: 'Time margin', value: timeMargin, unit: 'ms' },
+      ],
+      sections: [
+        { heading: 'Upstream device (nearer the supply)', rows: upstreamRows },
+        { heading: 'Downstream device (nearer the load)', rows: downstreamRows },
+        {
+          heading: 'Fault conditions',
+          rows: [{ label: 'Prospective fault current', value: `${faultCurrent} A` }],
+        },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Selectivity limit',
+              value: `${result.selectivityLimit.toFixed(0)} A`,
+              note: 'Fault current up to which the two devices stay selective',
+            },
+            {
+              label: 'Selectivity limit current Is',
+              value: `${result.selectivityLimitCurrent} A`,
+              note: 'Where the two time/current curves cross',
+            },
+            { label: 'Compliance', value: complianceText },
+            { label: 'Risk level', value: riskText },
+          ],
+        },
+        {
+          heading: 'Selectivity checks',
+          rows: [
+            {
+              label: 'Overload selectivity',
+              value: result.overloadSelectivity ? 'Pass' : 'Fail',
+              note: 'Upstream rating far enough above the downstream thermal trip',
+            },
+            {
+              label: 'Short-circuit selectivity',
+              value: result.shortCircuitSelectivity ? 'Pass' : 'Fail',
+              note: 'Upstream device holds in long enough for the downstream device to clear',
+            },
+            {
+              label: 'Breaking capacity',
+              value: result.breakingCapacityCheck ? 'Pass' : 'Fail',
+              note: `Both devices rated for ${faultCurrent} A`,
+            },
+            {
+              label: 'Energy selectivity (I²t)',
+              value: result.energyLetThrough.energySelective ? 'Pass' : 'Fail',
+              note: result.energyLetThrough.energySelective
+                ? 'Downstream device clears before the upstream device lets through equivalent energy'
+                : 'Downstream let-through exceeds upstream — both devices may be stressed at once',
+            },
+          ],
+        },
+        {
+          heading: 'Device comparison',
+          rows: [
+            { label: 'Downstream operating time', value: `${downMs} ms` },
+            {
+              label: 'Upstream operating time',
+              value: `${upMs} ms`,
+              note: `${timeMargin} ms later than the downstream device`,
+            },
+            { label: 'Downstream magnetic trip', value: `${result.magneticTrips.downstream.toFixed(0)} A` },
+            { label: 'Upstream magnetic trip', value: `${result.magneticTrips.upstream.toFixed(0)} A` },
+            {
+              label: 'Downstream let-through energy (I²t)',
+              value: `${result.energyLetThrough.downstreamI2t.toFixed(0)} A²s`,
+            },
+            {
+              label: 'Upstream let-through energy (I²t)',
+              value: `${result.energyLetThrough.upstreamI2t.toFixed(0)} A²s`,
+            },
+            {
+              label: 'I²t ratio',
+              value: `${result.energyLetThrough.ratio}`,
+              note: 'Downstream ÷ upstream — below 1 means the downstream device clears first',
+            },
+          ],
+        },
+        { heading: 'Back-up (cascade) protection', rows: cascadeRows },
+        ...(actions.length ? [{ heading: 'Immediate actions', items: actions }] : []),
+        ...(concerns.length ? [{ heading: 'Concerns', items: concerns }] : []),
+      ],
+      notes,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard
@@ -383,7 +586,16 @@ const SelectivityCalculator = () => {
                     {[
                       { label: 'Overload Selectivity', pass: result.overloadSelectivity },
                       { label: 'Short-Circuit Selectivity', pass: result.shortCircuitSelectivity },
-                      { label: 'Breaking Capacity', pass: result.breakingCapacityCheck },
+                      {
+                        // The engine defaults to 10 kA upstream / 6 kA downstream when the
+                        // field is blank, so an unqualified "Pass" here could be asserting
+                        // a breaking capacity nobody entered. Say when it is assumed.
+                        label:
+                          upstreamBreakingCapacity && downstreamBreakingCapacity
+                            ? 'Breaking Capacity'
+                            : 'Breaking Capacity (assumed values)',
+                        pass: result.breakingCapacityCheck,
+                      },
                       {
                         label: 'Energy Selectivity (I²t)',
                         pass: result.energyLetThrough.energySelective,

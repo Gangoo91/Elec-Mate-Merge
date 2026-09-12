@@ -236,7 +236,7 @@ const FaultLevelCalculator = () => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Fault Level Calculator',
+        title: 'Fault Level',
         subtitle: 'Prospective fault current at each distribution point',
       },
       headline: highestFault
@@ -265,6 +265,14 @@ const FaultLevelCalculator = () => {
               : [{ label: 'Supply Ze', value: `${supplyZe} Ω` }]),
             { label: 'System voltage (line-line)', value: `${systemVoltage} V` },
           ],
+        },
+        {
+          heading: 'Cable segments',
+          rows: segments.map((s) => ({
+            label: s.label || 'Unnamed segment',
+            value: `${s.size} mm² × ${s.length} m`,
+            note: `${s.material === 'cu' ? 'Copper' : 'Aluminium'} · Method ${s.installationMethod}`,
+          })),
         },
         {
           heading: 'Result',

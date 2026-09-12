@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.1 · Subsection 4 — Safe Access and Work at Height
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Safe systems of work."
+ *              · "Work environment hazards and risks. Risk assessments."
+ *              · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Safe Access and Work at Height - MOET Module 1.1.4';
@@ -42,10 +82,10 @@ const quickCheckQuestions = [
     id: 'fragile-surface',
     question: "What is a 'fragile surface' in the context of work at height?",
     options: [
-      "Any roof surface that has not been inspected within the last 12 months",
+      'Any roof surface that has not been inspected within the last 12 months',
       "A surface that would be liable to fail if a person's weight were to be applied to it",
-      "A wet or icy surface that becomes slippery in poor weather",
-      "A surface made from any material other than reinforced concrete",
+      'A wet or icy surface that becomes slippery in poor weather',
+      'A surface made from any material other than reinforced concrete',
     ],
     correctIndex: 1,
     explanation:
@@ -124,7 +164,7 @@ const quizQuestions = [
     id: 5,
     question: 'Before using a ladder on site, the pre-use inspection must check for:',
     options: [
-      'The manufacturer\'s 6-monthly LOLER thorough examination certificate',
+      "The manufacturer's 6-monthly LOLER thorough examination certificate",
       'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
       'The current wind speed and weather forecast for the rest of the shift',
       'A valid PASMA card held by the person erecting the ladder',
@@ -257,116 +297,65 @@ const faqs = [
 ];
 
 const MOETModule1Section1_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.1.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Safe Access and Work at Height
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.1 · Subsection 4"
+        title="Safe Access and Work at Height"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Preventing falls and managing access equipment for electrical maintenance at height
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> Avoid &gt; Prevent falls &gt; Mitigate consequences
-              </li>
-              <li className="pl-1">
-                <strong>Law:</strong> Work at Height Regulations 2005 — no minimum height threshold
-              </li>
-              <li className="pl-1">
-                <strong>Equipment:</strong> Scaffolds, MEWPs, podium steps preferred over ladders
-              </li>
-              <li className="pl-1">
-                <strong>Rescue:</strong> Must be planned BEFORE any work at height begins
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Cable tray:</strong> Often at 3-4m — requires scaffold or MEWP, not ladders
-              </li>
-              <li className="pl-1">
-                <strong>Busbars:</strong> Proximity to live conductors adds electrocution/arc flash
-                risk
-              </li>
-              <li className="pl-1">
-                <strong>Lighting:</strong> Luminaire maintenance often involves ceiling access
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Safe access and work at height is a core KSB
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Hierarchy: Avoid > Prevent falls > Mitigate consequences',
+              'Law: Work at Height Regulations 2005 — no minimum height threshold',
+              'Equipment: Scaffolds, MEWPs, podium steps preferred over ladders',
+              'Rescue: Must be planned BEFORE any work at height begins',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'State the requirements of the Work at Height Regulations 2005',
               'Apply the hierarchy of controls: avoid, prevent, mitigate',
               'Select appropriate access equipment for electrical maintenance tasks',
               'Describe inspection requirements for ladders, scaffolds, and MEWPs',
               'Explain the risks of fragile surfaces, falling objects, and suspension trauma',
               'Plan rescue arrangements and apply height-work controls to electrical tasks',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The Work at Height Regulations 2005</ContentEyebrow>
 
-        {/* Section 01: The Work at Height Regulations 2005 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Work at Height Regulations 2005
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable tray:</strong> Often at 3-4m — requires scaffold or MEWP, not ladders
+              </li>
+              <li>
+                <strong>Busbars:</strong> Proximity to live conductors adds electrocution/arc flash
+                risk
+              </li>
+              <li>
+                <strong>Lighting:</strong> Luminaire maintenance often involves ceiling access
+              </li>
+              <li>
+                <strong>ST1426:</strong> Safe access and work at height is a core KSB
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="A comprehensive legal framework, built for one of the biggest killers">
             <p>
               Falls from height are consistently one of the biggest single causes of workplace
               fatalities in the UK. HSE data shows that approximately 35-40 workers die each year
@@ -382,112 +371,84 @@ const MOETModule1Section1_4 = () => {
               all involve working at height. Understanding the Regulations and selecting the right
               equipment is not optional — it is a legal duty and a daily survival skill.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Key Statistic</p>
-              <p className="text-sm text-white">
-                Falls from height account for approximately 25% of all workplace fatalities in the
-                UK each year. Over 30% of these fatal falls are from a height of less than 2 metres.
-                A fall from a stepladder onto a concrete floor can cause a fatal head injury. There
-                is no 'safe' height from which to fall.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Key Requirements of the Regulations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Regulation 4:</strong> Every employer must ensure work at height is
-                  properly planned, appropriately supervised, and carried out safely. This includes
-                  planning for emergencies and rescue.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 6:</strong> Apply the hierarchy — avoid work at height; where
-                  it cannot be avoided, prevent falls; where falls cannot be prevented, mitigate
-                  consequences.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 7:</strong> Select work equipment appropriate to the task,
-                  considering the working conditions, distance and consequences of a fall, duration
-                  and frequency of use, and ease of rescue.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 8:</strong> Particular requirements for specific types of
-                  equipment — guardrails, working platforms, personal fall protection, ladders.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 9:</strong> Specific requirements for fragile surfaces — no one
-                  shall pass near or work on a fragile surface unless it is necessary and safe means
-                  of support are provided.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 10:</strong> Protect people from falling objects — toe boards,
-                  brick guards, fans, exclusion zones, tool lanyards.
-                </li>
-                <li className="pl-1">
-                  <strong>Regulation 12:</strong> All work at height equipment must be inspected at
-                  suitable intervals, by a competent person, and inspection records retained.
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">The Hierarchy of Controls</p>
-              <div className="space-y-2 mt-3">
-                <div className="flex items-start gap-3 p-3 rounded bg-green-500/10 border border-green-500/20">
-                  <span className="text-green-400 font-bold text-lg">1</span>
-                  <div>
-                    <p className="text-sm font-medium text-green-400">AVOID working at height</p>
-                    <p className="text-xs text-white">
-                      Can the work be done from ground level? Use extendable tools, ground-level
-                      assembly, prefabrication, or redesign the task to eliminate height work
-                      entirely.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded bg-amber-500/10 border border-amber-500/20">
-                  <span className="text-amber-400 font-bold text-lg">2</span>
-                  <div>
-                    <p className="text-sm font-medium text-amber-400">PREVENT falls</p>
-                    <p className="text-xs text-white">
-                      Use collective protection: guardrails, scaffolds, working platforms, MEWPs.
-                      These prevent the fall from happening and protect everyone in the area.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-3 rounded bg-red-500/10 border border-red-500/20">
-                  <span className="text-red-400 font-bold text-lg">3</span>
-                  <div>
-                    <p className="text-sm font-medium text-red-400">MITIGATE the consequences</p>
-                    <p className="text-xs text-white">
-                      Use personal fall protection: safety harnesses and lanyards, safety nets,
-                      airbags, soft-landing systems. These reduce injury severity after a fall
-                      occurs.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> You must always start at the top of the hierarchy. Only
-              move to the next level when you can demonstrate that the higher level is not
-              reasonably practicable. A risk assessment must document this decision.
+          <ConceptBlock title="Key statistic">
+            <p>
+              Falls from height account for approximately 25% of all workplace fatalities in the UK
+              each year. Over 30% of these fatal falls are from a height of less than 2 metres. A
+              fall from a stepladder onto a concrete floor can cause a fatal head injury. There is
+              no &apos;safe&apos; height from which to fall.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key requirements of the Regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Regulation 4:</strong> Every employer must ensure work at height is properly
+                planned, appropriately supervised, and carried out safely. This includes planning
+                for emergencies and rescue.
+              </li>
+              <li>
+                <strong>Regulation 6:</strong> Apply the hierarchy — avoid work at height; where it
+                cannot be avoided, prevent falls; where falls cannot be prevented, mitigate
+                consequences.
+              </li>
+              <li>
+                <strong>Regulation 7:</strong> Select work equipment appropriate to the task,
+                considering the working conditions, distance and consequences of a fall, duration
+                and frequency of use, and ease of rescue.
+              </li>
+              <li>
+                <strong>Regulation 8:</strong> Particular requirements for specific types of
+                equipment — guardrails, working platforms, personal fall protection, ladders.
+              </li>
+              <li>
+                <strong>Regulation 9:</strong> Specific requirements for fragile surfaces — no one
+                shall pass near or work on a fragile surface unless it is necessary and safe means
+                of support are provided.
+              </li>
+              <li>
+                <strong>Regulation 10:</strong> Protect people from falling objects — toe boards,
+                brick guards, fans, exclusion zones, tool lanyards.
+              </li>
+              <li>
+                <strong>Regulation 12:</strong> All work at height equipment must be inspected at
+                suitable intervals, by a competent person, and inspection records retained.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02: Access Equipment for Electrical Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Access Equipment for Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The hierarchy of controls"
+            onSite="Key point: you must always start at the top of the hierarchy. Only move to the next level when you can demonstrate that the higher level is not reasonably practicable. A risk assessment must document this decision."
+          >
+            <ul className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>AVOID working at height.</strong> Can the work be done from ground level?
+                Use extendable tools, ground-level assembly, prefabrication, or redesign the task to
+                eliminate height work entirely.
+              </li>
+              <li>
+                <strong>PREVENT falls.</strong> Use collective protection: guardrails, scaffolds,
+                working platforms, MEWPs. These prevent the fall from happening and protect everyone
+                in the area.
+              </li>
+              <li>
+                <strong>MITIGATE the consequences.</strong> Use personal fall protection: safety
+                harnesses and lanyards, safety nets, airbags, soft-landing systems. These reduce
+                injury severity after a fall occurs.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Access equipment for electrical maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Choosing the right platform for the task">
             <p>
               Selecting the right access equipment is one of the most important decisions in
               planning work at height. The choice depends on the nature of the task, its duration,
@@ -495,239 +456,172 @@ const MOETModule1Section1_4 = () => {
               For electrical maintenance, the need for two-handed working and carrying materials and
               tools makes platform-based solutions preferable in most situations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Access Equipment Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Limitations</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Training</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Podium Steps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light tasks up to ~3m, two-handed work, luminaire replacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited height range, not for heavy materials
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">User familiarisation</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Tower Scaffold
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sustained work at height, cable tray, containment runs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assembly time, floor space, wind limits (~17mph)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">PASMA trained</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Fixed Scaffold
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large-scale, long-duration work — cable risers, busbar runs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cost, lead time, requires scaffold contractor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        CISRS scaffolders erect; users need awareness
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Scissor Lift (MEWP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Medium-to-high work, firm flat floors, warehouse lighting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Floor loading, headroom, level surface only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">IPAF Category 3a</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Boom Lift (MEWP)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High reach, obstacles, outdoor work, overhead lines
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ground conditions, wind, outrigger space
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">IPAF Category 3b</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Stepladder</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Very short duration, low risk, light inspection tasks only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No guardrails, one-hand working, fatigue
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">User training</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Leaning Ladder
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Access only (getting onto/off a platform), not as a workstation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Last resort; strict conditions; no sustained work
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        User training + supervision
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Access equipment comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Equipment</th>
+                    <th className="py-2 pr-4 font-medium text-white">Best for</th>
+                    <th className="py-2 pr-4 font-medium text-white">Limitations</th>
+                    <th className="py-2 font-medium text-white">Training</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Podium Steps</td>
+                    <td className="py-2 pr-4">
+                      Light tasks up to ~3m, two-handed work, luminaire replacement
+                    </td>
+                    <td className="py-2 pr-4">Limited height range, not for heavy materials</td>
+                    <td className="py-2">User familiarisation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Tower Scaffold</td>
+                    <td className="py-2 pr-4">
+                      Sustained work at height, cable tray, containment runs
+                    </td>
+                    <td className="py-2 pr-4">Assembly time, floor space, wind limits (~17mph)</td>
+                    <td className="py-2">PASMA trained</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fixed Scaffold</td>
+                    <td className="py-2 pr-4">
+                      Large-scale, long-duration work — cable risers, busbar runs
+                    </td>
+                    <td className="py-2 pr-4">Cost, lead time, requires scaffold contractor</td>
+                    <td className="py-2">CISRS scaffolders erect; users need awareness</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Scissor Lift (MEWP)</td>
+                    <td className="py-2 pr-4">
+                      Medium-to-high work, firm flat floors, warehouse lighting
+                    </td>
+                    <td className="py-2 pr-4">Floor loading, headroom, level surface only</td>
+                    <td className="py-2">IPAF Category 3a</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Boom Lift (MEWP)</td>
+                    <td className="py-2 pr-4">
+                      High reach, obstacles, outdoor work, overhead lines
+                    </td>
+                    <td className="py-2 pr-4">Ground conditions, wind, outrigger space</td>
+                    <td className="py-2">IPAF Category 3b</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Stepladder</td>
+                    <td className="py-2 pr-4">
+                      Very short duration, low risk, light inspection tasks only
+                    </td>
+                    <td className="py-2 pr-4">No guardrails, one-hand working, fatigue</td>
+                    <td className="py-2">User training</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Leaning Ladder</td>
+                    <td className="py-2 pr-4">
+                      Access only (getting onto/off a platform), not as a workstation
+                    </td>
+                    <td className="py-2 pr-4">Last resort; strict conditions; no sustained work</td>
+                    <td className="py-2">User training + supervision</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Ladder Safety — When Ladders Are Permitted
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The Work at Height Regulations do not ban ladders, but they restrict their use to
-                situations where a risk assessment justifies them. Ladders are only acceptable when:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Short duration:</strong> The task takes minutes, not hours. If you need to
-                  be up there for more than 15-30 minutes, use a platform.
-                </li>
-                <li className="pl-1">
-                  <strong>Low risk:</strong> The task is simple and does not involve carrying heavy
-                  materials, using power tools, or working near open edges.
-                </li>
-                <li className="pl-1">
-                  <strong>Three points of contact:</strong> The worker can maintain three points of
-                  contact (two hands and one foot, or two feet and one hand) at all times.
-                </li>
-                <li className="pl-1">
-                  <strong>Secure base:</strong> The ladder is placed on a firm, level surface, at
-                  the correct angle (1:4 ratio for leaning ladders), and secured to prevent
-                  slipping.
-                </li>
-                <li className="pl-1">
-                  <strong>Not near live equipment:</strong> Metal ladders must never be used near
-                  live electrical equipment. Fibreglass or timber ladders are preferred for
-                  electrical work.
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Inspection Requirements
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pre-Use Check</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Formal Inspection
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Record Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ladders/Stepladders</td>
-                      <td className="border border-white/10 px-3 py-2">Before every use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Regular intervals (condition-based)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Asset register recommended
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Tower Scaffold</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        After erection, before use
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Every 7 days and after any event affecting stability
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Yes — written record</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fixed Scaffold</td>
-                      <td className="border border-white/10 px-3 py-2">Before first use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Every 7 days, after modification or adverse weather
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Yes — scaffold inspection register
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MEWP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Daily pre-start checks by operator
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        LOLER thorough examination every 6 months
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Yes — LOLER report</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety Harness</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Before every use (visual + tactile)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Every 6-12 months by a competent person
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Yes — harness inspection register
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> A pre-use check is YOUR responsibility. Even if the
-              equipment passed a formal inspection last week, you must check it before each use.
-              Conditions change, damage can occur between inspections, and you are the last line of
-              defence.
+          <ConceptBlock title="Ladder safety — when ladders are permitted">
+            <p>
+              The Work at Height Regulations do not ban ladders, but they restrict their use to
+              situations where a risk assessment justifies them. Ladders are only acceptable when:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Short duration:</strong> The task takes minutes, not hours. If you need to
+                be up there for more than 15-30 minutes, use a platform.
+              </li>
+              <li>
+                <strong>Low risk:</strong> The task is simple and does not involve carrying heavy
+                materials, using power tools, or working near open edges.
+              </li>
+              <li>
+                <strong>Three points of contact:</strong> The worker can maintain three points of
+                contact (two hands and one foot, or two feet and one hand) at all times.
+              </li>
+              <li>
+                <strong>Secure base:</strong> The ladder is placed on a firm, level surface, at the
+                correct angle (1:4 ratio for leaning ladders), and secured to prevent slipping.
+              </li>
+              <li>
+                <strong>Not near live equipment:</strong> Metal ladders must never be used near live
+                electrical equipment. Fibreglass or timber ladders are preferred for electrical
+                work.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock
+            title="Inspection requirements"
+            onSite="Remember: a pre-use check is YOUR responsibility. Even if the equipment passed a formal inspection last week, you must check it before each use. Conditions change, damage can occur between inspections, and you are the last line of defence."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Equipment</th>
+                    <th className="py-2 pr-4 font-medium text-white">Pre-use check</th>
+                    <th className="py-2 pr-4 font-medium text-white">Formal inspection</th>
+                    <th className="py-2 font-medium text-white">Record required</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ladders/Stepladders</td>
+                    <td className="py-2 pr-4">Before every use</td>
+                    <td className="py-2 pr-4">Regular intervals (condition-based)</td>
+                    <td className="py-2">Asset register recommended</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Tower Scaffold</td>
+                    <td className="py-2 pr-4">After erection, before use</td>
+                    <td className="py-2 pr-4">
+                      Every 7 days and after any event affecting stability
+                    </td>
+                    <td className="py-2">Yes — written record</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fixed Scaffold</td>
+                    <td className="py-2 pr-4">Before first use</td>
+                    <td className="py-2 pr-4">
+                      Every 7 days, after modification or adverse weather
+                    </td>
+                    <td className="py-2">Yes — scaffold inspection register</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MEWP</td>
+                    <td className="py-2 pr-4">Daily pre-start checks by operator</td>
+                    <td className="py-2 pr-4">LOLER thorough examination every 6 months</td>
+                    <td className="py-2">Yes — LOLER report</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Safety Harness</td>
+                    <td className="py-2 pr-4">Before every use (visual + tactile)</td>
+                    <td className="py-2 pr-4">Every 6-12 months by a competent person</td>
+                    <td className="py-2">Yes — harness inspection register</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 03: Fragile Surfaces, Falling Objects and Exclusion Zones */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Fragile Surfaces, Falling Objects and Exclusion Zones
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Fragile surfaces, falling objects and exclusion zones</ContentEyebrow>
+
+          <ConceptBlock title="Two of the most dangerous aspects of work at height">
             <p>
               Two of the most dangerous aspects of work at height are fragile surfaces and falling
               objects. Falls through fragile roofing materials account for a significant proportion
@@ -736,131 +630,92 @@ const MOETModule1Section1_4 = () => {
               accessing plant rooms on rooftops, working in ceiling voids, and carrying tools and
               materials at height.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-3">
-                Fragile Surfaces — A Hidden Killer
-              </p>
-              <p className="text-sm text-white mb-3">
-                A fragile surface is any surface that would be liable to fail if a person's weight
-                were applied to it. Falls through fragile surfaces cause approximately 5-7 deaths
-                and many serious injuries each year in the UK. The danger is that many fragile
-                surfaces appear solid — until the moment they collapse.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3 mt-3">
-                <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs font-medium text-red-400 mb-1">Common Fragile Materials</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Fibre-cement roof sheets (including asbestos cement)</li>
-                    <li>Rooflights (GRP, polycarbonate, glass)</li>
-                    <li>Liner panels on built-up metal roofs</li>
-                    <li>Corroded metal decking</li>
-                    <li>Chipboard or plywood ceiling panels</li>
-                    <li>Glass skylights and atriums</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs font-medium text-red-400 mb-1">
-                    Electrical Maintenance Scenarios
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Accessing rooftop plant rooms — crossing fragile roofing</li>
-                    <li>Working in ceiling voids — stepping off joists onto tiles</li>
-                    <li>Rooftop PV installations — walking on fragile rooflights</li>
-                    <li>Lightning protection — testing on industrial roofs</li>
-                    <li>Exterior lighting maintenance — accessing canopy roofs</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Controls for Fragile Surfaces
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Avoid:</strong> Can the work be done without going on or near the fragile
-                  surface? Use MEWPs to access from below, or extend equipment reach from a safe
-                  position.
-                </li>
-                <li className="pl-1">
-                  <strong>Warning signs:</strong> All fragile surfaces must be clearly marked with
-                  warning signs visible to anyone who might approach them.
-                </li>
-                <li className="pl-1">
-                  <strong>Barriers:</strong> Physical barriers must prevent anyone from accidentally
-                  walking onto a fragile surface. A sign alone is not sufficient.
-                </li>
-                <li className="pl-1">
-                  <strong>Crawling boards:</strong> If work on or near a fragile surface is
-                  unavoidable, use crawling boards or staging that spreads the load and provides a
-                  safe working surface.
-                </li>
-                <li className="pl-1">
-                  <strong>Safety nets:</strong> Where there is a risk of falling through, safety
-                  nets should be installed below the fragile surface to arrest falls.
-                </li>
-                <li className="pl-1">
-                  <strong>Assume fragile:</strong> If you cannot confirm a surface is not fragile,
-                  treat it as fragile. This applies particularly to older industrial roofs where
-                  materials may have deteriorated.
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Falling Object Protection
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Regulation 10 of the Work at Height Regulations requires that steps are taken to
-                prevent objects falling from height and to protect people from being struck by
-                falling objects. For electrical maintenance, dropped tools, cable offcuts, fixings,
-                and equipment are common falling object hazards.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Prevent Objects Falling</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Tool lanyards — attach tools to harness or platform</li>
-                    <li>Toe boards on scaffolds (minimum 150mm high)</li>
-                    <li>Brick guards or mesh panels on scaffold edges</li>
-                    <li>Enclosed tool buckets for raising/lowering tools</li>
-                    <li>Debris netting on scaffold exterior</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Protect People Below</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Exclusion zones — barriered areas below the work</li>
-                    <li>Covered walkways — tunnel protection for pedestrians</li>
-                    <li>Hard hats for all persons in the area</li>
-                    <li>Warning signs — 'Danger: overhead work in progress'</li>
-                    <li>Banksmen to manage pedestrian traffic</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Always set up your exclusion zone BEFORE starting work
-              at height, not after. Use cones, barrier tape, and signs to mark the area. Brief any
-              other workers in the vicinity. A dropped ratchet spanner from 4 metres can cause a
-              fatal head injury.
+          <ConceptBlock title="Fragile surfaces — a hidden killer">
+            <p>
+              A fragile surface is any surface that would be liable to fail if a person&apos;s
+              weight were applied to it. Falls through fragile surfaces cause approximately 5-7
+              deaths and many serious injuries each year in the UK. The danger is that many fragile
+              surfaces appear solid — until the moment they collapse.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Common fragile materials:</strong> fibre-cement roof sheets (including
+              asbestos cement), rooflights (GRP, polycarbonate, glass), liner panels on built-up
+              metal roofs, corroded metal decking, chipboard or plywood ceiling panels, and glass
+              skylights and atriums.
+            </p>
+            <p>
+              <strong>Electrical maintenance scenarios:</strong> accessing rooftop plant rooms —
+              crossing fragile roofing; working in ceiling voids — stepping off joists onto tiles;
+              rooftop PV installations — walking on fragile rooflights; lightning protection —
+              testing on industrial roofs; exterior lighting maintenance — accessing canopy roofs.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Controls for fragile surfaces">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Avoid:</strong> Can the work be done without going on or near the fragile
+                surface? Use MEWPs to access from below, or extend equipment reach from a safe
+                position.
+              </li>
+              <li>
+                <strong>Warning signs:</strong> All fragile surfaces must be clearly marked with
+                warning signs visible to anyone who might approach them.
+              </li>
+              <li>
+                <strong>Barriers:</strong> Physical barriers must prevent anyone from accidentally
+                walking onto a fragile surface. A sign alone is not sufficient.
+              </li>
+              <li>
+                <strong>Crawling boards:</strong> If work on or near a fragile surface is
+                unavoidable, use crawling boards or staging that spreads the load and provides a
+                safe working surface.
+              </li>
+              <li>
+                <strong>Safety nets:</strong> Where there is a risk of falling through, safety nets
+                should be installed below the fragile surface to arrest falls.
+              </li>
+              <li>
+                <strong>Assume fragile:</strong> If you cannot confirm a surface is not fragile,
+                treat it as fragile. This applies particularly to older industrial roofs where
+                materials may have deteriorated.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Harness Systems and Rescue Planning */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Harness Systems and Rescue Planning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Falling object protection"
+            onSite="Practical tip: always set up your exclusion zone BEFORE starting work at height, not after. Use cones, barrier tape, and signs to mark the area. Brief any other workers in the vicinity. A dropped ratchet spanner from 4 metres can cause a fatal head injury."
+          >
+            <p>
+              Regulation 10 of the Work at Height Regulations requires that steps are taken to
+              prevent objects falling from height and to protect people from being struck by falling
+              objects. For electrical maintenance, dropped tools, cable offcuts, fixings, and
+              equipment are common falling object hazards.
+            </p>
+            <p>
+              <strong>Prevent objects falling:</strong> tool lanyards — attach tools to harness or
+              platform; toe boards on scaffolds (minimum 150mm high); brick guards or mesh panels on
+              scaffold edges; enclosed tool buckets for raising/lowering tools; debris netting on
+              scaffold exterior.
+            </p>
+            <p>
+              <strong>Protect people below:</strong> exclusion zones — barriered areas below the
+              work; covered walkways — tunnel protection for pedestrians; hard hats for all persons
+              in the area; warning signs — &apos;Danger: overhead work in progress&apos;; banksmen
+              to manage pedestrian traffic.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Harness systems and rescue planning</ContentEyebrow>
+
+          <ConceptBlock title="Personal fall protection sits at the bottom of the hierarchy">
             <p>
               Personal fall protection — safety harnesses, lanyards, and anchor systems — sits at
               the bottom of the hierarchy of controls. It should only be used when collective
@@ -869,143 +724,114 @@ const MOETModule1Section1_4 = () => {
               lifts, accessing unprotected edges during building services installation, and rope
               access for specialist work.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Components of a Personal Fall Protection System
-              </h3>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Full Body Harness</p>
-                  <p className="text-xs text-white">
-                    Distributes fall arrest forces across the thighs, pelvis, chest, and shoulders.
-                    Must be correctly sized and adjusted to the individual wearer. The dorsal (back)
-                    D-ring is the primary fall arrest attachment point. Front (sternal) D-rings are
-                    used for work positioning. Side D-rings are used for work restraint.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Connecting Lanyards</p>
-                  <p className="text-xs text-white">
-                    The link between the harness and the anchor point. Types include:
-                    shock-absorbing lanyards (energy absorber deploys to limit fall arrest forces to
-                    6kN maximum), retractable fall arresters (self-retracting lifelines), and
-                    work-positioning lanyards (adjustable, for maintaining position rather than
-                    arresting falls).
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">Anchor Points</p>
-                  <p className="text-xs text-white">
-                    Must be capable of withstanding the forces generated during fall arrest —
-                    typically rated at 12kN for a single person. Types include: permanent roof
-                    anchors, structural steelwork clamps, anchor slings around beams, and horizontal
-                    lifelines. The anchor must be at or above the level of the D-ring to minimise
-                    free-fall distance.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Components of a personal fall protection system">
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Full body harness.</strong> Distributes fall arrest forces across the
+                thighs, pelvis, chest, and shoulders. Must be correctly sized and adjusted to the
+                individual wearer. The dorsal (back) D-ring is the primary fall arrest attachment
+                point. Front (sternal) D-rings are used for work positioning. Side D-rings are used
+                for work restraint.
+              </li>
+              <li>
+                <strong>Connecting lanyards.</strong> The link between the harness and the anchor
+                point. Types include: shock-absorbing lanyards (energy absorber deploys to limit
+                fall arrest forces to 6kN maximum), retractable fall arresters (self-retracting
+                lifelines), and work-positioning lanyards (adjustable, for maintaining position
+                rather than arresting falls).
+              </li>
+              <li>
+                <strong>Anchor points.</strong> Must be capable of withstanding the forces generated
+                during fall arrest — typically rated at 12kN for a single person. Types include:
+                permanent roof anchors, structural steelwork clamps, anchor slings around beams, and
+                horizontal lifelines. The anchor must be at or above the level of the D-ring to
+                minimise free-fall distance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <h3 className="text-sm font-medium text-red-400 mb-3">
-                Suspension Trauma — The Urgent Rescue Requirement
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Suspension trauma (also called harness hang syndrome or orthostatic intolerance) is
-                a life-threatening condition that can occur when a person is suspended motionless in
-                a harness after a fall. The leg straps compress the femoral veins, reducing blood
-                return to the heart. Blood pools in the legs, leading to:
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Loss of consciousness within 5-15 minutes</li>
-                <li className="pl-1">Renal failure from toxin buildup in pooled blood</li>
-                <li className="pl-1">Cardiac arrest — potentially within 15-30 minutes</li>
-                <li className="pl-1">
-                  'Rescue death' — if rescued incorrectly, sudden release of pooled blood can cause
-                  fatal cardiac overload
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                <strong>This is why rescue planning is not optional.</strong> Every person using a
-                harness must have a rescue plan that can recover them within minutes, not hours.
-                Calling the fire brigade is not a rescue plan — response times are typically 10-20
-                minutes.
-              </p>
-            </div>
+          <ConceptBlock title="Suspension trauma — the urgent rescue requirement">
+            <p>
+              Suspension trauma (also called harness hang syndrome or orthostatic intolerance) is a
+              life-threatening condition that can occur when a person is suspended motionless in a
+              harness after a fall. The leg straps compress the femoral veins, reducing blood return
+              to the heart. Blood pools in the legs, leading to:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-red-400/70">
+              <li>Loss of consciousness within 5-15 minutes</li>
+              <li>Renal failure from toxin buildup in pooled blood</li>
+              <li>Cardiac arrest — potentially within 15-30 minutes</li>
+              <li>
+                &apos;Rescue death&apos; — if rescued incorrectly, sudden release of pooled blood
+                can cause fatal cardiac overload
+              </li>
+            </ul>
+            <p>
+              <strong>This is why rescue planning is not optional.</strong> Every person using a
+              harness must have a rescue plan that can recover them within minutes, not hours.
+              Calling the fire brigade is not a rescue plan — response times are typically 10-20
+              minutes.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Rescue Plan Requirements
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Regulation 4 of the Work at Height Regulations requires that rescue arrangements are
-                in place before any work at height begins. A rescue plan must address:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Method:</strong> How will the person be rescued? Self-rescue devices,
-                  rescue from above (winch systems), rescue from below (MEWP), or assisted descent?
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment:</strong> Is rescue equipment immediately available, not stored
-                  in a distant location? Is it compatible with the harness and anchor system?
-                </li>
-                <li className="pl-1">
-                  <strong>Competence:</strong> Are the designated rescuers trained and practised in
-                  the rescue method? When did they last practise?
-                </li>
-                <li className="pl-1">
-                  <strong>Time:</strong> Can rescue be achieved within a safe timeframe (ideally
-                  less than 10 minutes)?
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> How will a fall be detected and the alarm raised?
-                  Is there constant visual or radio contact?
-                </li>
-                <li className="pl-1">
-                  <strong>First aid:</strong> Is a trained first aider available who understands the
-                  specific risks of suspension trauma?
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Rescue plan requirements">
+            <p>
+              Regulation 4 of the Work at Height Regulations requires that rescue arrangements are
+              in place before any work at height begins. A rescue plan must address:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Method:</strong> How will the person be rescued? Self-rescue devices, rescue
+                from above (winch systems), rescue from below (MEWP), or assisted descent?
+              </li>
+              <li>
+                <strong>Equipment:</strong> Is rescue equipment immediately available, not stored in
+                a distant location? Is it compatible with the harness and anchor system?
+              </li>
+              <li>
+                <strong>Competence:</strong> Are the designated rescuers trained and practised in
+                the rescue method? When did they last practise?
+              </li>
+              <li>
+                <strong>Time:</strong> Can rescue be achieved within a safe timeframe (ideally less
+                than 10 minutes)?
+              </li>
+              <li>
+                <strong>Communication:</strong> How will a fall be detected and the alarm raised? Is
+                there constant visual or radio contact?
+              </li>
+              <li>
+                <strong>First aid:</strong> Is a trained first aider available who understands the
+                specific risks of suspension trauma?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Harness Pre-Use Inspection Checklist
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Webbing — cuts, fraying, abrasion, chemical damage</li>
-                  <li className="pl-1">Stitching — intact, no pulled or broken threads</li>
-                  <li className="pl-1">D-rings — no deformation, corrosion, or sharp edges</li>
-                  <li className="pl-1">Buckles — function correctly, no distortion</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Labels — legible, within service life</li>
-                  <li className="pl-1">Energy absorber — not deployed (check indicator)</li>
-                  <li className="pl-1">Connectors — gates close and lock properly</li>
-                  <li className="pl-1">Previous fall arrest — remove from service</li>
-                </ul>
-              </div>
-              <p className="text-xs text-white mt-3">
-                Any harness that has arrested a fall must be immediately removed from service and
-                returned to the manufacturer or a competent person for inspection. Internal damage
-                may not be visible.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="Harness pre-use inspection checklist"
+            onSite="Any harness that has arrested a fall must be immediately removed from service and returned to the manufacturer or a competent person for inspection. Internal damage may not be visible."
+          >
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Webbing — cuts, fraying, abrasion, chemical damage</li>
+              <li>Stitching — intact, no pulled or broken threads</li>
+              <li>D-rings — no deformation, corrosion, or sharp edges</li>
+              <li>Buckles — function correctly, no distortion</li>
+              <li>Labels — legible, within service life</li>
+              <li>Energy absorber — not deployed (check indicator)</li>
+              <li>Connectors — gates close and lock properly</li>
+              <li>Previous fall arrest — remove from service</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Electrical-Specific Work at Height */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Electrical-Specific Work at Height
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electrical-specific work at height</ContentEyebrow>
+
+          <ConceptBlock title="Two hazards that compound each other">
             <p>
               Electrical maintenance technicians face a unique combination of hazards when working
               at height: the fall risk is compounded by electrical hazards. A worker who receives an
@@ -1013,266 +839,199 @@ const MOETModule1Section1_4 = () => {
               contraction caused by the shock can throw them from a ladder or cause them to lose
               grip on a platform edge. Planning must address both hazards simultaneously.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-blue-400 mb-3">
-                  Cable Tray and Containment at Height
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Cable tray and basket installation is one of the most common height tasks for
-                  electrical maintenance technicians. Runs are typically at 3-4 metres, requiring
-                  sustained two-handed work while carrying heavy materials.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Preferred access:</strong> Tower scaffold or MEWP — provides a stable
-                    platform with edge protection
-                  </li>
-                  <li className="pl-1">
-                    <strong>Not acceptable:</strong> Ladders — the task duration, two-handed work,
-                    and material handling rule out ladder use
-                  </li>
-                  <li className="pl-1">
-                    <strong>Isolation:</strong> If working near existing live cables, isolate and
-                    prove dead before disturbing containment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Manual handling:</strong> Cable tray sections are heavy and awkward —
-                    plan lifting and passing sequences
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tool management:</strong> Use tool lanyards and bucket hoists — do not
-                    carry loose tools up scaffolds
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Cable tray and containment at height">
+            <p>
+              Cable tray and basket installation is one of the most common height tasks for
+              electrical maintenance technicians. Runs are typically at 3-4 metres, requiring
+              sustained two-handed work while carrying heavy materials.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preferred access:</strong> Tower scaffold or MEWP — provides a stable
+                platform with edge protection
+              </li>
+              <li>
+                <strong>Not acceptable:</strong> Ladders — the task duration, two-handed work, and
+                material handling rule out ladder use
+              </li>
+              <li>
+                <strong>Isolation:</strong> If working near existing live cables, isolate and prove
+                dead before disturbing containment
+              </li>
+              <li>
+                <strong>Manual handling:</strong> Cable tray sections are heavy and awkward — plan
+                lifting and passing sequences
+              </li>
+              <li>
+                <strong>Tool management:</strong> Use tool lanyards and bucket hoists — do not carry
+                loose tools up scaffolds
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-purple-400 mb-3">
-                  Overhead Busbars and Busbar Trunking
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Working near overhead busbars combines height and electrical hazards in a
-                  particularly dangerous way. Even without direct contact, arc flash from proximity
-                  to energised busbars can cause severe burns.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Isolation:</strong> Busbars must be isolated and proved dead before any
-                    work within the exclusion distance
-                  </li>
-                  <li className="pl-1">
-                    <strong>Exclusion distance:</strong> Maintain safe clearance from energised
-                    conductors — consult BS EN 50110 for minimum distances
-                  </li>
-                  <li className="pl-1">
-                    <strong>Permit to work:</strong> Work near HV busbars typically requires a
-                    formal permit to work
-                  </li>
-                  <li className="pl-1">
-                    <strong>Access equipment:</strong> Use non-conductive (fibreglass) access
-                    equipment where possible
-                  </li>
-                  <li className="pl-1">
-                    <strong>Arc flash PPE:</strong> Where isolation is not possible, appropriate
-                    arc-rated PPE must be worn
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Overhead busbars and busbar trunking">
+            <p>
+              Working near overhead busbars combines height and electrical hazards in a particularly
+              dangerous way. Even without direct contact, arc flash from proximity to energised
+              busbars can cause severe burns.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolation:</strong> Busbars must be isolated and proved dead before any work
+                within the exclusion distance
+              </li>
+              <li>
+                <strong>Exclusion distance:</strong> Maintain safe clearance from energised
+                conductors — consult BS EN 50110 for minimum distances
+              </li>
+              <li>
+                <strong>Permit to work:</strong> Work near HV busbars typically requires a formal
+                permit to work
+              </li>
+              <li>
+                <strong>Access equipment:</strong> Use non-conductive (fibreglass) access equipment
+                where possible
+              </li>
+              <li>
+                <strong>Arc flash PPE:</strong> Where isolation is not possible, appropriate
+                arc-rated PPE must be worn
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-green-400 mb-3">
-                  Lighting Maintenance at Height
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Luminaire replacement, relamping, and emergency lighting testing frequently
-                  involve work at height. The range of installations — from office suspended
-                  ceilings to warehouse high-bay lighting at 10+ metres — demands different access
-                  solutions.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Office/retail:</strong> Podium steps (up to ~3m) or tower scaffold for
-                    sustained work
-                  </li>
-                  <li className="pl-1">
-                    <strong>Warehouse/industrial:</strong> Scissor lift or boom lift for high-bay
-                    fixtures
-                  </li>
-                  <li className="pl-1">
-                    <strong>Outdoor:</strong> MEWP (boom lift) for column-mounted or
-                    building-mounted luminaires
-                  </li>
-                  <li className="pl-1">
-                    <strong>Isolation:</strong> Always isolate the lighting circuit before accessing
-                    luminaires — even for 'just changing a lamp'
-                  </li>
-                  <li className="pl-1">
-                    <strong>Ceiling voids:</strong> Check load-bearing capacity before entering; use
-                    crawling boards; identify fragile surfaces
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Lighting maintenance at height">
+            <p>
+              Luminaire replacement, relamping, and emergency lighting testing frequently involve
+              work at height. The range of installations — from office suspended ceilings to
+              warehouse high-bay lighting at 10+ metres — demands different access solutions.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Office/retail:</strong> Podium steps (up to ~3m) or tower scaffold for
+                sustained work
+              </li>
+              <li>
+                <strong>Warehouse/industrial:</strong> Scissor lift or boom lift for high-bay
+                fixtures
+              </li>
+              <li>
+                <strong>Outdoor:</strong> MEWP (boom lift) for column-mounted or building-mounted
+                luminaires
+              </li>
+              <li>
+                <strong>Isolation:</strong> Always isolate the lighting circuit before accessing
+                luminaires — even for &apos;just changing a lamp&apos;
+              </li>
+              <li>
+                <strong>Ceiling voids:</strong> Check load-bearing capacity before entering; use
+                crawling boards; identify fragile surfaces
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <h3 className="text-sm font-medium text-orange-400 mb-3">
-                Combined Risk: Shock + Fall
-              </h3>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Combined risk: shock + fall"
+            whatHappens={
+              <>
                 When planning electrical work at height, always consider the combined scenario: what
                 happens if the worker receives an electric shock while at height? An involuntary
                 muscular reaction can throw a person off a ladder, over a platform edge, or cause
-                them to drop tools. The safe isolation procedure must be completed BEFORE ascending
-                to the work position. Never assume a circuit is dead just because the switch is off
-                — follow the full Prove-Test-Prove sequence at the point of work. Where this is not
-                possible from the access equipment (e.g., the isolation point is at ground level but
-                the work is at 4 metres), ensure the isolation is verified and secured with personal
-                locks before ascending.
-              </p>
-            </div>
+                them to drop tools.
+              </>
+            }
+            doInstead={
+              <>
+                The safe isolation procedure must be completed BEFORE ascending to the work
+                position. Never assume a circuit is dead just because the switch is off — follow the
+                full Prove-Test-Prove sequence at the point of work. Where this is not possible from
+                the access equipment (e.g., the isolation point is at ground level but the work is
+                at 4 metres), ensure the isolation is verified and secured with personal locks
+                before ascending.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Weather Considerations
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Weather conditions significantly affect the safety of work at height. For electrical
-                maintenance, the following conditions require work to be postponed or additional
-                controls to be implemented:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Wind:</strong> Tower scaffolds ~17mph max; MEWPs have specific limits
-                  </li>
-                  <li className="pl-1">
-                    <strong>Rain/ice:</strong> Slippery surfaces, reduced grip, visibility
-                  </li>
-                  <li className="pl-1">
-                    <strong>Lightning:</strong> Stop all outdoor height work immediately
-                  </li>
-                </ul>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Temperature:</strong> Cold reduces dexterity; heat causes fatigue
-                  </li>
-                  <li className="pl-1">
-                    <strong>Low light:</strong> Ensure adequate task lighting at height
-                  </li>
-                  <li className="pl-1">
-                    <strong>UV exposure:</strong> Sun protection for prolonged rooftop work
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The Maintenance and Operations Engineering Technician
-              standard requires you to demonstrate competence in selecting and using access
-              equipment, understanding work at height regulations, and conducting risk assessments
-              for height work. This is a core knowledge and skills requirement assessed during your
-              End-Point Assessment.
+          <ConceptBlock
+            title="Weather considerations"
+            onSite="ST1426 link: the Maintenance and Operations Engineering Technician standard requires you to demonstrate competence in selecting and using access equipment, understanding work at height regulations, and conducting risk assessments for height work. This is a core knowledge and skills requirement assessed during your End-Point Assessment."
+          >
+            <p>
+              Weather conditions significantly affect the safety of work at height. For electrical
+              maintenance, the following conditions require work to be postponed or additional
+              controls to be implemented:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wind:</strong> Tower scaffolds ~17mph max; MEWPs have specific limits
+              </li>
+              <li>
+                <strong>Rain/ice:</strong> Slippery surfaces, reduced grip, visibility
+              </li>
+              <li>
+                <strong>Lightning:</strong> Stop all outdoor height work immediately
+              </li>
+              <li>
+                <strong>Temperature:</strong> Cold reduces dexterity; heat causes fatigue
+              </li>
+              <li>
+                <strong>Low light:</strong> Ensure adequate task lighting at height
+              </li>
+              <li>
+                <strong>UV exposure:</strong> Sun protection for prolonged rooftop work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Hierarchy of Controls</p>
-                <ul className="space-y-0.5">
-                  <li>1. AVOID — work from ground level where possible</li>
-                  <li>2. PREVENT — guardrails, scaffolds, platforms, MEWPs</li>
-                  <li>3. MITIGATE — harnesses, nets, airbags</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Inspection Frequencies</p>
-                <ul className="space-y-0.5">
-                  <li>Ladders — before every use + regular formal</li>
-                  <li>Tower scaffold — after erection + every 7 days</li>
-                  <li>MEWP — daily pre-start + 6-monthly LOLER</li>
-                  <li>Harness — before every use + 6-12 monthly formal</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Training Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Tower scaffold — PASMA certification</li>
-                  <li>MEWP — IPAF Category 3a/3b</li>
-                  <li>Harness — harness user training + rescue</li>
-                  <li>All users — awareness of WAHR 2005</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Legislation</p>
-                <ul className="space-y-0.5">
-                  <li>Work at Height Regulations 2005</li>
-                  <li>LOLER 1998 — MEWPs, hoists, lifting equipment</li>
-                  <li>PUWER 1998 — all work equipment</li>
-                  <li>CDM 2015 — construction-specific duties</li>
-                  <li>BS 7671:2018+A4:2026 — electrical safety</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              'Hierarchy of controls: 1. AVOID — work from ground level where possible; 2. PREVENT — guardrails, scaffolds, platforms, MEWPs; 3. MITIGATE — harnesses, nets, airbags.',
+              'Inspection frequencies: ladders — before every use + regular formal; tower scaffold — after erection + every 7 days; MEWP — daily pre-start + 6-monthly LOLER; harness — before every use + 6-12 monthly formal.',
+              'Training requirements: tower scaffold — PASMA certification; MEWP — IPAF Category 3a/3b; harness — harness user training + rescue; all users — awareness of WAHR 2005.',
+              'Key legislation: Work at Height Regulations 2005; LOLER 1998 — MEWPs, hoists, lifting equipment; PUWER 1998 — all work equipment; CDM 2015 — construction-specific duties; BS 7671:2018+A4:2026 — electrical safety.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section1-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Lock-Out / Tag-Out
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section1-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Working in Confined Spaces
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Lock-Out / Tag-Out
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-5">
-              Next: Confined Spaces
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

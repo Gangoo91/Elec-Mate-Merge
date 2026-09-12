@@ -1,8 +1,76 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 2 · Subsection 2 — Thermal Imaging
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Inspect and test electrical aspects of plant. For
+ *     example, visual checks, insulation and continuity checks,
+ *     thermographic surveys, and voltage levels."
+ *   · "Electrical. Electrical maintenance tools, measurement, and test
+ *     equipment application, operation, care and calibration
+ *     requirements."
+ *   · "Documentation requirements: documentation control, auditable
+ *     records."
+ *
+ * ⚠️ ACCURACY CORRECTION (applied at conversion): the original page's
+ * severity classification only appeared in the "Quick Reference" footer,
+ * as ΔT bands (<10°C / 10-35°C / 35-75°C / >75°C) with no stated reference
+ * point. These do not match the actual NETA/Infraspection scale and
+ * conflated two different reference bases. Replaced throughout with the
+ * Infraspection Institute "Standard for Infrared Inspection of Electrical
+ * Systems & Rotating Equipment" (2016, §10.1) Priority 1-4 table, which
+ * reproduces the NETA Maintenance Testing Specifications and gives separate
+ * bands for a similar-component comparison and an over-ambient comparison
+ * (Priority 2 exists only on the over-ambient scale). This table has also
+ * been promoted from the footer into the main teaching body — "Apply
+ * severity classification to thermographic findings" is an explicit
+ * learning outcome the original page did not actually teach in its body
+ * text. Neither BS 7671 nor GN3 sets a thermography survey interval or a
+ * severity scale; the legal standing for carrying out a survey at all comes
+ * from EAWR 1989 Reg 4(2) and HSE guidance HSR25 §68, added below.
+ *
+ * ✎ CORRECTED (12 Sep): an earlier version of the conversion brief said
+ * "nothing in BS 7671 or GN3 governs thermography". That over-claimed and
+ * suppressed something useful. GN3 §4.9 "Thermographic equipment" DOES cover
+ * it — as an inspection aid for early identification of overheating, with the
+ * Note to Reg 653.2 allowing thermographic evidence to be attached to
+ * certification, and a recommendation to consult EAWR/HSR25 before working
+ * close to live parts. Verified in bs7671_facets. What GN3 does not give is a
+ * ΔT severity scale or a survey interval. A ConceptBlock covering this has
+ * been added to the page body.
+ * No other data-array entry in this page contained the wrong bands.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Thermal Imaging - MOET Module 4.2.2';
@@ -70,12 +138,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The emissivity of polished bare copper is approximately:',
-    options: [
-      '1.00 (perfect)',
-      '0.95 (very high)',
-      '0.07 (very low)',
-      '0.65 (moderate)',
-    ],
+    options: ['1.00 (perfect)', '0.95 (very high)', '0.07 (very low)', '0.65 (moderate)'],
     correctAnswer: 2,
     explanation:
       "Polished bare copper has a very low emissivity (~0.07), meaning it is a very poor emitter of infrared radiation and a very good reflector. This makes accurate temperature measurement with an IR camera extremely difficult — the camera 'sees' reflected radiation from surrounding objects rather than the copper's own emission. Applying high-emissivity tape or paint to measurement points overcomes this problem.",
@@ -97,10 +160,10 @@ const quizQuestions = [
     id: 4,
     question: 'IR viewing windows fitted to panel doors are made from materials that:',
     options: [
-      "Transmit infrared while keeping an arc-flash barrier and the IP rating",
-      "Block all radiation so the camera reads only the window surface temperature",
-      "Magnify the infrared image to improve the spatial resolution of the camera",
-      "Filter out visible light so the survey can be carried out fully in darkness",
+      'Transmit infrared while keeping an arc-flash barrier and the IP rating',
+      'Block all radiation so the camera reads only the window surface temperature',
+      'Magnify the infrared image to improve the spatial resolution of the camera',
+      'Filter out visible light so the survey can be carried out fully in darkness',
     ],
     correctAnswer: 0,
     explanation:
@@ -176,10 +239,10 @@ const quizQuestions = [
     id: 10,
     question: "The thermal image quality term 'IFOV' (Instantaneous Field of View) determines:",
     options: [
-      "The maximum surface temperature the camera is able to measure accurately",
-      "The rate at which the camera refreshes the thermal image on its display",
-      "The smallest object the camera can resolve — its spatial resolution",
-      "The emissivity correction the camera applies to readings automatically",
+      'The maximum surface temperature the camera is able to measure accurately',
+      'The rate at which the camera refreshes the thermal image on its display',
+      'The smallest object the camera can resolve — its spatial resolution',
+      'The emissivity correction the camera applies to readings automatically',
     ],
     correctAnswer: 2,
     explanation:
@@ -243,476 +306,570 @@ const faqs = [
 ];
 
 const MOETModule4Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Thermal Imaging
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.2 · Subsection 2"
+        title="Thermal Imaging"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Infrared thermography for detecting hot spots, trending degradation and preventing
-            electrical fires
+            electrical fires.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Principle:</strong> All objects emit IR radiation proportional to
-                temperature
-              </li>
-              <li className="pl-1">
-                <strong>Emissivity:</strong> Surface property affecting measurement accuracy
-              </li>
-              <li className="pl-1">
-                <strong>Applications:</strong> Connections, busbars, motors, switchgear,
-                transformers
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Arc flash risk when scanning with covers removed
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Principle: All objects emit IR radiation proportional to temperature.',
+              'Emissivity: Surface property affecting measurement accuracy.',
+              'Applications: Connections, busbars, motors, switchgear, transformers.',
+              'Safety: Arc flash risk when scanning with covers removed.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Hot spots:</strong> Loose connections, overloaded circuits, failing
-                components
+                components.
               </li>
-              <li className="pl-1">
-                <strong>IR windows:</strong> Enable scanning without removing covers
+              <li>
+                <strong>IR windows:</strong> Enable scanning without removing covers.
               </li>
-              <li className="pl-1">
-                <strong>Trending:</strong> Comparing surveys reveals progressive deterioration
+              <li>
+                <strong>Trending:</strong> Comparing surveys reveals progressive deterioration.
               </li>
-              <li className="pl-1">
-                <strong>BS EN 16714:</strong> Standard for thermographic testing
+              <li>
+                <strong>BS EN 16714:</strong> Standard for thermographic testing.
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principles of infrared thermography and thermal radiation',
               'Understand the significance of emissivity and its effect on temperature measurement',
               'Interpret thermograms to identify hot spots in electrical connections and equipment',
               'Apply severity classification to thermographic findings',
               'Produce comprehensive thermographic survey reports with trending data',
               'Implement safe working practices for thermographic surveys on live equipment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Principles of infrared thermography</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Principles of Infrared Thermography
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Every object above absolute zero emits infrared radiation">
             <p>
               Every object with a temperature above absolute zero (-273.15°C) emits electromagnetic
               radiation in the infrared spectrum. The intensity and wavelength distribution of this
-              radiation is directly related to the object's surface temperature — hotter objects
-              emit more radiation at shorter wavelengths. An infrared camera detects this radiation
-              and converts it into a visual thermal image, or thermogram.
+              radiation is directly related to the object&apos;s surface temperature — hotter
+              objects emit more radiation at shorter wavelengths. An infrared camera detects this
+              radiation and converts it into a visual thermal image, or thermogram.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Thermography Concepts
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stefan-Boltzmann Law:</strong> Total radiation emitted is proportional to
-                  the fourth power of absolute temperature (W = εσT⁴)
-                </li>
-                <li className="pl-1">
-                  <strong>Emissivity (ε):</strong> The ratio of radiation emitted by a surface to
-                  that of a perfect blackbody at the same temperature (0 to 1)
-                </li>
-                <li className="pl-1">
-                  <strong>Reflected temperature:</strong> Radiation from surrounding objects
-                  reflected off the target surface, which can distort measurements on low-emissivity
-                  surfaces
-                </li>
-                <li className="pl-1">
-                  <strong>Atmospheric transmission:</strong> The atmosphere absorbs some IR
-                  radiation; significant at long distances but negligible for most electrical
-                  inspection distances
-                </li>
-                <li className="pl-1">
-                  <strong>Spatial resolution (IFOV):</strong> The smallest object the camera can
-                  resolve — determines the minimum size of target that can be accurately measured
-                </li>
-              </ul>
+          <ConceptBlock title="Key thermography concepts">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stefan-Boltzmann Law:</strong> Total radiation emitted is proportional to
+                the fourth power of absolute temperature (W = εσT⁴)
+              </li>
+              <li>
+                <strong>Emissivity (ε):</strong> The ratio of radiation emitted by a surface to that
+                of a perfect blackbody at the same temperature (0 to 1)
+              </li>
+              <li>
+                <strong>Reflected temperature:</strong> Radiation from surrounding objects reflected
+                off the target surface, which can distort measurements on low-emissivity surfaces
+              </li>
+              <li>
+                <strong>Atmospheric transmission:</strong> The atmosphere absorbs some IR radiation;
+                significant at long distances but negligible for most electrical inspection
+                distances
+              </li>
+              <li>
+                <strong>Spatial resolution (IFOV):</strong> The smallest object the camera can
+                resolve — determines the minimum size of target that can be accurately measured
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Common emissivity values"
+            onSite={
+              <>
+                For bare metal connections, use qualitative (comparative) thermography rather than
+                trying to measure absolute temperatures. Compare the three phases of a similar
+                connection under similar load — a significant temperature difference between phases
+                indicates a problem, regardless of the absolute value.
+              </>
+            }
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Material
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Emissivity
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Measurement difficulty
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Painted surface (any colour)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.90–0.95</td>
+                    <td className="border border-white/10 px-3 py-2 text-green-400">
+                      Easy — accurate readings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">Oxidised copper</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.60–0.70</td>
+                    <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">Oxidised steel</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.70–0.80</td>
+                    <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">PVC insulation</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.91–0.93</td>
+                    <td className="border border-white/10 px-3 py-2 text-green-400">Easy</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">Polished copper</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.02–0.07</td>
+                    <td className="border border-white/10 px-3 py-2 text-red-400">
+                      Very difficult
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Polished aluminium
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">0.03–0.06</td>
+                    <td className="border border-white/10 px-3 py-2 text-red-400">
+                      Very difficult
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Emissivity Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Emissivity</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Measurement Difficulty
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Painted surface (any colour)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.90–0.95</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">
-                        Easy — accurate readings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Oxidised copper</td>
-                      <td className="border border-white/10 px-3 py-2">0.60–0.70</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Oxidised steel</td>
-                      <td className="border border-white/10 px-3 py-2">0.70–0.80</td>
-                      <td className="border border-white/10 px-3 py-2 text-yellow-400">Moderate</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PVC insulation</td>
-                      <td className="border border-white/10 px-3 py-2">0.91–0.93</td>
-                      <td className="border border-white/10 px-3 py-2 text-green-400">Easy</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polished copper</td>
-                      <td className="border border-white/10 px-3 py-2">0.02–0.07</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Very difficult
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Polished aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">0.03–0.06</td>
-                      <td className="border border-white/10 px-3 py-2 text-red-400">
-                        Very difficult
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> For bare metal connections, use qualitative (comparative)
-              thermography rather than trying to measure absolute temperatures. Compare the three
-              phases of a similar connection under similar load — a significant temperature
-              difference between phases indicates a problem, regardless of the absolute value.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Interpreting thermograms</ContentEyebrow>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Interpreting Thermograms
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Not pretty pictures — correct interpretation">
             <p>
               The value of thermography lies not in taking pretty pictures but in correctly
               interpreting what the thermal image reveals about equipment condition. Understanding
               common thermal patterns and their causes is essential for accurate diagnosis.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Thermal Patterns in Electrical Equipment
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Single hot connection (one phase):</strong> High-resistance joint —
-                    loose bolt, corroded surface, insufficient contact area
-                  </li>
-                  <li className="pl-1">
-                    <strong>All three phases equally hot:</strong> Overloading or undersized
-                    conductors — check actual current vs rating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Hot fuse:</strong> Partial blowing, loose fuse clips, or fuse operating
-                    near its rating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Hot MCB/MCCB:</strong> Overloaded circuit, high-resistance internal
-                    connection, or approaching end of life
-                  </li>
-                  <li className="pl-1">
-                    <strong>Motor frame — even heat:</strong> Normal operating temperature; compare
-                    to rated temperature rise
-                  </li>
-                  <li className="pl-1">
-                    <strong>Motor frame — localised hot spot:</strong> Stator winding fault, blocked
-                    ventilation, or bearing problem
-                  </li>
-                  <li className="pl-1">
-                    <strong>Transformer — winding pattern visible:</strong> Normal for loaded
-                    transformer; check against rating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Cable — heat at termination:</strong> Loose gland, undersized
-                    termination, or poor compression
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Common thermal patterns in electrical equipment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single hot connection (one phase):</strong> High-resistance joint — loose
+                bolt, corroded surface, insufficient contact area
+              </li>
+              <li>
+                <strong>All three phases equally hot:</strong> Overloading or undersized conductors
+                — check actual current vs rating
+              </li>
+              <li>
+                <strong>Hot fuse:</strong> Partial blowing, loose fuse clips, or fuse operating near
+                its rating
+              </li>
+              <li>
+                <strong>Hot MCB/MCCB:</strong> Overloaded circuit, high-resistance internal
+                connection, or approaching end of life
+              </li>
+              <li>
+                <strong>Motor frame — even heat:</strong> Normal operating temperature; compare to
+                rated temperature rise
+              </li>
+              <li>
+                <strong>Motor frame — localised hot spot:</strong> Stator winding fault, blocked
+                ventilation, or bearing problem
+              </li>
+              <li>
+                <strong>Transformer — winding pattern visible:</strong> Normal for loaded
+                transformer; check against rating
+              </li>
+              <li>
+                <strong>Cable — heat at termination:</strong> Loose gland, undersized termination,
+                or poor compression
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Thermographic severity classification (NETA / Infraspection)">
+            <p>
+              A thermographic finding is scored as a temperature differential (ΔT) read against a
+              reference point — and the reference point matters as much as the number. The table
+              below reproduces the NETA Maintenance Testing Specifications as published in the
+              Infraspection Institute&apos;s{' '}
+              <em>
+                Standard for Infrared Inspection of Electrical Systems &amp; Rotating Equipment
+              </em>{' '}
+              (2016, §10.1). It gives two separate scales — a rise above a similar component under
+              similar load, and a rise over ambient temperature — and they are not interchangeable.
+              Priority 2 exists only on the over-ambient scale; there is no similar-component band
+              for it.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Priority
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      ΔT vs similar component
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      ΔT over ambient
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
+                      Priority 4
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">1-3°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">1-10°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Possible deficiency, warrants investigation
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
+                      Priority 3
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">4-15°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">11-20°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Probable deficiency, repair as time permits
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
+                      Priority 2
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">—</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">21-40°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Monitor until corrective measures accomplished
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
+                      Priority 1
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">&gt;15°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">&gt;40°C</td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Major discrepancy, repair immediately
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Avoiding Misdiagnosis</p>
-              <p className="text-sm text-white">
-                Not every hot spot indicates a fault. Solar heating on south-facing panels, radiated
-                heat from nearby processes, reflected radiation from hot objects, and normal
-                operating temperatures can all create thermal patterns that may be misinterpreted.
-                Always consider the context: What is the load? What is nearby? Is the pattern
-                consistent across similar equipment? When in doubt, repeat the measurement under
-                different conditions.
-              </p>
-            </div>
-          </div>
-        </section>
+          <CommonMistake
+            title="Reading a ΔT without saying what it was measured against"
+            whatHappens={
+              <>
+                The same rise reads very differently depending on the reference. A connection
+                running 18°C above a similar connection under similar load is a Priority 1 major
+                discrepancy calling for immediate repair — but the same +18°C measured over ambient
+                temperature is only a Priority 3 probable deficiency, repair as time permits. A ΔT
+                quoted without its reference tells the next technician nothing, and can leave a
+                genuinely urgent fault filed as routine.
+              </>
+            }
+            doInstead={
+              <>
+                Always record both the ΔT value and what it was measured against — a similar
+                component under similar load, or ambient temperature — and read it against the
+                matching column of the table, never the other one.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Avoiding misdiagnosis">
+            <p>
+              Not every hot spot indicates a fault. Solar heating on south-facing panels, radiated
+              heat from nearby processes, reflected radiation from hot objects, and normal operating
+              temperatures can all create thermal patterns that may be misinterpreted. Always
+              consider the context: What is the load? What is nearby? Is the pattern consistent
+              across similar equipment? When in doubt, repeat the measurement under different
+              conditions.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Reporting, Trending and Standards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Reporting, trending and standards</ContentEyebrow>
+
+          <ConceptBlock title="Limited value without proper reporting and trending">
             <p>
               A thermographic survey has limited value without proper reporting and trending. The
               report must provide sufficient information for maintenance decisions, and successive
               surveys must be comparable to reveal trends over time.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Report Contents</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Survey date, time, surveyor name and qualification level</li>
-                <li className="pl-1">Camera model, serial number, last calibration date</li>
-                <li className="pl-1">Ambient temperature and humidity at time of survey</li>
-                <li className="pl-1">
-                  Equipment load conditions (actual percentage of rated load)
-                </li>
-                <li className="pl-1">
-                  For each anomaly: thermal image, visual photograph, location identifier
-                </li>
-                <li className="pl-1">
-                  Emissivity setting used, reflected temperature compensation
-                </li>
-                <li className="pl-1">Maximum temperature, reference temperature, ΔT value</li>
-                <li className="pl-1">Severity classification and recommended action</li>
-                <li className="pl-1">Comparison to previous survey data where available</li>
-              </ul>
-            </div>
+          <ConceptBlock title="Report contents">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Survey date, time, surveyor name and qualification level</li>
+              <li>Camera model, serial number, last calibration date</li>
+              <li>Ambient temperature and humidity at time of survey</li>
+              <li>Equipment load conditions (actual percentage of rated load)</li>
+              <li>For each anomaly: thermal image, visual photograph, location identifier</li>
+              <li>Emissivity setting used, reflected temperature compensation</li>
+              <li>Maximum temperature, reference temperature, ΔT value</li>
+              <li>Severity classification and recommended action</li>
+              <li>Comparison to previous survey data where available</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Trending Technique</h3>
-                <p className="text-sm text-white">
-                  For trending to be meaningful, surveys must be carried out under consistent
-                  conditions: similar load percentage, similar ambient temperature, same camera
-                  settings, same scanning angles. Plot the ΔT for each monitored connection over
-                  time. A rising trend indicates progressive deterioration and should trigger
-                  corrective action before the threshold for urgent repair is reached.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">BS EN 16714</h3>
-                <p className="text-sm text-white">
-                  BS EN 16714 provides the European standard framework for thermographic testing as
-                  a non-destructive testing method. Part 1 covers general principles, Part 2 covers
-                  equipment requirements, and Part 3 covers terms and definitions. The standard
-                  supports consistent quality in thermographic inspection across organisations and
-                  industries.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Trending technique">
+            <p>
+              For trending to be meaningful, surveys must be carried out under consistent
+              conditions: similar load percentage, similar ambient temperature, same camera
+              settings, same scanning angles. Plot the ΔT for each monitored connection over time. A
+              rising trend indicates progressive deterioration and should trigger corrective action
+              before the threshold for urgent repair is reached.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="BS EN 16714">
+            <p>
+              BS EN 16714 provides the European standard framework for thermographic testing as a
+              non-destructive testing method. Part 1 covers general principles, Part 2 covers
+              equipment requirements, and Part 3 covers terms and definitions. The standard supports
+              consistent quality in thermographic inspection across organisations and industries.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Safety During Live Scanning
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Safety during live scanning</ContentEyebrow>
+
+          <ConceptBlock title="An inherent conflict with electrical safety principles">
             <p>
               Thermographic surveys must be carried out on energised, loaded equipment to be
               meaningful. This creates an inherent conflict with electrical safety principles. Safe
               working practices must balance the need for access with the risks of working near live
               equipment.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Safe Survey Hierarchy
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Best:</strong> Scan through IR viewing windows — no cover removal, no arc
-                  flash risk, maintains IP rating
-                </li>
-                <li className="pl-1">
-                  <strong>Acceptable:</strong> Remove covers under a safe system of work with
-                  appropriate arc-rated PPE, risk assessment and competent person supervision
-                </li>
-                <li className="pl-1">
-                  <strong>Worst:</strong> Scanning with covers on — limited value as covers block IR
-                  radiation (only useful for surface temperature of the enclosure)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Safe survey hierarchy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Best:</strong> Scan through IR viewing windows — no cover removal, no arc
+                flash risk, maintains IP rating
+              </li>
+              <li>
+                <strong>Acceptable:</strong> Remove covers under a safe system of work with
+                appropriate arc-rated PPE, risk assessment and competent person supervision
+              </li>
+              <li>
+                <strong>Worst:</strong> Scanning with covers on — limited value as covers block IR
+                radiation (only useful for surface temperature of the enclosure)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Arc Flash Protection</p>
-              <p className="text-sm text-white">
-                When covers are removed from live equipment, the surveyor must wear arc-rated PPE
-                appropriate for the prospective incident energy level. This typically includes:
-                arc-rated face shield and balaclava, arc-rated shirt and trousers (or coverall),
-                insulated gloves with leather protectors, and safety footwear. The arc flash
-                boundary must be established and non-essential personnel excluded. A second person
-                should be present to act as safety observer.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Understanding the application and limitations of
-              thermographic inspection is part of the condition monitoring knowledge required for
-              maintenance technicians. You should be able to explain when and why thermographic
-              surveys are carried out and how the results inform maintenance decisions.
+          <ConceptBlock title="Arc flash protection">
+            <p>
+              When covers are removed from live equipment, the surveyor must wear arc-rated PPE
+              appropriate for the prospective incident energy level. This typically includes:
+              arc-rated face shield and balaclava, arc-rated shirt and trousers (or coverall),
+              insulated gloves with leather protectors, and safety footwear. The arc flash boundary
+              must be established and non-essential personnel excluded. A second person should be
+              present to act as safety observer.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="What gives a thermographic survey its legal standing"
+            onSite={
+              <>
+                Neither BS 7671 nor IET Guidance Note 3 sets a thermography survey interval — the
+                standing to require a survey at all comes from the Electricity at Work Regulations
+                1989, Regulation 4(2) (systems must be maintained so as to prevent danger), with HSE
+                guidance HSR25 §68 confirming that the frequency is a matter for the judgement of
+                the dutyholder, informed by the consequence of failure and the condition data
+                already held.
+              </>
+            }
+          >
+            <p>
+              Thermography is a maintenance technique the dutyholder chooses to deploy in
+              discharging that duty — the survey interval is a risk-based judgement, not a figure
+              written into any electrical standard.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">ST1426 link: </span>
+            Understanding the application and limitations of thermographic inspection is part of the
+            condition monitoring knowledge required for maintenance technicians. You should be able
+            to explain when and why thermographic surveys are carried out and how the results inform
+            maintenance decisions.
+          </p>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Severity Classification</p>
-                <ul className="space-y-0.5">
-                  <li>ΔT &lt;10°C — Monitor at next survey</li>
-                  <li>ΔT 10-35°C — Plan repair at next window</li>
-                  <li>ΔT 35-75°C — Urgent repair required</li>
-                  <li>ΔT &gt;75°C — Immediate action / shutdown</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Survey Requirements</p>
-                <ul className="space-y-0.5">
-                  <li>Equipment energised, minimum 40% load</li>
-                  <li>Record ambient temp, load %, emissivity</li>
-                  <li>Arc flash PPE if covers removed</li>
-                  <li>IR windows preferred where available</li>
-                  <li>BS EN 16714 standard framework</li>
-                </ul>
-              </div>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=JJZiefsM-j8"
+
+            title="An Introduction to Tuning a Thermal Image"
+
+            channel="SparkyNinja"
+
+            duration="36:43"
+
+            topic="Setting a thermal camera up so the image means something"
+
+            caption="Emissivity, span and palette decide whether a thermogram shows a fault or an artefact. This is the part that turns a pretty picture into evidence."
+          />
+
+          <SectionRule />
+
+          <ConceptBlock
+            title="What GN3 does and does not say about thermography"
+
+            plainEnglish="GN3 treats a thermal camera as an inspection aid and tells you how the images can be used. It does not tell you what a given temperature rise means."
+
+            onSite="Your thermogram can go on the certificate as supporting evidence — but it never replaces the measurements the inspection actually requires."
+          >
+            <p>
+              It is worth being precise about where thermography sits in the UK documents, because
+              it is easy to over- or under-claim. IET Guidance Note 3 does cover it: section 4.9,
+              &quot;Thermographic equipment&quot;, describes photographic and thermographic
+              surveying as invaluable in assisting electrical inspections, specifically for the
+              early identification of possible points of overheating in circuits.
+            </p>
+
+            <p>
+              GN3 also points at the Note to Regulation 653.2, which acknowledges that photographic
+              or thermographic evidence can be attached to the appropriate certification to support
+              observations recorded on the model forms. A thermogram is therefore not just something
+              you keep for your own records — it has a recognised place alongside the paperwork.
+            </p>
+
+            <p>
+              Two limits go with that. GN3 is explicit that thermographic evidence supports
+              observations but is not a substitute for the inspection, measurement and testing BS
+              7671 requires. And it recommends referring to the Electricity at Work Regulations and
+              HSE HSR25 before any activity that puts you close to live parts — which a survey
+              usually does, since equipment has to be energised and under load to be worth
+              surveying. Where a small installation could practically be disconnected instead, GN3
+              says that should be considered.
+            </p>
+
+            <p>
+              What GN3 does <strong>not</strong> give is a severity scale. There is no ΔT table and
+              no survey interval in either GN3 or BS 7671 — the Priority 1 to 4 bands above come
+              from the NETA specifications reproduced by the Infraspection Institute, and the
+              frequency is a dutyholder judgement under EAWR Regulation 4(2).
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            title="Thermographic severity (NETA / Infraspection)"
+            points={[
+              'Priority 4 — 1-3°C vs similar component / 1-10°C over ambient — possible deficiency.',
+              'Priority 3 — 4-15°C vs similar component / 11-20°C over ambient — probable deficiency.',
+              'Priority 2 — over-ambient scale only, 21-40°C — monitor until corrected.',
+              'Priority 1 — >15°C vs similar component / >40°C over ambient — major discrepancy, repair immediately.',
+            ]}
+          />
+
+          <KeyTakeaways
+            title="Survey requirements"
+            points={[
+              'Equipment energised, minimum 40% load.',
+              'Record ambient temp, load %, emissivity.',
+              'Arc flash PPE if covers removed.',
+              'IR windows preferred where available.',
+              'BS EN 16714 standard framework.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Visual and Sensory Inspection
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Vibration Analysis
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Visual and Sensory Inspection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-3">
-              Next: Vibration Analysis
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

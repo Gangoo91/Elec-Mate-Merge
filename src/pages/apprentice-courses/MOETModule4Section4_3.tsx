@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4 · Subsection 3 — Cable Jointing and
+ * Termination
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Electrical. Electrical plant, equipment, and systems
+ *                 maintenance requirements: removing and replacing parts,
+ *                 inspecting, testing, setting up, adjusting, cleaning, and
+ *                 functional testing."
+ *              · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Inspect and test electrical aspects of plant.
+ *                 For example, visual checks, insulation and continuity
+ *                 checks, thermographic surveys, and voltage levels."
+ *   Skills     · "Electrical. Conduct functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Cable Jointing and Termination - MOET Module 4.4.3';
@@ -113,9 +152,9 @@ const quizQuestions = [
     question: 'When stripping SWA cable for gland termination, the critical dimensions are:',
     options: [
       "The armour strip length (determined by the gland size), the outer sheath strip length, the inner sheath strip length, and the conductor tail length — all specified in the gland manufacturer's installation guide",
-      "Only the outer sheath strip length, since the gland clamps the cable on its sheath rather than the armour",
-      "Only the conductor tail length, as the gland self-adjusts to suit any armour and sheath dimensions",
-      "The bending radius and the depth of the enclosure knockout, which together fix all strip lengths",
+      'Only the outer sheath strip length, since the gland clamps the cable on its sheath rather than the armour',
+      'Only the conductor tail length, as the gland self-adjusts to suit any armour and sheath dimensions',
+      'The bending radius and the depth of the enclosure knockout, which together fix all strip lengths',
     ],
     correctAnswer: 0,
     explanation:
@@ -260,121 +299,67 @@ const faqs = [
 ];
 
 const MOETModule4Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Cable Jointing and Termination
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.4 · Subsection 3"
+        title="Cable Jointing and Termination"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Straight joints, branch joints, heat shrink, cold shrink, resin joints, SWA glands,
             crimping and torque requirements
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Straight/branch joints:</strong> Restore continuity, insulation and
-                mechanical protection
-              </li>
-              <li className="pl-1">
-                <strong>Heat/cold shrink:</strong> Two main jointing technologies for LV and MV
-                cables
-              </li>
-              <li className="pl-1">
-                <strong>SWA glands:</strong> Mechanical retention plus earth continuity through
-                armour
-              </li>
-              <li className="pl-1">
-                <strong>Test after jointing:</strong> IR, continuity and visual inspection are
-                mandatory
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Standards and Guidance
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671 Reg 526:</strong> Electrical connections — reliability and
-                accessibility
-              </li>
-              <li className="pl-1">
-                <strong>BS 7671 Reg 522.8:</strong> Joints and connections — protection and
-                enclosure
-              </li>
-              <li className="pl-1">
-                <strong>BS 6346/BS 5467:</strong> PVC and XLPE cable construction standards
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Cable installation and termination competences
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Straight/branch joints: restore continuity, insulation and mechanical protection.',
+              'Heat/cold shrink: two main jointing technologies for LV and MV cables.',
+              'SWA glands: mechanical retention plus earth continuity through armour.',
+              'Test after jointing: IR, continuity and visual inspection are mandatory.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe straight joint and branch joint construction techniques for LV cables',
               'Compare heat shrink, cold shrink and resin joint technologies and their applications',
               'Correctly terminate SWA cables using CW-type glands with earth continuity',
               'Apply crimping techniques using calibrated tools and correct die sizes',
               'Specify and apply correct torque values for electrical terminal connections',
               'Carry out post-jointing testing including insulation resistance and continuity',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Standards and guidance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671 Reg 526:</strong> electrical connections — reliability and
+                accessibility.
+              </li>
+              <li>
+                <strong>BS 7671 Reg 522.8:</strong> joints and connections — protection and
+                enclosure.
+              </li>
+              <li>
+                <strong>BS 6346/BS 5467:</strong> PVC and XLPE cable construction standards.
+              </li>
+              <li>
+                <strong>ST1426:</strong> cable installation and termination competences.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Straight Joints and Branch Joints
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Straight joints and branch joints</ContentEyebrow>
+
+          <ConceptBlock title="Straight joints and branch joints">
             <p>
               Cable joints are required when a cable must be repaired, extended, or when a new
               circuit must be tapped from an existing cable run. The quality of the joint directly
@@ -391,274 +376,225 @@ const MOETModule4Section4_3 = () => {
               joints must be in accessible positions — typically in junction boxes, distribution
               boards or purpose-made joint enclosures.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Straight Joint Construction — Key Steps
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prepare cable ends:</strong> Strip the outer sheath, armour (if SWA),
-                  bedding and core insulation to the dimensions specified in the joint kit
-                  instructions
-                </li>
-                <li className="pl-1">
-                  <strong>Clean and identify cores:</strong> Clean all surfaces with the supplied
-                  solvent wipes. Apply colour identification sleeves to maintain phase
-                  identification
-                </li>
-                <li className="pl-1">
-                  <strong>Connect conductors:</strong> Use the supplied connector barrels,
-                  compression connectors or mechanical connectors. Ensure full conductor insertion
-                  and correct crimp/torque
-                </li>
-                <li className="pl-1">
-                  <strong>Insulate individual cores:</strong> Apply core insulation using heat
-                  shrink sleeves, cold shrink tubes, or self-amalgamating tape built up to the
-                  required thickness
-                </li>
-                <li className="pl-1">
-                  <strong>Reconstruct armour continuity:</strong> For SWA cables, connect the armour
-                  wires across the joint using earth straps or the joint body
-                </li>
-                <li className="pl-1">
-                  <strong>Apply outer protection:</strong> Heat shrink, cold shrink or resin
-                  encapsulation to provide the overall mechanical and moisture protection
-                </li>
-                <li className="pl-1">
-                  <strong>Test:</strong> Insulation resistance, continuity, and visual inspection
-                  before burial or concealment
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Straight joint construction — key steps">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prepare cable ends:</strong> strip the outer sheath, armour (if SWA),
+                bedding and core insulation to the dimensions specified in the joint kit
+                instructions.
+              </li>
+              <li>
+                <strong>Clean and identify cores:</strong> clean all surfaces with the supplied
+                solvent wipes. Apply colour identification sleeves to maintain phase identification.
+              </li>
+              <li>
+                <strong>Connect conductors:</strong> use the supplied connector barrels, compression
+                connectors or mechanical connectors. Ensure full conductor insertion and correct
+                crimp/torque.
+              </li>
+              <li>
+                <strong>Insulate individual cores:</strong> apply core insulation using heat shrink
+                sleeves, cold shrink tubes, or self-amalgamating tape built up to the required
+                thickness.
+              </li>
+              <li>
+                <strong>Reconstruct armour continuity:</strong> for SWA cables, connect the armour
+                wires across the joint using earth straps or the joint body.
+              </li>
+              <li>
+                <strong>Apply outer protection:</strong> heat shrink, cold shrink or resin
+                encapsulation to provide the overall mechanical and moisture protection.
+              </li>
+              <li>
+                <strong>Test:</strong> insulation resistance, continuity, and visual inspection
+                before burial or concealment.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Branch (Tee) Joint Considerations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Through circuit integrity:</strong> The through cable must not be cut —
-                  individual cores are exposed for the branch connection
-                </li>
-                <li className="pl-1">
-                  <strong>Branch connection:</strong> Tap connectors or compression connectors join
-                  the branch conductors to the through conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Current rating:</strong> The branch connection and branch cable must be
-                  rated for the branch circuit current
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> The branch circuit must have appropriate overcurrent
-                  protection at or near the point of connection
-                </li>
-                <li className="pl-1">
-                  <strong>Armour continuity:</strong> All three cable armours must be bonded
-                  together at the joint
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Branch (tee) joint considerations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Through circuit integrity:</strong> the through cable must not be cut —
+                individual cores are exposed for the branch connection.
+              </li>
+              <li>
+                <strong>Branch connection:</strong> tap connectors or compression connectors join
+                the branch conductors to the through conductors.
+              </li>
+              <li>
+                <strong>Current rating:</strong> the branch connection and branch cable must be
+                rated for the branch circuit current.
+              </li>
+              <li>
+                <strong>Protection:</strong> the branch circuit must have appropriate overcurrent
+                protection at or near the point of connection.
+              </li>
+              <li>
+                <strong>Armour continuity:</strong> all three cable armours must be bonded together
+                at the joint.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Heat Shrink, Cold Shrink and Resin Joint Technologies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Heat shrink, cold shrink and resin technologies</ContentEyebrow>
+
+          <ConceptBlock title="Heat shrink, cold shrink and resin joint technologies">
             <p>
               Three main technologies are used for cable jointing and termination in maintenance
               work: heat shrink, cold shrink and resin-filled joints. Each has specific advantages
               and applications, and the maintenance technician must understand when to use each
               technology and the correct installation procedures.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Joint Technology Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Heat Shrink</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cold Shrink</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Resin</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Heat source needed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Yes — gas torch or heat gun
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Suitable for hazardous areas
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Restricted — open flame risk
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Yes</td>
-                      <td className="border border-white/10 px-3 py-2">Yes (once cured)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Moisture resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Good</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                      <td className="border border-white/10 px-3 py-2">Excellent</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Reusable/repairable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">No (but removable)</td>
-                      <td className="border border-white/10 px-3 py-2">No (permanent)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Best application
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">General LV/MV joints</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        MV terminations, confined spaces
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Underground, submerged joints
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Joint technology comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">Heat shrink</th>
+                    <th className="py-2 pr-4 font-medium text-white">Cold shrink</th>
+                    <th className="py-2 font-medium text-white">Resin</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Heat source needed</td>
+                    <td className="py-2 pr-4">Yes — gas torch or heat gun</td>
+                    <td className="py-2 pr-4">No</td>
+                    <td className="py-2">No</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Suitable for hazardous areas</td>
+                    <td className="py-2 pr-4">Restricted — open flame risk</td>
+                    <td className="py-2 pr-4">Yes</td>
+                    <td className="py-2">Yes (once cured)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Moisture resistance</td>
+                    <td className="py-2 pr-4">Good</td>
+                    <td className="py-2 pr-4">Excellent</td>
+                    <td className="py-2">Excellent</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Reusable/repairable</td>
+                    <td className="py-2 pr-4">No</td>
+                    <td className="py-2 pr-4">No (but removable)</td>
+                    <td className="py-2">No (permanent)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Best application</td>
+                    <td className="py-2 pr-4">General LV/MV joints</td>
+                    <td className="py-2 pr-4">MV terminations, confined spaces</td>
+                    <td className="py-2">Underground, submerged joints</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p>
+              When applying heat shrink materials, always work from the centre outward to expel air
+              and moisture. Use a rotating motion to apply heat evenly around the circumference.
+              Avoid overheating — the material should shrink smoothly without bubbling, burning or
+              becoming brittle. Look for adhesive &apos;squeeze-out&apos; at the ends of
+              adhesive-lined heat shrink, which confirms a complete seal. Allow adequate cooling
+              before handling or applying mechanical stress to the joint.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Heat Shrink Application Best Practice
-              </p>
-              <p className="text-sm text-white">
-                When applying heat shrink materials, always work from the centre outward to expel
-                air and moisture. Use a rotating motion to apply heat evenly around the
-                circumference. Avoid overheating — the material should shrink smoothly without
-                bubbling, burning or becoming brittle. Look for adhesive 'squeeze-out' at the ends
-                of adhesive-lined heat shrink, which confirms a complete seal. Allow adequate
-                cooling before handling or applying mechanical stress to the joint.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            SWA Gland Termination and Multicore Cable Termination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>SWA gland and multicore cable termination</ContentEyebrow>
+
+          <ConceptBlock title="SWA gland termination and multicore cable termination">
             <p>
               Steel wire armoured (SWA) cables are the most commonly used power cables in UK
               commercial and industrial installations. Correct gland termination is essential for
               mechanical retention of the cable, maintenance of the IP rating of the enclosure, and
               continuity of the earth path through the cable armour to the earthing system.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SWA Gland Installation Procedure (CW Type)
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Measure and mark:</strong> Refer to the gland installation dimensions for
-                  the cable size. Mark the outer sheath strip, armour strip and inner sheath strip
-                  positions
-                </li>
-                <li className="pl-1">
-                  <strong>Strip outer sheath:</strong> Score carefully around the cable, taking care
-                  not to cut into the armour wires. Remove the sheath cleanly
-                </li>
-                <li className="pl-1">
-                  <strong>Fit back nut:</strong> Thread the gland back nut over the cable before
-                  cutting the armour
-                </li>
-                <li className="pl-1">
-                  <strong>Cut armour wires:</strong> Cut each wire individually with armour wire
-                  cutters. Fan the wires outward evenly around the circumference
-                </li>
-                <li className="pl-1">
-                  <strong>Remove bedding:</strong> Strip the bedding (inner sheath) to expose the
-                  cores
-                </li>
-                <li className="pl-1">
-                  <strong>Fit gland body:</strong> Slide the gland body over the fanned armour wires
-                  into the enclosure knockout. Secure with the gland locknut inside the enclosure
-                </li>
-                <li className="pl-1">
-                  <strong>Cone and compression:</strong> Fit the cone over the armour wires, then
-                  tighten the back nut to compress the armour wires between the cone and the gland
-                  body
-                </li>
-                <li className="pl-1">
-                  <strong>Earth tag:</strong> If an external earth is required, fit the earth tag
-                  between the locknut and the enclosure
-                </li>
-                <li className="pl-1">
-                  <strong>Verify:</strong> Check the armour is firmly clamped (cable cannot be
-                  pulled out), earth continuity is confirmed, and the seal is complete
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="SWA gland installation procedure (CW type)">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Measure and mark:</strong> refer to the gland installation dimensions for
+                the cable size. Mark the outer sheath strip, armour strip and inner sheath strip
+                positions.
+              </li>
+              <li>
+                <strong>Strip outer sheath:</strong> score carefully around the cable, taking care
+                not to cut into the armour wires. Remove the sheath cleanly.
+              </li>
+              <li>
+                <strong>Fit back nut:</strong> thread the gland back nut over the cable before
+                cutting the armour.
+              </li>
+              <li>
+                <strong>Cut armour wires:</strong> cut each wire individually with armour wire
+                cutters. Fan the wires outward evenly around the circumference.
+              </li>
+              <li>
+                <strong>Remove bedding:</strong> strip the bedding (inner sheath) to expose the
+                cores.
+              </li>
+              <li>
+                <strong>Fit gland body:</strong> slide the gland body over the fanned armour wires
+                into the enclosure knockout. Secure with the gland locknut inside the enclosure.
+              </li>
+              <li>
+                <strong>Cone and compression:</strong> fit the cone over the armour wires, then
+                tighten the back nut to compress the armour wires between the cone and the gland
+                body.
+              </li>
+              <li>
+                <strong>Earth tag:</strong> if an external earth is required, fit the earth tag
+                between the locknut and the enclosure.
+              </li>
+              <li>
+                <strong>Verify:</strong> check the armour is firmly clamped (cable cannot be pulled
+                out), earth continuity is confirmed, and the seal is complete.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Multicore Cable Core Identification (BS 7671)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Single phase:</strong> Brown (line), blue (neutral), green/yellow (earth)
-                  — or grey (line), black (neutral) for older installations
-                </li>
-                <li className="pl-1">
-                  <strong>Three phase:</strong> Brown (L1), black (L2), grey (L3), blue (N),
-                  green/yellow (earth)
-                </li>
-                <li className="pl-1">
-                  <strong>SWA with reduced cores:</strong> If the cable has fewer colours, heat
-                  shrink sleeves of the correct colour must be applied at each termination point
-                </li>
-                <li className="pl-1">
-                  <strong>Control cables:</strong> Core numbering is used — reference cable schedule
-                  for identification
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Multicore cable core identification (BS 7671)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single phase:</strong> brown (line), blue (neutral), green/yellow (earth) —
+                or grey (line), black (neutral) for older installations.
+              </li>
+              <li>
+                <strong>Three phase:</strong> brown (L1), black (L2), grey (L3), blue (N),
+                green/yellow (earth).
+              </li>
+              <li>
+                <strong>SWA with reduced cores:</strong> if the cable has fewer colours, heat shrink
+                sleeves of the correct colour must be applied at each termination point.
+              </li>
+              <li>
+                <strong>Control cables:</strong> core numbering is used — reference cable schedule
+                for identification.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Crimping Techniques, Torque Requirements and Post-Jointing Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Crimping, torque and post-jointing testing</ContentEyebrow>
+
+          <ConceptBlock title="Crimping techniques, torque requirements and post-jointing testing">
             <p>
               The quality of electrical connections is determined by the method of making the
               connection and the force applied. Crimping and torquing are the two primary methods of
@@ -666,158 +602,138 @@ const MOETModule4Section4_3 = () => {
               technique — improvisation with incorrect tools is a leading cause of connection
               failures, overheating and fires.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crimping Best Practice</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tool selection:</strong> Use a calibrated crimp tool with interchangeable
-                  dies matched to the terminal type and conductor size
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor preparation:</strong> Strip insulation to the correct length —
-                  no more, no less. Clean the conductor if corroded
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal selection:</strong> Match the terminal's barrel size to the
-                  conductor cross-sectional area. Colour-coded terminals: red (0.5-1.5 mm²), blue
-                  (1.5-2.5 mm²), yellow (4-6 mm²)
-                </li>
-                <li className="pl-1">
-                  <strong>Full insertion:</strong> The conductor must be fully inserted into the
-                  crimp barrel — verify by checking through the inspection window
-                </li>
-                <li className="pl-1">
-                  <strong>Crimp position:</strong> Crimp in the barrel zone only, not on the
-                  insulation grip or the transition zone
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> The completed crimp should be symmetrical, with no
-                  cracks, and should not rotate or pull off the conductor under moderate manual
-                  force
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Crimping best practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Tool selection:</strong> use a calibrated crimp tool with interchangeable
+                dies matched to the terminal type and conductor size.
+              </li>
+              <li>
+                <strong>Conductor preparation:</strong> strip insulation to the correct length — no
+                more, no less. Clean the conductor if corroded.
+              </li>
+              <li>
+                <strong>Terminal selection:</strong> match the terminal&apos;s barrel size to the
+                conductor cross-sectional area. Colour-coded terminals: red (0.5-1.5 mm²), blue
+                (1.5-2.5 mm²), yellow (4-6 mm²).
+              </li>
+              <li>
+                <strong>Full insertion:</strong> the conductor must be fully inserted into the crimp
+                barrel — verify by checking through the inspection window.
+              </li>
+              <li>
+                <strong>Crimp position:</strong> crimp in the barrel zone only, not on the
+                insulation grip or the transition zone.
+              </li>
+              <li>
+                <strong>Verification:</strong> the completed crimp should be symmetrical, with no
+                cracks, and should not rotate or pull off the conductor under moderate manual force.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Torque Requirements for Common Terminals
-              </p>
-              <p className="text-sm text-white mb-3">
-                Torque values vary by manufacturer and terminal type. Always refer to the specific
-                manufacturer's data. The following are typical ranges for guidance:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>M3.5 terminals (MCBs, RCDs):</strong> 1.2-2.0 Nm typically
-                </li>
-                <li className="pl-1">
-                  <strong>M4 terminals (small contactors, relays):</strong> 1.5-2.5 Nm typically
-                </li>
-                <li className="pl-1">
-                  <strong>M5 terminals (distribution equipment):</strong> 2.5-4.0 Nm typically
-                </li>
-                <li className="pl-1">
-                  <strong>M6 terminals (switchgear, busbars):</strong> 4.0-8.0 Nm typically
-                </li>
-                <li className="pl-1">
-                  <strong>M8-M10 terminals (HV equipment):</strong> 10-25 Nm typically
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Torque requirements for common terminals">
+            <p>
+              Torque values vary by manufacturer and terminal type. Always refer to the specific
+              manufacturer&apos;s data. The following are typical ranges for guidance:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>M3.5 terminals (MCBs, RCDs):</strong> 1.2-2.0 Nm typically.
+              </li>
+              <li>
+                <strong>M4 terminals (small contactors, relays):</strong> 1.5-2.5 Nm typically.
+              </li>
+              <li>
+                <strong>M5 terminals (distribution equipment):</strong> 2.5-4.0 Nm typically.
+              </li>
+              <li>
+                <strong>M6 terminals (switchgear, busbars):</strong> 4.0-8.0 Nm typically.
+              </li>
+              <li>
+                <strong>M8-M10 terminals (HV equipment):</strong> 10-25 Nm typically.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Jointing Test Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Test between all conductors and earth, and
-                  between conductors. Minimum 1.0 MΩ at 500 V DC for LV circuits (BS 7671 Table 6.3)
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity:</strong> Measure and record the resistance of each conductor
-                  through the joint. Compare with calculated values to confirm correct connection
-                </li>
-                <li className="pl-1">
-                  <strong>Earth continuity:</strong> For SWA cables, verify the armour continuity
-                  through the joint and confirm the gland earth connection
-                </li>
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Check for exposed conductors, correct sealing,
-                  mechanical integrity, correct phase identification, and overall workmanship
-                </li>
-                <li className="pl-1">
-                  <strong>High-voltage test (MV joints):</strong> For medium voltage joints, a DC
-                  withstand test or VLF test may be required per the joint manufacturer's
-                  commissioning procedure
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Cable jointing and termination is a core practical
+          <ConceptBlock title="Post-jointing test requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation resistance:</strong> test between all conductors and earth, and
+                between conductors. Minimum 1.0 MΩ at 500 V DC for LV circuits (BS 7671 Table 64).
+              </li>
+              <li>
+                <strong>Continuity:</strong> measure and record the resistance of each conductor
+                through the joint. Compare with calculated values to confirm correct connection.
+              </li>
+              <li>
+                <strong>Earth continuity:</strong> for SWA cables, verify the armour continuity
+                through the joint and confirm the gland earth connection.
+              </li>
+              <li>
+                <strong>Visual inspection:</strong> check for exposed conductors, correct sealing,
+                mechanical integrity, correct phase identification, and overall workmanship.
+              </li>
+              <li>
+                <strong>High-voltage test (MV joints):</strong> for medium voltage joints, a DC
+                withstand test or VLF test may be required per the joint manufacturer&apos;s
+                commissioning procedure.
+              </li>
+            </ul>
+            <p>
+              <strong>ST1426 link:</strong> cable jointing and termination is a core practical
               competence for maintenance technicians. The ability to produce reliable, safe and
               correctly tested cable joints is essential for maintaining the integrity of electrical
               installations and preventing faults, fires and injuries.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz
-            title="Test Your Knowledge — Cable Jointing and Termination"
-            questions={quizQuestions}
-          />
-        </section>
+          <Bleed>
+            <Quiz
+              title="Test Your Knowledge — Cable Jointing and Termination"
+              questions={quizQuestions}
+            />
+          </Bleed>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Component Removal
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4-4">
-              Next: Use of Approved Spare Parts
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Component Removal and Replacement
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Use of Approved Spare Parts
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

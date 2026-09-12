@@ -1,8 +1,42 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 3 · Subsection 2 — Collecting Witness Statements
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This subsection covers evidence and documentation for
+ * the EPA professional discussion, which the following ST1426 statements
+ * genuinely fit (reused from the Module 1/4 conversions where they were
+ * verified — quoted rather than numbered, as the published K/S/B numbering
+ * has not been verified against a primary source):
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Collecting Witness Statements - MOET Module 7 Section 3.2';
@@ -41,10 +75,10 @@ const quickCheckQuestions = [
     id: 'witness-timing',
     question: 'When should you request witness statements during your apprenticeship?',
     options: [
-      "Only in the final week before your end-point assessment is booked",
+      'Only in the final week before your end-point assessment is booked',
       "As close to the activity as possible, while the details are fresh in both your mind and the witness's mind",
-      "Only after you have completed the entire apprenticeship programme",
-      "At the very start of the apprenticeship, before you have done the work",
+      'Only after you have completed the entire apprenticeship programme',
+      'At the very start of the apprenticeship, before you have done the work',
     ],
     correctIndex: 1,
     explanation:
@@ -256,562 +290,475 @@ const faqs = [
 ];
 
 const MOETModule7Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Collecting Witness Statements
-          </h1>
-          <p className="text-white">
-            Obtaining specific, credible third-party evidence to strengthen your EPA portfolio
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.3 · Subsection 2"
+        title="Collecting Witness Statements"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Obtaining specific, credible third-party evidence to strengthen your EPA portfolio.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Who:</strong> Supervisors, qualified colleagues who observed you
-              </li>
-              <li className="pl-1">
-                <strong>What:</strong> Specific activities, observable competence, KSBs
-              </li>
-              <li className="pl-1">
-                <strong>When:</strong> As soon as possible after the activity
-              </li>
-              <li className="pl-1">
-                <strong>Format:</strong> Named, signed, dated, role identified
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Credibility:</strong> Independent verification of competence
-              </li>
-              <li className="pl-1">
-                <strong>Range:</strong> Multiple witnesses covering different activities
-              </li>
-              <li className="pl-1">
-                <strong>Specificity:</strong> Observable actions, not general opinions
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Supports professional discussion evidence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Who: supervisors, qualified colleagues who observed you.',
+              'What: specific activities, observable competence, KSBs.',
+              'When: as soon as possible after the activity.',
+              'Format: named, signed, dated, role identified.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify appropriate witnesses for different types of workplace evidence',
               'Request and guide witnesses to produce specific, KSB-linked statements',
               'Time your requests to capture detailed, accurate recollections',
               'Integrate witness statements into your portfolio mapping structure',
               'Ensure statements meet EPAO formatting and authentication requirements',
               'Use witness evidence to strengthen your professional discussion preparation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Credibility:</strong> independent verification of competence.
+              </li>
+              <li>
+                <strong>Range:</strong> multiple witnesses covering different activities.
+              </li>
+              <li>
+                <strong>Specificity:</strong> observable actions, not general opinions.
+              </li>
+              <li>
+                <strong>ST1426:</strong> supports professional discussion evidence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Who Should Provide Witness Statements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Who should provide witness statements</ContentEyebrow>
+
+          <ConceptBlock title="Who should provide witness statements">
             <p>
               The credibility of a witness statement depends on who provides it. The ideal witness
               is someone who directly observed your work, has the technical competence to judge the
               quality of what they observed, and is recognised as a credible source within the
               industry.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Suitable Witnesses by Priority
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct supervisor:</strong> Best source — observes your work regularly and
-                  can comment on development over time
-                </li>
-                <li className="pl-1">
-                  <strong>Qualified electrician/technician:</strong> Can assess technical competence
-                  and workmanship quality
-                </li>
-                <li className="pl-1">
-                  <strong>Engineering manager:</strong> Can comment on professional behaviours,
-                  communication and teamwork
-                </li>
-                <li className="pl-1">
-                  <strong>Workplace mentor:</strong> Can describe your learning journey and
-                  development
-                </li>
-                <li className="pl-1">
-                  <strong>Client/customer representative:</strong> Can comment on communication,
-                  professionalism and service quality
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Suitable witnesses by priority">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct supervisor:</strong> best source — observes your work regularly and
+                can comment on development over time.
+              </li>
+              <li>
+                <strong>Qualified electrician/technician:</strong> can assess technical competence
+                and workmanship quality.
+              </li>
+              <li>
+                <strong>Engineering manager:</strong> can comment on professional behaviours,
+                communication and teamwork.
+              </li>
+              <li>
+                <strong>Workplace mentor:</strong> can describe your learning journey and
+                development.
+              </li>
+              <li>
+                <strong>Client/customer representative:</strong> can comment on communication,
+                professionalism and service quality.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Who Should NOT Provide Statements
-              </p>
-              <p className="text-sm text-white">
-                Avoid witness statements from people who did not directly observe the activity
-                (hearsay is not evidence), family members or personal friends (lack of objectivity),
-                unqualified colleagues who cannot judge technical competence, or anyone who would
-                not be considered a credible professional witness. The assessor evaluates the
-                credibility of each witness as part of reviewing your portfolio.
-              </p>
-            </div>
+          <CommonMistake
+            title="Who should NOT provide statements"
+            whatHappens={
+              <>
+                Witness statements from people who did not directly observe the activity (hearsay is
+                not evidence), family members or personal friends (lack of objectivity), unqualified
+                colleagues who cannot judge technical competence, or anyone who would not be
+                considered a credible professional witness weaken the portfolio.
+              </>
+            }
+            doInstead={
+              <>
+                The assessor evaluates the credibility of each witness as part of reviewing your
+                portfolio — choose witnesses who genuinely observed the work and can judge it.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Aim for at least 3 different witnesses across your
-              portfolio. This demonstrates that multiple people have observed and can vouch for your
-              competence, which is more convincing than a single person's opinion.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> aim for at least 3 different witnesses across your
+            portfolio. This demonstrates that multiple people have observed and can vouch for your
+            competence, which is more convincing than a single person&apos;s opinion.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            What Makes an Effective Witness Statement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>What makes an effective witness statement</ContentEyebrow>
+
+          <ConceptBlock title="What makes an effective witness statement">
             <p>
               The difference between a useful witness statement and a useless one is specificity.
               The assessor needs to see evidence of observable competence, not a character
               reference. Guiding your witnesses on what to include makes all the difference.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Elements of a Strong Witness Statement
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Date and location:</strong> When and where the activity took place
-                </li>
-                <li className="pl-1">
-                  <strong>Activity description:</strong> What the task was and what equipment was
-                  involved
-                </li>
-                <li className="pl-1">
-                  <strong>Observable actions:</strong> Specific things the witness saw you do (e.g.,
-                  "carried out safe isolation correctly")
-                </li>
-                <li className="pl-1">
-                  <strong>Quality assessment:</strong> The standard of work observed (e.g., "neat
-                  terminations, correct torque applied")
-                </li>
-                <li className="pl-1">
-                  <strong>Professional behaviours:</strong> Communication, safety awareness,
-                  initiative demonstrated
-                </li>
-                <li className="pl-1">
-                  <strong>KSB reference:</strong> Which areas of the standard the activity
-                  demonstrates (optional but helpful)
-                </li>
-              </ul>
+          <ConceptBlock title="Essential elements of a strong witness statement">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date and location:</strong> when and where the activity took place.
+              </li>
+              <li>
+                <strong>Activity description:</strong> what the task was and what equipment was
+                involved.
+              </li>
+              <li>
+                <strong>Observable actions:</strong> specific things the witness saw you do (e.g.,
+                &quot;carried out safe isolation correctly&quot;).
+              </li>
+              <li>
+                <strong>Quality assessment:</strong> the standard of work observed (e.g., &quot;neat
+                terminations, correct torque applied&quot;).
+              </li>
+              <li>
+                <strong>Professional behaviours:</strong> communication, safety awareness,
+                initiative demonstrated.
+              </li>
+              <li>
+                <strong>KSB reference:</strong> which areas of the standard the activity
+                demonstrates (optional but helpful).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Weak vs strong witness statements">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Aspect</th>
+                    <th className="py-2 pr-4 font-medium text-white">Weak statement</th>
+                    <th className="py-2 font-medium text-white">Strong statement</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Content</td>
+                    <td className="py-2 pr-4">&quot;Good worker, always on time&quot;</td>
+                    <td className="py-2">
+                      &quot;On 15 Jan, I observed safe isolation of MCC-3...&quot;
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Specificity</td>
+                    <td className="py-2 pr-4">General praise, no dates or details</td>
+                    <td className="py-2">Named activity, dated, specific actions described</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Evidence value</td>
+                    <td className="py-2 pr-4">Minimal — character reference only</td>
+                    <td className="py-2">High — verifiable competence evidence</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">KSB coverage</td>
+                    <td className="py-2 pr-4">None identifiable</td>
+                    <td className="py-2">Multiple KSBs clearly demonstrated</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Weak vs Strong Witness Statements
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Weak Statement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Strong Statement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Content</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Good worker, always on time"
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "On 15 Jan, I observed safe isolation of MCC-3..."
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Specificity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General praise, no dates or details
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Named activity, dated, specific actions described
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Evidence value</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal — character reference only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High — verifiable competence evidence
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">KSB coverage</td>
-                      <td className="border border-white/10 px-3 py-2">None identifiable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple KSBs clearly demonstrated
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A witness statement that describes one specific activity
+            <p>
+              <strong>Key point:</strong> a witness statement that describes one specific activity
               in detail is worth more than three vague statements about your general capabilities.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Timing and Planning Your Requests
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Timing and planning your requests</ContentEyebrow>
+
+          <ConceptBlock title="Timing and planning your requests">
             <p>
               Timing is critical for effective witness statements. The best time to request one is
               within a few days of the activity, while details are fresh. Planning ahead —
               identifying which activities need witness evidence and who will provide it — avoids a
               last-minute rush.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Planning Your Witness Evidence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Identify target activities:</strong> Plan which workplace activities you
-                  want witnessed and evidenced
-                </li>
-                <li className="pl-1">
-                  <strong>Brief the witness in advance:</strong> Let them know you would like a
-                  statement after the task
-                </li>
-                <li className="pl-1">
-                  <strong>Request promptly:</strong> Ask within a few days of the activity while it
-                  is fresh
-                </li>
-                <li className="pl-1">
-                  <strong>Provide the template:</strong> Give them a pre-formatted document with
-                  prompts
-                </li>
-                <li className="pl-1">
-                  <strong>Follow up politely:</strong> If the statement has not been returned,
-                  follow up within a week
-                </li>
-                <li className="pl-1">
-                  <strong>Review and file:</strong> Check the statement covers the intended KSBs and
-                  file it in your portfolio
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Planning your witness evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify target activities:</strong> plan which workplace activities you
+                want witnessed and evidenced.
+              </li>
+              <li>
+                <strong>Brief the witness in advance:</strong> let them know you would like a
+                statement after the task.
+              </li>
+              <li>
+                <strong>Request promptly:</strong> ask within a few days of the activity while it is
+                fresh.
+              </li>
+              <li>
+                <strong>Provide the template:</strong> give them a pre-formatted document with
+                prompts.
+              </li>
+              <li>
+                <strong>Follow up politely:</strong> if the statement has not been returned, follow
+                up within a week.
+              </li>
+              <li>
+                <strong>Review and file:</strong> check the statement covers the intended KSBs and
+                file it in your portfolio.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Helping Your Witness Write Effectively
-              </p>
-              <p className="text-sm text-white">
-                Most supervisors and colleagues are not familiar with apprenticeship evidence
-                requirements. Help them by: reminding them of the specific activity (date, location,
-                what you were doing), providing a template with prompts, and explaining that
-                specific observations are more useful than general comments. Make the process as
-                easy as possible for them — busy professionals are more likely to provide a
-                statement if it takes ten minutes rather than an hour.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Build witness statement collection into your regular
-              apprenticeship routine. After any significant maintenance activity, ask yourself:
-              "Should I get a witness statement for this?"
+          <ConceptBlock title="Helping your witness write effectively">
+            <p>
+              Most supervisors and colleagues are not familiar with apprenticeship evidence
+              requirements. Help them by: reminding them of the specific activity (date, location,
+              what you were doing), providing a template with prompts, and explaining that specific
+              observations are more useful than general comments. Make the process as easy as
+              possible for them — busy professionals are more likely to provide a statement if it
+              takes ten minutes rather than an hour.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Key point:</strong> build witness statement collection into your regular
+              apprenticeship routine. After any significant maintenance activity, ask yourself:
+              &quot;Should I get a witness statement for this?&quot;
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Integrating Statements into Your Portfolio
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Integrating statements into your portfolio</ContentEyebrow>
+
+          <ConceptBlock title="Integrating statements into your portfolio">
             <p>
               Witness statements are most effective when they are integrated into your portfolio
               structure, cross-referenced to relevant evidence and KSBs. An isolated statement filed
               at the back of the folder loses much of its impact.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Integration Steps</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Assign a reference code (e.g., WS-01, WS-02) matching your portfolio system
-                </li>
-                <li className="pl-1">Cross-reference the statement to your KSB mapping matrix</li>
-                <li className="pl-1">
-                  Link it to related evidence (work log entry, photographs, reflective account)
-                </li>
-                <li className="pl-1">
-                  Ensure the activity described in the statement matches your own documentation
-                </li>
-                <li className="pl-1">
-                  Prepare to discuss the witnessed activity in your professional discussion
-                </li>
-                <li className="pl-1">
-                  Store the original (signed) securely and keep a copy in your working portfolio
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Witness statements corroborate your own evidence. When the
+          <ConceptBlock title="Integration steps">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Assign a reference code (e.g., WS-01, WS-02) matching your portfolio system.</li>
+              <li>Cross-reference the statement to your KSB mapping matrix.</li>
+              <li>
+                Link it to related evidence (work log entry, photographs, reflective account).
+              </li>
+              <li>
+                Ensure the activity described in the statement matches your own documentation.
+              </li>
+              <li>Prepare to discuss the witnessed activity in your professional discussion.</li>
+              <li>
+                Store the original (signed) securely and keep a copy in your working portfolio.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> witness statements corroborate your own evidence. When the
               assessor sees that your activity log, your reflective account, and an independent
               witness statement all describe the same activity consistently, the evidence is highly
               convincing.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Using Witness Evidence in the Professional Discussion
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Using witness evidence in the professional discussion</ContentEyebrow>
+
+          <ConceptBlock title="Using witness evidence in the professional discussion">
             <p>
               During the professional discussion, the assessor may reference witness statements and
               ask you to expand on the activities described. Being prepared to discuss witnessed
               activities in detail demonstrates that the evidence is genuine and that you have deep
               understanding of your own practice.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preparing to Discuss Witnessed Activities
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Re-read each statement:</strong> Refresh your memory of what the witness
-                  described
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare to add detail:</strong> The assessor may ask for more information
-                  than the statement contains
-                </li>
-                <li className="pl-1">
-                  <strong>Explain your reasoning:</strong> Be ready to discuss why you approached
-                  the task as you did
-                </li>
-                <li className="pl-1">
-                  <strong>Connect to learning:</strong> Describe what you learned from the
-                  experience
-                </li>
-                <li className="pl-1">
-                  <strong>Link to standards:</strong> Explain how the activity demonstrates specific
-                  KSBs
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Example Discussion Questions from Witness Evidence
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  "Your supervisor mentions you carried out safe isolation. Can you talk me through
-                  the exact procedure you followed?"
-                </li>
-                <li className="pl-1">
-                  "The witness describes your fault diagnosis approach. What made you choose that
-                  method over alternatives?"
-                </li>
-                <li className="pl-1">
-                  "This statement mentions good communication with the production team. How did you
-                  explain the fault and repair to them?"
-                </li>
-                <li className="pl-1">
-                  "What would you do differently if you encountered the same fault again?"
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Witness statements provide independent verification of
-              your workplace competence. During the professional discussion, the assessor may ask
-              you to expand on activities described in witness statements — be prepared to discuss
-              them in detail and with confidence.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Who:</strong> Supervisors, qualified colleagues, mentors who directly
-                observed the activity
+          <ConceptBlock title="Preparing to discuss witnessed activities">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Re-read each statement:</strong> refresh your memory of what the witness
+                described.
               </li>
-              <li className="pl-1">
-                <strong>When:</strong> Within days of the activity — do not wait months
+              <li>
+                <strong>Prepare to add detail:</strong> the assessor may ask for more information
+                than the statement contains.
               </li>
-              <li className="pl-1">
-                <strong>What to include:</strong> Date, activity, observable actions, quality
-                assessment, KSBs demonstrated
+              <li>
+                <strong>Explain your reasoning:</strong> be ready to discuss why you approached the
+                task as you did.
               </li>
-              <li className="pl-1">
-                <strong>Format:</strong> Named witness, role stated, signed, dated
+              <li>
+                <strong>Connect to learning:</strong> describe what you learned from the experience.
               </li>
-              <li className="pl-1">
-                <strong>Number:</strong> Aim for 3-6 from different observers covering different
-                activities
-              </li>
-              <li className="pl-1">
-                <strong>Integration:</strong> Cross-reference to KSB matrix and related portfolio
-                evidence
-              </li>
-              <li className="pl-1">
-                <strong>Preparation:</strong> Be ready to discuss every witnessed activity in detail
-              </li>
-              <li className="pl-1">
-                <strong>Template:</strong> Provide prompts to help witnesses write specific, useful
-                statements
+              <li>
+                <strong>Link to standards:</strong> explain how the activity demonstrates specific
+                KSBs.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Example discussion questions from witness evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                &quot;Your supervisor mentions you carried out safe isolation. Can you talk me
+                through the exact procedure you followed?&quot;
+              </li>
+              <li>
+                &quot;The witness describes your fault diagnosis approach. What made you choose that
+                method over alternatives?&quot;
+              </li>
+              <li>
+                &quot;This statement mentions good communication with the production team. How did
+                you explain the fault and repair to them?&quot;
+              </li>
+              <li>
+                &quot;What would you do differently if you encountered the same fault again?&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Witness Statements" questions={quizQuestions} />
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> witness statements provide independent verification of
+            your workplace competence. During the professional discussion, the assessor may ask you
+            to expand on activities described in witness statements — be prepared to discuss them in
+            detail and with confidence.
+          </p>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Building a Portfolio
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section3-3">
-              Next: Logging Activities
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <Scenario
+            title="A witness statement that proves nothing"
+
+            situation={
+              <>
+                <p>
+                  An apprentice submits a witness statement for a motor replacement. It reads: "I
+                  confirm that [name] carried out this work to a good standard." It is signed and
+                  dated by a supervisor.
+                </p>
+
+                <p>The assessor rejects it.</p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Understand why it fails. It attests to a standard rather than describing what was
+                  observed, so it gives the assessor nothing to map against a KSB. "To a good
+                  standard" is an opinion; the evidence has to be an account.
+                </p>
+
+                <p>
+                  Get the witness to describe what they actually saw you do: that you isolated and
+                  proved dead before starting, that you checked the replacement against the
+                  nameplate, that you took insulation resistance readings before reconnection, that
+                  you tested for rotation before coupling the load.
+                </p>
+
+                <p>
+                  Make sure the witness is competent to judge what they are attesting to, and that
+                  the statement says who they are and in what capacity they observed it.
+                </p>
+
+                <p>
+                  Tie it to a date, a location and a job reference so it can be cross-checked
+                  against your own log and the plant records.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                The assessor is not questioning whether the work happened. They are asking which
+                knowledge, skills and behaviours it demonstrates, and a statement with no observable
+                detail cannot answer that. This is the most common reason portfolio evidence gets
+                returned, and it costs weeks — the work is done and the witness has moved on, so the
+                statement often cannot be rewritten with any authority.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Who: supervisors, qualified colleagues, mentors who directly observed the activity.',
+              'When: within days of the activity — do not wait months.',
+              'What to include: date, activity, observable actions, quality assessment, KSBs demonstrated.',
+              'Format: named witness, role stated, signed, dated.',
+              'Number: aim for 3-6 from different observers covering different activities.',
+              'Integration: cross-reference to KSB matrix and related portfolio evidence.',
+              'Preparation: be ready to discuss every witnessed activity in detail.',
+              'Template: provide prompts to help witnesses write specific, useful statements.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Witness Statements" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Building a Work-Based Portfolio
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Logging On-the-Job Activities
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

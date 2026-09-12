@@ -4,36 +4,35 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '6.4.1',
-      title: 'Shift handover procedures',
-      description: 'Shift handover protocols, information transfer and continuity procedures',
-      icon: Clock,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section4-1',
-    },
-    {
-      number: '6.4.2',
-      title: 'Communicating with supervisors and engineers',
-      description: 'Professional communication, reporting lines and technical discussions',
-      icon: UserCheck,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section4-2',
-    },
-    {
-      number: '6.4.3',
-      title: 'Liaising with non-technical staff',
-      description: 'Communication with operations, management and non-technical personnel',
-      icon: Users,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section4-3',
-    },
-    {
-      number: '6.4.4',
-      title: 'Professional behaviour and teamwork',
-      description: 'Professional standards, teamwork principles and workplace behaviour',
-      icon: Handshake,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section4-4',
-    },
-  ];
-
+  {
+    number: '6.4.1',
+    title: 'Shift handover procedures',
+    description: 'Shift handover protocols, information transfer and continuity procedures',
+    icon: Clock,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section4-1',
+  },
+  {
+    number: '6.4.2',
+    title: 'Communicating with supervisors and engineers',
+    description: 'Professional communication, reporting lines and technical discussions',
+    icon: UserCheck,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section4-2',
+  },
+  {
+    number: '6.4.3',
+    title: 'Liaising with non-technical staff',
+    description: 'Communication with operations, management and non-technical personnel',
+    icon: Users,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section4-3',
+  },
+  {
+    number: '6.4.4',
+    title: 'Professional behaviour and teamwork',
+    description: 'Professional standards, teamwork principles and workplace behaviour',
+    icon: Handshake,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section4-4',
+  },
+];
 
 const MOETModule6Section4 = () => {
   useSEO(

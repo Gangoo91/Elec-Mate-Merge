@@ -195,7 +195,7 @@ const LEDDriverCalculator = () => {
     const verdict: CalcVerdict = result.status === 'warning' ? 'warn' : result.status;
     return {
       meta: {
-        title: 'LED Driver Calculator',
+        title: 'LED Driver',
         subtitle: `Driver sizing for a ${connectionType} LED array`,
       },
       headline: [
@@ -213,7 +213,10 @@ const LEDDriverCalculator = () => {
             { label: 'LED forward voltage', value: `${ledVoltage} V` },
             { label: 'LED forward current', value: `${ledCurrent} mA` },
             { label: 'Number of LEDs', value: numLeds },
-            { label: 'Connection type', value: connectionType },
+            {
+              label: 'Connection type',
+              value: connectionOptions.find((c) => c.value === connectionType)?.label ?? connectionType,
+            },
             { label: 'Supply voltage', value: `${supplyVoltage} V` },
             { label: 'Driver efficiency', value: efficiency },
           ],

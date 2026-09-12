@@ -27,6 +27,7 @@ import {
   DEFAULT_CALC_DISCLAIMER,
   reportHasContent,
 } from '@/lib/calculator-report';
+import { CALCULATION_REPORT_SAVED } from '@/hooks/useCalculationReports';
 
 interface CalculationPdfButtonProps {
   /** Called on click. Return null when there is nothing to report yet. */
@@ -35,6 +36,8 @@ interface CalculationPdfButtonProps {
   disabled?: boolean;
   className?: string;
   label?: string;
+  /** Stored with the saved copy so it can link back to this calculator. */
+  calculatorSlug?: string;
 }
 
 export function CalculationPdfButton({
@@ -42,6 +45,7 @@ export function CalculationPdfButton({
   disabled,
   className,
   label = 'PDF for client',
+  calculatorSlug,
 }: CalculationPdfButtonProps) {
   const { toast } = useToast();
   const [busy, setBusy] = useState(false);
@@ -68,6 +72,7 @@ export function CalculationPdfButton({
     try {
       const { data, error } = await supabase.functions.invoke('generate-calculation-pdf', {
         body: {
+          calculatorSlug,
           report: {
             ...built,
             // Named to match the payload the template expects. The server
@@ -88,15 +93,31 @@ export function CalculationPdfButton({
       const blob = await res.blob();
       await saveOrShareFile(blob, data.filename || 'calculation.pdf');
 
+      // Tell any open "Saved reports" list to refresh — the row is already written
+      // by the edge function, but a list mounted before this would not show it.
+      window.dispatchEvent(new Event(CALCULATION_REPORT_SAVED));
+
       toast({
         title: 'PDF ready',
         description: 'Saved and ready to send to your client.',
       });
     } catch (err) {
       console.error('[CalculationPdfButton] failed', err);
+      // The raw message is usually transport-level ("Edge Function returned a
+      // non-2xx status code") — alarming and useless to an electrician stood in
+      // a loft. The detail goes to the console; the toast says what to do.
+      const message = err instanceof Error ? err.message : '';
+      // Verified against the real strings: Supabase surfaces "Failed to send a
+      // request to the Edge Function" when the call never lands, and "Edge
+      // Function returned a non-2xx status code" when it fails server-side.
+      const isTransport =
+        !message ||
+        /Edge Function|Failed to fetch|NetworkError|Load failed|fetch failed/i.test(message);
       toast({
         title: 'Could not create the PDF',
-        description: err instanceof Error ? err.message : 'Please try again',
+        description: isTransport
+          ? 'Check your connection and try again — the calculation is still here.'
+          : message,
         variant: 'destructive',
       });
     } finally {

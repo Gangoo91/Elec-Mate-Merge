@@ -38,6 +38,22 @@ const CATEGORY_LABELS: Record<string, string> = {
   messages: 'Messages',
 };
 
+/* What each category actually sends. `ToggleRow` has taken a subtitle since it
+   was written and nothing ever passed one, so this screen was eight bare nouns
+   and a switch — you had to mute a category to find out what it did. Deciding
+   whether to allow a notification means knowing what turns up when you do. */
+const CATEGORY_BLURBS: Record<string, string> = {
+  daily_briefing: 'One morning summary, and a wrap-up at the end of the day',
+  tasks_projects: 'Jobs booked for today, and tasks that have gone overdue',
+  invoices_quotes: 'Overdue invoices, quotes about to expire, payments received',
+  certificates_compliance:
+    'Insurance, scheme membership, ECS card and instrument calibration expiries',
+  study_centre: 'What to study next, streaks, mock exam follow-ups and your weekly recap',
+  mental_health: 'The daily check-in, and replies from a peer supporter',
+  apprentice: 'Assessment deadlines and off-the-job hours running behind',
+  messages: 'Replies from your tutor, employer and the Elec-Mate team',
+};
+
 const humanise = (k: string) =>
   k.replace(/_/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
 
@@ -315,28 +331,28 @@ const NotificationsTab = () => {
               <div className="px-5 sm:px-6 py-4 space-y-2.5">
                 <div className="flex items-center gap-2">
                   <Dot tone={permissionTone} />
-                  <span className="text-[12.5px] text-white/80">
+                  <span className="text-[12.5px] text-white">
                     Permission: <span className="text-white">{permissionLabel}</span>
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Dot tone={deviceCount > 0 ? 'green' : 'amber'} />
-                  <span className="text-[12.5px] text-white/80">{deviceSummary}</span>
+                  <span className="text-[12.5px] text-white">{deviceSummary}</span>
                 </div>
-                <p className="text-[11.5px] text-white/55 leading-relaxed pl-4">
+                <p className="text-[11.5px] text-white leading-relaxed pl-4">
                   {channelLine} iOS, Android and web are all live.
                 </p>
               </div>
 
               <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-3">
-                <span className="text-[12.5px] text-white/65">Send a test to this device</span>
+                <span className="text-[12.5px] text-white">Send a test to this device</span>
                 <TextAction onClick={handleTestNotification}>
                   {isTestingSend ? 'Sending…' : 'Send test'}
                 </TextAction>
               </div>
             </>
           ) : (
-            <div className="px-5 sm:px-6 py-6 text-[12.5px] text-white/60 leading-relaxed">
+            <div className="px-5 sm:px-6 py-6 text-[12.5px] text-white leading-relaxed">
               Push notifications aren’t supported in this browser. Install the Elec-Mate app or
               add it to your home screen to receive alerts.
             </div>
@@ -364,6 +380,7 @@ const NotificationsTab = () => {
               <ToggleRow
                 key={key}
                 label={CATEGORY_LABELS[key] ?? humanise(key)}
+                subtitle={CATEGORY_BLURBS[key]}
                 checked={notifPrefs[key]}
                 onCheckedChange={(v) => updatePreference(key, v)}
                 disabled={allMuted || isPrefsLoading}
@@ -381,7 +398,7 @@ const NotificationsTab = () => {
           action={<TextAction onClick={() => navigate('/notifications')}>View all</TextAction>}
         >
           {recent.length === 0 ? (
-            <div className="px-5 sm:px-6 py-6 text-[12.5px] text-white/55">
+            <div className="px-5 sm:px-6 py-6 text-[12.5px] text-white">
               No notifications yet. New alerts will appear here.
             </div>
           ) : (
@@ -404,13 +421,13 @@ const NotificationsTab = () => {
                   />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-3">
-                      <span className={cn('text-[13.5px] truncate', n.is_read ? 'text-white/75' : 'text-white font-medium')}>
+                      <span className={cn('text-[13.5px] truncate', n.is_read ? 'text-white' : 'text-white font-medium')}>
                         {n.title || 'Notification'}
                       </span>
-                      <span className="text-[11px] text-white/40 shrink-0">{timeAgo(n.created_at)}</span>
+                      <span className="text-[11px] text-white shrink-0">{timeAgo(n.created_at)}</span>
                     </div>
                     {n.message && (
-                      <p className="mt-0.5 text-[12px] text-white/55 line-clamp-2">{n.message}</p>
+                      <p className="mt-0.5 text-[12px] text-white line-clamp-2">{n.message}</p>
                     )}
                   </div>
                 </button>
@@ -444,9 +461,9 @@ const NotificationsTab = () => {
                 options={[4, 5, 6, 7, 8, 9, 10, 11].map((h) => ({ value: String(h), label: fmtHour(h) }))}
               />
               {quietPreview && (
-                <div className="mx-5 sm:mx-6 my-4 rounded-xl bg-white/[0.04] border border-white/[0.08] px-4 py-3">
+                <div className="mx-5 sm:mx-6 my-4 rounded-xl bg-white/[0.04] border border-elec-yellow/35 px-4 py-3">
                   <Eyebrow>Next delivery</Eyebrow>
-                  <p className="mt-1 text-[12.5px] text-white/80 leading-relaxed">{quietPreview}</p>
+                  <p className="mt-1 text-[12.5px] text-white leading-relaxed">{quietPreview}</p>
                 </div>
               )}
             </>
@@ -474,7 +491,7 @@ const NotificationsTab = () => {
             }}
           />
           <div className="px-5 sm:px-6 py-3.5 border-t border-white/[0.06]">
-            <p className="text-[11.5px] text-white/70 leading-relaxed">
+            <p className="text-[11.5px] text-white leading-relaxed">
               Transactional email — certificates you send, invoices, receipts and security
               notices — always arrives regardless of this setting.
             </p>

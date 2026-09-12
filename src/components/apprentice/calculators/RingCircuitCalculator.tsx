@@ -242,7 +242,10 @@ const RingCircuitCalculator = () => {
 
     // Cable comparison (optional)
     let cableComparison: RingResult['cableComparison'] = null;
-    const temp = parseFloat(temperature) || 20;
+    // `|| 20` silently replaced a typed 0 °C — a real ambient for an unheated
+    // space — with 20 °C, while the report printed the 0 the electrician entered.
+    const typedTemp = parseFloat(temperature);
+    const temp = Number.isFinite(typedTemp) ? typedTemp : 20;
     if (cableType && cableLength) {
       const cable = CABLE_DATA[cableType];
       const length = parseFloat(cableLength);
@@ -328,7 +331,7 @@ const RingCircuitCalculator = () => {
 
     return {
       meta: {
-        title: 'Ring Circuit Calculator',
+        title: 'Ring Circuit',
         subtitle: 'Ring final circuit continuity — end-to-end and cross-connected readings',
         standard: 'BS 7671:2018+A4:2026 — Reg 643.2.1, GN3 Ch 2',
       },
@@ -360,12 +363,13 @@ const RingCircuitCalculator = () => {
           ],
         },
         {
+          // R1 + R2 is already the headline figure — this section carries the
+          // individual leg resistances behind it instead of restating the total.
           heading: 'Result',
           rows: [
             { label: 'R1 (Live)', value: `${result.r1.toFixed(3)} Ω` },
             { label: 'Rn (Neutral)', value: `${result.rn.toFixed(3)} Ω` },
             { label: 'R2 (CPC)', value: `${result.r2.toFixed(3)} Ω` },
-            { label: 'R1 + R2 (at midpoint)', value: `${result.r1PlusR2.toFixed(3)} Ω` },
             {
               label: 'L–N cross-connection',
               value: result.lnPass ? 'PASS' : 'FAIL',

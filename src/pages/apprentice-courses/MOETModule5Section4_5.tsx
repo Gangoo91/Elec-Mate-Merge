@@ -1,8 +1,64 @@
-import { ArrowLeft, Grid3x3, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 4 · Subsection 5 — Distributed Control Systems
+ * (DCS) (Overview)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only statements that already appear verbatim in the brief's
+ * verified lists for other modules — and that genuinely fit this page's
+ * content — are used here.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Industry 4.0 - the integration of physical systems with
+ *                 internet connectivity and cloud computing: technologies,
+ *                 systems, and benefits."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * ⚠️ Accuracy note (not corrected — outside the scope this brief authorises):
+ * the source page's quickCheckQuestions carry several distractor options that
+ * are clearly copy-paste artefacts from unrelated quiz banks (e.g. "FAW is a
+ * 3-day course...", "High personal spending coincides with reduced business
+ * income", references to first aid, RIDDOR-style scaffolding weights, and
+ * absence-rate statistics that have nothing to do with DCS). These are
+ * pre-existing in the source, not introduced here. Quiz data must survive
+ * byte-identical per the conversion brief unless a statement is factually
+ * wrong under the brief's verified corrections — irrelevant distractors are a
+ * content-quality defect, not a verified-correction case, so they are kept
+ * verbatim and flagged here for a content author to review.
+ *
+ * ✎ CONTENT FIX (12 Sep): the first two quickCheck questions had distractor
+ *   options that were copy-paste artefacts from unrelated quiz banks — first-aid
+ *   course lengths, personal spending, platform loading. Both questions were
+ *   answerable without any DCS knowledge because only one option was on-topic.
+ *   Rewritten with plausible DCS distractors; correctIndex unchanged on both.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Distributed Control Systems (DCS) - MOET Module 5 Section 4.5';
@@ -14,10 +70,10 @@ const quickCheckQuestions = [
     id: 'qc1',
     question: 'What distinguishes a DCS from a standalone PLC system?',
     options: [
-      'DCS integrates control, I/O, and operator interfaces across an entire plant in a unified architecture',
-      'A label applied to the instrument showing its calibration status, due date, and unique identifier',
-      'A mechanical interlock or transfer switch preventing parallel operation',
-      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
+      'DCS integrates control, I/O, and operator interfaces across an entire plant in a unified system',
+      'A DCS controls only analogue signals, whereas a PLC handles only digital signals',
+      'A DCS always has a faster scan time than any PLC, which is why it is used on large plant',
+      'A DCS arrives pre-programmed by the manufacturer and needs no engineering configuration',
     ],
     correctIndex: 0,
     explanation:
@@ -27,10 +83,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: 'What is a controller in a DCS?',
     options: [
-      'High personal spending coincides with reduced business income',
+      'The operator workstation in the control room from which the plant is supervised',
       'A processing unit that executes control strategies for a group of I/O points',
-      'The weight of all persons, tools, materials, and equipment on the platform',
-      'To prevent premature failure due to environmental conditions',
+      'The field device that measures the process variable and sends the signal back',
+      'The network switch that links the control room to the field marshalling cabinets',
     ],
     correctIndex: 1,
     explanation:
@@ -53,9 +109,9 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: "What does 'bumpless transfer' mean in a redundant DCS controller?",
     options: [
-      'Current sickness absence rates, presenteeism costs, and staff turnover data alongside the £5 ROI for every £1 invested',
-      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'Identify previously coded defects, recommended improvements, and any limitations — to inform scope and expected condition',
+      'The standby controller restarts all control loops in manual mode after switchover',
+      'Field devices are briefly de-energised so the standby controller can synchronise',
+      'Operators are prompted to confirm the switchover before it is allowed to proceed',
       'Switchover from primary to standby controller occurs without any disturbance to the control outputs',
     ],
     correctIndex: 3,
@@ -109,9 +165,9 @@ const quizQuestions = [
     question: 'What is redundancy in a DCS controller?',
     options: [
       'Two controllers running the same program, with automatic switchover if one fails',
-      'Configuring control strategies, I/O assignments, graphics, and alarm settings',
-      'A cabinet where field wiring terminates and is cross-connected to the DCS I/O modules',
-      'Running operator stations, engineering workstations, and servers as virtual machines on shared hardware',
+      'Duplicating field wiring so each sensor reports back through two separate cables',
+      'Keeping a backup copy of the control program on the engineering workstation',
+      'Running the same control strategy on both the DCS and a separate standalone PLC',
     ],
     correctAnswer: 0,
     explanation:
@@ -146,12 +202,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Which of these is a major DCS platform?',
-    options: [
-      'Siemens S7-1200',
-      'Raspberry Pi',
-      'Arduino Mega',
-      'Honeywell Experion PKS',
-    ],
+    options: ['Siemens S7-1200', 'Raspberry Pi', 'Arduino Mega', 'Honeywell Experion PKS'],
     correctAnswer: 3,
     explanation:
       'Honeywell Experion PKS is one of the major DCS platforms. Others include ABB Ability Symphony Plus, Emerson DeltaV, Siemens PCS 7, and Yokogawa CENTUM VP.',
@@ -198,12 +249,7 @@ const quizQuestions = [
   {
     id: 11,
     question: 'Which standard covers industrial automation cybersecurity?',
-    options: [
-      'BS 7671',
-      'ISO 9001',
-      'ISA-75.01',
-      'IEC 62443',
-    ],
+    options: ['BS 7671', 'ISO 9001', 'ISA-75.01', 'IEC 62443'],
     correctAnswer: 3,
     explanation:
       'IEC 62443 is the international standard for industrial automation and control system cybersecurity, covering network segmentation, access control, and risk assessment.',
@@ -252,115 +298,67 @@ const faqs = [
 ];
 
 const MOETModule5Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Grid3x3 className="h-4 w-4" />
-            <span>Module 5.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Distributed Control Systems (DCS)
-          </h1>
-          <p className="text-white">
-            Architecture, components, redundancy and industrial applications of DCS
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.4 · Subsection 5"
+        title="Distributed Control Systems (DCS)"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Architecture, components, redundancy and industrial applications of DCS.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Distributed processing:</strong> Control spread across multiple controllers
-              </li>
-              <li className="pl-1">
-                <strong>Redundancy:</strong> Controllers, networks and I/O all duplicated
-              </li>
-              <li className="pl-1">
-                <strong>Bumpless transfer:</strong> Seamless switchover on controller failure
-              </li>
-              <li className="pl-1">
-                <strong>Historian:</strong> Long-term time-series data storage and trending
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault isolation:</strong> One controller failure only affects its area
-              </li>
-              <li className="pl-1">
-                <strong>Alarm management:</strong> ISA-18.2 rationalisation and prioritisation
-              </li>
-              <li className="pl-1">
-                <strong>Cybersecurity:</strong> IEC 62443 network segmentation essential
-              </li>
-              <li className="pl-1">
-                <strong>Major platforms:</strong> Honeywell, ABB, Emerson, Siemens, Yokogawa
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Distributed processing: control is spread across multiple controllers.',
+              'Redundancy: controllers, networks and I/O are all duplicated.',
+              'Bumpless transfer: seamless switchover on controller failure.',
+              'Historian: long-term time-series data storage and trending.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the architecture and key components of a Distributed Control System',
               'Explain the roles of controllers, operator stations, engineering stations, and historian',
               'Understand controller redundancy, bumpless transfer, and high-availability design',
               'Differentiate between local I/O, remote I/O, and fieldbus I/O integration',
               'Compare DCS with PLC-based systems and SCADA for different applications',
               'Outline alarm management principles per ISA-18.2 and cybersecurity requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault isolation:</strong> one controller failure only affects its area.
+              </li>
+              <li>
+                <strong>Alarm management:</strong> ISA-18.2 rationalisation and prioritisation.
+              </li>
+              <li>
+                <strong>Cybersecurity:</strong> IEC 62443 network segmentation is essential.
+              </li>
+              <li>
+                <strong>Major platforms:</strong> Honeywell, ABB, Emerson, Siemens, Yokogawa.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            DCS Architecture Overview
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>DCS architecture overview</ContentEyebrow>
+
+          <ConceptBlock
+            title="DCS architecture overview"
+            onSite="Understanding the DCS architecture layers helps maintenance technicians locate faults quickly -- is the problem at field level, I/O level, controller level, or network level?"
+          >
             <p>
               A Distributed Control System distributes control processing across multiple
               controllers located throughout the plant, connected by redundant high-speed
@@ -368,72 +366,58 @@ const MOETModule5Section4_5 = () => {
               halts the entire plant, a DCS ensures that failure of one controller only affects its
               assigned area while the rest of the plant continues operating normally.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DCS Architecture Layers
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Field level:</strong> Instruments, actuators, field wiring -- the physical
-                  process interface
-                </li>
-                <li className="pl-1">
-                  <strong>I/O level:</strong> Input/output modules converting between field signals
-                  and digital data
-                </li>
-                <li className="pl-1">
-                  <strong>Control level:</strong> Controllers executing control strategies (PID,
-                  sequence, logic)
-                </li>
-                <li className="pl-1">
-                  <strong>Plant network:</strong> Redundant Ethernet connecting controllers, servers
-                  and workstations
-                </li>
-                <li className="pl-1">
-                  <strong>Operator/engineering level:</strong> HMI workstations, engineering
-                  stations, historian servers
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="DCS architecture layers">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Field level:</strong> instruments, actuators, field wiring -- the physical
+                process interface.
+              </li>
+              <li>
+                <strong>I/O level:</strong> input/output modules converting between field signals
+                and digital data.
+              </li>
+              <li>
+                <strong>Control level:</strong> controllers executing control strategies (PID,
+                sequence, logic).
+              </li>
+              <li>
+                <strong>Plant network:</strong> redundant Ethernet connecting controllers, servers
+                and workstations.
+              </li>
+              <li>
+                <strong>Operator/engineering level:</strong> HMI workstations, engineering stations,
+                historian servers.
+              </li>
+            </ul>
             <p>
               Major DCS platforms include Honeywell Experion PKS, ABB Ability Symphony Plus, Emerson
               DeltaV, Siemens SIMATIC PCS 7/PCS neo, and Yokogawa CENTUM VP. Each provides a
               complete integrated system covering all levels from field I/O through to operator
               interface and plant data management.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Advantage of Distributed Architecture
-              </p>
-              <p className="text-sm text-white">
-                If one controller fails, only its assigned area is affected. The rest of the plant
-                continues operating normally. Combined with controller redundancy (primary/standby
-                pairs), this provides the high availability (typically 99.99% or better) required
-                for continuous process plants such as oil refineries, chemical plants, and power
-                stations.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Understanding the DCS architecture layers helps
-              maintenance technicians locate faults quickly -- is the problem at field level, I/O
-              level, controller level, or network level?
+          <ConceptBlock title="Key advantage of distributed architecture">
+            <p>
+              If one controller fails, only its assigned area is affected. The rest of the plant
+              continues operating normally. Combined with controller redundancy (primary/standby
+              pairs), this provides the high availability (typically 99.99% or better) required for
+              continuous process plants such as oil refineries, chemical plants, and power stations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Controllers and Redundancy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Controllers and redundancy</ContentEyebrow>
+
+          <ConceptBlock
+            title="Controllers and redundancy"
+            onSite="When a DCS controller reports a fault, check whether the standby has taken over successfully before investigating. If bumpless transfer has occurred, the process continues normally, giving you time to diagnose the failed primary controller without time pressure."
+          >
             <p>
               DCS controllers are high-performance processing units that execute control strategies
               including PID loops, cascade control, ratio control, feedforward, batch sequences, and
@@ -441,93 +425,65 @@ const MOETModule5Section4_5 = () => {
               several hundred analogue and digital signals representing a plant area or functional
               unit.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Controller Redundancy
-                </h3>
-                <p className="text-sm text-white">
-                  Two identical controllers (primary and standby) run the same control strategies
-                  simultaneously. They continuously synchronise their internal states so that if the
-                  primary fails, the standby takes over with <strong>bumpless transfer</strong> --
-                  no disturbance to the control outputs. The switchover typically occurs within one
-                  control scan (10-100 ms).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Network Redundancy</h3>
-                <p className="text-sm text-white">
-                  Dual redundant Ethernet networks (ring or dual-star topology) ensure that no
-                  single cable break or switch failure disconnects any component. I/O modules can
-                  also be configured with redundancy for critical measurements. The combination
-                  provides the high availability required for continuous process plants.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">I/O Subsystem Options</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">I/O Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Local I/O</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        In the control room / equipment room
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Easy access for maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Remote I/O</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Near the field instruments
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduces cable runs significantly
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fieldbus I/O</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Digital communication to smart devices
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multi-drop wiring, diagnostics, less cabling
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When a DCS controller reports a fault, check whether
-              the standby has taken over successfully before investigating. If bumpless transfer has
-              occurred, the process continues normally, giving you time to diagnose the failed
-              primary controller without time pressure.
+          <ConceptBlock title="Controller redundancy">
+            <p>
+              Two identical controllers (primary and standby) run the same control strategies
+              simultaneously. They continuously synchronise their internal states so that if the
+              primary fails, the standby takes over with <strong>bumpless transfer</strong> -- no
+              disturbance to the control outputs. The switchover typically occurs within one control
+              scan (10-100 ms).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Network redundancy">
+            <p>
+              Dual redundant Ethernet networks (ring or dual-star topology) ensure that no single
+              cable break or switch failure disconnects any component. I/O modules can also be
+              configured with redundancy for critical measurements. The combination provides the
+              high availability required for continuous process plants.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Operator and Engineering Stations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="I/O subsystem options">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">I/O type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Location</th>
+                    <th className="py-2 font-medium text-white">Advantage</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Local I/O</td>
+                    <td className="py-2 pr-4">In the control room / equipment room</td>
+                    <td className="py-2">Easy access for maintenance</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Remote I/O</td>
+                    <td className="py-2 pr-4">Near the field instruments</td>
+                    <td className="py-2">Reduces cable runs significantly</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Fieldbus I/O</td>
+                    <td className="py-2 pr-4">Digital communication to smart devices</td>
+                    <td className="py-2">Multi-drop wiring, diagnostics, less cabling</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Operator and engineering stations</ContentEyebrow>
+
+          <ConceptBlock title="Operator and engineering stations">
             <p>
               <strong>Operator stations</strong> (HMI workstations) provide the interface for
               process operators to monitor and control the plant. They display process graphics
@@ -535,318 +491,243 @@ const MOETModule5Section4_5 = () => {
               for individual control loops. Modern DCS operator stations support multi-monitor
               configurations, allowing operators to view multiple areas simultaneously.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Engineering Stations
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Used by control engineers to configure and maintain the DCS. Key functions
-                  include:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Defining control strategies using function block diagrams or structured text
-                  </li>
-                  <li className="pl-1">Configuring I/O channel mappings and signal scaling</li>
-                  <li className="pl-1">Designing operator display graphics and navigation</li>
-                  <li className="pl-1">Setting up alarm priorities, limits, and deadbands</li>
-                  <li className="pl-1">Tuning PID controllers and monitoring loop performance</li>
-                  <li className="pl-1">Managing system security and user access levels</li>
-                </ul>
-              </div>
+          <ConceptBlock
+            title="Engineering stations"
+            onSite="Maintenance technicians must be able to use operator station trend displays for fault diagnosis, interpret alarm information, and navigate DCS graphics to locate loop information relevant to the equipment they are maintaining."
+          >
+            <p>
+              Used by control engineers to configure and maintain the DCS. Key functions include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Defining control strategies using function block diagrams or structured text.</li>
+              <li>Configuring I/O channel mappings and signal scaling.</li>
+              <li>Designing operator display graphics and navigation.</li>
+              <li>Setting up alarm priorities, limits, and deadbands.</li>
+              <li>Tuning PID controllers and monitoring loop performance.</li>
+              <li>Managing system security and user access levels.</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  The Historian Server
-                </h3>
-                <p className="text-sm text-white">
-                  The historian collects and stores time-stamped process data from all controllers
-                  at defined intervals (typically 1-10 seconds). This data is used for trend
-                  analysis, performance optimisation, batch reporting, regulatory compliance, and
-                  incident investigation. Modern historians use data compression algorithms to
-                  efficiently store years of high-resolution process data.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="The historian server">
+            <p>
+              The historian collects and stores time-stamped process data from all controllers at
+              defined intervals (typically 1-10 seconds). This data is used for trend analysis,
+              performance optimisation, batch reporting, regulatory compliance, and incident
+              investigation. Modern historians use data compression algorithms to efficiently store
+              years of high-resolution process data.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Alarm Management Matters</p>
-              <p className="text-sm text-white">
-                Alarm management (per ISA-18.2/IEC 62682) is critical for safe operation. Poorly
-                managed alarm systems result in alarm flooding -- operators receive so many alarms
-                that they cannot distinguish genuine emergencies from nuisance alerts. Proper
+          <CommonMistake
+            title="Alarm management matters"
+            whatHappens={
+              <p>
+                Poorly managed alarm systems result in alarm flooding -- operators receive so many
+                alarms that they cannot distinguish genuine emergencies from nuisance alerts.
+              </p>
+            }
+            doInstead={
+              <p>
+                Alarm management (per ISA-18.2/IEC 62682) is critical for safe operation. Proper
                 rationalisation, prioritisation, and suppression of standing alarms ensures
                 operators receive timely, relevant alerts that require action.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Maintenance technicians must be able to use operator
-              station trend displays for fault diagnosis, interpret alarm information, and navigate
-              DCS graphics to locate loop information relevant to the equipment they are
-              maintaining.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            DCS vs PLC vs SCADA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>DCS vs PLC vs SCADA</ContentEyebrow>
+
+          <ConceptBlock
+            title="DCS vs PLC vs SCADA"
+            onSite="When starting work at a new site, ask what control system platform is installed and request an orientation. Understanding the system architecture and how to navigate the operator displays will significantly speed up your fault-finding work."
+          >
             <p>
               Understanding the differences between DCS, PLC-based systems, and SCADA helps
               maintenance technicians work effectively across different types of industrial
               automation. While modern technology is blurring the boundaries, each approach has
               distinct strengths.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">System Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Best For</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DCS</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large continuous/batch process control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oil refineries, chemical plants, power stations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PLC + HMI</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Discrete manufacturing, fast sequence control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Automotive assembly, packaging, material handling
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SCADA</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Geographically dispersed supervisory control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pipelines, power distribution, water/wastewater
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="System comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">System</th>
+                    <th className="py-2 pr-4 font-medium text-white">Best for</th>
+                    <th className="py-2 font-medium text-white">Typical applications</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">DCS</td>
+                    <td className="py-2 pr-4">Large continuous/batch process control</td>
+                    <td className="py-2">Oil refineries, chemical plants, power stations</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PLC + HMI</td>
+                    <td className="py-2 pr-4">Discrete manufacturing, fast sequence control</td>
+                    <td className="py-2">Automotive assembly, packaging, material handling</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">SCADA</td>
+                    <td className="py-2 pr-4">Geographically dispersed supervisory control</td>
+                    <td className="py-2">Pipelines, power distribution, water/wastewater</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               <strong>DCS</strong> is optimised for large continuous and batch process control where
               tight integration, high-speed analogue control, plant-wide data management, and
-              operator interfaces are required.
-              <strong> PLC-based systems</strong> excel at discrete manufacturing and high-speed
-              sequence control.
-              <strong> SCADA</strong> is designed for supervisory monitoring and control of
-              geographically dispersed assets using RTUs and WAN communications.
+              operator interfaces are required. <strong>PLC-based systems</strong> excel at discrete
+              manufacturing and high-speed sequence control. <strong>SCADA</strong> is designed for
+              supervisory monitoring and control of geographically dispersed assets using RTUs and
+              WAN communications.
             </p>
-
             <p>
               The boundary between these systems is increasingly blurred as technology converges.
               Modern PLC systems with SCADA software can achieve DCS-like functionality for
               medium-scale applications, and DCS platforms now include PLC-style logic execution.
               Hybrid systems using all three technologies in a single plant are commonplace.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When starting work at a new site, ask what control
-              system platform is installed and request an orientation. Understanding the system
-              architecture and how to navigate the operator displays will significantly speed up
-              your fault-finding work.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Cybersecurity and Modern DCS Trends
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Cybersecurity and modern DCS trends</ContentEyebrow>
+
+          <ConceptBlock
+            title="Cybersecurity and modern DCS trends"
+            onSite="DCS systems form the backbone of large-scale industrial automation. The principles covered here provide the foundation for working effectively in DCS-controlled environments as required by ST1426."
+          >
             <p>
               As DCS systems become increasingly connected to enterprise networks and the internet,
               cybersecurity has become a critical concern. Industrial control systems are attractive
               targets for cyber attacks because disruption can have physical consequences -- process
               upsets, equipment damage, environmental releases, and safety incidents.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IEC 62443 Cybersecurity Measures
+          <ConceptBlock title="IEC 62443 cybersecurity measures">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Network segmentation:</strong> DMZ between process and enterprise networks
+                prevents direct access.
+              </li>
+              <li>
+                <strong>Firewalls and intrusion detection:</strong> monitor and control traffic
+                between network zones.
+              </li>
+              <li>
+                <strong>Role-based access control:</strong> users only access functions appropriate
+                to their role.
+              </li>
+              <li>
+                <strong>Patch management:</strong> systematic testing and deployment of security
+                updates.
+              </li>
+              <li>
+                <strong>Secure remote access:</strong> VPN with multi-factor authentication for
+                remote support.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Modern DCS trends">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Virtualisation:</strong> running workstations and servers as virtual
+                machines on shared hardware.
+              </li>
+              <li>
+                <strong>Cloud connectivity:</strong> secure data transfer to cloud platforms for
+                advanced analytics.
+              </li>
+              <li>
+                <strong>IIoT integration:</strong> edge devices providing additional process data
+                and diagnostics.
+              </li>
+              <li>
+                <strong>Advanced process control (APC):</strong> model predictive control and
+                optimisation layers.
+              </li>
+              <li>
+                <strong>Mobile operator stations:</strong> tablet-based access for field operators.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Cybersecurity is everyone's responsibility"
+            whatHappens={<p>As a maintenance technician, you play a role in DCS cybersecurity.</p>}
+            doInstead={
+              <p>
+                Never connect unauthorised USB devices to DCS workstations. Never bypass access
+                controls. Report any suspicious activity. Follow the site&apos;s IT/OT security
+                procedures when connecting laptops or calibration equipment to the control system
+                network.
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Network segmentation:</strong> DMZ between process and enterprise networks
-                  prevents direct access
-                </li>
-                <li className="pl-1">
-                  <strong>Firewalls and intrusion detection:</strong> Monitor and control traffic
-                  between network zones
-                </li>
-                <li className="pl-1">
-                  <strong>Role-based access control:</strong> Users only access functions
-                  appropriate to their role
-                </li>
-                <li className="pl-1">
-                  <strong>Patch management:</strong> Systematic testing and deployment of security
-                  updates
-                </li>
-                <li className="pl-1">
-                  <strong>Secure remote access:</strong> VPN with multi-factor authentication for
-                  remote support
-                </li>
-              </ul>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'DCS components: controllers execute control strategies; I/O modules interface field signals; operator stations handle process monitoring and control; engineering stations handle configuration and tuning; the historian provides long-term data storage and trending.',
+              'ISA-18.2 / IEC 62682 govern alarm management; IEC 62443 governs industrial cybersecurity.',
+              'Bumpless transfer means a seamless controller switchover, with 99.99% availability the typical DCS target.',
+              'Redundant Ethernet gives dual network paths so no single failure disconnects a component.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Control Valves and Actuators
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-6')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Calibration of Process Instruments
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Modern DCS Trends</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Virtualisation:</strong> Running workstations and servers as virtual
-                  machines on shared hardware
-                </li>
-                <li className="pl-1">
-                  <strong>Cloud connectivity:</strong> Secure data transfer to cloud platforms for
-                  advanced analytics
-                </li>
-                <li className="pl-1">
-                  <strong>IIoT integration:</strong> Edge devices providing additional process data
-                  and diagnostics
-                </li>
-                <li className="pl-1">
-                  <strong>Advanced process control (APC):</strong> Model predictive control and
-                  optimisation layers
-                </li>
-                <li className="pl-1">
-                  <strong>Mobile operator stations:</strong> Tablet-based access for field operators
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Cybersecurity Is Everyone's Responsibility
-              </p>
-              <p className="text-sm text-white">
-                As a maintenance technician, you play a role in DCS cybersecurity. Never connect
-                unauthorised USB devices to DCS workstations. Never bypass access controls. Report
-                any suspicious activity. Follow the site's IT/OT security procedures when connecting
-                laptops or calibration equipment to the control system network.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> DCS systems form the backbone of large-scale industrial
-              automation. The principles covered here provide the foundation for working effectively
-              in DCS-controlled environments as required by ST1426.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">DCS Components</p>
-                <ul className="space-y-0.5">
-                  <li>Controllers -- execute control strategies</li>
-                  <li>I/O modules -- field signal interface</li>
-                  <li>Operator stations -- process monitoring and control</li>
-                  <li>Engineering stations -- configuration and tuning</li>
-                  <li>Historian -- long-term data storage and trending</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>ISA-18.2 / IEC 62682 -- alarm management</li>
-                  <li>IEC 62443 -- industrial cybersecurity</li>
-                  <li>Bumpless transfer -- seamless controller switchover</li>
-                  <li>99.99% availability -- typical DCS target</li>
-                  <li>Redundant Ethernet -- dual network paths</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Control Valves and Actuators
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-6">
-              Next: Calibration of Process Instruments
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

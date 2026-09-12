@@ -6,6 +6,7 @@ import {
   Wrench,
   FileCheck,
   GraduationCap,
+  BookMarked,
 } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
@@ -23,7 +24,8 @@ const modules = [
   {
     id: 2,
     title: 'System categories and lighting types',
-    description: 'Escape, anti-panic, high-risk task lighting, maintained vs non-maintained systems.',
+    description:
+      'Escape, anti-panic, high-risk task lighting, maintained vs non-maintained systems.',
     duration: '45 mins',
     icon: Layers,
     link: '../emergency-lighting-module-2',
@@ -104,6 +106,15 @@ export default function EmergencyLightingCourse() {
           index={index}
         />
       ))}
+      <ModuleCard
+        to="/study-centre/glossary?course=emergency-lighting"
+        moduleNumber={modules.length + 1}
+        title="Glossary"
+        description="Every abbreviation this course uses, defined in plain English — shared across the study centre so a term means the same thing wherever you meet it."
+        icon={BookMarked}
+        duration="Reference"
+        index={modules.length}
+      />
     </CourseShell>
   );
 }

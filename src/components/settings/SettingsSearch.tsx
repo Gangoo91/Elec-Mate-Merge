@@ -15,46 +15,277 @@ interface SearchEntry {
   hint: string;
   tab: string;
   sheet?: string;
+  /** Elec-ID sub-section id, e.g. 'qualifications'. */
+  section?: string;
   keywords: string;
 }
 
 const REGISTRY: SearchEntry[] = [
   // Account
-  { label: 'Profile & name', hint: 'Account', tab: 'account', keywords: 'name job title photo avatar profile' },
-  { label: 'Change password', hint: 'Account · Security', tab: 'account', keywords: 'password security login' },
-  { label: 'Two-factor authentication', hint: 'Account · Security', tab: 'account', keywords: '2fa mfa totp authenticator security code' },
-  { label: 'Sign out all devices', hint: 'Account · Security', tab: 'account', keywords: 'logout sessions devices security' },
-  { label: 'Biometric login', hint: 'Account · Security', tab: 'account', keywords: 'face id touch fingerprint biometric' },
+  {
+    label: 'Profile & name',
+    hint: 'Account',
+    tab: 'account',
+    keywords: 'name job title photo avatar profile',
+  },
+  {
+    label: 'Change password',
+    hint: 'Account · Security',
+    tab: 'account',
+    keywords: 'password security login',
+  },
+  // Two-factor authentication is hidden until TOTP enrolment is enabled in
+  // Supabase Auth — see TOTP_ENROLMENT_ENABLED in SecuritySection.tsx. Restore
+  // this entry at the same time.
+  {
+    label: 'Sign out all devices',
+    hint: 'Account · Security',
+    tab: 'account',
+    keywords: 'logout sessions devices security',
+  },
+  {
+    label: 'Biometric login',
+    hint: 'Account · Security',
+    tab: 'account',
+    keywords: 'face id touch fingerprint biometric',
+  },
   // Elec-ID
-  { label: 'Elec-ID profile', hint: 'Elec-ID', tab: 'elec-id', keywords: 'ecs card qualifications cv share verify elec id' },
+  {
+    label: 'Elec-ID card',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'overview',
+    keywords: 'ecs card elec id profile verify',
+  },
+  {
+    label: 'Documents & verification',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'documents',
+    keywords: 'documents upload verify id photo card',
+  },
+  {
+    label: 'Qualifications',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'qualifications',
+    keywords: 'qualifications certificates 18th edition 2391 am2 training courses',
+  },
+  {
+    label: 'Work experience',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'experience',
+    keywords: 'experience work history employer jobs',
+  },
+  {
+    label: 'Skills',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'skills',
+    keywords: 'skills competencies endorsements',
+  },
+  {
+    label: 'My CV',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'cv',
+    keywords: 'cv resume download pdf',
+  },
+  {
+    label: 'Expiry tracking',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'compliance',
+    keywords: 'expiry compliance renewals ecs card expires',
+  },
+  {
+    label: 'Share your Elec-ID',
+    hint: 'Elec-ID',
+    tab: 'elec-id',
+    section: 'share',
+    keywords: 'share link qr export public profile',
+  },
   // Business
-  { label: 'Company details', hint: 'Business', tab: 'business', sheet: 'company', keywords: 'company name address registration vat logo' },
-  { label: 'Brand & logo', hint: 'Business', tab: 'business', sheet: 'brand', keywords: 'logo colour brand accent' },
-  { label: 'Payments & Stripe', hint: 'Business', tab: 'business', sheet: 'payment', keywords: 'stripe card payments bank account payout' },
-  { label: 'Accounting integration', hint: 'Business', tab: 'business', sheet: 'accounting', keywords: 'xero quickbooks freshbooks accounting sync' },
-  { label: 'Pricing & rates', hint: 'Business', tab: 'business', sheet: 'pricing', keywords: 'day rate hourly rate card markup pricing' },
-  { label: 'Quote settings', hint: 'Business', tab: 'business', sheet: 'quotes', keywords: 'quote terms validity deposit' },
-  { label: 'Invoice settings', hint: 'Business', tab: 'business', sheet: 'invoices', keywords: 'invoice payment terms numbering vat' },
-  { label: 'Reviews', hint: 'Business', tab: 'business', sheet: 'reviews', keywords: 'google reviews rating link' },
-  { label: 'Inspector details', hint: 'Business', tab: 'business', sheet: 'inspector', keywords: 'inspector signature scheme niceic napit registration' },
-  { label: 'Test instruments', hint: 'Business', tab: 'business', sheet: 'instruments', keywords: 'instrument calibration meter mft serial' },
-  { label: 'Regional settings', hint: 'Business', tab: 'business', sheet: 'regional', keywords: 'region currency date format' },
-  { label: 'Booking availability', hint: 'Business', tab: 'business', sheet: 'booking-availability', keywords: 'booking calendar availability hours' },
+  {
+    label: 'Company details',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'company',
+    keywords: 'company name address registration vat logo',
+  },
+  {
+    label: 'Brand & logo',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'brand',
+    keywords: 'logo colour brand accent',
+  },
+  {
+    label: 'Payments & Stripe',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'payment',
+    keywords: 'stripe card payments bank account payout',
+  },
+  {
+    label: 'Accounting integration',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'accounting',
+    keywords: 'xero quickbooks freshbooks accounting sync',
+  },
+  {
+    label: 'Pricing & rates',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'pricing',
+    keywords: 'day rate hourly rate card markup pricing',
+  },
+  {
+    label: 'Quote settings',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'quotes',
+    keywords: 'quote terms validity deposit',
+  },
+  {
+    label: 'Invoice settings',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'invoices',
+    keywords: 'invoice payment terms numbering vat',
+  },
+  {
+    label: 'Reviews',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'reviews',
+    keywords: 'google reviews rating link',
+  },
+  {
+    label: 'Inspector details',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'inspector',
+    keywords: 'inspector signature scheme niceic napit registration',
+  },
+  {
+    label: 'Test instruments',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'instruments',
+    keywords: 'instrument calibration meter mft serial',
+  },
+  {
+    label: 'Regional settings',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'regional',
+    keywords: 'region currency date format',
+  },
+  {
+    label: 'Booking availability',
+    hint: 'Business',
+    tab: 'business',
+    sheet: 'booking-availability',
+    keywords: 'booking calendar availability hours',
+  },
   // Notifications
-  { label: 'Push notifications', hint: 'Notifications', tab: 'notifications', keywords: 'push alerts categories notification' },
-  { label: 'Quiet hours', hint: 'Notifications', tab: 'notifications', keywords: 'quiet hours do not disturb night' },
-  { label: 'Marketing emails', hint: 'Notifications · Email', tab: 'notifications', keywords: 'email marketing unsubscribe newsletter tips' },
+  {
+    label: 'Push notifications',
+    hint: 'Notifications',
+    tab: 'notifications',
+    keywords: 'push alerts categories notification',
+  },
+  {
+    label: 'Quiet hours',
+    hint: 'Notifications',
+    tab: 'notifications',
+    keywords: 'quiet hours do not disturb night',
+  },
+  {
+    label: 'Notification categories',
+    hint: 'Notifications',
+    tab: 'notifications',
+    keywords: 'categories quotes invoices tasks messages reminders alerts',
+  },
+  {
+    label: 'Recent notifications',
+    hint: 'Notifications',
+    tab: 'notifications',
+    keywords: 'recent activity delivered history',
+  },
+  {
+    label: 'Marketing emails',
+    hint: 'Notifications · Email',
+    tab: 'notifications',
+    keywords: 'email marketing unsubscribe newsletter tips',
+  },
   // App
-  { label: 'Default certificate type', hint: 'App', tab: 'preferences', keywords: 'default cert eicr eic minor works' },
-  { label: 'Auto-save drafts', hint: 'App', tab: 'preferences', keywords: 'autosave drafts saving' },
+  {
+    label: 'Default certificate type',
+    hint: 'App',
+    tab: 'preferences',
+    keywords: 'default cert eicr eic minor works',
+  },
+  {
+    label: 'Auto-save drafts',
+    hint: 'App',
+    tab: 'preferences',
+    keywords: 'autosave drafts saving',
+  },
   // Privacy
-  { label: 'Download my data', hint: 'Privacy', tab: 'privacy', keywords: 'export data gdpr download' },
-  { label: 'Delete account', hint: 'Privacy', tab: 'privacy', keywords: 'delete account erase gdpr close' },
-  { label: 'Cookies', hint: 'Privacy', tab: 'privacy', keywords: 'cookies analytics marketing tracking consent' },
+  {
+    label: 'Download my data',
+    hint: 'Privacy',
+    tab: 'privacy',
+    keywords: 'export data gdpr download',
+  },
+  {
+    label: 'Delete account',
+    hint: 'Privacy',
+    tab: 'privacy',
+    keywords: 'delete account erase gdpr close',
+  },
+  {
+    label: 'Cookies',
+    hint: 'Privacy',
+    tab: 'privacy',
+    keywords: 'cookies analytics marketing tracking consent',
+  },
   // Billing
-  { label: 'Subscription & billing', hint: 'Billing', tab: 'billing', keywords: 'plan subscription upgrade cancel billing invoice payment' },
+  {
+    label: 'Current plan',
+    hint: 'Billing',
+    tab: 'billing',
+    keywords: 'plan subscription upgrade tier price',
+  },
+  {
+    label: 'Cancel subscription',
+    hint: 'Billing',
+    tab: 'billing',
+    keywords: 'cancel stop subscription refund',
+  },
+  {
+    label: 'Billing history & receipts',
+    hint: 'Billing',
+    tab: 'billing',
+    keywords: 'invoice receipt history payment method card portal',
+  },
+  {
+    label: 'Restore purchases',
+    hint: 'Billing',
+    tab: 'billing',
+    keywords: 'restore purchases app store google play',
+  },
   // Referrals
-  { label: 'Refer a mate', hint: 'Refer a Mate', tab: 'referrals', keywords: 'referral invite friend reward' },
+  {
+    label: 'Refer a mate',
+    hint: 'Refer a Mate',
+    tab: 'referrals',
+    keywords: 'referral invite friend reward',
+  },
 ];
 
 const SettingsSearch = ({ className }: { className?: string }) => {
@@ -78,13 +309,14 @@ const SettingsSearch = ({ className }: { className?: string }) => {
     setQ('');
     const params: Record<string, string> = { tab: entry.tab };
     if (entry.sheet) params.sheet = entry.sheet;
+    if (entry.section) params.section = entry.section;
     setSearchParams(params, { replace: false });
   };
 
   return (
     <div className={cn('relative', className)}>
       <div className="relative">
-        <Search className="absolute left-3.5 top-1/2 -mt-2 h-4 w-4 text-white/50 pointer-events-none" />
+        <Search className="absolute left-3.5 top-1/2 -mt-2 h-4 w-4 text-white pointer-events-none" />
         <input
           type="search"
           value={q}
@@ -109,7 +341,7 @@ const SettingsSearch = ({ className }: { className?: string }) => {
           placeholder="Search settings…"
           className={cn(
             'w-full h-11 pl-10 pr-4 rounded-xl text-[14px] touch-manipulation',
-            'bg-white/[0.08] border border-white/[0.16] text-white placeholder:text-white/45',
+            'bg-white/[0.05] border border-elec-yellow/35 text-white placeholder:text-white',
             'outline-none transition-colors focus:border-elec-yellow/60',
             '[&::-webkit-search-cancel-button]:hidden'
           )}
@@ -117,7 +349,7 @@ const SettingsSearch = ({ className }: { className?: string }) => {
       </div>
 
       {focused && results.length > 0 && (
-        <div className="absolute z-50 mt-2 w-full rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.12] shadow-2xl shadow-black/60 overflow-hidden">
+        <div className="absolute z-50 mt-2 w-full rounded-xl bg-[hsl(0_0%_13%)] border border-elec-yellow/35 shadow-2xl shadow-black/60 overflow-hidden">
           {results.map((r) => (
             <button
               key={`${r.tab}-${r.label}`}
@@ -127,7 +359,7 @@ const SettingsSearch = ({ className }: { className?: string }) => {
               className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left hover:bg-white/[0.06] touch-manipulation min-h-[44px]"
             >
               <span className="text-[13.5px] font-medium text-white truncate">{r.label}</span>
-              <span className="shrink-0 text-[10.5px] uppercase tracking-[0.12em] text-white/50">
+              <span className="shrink-0 text-[10.5px] uppercase tracking-[0.12em] text-white">
                 {r.hint}
               </span>
             </button>
@@ -135,8 +367,8 @@ const SettingsSearch = ({ className }: { className?: string }) => {
         </div>
       )}
       {focused && q.trim().length >= 2 && results.length === 0 && (
-        <div className="absolute z-50 mt-2 w-full rounded-xl bg-[hsl(0_0%_16%)] border border-white/[0.12] shadow-2xl shadow-black/60 px-4 py-3.5">
-          <p className="text-[13px] text-white/70">Nothing matches "{q.trim()}".</p>
+        <div className="absolute z-50 mt-2 w-full rounded-xl bg-[hsl(0_0%_13%)] border border-elec-yellow/35 shadow-2xl shadow-black/60 px-4 py-3.5">
+          <p className="text-[13px] text-white">Nothing matches "{q.trim()}".</p>
         </div>
       )}
     </div>

@@ -1,8 +1,39 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 6 · Section 1 · Subsection 3 — Orthographic Projection
+ * (Engineering Drawings)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered: no verified ST1426 KSB statement list for Module 6 was
+ * available at conversion time (Modules 1–4 have verified lists; Module 6
+ * does not). Rather than invent statements or borrow another module's list,
+ * this header omits specific KSB quotes. Flagged for follow-up once a
+ * verified Module 6 KSB list exists.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Orthographic Projection (Engineering Drawings) - MOET Module 6 Section 1.3';
@@ -255,117 +286,66 @@ const faqs = [
 ];
 
 const MOETModule6Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 6.1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 6.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Orthographic Projection
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 6 · Section 6.1 · Subsection 3"
+        title="Orthographic Projection (Engineering Drawings)"
+        backTo="/study-centre/apprentice/m-o-e-t-module6-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             First and third angle projection, standard views, hidden detail and auxiliary views for
-            engineering drawings
+            engineering drawings.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Orthographic:</strong> 3D objects shown as 2D views projected at 90 degrees
-              </li>
-              <li className="pl-1">
-                <strong>First angle:</strong> UK/Europe standard — views opposite viewing direction
-              </li>
-              <li className="pl-1">
-                <strong>Third angle:</strong> North American standard — views same side as viewing
-              </li>
-              <li className="pl-1">
-                <strong>BS 8888:</strong> UK standard for engineering drawing conventions
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Enclosure layouts:</strong> Cable entries, gland plates, internal
-                arrangement
-              </li>
-              <li className="pl-1">
-                <strong>Motor drawings:</strong> Mounting dimensions, terminal box orientation
-              </li>
-              <li className="pl-1">
-                <strong>Equipment GA:</strong> Physical dimensions for replacement planning
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Drawing interpretation competence for EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Orthographic: 3D objects shown as 2D views projected at 90 degrees.',
+              'First angle: UK/Europe standard — views opposite viewing direction.',
+              'Third angle: North American standard — views same side as viewing.',
+              'BS 8888: UK standard for engineering drawing conventions.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principles of orthographic projection and its purpose in engineering drawings',
               'Distinguish between first angle and third angle projection and identify the convention from the symbol',
               'Interpret standard views — front elevation, side elevation and plan',
               'Read hidden detail lines, centre lines and section indicators on orthographic drawings',
               'Understand auxiliary views for features on inclined surfaces',
               'Apply orthographic drawing interpretation to electrical equipment installation and replacement',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Enclosure layouts:</strong> cable entries, gland plates, internal
+                arrangement.
+              </li>
+              <li>
+                <strong>Motor drawings:</strong> mounting dimensions, terminal box orientation.
+              </li>
+              <li>
+                <strong>Equipment GA:</strong> physical dimensions for replacement planning.
+              </li>
+              <li>
+                <strong>ST1426:</strong> drawing interpretation competence for EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Principles of Orthographic Projection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Principles of orthographic projection</ContentEyebrow>
+
+          <ConceptBlock title="Principles of orthographic projection">
             <p>
               Orthographic projection is the standard method of representing three-dimensional
               objects on two-dimensional engineering drawings. The object is viewed from several
@@ -382,58 +362,51 @@ const MOETModule6Section1_3 = () => {
               verifying mounting dimensions, locating cable entry points, and understanding the
               physical arrangement of equipment you maintain.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Principal Views
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Front elevation:</strong> The view from the front of the object — usually
-                  chosen to show the most characteristic shape or the face with the most features
-                </li>
-                <li className="pl-1">
-                  <strong>Side elevation:</strong> The view from the left or right side, showing the
-                  depth and features not visible from the front
-                </li>
-                <li className="pl-1">
-                  <strong>Plan (top view):</strong> The view from above, showing the width and depth
-                  of the object and the arrangement of features on the top surface
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The three principal views">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Front elevation:</strong> the view from the front of the object — usually
+                chosen to show the most characteristic shape or the face with the most features.
+              </li>
+              <li>
+                <strong>Side elevation:</strong> the view from the left or right side, showing the
+                depth and features not visible from the front.
+              </li>
+              <li>
+                <strong>Plan (top view):</strong> the view from above, showing the width and depth
+                of the object and the arrangement of features on the top surface.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Multiple Views Are Needed
-              </h3>
-              <p className="text-sm text-white mb-2">
-                A single 2D view cannot fully describe a 3D object. A front view shows height and
-                width but not depth. A side view shows height and depth but not width. A plan shows
-                width and depth but not height. Together, these three views provide complete
-                dimensional information. Features visible in one view can be projected across to
-                locate the same feature in an adjacent view.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When reading orthographic drawings, always check how many
-              views are provided and look at all of them together. A feature that appears as a
-              simple rectangle in the front view might be revealed as a circular hole in the plan
-              view — the views work together to build the complete picture.
+          <ConceptBlock title="Why multiple views are needed">
+            <p>
+              A single 2D view cannot fully describe a 3D object. A front view shows height and
+              width but not depth. A side view shows height and depth but not width. A plan shows
+              width and depth but not height. Together, these three views provide complete
+              dimensional information. Features visible in one view can be projected across to
+              locate the same feature in an adjacent view.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key point">
+            <p>
+              When reading orthographic drawings, always check how many views are provided and look
+              at all of them together. A feature that appears as a simple rectangle in the front
+              view might be revealed as a circular hole in the plan view — the views work together
+              to build the complete picture.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            First Angle vs Third Angle Projection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>First angle vs third angle projection</ContentEyebrow>
+
+          <ConceptBlock title="First angle vs third angle projection">
             <p>
               There are two internationally recognised conventions for arranging orthographic views:
               first angle projection (used predominantly in the UK and Europe, governed by BS 8888)
@@ -441,213 +414,176 @@ const MOETModule6Section1_3 = () => {
               Y14.5). Both produce identical information — the difference is solely in where the
               views are positioned relative to the front elevation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        First Angle (BS 8888)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Third Angle (ASME Y14.5)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Plan position</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Below the front elevation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Above the front elevation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Right side view</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        To the left of the front elevation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        To the right of the front elevation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Left side view</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        To the right of the front elevation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        To the left of the front elevation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Principle</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        View falls onto the plane behind the object
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        View falls onto the plane between observer and object
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Common use</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK, Europe, Commonwealth countries
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">USA, Canada</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="First angle vs third angle: how they differ">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">First angle (BS 8888)</th>
+                    <th className="py-2 font-medium text-white">Third angle (ASME Y14.5)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Plan position</td>
+                    <td className="py-2 pr-4">Below the front elevation</td>
+                    <td className="py-2">Above the front elevation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Right side view</td>
+                    <td className="py-2 pr-4">To the left of the front elevation</td>
+                    <td className="py-2">To the right of the front elevation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Left side view</td>
+                    <td className="py-2 pr-4">To the right of the front elevation</td>
+                    <td className="py-2">To the left of the front elevation</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Principle</td>
+                    <td className="py-2 pr-4">View falls onto the plane behind the object</td>
+                    <td className="py-2">View falls onto the plane between observer and object</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Common use</td>
+                    <td className="py-2 pr-4">UK, Europe, Commonwealth countries</td>
+                    <td className="py-2">USA, Canada</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Always Check the Projection Symbol
-              </p>
-              <p className="text-sm text-white">
-                Before reading any orthographic drawing, locate the projection symbol in the title
-                block. If you read a first angle drawing assuming third angle convention (or vice
-                versa), features will appear on the wrong side of the object and your interpretation
-                will be completely incorrect. This can lead to serious errors — drilling cable entry
-                holes on the wrong side of an enclosure, mounting equipment with the wrong
-                orientation, or misidentifying component positions.
-              </p>
-            </div>
+          <CommonMistake
+            title="Reading a drawing under the wrong projection convention"
+            whatHappens={
+              <>
+                <p>
+                  Before reading any orthographic drawing, locate the projection symbol in the title
+                  block. If you read a first angle drawing assuming third angle convention (or vice
+                  versa), features will appear on the wrong side of the object and your
+                  interpretation will be completely incorrect.
+                </p>
+                <p>
+                  This can lead to serious errors — drilling cable entry holes on the wrong side of
+                  an enclosure, mounting equipment with the wrong orientation, or misidentifying
+                  component positions.
+                </p>
+              </>
+            }
+            doInstead={
+              <>
+                In the UK, most engineering drawings use first angle projection per BS 8888.
+                However, equipment manufactured in North America (many large motors, switchgear, and
+                transformers) will use third angle. International projects may use either convention
+                — always verify from the symbol.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> In the UK, most engineering drawings use first angle
-              projection per BS 8888. However, equipment manufactured in North America (many large
-              motors, switchgear, and transformers) will use third angle. International projects may
-              use either convention — always verify from the symbol.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Line Types and Drawing Conventions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Line types and drawing conventions</ContentEyebrow>
+
+          <ConceptBlock title="Line types and drawing conventions">
             <p>
               Engineering drawings use standardised line types to convey different kinds of
               information. Each line type has a specific meaning defined by BS 8888 and ISO 128. As
               a maintenance technician, recognising these line types allows you to extract the
               maximum information from a drawing quickly and accurately.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Line Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Appearance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuous thick</td>
-                      <td className="border border-white/10 px-3 py-2">Solid, heavy line</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Visible outlines and edges
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuous thin</td>
-                      <td className="border border-white/10 px-3 py-2">Solid, light line</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dimension lines, projection lines, hatching, leader lines
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dashed thin</td>
-                      <td className="border border-white/10 px-3 py-2">Even dashes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hidden edges and outlines
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chain thin</td>
-                      <td className="border border-white/10 px-3 py-2">Long-short-long dashes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Centre lines, axes of symmetry
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Chain thick at ends</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Long-short with thick ends
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cutting planes for sections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuous thin irregular
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Wavy freehand line</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Short break lines (object continues beyond)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Standard line types and their purpose">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Line type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Appearance</th>
+                    <th className="py-2 font-medium text-white">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Continuous thick</td>
+                    <td className="py-2 pr-4">Solid, heavy line</td>
+                    <td className="py-2">Visible outlines and edges</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Continuous thin</td>
+                    <td className="py-2 pr-4">Solid, light line</td>
+                    <td className="py-2">
+                      Dimension lines, projection lines, hatching, leader lines
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Dashed thin</td>
+                    <td className="py-2 pr-4">Even dashes</td>
+                    <td className="py-2">Hidden edges and outlines</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Chain thin</td>
+                    <td className="py-2 pr-4">Long-short-long dashes</td>
+                    <td className="py-2">Centre lines, axes of symmetry</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Chain thick at ends</td>
+                    <td className="py-2 pr-4">Long-short with thick ends</td>
+                    <td className="py-2">Cutting planes for sections</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Continuous thin irregular</td>
+                    <td className="py-2 pr-4">Wavy freehand line</td>
+                    <td className="py-2">Short break lines (object continues beyond)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Reading Hidden Detail for Electrical Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable entry knockouts:</strong> Often shown as hidden detail on the rear
-                  elevation of an enclosure
-                </li>
-                <li className="pl-1">
-                  <strong>Internal DIN rails:</strong> Shown as hidden detail on the front view when
-                  the door is closed
-                </li>
-                <li className="pl-1">
-                  <strong>Rear-mounted components:</strong> Terminal strips, busbars and internal
-                  wiring channels behind a panel face
-                </li>
-                <li className="pl-1">
-                  <strong>Concealed fixings:</strong> Bolt holes and mounting points not visible
-                  from the viewing direction
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Reading hidden detail for electrical maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable entry knockouts:</strong> often shown as hidden detail on the rear
+                elevation of an enclosure.
+              </li>
+              <li>
+                <strong>Internal DIN rails:</strong> shown as hidden detail on the front view when
+                the door is closed.
+              </li>
+              <li>
+                <strong>Rear-mounted components:</strong> terminal strips, busbars and internal
+                wiring channels behind a panel face.
+              </li>
+              <li>
+                <strong>Concealed fixings:</strong> bolt holes and mounting points not visible from
+                the viewing direction.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Hidden detail lines are essential in maintenance. They
-              tell you what is behind, beneath or inside a surface that you cannot see in that view.
-              When planning cable entries or locating internal components, the hidden detail lines
-              on the drawing may be more useful than the visible outlines.
+          <ConceptBlock title="Key point">
+            <p>
+              Hidden detail lines are essential in maintenance. They tell you what is behind,
+              beneath or inside a surface that you cannot see in that view. When planning cable
+              entries or locating internal components, the hidden detail lines on the drawing may be
+              more useful than the visible outlines.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Sections, Auxiliary Views and Detail Views
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Sections, auxiliary views and detail views</ContentEyebrow>
+
+          <ConceptBlock title="Sections, auxiliary views and detail views">
             <p>
               When standard orthographic views cannot adequately describe an object — particularly
               its internal features or features on inclined surfaces — additional views are used.
@@ -655,92 +591,81 @@ const MOETModule6Section1_3 = () => {
               project inclined surfaces in true shape; detail views enlarge specific areas for
               clarity. All three are common on electrical equipment drawings.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Sectional Views</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Full section:</strong> Complete cut through the object
-                  </li>
-                  <li className="pl-1">
-                    <strong>Half section:</strong> Half sectioned, half external (for symmetrical
-                    objects)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Removed section:</strong> Cross-section drawn separately
-                  </li>
-                  <li className="pl-1">
-                    <strong>Hatching:</strong> 45-degree lines on cut material; different angles for
-                    adjacent parts
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Auxiliary and Detail Views
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Auxiliary views:</strong> Show true shape of inclined surfaces
-                  </li>
-                  <li className="pl-1">
-                    <strong>Detail views:</strong> Enlarged areas for fine features
-                  </li>
-                  <li className="pl-1">
-                    <strong>Exploded views:</strong> Components separated along assembly axis
-                  </li>
-                  <li className="pl-1">
-                    <strong>Partial views:</strong> Only the relevant portion of a symmetrical
-                    object
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Sectional views">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Full section:</strong> complete cut through the object.
+              </li>
+              <li>
+                <strong>Half section:</strong> half sectioned, half external (for symmetrical
+                objects).
+              </li>
+              <li>
+                <strong>Removed section:</strong> cross-section drawn separately.
+              </li>
+              <li>
+                <strong>Hatching:</strong> 45-degree lines on cut material; different angles for
+                adjacent parts.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Electrical Maintenance Applications
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Switchgear sections:</strong> Internal busbar arrangement, contact
-                  mechanism, arc chute position
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer sections:</strong> Core and winding arrangement, tap changer
-                  position, oil level
-                </li>
-                <li className="pl-1">
-                  <strong>Cable trunking sections:</strong> Internal dividers, cable capacity, lid
-                  fixing detail
-                </li>
-                <li className="pl-1">
-                  <strong>Motor terminal box detail:</strong> Enlarged view showing terminal
-                  arrangement, link configuration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Auxiliary and detail views">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Auxiliary views:</strong> show true shape of inclined surfaces.
+              </li>
+              <li>
+                <strong>Detail views:</strong> enlarged areas for fine features.
+              </li>
+              <li>
+                <strong>Exploded views:</strong> components separated along assembly axis.
+              </li>
+              <li>
+                <strong>Partial views:</strong> only the relevant portion of a symmetrical object.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Sectional views on switchgear drawings are
-              invaluable for understanding access routes for maintenance. They show which
-              compartments can be opened, how internal barriers are arranged, and where live busbars
-              are located relative to maintenance access points — critical safety information for
-              anyone working inside the switchgear.
+          <ConceptBlock title="Electrical maintenance applications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switchgear sections:</strong> internal busbar arrangement, contact
+                mechanism, arc chute position.
+              </li>
+              <li>
+                <strong>Transformer sections:</strong> core and winding arrangement, tap changer
+                position, oil level.
+              </li>
+              <li>
+                <strong>Cable trunking sections:</strong> internal dividers, cable capacity, lid
+                fixing detail.
+              </li>
+              <li>
+                <strong>Motor terminal box detail:</strong> enlarged view showing terminal
+                arrangement, link configuration.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Maintenance tip">
+            <p>
+              Sectional views on switchgear drawings are invaluable for understanding access routes
+              for maintenance. They show which compartments can be opened, how internal barriers are
+              arranged, and where live busbars are located relative to maintenance access points —
+              critical safety information for anyone working inside the switchgear.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Applying Orthographic Drawing Skills in Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Applying orthographic drawing skills in maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Applying orthographic drawing skills in maintenance">
             <p>
               The ability to read orthographic drawings fluently translates directly into more
               effective and safer maintenance practice. From verifying replacement equipment
@@ -748,156 +673,133 @@ const MOETModule6Section1_3 = () => {
               orthographic drawing interpretation is a daily skill for maintenance technicians in
               industrial and commercial environments.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Application Scenarios
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor replacement:</strong> Compare the orthographic GA drawing of the
-                  replacement motor with the existing installation — verify mounting bolt centres,
-                  shaft height, terminal box position and overall dimensions
+          <ConceptBlock title="Practical application scenarios">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor replacement:</strong> compare the orthographic GA drawing of the
+                replacement motor with the existing installation — verify mounting bolt centres,
+                shaft height, terminal box position and overall dimensions.
+              </li>
+              <li>
+                <strong>Enclosure modification:</strong> use the orthographic drawing to locate
+                suitable positions for additional cable entries without fouling internal components
+                shown in hidden detail.
+              </li>
+              <li>
+                <strong>Switchgear maintenance:</strong> use sectional views to understand internal
+                arrangement and plan safe access routes for testing and inspection.
+              </li>
+              <li>
+                <strong>Cable containment:</strong> read plan views and sections to determine cable
+                capacity, routing and support requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Common reading errors to avoid"
+            whatHappens={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                <li>
+                  <strong>Wrong projection:</strong> misreading view positions because the
+                  projection symbol was not checked first.
                 </li>
-                <li className="pl-1">
-                  <strong>Enclosure modification:</strong> Use the orthographic drawing to locate
-                  suitable positions for additional cable entries without fouling internal
-                  components shown in hidden detail
+                <li>
+                  <strong>Scaling from the drawing:</strong> measuring directly from the paper
+                  instead of using the stated dimension values.
                 </li>
-                <li className="pl-1">
-                  <strong>Switchgear maintenance:</strong> Use sectional views to understand
-                  internal arrangement and plan safe access routes for testing and inspection
+                <li>
+                  <strong>Ignoring hidden detail:</strong> missing critical information about
+                  concealed features carried in the dashed lines.
                 </li>
-                <li className="pl-1">
-                  <strong>Cable containment:</strong> Read plan views and sections to determine
-                  cable capacity, routing and support requirements
+                <li>
+                  <strong>Missing the revision:</strong> working from an out-of-date issue of the
+                  drawing.
                 </li>
               </ul>
-            </div>
+            }
+            doInstead={
+              <>
+                Always check the projection symbol before interpreting view positions. Never measure
+                from the paper — use the stated dimension values only. Read hidden detail lines as
+                carefully as visible outlines. Ensure you are reading the current revision of the
+                drawing before starting any work.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Reading Errors to Avoid
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong projection:</strong> Always check the projection symbol before
-                  interpreting view positions
-                </li>
-                <li className="pl-1">
-                  <strong>Scaling from the drawing:</strong> Never measure from the paper — use the
-                  stated dimension values only
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring hidden detail:</strong> Dashed lines contain critical information
-                  about concealed features
-                </li>
-                <li className="pl-1">
-                  <strong>Missing the revision:</strong> Ensure you are reading the current revision
-                  of the drawing
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Implication</p>
-              <p className="text-sm text-white">
-                Misreading an orthographic drawing can have serious safety consequences. Drilling a
-                cable entry hole in the wrong position could breach an internal safety barrier or
-                damage a busbar. Installing a motor with the wrong orientation could position the
-                terminal box inaccessibly or misalign the drive coupling. Always verify your
-                interpretation against the physical equipment before carrying out any modification.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in interpreting technical drawings and documentation. Orthographic drawing
-              interpretation is specifically assessed — demonstrating that you can extract accurate
-              information from multi-view drawings and apply it to practical maintenance tasks.
+          <ConceptBlock title="Safety implication">
+            <p>
+              Misreading an orthographic drawing can have serious safety consequences. Drilling a
+              cable entry hole in the wrong position could breach an internal safety barrier or
+              damage a busbar. Installing a motor with the wrong orientation could position the
+              terminal box inaccessibly or misalign the drive coupling. Always verify your
+              interpretation against the physical equipment before carrying out any modification.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="ST1426 link">
+            <p>
+              The maintenance technician standard requires competence in interpreting technical
+              drawings and documentation. Orthographic drawing interpretation is specifically
+              assessed — demonstrating that you can extract accurate information from multi-view
+              drawings and apply it to practical maintenance tasks.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Orthographic projection represents a 3D object using two or more 2D views projected at right angles.',
+              'First angle (BS 8888, UK/Europe): views placed opposite the viewing direction — plan below the front elevation.',
+              'Third angle (ASME Y14.5, North America): views placed on the same side as the viewing direction.',
+              'Always check the projection symbol in the title block before interpreting a drawing.',
+              'Standard line types: thick continuous for visible outlines, thin dashed for hidden detail, chain thin for centre lines, chain thick at ends for cutting planes.',
+              'Sectional, auxiliary and detail views extend the standard three views for internal features, inclined surfaces and fine detail.',
+              'Never scale dimensions from the drawing — always use the stated dimension values.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Projection Conventions</p>
-                <ul className="space-y-0.5">
-                  <li>First angle (BS 8888) — views opposite viewing direction</li>
-                  <li>Third angle (ASME Y14.5) — views same side as viewing</li>
-                  <li>Always check projection symbol in title block</li>
-                  <li>Both convey identical information</li>
-                  <li>UK/Europe typically first angle</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Line Types</p>
-                <ul className="space-y-0.5">
-                  <li>Thick continuous — visible outlines</li>
-                  <li>Thin dashed — hidden detail</li>
-                  <li>Chain thin — centre lines</li>
-                  <li>Thin continuous — dimensions, hatching</li>
-                  <li>Chain thick ends — cutting planes</li>
-                </ul>
-              </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section1-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Legal and Safety Reasons (EAWR, BS 7671 Principles)
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module6-section1-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Drawing Layouts and Title Blocks
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Legal and Safety
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6-section1-4">
-              Next: Drawing Layouts and Title Blocks
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

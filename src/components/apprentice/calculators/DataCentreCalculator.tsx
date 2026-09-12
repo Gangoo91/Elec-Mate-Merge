@@ -37,6 +37,16 @@ import {
 const CAT = 'power' as const;
 const config = CALCULATOR_CONFIG[CAT];
 
+/**
+ * `parseFloat(x) || fallback` treats a typed 0 as absent, so entering a 0%
+ * design margin or 0% lights-and-misc silently applied 20% / 5% while the
+ * client's report printed the 0 that was entered. Blank still falls back.
+ */
+const numberOr = (raw: string, fallback: number) => {
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? n : fallback;
+};
+
 const DataCentreCalculator = () => {
   const { toast } = useToast();
   const [copied, setCopied] = useState(false);
@@ -79,14 +89,14 @@ const DataCentreCalculator = () => {
       redundancy,
       coolingMethod,
       coolingRatio: 1.5,
-      lightsAndMisc: parseFloat(lightsAndMisc) || 5,
+      lightsAndMisc: numberOr(lightsAndMisc, 5),
       upsBatteryHours: parseFloat(upsBatteryHours) || 15,
       upsEfficiency: parseFloat(upsEfficiency) || 95,
       powerRedundancy,
       coolingRedundancy,
       energyCost: parseFloat(energyCost) || 0.15,
-      carbonFactor: parseFloat(carbonFactor) || 0.233,
-      designMargin: parseFloat(designMargin) || 20,
+      carbonFactor: numberOr(carbonFactor, 0.233),
+      designMargin: numberOr(designMargin, 20),
       facilityType,
       climateZone,
     };
@@ -157,7 +167,7 @@ const DataCentreCalculator = () => {
 
     return {
       meta: {
-        title: 'Data Centre Calculator',
+        title: 'Data Centre',
         subtitle: 'Load analysis, PUE, infrastructure sizing and cost estimation',
       },
       headline: [
@@ -178,6 +188,14 @@ const DataCentreCalculator = () => {
             { label: 'Facility type', value: facilityType },
             { label: 'Climate zone', value: climateZone },
             { label: 'Cooling method', value: coolingMethod },
+            { label: 'Power redundancy', value: powerRedundancy },
+            { label: 'Cooling redundancy', value: coolingRedundancy },
+            { label: 'Design margin', value: `${designMargin}%` },
+            { label: 'UPS battery runtime', value: `${upsBatteryHours} min` },
+            { label: 'UPS efficiency', value: `${upsEfficiency}%` },
+            { label: 'Lights & misc', value: `${lightsAndMisc}%` },
+            { label: 'Energy cost', value: `£${energyCost}/kWh` },
+            { label: 'Carbon factor', value: `${carbonFactor} kg CO₂e/kWh` },
           ],
         },
         {
@@ -185,7 +203,6 @@ const DataCentreCalculator = () => {
           rows: [
             { label: 'Total IT load', value: `${result.totalItLoad.toFixed(0)} kW` },
             { label: 'Cooling load', value: `${result.coolingLoad.toFixed(0)} kW` },
-            { label: 'Total facility load', value: `${result.totalFacilityLoad.toFixed(0)} kW` },
             { label: 'UPS capacity', value: `${result.upsCapacity.toFixed(0)} kW` },
             { label: 'Generator capacity', value: `${result.generatorCapacity.toFixed(0)} kW` },
             { label: 'Battery capacity', value: `${result.batteryCapacity.toFixed(0)} kWh` },

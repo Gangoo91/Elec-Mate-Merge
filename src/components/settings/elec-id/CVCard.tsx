@@ -131,7 +131,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
       >
         <div
           className={cn(
-            'relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden transition-all touch-manipulation',
+            'relative bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden transition-all touch-manipulation',
             cv.is_primary && 'ring-1 ring-elec-yellow/30'
           )}
         >
@@ -145,7 +145,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-semibold text-white truncate">{cv.title || 'My CV'}</h3>
                   {cv.is_primary && (
-                    <span className="inline-flex items-center text-[10px] font-medium px-1.5 py-0 rounded-full border bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+                    <span className="inline-flex items-center text-[10px] font-medium px-1.5 py-0 rounded-full border bg-white/[0.06] text-elec-yellow border-elec-yellow/20">
                       Primary
                     </span>
                   )}
@@ -168,7 +168,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-48 bg-[hsl(0_0%_12%)] border-white/[0.06]"
+                  className="w-48 bg-white/[0.05] border-white/[0.06]"
                 >
                   <DropdownMenuItem onClick={() => onEdit(cv)}>Edit CV</DropdownMenuItem>
                   <DropdownMenuItem onClick={handleDownload} disabled={isDownloading}>
@@ -250,7 +250,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
       </motion.div>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl">
+        <AlertDialogContent className="bg-elec-dark border-elec-yellow/35 rounded-2xl">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete CV?</AlertDialogTitle>
             <AlertDialogDescription className="text-white">

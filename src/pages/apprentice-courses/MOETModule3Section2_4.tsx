@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.2 · Subsection 4 — Variable Speed Drives and Soft Starters
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *     requirements: removing and replacing parts, inspecting, testing,
+ *     setting up, adjusting, cleaning, and functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Variable Speed Drives and Soft Starters - MOET Module 3 Section 2.4';
@@ -13,12 +52,7 @@ const quickCheckQuestions = [
   {
     id: 'dc-bus-voltage',
     question: 'What is the approximate DC bus voltage for a VSD connected to a 400 V AC supply?',
-    options: [
-      '565 V DC',
-      '690 V DC',
-      '400 V DC',
-      '230 V DC',
-    ],
+    options: ['565 V DC', '690 V DC', '400 V DC', '230 V DC'],
     correctIndex: 0,
     explanation:
       'The DC bus voltage is approximately 400 V x 1.414 (the square root of 2) = 565 V DC. This is the peak of the AC supply waveform, rectified and smoothed by the DC bus capacitors. Monitoring the DC bus voltage is a key diagnostic parameter -- significantly lower values indicate rectifier or supply issues.',
@@ -39,12 +73,7 @@ const quickCheckQuestions = [
   {
     id: 'vsd-maintenance',
     question: 'What is the most common failure point in a VSD that requires regular maintenance?',
-    options: [
-      'Cooling fans and filters',
-      'IGBT modules',
-      'The keypad display',
-      'Motor cables',
-    ],
+    options: ['Cooling fans and filters', 'IGBT modules', 'The keypad display', 'Motor cables'],
     correctIndex: 0,
     explanation:
       'Cooling fans and their air filters are the most common maintenance item on VSDs. Blocked or dirty filters restrict airflow, causing the drive to overheat and trip on overtemperature. Filters should be cleaned or replaced every 6-12 months depending on the environment. Fan failure is also common and many drives will alarm before the fan stops completely.',
@@ -54,9 +83,9 @@ const quickCheckQuestions = [
     question: 'How long should you wait after isolating a VSD before opening the enclosure?',
     options: [
       "At least 5 minutes (check manufacturer's data)",
-      "No wait is needed once the supply is isolated",
-      "Around 30 seconds for the capacitors to discharge",
-      "Until the cooling fans have fully stopped",
+      'No wait is needed once the supply is isolated',
+      'Around 30 seconds for the capacitors to discharge',
+      'Until the cooling fans have fully stopped',
     ],
     correctIndex: 0,
     explanation:
@@ -81,12 +110,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What switching devices are used in the VSD inverter stage?',
-    options: [
-      'Triacs',
-      'Thyristors',
-      'IGBTs',
-      'Diodes',
-    ],
+    options: ['Triacs', 'Thyristors', 'IGBTs', 'Diodes'],
     correctAnswer: 2,
     explanation:
       'IGBTs (Insulated Gate Bipolar Transistors) are used in the inverter stage, switching at high frequency (typically 2-16 kHz) to create the PWM output waveform.',
@@ -94,12 +118,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the approximate DC bus voltage for a 400 V VSD?',
-    options: [
-      '500 V DC',
-      '400 V DC',
-      '690 V DC',
-      '565 V DC',
-    ],
+    options: ['500 V DC', '400 V DC', '690 V DC', '565 V DC'],
     correctAnswer: 3,
     explanation:
       'The DC bus voltage is approximately 400 x 1.414 = 565 V DC (peak of the AC supply waveform, rectified and smoothed).',
@@ -146,12 +165,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'How long must you wait before opening an isolated VSD?',
-    options: [
-      'No wait needed',
-      '1 minute',
-      '1 hour',
-      'At least 5 minutes',
-    ],
+    options: ['No wait needed', '1 minute', '1 hour', 'At least 5 minutes'],
     correctAnswer: 3,
     explanation:
       "DC bus capacitors retain a lethal charge. Wait at least 5 minutes (check manufacturer's data) and verify the DC bus has discharged below 50 V before any work.",
@@ -159,12 +173,7 @@ const quizQuestions = [
   {
     id: 8,
     question: 'What harmonics are predominantly generated by a VSD rectifier?',
-    options: [
-      '5th, 7th, 11th and 13th',
-      'None',
-      '2nd and 4th',
-      '3rd and 9th',
-    ],
+    options: ['5th, 7th, 11th and 13th', 'None', '2nd and 4th', '3rd and 9th'],
     correctAnswer: 0,
     explanation:
       'The six-pulse diode rectifier produces predominantly 5th, 7th, 11th and 13th harmonics of the supply frequency.',
@@ -185,12 +194,7 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the typical lifespan of DC bus electrolytic capacitors?',
-    options: [
-      '1-2 years',
-      'Indefinite',
-      '5-10 years',
-      '20-30 years',
-    ],
+    options: ['1-2 years', 'Indefinite', '5-10 years', '20-30 years'],
     correctAnswer: 2,
     explanation:
       'Electrolytic capacitors have a finite life of typically 5-10 years, depending on temperature and usage. Capacitor degradation causes DC bus voltage ripple and eventual drive failure.',
@@ -252,116 +256,65 @@ const faqs = [
 ];
 
 const MOETModule3Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Variable Speed Drives and Soft Starters
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.2 · Subsection 4"
+        title="Variable Speed Drives and Soft Starters"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             VSD/VFD architecture, V/f and vector control, soft starter operation, harmonics, EMC and
-            maintenance
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>VSD:</strong> Rectifier - DC bus - Inverter (IGBTs + PWM)
+          <TLDR
+            points={[
+              'VSD: Rectifier - DC bus - Inverter (IGBTs + PWM).',
+              'V/f control: Constant torque up to base speed (50 Hz).',
+              'Soft starter: Thyristor voltage ramp, bypass at speed.',
+              'Safety: DC bus holds lethal charge after isolation.',
+            ]}
+          />
+
+          <ConceptBlock title="Why this matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prevalence:</strong> VSDs standard in all modern buildings.
               </li>
-              <li className="pl-1">
-                <strong>V/f control:</strong> Constant torque up to base speed (50 Hz)
+              <li>
+                <strong>Energy savings:</strong> 30-50% on fans and pumps via cube law.
               </li>
-              <li className="pl-1">
-                <strong>Soft starter:</strong> Thyristor voltage ramp, bypass at speed
+              <li>
+                <strong>Maintenance:</strong> Fan/filter cleaning prevents 80% of trips.
               </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> DC bus holds lethal charge after isolation
+              <li>
+                <strong>ST1426:</strong> Maps to electrical plant and motor control KSBs.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Prevalence:</strong> VSDs standard in all modern buildings
-              </li>
-              <li className="pl-1">
-                <strong>Energy savings:</strong> 30-50% on fans and pumps via cube law
-              </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> Fan/filter cleaning prevents 80% of trips
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to electrical plant and motor control KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe the internal architecture of a variable speed drive (rectifier, DC bus, inverter)',
               'Explain V/f control and sensorless vector control principles',
               'Describe soft starter operation using thyristor phase angle control',
               'Outline the commissioning and parameter setup process for VSDs',
               'Explain the effects of harmonics and EMC requirements for VSD installations',
               'Describe maintenance procedures including fan filters, capacitors and safety precautions',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Variable speed drive architecture</ContentEyebrow>
 
-        {/* Section 01: Variable Speed Drive Architecture */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Variable Speed Drive Architecture
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Three power stages: rectifier, DC bus, inverter">
             <p>
               A variable speed drive (VSD), also called a variable frequency drive (VFD) or simply
               an inverter, controls the speed of an AC induction motor by varying both the frequency
@@ -369,81 +322,68 @@ const MOETModule3Section2_4 = () => {
               the supply frequency (Speed = 120f/P), controlling the frequency controls the speed.
             </p>
             <p>The VSD consists of three main power stages:</p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">VSD Power Stages</p>
-              <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rectifier (AC to DC):</strong> Converts the incoming three-phase AC supply
-                  (50 Hz, 400 V) to DC using a six-pulse diode bridge rectifier. The output is a
-                  pulsating DC voltage with a peak value of approximately 565 V (400 x 1.414). The
-                  rectifier is a passive component with no moving parts.
-                </li>
-                <li className="pl-1">
-                  <strong>DC Bus (Smoothing):</strong> Large electrolytic capacitors smooth the
-                  pulsating DC into a stable DC voltage. The DC bus also provides energy storage for
-                  dynamic braking and smooths out transient loads. The DC bus voltage is a key
-                  diagnostic parameter -- it should read approximately 565-580 V DC for a 400 V
-                  supply.
-                </li>
-                <li className="pl-1">
-                  <strong>Inverter (DC to AC):</strong> Uses six insulated gate bipolar transistors
-                  (IGBTs) switching at high frequency (typically 2-16 kHz) to synthesise a
-                  variable-frequency, variable-voltage AC output using pulse width modulation (PWM).
-                  The output waveform approximates a sine wave when averaged over time.
-                </li>
-              </ul>
-            </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rectifier (AC to DC):</strong> Converts the incoming three-phase AC supply
+                (50 Hz, 400 V) to DC using a six-pulse diode bridge rectifier. The output is a
+                pulsating DC voltage with a peak value of approximately 565 V (400 x 1.414). The
+                rectifier is a passive component with no moving parts.
+              </li>
+              <li>
+                <strong>DC Bus (Smoothing):</strong> Large electrolytic capacitors smooth the
+                pulsating DC into a stable DC voltage. The DC bus also provides energy storage for
+                dynamic braking and smooths out transient loads. The DC bus voltage is a key
+                diagnostic parameter -- it should read approximately 565-580 V DC for a 400 V
+                supply.
+              </li>
+              <li>
+                <strong>Inverter (DC to AC):</strong> Uses six insulated gate bipolar transistors
+                (IGBTs) switching at high frequency (typically 2-16 kHz) to synthesise a
+                variable-frequency, variable-voltage AC output using pulse width modulation (PWM).
+                The output waveform approximates a sine wave when averaged over time.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">V/f Control</h3>
-              <p className="text-sm text-white mb-3">
-                V/f (voltage-to-frequency) control maintains a constant ratio of voltage to
-                frequency to keep the motor magnetic flux constant. At 50 Hz and 400 V, the ratio is
-                8 V/Hz. At 25 Hz, the voltage is reduced to 200 V to maintain the same ratio. This
-                provides approximately constant torque throughout the speed range up to base speed
-                (50 Hz).
-              </p>
-              <p className="text-sm text-white">
-                Above base speed, the voltage remains at maximum while frequency continues to
-                increase, resulting in reduced torque -- this region is called field weakening. V/f
-                control is suitable for simple applications such as fans, pumps and conveyors where
-                precise speed regulation is not critical.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Sensorless Vector Control
-              </h3>
-              <p className="text-sm text-white">
-                Sensorless vector control uses a mathematical model of the motor to independently
-                control torque and flux without a shaft encoder. This provides better speed
-                regulation (typically plus or minus 0.5% of set speed), improved low-speed torque
-                (down to approximately 3% of base speed), faster dynamic response to load changes,
-                and more precise speed control. Modern VSDs often offer both V/f and vector modes,
-                selectable via configuration parameters.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Understanding the three-stage architecture is essential
-              for VSD fault diagnosis. A DC bus voltage reading tells you whether the rectifier and
-              supply are healthy. An output frequency reading tells you whether the inverter is
-              responding to the speed reference. These are the first two diagnostic checks for any
-              VSD fault.
+          <ConceptBlock title="V/f control">
+            <p>
+              V/f (voltage-to-frequency) control maintains a constant ratio of voltage to frequency
+              to keep the motor magnetic flux constant. At 50 Hz and 400 V, the ratio is 8 V/Hz. At
+              25 Hz, the voltage is reduced to 200 V to maintain the same ratio. This provides
+              approximately constant torque throughout the speed range up to base speed (50 Hz).
             </p>
-          </div>
-        </section>
+            <p>
+              Above base speed, the voltage remains at maximum while frequency continues to
+              increase, resulting in reduced torque -- this region is called field weakening. V/f
+              control is suitable for simple applications such as fans, pumps and conveyors where
+              precise speed regulation is not critical.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock
+            title="Sensorless vector control"
+            onSite="Understanding the three-stage architecture is essential for VSD fault diagnosis. A DC bus voltage reading tells you whether the rectifier and supply are healthy. An output frequency reading tells you whether the inverter is responding to the speed reference. These are the first two diagnostic checks for any VSD fault."
+          >
+            <p>
+              Sensorless vector control uses a mathematical model of the motor to independently
+              control torque and flux without a shaft encoder. This provides better speed regulation
+              (typically plus or minus 0.5% of set speed), improved low-speed torque (down to
+              approximately 3% of base speed), faster dynamic response to load changes, and more
+              precise speed control. Modern VSDs often offer both V/f and vector modes, selectable
+              via configuration parameters.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02: Soft Starter Operation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Soft Starter Operation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Soft starter operation</ContentEyebrow>
+
+          <ConceptBlock
+            title="A controlled voltage ramp during motor starting"
+            onSite="Soft starters are simpler and less expensive than VSDs. They are ideal for applications that need reduced starting current and smooth acceleration but do not require variable speed operation, such as pumps, fans, compressors and conveyors that run at a single speed."
+          >
             <p>
               A soft starter provides a controlled voltage ramp during motor starting, reducing
               starting current and mechanical stress on the driven equipment. Unlike a VSD, a soft
@@ -458,100 +398,75 @@ const MOETModule3Section2_4 = () => {
               motor is varied from a low initial level to full supply voltage over an adjustable
               ramp time.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Adjustable Parameters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Starting Voltage (Initial Kick):</strong> Adjustable from approximately
-                  30% to 80% of line voltage. Set high enough to overcome static friction and start
-                  the motor rotating.
-                </li>
-                <li className="pl-1">
-                  <strong>Ramp Time:</strong> Adjustable from 1 to 60 seconds. Determines the
-                  acceleration rate. Longer ramps give smoother starts but extend the starting
-                  period.
-                </li>
-                <li className="pl-1">
-                  <strong>Current Limit:</strong> Adjustable from 150% to 500% of FLC. Limits the
-                  maximum starting current regardless of ramp setting.
-                </li>
-                <li className="pl-1">
-                  <strong>Soft Stop:</strong> Provides a controlled deceleration ramp, useful for
-                  pumps to prevent water hammer (the pressure surge caused by sudden flow stoppage).
-                </li>
-              </ul>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Starting Voltage (Initial Kick):</strong> Adjustable from approximately 30%
+                to 80% of line voltage. Set high enough to overcome static friction and start the
+                motor rotating.
+              </li>
+              <li>
+                <strong>Ramp Time:</strong> Adjustable from 1 to 60 seconds. Determines the
+                acceleration rate. Longer ramps give smoother starts but extend the starting period.
+              </li>
+              <li>
+                <strong>Current Limit:</strong> Adjustable from 150% to 500% of FLC. Limits the
+                maximum starting current regardless of ramp setting.
+              </li>
+              <li>
+                <strong>Soft Stop:</strong> Provides a controlled deceleration ramp, useful for
+                pumps to prevent water hammer (the pressure surge caused by sudden flow stoppage).
+              </li>
+            </ul>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Feature</th>
+                    <th className="py-2 pr-4 font-medium text-white">VSD</th>
+                    <th className="py-2 font-medium text-white">Soft Starter</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Speed control</td>
+                    <td className="py-2 pr-4">Continuous variable speed</td>
+                    <td className="py-2">Full speed only (after ramp)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Control method</td>
+                    <td className="py-2 pr-4">Frequency and voltage</td>
+                    <td className="py-2">Voltage only (phase angle)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Semiconductor</td>
+                    <td className="py-2 pr-4">IGBTs in inverter</td>
+                    <td className="py-2">Back-to-back thyristors</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Energy savings</td>
+                    <td className="py-2 pr-4">Significant (cube law)</td>
+                    <td className="py-2">Minimal (reduced start only)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Cost</td>
+                    <td className="py-2 pr-4">Higher</td>
+                    <td className="py-2">Lower</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">VSD</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Soft Starter</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continuous variable speed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full speed only (after ramp)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Control method</td>
-                      <td className="border border-white/10 px-3 py-2">Frequency and voltage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage only (phase angle)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Semiconductor</td>
-                      <td className="border border-white/10 px-3 py-2">IGBTs in inverter</td>
-                      <td className="border border-white/10 px-3 py-2">Back-to-back thyristors</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy savings</td>
-                      <td className="border border-white/10 px-3 py-2">Significant (cube law)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimal (reduced start only)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">Higher</td>
-                      <td className="border border-white/10 px-3 py-2">Lower</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Soft starters are simpler and less expensive than VSDs.
-              They are ideal for applications that need reduced starting current and smooth
-              acceleration but do not require variable speed operation, such as pumps, fans,
-              compressors and conveyors that run at a single speed.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>Commissioning and parameter setup</ContentEyebrow>
 
-        {/* Section 03: Commissioning and Parameter Setup */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Commissioning and Parameter Setup
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Entering motor nameplate data and configuring the application"
+            onSite="Always back up drive parameters to a laptop, USB drive or the manufacturer's commissioning software after commissioning. If the drive needs replacing, the parameters can be downloaded to the replacement unit, saving hours of recommissioning time."
+          >
             <p>
               Commissioning a VSD requires entering the motor nameplate data and configuring the
               application parameters. Essential motor parameters include rated voltage, rated
@@ -564,83 +479,64 @@ const MOETModule3Section2_4 = () => {
               sequence. This optimises the VSD's internal motor model for better performance,
               particularly in vector control mode.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Acceleration time:</strong> Typically 5-30 seconds depending on load
+                inertia. Too fast causes overcurrent trips; too slow wastes energy.
+              </li>
+              <li>
+                <strong>Deceleration time:</strong> Typically 5-30 seconds. Too fast causes
+                overvoltage trips from regenerative energy feeding back to the DC bus.
+              </li>
+              <li>
+                <strong>Minimum/maximum frequency:</strong> Sets the speed range (e.g., 15 Hz to 50
+                Hz for a fan application to prevent operation below the motor's cooling threshold).
+              </li>
+              <li>
+                <strong>Control mode:</strong> V/f for simple pump/fan loads; vector for precise
+                speed control or applications needing high low-speed torque.
+              </li>
+              <li>
+                <strong>I/O configuration:</strong> Digital and analogue inputs/outputs for
+                start/stop signals, speed reference (0-10 V or 4-20 mA), feedback signals, and
+                fault/status outputs.
+              </li>
+            </ul>
+            <p className="text-[13.5px] font-medium text-white">Pre-commissioning checks:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Supply voltage:</strong> Confirm all three phases are present and within the
+                VSD's rated range (typically plus or minus 10%)
+              </li>
+              <li>
+                <strong>Motor insulation:</strong> Test insulation resistance with motor cables
+                disconnected from VSD output
+              </li>
+              <li>
+                <strong>Cable screening:</strong> Verify screened motor cable with 360-degree
+                termination at both ends
+              </li>
+              <li>
+                <strong>Earth connections:</strong> Confirm motor earth, VSD earth and cable screen
+                earth are correctly connected
+              </li>
+              <li>
+                <strong>Motor rotation:</strong> Run briefly at low speed to confirm correct
+                rotation direction before full commissioning
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Application Parameters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Acceleration time:</strong> Typically 5-30 seconds depending on load
-                  inertia. Too fast causes overcurrent trips; too slow wastes energy.
-                </li>
-                <li className="pl-1">
-                  <strong>Deceleration time:</strong> Typically 5-30 seconds. Too fast causes
-                  overvoltage trips from regenerative energy feeding back to the DC bus.
-                </li>
-                <li className="pl-1">
-                  <strong>Minimum/maximum frequency:</strong> Sets the speed range (e.g., 15 Hz to
-                  50 Hz for a fan application to prevent operation below the motor's cooling
-                  threshold).
-                </li>
-                <li className="pl-1">
-                  <strong>Control mode:</strong> V/f for simple pump/fan loads; vector for precise
-                  speed control or applications needing high low-speed torque.
-                </li>
-                <li className="pl-1">
-                  <strong>I/O configuration:</strong> Digital and analogue inputs/outputs for
-                  start/stop signals, speed reference (0-10 V or 4-20 mA), feedback signals, and
-                  fault/status outputs.
-                </li>
-              </ul>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Pre-commissioning Checks
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Supply voltage:</strong> Confirm all three phases are present and within
-                  the VSD's rated range (typically plus or minus 10%)
-                </li>
-                <li className="pl-1">
-                  <strong>Motor insulation:</strong> Test insulation resistance with motor cables
-                  disconnected from VSD output
-                </li>
-                <li className="pl-1">
-                  <strong>Cable screening:</strong> Verify screened motor cable with 360-degree
-                  termination at both ends
-                </li>
-                <li className="pl-1">
-                  <strong>Earth connections:</strong> Confirm motor earth, VSD earth and cable
-                  screen earth are correctly connected
-                </li>
-                <li className="pl-1">
-                  <strong>Motor rotation:</strong> Run briefly at low speed to confirm correct
-                  rotation direction before full commissioning
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always back up drive parameters to a laptop, USB drive or
-              the manufacturer's commissioning software after commissioning. If the drive needs
-              replacing, the parameters can be downloaded to the replacement unit, saving hours of
-              recommissioning time.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>Harmonics and EMC compliance</ContentEyebrow>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 04: Harmonics and EMC Compliance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Harmonics and EMC Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Harmonic currents flowing back into the supply network"
+            onSite="EMC compliance is not optional. Failure to follow the manufacturer's EMC installation guidelines can cause widespread interference affecting not just the VSD circuit but the entire installation and even neighbouring premises."
+          >
             <p>
               VSDs generate harmonic currents that flow back into the supply network. The rectifier
               stage draws non-sinusoidal current, producing predominantly 5th (250 Hz), 7th (350
@@ -653,262 +549,269 @@ const MOETModule3Section2_4 = () => {
               Engineering Recommendation G5/4-1 sets limits on the harmonic emissions from
               installations connected to the public supply network. Mitigation measures include:
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DC bus chokes:</strong> Reduce harmonic current by 30-40%. Fitted inside the
+                drive or as an external option.
+              </li>
+              <li>
+                <strong>Line reactors:</strong> 3-5% impedance reactors, typically fitted to drives
+                above 30 kW.
+              </li>
+              <li>
+                <strong>Passive harmonic filters:</strong> Tuned LC filters targeting specific
+                harmonic frequencies.
+              </li>
+              <li>
+                <strong>Active front-end drives:</strong> Use an active rectifier (IGBT-based)
+                instead of diodes to draw near-sinusoidal current. Most effective but most expensive
+                option.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonic Mitigation Methods
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DC bus chokes:</strong> Reduce harmonic current by 30-40%. Fitted inside
-                  the drive or as an external option.
-                </li>
-                <li className="pl-1">
-                  <strong>Line reactors:</strong> 3-5% impedance reactors, typically fitted to
-                  drives above 30 kW.
-                </li>
-                <li className="pl-1">
-                  <strong>Passive harmonic filters:</strong> Tuned LC filters targeting specific
-                  harmonic frequencies.
-                </li>
-                <li className="pl-1">
-                  <strong>Active front-end drives:</strong> Use an active rectifier (IGBT-based)
-                  instead of diodes to draw near-sinusoidal current. Most effective but most
-                  expensive option.
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                EMC Installation Requirements
-              </h3>
-              <p className="text-sm text-white mb-3">
-                EMC (electromagnetic compatibility) requirements under the EMC Directive 2014/30/EU
-                mean that VSD installations must not cause electromagnetic interference with other
-                equipment. This requires:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Screened motor cables with 360-degree cable gland termination at both ends
-                </li>
-                <li className="pl-1">
-                  Correct segregation of power and signal cables (minimum 300 mm separation)
-                </li>
-                <li className="pl-1">Input EMC filter on the VSD supply</li>
-                <li className="pl-1">Output choke or du/dt filter for long motor cable runs</li>
-                <li className="pl-1">
-                  Compliance with the VSD manufacturer's EMC installation guidelines
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common EMC Issues</p>
-              <p className="text-sm text-white">
-                Poor EMC practice in VSD installations is one of the most common causes of
-                intermittent control system faults. PLC analogue inputs reading erratically,
-                communication bus dropouts, nuisance RCD tripping and temperature transmitter
-                fluctuations are all symptoms of inadequate EMC measures. When replacing a VSD or
-                modifying a panel containing VSDs, always reinstall EMC filters and maintain cable
-                screening.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> EMC compliance is not optional. Failure to follow the
-              manufacturer's EMC installation guidelines can cause widespread interference affecting
-              not just the VSD circuit but the entire installation and even neighbouring premises.
+          <ConceptBlock title="EMC installation requirements">
+            <p>
+              EMC (electromagnetic compatibility) requirements under the EMC Directive 2014/30/EU
+              mean that VSD installations must not cause electromagnetic interference with other
+              equipment. This requires:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Screened motor cables with 360-degree cable gland termination at both ends</li>
+              <li>Correct segregation of power and signal cables (minimum 300 mm separation)</li>
+              <li>Input EMC filter on the VSD supply</li>
+              <li>Output choke or du/dt filter for long motor cable runs</li>
+              <li>Compliance with the VSD manufacturer's EMC installation guidelines</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <CommonMistake
+            title="Poor EMC practice in VSD installations"
+            whatHappens={
+              <>
+                One of the most common causes of intermittent control system faults. PLC analogue
+                inputs reading erratically, communication bus dropouts, nuisance RCD tripping and
+                temperature transmitter fluctuations are all symptoms of inadequate EMC measures.
+              </>
+            }
+            doInstead={
+              <>
+                When replacing a VSD or modifying a panel containing VSDs, always reinstall EMC
+                filters and maintain cable screening.
+              </>
+            }
+          />
 
-        {/* Section 05: Maintenance and Safety */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Maintenance and Safety
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Warning</p>
-              <p className="text-sm text-white">
-                DC bus capacitors retain a lethal charge after the drive is isolated from the
-                supply. Allow at least 5 minutes (check manufacturer's data -- some larger drives
-                require longer) before opening the drive enclosure. Verify the DC bus voltage has
-                discharged to below 50 V using a multimeter rated for the voltage before touching
-                any internal components. Never perform insulation resistance testing on a motor
-                while it is connected to a VSD -- the 500 V DC test voltage will destroy the IGBT
-                output stage.
-              </p>
-            </div>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preventive Maintenance Schedule
-              </p>
-              <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cooling fans:</strong> Internal fans are the most common failure point.
-                  Check fans are running during every visit. Clean or replace air filters every 6-12
-                  months depending on the environment. Blocked filters are the number one cause of
-                  VSD overtemperature trips.
-                </li>
-                <li className="pl-1">
-                  <strong>DC bus capacitors:</strong> Electrolytic capacitors have a finite life
-                  (typically 5-10 years). Capacitor degradation causes DC bus voltage ripple,
-                  reduced ride-through capability, and eventual drive failure. Some drives monitor
-                  capacitor health and provide early warnings.
-                </li>
-                <li className="pl-1">
-                  <strong>Firmware updates:</strong> Manufacturers periodically release firmware
-                  updates to fix bugs and add features. Update during planned maintenance windows
-                  following the manufacturer's documented procedure.
-                </li>
-                <li className="pl-1">
-                  <strong>Parameter backup:</strong> Always back up drive parameters to a laptop,
-                  USB drive or the manufacturer's commissioning software before any maintenance. If
-                  the drive needs replacing, the parameters can be downloaded to the replacement
-                  unit.
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal imaging:</strong> Check power connections for hot spots during
-                  routine thermographic surveys. High-frequency PWM output cables are particularly
-                  prone to heating at poor connections or where screen terminations are inadequate.
-                </li>
-                <li className="pl-1">
-                  <strong>Connection checks:</strong> Torque-check all power connections annually.
-                  Vibration from the drive's cooling fan and thermal cycling can loosen connections
-                  over time.
-                </li>
-              </ul>
-            </div>
+          <SectionRule />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common VSD Fault Codes
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Overcurrent:</strong> Acceleration too fast, motor fault, short circuit
-                  </li>
-                  <li className="pl-1">
-                    <strong>Overvoltage:</strong> Deceleration too fast, regenerative energy
-                  </li>
-                  <li className="pl-1">
-                    <strong>Overtemperature:</strong> Blocked filters, failed fan, high ambient
-                  </li>
-                  <li className="pl-1">
-                    <strong>Earth fault:</strong> Motor insulation failure, cable damage
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Replacement Procedure
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Download parameters from failed drive (if possible)</li>
-                  <li className="pl-1">Isolate, lock off, prove dead, wait for DC bus discharge</li>
-                  <li className="pl-1">Install replacement with identical rating and firmware</li>
-                  <li className="pl-1">Upload saved parameters or recommission from scratch</li>
-                </ul>
-              </div>
-            </div>
+          <ContentEyebrow>Maintenance and safety</ContentEyebrow>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand VSD and soft starter operation, carry out preventive maintenance, interpret
-              fault codes, and perform basic commissioning. These are core competence requirements
-              for the electrical maintenance pathway.
+          <ConceptBlock title="DC bus capacitors retain a lethal charge after isolation">
+            <p>
+              DC bus capacitors retain a lethal charge after the drive is isolated from the supply.
+              Allow at least 5 minutes (check manufacturer's data -- some larger drives require
+              longer) before opening the drive enclosure. Verify the DC bus voltage has discharged
+              to below 50 V using a multimeter rated for the voltage before touching any internal
+              components. Never perform insulation resistance testing on a motor while it is
+              connected to a VSD -- the 500 V DC test voltage will destroy the IGBT output stage.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Preventive maintenance schedule">
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cooling fans:</strong> Internal fans are the most common failure point.
+                Check fans are running during every visit. Clean or replace air filters every 6-12
+                months depending on the environment. Blocked filters are the number one cause of VSD
+                overtemperature trips.
+              </li>
+              <li>
+                <strong>DC bus capacitors:</strong> Electrolytic capacitors have a finite life
+                (typically 5-10 years). Capacitor degradation causes DC bus voltage ripple, reduced
+                ride-through capability, and eventual drive failure. Some drives monitor capacitor
+                health and provide early warnings.
+              </li>
+              <li>
+                <strong>Firmware updates:</strong> Manufacturers periodically release firmware
+                updates to fix bugs and add features. Update during planned maintenance windows
+                following the manufacturer's documented procedure.
+              </li>
+              <li>
+                <strong>Parameter backup:</strong> Always back up drive parameters to a laptop, USB
+                drive or the manufacturer's commissioning software before any maintenance. If the
+                drive needs replacing, the parameters can be downloaded to the replacement unit.
+              </li>
+              <li>
+                <strong>Thermal imaging:</strong> Check power connections for hot spots during
+                routine thermographic surveys. High-frequency PWM output cables are particularly
+                prone to heating at poor connections or where screen terminations are inadequate.
+              </li>
+              <li>
+                <strong>Connection checks:</strong> Torque-check all power connections annually.
+                Vibration from the drive's cooling fan and thermal cycling can loosen connections
+                over time.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Common VSD fault codes and replacement procedure">
+            <p className="text-[13.5px] font-medium text-white">Common VSD fault codes:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Overcurrent:</strong> Acceleration too fast, motor fault, short circuit
+              </li>
+              <li>
+                <strong>Overvoltage:</strong> Deceleration too fast, regenerative energy
+              </li>
+              <li>
+                <strong>Overtemperature:</strong> Blocked filters, failed fan, high ambient
+              </li>
+              <li>
+                <strong>Earth fault:</strong> Motor insulation failure, cable damage
+              </li>
+            </ul>
+            <p className="text-[13.5px] font-medium text-white">Replacement procedure:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Download parameters from failed drive (if possible)</li>
+              <li>Isolate, lock off, prove dead, wait for DC bus discharge</li>
+              <li>Install replacement with identical rating and firmware</li>
+              <li>Upload saved parameters or recommission from scratch</li>
+            </ul>
+            <p>
+              Under ST1426, maintenance technicians are expected to understand VSD and soft starter
+              operation, carry out preventive maintenance, interpret fault codes, and perform basic
+              commissioning. These are core competence requirements for the electrical maintenance
+              pathway.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">VSD Architecture</p>
-                <ul className="space-y-0.5">
-                  <li>Rectifier = Diode bridge (AC to DC)</li>
-                  <li>DC Bus = Capacitors (565 V DC for 400 V supply)</li>
-                  <li>Inverter = IGBTs + PWM (DC to variable AC)</li>
-                  <li>V/f = constant torque up to base speed</li>
-                  <li>Vector = precise speed and torque control</li>
-                  <li>Switching frequency = 2-16 kHz typical</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safety and Maintenance</p>
-                <ul className="space-y-0.5">
-                  <li>DC bus = lethal voltage after isolation</li>
-                  <li>Wait 5+ minutes, verify below 50 V</li>
-                  <li>Disconnect motor before IR testing</li>
-                  <li>Fan/filter maintenance every 6-12 months</li>
-                  <li>Capacitor life = 5-10 years typical</li>
-                  <li>Screened motor cable with 360-degree termination</li>
-                </ul>
-              </div>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=yEPe7RDtkgo"
+
+            title="Variable Frequency Drives Explained — VFD Basics"
+
+            channel="The Engineering Mindset"
+
+            duration="15:17"
+
+            topic="Rectifier, DC bus and inverter — how a drive makes a variable frequency"
+
+            caption="Builds the drive up stage by stage, which makes the 565 V DC bus figure and the carrier frequency settings on this page make sense."
+          />
+
+          <SectionRule />
+
+          <Scenario
+            title="A drive that trips on overcurrent only when the plant is busy"
+
+            situation={
+              <>
+                <p>
+                  A VSD on a mixer trips on overcurrent two or three times a week, always during the
+                  afternoon shift, never overnight. The motor and mechanical drive check out fine.
+                  Resetting clears it and the mixer runs normally.
+                </p>
+
+                <p>
+                  The drive is in a panel alongside four others in a plant room with no forced
+                  ventilation.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Before touching the drive parameters, read its own fault log. Most drives record
+                  the conditions at trip — output current, DC bus voltage, heatsink temperature —
+                  and that turns a guess into a measurement.
+                </p>
+
+                <p>
+                  Check the correlation you have already been given. Afternoons and not nights
+                  points at ambient temperature or at a load that only occurs on certain production.
+                  Both are testable.
+                </p>
+
+                <p>
+                  Check the heatsink temperature and the panel ambient under load. A drive derates
+                  above its rated ambient, and a panel with blocked filters or a failed fan can be
+                  15 °C above the room. A drive that is fine at 25 °C can trip at 45 °C on the same
+                  load.
+                </p>
+
+                <p>
+                  Only increase the current limit or extend the trip time as a last resort, and
+                  never without knowing why it is tripping. Both change what the drive will tolerate
+                  rather than what the plant is doing.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Raising a trip setting to stop a nuisance trip is the single most common way a
+                protective device gets defeated. In this case the drive is doing exactly what it is
+                designed to do — protecting itself from a thermal condition someone else created by
+                blocking a filter. The clue was in the pattern from the start, and the fault log had
+                the evidence; the temptation is always to treat the symptom on the drive rather than
+                the cause in the panel.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'VSD architecture: rectifier = diode bridge (AC to DC), DC bus = capacitors (565 V DC for a 400 V supply), inverter = IGBTs + PWM (DC to variable AC).',
+              'V/f control gives constant torque up to base speed; vector control gives precise speed and torque control; switching frequency is typically 2-16 kHz.',
+              'DC bus holds a lethal voltage after isolation -- wait 5+ minutes and verify below 50 V. Always disconnect the motor before insulation resistance testing.',
+              'Fan/filter maintenance every 6-12 months; capacitor life is typically 5-10 years. Use screened motor cable with 360-degree termination.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section2-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Star-Delta Starters
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section2-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Motor Maintenance
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Star-Delta Starters
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section2-5">
-              Next: Motor Maintenance
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

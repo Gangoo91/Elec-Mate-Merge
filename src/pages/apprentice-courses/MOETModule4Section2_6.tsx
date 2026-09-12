@@ -1,8 +1,49 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4.2 · Subsection 6 — Trend Analysis and Predictive Maintenance
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Maintenance strategies: planned preventative maintenance (PPM),
+ *     condition-based maintenance (CBM), scheduled maintenance, total
+ *     productive maintenance (TPM), breakdown and run to failure
+ *     maintenance."
+ *   · "Continuous improvement (CI) systems and techniques."
+ *   · "Equipment life cycle considerations."
+ *   · "Record information."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The
+ * prev/next pair now follows the module chain into Section 3 (Fault
+ * Diagnosis) rather than looping back to the section overview.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Trend Analysis and Predictive Maintenance - MOET Module 4.2.6';
@@ -29,8 +70,8 @@ const quickCheckQuestions = [
     options: [
       "Apply the manufacturer's generic limit to every asset of the same type without adjustment",
       "Base alarm levels on the specific equipment's baseline readings plus a statistically determined threshold",
-      "Set the alarm at the maximum value the instrument is capable of measuring",
-      "Wait until the first failure occurs and set the alarm just below that recorded value",
+      'Set the alarm at the maximum value the instrument is capable of measuring',
+      'Wait until the first failure occurs and set the alarm just below that recorded value',
     ],
     correctIndex: 1,
     explanation:
@@ -258,117 +299,65 @@ const faqs = [
 ];
 
 const MOETModule4Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Trend Analysis and Predictive Maintenance
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.2 · Subsection 6"
+        title="Trend Analysis and Predictive Maintenance"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Converting condition monitoring data into maintenance decisions through trending and
-            analysis
+            analysis.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>What:</strong> Analysing condition data trends to predict and prevent
-                failures
+          <TLDR
+            points={[
+              'What: Analysing condition data trends to predict and prevent failures.',
+              'P-F curve: Window between detectable and functional failure.',
+              'Alarms: Alert and danger thresholds based on baselines.',
+              'KPIs: MTBF, MTTR, OEE measure programme effectiveness.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>CMMS:</strong> Central data store for all monitoring results.
               </li>
-              <li className="pl-1">
-                <strong>P-F curve:</strong> Window between detectable and functional failure
+              <li>
+                <strong>Multi-technique:</strong> Combining vibration, thermal, oil and IR data.
               </li>
-              <li className="pl-1">
-                <strong>Alarms:</strong> Alert and danger thresholds based on baselines
+              <li>
+                <strong>Decisions:</strong> Run, monitor, plan, or act immediately.
               </li>
-              <li className="pl-1">
-                <strong>KPIs:</strong> MTBF, MTTR, OEE measure programme effectiveness
+              <li>
+                <strong>ST1426:</strong> Maintenance planning and continuous improvement.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>CMMS:</strong> Central data store for all monitoring results
-              </li>
-              <li className="pl-1">
-                <strong>Multi-technique:</strong> Combining vibration, thermal, oil and IR data
-              </li>
-              <li className="pl-1">
-                <strong>Decisions:</strong> Run, monitor, plan, or act immediately
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maintenance planning and continuous improvement
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the P-F curve and its role in determining monitoring intervals',
               'Set meaningful alarm and trip levels based on baseline data',
               'Apply trend analysis to condition monitoring data for maintenance decisions',
               'Describe the role of CMMS in supporting predictive maintenance programmes',
               'Identify key maintenance KPIs and what they measure',
               'Link trend analysis to ST1426 continuous improvement requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The P-F curve and failure development</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The P-F Curve and Failure Development
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The foundational concept of predictive maintenance">
             <p>
               The P-F curve is the foundational concept of predictive maintenance. It describes how
               equipment faults develop over time, from the point at which deterioration first
@@ -386,142 +375,107 @@ const MOETModule4Section2_6 = () => {
               usually detectable well before it causes a functional failure, provided you are
               measuring the right parameter at the right frequency.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Understanding the P-F Curve
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Point P (Potential failure):</strong> The point at which deterioration can
-                  first be detected by condition monitoring — e.g., a subtle increase in vibration
-                  or a slight change in insulation resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Point F (Functional failure):</strong> The point at which the equipment
-                  can no longer perform its required function — breakdown, trip, or unsafe condition
-                </li>
-                <li className="pl-1">
-                  <strong>P-F interval:</strong> The time between P and F. This is the window of
-                  opportunity for planned maintenance. The monitoring interval must be less than
-                  half this value
-                </li>
-                <li className="pl-1">
-                  <strong>Different techniques detect at different points:</strong> Ultrasound and
-                  oil analysis may detect deterioration earlier than vibration, which detects
-                  earlier than thermal imaging. The earlier the detection, the longer the P-F
-                  interval
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Understanding the P-F curve">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Point P (Potential failure):</strong> The point at which deterioration can
+                first be detected by condition monitoring — e.g., a subtle increase in vibration or
+                a slight change in insulation resistance.
+              </li>
+              <li>
+                <strong>Point F (Functional failure):</strong> The point at which the equipment can
+                no longer perform its required function — breakdown, trip, or unsafe condition.
+              </li>
+              <li>
+                <strong>P-F interval:</strong> The time between P and F. This is the window of
+                opportunity for planned maintenance. The monitoring interval must be less than half
+                this value.
+              </li>
+              <li>
+                <strong>Different techniques detect at different points:</strong> Ultrasound and oil
+                analysis may detect deterioration earlier than vibration, which detects earlier than
+                thermal imaging. The earlier the detection, the longer the P-F interval.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">The Bathtub Curve</h3>
-              <p className="text-sm text-white mb-2">
-                The bathtub curve describes failure rate over an equipment's lifecycle in three
-                phases:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Infant mortality (burn-in):</strong> High failure rate from manufacturing
-                  defects, installation errors and commissioning problems. Decreases as early
-                  failures are rectified
-                </li>
-                <li className="pl-1">
-                  <strong>Useful life:</strong> Low, approximately constant failure rate from random
-                  events. Time-based maintenance is least effective here because failures are
-                  random, not age-related
-                </li>
-                <li className="pl-1">
-                  <strong>Wear-out:</strong> Increasing failure rate as components reach end of
-                  life. Condition monitoring is most valuable here, detecting the onset of wear-out
-                  before failure
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                P-F Intervals for Electrical Equipment
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Equipment / Fault Type
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Detection Method
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical P-F Interval
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor bearing degradation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Vibration analysis</td>
-                      <td className="border border-white/10 px-3 py-2">1-9 months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable insulation degradation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance trending
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Months to years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Loose connection (thermal)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Thermographic survey</td>
-                      <td className="border border-white/10 px-3 py-2">Weeks to months</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformer oil degradation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Dissolved gas analysis</td>
-                      <td className="border border-white/10 px-3 py-2">Months to years</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contactor contact erosion
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contact resistance measurement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Weeks to months</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Research shows that only approximately 11% of equipment
-              failures follow the traditional 'wear-out' pattern. Most failures are random. This
-              means time-based replacement is ineffective for the majority of failures — only
-              condition-based monitoring can detect them.
+          <ConceptBlock title="The bathtub curve">
+            <p>
+              The bathtub curve describes failure rate over an equipment's lifecycle in three
+              phases:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Infant mortality (burn-in):</strong> High failure rate from manufacturing
+                defects, installation errors and commissioning problems. Decreases as early failures
+                are rectified.
+              </li>
+              <li>
+                <strong>Useful life:</strong> Low, approximately constant failure rate from random
+                events. Time-based maintenance is least effective here because failures are random,
+                not age-related.
+              </li>
+              <li>
+                <strong>Wear-out:</strong> Increasing failure rate as components reach end of life.
+                Condition monitoring is most valuable here, detecting the onset of wear-out before
+                failure.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock
+            title="P-F intervals for electrical equipment"
+            onSite="Research shows that only approximately 11% of equipment failures follow the traditional 'wear-out' pattern. Most failures are random. This means time-based replacement is ineffective for the majority of failures — only condition-based monitoring can detect them."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Equipment / fault type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Detection method</th>
+                    <th className="py-2 font-medium text-white">Typical P-F interval</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Motor bearing degradation</td>
+                    <td className="py-2 pr-4">Vibration analysis</td>
+                    <td className="py-2">1-9 months</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Cable insulation degradation</td>
+                    <td className="py-2 pr-4">Insulation resistance trending</td>
+                    <td className="py-2">Months to years</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Loose connection (thermal)</td>
+                    <td className="py-2 pr-4">Thermographic survey</td>
+                    <td className="py-2">Weeks to months</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Transformer oil degradation</td>
+                    <td className="py-2 pr-4">Dissolved gas analysis</td>
+                    <td className="py-2">Months to years</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Contactor contact erosion</td>
+                    <td className="py-2 pr-4">Contact resistance measurement</td>
+                    <td className="py-2">Weeks to months</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Setting Alarm Levels and Decision Thresholds
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Setting alarm levels and decision thresholds</ContentEyebrow>
+
+          <ConceptBlock title="Meaningful thresholds turn data into action">
             <p>
               Effective trending requires clear decision thresholds — defined levels at which
               specific actions are triggered. Without thresholds, data collection becomes an
@@ -536,72 +490,61 @@ const MOETModule4Section2_6 = () => {
               in any measurement and ensures that alarms are triggered only by genuine changes in
               equipment condition.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Two-Level Alarm System
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Alert level:</strong> Indicates a change from normal condition. Action:
-                  increase monitoring frequency, investigate the cause, plan maintenance. Typically
-                  set at 2 standard deviations above baseline or at the ISO Zone B/C boundary
-                </li>
-                <li className="pl-1">
-                  <strong>Danger level:</strong> Indicates severity sufficient to cause damage or
-                  imminent failure. Action: immediate intervention — controlled shutdown, emergency
-                  maintenance. Typically set at 3 standard deviations or the ISO Zone C/D boundary
-                </li>
+          <ConceptBlock title="Two-level alarm system">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Alert level:</strong> Indicates a change from normal condition. Action:
+                increase monitoring frequency, investigate the cause, plan maintenance. Typically
+                set at 2 standard deviations above baseline or at the ISO Zone B/C boundary.
+              </li>
+              <li>
+                <strong>Danger level:</strong> Indicates severity sufficient to cause damage or
+                imminent failure. Action: immediate intervention — controlled shutdown, emergency
+                maintenance. Typically set at 3 standard deviations or the ISO Zone C/D boundary.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Rate of change alarms">
+            <p>
+              In addition to absolute level alarms, rate of change alarms detect rapid
+              deterioration. A parameter that increases by more than a defined percentage between
+              consecutive readings triggers an alert even if the absolute value is still below the
+              alarm level. This catches rapidly developing faults that might reach failure before
+              the next scheduled measurement. For example, a vibration reading that doubles in one
+              month — even if still below the alert threshold — indicates a rapidly developing fault
+              that warrants immediate investigation.
+            </p>
+          </ConceptBlock>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ConceptBlock title="Decision framework">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>Below alert: continue routine monitoring.</li>
+                <li>At alert: investigate, increase frequency.</li>
+                <li>Rising trend: plan maintenance intervention.</li>
+                <li>At danger: act immediately.</li>
               </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Rate of Change Alarms</p>
-              <p className="text-sm text-white">
-                In addition to absolute level alarms, rate of change alarms detect rapid
-                deterioration. A parameter that increases by more than a defined percentage between
-                consecutive readings triggers an alert even if the absolute value is still below the
-                alarm level. This catches rapidly developing faults that might reach failure before
-                the next scheduled measurement. For example, a vibration reading that doubles in one
-                month — even if still below the alert threshold — indicates a rapidly developing
-                fault that warrants immediate investigation.
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Decision Framework</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Below alert: continue routine monitoring</li>
-                  <li className="pl-1">At alert: investigate, increase frequency</li>
-                  <li className="pl-1">Rising trend: plan maintenance intervention</li>
-                  <li className="pl-1">At danger: act immediately</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Refining Thresholds
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Start with generic standards (ISO 10816)</li>
-                  <li className="pl-1">Refine using actual baseline data</li>
-                  <li className="pl-1">Account for operating conditions (load, speed)</li>
-                  <li className="pl-1">Review and adjust based on experience</li>
-                </ul>
-              </div>
-            </div>
+            </ConceptBlock>
+            <ConceptBlock title="Refining thresholds">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>Start with generic standards (ISO 10816).</li>
+                <li>Refine using actual baseline data.</li>
+                <li>Account for operating conditions (load, speed).</li>
+                <li>Review and adjust based on experience.</li>
+              </ul>
+            </ConceptBlock>
           </div>
-        </section>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            CMMS Integration and Data Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>CMMS integration and data management</ContentEyebrow>
+
+          <ConceptBlock title="The backbone of an effective predictive maintenance programme">
             <p>
               A computerised maintenance management system (CMMS) is the backbone of an effective
               predictive maintenance programme. It stores all condition monitoring data, generates
@@ -618,65 +561,63 @@ const MOETModule4Section2_6 = () => {
               measurement point, or failing to note the operating conditions at the time of
               measurement can corrupt the trend data and lead to incorrect decisions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CMMS Functions for Predictive Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Data storage:</strong> Historical repository for all condition monitoring
-                  readings, linked to individual equipment records
-                </li>
-                <li className="pl-1">
-                  <strong>Trend generation:</strong> Automatic plotting of parameters over time with
-                  alarm thresholds displayed
-                </li>
-                <li className="pl-1">
-                  <strong>Alarm management:</strong> Automatic notification when readings exceed
-                  thresholds
-                </li>
-                <li className="pl-1">
-                  <strong>Work order generation:</strong> Automatic creation of maintenance work
-                  orders triggered by alarm conditions
-                </li>
-                <li className="pl-1">
-                  <strong>KPI tracking:</strong> Dashboard reporting of MTBF, MTTR, availability,
-                  OEE and maintenance costs
-                </li>
-                <li className="pl-1">
-                  <strong>Asset history:</strong> Complete maintenance and condition history for
-                  each equipment item
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="CMMS functions for predictive maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Data storage:</strong> Historical repository for all condition monitoring
+                readings, linked to individual equipment records.
+              </li>
+              <li>
+                <strong>Trend generation:</strong> Automatic plotting of parameters over time with
+                alarm thresholds displayed.
+              </li>
+              <li>
+                <strong>Alarm management:</strong> Automatic notification when readings exceed
+                thresholds.
+              </li>
+              <li>
+                <strong>Work order generation:</strong> Automatic creation of maintenance work
+                orders triggered by alarm conditions.
+              </li>
+              <li>
+                <strong>KPI tracking:</strong> Dashboard reporting of MTBF, MTTR, availability, OEE
+                and maintenance costs.
+              </li>
+              <li>
+                <strong>Asset history:</strong> Complete maintenance and condition history for each
+                equipment item.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Data Quality — Garbage In, Garbage Out
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Garbage in, garbage out"
+            whatHappens={
+              <>
                 The value of any predictive maintenance programme depends entirely on data quality.
                 Inconsistent measurements, missing records, incorrect equipment identification and
-                poor data entry undermine the entire system. Ensure every reading is recorded with
-                the correct equipment ID, date, operating conditions and measurement point. A CMMS
-                is only as good as the data entered into it. One incorrectly entered reading can
-                distort a trend and trigger unnecessary maintenance — or, worse, mask a genuine
-                developing fault.
-              </p>
-            </div>
-          </div>
-        </section>
+                poor data entry undermine the entire system.
+              </>
+            }
+            doInstead={
+              <>
+                Ensure every reading is recorded with the correct equipment ID, date, operating
+                conditions and measurement point. A CMMS is only as good as the data entered into
+                it. One incorrectly entered reading can distort a trend and trigger unnecessary
+                maintenance — or, worse, mask a genuine developing fault.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance KPIs and Programme Effectiveness
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Maintenance KPIs and programme effectiveness</ContentEyebrow>
+
+          <ConceptBlock title="Objective evidence the programme is working">
             <p>
               Key performance indicators (KPIs) measure the effectiveness of the predictive
               maintenance programme and demonstrate its value to the organisation. Understanding and
@@ -685,91 +626,64 @@ const MOETModule4Section2_6 = () => {
               achieving its goals — reducing breakdowns, improving availability, and optimising
               maintenance costs.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">KPI</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Measures
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Target Direction
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MTBF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Average time between failures
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increase (more reliable)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MTTR</td>
-                      <td className="border border-white/10 px-3 py-2">Average time to repair</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decrease (faster repairs)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Availability</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uptime as percentage of planned time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increase (above 95%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">OEE</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Availability x Performance x Quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increase (above 85%)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Planned vs Reactive %</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ratio of planned to unplanned maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increase planned (above 80%)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PdM hit rate</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Percentage of predictions confirmed correct
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Increase (validates programme)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock
+            title="Key KPIs"
+            onSite="The maintenance technician standard requires understanding of maintenance strategies, continuous improvement and the ability to contribute to improving equipment reliability. Trend analysis and KPI management are core competences for modern maintenance practice."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">KPI</th>
+                    <th className="py-2 pr-4 font-medium text-white">What it measures</th>
+                    <th className="py-2 font-medium text-white">Target direction</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MTBF</td>
+                    <td className="py-2 pr-4">Average time between failures</td>
+                    <td className="py-2">Increase (more reliable)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MTTR</td>
+                    <td className="py-2 pr-4">Average time to repair</td>
+                    <td className="py-2">Decrease (faster repairs)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Availability</td>
+                    <td className="py-2 pr-4">Uptime as percentage of planned time</td>
+                    <td className="py-2">Increase (above 95%)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">OEE</td>
+                    <td className="py-2 pr-4">Availability x Performance x Quality</td>
+                    <td className="py-2">Increase (above 85%)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Planned vs Reactive %</td>
+                    <td className="py-2 pr-4">Ratio of planned to unplanned maintenance</td>
+                    <td className="py-2">Increase planned (above 80%)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">PdM hit rate</td>
+                    <td className="py-2 pr-4">Percentage of predictions confirmed correct</td>
+                    <td className="py-2">Increase (validates programme)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires
-              understanding of maintenance strategies, continuous improvement and the ability to
-              contribute to improving equipment reliability. Trend analysis and KPI management are
-              core competences for modern maintenance practice.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Building an Effective Predictive Maintenance Programme
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Building an effective predictive maintenance programme</ContentEyebrow>
+
+          <ConceptBlock title="Structure, not just equipment">
             <p>
               Implementing a predictive maintenance programme is not simply a matter of buying
               monitoring equipment and taking readings. It requires a systematic approach that
@@ -779,168 +693,175 @@ const MOETModule4Section2_6 = () => {
               but because the implementation lacks structure, commitment, or the data discipline to
               make it effective.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Asset Criticality Assessment
-                </h3>
-                <p className="text-sm text-white">
-                  Not every asset justifies predictive maintenance. Begin by assessing criticality:
-                  what is the consequence of failure for each asset in terms of safety, production
-                  loss, environmental impact, and repair cost? Focus monitoring resources on the
-                  assets where the consequence of failure is highest. A criticality matrix
-                  (likelihood x consequence) provides a rational basis for prioritisation.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Technique Selection
-                </h3>
-                <p className="text-sm text-white">
-                  Select the most appropriate monitoring technique for each asset based on the
-                  dominant failure modes. For rotating machinery, vibration analysis is typically
-                  the primary technique. For electrical connections, thermography is most effective.
-                  For transformers, dissolved gas analysis provides the best early warning. For
-                  cables and insulation systems, insulation resistance trending is the foundation.
-                  Where possible, combine multiple techniques for higher diagnostic confidence.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Baseline and Trending
-                </h3>
-                <p className="text-sm text-white">
-                  Establish baseline readings under known good conditions — ideally during
-                  commissioning or after a major overhaul. These baselines become the reference
-                  point for all future comparisons. Begin regular trending immediately, plotting
-                  each measurement on a time-series graph. Look for gradual upward or downward
-                  trends, step changes, and cyclical patterns. A minimum of three data points is
-                  needed to confirm a trend, which is why the monitoring interval must allow
-                  multiple readings within the P-F interval.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Pitfalls in PdM Implementation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Collecting data without analysing it:</strong> Data that sits unreviewed
-                  in a CMMS provides no value — schedule regular trend review meetings
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring everything equally:</strong> Focus on critical assets — not
-                  every motor needs weekly vibration readings
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring the human element:</strong> Technicians need training in
-                  measurement techniques and basic trend interpretation
-                </li>
-                <li className="pl-1">
-                  <strong>Expecting instant results:</strong> PdM programmes take 12 to 24 months to
-                  build sufficient data for reliable trending
-                </li>
-                <li className="pl-1">
-                  <strong>Poor data discipline:</strong> Inconsistent measurement points, missed
-                  readings, and data entry errors destroy trend reliability
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Remember:</strong> Predictive maintenance is a journey, not a destination.
-              Start with the basics, build data, demonstrate value, and progressively expand. The
-              maintenance technician who consistently collects accurate data, reviews trends, and
-              acts on the findings is contributing directly to improved reliability, safety, and
-              cost efficiency.
+          <ConceptBlock title="Step 1 — Asset criticality assessment">
+            <p>
+              Not every asset justifies predictive maintenance. Begin by assessing criticality: what
+              is the consequence of failure for each asset in terms of safety, production loss,
+              environmental impact, and repair cost? Focus monitoring resources on the assets where
+              the consequence of failure is highest. A criticality matrix (likelihood x consequence)
+              provides a rational basis for prioritisation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Step 2 — Technique selection">
+            <p>
+              Select the most appropriate monitoring technique for each asset based on the dominant
+              failure modes. For rotating machinery, vibration analysis is typically the primary
+              technique. For electrical connections, thermography is most effective. For
+              transformers, dissolved gas analysis provides the best early warning. For cables and
+              insulation systems, insulation resistance trending is the foundation. Where possible,
+              combine multiple techniques for higher diagnostic confidence.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Step 3 — Baseline and trending">
+            <p>
+              Establish baseline readings under known good conditions — ideally during commissioning
+              or after a major overhaul. These baselines become the reference point for all future
+              comparisons. Begin regular trending immediately, plotting each measurement on a
+              time-series graph. Look for gradual upward or downward trends, step changes, and
+              cyclical patterns. A minimum of three data points is needed to confirm a trend, which
+              is why the monitoring interval must allow multiple readings within the P-F interval.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock
+            title="Common pitfalls in PdM implementation"
+            onSite="Predictive maintenance is a journey, not a destination. Start with the basics, build data, demonstrate value, and progressively expand. The maintenance technician who consistently collects accurate data, reviews trends, and acts on the findings is contributing directly to improved reliability, safety, and cost efficiency."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Collecting data without analysing it:</strong> Data that sits unreviewed in
+                a CMMS provides no value — schedule regular trend review meetings.
+              </li>
+              <li>
+                <strong>Monitoring everything equally:</strong> Focus on critical assets — not every
+                motor needs weekly vibration readings.
+              </li>
+              <li>
+                <strong>Ignoring the human element:</strong> Technicians need training in
+                measurement techniques and basic trend interpretation.
+              </li>
+              <li>
+                <strong>Expecting instant results:</strong> PdM programmes take 12 to 24 months to
+                build sufficient data for reliable trending.
+              </li>
+              <li>
+                <strong>Poor data discipline:</strong> Inconsistent measurement points, missed
+                readings, and data entry errors destroy trend reliability.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">P-F Curve Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>P = first detectable deterioration</li>
-                  <li>F = functional failure (breakdown)</li>
-                  <li>Monitor at less than half P-F interval</li>
-                  <li>Earlier detection = longer P-F interval</li>
-                  <li>Only 11% of failures are age-related</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key KPIs</p>
-                <ul className="space-y-0.5">
-                  <li>MTBF — mean time between failures</li>
-                  <li>MTTR — mean time to repair</li>
-                  <li>OEE — availability x performance x quality</li>
-                  <li>Planned vs reactive ratio (target 80%+)</li>
-                  <li>PdM hit rate validates predictions</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Scenario
+            title="Three readings that look like a trend and are not"
+
+            situation={
+              <>
+                <p>
+                  Monthly vibration readings on a fan are 3.8, 4.1 and 4.4 mm/s. A rising trend is
+                  reported and a bearing change is scheduled into the next shutdown.
+                </p>
+
+                <p>
+                  The bearing comes out in good condition. The fan runs on for another two years on
+                  the original spare.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Establish what normal scatter looks like on that machine before calling anything a
+                  trend. If the last two years of readings sit between 3.6 and 4.5, then 3.8-4.1-4.4
+                  is entirely ordinary variation and there is no trend to see.
+                </p>
+
+                <p>
+                  Check the conditions each reading was taken under. Load, temperature, measurement
+                  point and instrument settings all move the number; readings taken at different
+                  loads are measuring the load, not the machine.
+                </p>
+
+                <p>
+                  Where the data is thin, shorten the interval rather than acting. Four more
+                  readings a fortnight apart will settle the question at almost no cost; a shutdown
+                  and a bearing will not.
+                </p>
+
+                <p>
+                  If you do act, say what evidence you acted on. "Rising trend" with three points
+                  behind it should not read the same in the record as "rising trend" with twenty.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Condition monitoring loses credibility faster through false alarms than through
+                missed faults, because every unnecessary strip-down teaches the plant that the
+                readings do not mean much. This is the mirror image of the gearbox scenario
+                elsewhere in the course: there, a real trend was nearly missed because the level
+                looked acceptable; here, ordinary scatter was mistaken for a trend. Both mistakes
+                come from reading numbers without knowing how much they normally move.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'P = first detectable deterioration; F = functional failure (breakdown). Monitor at less than half the P-F interval.',
+              'Earlier detection technique = longer P-F interval. Only around 11% of failures are age-related.',
+              'MTBF (mean time between failures), MTTR (mean time to repair), OEE (availability x performance x quality).',
+              'Planned vs reactive ratio (target 80%+ planned); PdM hit rate validates the predictions the programme makes.',
+              'A CMMS is only as good as the data entered into it — record equipment ID, date, operating conditions and measurement point every time.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Oil and Fluid Analysis
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Symptom Recognition and Initial Assessment
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Oil and Fluid Analysis
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

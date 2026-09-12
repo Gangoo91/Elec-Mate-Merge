@@ -4,16 +4,40 @@ import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'Reading and producing technical drawings', icon: FileText, description: 'Engineering conventions, electrical schematics, mechanical drawings and revision control.' },
-  { id: 2, title: 'Electrical schematics and wiring diagrams', icon: Zap, description: 'Circuit diagrams, single-line diagrams, control circuits and labelling standards.' },
-  { id: 3, title: 'Maintenance records and reporting', icon: ClipboardList, description: 'Work recording, fault reports, digital reporting and maintenance management systems.' },
-  { id: 4, title: 'Handovers and stakeholder communication', icon: Users, description: 'Shift handovers, stakeholder communication, professional behaviour and teamwork.' },
+  {
+    id: 1,
+    title: 'Reading and producing technical drawings',
+    icon: FileText,
+    description:
+      'Engineering conventions, electrical schematics, mechanical drawings and revision control.',
+  },
+  {
+    id: 2,
+    title: 'Electrical schematics and wiring diagrams',
+    icon: Zap,
+    description:
+      'Circuit diagrams, single-line diagrams, control circuits and labelling standards.',
+  },
+  {
+    id: 3,
+    title: 'Maintenance records and reporting',
+    icon: ClipboardList,
+    description:
+      'Work recording, fault reports, digital reporting and maintenance management systems.',
+  },
+  {
+    id: 4,
+    title: 'Handovers and stakeholder communication',
+    icon: Users,
+    description: 'Shift handovers, stakeholder communication, professional behaviour and teamwork.',
+  },
 ];
 
 export default function MOETModule6() {
   useSEO({
     title: 'Module 6: Technical Documentation and Communication | MOET | Elec-Mate',
-    description: 'Technical drawings, electrical schematics, maintenance records and stakeholder communication for maintenance engineers.',
+    description:
+      'Technical drawings, electrical schematics, maintenance records and stakeholder communication for maintenance engineers.',
   });
 
   return (

@@ -489,7 +489,7 @@ const CableCurrentCapacityCalculator = () => {
     const compliance = result.compliance;
     return {
       meta: {
-        title: 'Cable Current Capacity Calculator',
+        title: 'Cable Current Capacity',
         subtitle: 'Current-carrying capacity (Iz) after correction factors',
         standard: result.standard,
       },
@@ -526,13 +526,16 @@ const CableCurrentCapacityCalculator = () => {
           ],
         },
         {
-          heading: 'Result',
+          heading: 'How it was calculated',
           rows: [
-            { label: 'Base capacity', value: `${result.baseCapacity} A` },
-            { label: 'Temperature factor', value: result.tempCorrectionFactor.toFixed(3) },
-            { label: 'Grouping factor', value: result.groupingCorrectionFactor.toFixed(2) },
-            { label: 'Soil factor', value: result.soilCorrectionFactor.toFixed(3) },
-            { label: 'Final capacity (Iz)', value: `${result.finalCapacity.toFixed(1)} A` },
+            { label: 'Base capacity (tabulated)', value: `${result.baseCapacity} A` },
+            { label: 'Temperature factor (Ca)', value: result.tempCorrectionFactor.toFixed(3) },
+            { label: 'Grouping factor (Cg)', value: result.groupingCorrectionFactor.toFixed(2) },
+            { label: 'Soil factor (Cs)', value: result.soilCorrectionFactor.toFixed(3) },
+            {
+              label: 'Working',
+              value: `Iz = ${result.baseCapacity} × ${result.tempCorrectionFactor.toFixed(3)} × ${result.groupingCorrectionFactor.toFixed(2)} × ${result.soilCorrectionFactor.toFixed(3)} = ${result.finalCapacity.toFixed(1)} A`,
+            },
             ...(compliance
               ? [{ label: 'Safety margin', value: `${compliance.safetyMargin.toFixed(1)}%` }]
               : []),

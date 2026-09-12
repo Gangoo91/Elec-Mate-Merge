@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { isStudyContentPath, studyTitleFromDocument } from '@/lib/studyContentPath';
 import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
 import { ApprenticeSetupGate } from '@/components/onboarding/ApprenticeSetupGate';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
@@ -18,6 +19,7 @@ const LearningVideos = lazyWithRetry(() => import('@/pages/apprentice/LearningVi
 const OnJobFlashcards = lazyWithRetry(() => import('@/pages/apprentice/OnJobFlashcards'));
 const NotFound = lazyWithRetry(() => import('@/pages/apprentice-courses/NotFound'));
 const MockExamsPage = lazyWithRetry(() => import('@/pages/study-centre/MockExamsPage'));
+const StudyCentreGlossary = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreGlossary'));
 
 // Import nested route components with retry
 const ApprenticeCourseRoutes = lazyWithRetry(() => import('@/routes/ApprenticeCourseRoutes'));
@@ -318,9 +320,13 @@ function StudyCentreTracker() {
         });
       }, 1000); // 1s delay to avoid recording bounces
 
-      // Update last study location — only for actual content pages
-      const title = document.title?.split('|')[0]?.trim() || 'Study Centre';
-      updateLastLocationRef.current(path, title);
+      // Update last study location — only for actual content pages. The
+      // courseKey/sectionKey test above admits reference pages too (a glossary
+      // parses as a section), so the shared classifier has the final say.
+      const title = studyTitleFromDocument('Study centre');
+      if (isStudyContentPath(path)) {
+        updateLastLocationRef.current(path, title);
+      }
 
       prevContentPathRef.current = path; // Remember this content page
       prevTitleRef.current = title;
@@ -354,6 +360,7 @@ export default function StudyCentreRoutes() {
         {/* Every in-app paper in one index. Dashboard has linked here since
             before the page existed — that link used to render blank. */}
         <Route path="mock-exams" element={<MockExamsPage />} />
+        <Route path="glossary" element={<StudyCentreGlossary />} />
         <Route path="videos" element={<LearningVideos backTo="/study-centre" />} />
         {/* Same reason as videos above: the Study Centre tile used to link
             straight to /apprentice/on-job-tools/flashcards, which leaves this

@@ -1,8 +1,47 @@
-import { ArrowLeft, Activity, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 4 — Earthing Systems (TN, TT, IT)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { EarthingSystemDiagram } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earthing Systems (TN, TT, IT) - MOET Module 2 Section 4.4';
@@ -109,12 +148,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'The typical range of Ze values for a TN-C-S (PME) supply in the UK is:',
-    options: [
-      '0.2 to 0.35 ohms',
-      '0.01 to 0.05 ohms',
-      '2 to 5 ohms',
-      '20 to 200 ohms',
-    ],
+    options: ['0.2 to 0.35 ohms', '0.01 to 0.05 ohms', '2 to 5 ohms', '20 to 200 ohms'],
     correctAnswer: 0,
     explanation:
       'For a TN-C-S (PME) supply, the DNO typically declares a maximum Ze of 0.35 ohms, with measured values commonly in the range 0.2 to 0.35 ohms. This low impedance ensures high earth fault currents, allowing overcurrent devices to operate within the required disconnection times. For TN-S supplies, the maximum declared Ze is typically 0.8 ohms.',
@@ -176,12 +210,7 @@ const quizQuestions = [
     id: 9,
     question:
       'The maximum value of earth electrode resistance for a TT system protected by a 30 mA RCD is:',
-    options: [
-      '20 ohms',
-      '1,667 ohms',
-      '200 ohms',
-      'There is no maximum',
-    ],
+    options: ['20 ohms', '1,667 ohms', '200 ohms', 'There is no maximum'],
     correctAnswer: 1,
     explanation:
       'For a 30 mA RCD, the maximum Zs = 50 V / 0.03 A = 1,667 ohms. Since the earth electrode resistance (RA) dominates Zs in a TT system, RA must not exceed approximately 1,667 ohms. In practice, earth electrode resistances are typically kept well below 200 ohms to provide an adequate safety margin.',
@@ -189,12 +218,7 @@ const quizQuestions = [
   {
     id: 10,
     question: 'When measuring Ze on a TN-C-S supply, a typical acceptable value would be:',
-    options: [
-      '280 ohms',
-      '2.8 ohms',
-      '0.28 ohms',
-      '28 ohms',
-    ],
+    options: ['280 ohms', '2.8 ohms', '0.28 ohms', '28 ohms'],
     correctAnswer: 2,
     explanation:
       "A typical Ze measurement on a TN-C-S (PME) supply would be around 0.2 to 0.35 ohms. A value of 0.28 ohms is entirely normal and within the DNO's declared maximum of 0.35 ohms. Values of 2.8 ohms or higher would indicate a problem with the earthing or suggest a TT rather than TN-C-S arrangement.",
@@ -216,12 +240,7 @@ const quizQuestions = [
     id: 12,
     question:
       'Which earthing system type is most commonly used for new domestic supplies in the UK?',
-    options: [
-      'TN-C-S (PME)',
-      'IT',
-      'TN-S',
-      'TT',
-    ],
+    options: ['TN-C-S (PME)', 'IT', 'TN-S', 'TT'],
     correctAnswer: 0,
     explanation:
       'TN-C-S (PME — Protective Multiple Earthing) is the most common earthing arrangement for new domestic supplies in the UK. The DNO provides earth via the combined neutral/earth (PEN) conductor of the supply cable. PME provides a low-impedance earth, good for overcurrent protection disconnection times. TN-S is common in older urban areas, and TT is used in rural areas where the DNO does not provide an earth terminal.',
@@ -243,7 +262,7 @@ const faqs = [
     question:
       'Can a TT system use overcurrent devices (MCBs) for earth fault protection instead of RCDs?',
     answer:
-      'In theory, if the earth fault loop impedance is low enough for an MCB to trip within the required time (0.4 seconds for final circuits up to 32 A), an MCB could provide earth fault protection. In practice, TT earth electrode resistances are almost always too high for this. A 30 mA RCD will operate with Zs up to 1,667 ohms, whereas a 32 A Type B MCB requires Zs below approximately 1.44 ohms. RCD protection is therefore essential in TT systems.',
+      'In theory, if the earth fault loop impedance is low enough for an MCB to trip within the required time (0.4 seconds for final circuits up to 32 A), an MCB could provide earth fault protection. In practice, TT earth electrode resistances are almost always too high for this. A 30 mA RCD will operate with Zs up to 1,667 ohms, whereas a 32 A Type B MCB requires Zs below 1.37 ohms (BS 7671 Table 41.3, which applies Cmin = 0.95). RCD protection is therefore essential in TT systems.',
   },
   {
     question: 'Why is PME earthing not permitted for some special locations?',
@@ -259,115 +278,71 @@ const faqs = [
 ];
 
 const MOETModule2Section4_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Activity className="h-4 w-4" />
-            <span>Module 2.4.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Earthing Systems (TN, TT, IT)
-          </h1>
-          <p className="text-white">
-            Types of earthing arrangements, their characteristics and applications
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 4"
+        title="Earthing Systems (TN, TT, IT)"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Types of earthing arrangements, their characteristics and applications — TN-S, TN-C-S
+            (PME), TT and IT — and how to identify, measure and verify each one on site.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>TN-S:</strong> Separate earth from supply cable sheath/conductor
-              </li>
-              <li className="pl-1">
-                <strong>TN-C-S (PME):</strong> Combined PEN in supply, separated at origin
-              </li>
-              <li className="pl-1">
-                <strong>TT:</strong> Local earth electrode, no supply earth — needs RCD
-              </li>
-              <li className="pl-1">
-                <strong>IT:</strong> Isolated source — first fault does not disconnect
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Identification:</strong> Determine system type at supply intake
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Measure Ze to verify earthing integrity
-              </li>
-              <li className="pl-1">
-                <strong>Protection:</strong> Match device selection to earthing type
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to earthing and protection system KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'TN-S: separate earth from supply cable sheath/conductor.',
+              'TN-C-S (PME): combined PEN in supply, separated at origin.',
+              'TT: local earth electrode, no supply earth — needs RCD.',
+              'IT: isolated source — first fault does not disconnect.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose of earthing and its role in automatic disconnection of supply',
               'Describe TN-S, TN-C-S (PME) and TT earthing arrangements and how to identify them',
               'Understand the IT earthing system and its applications in critical installations',
               'Identify the risks associated with PME earthing and the special location restrictions',
               'Measure and interpret external earth fault loop impedance (Ze) values',
               'Reference BS 7671 Part 4 and Section 542 earthing requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The purpose and principles of earthing</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Purpose and Principles of Earthing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="A low-impedance path for fault current"
+            onSite="The type of earthing system directly determines the earth fault loop impedance, which in turn determines which protective devices can achieve the required disconnection times. A maintenance technician must be able to identify the earthing system, understand its implications for protection, and verify that the earthing arrangement is intact and effective through measurement and inspection."
+          >
             <p>
               Earthing is the foundation of electrical safety. Without a reliable earth connection,
               protective devices cannot operate when a fault occurs, and metalwork that should be
@@ -383,177 +358,149 @@ const MOETModule2Section4_4 = () => {
               standard classifies earthing systems using a lettering scheme derived from IEC 60364,
               based on the relationship between the source earth and the installation earth.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earthing System Classification
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First letter — Source earthing:</strong> T = source directly earthed
-                  (terre = earth); I = source isolated or high-impedance earthed
-                </li>
-                <li className="pl-1">
-                  <strong>Second letter — Installation earthing:</strong> T =
-                  exposed-conductive-parts earthed via local electrode; N = exposed-conductive-parts
-                  connected to the supply earth (neutral)
-                </li>
-                <li className="pl-1">
-                  <strong>Third letter (TN only):</strong> S = separate N and PE conductors; C =
-                  combined PEN conductor; C-S = combined in supply, separate in installation
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Earthing system classification">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>First letter — Source earthing:</strong> T = source directly earthed (terre
+                = earth); I = source isolated or high-impedance earthed
+              </li>
+              <li>
+                <strong>Second letter — Installation earthing:</strong> T = exposed-conductive-parts
+                earthed via local electrode; N = exposed-conductive-parts connected to the supply
+                earth (neutral)
+              </li>
+              <li>
+                <strong>Third letter (TN only):</strong> S = separate N and PE conductors; C =
+                combined PEN conductor; C-S = combined in supply, separate in installation
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Why Earthing Type Matters for Maintenance
-              </p>
-              <p className="text-sm text-white">
-                The type of earthing system directly determines the earth fault loop impedance,
-                which in turn determines which protective devices can achieve the required
-                disconnection times. A maintenance technician must be able to identify the earthing
-                system, understand its implications for protection, and verify that the earthing
-                arrangement is intact and effective through measurement and inspection.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            TN Systems — TN-S and TN-C-S
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>TN systems — TN-S and TN-C-S</ContentEyebrow>
+
+          <ConceptBlock title="A metallic earth return path from installation to transformer">
             <p>
               TN systems provide a metallic earth return path from the installation back to the
               supply transformer star point. This metallic path has low impedance, resulting in high
               earth fault currents that allow overcurrent protective devices (fuses and MCBs) to
               achieve fast disconnection. TN is the most common earthing arrangement in the UK.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">TN-S (Separate)</h3>
-                <p className="text-sm text-white mb-2">
-                  In a TN-S system, the protective earth (PE) conductor is separate from the neutral
-                  (N) throughout both the supply and the installation. The earth path is typically
-                  provided by the metallic sheath (lead or aluminium) of the supply cable or by a
-                  dedicated earth conductor. This system is common in older urban areas where the
-                  supply uses paper-insulated lead-sheathed (PILC) cables.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Typical Ze: 0.4 to 0.8 ohms (DNO maximum declared: 0.8 ohms)
-                  </li>
-                  <li className="pl-1">Earth terminal: connected to cable sheath at the cutout</li>
-                  <li className="pl-1">Safe for all applications — no PEN conductor risk</li>
-                  <li className="pl-1">Being replaced by TN-C-S as networks are modernised</li>
-                </ul>
-              </div>
+          <EarthingSystemDiagram system="TN-S" />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  TN-C-S (PME — Protective Multiple Earthing)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  TN-C-S is the most common arrangement for new UK supplies. The supply cable uses a
-                  combined PEN (Protective Earth and Neutral) conductor. At the origin of the
-                  installation, the PEN is separated into distinct neutral (N) and protective earth
-                  (PE) conductors. The PEN conductor is earthed at multiple points along the supply
-                  network — hence 'Protective Multiple Earthing'.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Typical Ze: 0.2 to 0.35 ohms (DNO maximum declared: 0.35 ohms)
-                  </li>
-                  <li className="pl-1">
-                    Lowest Ze — therefore highest fault currents and fastest disconnection
-                  </li>
-                  <li className="pl-1">PEN conductor minimum: 10 mm² Cu or 16 mm² Al</li>
-                  <li className="pl-1">
-                    Risk: broken PEN conductor causes dangerous voltages on earthed metalwork
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="TN-S (Separate)">
+            <p>
+              In a TN-S system, the protective earth (PE) conductor is separate from the neutral (N)
+              throughout both the supply and the installation. The earth path is typically provided
+              by the metallic sheath (lead or aluminium) of the supply cable or by a dedicated earth
+              conductor. This system is common in older urban areas where the supply uses
+              paper-insulated lead-sheathed (PILC) cables.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Typical Ze: 0.4 to 0.8 ohms (DNO maximum declared: 0.8 ohms)</li>
+              <li>Earth terminal: connected to cable sheath at the cutout</li>
+              <li>Safe for all applications — no PEN conductor risk</li>
+              <li>Being replaced by TN-C-S as networks are modernised</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">PME Risks and Restrictions</p>
-              <p className="text-sm text-white">
+          <EarthingSystemDiagram system="TN-C-S" />
+
+          <ConceptBlock
+            title="TN-C-S (PME — Protective Multiple Earthing)"
+            onSite="When inspecting a TN-C-S installation, check the integrity of the main bonding conductors. These limit the potential difference between earthed metalwork and extraneous-conductive-parts (gas, water pipes) in the event of a PEN conductor issue. Inadequate bonding in a PME installation is a serious deficiency."
+          >
+            <p>
+              TN-C-S is the most common arrangement for new UK supplies. The supply cable uses a
+              combined PEN (Protective Earth and Neutral) conductor. At the origin of the
+              installation, the PEN is separated into distinct neutral (N) and protective earth (PE)
+              conductors. The PEN conductor is earthed at multiple points along the supply network —
+              hence 'Protective Multiple Earthing'.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Typical Ze: 0.2 to 0.35 ohms (DNO maximum declared: 0.35 ohms)</li>
+              <li>Lowest Ze — therefore highest fault currents and fastest disconnection</li>
+              <li>PEN conductor minimum: 10 mm² Cu or 16 mm² Al</li>
+              <li>Risk: broken PEN conductor causes dangerous voltages on earthed metalwork</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="PME risks and restrictions"
+            whatHappens={
+              <>
                 The critical risk with PME is loss of the PEN conductor. If the PEN conductor
                 becomes open-circuit between the installation and the transformer, load current that
                 would normally return via the neutral is forced to flow through the installation's
                 earth system. This causes the earth terminal and all connected metalwork to rise to
-                a potentially lethal voltage. BS 7671 and DNO regulations restrict PME earthing for
-                swimming pools, marinas, construction sites, caravan parks, agricultural premises
-                and petrol filling stations.
-              </p>
-            </div>
+                a potentially lethal voltage.
+              </>
+            }
+            doInstead={
+              <>
+                BS 7671 and DNO regulations restrict PME earthing for swimming pools, marinas,
+                construction sites, caravan parks, agricultural premises and petrol filling stations
+                — a TT arrangement is used in these locations instead.
+              </>
+            }
+          />
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">TN System Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">TN-S</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">TN-C-S (PME)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maximum declared Ze</td>
-                      <td className="border border-white/10 px-3 py-2">0.8 ohms</td>
-                      <td className="border border-white/10 px-3 py-2">0.35 ohms</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth return</td>
-                      <td className="border border-white/10 px-3 py-2">Cable sheath (separate)</td>
-                      <td className="border border-white/10 px-3 py-2">PEN conductor (combined)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PEN conductor risk</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes — loss causes danger</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Special location restrictions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Yes — pools, marinas, etc.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="TN system comparison">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Characteristic</th>
+                    <th className="py-2 pr-4 font-medium text-white">TN-S</th>
+                    <th className="py-2 font-medium text-white">TN-C-S (PME)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Maximum declared Ze</td>
+                    <td className="py-2 pr-4">0.8 ohms</td>
+                    <td className="py-2">0.35 ohms</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Earth return</td>
+                    <td className="py-2 pr-4">Cable sheath (separate)</td>
+                    <td className="py-2">PEN conductor (combined)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PEN conductor risk</td>
+                    <td className="py-2 pr-4">No</td>
+                    <td className="py-2">Yes — loss causes danger</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Special location restrictions</td>
+                    <td className="py-2 pr-4">None</td>
+                    <td className="py-2">Yes — pools, marinas, etc.</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-elec-yellow/70">
               <strong>Practical tip:</strong> When inspecting a TN-C-S installation, check the
               integrity of the main bonding conductors. These limit the potential difference between
               earthed metalwork and extraneous-conductive-parts (gas, water pipes) in the event of a
               PEN conductor issue. Inadequate bonding in a PME installation is a serious deficiency.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            TT Earthing Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>TT earthing systems</ContentEyebrow>
+
+          <ConceptBlock title="No earth terminal from the supplier">
             <p>
               In a TT system, the supply company does not provide an earth terminal. The
               installation must obtain its own connection to earth, typically via one or more earth
@@ -569,93 +516,83 @@ const MOETModule2Section4_4 = () => {
               systems means that RCDs are essential for earth fault protection — overcurrent devices
               alone cannot achieve the required disconnection times.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TT System Characteristics
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Earth electrode types:</strong> Driven rods (copper-clad steel), copper
-                  plates, bare copper tape buried in trenches, foundation electrodes
-                </li>
-                <li className="pl-1">
-                  <strong>Typical electrode resistance:</strong> 10 to 200 ohms (depends heavily on
-                  soil conditions)
-                </li>
-                <li className="pl-1">
-                  <strong>Protection:</strong> RCD essential — 30 mA for additional protection, with
-                  maximum Zs &le; 1,667 ohms
-                </li>
-                <li className="pl-1">
-                  <strong>Testing:</strong> Earth electrode resistance must be measured separately
-                  during periodic inspection
-                </li>
-              </ul>
+          <EarthingSystemDiagram system="TT" />
+
+          <ConceptBlock title="TT system characteristics">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Earth electrode types:</strong> Driven rods (copper-clad steel), copper
+                plates, bare copper tape buried in trenches, foundation electrodes
+              </li>
+              <li>
+                <strong>Typical electrode resistance:</strong> 10 to 200 ohms (depends heavily on
+                soil conditions)
+              </li>
+              <li>
+                <strong>Protection:</strong> RCD essential — 30 mA for additional protection, with
+                maximum Zs ≤ 1,667 ohms
+              </li>
+              <li>
+                <strong>Testing:</strong> Earth electrode resistance must be measured separately
+                during periodic inspection
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Earth electrode resistance and soil conditions">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Soil Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">
+                      Typical Resistivity (ohm-m)
+                    </th>
+                    <th className="py-2 font-medium text-white">Expected Electrode Resistance</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Clay (moist)</td>
+                    <td className="py-2 pr-4">5 - 20</td>
+                    <td className="py-2">Low (5 - 30 ohms)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Loam/topsoil</td>
+                    <td className="py-2 pr-4">10 - 100</td>
+                    <td className="py-2">Moderate (10 - 100 ohms)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Sand</td>
+                    <td className="py-2 pr-4">50 - 500</td>
+                    <td className="py-2">High (50 - 300 ohms)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Rock (granite/sandstone)</td>
+                    <td className="py-2 pr-4">1,000 - 10,000</td>
+                    <td className="py-2">Very high (200+ ohms)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Electrode Resistance and Soil Conditions
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Soil Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Resistivity (ohm-m)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Expected Electrode Resistance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Clay (moist)</td>
-                      <td className="border border-white/10 px-3 py-2">5 - 20</td>
-                      <td className="border border-white/10 px-3 py-2">Low (5 - 30 ohms)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Loam/topsoil</td>
-                      <td className="border border-white/10 px-3 py-2">10 - 100</td>
-                      <td className="border border-white/10 px-3 py-2">Moderate (10 - 100 ohms)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sand</td>
-                      <td className="border border-white/10 px-3 py-2">50 - 500</td>
-                      <td className="border border-white/10 px-3 py-2">High (50 - 300 ohms)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rock (granite/sandstone)</td>
-                      <td className="border border-white/10 px-3 py-2">1,000 - 10,000</td>
-                      <td className="border border-white/10 px-3 py-2">Very high (200+ ohms)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-elec-yellow/70">
               <strong>Maintenance note:</strong> Earth electrode resistance can vary significantly
               with season — dry summer conditions can increase resistance dramatically as soil
               moisture decreases. Periodic inspection should ideally include earth electrode
               resistance measurement, and the installation owner should be aware that seasonal
               variation may affect protection performance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            IT Earthing Systems and Insulation Monitoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>IT earthing systems and insulation monitoring</ContentEyebrow>
+
+          <ConceptBlock title="A single earth fault does not force a disconnection">
             <p>
               The IT earthing system is fundamentally different from TN and TT systems. In an IT
               system, the supply source (transformer) is either completely isolated from earth or
@@ -671,213 +608,182 @@ const MOETModule2Section4_4 = () => {
               raises an alarm, allowing maintenance personnel to locate and repair the fault in a
               planned manner without interrupting supply.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">IT System Applications</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Hospitals:</strong> Operating theatres and critical care areas where loss
-                  of supply could be life-threatening
-                </li>
-                <li className="pl-1">
-                  <strong>Process industries:</strong> Chemical plants and refineries where
-                  unexpected shutdown could cause hazardous conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Mining:</strong> Underground mining where fault conditions combined with
-                  water create extreme danger
-                </li>
-                <li className="pl-1">
-                  <strong>Laboratory equipment:</strong> Sensitive measurement systems where leakage
-                  currents could affect results
-                </li>
-              </ul>
-            </div>
+          <EarthingSystemDiagram system="IT" />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IT System Requirements
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation monitoring device (IMD):</strong> Continuously monitors
-                  insulation resistance and alarms on first fault
-                </li>
-                <li className="pl-1">
-                  <strong>Second fault protection:</strong> Overcurrent devices must disconnect for
-                  a second fault (which creates a phase-to-phase path through earth)
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> First faults must be rectified promptly to maintain
-                  the safety advantage
-                </li>
-                <li className="pl-1">
-                  <strong>Exposed-conductive-parts:</strong> Must still be earthed (individually or
-                  collectively) for second-fault protection
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="IT system applications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hospitals:</strong> Operating theatres and critical care areas where loss of
+                supply could be life-threatening
+              </li>
+              <li>
+                <strong>Process industries:</strong> Chemical plants and refineries where unexpected
+                shutdown could cause hazardous conditions
+              </li>
+              <li>
+                <strong>Mining:</strong> Underground mining where fault conditions combined with
+                water create extreme danger
+              </li>
+              <li>
+                <strong>Laboratory equipment:</strong> Sensitive measurement systems where leakage
+                currents could affect results
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 context:</strong> While IT systems are less common than TN or TT in
-              general maintenance work, understanding their principle is important for the
-              maintenance technician standard. You may encounter IT systems in hospital maintenance,
-              industrial process plants, or when working with standby generators and UPS systems.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="IT system requirements"
+            onSite="While IT systems are less common than TN or TT in general maintenance work, understanding their principle is important for the maintenance technician standard. You may encounter IT systems in hospital maintenance, industrial process plants, or when working with standby generators and UPS systems."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation monitoring device (IMD):</strong> Continuously monitors
+                insulation resistance and alarms on first fault
+              </li>
+              <li>
+                <strong>Second fault protection:</strong> Overcurrent devices must disconnect for a
+                second fault (which creates a phase-to-phase path through earth)
+              </li>
+              <li>
+                <strong>Maintenance:</strong> First faults must be rectified promptly to maintain
+                the safety advantage
+              </li>
+              <li>
+                <strong>Exposed-conductive-parts:</strong> Must still be earthed (individually or
+                collectively) for second-fault protection
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Testing and Verification of Earthing Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Testing and verification of earthing systems</ContentEyebrow>
+
+          <ConceptBlock title="Ze, Zs and earth electrode resistance">
             <p>
               Verifying the integrity and adequacy of the earthing system is a critical part of both
               initial verification and periodic inspection. The key measurements are the external
               earth fault loop impedance (Ze), the total earth fault loop impedance at each circuit
               endpoint (Zs), and — for TT systems — the earth electrode resistance (RA).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Measuring Ze</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Method:</strong> Disconnect the installation earthing conductor from the
-                  main earthing terminal. Connect the loop impedance tester between line, neutral
-                  and the supply earth terminal.
-                </li>
-                <li className="pl-1">
-                  <strong>Safety:</strong> Whilst the installation earthing is disconnected, there
-                  is no earth fault protection. Minimise the disconnection time and ensure no work
-                  is carried out on the installation.
-                </li>
-                <li className="pl-1">
-                  <strong>Expected values:</strong> TN-S: up to 0.8 ohms; TN-C-S: up to 0.35 ohms
-                </li>
-                <li className="pl-1">
-                  <strong>Anomalies:</strong> A Ze significantly higher than expected may indicate a
-                  damaged earthing conductor or a change in the supply arrangement
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Measuring Ze">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Method:</strong> Disconnect the installation earthing conductor from the
+                main earthing terminal. Connect the loop impedance tester between line, neutral and
+                the supply earth terminal.
+              </li>
+              <li>
+                <strong>Safety:</strong> Whilst the installation earthing is disconnected, there is
+                no earth fault protection. Minimise the disconnection time and ensure no work is
+                carried out on the installation.
+              </li>
+              <li>
+                <strong>Expected values:</strong> TN-S: up to 0.8 ohms; TN-C-S: up to 0.35 ohms
+              </li>
+              <li>
+                <strong>Anomalies:</strong> A Ze significantly higher than expected may indicate a
+                damaged earthing conductor or a change in the supply arrangement
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Zs Verification</h3>
-                <p className="text-sm text-white">
-                  Zs is measured at each circuit endpoint (furthest point from the origin) using a
-                  loop impedance tester. The measured value must not exceed the maximum Zs for the
-                  protective device type and rating, as tabulated in BS 7671. Values should be
-                  compared with the corrected (temperature-adjusted) tabulated maximums, applying a
-                  0.8 multiplier to the table values for ambient temperature correction during
-                  testing.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Earth Electrode Testing (TT)
-                </h3>
-                <p className="text-sm text-white">
-                  For TT systems, the earth electrode resistance (RA) must be measured using the
-                  fall-of- potential method with a dedicated earth electrode tester. This involves
-                  placing temporary test electrodes at defined distances from the installation
-                  electrode and measuring the voltage gradient. The 61.8% rule is used to determine
-                  the correct measurement point for accuracy.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="Zs verification and earth electrode testing">
+            <p>
+              Zs is measured at each circuit endpoint (furthest point from the origin) using a loop
+              impedance tester. The measured value must not exceed the maximum Zs for the protective
+              device type and rating, as tabulated in BS 7671. Values should be compared with the
+              corrected (temperature-adjusted) tabulated maximums, applying a 0.8 multiplier to the
+              table values for ambient temperature correction during testing.
+            </p>
+            <p>
+              For TT systems, the earth electrode resistance (RA) must be measured using the
+              fall-of-potential method with a dedicated earth electrode tester. This involves
+              placing temporary test electrodes at defined distances from the installation electrode
+              and measuring the voltage gradient. The 61.8% rule is used to determine the correct
+              measurement point for accuracy.
+            </p>
+            <p className="italic text-white">
               <strong>Note:</strong> Always record earthing system type and Ze on the electrical
               installation certificate or periodic inspection report. Changes in Ze over time can
               indicate deterioration of the supply earth connection and should be investigated with
               the DNO.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=2NQzFwZupiY"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Broken PEN Conductors and Diverted Neutral Currents"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Earthing System Types</p>
-                <ul className="space-y-0.5">
-                  <li>TN-S — Separate PE, Ze &le; 0.8 ohms</li>
-                  <li>TN-C-S — PME, Ze &le; 0.35 ohms</li>
-                  <li>TT — Local electrode, RCD essential</li>
-                  <li>IT — Isolated source, IMD required</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key BS 7671 References</p>
-                <ul className="space-y-0.5">
-                  <li>Chapter 41 — Automatic disconnection of supply</li>
-                  <li>Section 542 — Earthing arrangements</li>
-                  <li>Table 41.1/41.2 — Maximum disconnection times</li>
-                  <li>Reg 543.4.1 — PEN conductor requirements</li>
-                </ul>
-              </div>
+            channel="A121 Training"
+
+            duration="30:45"
+
+            topic="What goes wrong in a TN-C-S system when the PEN fails"
+
+            caption="The failure mode that makes PME worth understanding properly — worth the time once you have the four systems straight."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'TN-S: separate PE conductor throughout, Ze up to 0.8 ohms, no PEN conductor risk.',
+              'TN-C-S (PME): combined PEN in the supply, separated at the origin, Ze up to 0.35 ohms — the lowest and fastest, but a broken PEN is dangerous.',
+              'TT: no supply earth — a local earth electrode and RCD protection are essential; maximum Zs <= 1,667 ohms for a 30 mA RCD.',
+              'IT: source isolated or high-impedance earthed — a first fault does not disconnect; an insulation monitoring device (IMD) is required.',
+              'PME restrictions apply to swimming pools, marinas, caravan parks, agricultural premises and petrol filling stations.',
+              'Ze is measured with the installation earthing conductor disconnected; Zs = Ze + (R1 + R2) at each circuit endpoint.',
+              'TT earth electrode resistance is measured by the fall-of-potential method using the 61.8% rule.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Overcurrent and Short-Circuit Protection
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Bonding Requirements
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Overcurrent and Short-Circuit Protection
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-5">
-              Next: Bonding Requirements
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

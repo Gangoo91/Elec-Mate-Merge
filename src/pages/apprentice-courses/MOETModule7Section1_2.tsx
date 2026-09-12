@@ -1,8 +1,50 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 1 · Subsection 2 — Timed Mock Tests
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the
+ * End-Point Assessment knowledge test rather than a specific piece of
+ * engineering knowledge, so no ST1426 knowledge/skill/behaviour statement is
+ * quoted here — none of the verified KSB statements checked for this
+ * conversion describe exam or assessment-preparation technique.
+ *
+ * ⚠️ ACCURACY FLAG: the original page states the EPA knowledge test is
+ * "40 questions, 60 minutes" with a "typical pass mark (60-70%)". These
+ * specific figures could not be verified against a primary ST1426/EPAO
+ * source and are preserved verbatim from the original — flagged, not
+ * corrected, per the conversion brief.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * ✎ RESOLVED (12 Sep): the page asserted "40 questions, 60 minutes" and a
+ *   "typical pass mark (60-70%)" as the EPA format. Neither could be verified
+ *   against ST1426's assessment plan or an EPAO, and a learner pacing a real
+ *   exam on wrong figures is a genuine harm. The numbers are now framed as the
+ *   Elec-Mate mock exam's format (which they match — see MOETModule7MockExam,
+ *   totalQuestions 40 / timeLimit 60 min), with an explicit instruction to
+ *   confirm the real paper's format with the training provider or EPAO.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Timed Mock Tests - MOET Module 7 Section 1.2';
@@ -14,12 +56,7 @@ const quickCheckQuestions = [
     id: 'time-per-question',
     question:
       'In a 40-question, 60-minute EPA knowledge test, approximately how long do you have per question?',
-    options: [
-      '120 seconds',
-      '90 seconds',
-      '30 seconds',
-      '60 seconds',
-    ],
+    options: ['120 seconds', '90 seconds', '30 seconds', '60 seconds'],
     correctIndex: 1,
     explanation:
       'With 40 questions in 60 minutes, you have approximately 90 seconds (1.5 minutes) per question. However, some questions will take less time and others more, so flexible pacing is important.',
@@ -190,9 +227,9 @@ const quizQuestions = [
     id: 11,
     question: 'Calculation questions in the EPA test typically require:',
     options: [
-      "Advanced calculus and complex differential equations",
-      "A scientific programmable calculator with stored formulae",
-      "Memorising every value from the BS 7671 tables",
+      'Advanced calculus and complex differential equations',
+      'A scientific programmable calculator with stored formulae',
+      'Memorising every value from the BS 7671 tables',
       "Basic arithmetic using Ohm's law, power formulae, or simple unit conversions",
     ],
     correctAnswer: 3,
@@ -243,464 +280,365 @@ const faqs = [
 ];
 
 const MOETModule7Section1_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.1.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Timed Mock Tests
-          </h1>
-          <p className="text-white">
-            Practising under exam conditions to build confidence, pacing and time management skills
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.1 · Subsection 2"
+        title="Timed Mock Tests"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Practising under exam conditions to build confidence, pacing and time management skills.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Format:</strong> 40 MCQs, 60 minutes, ~90 seconds each
-              </li>
-              <li className="pl-1">
-                <strong>Pacing:</strong> Two-pass strategy — confident first, flagged second
-              </li>
-              <li className="pl-1">
-                <strong>Checkpoints:</strong> 20 questions by 30 minutes
-              </li>
-              <li className="pl-1">
-                <strong>Review:</strong> Final 5-10 minutes for flagged questions
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Calculations:</strong> Ohm's law, power — practise for speed
-              </li>
-              <li className="pl-1">
-                <strong>Scenarios:</strong> Safe isolation, fault diagnosis questions
-              </li>
-              <li className="pl-1">
-                <strong>Regulations:</strong> BS 7671, EAWR references under pressure
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Knowledge test is one of three EPA components
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'This page works to a 40-question, 60-minute paper — the format of the Elec-Mate mock exam. Confirm your own EPA format with your training provider.',
+              'Pacing: two-pass strategy — confident first, flagged second.',
+              'Checkpoints: 20 questions by 30 minutes.',
+              'Review: final 5-10 minutes for flagged questions.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <CommonMistake
+            title="Assuming the EPA paper matches the practice paper"
+            whatHappens={
+              <p>
+                An apprentice rehearses a 40-question, 60-minute pace, then sits a paper with a
+                different question count or time limit and finds their whole pacing plan is wrong in
+                the first ten minutes.
+              </p>
+            }
+            doInstead={
+              <p>
+                Treat the numbers on this page as the Elec-Mate mock exam&apos;s format — 40
+                questions in 60 minutes, which is what gives the 90-seconds-per-question figure. The
+                technique transfers to any paper; the arithmetic does not. Ask your training
+                provider or EPAO for the question count, time limit and grading boundaries of the
+                paper you will actually sit, then redo the per-question sum with those figures.
+              </p>
+            }
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Set up and complete mock tests under realistic EPA exam conditions',
               'Apply time management strategies including the 90-second-per-question rule',
               'Use the two-pass strategy to maximise marks across the full test',
               'Develop techniques for handling difficult questions without losing time',
               'Use time checkpoints to monitor pacing throughout the test',
               'Manage exam anxiety through familiarity and breathing techniques',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Calculations:</strong> Ohm&apos;s law, power — practise for speed.
+              </li>
+              <li>
+                <strong>Scenarios:</strong> safe isolation, fault diagnosis questions.
+              </li>
+              <li>
+                <strong>Regulations:</strong> BS 7671, EAWR references under pressure.
+              </li>
+              <li>
+                <strong>ST1426:</strong> knowledge test is one of three EPA components.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Setting Up Exam Conditions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Setting up exam conditions</ContentEyebrow>
+
+          <ConceptBlock title="Setting up exam conditions">
             <p>
               The value of a mock test lies in how closely it simulates the real exam experience. If
               you practise in a relaxed environment with notes available and no time pressure, you
               are not preparing yourself for the conditions you will face on EPA day. Creating
               realistic conditions builds the neural pathways for performing under pressure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mock Test Setup Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Quiet environment:</strong> Find a space free from interruptions — switch
-                  off your phone
-                </li>
-                <li className="pl-1">
-                  <strong>No references:</strong> Close all notes, textbooks, and study materials
-                  before starting
-                </li>
-                <li className="pl-1">
-                  <strong>Visible timer:</strong> Use a countdown timer set to 60 minutes — position
-                  it where you can see it
-                </li>
-                <li className="pl-1">
-                  <strong>Full test:</strong> Complete all 40 questions in one sitting — no pausing
-                  or breaks
-                </li>
-                <li className="pl-1">
-                  <strong>Answer all questions:</strong> Never leave a question blank — there is no
-                  penalty for guessing
-                </li>
-                <li className="pl-1">
-                  <strong>Calculator:</strong> Only if your EPAO permits one — check beforehand
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Mock test setup checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Quiet environment:</strong> find a space free from interruptions — switch
+                off your phone.
+              </li>
+              <li>
+                <strong>No references:</strong> close all notes, textbooks, and study materials
+                before starting.
+              </li>
+              <li>
+                <strong>Visible timer:</strong> use a countdown timer set to 60 minutes — position
+                it where you can see it.
+              </li>
+              <li>
+                <strong>Full test:</strong> complete all 40 questions in one sitting — no pausing or
+                breaks.
+              </li>
+              <li>
+                <strong>Answer all questions:</strong> never leave a question blank — there is no
+                penalty for guessing.
+              </li>
+              <li>
+                <strong>Calculator:</strong> only if your EPAO permits one — check beforehand.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Mistakes in Mock Tests
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Common mistakes in mock tests"
+            whatHappens={
+              <>
                 Many apprentices undermine their mock test practice by pausing the timer to think,
                 looking up answers for questions they are unsure about, or completing the test over
                 multiple sessions. While these approaches feel comfortable, they do not prepare you
-                for the real experience. The discomfort of working under time pressure during
-                practice is exactly what builds your resilience for the real test.
-              </p>
-            </div>
+                for the real experience.
+              </>
+            }
+            doInstead={
+              <>
+                The discomfort of working under time pressure during practice is exactly what builds
+                your resilience for the real test.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Treat every mock test as if it were the real exam. The
-              habits you build in practice are the habits you will use under pressure.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> treat every mock test as if it were the real exam. The
+            habits you build in practice are the habits you will use under pressure.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Time Management and Pacing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Time management and pacing</ContentEyebrow>
+
+          <ConceptBlock title="Time management and pacing">
             <p>
               With 90 seconds per question on average, time management is critical. Not all
               questions take the same amount of time — a simple recall question may take 30 seconds,
               while a complex scenario or calculation may need 2-3 minutes. The key is to build a
               time budget that accounts for this variation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Time Budget
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Phase</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">First pass</td>
-                      <td className="border border-white/10 px-3 py-2">40-45 min</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Answer all questions; flag difficult ones
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Second pass</td>
-                      <td className="border border-white/10 px-3 py-2">10-15 min</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Return to flagged questions with fresh eyes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Final review</td>
-                      <td className="border border-white/10 px-3 py-2">5 min</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check all questions answered; fix obvious errors
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Recommended time budget">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Phase</th>
+                    <th className="py-2 pr-4 font-medium text-white">Time</th>
+                    <th className="py-2 font-medium text-white">Activity</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">First pass</td>
+                    <td className="py-2 pr-4">40-45 min</td>
+                    <td className="py-2">Answer all questions; flag difficult ones</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Second pass</td>
+                    <td className="py-2 pr-4">10-15 min</td>
+                    <td className="py-2">Return to flagged questions with fresh eyes</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Final review</td>
+                    <td className="py-2 pr-4">5 min</td>
+                    <td className="py-2">Check all questions answered; fix obvious errors</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Time Checkpoints</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>15 minutes:</strong> Should have completed approximately 10 questions
-                </li>
-                <li className="pl-1">
-                  <strong>30 minutes:</strong> Should have completed approximately 20 questions
-                  (halfway)
-                </li>
-                <li className="pl-1">
-                  <strong>45 minutes:</strong> Should have completed approximately 30 questions
-                </li>
-                <li className="pl-1">
-                  <strong>50-55 minutes:</strong> All 40 questions attempted; begin review
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Time checkpoints">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>15 minutes:</strong> should have completed approximately 10 questions.
+              </li>
+              <li>
+                <strong>30 minutes:</strong> should have completed approximately 20 questions
+                (halfway).
+              </li>
+              <li>
+                <strong>45 minutes:</strong> should have completed approximately 30 questions.
+              </li>
+              <li>
+                <strong>50-55 minutes:</strong> all 40 questions attempted; begin review.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  If You Are Ahead of Pace
-                </h3>
-                <p className="text-sm text-white">
-                  Being ahead of pace is a good position. Use the extra time to read questions more
-                  carefully, double-check calculations, and ensure you are answering the question
-                  actually asked. Do not rush through the remaining questions just because you have
-                  time — maintain your careful technique.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  If You Are Behind Pace
-                </h3>
-                <p className="text-sm text-white">
-                  If you are behind at a checkpoint, increase your decision speed. Use elimination
-                  more aggressively — if you can narrow to two options, choose the better one and
-                  move on. Do not spend more than 90 seconds on any single question during catch-up.
-                  You can always return to flagged questions if time allows.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Pacing is a skill that improves with practice. Your first
+          <ConceptBlock title="If you are ahead of pace, or behind it">
+            <p>
+              <strong>If you are ahead of pace:</strong> being ahead of pace is a good position. Use
+              the extra time to read questions more carefully, double-check calculations, and ensure
+              you are answering the question actually asked. Do not rush through the remaining
+              questions just because you have time — maintain your careful technique.
+            </p>
+            <p>
+              <strong>If you are behind pace:</strong> if you are behind at a checkpoint, increase
+              your decision speed. Use elimination more aggressively — if you can narrow to two
+              options, choose the better one and move on. Do not spend more than 90 seconds on any
+              single question during catch-up. You can always return to flagged questions if time
+              allows.
+            </p>
+            <p>
+              <strong>Key point:</strong> pacing is a skill that improves with practice. Your first
               mock test may feel rushed, but by the third or fourth, you will have developed an
               instinct for when to move on.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            The Two-Pass Strategy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The two-pass strategy</ContentEyebrow>
+
+          <ConceptBlock title="The two-pass strategy">
             <p>
               The two-pass strategy is the most effective approach for maximising your score in a
               timed multiple-choice test. Rather than working through each question sequentially and
               getting stuck on difficult ones, you make two deliberate passes through the test with
               different objectives.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  First Pass — Secure the Easy Marks
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Work through every question in order</li>
-                  <li className="pl-1">Answer questions you are confident about immediately</li>
-                  <li className="pl-1">
-                    For questions you are unsure about, use elimination to select your best guess
-                    and flag the question
-                  </li>
-                  <li className="pl-1">
-                    Do not spend more than 90 seconds on any question during this pass
-                  </li>
-                  <li className="pl-1">
-                    The goal: answer all 40 questions with at least a reasonable attempt
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="First pass — secure the easy marks">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Work through every question in order.</li>
+              <li>Answer questions you are confident about immediately.</li>
+              <li>
+                For questions you are unsure about, use elimination to select your best guess and
+                flag the question.
+              </li>
+              <li>Do not spend more than 90 seconds on any question during this pass.</li>
+              <li>The goal: answer all 40 questions with at least a reasonable attempt.</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Second Pass — Improve on Flagged Questions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Return to flagged questions with fresh eyes and reduced pressure
-                  </li>
-                  <li className="pl-1">
-                    Re-read the stem carefully — you may notice key words you missed first time
-                  </li>
-                  <li className="pl-1">
-                    Sometimes answering later questions triggers recall that helps with earlier ones
-                  </li>
-                  <li className="pl-1">
-                    Only change your answer if you have a clear reason — not just anxiety
-                  </li>
-                  <li className="pl-1">
-                    If still unsure, stick with your original elimination-based choice
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Second pass — improve on flagged questions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Return to flagged questions with fresh eyes and reduced pressure.</li>
+              <li>Re-read the stem carefully — you may notice key words you missed first time.</li>
+              <li>
+                Sometimes answering later questions triggers recall that helps with earlier ones.
+              </li>
+              <li>Only change your answer if you have a clear reason — not just anxiety.</li>
+              <li>If still unsure, stick with your original elimination-based choice.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Why Two Passes Work</h3>
-              <p className="text-sm text-white">
-                The two-pass approach prevents the common problem of spending too long on an early
-                difficult question and running out of time for easier questions later. By ensuring
-                every question gets at least your best guess on the first pass, you guarantee no
-                marks are lost to unanswered questions. The second pass then allows you to improve
-                answers on difficult questions with the benefit of having seen the entire test.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Never leave any question without an answer after the first
+          <ConceptBlock title="Why two passes work">
+            <p>
+              The two-pass approach prevents the common problem of spending too long on an early
+              difficult question and running out of time for easier questions later. By ensuring
+              every question gets at least your best guess on the first pass, you guarantee no marks
+              are lost to unanswered questions. The second pass then allows you to improve answers
+              on difficult questions with the benefit of having seen the entire test.
+            </p>
+            <p>
+              <strong>Key point:</strong> never leave any question without an answer after the first
               pass. Even a guess has a 25% chance of being correct; a blank has zero chance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Dealing with Difficult Questions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Dealing with difficult questions</ContentEyebrow>
+
+          <ConceptBlock title="Dealing with difficult questions">
             <p>
               Every candidate encounters questions they find difficult. The difference between
               high-scoring and low-scoring candidates is not that high scorers find the test easy —
               it is that they manage difficult questions more effectively. Having a clear strategy
               for difficult questions prevents panic and time wastage.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Difficult Question Decision Tree
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Read the stem twice:</strong> Many apparently difficult questions become
-                  clearer on a second reading
-                </li>
-                <li className="pl-1">
-                  <strong>Eliminate what you can:</strong> Even if you cannot identify the correct
-                  answer, removing one or two options improves your odds
-                </li>
-                <li className="pl-1">
-                  <strong>Look for clues:</strong> The stem often contains information that points
-                  toward the correct answer — technical terms, specific contexts, regulation
-                  references
-                </li>
-                <li className="pl-1">
-                  <strong>Apply general principles:</strong> In electrical maintenance, safety-first
-                  principles (isolate before working, prove dead, use PPE) often guide the correct
-                  answer
-                </li>
-                <li className="pl-1">
-                  <strong>Select and flag:</strong> Choose your best option, flag the question, and
-                  move on. Return later if time allows
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Difficult question decision tree">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Read the stem twice:</strong> many apparently difficult questions become
+                clearer on a second reading.
+              </li>
+              <li>
+                <strong>Eliminate what you can:</strong> even if you cannot identify the correct
+                answer, removing one or two options improves your odds.
+              </li>
+              <li>
+                <strong>Look for clues:</strong> the stem often contains information that points
+                toward the correct answer — technical terms, specific contexts, regulation
+                references.
+              </li>
+              <li>
+                <strong>Apply general principles:</strong> in electrical maintenance, safety-first
+                principles (isolate before working, prove dead, use PPE) often guide the correct
+                answer.
+              </li>
+              <li>
+                <strong>Select and flag:</strong> choose your best option, flag the question, and
+                move on. Return later if time allows.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Questions with Unfamiliar Content
-                </h3>
-                <p className="text-sm text-white">
-                  If a question covers a topic you have not studied, do not panic. Use elimination
-                  to remove options you know are wrong from other knowledge. Technical terms can
-                  often be broken down into recognisable parts. Apply general electrical principles
-                  — they often point toward the correct answer even in unfamiliar contexts.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Calculation Questions Under Pressure
-                </h3>
-                <p className="text-sm text-white">
-                  If a calculation question is causing difficulty, check whether the options can
-                  help you work backwards. Sometimes substituting the given options into the formula
-                  is quicker than solving from scratch. Also check for common calculation traps —
-                  unit conversions (kW to W, mA to A) and formula transposition errors.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Unfamiliar content, and calculations under pressure">
+            <p>
+              <strong>Questions with unfamiliar content:</strong> if a question covers a topic you
+              have not studied, do not panic. Use elimination to remove options you know are wrong
+              from other knowledge. Technical terms can often be broken down into recognisable
+              parts. Apply general electrical principles — they often point toward the correct
+              answer even in unfamiliar contexts.
+            </p>
+            <p>
+              <strong>Calculation questions under pressure:</strong> if a calculation question is
+              causing difficulty, check whether the options can help you work backwards. Sometimes
+              substituting the given options into the formula is quicker than solving from scratch.
+              Also check for common calculation traps — unit conversions (kW to W, mA to A) and
+              formula transposition errors.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                What NOT to Do with Difficult Questions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Do not spend more than 2-3 minutes on any single question</li>
-                <li className="pl-1">
-                  Do not let one difficult question affect your confidence for the rest of the test
-                </li>
-                <li className="pl-1">
-                  Do not leave difficult questions blank — always select an answer
-                </li>
-                <li className="pl-1">
-                  Do not assume you have failed because of a few uncertain answers — you do not need
-                  100%
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Accept that you will encounter questions you find
+          <ConceptBlock title="What not to do with difficult questions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Do not spend more than 2-3 minutes on any single question.</li>
+              <li>
+                Do not let one difficult question affect your confidence for the rest of the test.
+              </li>
+              <li>Do not leave difficult questions blank — always select an answer.</li>
+              <li>
+                Do not assume you have failed because of a few uncertain answers — you do not need
+                100%.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> accept that you will encounter questions you find
               difficult. This is normal and expected. Having a strategy for these moments — rather
               than hoping they will not happen — is what builds genuine exam resilience.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Managing Exam Anxiety
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Managing exam anxiety</ContentEyebrow>
+
+          <ConceptBlock title="Managing exam anxiety">
             <p>
               Some degree of anxiety before and during an exam is normal and can even be helpful —
               it sharpens focus and increases alertness. However, excessive anxiety impairs
@@ -708,107 +646,81 @@ const MOETModule7Section1_2 = () => {
               rushed decisions. Learning to manage anxiety is as important as learning the technical
               content.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Before the Test</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Preparation reduces anxiety:</strong> The single best anxiety reducer is
-                  knowing you are well prepared
-                </li>
-                <li className="pl-1">
-                  <strong>Night before:</strong> Light revision only — do not cram. Get a full
-                  night's sleep
-                </li>
-                <li className="pl-1">
-                  <strong>Morning of:</strong> Eat a proper breakfast. Arrive early. Have your
-                  materials ready
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid negative talk:</strong> Do not discuss what you do not know with
-                  other candidates before the test
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">During the Test</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Breathing technique:</strong> If you feel anxious, pause and take 3 slow
-                  breaths — in for 4 seconds, hold for 4, out for 6
-                </li>
-                <li className="pl-1">
-                  <strong>One question at a time:</strong> Do not think about the whole test — focus
-                  only on the current question
-                </li>
-                <li className="pl-1">
-                  <strong>Positive self-talk:</strong> Replace "I don't know this" with "I'll use
-                  elimination and do my best"
-                </li>
-                <li className="pl-1">
-                  <strong>Physical awareness:</strong> Relax your shoulders, unclench your jaw, and
-                  sit back in your chair if you notice tension
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> You have been studying for months. You have practical
+          <ConceptBlock title="Before the test, and during it">
+            <p>
+              <strong>Before the test:</strong> preparation reduces anxiety — the single best
+              anxiety reducer is knowing you are well prepared. The night before, do light revision
+              only — do not cram, and get a full night&apos;s sleep. On the morning of the test, eat
+              a proper breakfast, arrive early, and have your materials ready. Avoid negative talk —
+              do not discuss what you do not know with other candidates before the test.
+            </p>
+            <p>
+              <strong>During the test:</strong> if you feel anxious, use a breathing technique —
+              pause and take three slow breaths, in for four seconds, hold for four, out for six.
+              Keep to one question at a time — do not think about the whole test, focus only on the
+              current question. Use positive self-talk — replace &quot;I don&apos;t know this&quot;
+              with &quot;I&apos;ll use elimination and do my best&quot;. Stay aware of physical
+              tension — relax your shoulders, unclench your jaw, and sit back in your chair if you
+              notice tension.
+            </p>
+            <p>
+              <strong>Remember:</strong> you have been studying for months. You have practical
               experience. You have taken mock tests. Trust your preparation and focus on the process
               — one question at a time.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Treat every mock test as if it were the real exam — practice habits become exam habits.',
+              'Pacing is a skill that improves with practice; use time checkpoints to stay on track.',
+              'Never leave a question without an answer after the first pass — a guess beats a blank.',
+              'Accept that difficult questions will happen. Having a strategy for them beats hoping they will not.',
+              'Some anxiety is normal. Preparation, breathing and one-question-at-a-time focus keep it manageable.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Timed Mock Tests" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Question Banks
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1-3">
-              Next: Feedback and Explanations
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Timed Mock Tests" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section1-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Multiple-Choice Question Banks
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section1-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Feedback and Explanations
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

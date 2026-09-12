@@ -27,9 +27,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
+import { NextUpCard } from '@/components/study-centre/NextUpCard';
 import { useQuizResults } from '@/hooks/useQuizResults';
 import { useLearningXP } from '@/hooks/useLearningXP';
-import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { completedSectionsForCourse } from '@/lib/courseProgressMatch';
 import { getCount as getMissedCount } from '@/lib/missedQuestions';
@@ -47,13 +47,10 @@ import {
   type HubTool,
 } from '@/components/hub/HubPrimitives';
 import { curatedVideos } from '@/data/apprentice/curatedVideos';
+import { glossaryTermCount } from '@/components/study-centre/GlossaryView';
 import { TOTAL_IN_APP_MOCK_EXAMS } from '@/data/study-centre/inAppMockExams';
 import { flashcardSetDefinitions } from '@/data/flashcards';
-import {
-  TOTAL_COURSES,
-  countByTrack,
-  type CourseTrack,
-} from '@/data/study-centre/courseCatalogue';
+import { TOTAL_COURSES, countByTrack, type CourseTrack } from '@/data/study-centre/courseCatalogue';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Categories
@@ -168,7 +165,6 @@ export default function StudyCentreIndex() {
   const studyStreakData = useStudyStreak();
   const quizData = useQuizResults();
   const xpData = useLearningXP();
-  const { lastLocation, loading: lastLocLoading, getLastStudiedDisplay } = useLastStudyLocation();
   const { allProgress } = useCourseProgress();
 
   useSEO({
@@ -220,19 +216,13 @@ export default function StudyCentreIndex() {
   const totalCourses = TOTAL_COURSES;
 
   // ── Start something ──────────────────────────────────────────────────
-  // Resuming is the single most-reached-for action on this page, so it takes
-  // the one solid volt card the group allows. When there's nothing to resume
-  // the strip still has somewhere to send people.
+  // Resuming used to be the primary card here. It is now the job of
+  // <NextUpCard> above, which asks the ranking engine what this learner should
+  // do rather than always answering "the last page you opened" — and which
+  // still offers the resume point when that is genuinely the best answer. Two
+  // cards competing to be the way back into the course is one too many.
   const quickStart: HubQuickAction[] = useMemo(() => {
     const items: HubQuickAction[] = [];
-    if (lastLocation && !lastLocLoading) {
-      items.push({
-        title: lastLocation.title,
-        description: `Pick up where you left off · ${getLastStudiedDisplay()}`,
-        primary: true,
-        onClick: () => navigate(lastLocation.path),
-      });
-    }
     // Was pointed at /study-centre/apprentice, which is one of four tracks —
     // so "browse" could only ever show you a sixth of the catalogue.
     items.push({
@@ -246,7 +236,7 @@ export default function StudyCentreIndex() {
       onClick: () => navigate('/study-centre/leaderboard'),
     });
     return items;
-  }, [lastLocation, lastLocLoading, getLastStudiedDisplay, navigate, totalCourses]);
+  }, [navigate, totalCourses]);
 
   // ── Revise & test yourself ───────────────────────────────────────────
   // Mock exams and flashcards are the two most-used study habits after the
@@ -295,6 +285,13 @@ export default function StudyCentreIndex() {
         valueLabel: 'training videos',
         to: '/study-centre/videos',
       },
+      {
+        id: 'glossary',
+        title: 'Glossary',
+        value: String(glossaryTermCount()),
+        valueLabel: 'terms defined',
+        to: '/study-centre/glossary',
+      },
     ],
     [missedCount, navigate]
   );
@@ -324,6 +321,11 @@ export default function StudyCentreIndex() {
       <HubMasthead section="Learning" title="Study Centre" backTo="/dashboard" />
 
       <HubBody>
+        {/* The single most useful thing this learner could do next, with the
+            reason attached. Same ranking the evening push reads, so arriving
+            from a notification lands on the sentence it was sent. */}
+        <NextUpCard streak={currentStreak} />
+
         <HubQuickStart label="Start something" items={quickStart} />
 
         {/* Streak takes the row's single accent — it's the one figure that

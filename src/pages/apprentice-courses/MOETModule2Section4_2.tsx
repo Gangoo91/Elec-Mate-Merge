@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.4 · Subsection 2 — RCDs and RCBOs
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring
+ *     regulations."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'RCDs and RCBOs - MOET Module 2 Section 4.2';
@@ -90,7 +127,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      'Regulation 411.3.3 requires additional protection by a 30 mA RCD for socket outlets with a rated current not exceeding 32 A (except where a risk assessment justifies otherwise) and for mobile equipment with a rated current not exceeding 32 A intended for use outdoors. Amendment 2 extended this to essentially all circuits in dwellings.',
+      'Regulation 411.3.3 requires additional protection by a 30 mA RCD for socket outlets with a rated current not exceeding 32 A (except where a risk assessment justifies otherwise) and for mobile equipment with a rated current not exceeding 32 A intended for use outdoors. Regulation 411.3.4 adds AC final circuits supplying luminaires in domestic premises, so in a dwelling the two together cover effectively every circuit. Note the 411.3.3 risk-assessment exception is worded "other than for a dwelling" — it is not available domestically.',
   },
   {
     id: 3,
@@ -251,7 +288,7 @@ const faqs = [
   {
     question: 'Do I need RCD protection on lighting circuits in a new dwelling?',
     answer:
-      'Yes. BS 7671:2018 Amendment 2 effectively requires RCD protection (30 mA) for all circuits in dwellings, including lighting circuits. This can be achieved using RCBOs for each circuit, a split-load consumer unit with RCDs protecting groups of circuits, or a high-integrity arrangement with two RCDs and appropriate circuit distribution.',
+      'Yes. Under BS 7671:2018+A4:2026, Regulation 411.3.4 requires additional protection by a 30 mA RCD for AC final circuits supplying luminaires in domestic (household) premises. Together with Regulation 411.3.3 for socket-outlets up to 32 A, that puts RCD protection on effectively every circuit in a new dwelling. It can be achieved using RCBOs for each circuit, a split-load consumer unit with RCDs protecting groups of circuits, or a high-integrity arrangement with two RCDs and appropriate circuit distribution.',
   },
   {
     question: 'What is a Type B RCD and when is it needed?',
@@ -261,117 +298,69 @@ const faqs = [
 ];
 
 const MOETModule2Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            RCDs and RCBOs
-          </h1>
-          <p className="text-white">
-            Residual current devices and combined protection units for earth fault protection
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.4 · Subsection 2"
+        title="RCDs and RCBOs"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Residual current devices and combined protection units for earth fault protection — how
+            an RCD detects a fault, the four types (AC, A, F, B), RCBOs, and the BS 7671
+            requirements a maintenance technician must be able to verify.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>RCD:</strong> Detects current imbalance between L and N (earth leakage)
-              </li>
-              <li className="pl-1">
-                <strong>30 mA:</strong> Additional protection against electric shock
-              </li>
-              <li className="pl-1">
-                <strong>Types:</strong> AC (sinusoidal), A (+ pulsating DC), F (+ mixed freq), B (+
-                smooth DC)
-              </li>
-              <li className="pl-1">
-                <strong>RCBO:</strong> RCD + MCB combined — individual circuit protection
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Testing:</strong> Push-button quarterly; instrument test at periodic
-                inspection
-              </li>
-              <li className="pl-1">
-                <strong>Nuisance tripping:</strong> Investigate leakage — do not uprate I&#916;n
-              </li>
-              <li className="pl-1">
-                <strong>Fault finding:</strong> Systematic circuit isolation to locate earth faults
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to protection and earthing KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'RCD: detects current imbalance between L and N (earth leakage).',
+              '30 mA: additional protection against electric shock.',
+              'Types: AC (sinusoidal), A (+ pulsating DC), F (+ mixed freq), B (+ smooth DC).',
+              'RCBO: RCD + MCB combined — individual circuit protection.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principle of residual current devices using current balance detection',
               'Identify RCD types (AC, A, F, B) and their appropriate applications',
               'Describe the role of 30 mA RCDs in providing additional protection against electric shock',
               'Understand RCBO construction and the advantages of individual circuit protection',
               'Apply BS 7671 requirements for RCD selection and disconnection times',
               'Carry out functional testing of RCDs and diagnose nuisance tripping',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>How an RCD works — the current balance principle</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            How an RCD Works — The Current Balance Principle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Detecting current that has gone missing">
             <p>
               The residual current device is one of the most important safety devices in modern
               electrical installations. Its purpose is to detect earth fault currents — current that
@@ -393,57 +382,51 @@ const MOETModule2Section4_2 = () => {
               path instead of through the neutral conductor. The line current is now greater than
               the neutral current by the amount of the fault current. This imbalance — the residual
               current — creates a net magnetic flux in the core, which induces a voltage in the
-              sensing coil. When this residual current reaches the rated operating threshold
-              (I&#916;n), the induced voltage is sufficient to energise a sensitive relay that
-              releases the trip mechanism, disconnecting the circuit.
+              sensing coil. When this residual current reaches the rated operating threshold (I∆n),
+              the induced voltage is sufficient to energise a sensitive relay that releases the trip
+              mechanism, disconnecting the circuit.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key RCD Parameters</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Rated residual operating current (I&#916;n):</strong> The earth fault
-                  current at which the device operates — 30 mA, 100 mA, or 300 mA are standard
-                  values
-                </li>
-                <li className="pl-1">
-                  <strong>Rated current (In):</strong> The maximum continuous load current — must be
-                  coordinated with upstream or integral overcurrent protection
-                </li>
-                <li className="pl-1">
-                  <strong>Operating time:</strong> Must not exceed 300 ms at I&#916;n and 40 ms at 5
-                  &times; I&#916;n (for general-purpose non-delayed types)
-                </li>
-                <li className="pl-1">
-                  <strong>Non-operating current:</strong> The device must NOT trip at 50% of
-                  I&#916;n (15 mA for a 30 mA device)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key RCD parameters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Rated residual operating current (I∆n):</strong> The earth fault current at
+                which the device operates — 30 mA, 100 mA, or 300 mA are standard values
+              </li>
+              <li>
+                <strong>Rated current (In):</strong> The maximum continuous load current — must be
+                coordinated with upstream or integral overcurrent protection
+              </li>
+              <li>
+                <strong>Operating time:</strong> Must not exceed 300 ms at I∆n and 40 ms at 5 × I∆n
+                (for general-purpose non-delayed types)
+              </li>
+              <li>
+                <strong>Non-operating current:</strong> The device must NOT trip at 50% of I∆n (15
+                mA for a 30 mA device)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Critical Understanding</p>
-              <p className="text-sm text-white">
-                An RCD does not protect against overload or short-circuit between line and neutral.
-                It only detects current imbalance (earth leakage). It also cannot protect against
-                shock from contact between line and neutral simultaneously (as no current flows to
-                earth). An RCD provides additional protection — it is not a substitute for basic
-                protection (insulation, barriers) or fault protection (automatic disconnection via
-                overcurrent devices and earthing).
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock
+            title="What an RCD cannot do"
+            onSite="An RCD does not protect against overload or short-circuit between line and neutral. It only detects current imbalance (earth leakage). It also cannot protect against shock from contact between line and neutral simultaneously (as no current flows to earth). An RCD provides additional protection — it is not a substitute for basic protection (insulation, barriers) or fault protection (automatic disconnection via overcurrent devices and earthing)."
+          >
+            <p>
+              An RCD only ever responds to an imbalance between line and neutral current. That
+              single fact defines both its power and its limits, and it is worth holding in mind
+              before you rely on one during fault diagnosis.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            RCD Types — AC, A, F and B
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>RCD types — AC, A, F and B</ContentEyebrow>
+
+          <ConceptBlock title="Not all earth fault currents are sinusoidal AC">
             <p>
               Not all earth fault currents are pure sinusoidal AC. Modern electronic equipment
               containing rectifiers, inverters and switch-mode power supplies can produce fault
@@ -451,141 +434,113 @@ const MOETModule2Section4_2 = () => {
               detect different forms of residual current, and selecting the correct type is
               essential for reliable protection.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Type AC</h3>
-                <p className="text-sm text-white mb-2">
-                  Detects sinusoidal AC residual currents only. This is the most basic type and is
-                  identified by a sinusoidal wave symbol on the device. Type AC cannot reliably
-                  detect pulsating DC or smooth DC residual currents. In fact, a DC component in the
-                  fault current can saturate the magnetic core, preventing the device from operating
-                  even on a pure AC fault.
-                </p>
-                <p className="text-sm text-white">
-                  <strong>Application:</strong> Very limited in modern installations. BS 7671
-                  generally requires Type A as a minimum. Type AC is only suitable where no
-                  electronic equipment is present.
-                </p>
-              </div>
+          <ConceptBlock title="Type AC">
+            <p>
+              Detects sinusoidal AC residual currents only. This is the most basic type and is
+              identified by a sinusoidal wave symbol on the device. Type AC cannot reliably detect
+              pulsating DC or smooth DC residual currents. In fact, a DC component in the fault
+              current can saturate the magnetic core, preventing the device from operating even on a
+              pure AC fault.
+            </p>
+            <p>
+              <strong>Application:</strong> Very limited in modern installations. BS 7671 generally
+              requires Type A as a minimum. Type AC is only suitable where no electronic equipment
+              is present.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Type A</h3>
-                <p className="text-sm text-white mb-2">
-                  Detects sinusoidal AC and pulsating DC residual currents. Pulsating DC is the
-                  waveform produced by single-phase rectification (half-wave or full-wave). This
-                  type is identified by a sinusoidal wave plus a pulsating DC symbol. Type A is the
-                  minimum requirement for most circuits under current BS 7671 guidance.
-                </p>
-                <p className="text-sm text-white">
-                  <strong>Application:</strong> General-purpose protection for circuits supplying
-                  equipment with single-phase rectifiers — washing machines, dishwashers, IT
-                  equipment, LED drivers.
-                </p>
-              </div>
+          <ConceptBlock title="Type A">
+            <p>
+              Detects sinusoidal AC and pulsating DC residual currents. Pulsating DC is the waveform
+              produced by single-phase rectification (half-wave or full-wave). This type is
+              identified by a sinusoidal wave plus a pulsating DC symbol. Type A is the minimum
+              requirement for most circuits under current BS 7671 guidance.
+            </p>
+            <p>
+              <strong>Application:</strong> General-purpose protection for circuits supplying
+              equipment with single-phase rectifiers — washing machines, dishwashers, IT equipment,
+              LED drivers.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Type F</h3>
-                <p className="text-sm text-white mb-2">
-                  Detects sinusoidal AC, pulsating DC, and composite residual currents that contain
-                  mixed frequencies. These complex waveforms are produced by single-phase
-                  variable-frequency drives and inverter-based equipment. Type F provides enhanced
-                  sensitivity to these waveforms compared to Type A.
-                </p>
-                <p className="text-sm text-white">
-                  <strong>Application:</strong> Circuits supplying single-phase inverter drives
-                  (e.g., washing machines with variable-speed motors, heat pumps, some air
-                  conditioning units).
-                </p>
-              </div>
+          <ConceptBlock title="Type F">
+            <p>
+              Detects sinusoidal AC, pulsating DC, and composite residual currents that contain
+              mixed frequencies. These complex waveforms are produced by single-phase
+              variable-frequency drives and inverter-based equipment. Type F provides enhanced
+              sensitivity to these waveforms compared to Type A.
+            </p>
+            <p>
+              <strong>Application:</strong> Circuits supplying single-phase inverter drives (e.g.,
+              washing machines with variable-speed motors, heat pumps, some air conditioning units).
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Type B</h3>
-                <p className="text-sm text-white mb-2">
-                  Detects sinusoidal AC, pulsating DC, smooth DC (up to 1 kHz) and composite
-                  residual currents. This is the most comprehensive type, required where smooth DC
-                  fault currents may be present — typically from three-phase rectifier circuits.
-                  Type B RCDs use a more complex sensing arrangement, often incorporating electronic
-                  detection alongside the magnetic core.
-                </p>
-                <p className="text-sm text-white">
-                  <strong>Application:</strong> Three-phase variable speed drives, some EV charging
-                  equipment, certain medical devices, three-phase UPS systems.
-                </p>
-              </div>
+          <ConceptBlock title="Type B">
+            <p>
+              Detects sinusoidal AC, pulsating DC, smooth DC (up to 1 kHz) and composite residual
+              currents. This is the most comprehensive type, required where smooth DC fault currents
+              may be present — typically from three-phase rectifier circuits. Type B RCDs use a more
+              complex sensing arrangement, often incorporating electronic detection alongside the
+              magnetic core.
+            </p>
+            <p>
+              <strong>Application:</strong> Three-phase variable speed drives, some EV charging
+              equipment, certain medical devices, three-phase UPS systems.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="RCD type selection summary">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Detects</th>
+                    <th className="py-2 font-medium text-white">Typical Application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">AC</td>
+                    <td className="py-2 pr-4">Sinusoidal AC only</td>
+                    <td className="py-2">Purely resistive loads (limited use)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">A</td>
+                    <td className="py-2 pr-4">AC + pulsating DC</td>
+                    <td className="py-2">General circuits, single-phase rectifier loads</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">F</td>
+                    <td className="py-2 pr-4">AC + pulsating DC + mixed frequency</td>
+                    <td className="py-2">Single-phase inverter/VFD circuits</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">B</td>
+                    <td className="py-2 pr-4">AC + pulsating DC + smooth DC</td>
+                    <td className="py-2">Three-phase VFDs, some EV chargers</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                RCD Type Selection Summary
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Detects</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">AC</td>
-                      <td className="border border-white/10 px-3 py-2">Sinusoidal AC only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Purely resistive loads (limited use)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A</td>
-                      <td className="border border-white/10 px-3 py-2">AC + pulsating DC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General circuits, single-phase rectifier loads
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">F</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AC + pulsating DC + mixed frequency
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase inverter/VFD circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        AC + pulsating DC + smooth DC
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Three-phase VFDs, some EV chargers
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p className="text-elec-yellow/70">
               <strong>Maintenance note:</strong> When replacing an RCD, always check that the
               replacement type matches or exceeds the original. Downgrading from Type A to Type AC,
               for example, would remove protection against pulsating DC faults and could be
               dangerous.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            RCBOs — Combined Protection Devices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>RCBOs — combined protection devices</ContentEyebrow>
+
+          <ConceptBlock title="Earth fault detection plus overcurrent protection in one device">
             <p>
               An RCBO (Residual Current operated Circuit Breaker with integral Overcurrent
               protection) to BS EN 61009 combines the earth fault detection capability of an RCD
@@ -601,80 +556,60 @@ const MOETModule2Section4_2 = () => {
               socket circuit. With individual RCBOs, only the circuit with the fault loses supply —
               all other circuits remain energised.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCBO Specifications</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Overcurrent rating (In):</strong> Same as MCB ratings — 6, 10, 16, 20, 25,
-                  32, 40, 50 A
-                </li>
-                <li className="pl-1">
-                  <strong>Trip type:</strong> B, C or D (same characteristics as standalone MCBs)
-                </li>
-                <li className="pl-1">
-                  <strong>Residual current rating (I&#916;n):</strong> Typically 30 mA for final
-                  circuits
-                </li>
-                <li className="pl-1">
-                  <strong>RCD type:</strong> Type A as standard; Type F and Type B available for
-                  specialist applications
-                </li>
-                <li className="pl-1">
-                  <strong>Breaking capacity:</strong> Typically 6 kA or 10 kA
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="RCBO specifications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Overcurrent rating (In):</strong> Same as MCB ratings — 6, 10, 16, 20, 25,
+                32, 40, 50 A
+              </li>
+              <li>
+                <strong>Trip type:</strong> B, C or D (same characteristics as standalone MCBs)
+              </li>
+              <li>
+                <strong>Residual current rating (I∆n):</strong> Typically 30 mA for final circuits
+              </li>
+              <li>
+                <strong>RCD type:</strong> Type A as standard; Type F and Type B available for
+                specialist applications
+              </li>
+              <li>
+                <strong>Breaking capacity:</strong> Typically 6 kA or 10 kA
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Advantages of RCBOs
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Individual circuit earth fault protection</li>
-                  <li className="pl-1">A fault on one circuit does not affect others</li>
-                  <li className="pl-1">
-                    Easier fault finding — the tripped RCBO identifies the faulty circuit
-                  </li>
-                  <li className="pl-1">
-                    Eliminates the need for separate RCDs and split-load boards
-                  </li>
-                  <li className="pl-1">Compliance with BS 7671 high-integrity arrangement</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Considerations</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Higher cost per circuit than shared RCD arrangement</li>
-                  <li className="pl-1">Consumer unit must be compatible (check busbar type)</li>
-                  <li className="pl-1">Must still be tested both by push-button and instrument</li>
-                  <li className="pl-1">
-                    Correct RCD type (A, F, B) must still be selected for the load
-                  </li>
-                  <li className="pl-1">Replacement must match both MCB and RCD specifications</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Amendment 2 to BS 7671:2018 requires that all circuits in
-              dwellings have RCD protection. A consumer unit populated entirely with RCBOs is one of
-              the simplest ways to comply with this requirement whilst providing the best level of
-              discrimination and continuity of supply.
+          <ConceptBlock title="Advantages and considerations">
+            <p>
+              <strong>Advantages:</strong> individual circuit earth fault protection; a fault on one
+              circuit does not affect others; easier fault finding — the tripped RCBO identifies the
+              faulty circuit; eliminates the need for separate RCDs and split-load boards; supports
+              BS 7671 high-integrity arrangements.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Considerations:</strong> higher cost per circuit than a shared RCD
+              arrangement; the consumer unit must be compatible (check busbar type); each device
+              must still be tested both by push-button and instrument; the correct RCD type (A, F,
+              B) must still be selected for the load; replacement must match both MCB and RCD
+              specifications.
+            </p>
+            <p>
+              Under BS 7671:2018+A4:2026, Regulation 411.3.4 requires a 30 mA RCD on AC final
+              circuits supplying luminaires in domestic premises, and Regulation 411.3.3 requires
+              one on socket-outlets up to 32 A. A consumer unit populated entirely with RCBOs is one
+              of the simplest ways to satisfy both, whilst giving the best discrimination and
+              continuity of supply.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            BS 7671 Requirements and Disconnection Times
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>BS 7671 requirements and disconnection times</ContentEyebrow>
+
+          <ConceptBlock title="Additional protection, TT fault protection and fire protection">
             <p>
               BS 7671 addresses RCD requirements in several regulations. The main provisions relate
               to additional protection (Regulation 411.3.3), fault protection in TT systems
@@ -682,282 +617,209 @@ const MOETModule2Section4_2 = () => {
               these requirements is essential for maintenance technicians who need to verify that
               existing RCD protection is adequate and correctly specified.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key BS 7671 RCD Regulations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reg 411.3.3 — Additional protection:</strong> 30 mA RCD required for
-                  socket outlets &le; 32 A, mobile equipment &le; 32 A outdoors, and (per Amendment
-                  2) all circuits in dwellings
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 411.5 — TT systems:</strong> RCDs are the primary means of fault
-                  protection in TT earthing systems where the earth fault loop impedance is too high
-                  for overcurrent devices to achieve disconnection within the required time
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 422.3.9 — Fire protection:</strong> 300 mA RCD required where the risk
-                  of fire is increased (e.g., locations with combustible materials, cable routes
-                  through fire-risk areas)
-                </li>
-                <li className="pl-1">
-                  <strong>Reg 415.1.1 — Disconnection time:</strong> For additional protection, RCD
-                  must operate within 40 ms at 5 &times; I&#916;n
-                </li>
-              </ul>
+          <ConceptBlock title="Key BS 7671 RCD regulations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reg 411.3.3 — Additional protection:</strong> 30 mA RCD required for socket
+                outlets ≤ 32 A and mobile equipment ≤ 32 A used outdoors. Reg 411.3.4 adds AC final
+                circuits supplying luminaires in domestic premises
+              </li>
+              <li>
+                <strong>Reg 411.5 — TT systems:</strong> RCDs are the primary means of fault
+                protection in TT earthing systems where the earth fault loop impedance is too high
+                for overcurrent devices to achieve disconnection within the required time
+              </li>
+              <li>
+                <strong>Reg 422.3.9 — Fire protection:</strong> 300 mA RCD required where the risk
+                of fire is increased (e.g., locations with combustible materials, cable routes
+                through fire-risk areas)
+              </li>
+              <li>
+                <strong>Reg 415.1.1 — Disconnection time:</strong> For additional protection, RCD
+                must operate within 40 ms at 5 × I∆n
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="RCD test requirements">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Test</th>
+                    <th className="py-2 pr-4 font-medium text-white">Test Current</th>
+                    <th className="py-2 font-medium text-white">Required Result</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Non-trip (no trip)</td>
+                    <td className="py-2 pr-4">50% of I∆n</td>
+                    <td className="py-2">Device must NOT trip</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Trip at rated current</td>
+                    <td className="py-2 pr-4">100% of I∆n</td>
+                    <td className="py-2">≤ 300 ms (general) or ≤ 200 ms (Type S)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Fast trip (5x)</td>
+                    <td className="py-2 pr-4">5 × I∆n</td>
+                    <td className="py-2">≤ 40 ms (general purpose)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Test Requirements</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Current</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Required Result
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Non-trip (no trip)</td>
-                      <td className="border border-white/10 px-3 py-2">50% of I&#916;n</td>
-                      <td className="border border-white/10 px-3 py-2">Device must NOT trip</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Trip at rated current</td>
-                      <td className="border border-white/10 px-3 py-2">100% of I&#916;n</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &le; 300 ms (general) or &le; 200 ms (Type S)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fast trip (5x)</td>
-                      <td className="border border-white/10 px-3 py-2">5 &times; I&#916;n</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        &le; 40 ms (general purpose)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Nuisance Tripping — Diagnosis and Solutions
-              </p>
-              <p className="text-sm text-white mb-2">
+          <CommonMistake
+            title="Nuisance tripping — diagnosis and solutions"
+            whatHappens={
+              <>
                 Nuisance tripping is one of the most common RCD-related issues that maintenance
                 technicians face. It occurs when the cumulative standing earth leakage current from
-                all connected equipment approaches the RCD's operating threshold.
-              </p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>IET guidance:</strong> Standing leakage should not exceed 30% of I&#916;n
-                  (9 mA for 30 mA RCD)
-                </li>
-                <li className="pl-1">
-                  <strong>Solution 1:</strong> Split circuits across multiple RCDs or use individual
-                  RCBOs
-                </li>
-                <li className="pl-1">
-                  <strong>Solution 2:</strong> Investigate specific equipment with high leakage (EMC
-                  filters, long cable runs)
-                </li>
-                <li className="pl-1">
-                  <strong>Solution 3:</strong> Check for deteriorating insulation resistance on the
-                  circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Never:</strong> Uprate the I&#916;n to stop tripping where 30 mA
-                  protection is required
-                </li>
-              </ul>
-            </div>
+                all connected equipment approaches the RCD's operating threshold. IET guidance holds
+                that standing leakage should not exceed 30% of I∆n (9 mA for a 30 mA RCD).
+              </>
+            }
+            doInstead={
+              <>
+                Split circuits across multiple RCDs or use individual RCBOs; investigate specific
+                equipment with high leakage (EMC filters, long cable runs); check for deteriorating
+                insulation resistance on the circuit. Never uprate the I∆n to stop tripping where 30
+                mA protection is required.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires
-              understanding of protection devices and their role in maintaining electrical safety.
-              Being able to test, diagnose and replace RCDs correctly is a core maintenance skill
-              assessed under the electrical engineering pathway.
+          <ConceptBlock
+            title="A core maintenance responsibility"
+            onSite="RCDs are life-saving devices. Ensuring they are present where required, correctly specified, and regularly tested is one of your most important responsibilities. Never bypass, remove or defeat an RCD — doing so removes a critical layer of protection and may constitute a criminal offence under the Electricity at Work Regulations 1989."
+          >
+            <p>
+              The ST1426 maintenance technician standard requires understanding of protection
+              devices and their role in maintaining electrical safety. Being able to test, diagnose
+              and replace RCDs correctly is a core maintenance skill assessed under the electrical
+              engineering pathway.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            RCD Discrimination and Special Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>RCD discrimination and special applications</ContentEyebrow>
+
+          <ConceptBlock title="Only the device nearest the fault should operate">
             <p>
               In installations with multiple levels of RCD protection, it is important that only the
               device nearest to the fault operates, leaving the upstream RCD closed and maintaining
               supply to healthy circuits. This is RCD discrimination (selectivity), and it requires
               careful coordination of device ratings and time delays.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Achieving RCD Discrimination
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Time discrimination:</strong> The upstream RCD must be a time-delayed type
-                  (S-type or selective) with a deliberate operating delay. The downstream RCD is an
-                  instantaneous type that operates within 40 ms. The upstream S-type has a minimum
-                  non-operating time that exceeds the downstream device's maximum operating time.
-                </li>
-                <li className="pl-1">
-                  <strong>Current discrimination:</strong> The upstream RCD has a higher I&#916;n
-                  rating (e.g., 100 mA or 300 mA) than the downstream device (30 mA). However,
-                  current discrimination alone does not guarantee selectivity — the upstream device
-                  may still operate on high-magnitude faults.
-                </li>
-                <li className="pl-1">
-                  <strong>Combined approach:</strong> For reliable discrimination, both time and
-                  current discrimination should be employed — the upstream device should have both a
-                  higher I&#916;n and a time delay.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Achieving RCD discrimination">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time discrimination:</strong> The upstream RCD must be a time-delayed type
+                (S-type or selective) with a deliberate operating delay. The downstream RCD is an
+                instantaneous type that operates within 40 ms. The upstream S-type has a minimum
+                non-operating time that exceeds the downstream device's maximum operating time.
+              </li>
+              <li>
+                <strong>Current discrimination:</strong> The upstream RCD has a higher I∆n rating
+                (e.g., 100 mA or 300 mA) than the downstream device (30 mA). However, current
+                discrimination alone does not guarantee selectivity — the upstream device may still
+                operate on high-magnitude faults.
+              </li>
+              <li>
+                <strong>Combined approach:</strong> For reliable discrimination, both time and
+                current discrimination should be employed — the upstream device should have both a
+                higher I∆n and a time delay.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Special Applications</h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">EV Charging</p>
-                  <p className="text-sm text-white">
-                    Electric vehicle charging circuits require careful RCD selection due to the
-                    potential for DC fault currents from the charging electronics. BS 7671 and IET
-                    guidance require Type A as minimum, with Type B or Type A plus Type B RDC-DD
-                    where smooth DC faults exceeding 6 mA may occur. Many EV charger manufacturers
-                    incorporate DC protection within the unit itself, allowing a standard Type A RCD
-                    or RCBO to be used upstream.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">Fire Protection (300 mA)</p>
-                  <p className="text-sm text-white">
-                    A 300 mA RCD does not provide shock protection but can detect earth leakage
-                    currents that could cause heating and ignition of combustible materials. BS 7671
-                    Regulation 422.3.9 requires 300 mA RCD protection for cable routes in locations
-                    with increased fire risk. This is a fire prevention measure, not a personnel
-                    protection measure.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white mb-1">TT Earthing Systems</p>
-                  <p className="text-sm text-white">
-                    In TT systems, the earth fault loop impedance is typically too high for
-                    overcurrent devices to achieve the required disconnection times. RCDs become the
-                    primary means of fault protection (not just additional protection). The maximum
-                    earth fault loop impedance for an RCD is calculated as Zs &le; 50 V / I&#916;n.
-                    For a 30 mA RCD, this gives Zs &le; 1667 ohms — easily achievable even with a
-                    basic earth electrode.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> RCDs are life-saving devices. As a maintenance technician,
-              ensuring that RCDs are present where required, correctly specified, and regularly
-              tested is one of your most important responsibilities. Never bypass, remove or defeat
-              an RCD — doing so removes a critical layer of protection and may constitute a criminal
-              offence under the Electricity at Work Regulations 1989.
+          <ConceptBlock title="Special applications">
+            <p>
+              <strong>EV charging:</strong> electric vehicle charging circuits require careful RCD
+              selection due to the potential for DC fault currents from the charging electronics. BS
+              7671 and IET guidance require Type A as minimum, with Type B or Type A plus Type B
+              RDC-DD where smooth DC faults exceeding 6 mA may occur. Many EV charger manufacturers
+              incorporate DC protection within the unit itself, allowing a standard Type A RCD or
+              RCBO to be used upstream.
             </p>
-          </div>
-        </section>
+            <p>
+              <strong>Fire protection (300 mA):</strong> a 300 mA RCD does not provide shock
+              protection but can detect earth leakage currents that could cause heating and ignition
+              of combustible materials. BS 7671 Regulation 422.3.9 requires 300 mA RCD protection
+              for cable routes in locations with increased fire risk. This is a fire prevention
+              measure, not a personnel protection measure.
+            </p>
+            <p>
+              <strong>TT earthing systems:</strong> in TT systems, the earth fault loop impedance is
+              typically too high for overcurrent devices to achieve the required disconnection
+              times. RCDs become the primary means of fault protection (not just additional
+              protection). The maximum earth fault loop impedance for an RCD is calculated as Zs ≤
+              50 V / I∆n. For a 30 mA RCD, this gives Zs ≤ 1667 ohms — easily achievable even with a
+              basic earth electrode.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'An RCD detects the imbalance between line and neutral current — it does not protect against overload or line-neutral short-circuit.',
+              '30 mA RCDs provide additional protection against electric shock; 300 mA RCDs provide fire protection, not shock protection.',
+              'Type AC (sinusoidal only), Type A (+ pulsating DC, minimum standard), Type F (+ mixed frequency), Type B (+ smooth DC).',
+              'An RCBO combines an RCD and an MCB — individual circuits keep their own earth fault protection instead of sharing one RCD.',
+              'IET guidance: standing leakage should not exceed 30% of I Delta n (9 mA for a 30 mA device) — investigate leakage, never uprate the device.',
+              'RCD discrimination needs an upstream time-delayed (S-type) device with both a longer time delay and a higher I Delta n than the downstream device.',
+              'TT systems rely on RCDs as the primary means of fault protection, not just additional protection, because Zs is too high for overcurrent devices alone.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RCD Types</p>
-                <ul className="space-y-0.5">
-                  <li>Type AC — sinusoidal AC only</li>
-                  <li>Type A — AC + pulsating DC (minimum standard)</li>
-                  <li>Type F — AC + pulsating DC + mixed frequency</li>
-                  <li>Type B — AC + pulsating DC + smooth DC</li>
-                  <li>Type S — time-delayed for discrimination</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key BS 7671 Regulations</p>
-                <ul className="space-y-0.5">
-                  <li>Reg 411.3.3 — Additional protection (30 mA)</li>
-                  <li>Reg 411.5 — TT system fault protection</li>
-                  <li>Reg 415.1.1 — 40 ms at 5 &times; I&#916;n</li>
-                  <li>Reg 422.3.9 — Fire protection (300 mA)</li>
-                  <li>BS EN 61008 — RCCBs; BS EN 61009 — RCBOs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Fuses and Circuit Breakers
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Overcurrent and Short-Circuit Protection
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Fuses and Circuit Breakers
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-3">
-              Next: Overcurrent and Short-Circuit Protection
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

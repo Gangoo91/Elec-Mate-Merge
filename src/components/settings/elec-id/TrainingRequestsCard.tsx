@@ -111,7 +111,7 @@ export function TrainingRequestsCard() {
 
   if (isLoading) {
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6">
+      <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-6">
         <div className="flex items-center justify-center gap-2 text-white">
           <div className="h-5 w-5 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
           <span>Loading training requests…</span>
@@ -123,7 +123,7 @@ export function TrainingRequestsCard() {
   if (requests.length === 0) return null;
 
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden">
       <div className="px-5 py-4 flex items-center justify-between border-b border-white/[0.06]">
         <div>
           <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">

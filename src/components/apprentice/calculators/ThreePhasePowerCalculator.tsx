@@ -298,14 +298,18 @@ const ThreePhasePowerCalculator = () => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Three Phase Power Calculator',
+        title: 'Three Phase Power',
         subtitle: 'Apparent, active and reactive power for a three-phase system',
         standard: 'BS 7671:2018+A4:2026',
       },
       headline: [
         { label: 'Apparent power', value: result.apparentPower.toFixed(2), unit: 'kVA' },
         { label: 'Active power', value: result.activePower.toFixed(2), unit: 'kW' },
-        { label: 'Line current', value: result.lineCurrent.toFixed(2), unit: 'A' },
+        {
+          label: 'Reactive power',
+          value: Math.abs(result.reactivePower).toFixed(2),
+          unit: 'kVAR',
+        },
       ],
       sections: [
         {
@@ -317,8 +321,36 @@ const ThreePhasePowerCalculator = () => {
                 voltageType === 'line-line' ? 'Line voltage (VLL)' : 'Line-to-neutral voltage (VLN)',
               value: `${voltage} V`,
             },
+            ...(result.currentSource === 'entered'
+              ? [
+                  {
+                    label: currentType === 'line' ? 'Line current' : 'Phase current',
+                    value: `${current} A`,
+                  },
+                ]
+              : []),
+            ...(result.currentSource === 'from-power'
+              ? [{ label: 'Active power (P)', value: `${activePowerInput} kW` }]
+              : []),
+            ...(result.currentSource === 'from-motor'
+              ? [
+                  { label: 'Mechanical power', value: `${mechanicalPower} ${mechanicalPowerUnit}` },
+                  { label: 'Motor efficiency', value: `${efficiency} %` },
+                ]
+              : []),
             { label: 'Power factor', value: `${powerFactor} ${pfType}` },
             { label: 'Frequency', value: `${frequency} Hz` },
+            ...(result.correctionCapacitor !== undefined || result.correctionNote !== undefined
+              ? [{ label: 'Target power factor', value: targetPf }]
+              : []),
+            ...(result.unbalance !== undefined
+              ? [
+                  {
+                    label: 'Phase currents (IA / IB / IC)',
+                    value: `${currentA} / ${currentB} / ${currentC} A`,
+                  },
+                ]
+              : []),
           ],
         },
         {

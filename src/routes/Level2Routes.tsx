@@ -2,21 +2,27 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { isStudyContentPath, studyTitleFromDocument } from '@/lib/studyContentPath';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 
 // Loading component
 const LoadingFallback = CourseSkeleton;
 
-// Study location tracker component - tracks all Level 2 page visits
+// Study location tracker — records the resume point for Level 2.
+//
+// Only content pages are recorded. This used to write on every navigation, so
+// the course index and every module landing page overwrote the lesson you were
+// actually on, and Continue dropped you back on a menu.
 function Level2Tracker() {
   const location = useLocation();
   const { updateLastLocation } = useLastStudyLocation();
 
   useEffect(() => {
-    // Get title from document after a short delay (to let page set title)
+    if (!isStudyContentPath(location.pathname)) return;
+
+    // Short delay so the page has set its own title before we read it.
     const timer = setTimeout(() => {
-      const title = document.title?.split('|')[0]?.trim() || 'Level 2 Course';
-      updateLastLocation(location.pathname, title);
+      updateLastLocation(location.pathname, studyTitleFromDocument('Level 2 course'));
     }, 100);
 
     return () => clearTimeout(timer);

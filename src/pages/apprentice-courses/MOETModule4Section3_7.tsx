@@ -1,8 +1,44 @@
-import { ArrowLeft, FileText, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 3 · Subsection 7 — Documentation of Faults
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Documentation requirements: documentation control, auditable
+ *                 records."
+ *              · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *              · "Continuous improvement (CI) systems and techniques."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Documentation of Faults - MOET Module 4 Section 3.7';
@@ -83,10 +119,10 @@ const quizQuestions = [
     id: 2,
     question: "The '5 Whys' technique in root cause analysis involves:",
     options: [
-      "Interviewing exactly five different people who witnessed the fault",
-      "Listing five possible faults and testing each one in turn",
+      'Interviewing exactly five different people who witnessed the fault',
+      'Listing five possible faults and testing each one in turn',
       "Asking 'why' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause",
-      "Completing the fault report within five minutes of finishing the repair",
+      'Completing the fault report within five minutes of finishing the repair',
     ],
     correctAnswer: 2,
     explanation:
@@ -262,116 +298,66 @@ const faqs = [
 ];
 
 const MOETModule4Section3_7 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <FileText className="h-4 w-4" />
-            <span>Module 4.3.7</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Documentation of Faults
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.3 · Subsection 7"
+        title="Documentation of Faults"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Recording, reporting and learning from fault diagnosis outcomes
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault reports:</strong> Record symptoms, diagnosis, repair actions, parts
-                and recommendations
-              </li>
-              <li className="pl-1">
-                <strong>Root cause:</strong> Go beyond what failed to why it failed and how to
-                prevent recurrence
-              </li>
-              <li className="pl-1">
-                <strong>CMMS:</strong> Computerised records enable trend analysis, scheduling and
-                compliance evidence
-              </li>
-              <li className="pl-1">
-                <strong>Legal:</strong> Records demonstrate compliance with EAW Regs, HASAWA and BS
-                7671
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Professional practice:</strong> Accurate documentation is a core competence,
-                not optional paperwork
-              </li>
-              <li className="pl-1">
-                <strong>Future technicians:</strong> Your records help the next person diagnose
-                faster and safer
-              </li>
-              <li className="pl-1">
-                <strong>Continuous improvement:</strong> Trend data drives reliability programmes
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Documentation and reporting is assessed in the EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Fault reports: record symptoms, diagnosis, repair actions, parts and recommendations.',
+              'Root cause: go beyond what failed to why it failed and how to prevent recurrence.',
+              'CMMS: computerised records enable trend analysis, scheduling and compliance evidence.',
+              'Legal: records demonstrate compliance with EAW Regs, HASAWA and BS 7671.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Complete accurate fault reports that capture the full diagnostic and repair process',
               'Conduct root cause analysis using the 5 Whys and fishbone diagram techniques',
               'Make effective CMMS entries that support future diagnosis and trend analysis',
               'Understand the legal and regulatory requirements for maintenance documentation in the UK',
               'Use maintenance data for trend analysis and reliability improvement',
               'Follow proper handover procedures including verbal explanation and written records',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Professional practice:</strong> accurate documentation is a core competence,
+                not optional paperwork.
+              </li>
+              <li>
+                <strong>Future technicians:</strong> your records help the next person diagnose
+                faster and safer.
+              </li>
+              <li>
+                <strong>Continuous improvement:</strong> trend data drives reliability programmes.
+              </li>
+              <li>
+                <strong>ST1426:</strong> documentation and reporting is assessed in the EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Importance of Fault Documentation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The importance of fault documentation</ContentEyebrow>
+
+          <ConceptBlock title="The importance of fault documentation">
             <p>
               Documentation is the final — and arguably most undervalued — step in the fault
               diagnosis process. A repair that is completed but not documented is a repair that
@@ -389,74 +375,60 @@ const MOETModule4Section3_7 = () => {
               exists and is being followed. In the event of an incident, the quality of your
               maintenance records will be scrutinised.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Why Fault Documentation Matters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Future diagnosis:</strong> A well-documented fault repair enables the next
-                  technician to diagnose a similar or recurring fault far more quickly
-                </li>
-                <li className="pl-1">
-                  <strong>Pattern recognition:</strong> Records reveal trends — increasing failure
-                  rates, seasonal patterns, recurring root causes — that are invisible without data
-                </li>
-                <li className="pl-1">
-                  <strong>Compliance evidence:</strong> Demonstrates adherence to the Electricity at
-                  Work Regulations, HASAWA 1974, and BS 7671
-                </li>
-                <li className="pl-1">
-                  <strong>Legal protection:</strong> Provides evidence of due diligence in the event
-                  of an incident, claim or prosecution
-                </li>
-                <li className="pl-1">
-                  <strong>Asset management:</strong> Supports capital replacement decisions by
-                  providing evidence of equipment condition and reliability
-                </li>
-                <li className="pl-1">
-                  <strong>Knowledge transfer:</strong> Preserves the diagnostic knowledge of
-                  experienced technicians for the benefit of the wider team
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Cost of Poor Documentation
-              </p>
-              <p className="text-sm text-white">
-                Poor maintenance documentation has real consequences. A technician spends two hours
-                diagnosing a fault that a colleague fixed last month but did not record — that is
-                two hours of lost productivity and extended downtime. A recurring fault goes
-                unrecognised because each occurrence is documented differently or not at all. An
-                undocumented modification causes a safety incident because the next technician
-                relied on drawings that no longer represent reality. Insurance claims are rejected
-                because there is no evidence of a maintenance regime. These are not hypothetical
-                scenarios — they happen regularly in organisations with inadequate documentation
-                practices.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The best time to complete a fault report is immediately
+          <ConceptBlock title="Why fault documentation matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Future diagnosis:</strong> a well-documented fault repair enables the next
+                technician to diagnose a similar or recurring fault far more quickly.
+              </li>
+              <li>
+                <strong>Pattern recognition:</strong> records reveal trends — increasing failure
+                rates, seasonal patterns, recurring root causes — that are invisible without data.
+              </li>
+              <li>
+                <strong>Compliance evidence:</strong> demonstrates adherence to the Electricity at
+                Work Regulations, HASAWA 1974, and BS 7671.
+              </li>
+              <li>
+                <strong>Legal protection:</strong> provides evidence of due diligence in the event
+                of an incident, claim or prosecution.
+              </li>
+              <li>
+                <strong>Asset management:</strong> supports capital replacement decisions by
+                providing evidence of equipment condition and reliability.
+              </li>
+              <li>
+                <strong>Knowledge transfer:</strong> preserves the diagnostic knowledge of
+                experienced technicians for the benefit of the wider team.
+              </li>
+            </ul>
+            <p>
+              Poor maintenance documentation has real consequences. A technician spends two hours
+              diagnosing a fault that a colleague fixed last month but did not record — that is two
+              hours of lost productivity and extended downtime. A recurring fault goes unrecognised
+              because each occurrence is documented differently or not at all. An undocumented
+              modification causes a safety incident because the next technician relied on drawings
+              that no longer represent reality. Insurance claims are rejected because there is no
+              evidence of a maintenance regime. These are not hypothetical scenarios — they happen
+              regularly in organisations with inadequate documentation practices.
+            </p>
+            <p>
+              <strong>Key point:</strong> the best time to complete a fault report is immediately
               after the repair, while the details are fresh. A report completed two days later will
               inevitably be less accurate and less complete than one written on the spot. Make
               documentation a habit, not an afterthought.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fault Reports, Job Cards and Log Books
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Fault reports, job cards and log books</ContentEyebrow>
+
+          <ConceptBlock title="Fault reports, job cards and log books">
             <p>
               The fault report is the primary document that records the details of a fault diagnosis
               and repair. Different organisations use different formats — paper job cards, digital
@@ -464,159 +436,133 @@ const MOETModule4Section3_7 = () => {
               tells the complete story: what was reported, what was found, what was done, and what
               should happen next.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Content of a Fault Report
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Details to Record
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Identification
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Date, time, job/work order number, asset number, asset description, location
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Reported fault
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Who reported it, when, what symptoms they described, any relevant context
-                        (time of day, conditions, what was happening)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Findings on arrival
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        State of equipment when you arrived, observable symptoms, any differences
-                        from the reported description
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Diagnostic process
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests performed, measurements taken (with values), areas inspected, sequence
-                        of diagnostic steps
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Root cause</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Identified cause of the fault, how it was confirmed, contributing factors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Repair actions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What was replaced, repaired or adjusted; method used; any temporary measures
-                        in place
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Parts used</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Part numbers, descriptions, quantities, manufacturers, batch numbers where
-                        relevant
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Post-repair testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tests performed to confirm repair, results obtained, confirmation of safe
-                        operation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Recommendations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Preventive actions, follow-up work required, modifications suggested, PM
-                        schedule changes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Sign-off</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technician name, signature, date, time completed, total time on task,
-                        handover confirmation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Essential content of a fault report">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Section</th>
+                    <th className="py-2 font-medium text-white">Details to record</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Identification</td>
+                    <td className="py-2">
+                      Date, time, job/work order number, asset number, asset description, location
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Reported fault</td>
+                    <td className="py-2">
+                      Who reported it, when, what symptoms they described, any relevant context
+                      (time of day, conditions, what was happening)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Findings on arrival</td>
+                    <td className="py-2">
+                      State of equipment when you arrived, observable symptoms, any differences from
+                      the reported description
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Diagnostic process</td>
+                    <td className="py-2">
+                      Tests performed, measurements taken (with values), areas inspected, sequence
+                      of diagnostic steps
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Root cause</td>
+                    <td className="py-2">
+                      Identified cause of the fault, how it was confirmed, contributing factors
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Repair actions</td>
+                    <td className="py-2">
+                      What was replaced, repaired or adjusted; method used; any temporary measures
+                      in place
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Parts used</td>
+                    <td className="py-2">
+                      Part numbers, descriptions, quantities, manufacturers, batch numbers where
+                      relevant
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Post-repair testing</td>
+                    <td className="py-2">
+                      Tests performed to confirm repair, results obtained, confirmation of safe
+                      operation
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Recommendations</td>
+                    <td className="py-2">
+                      Preventive actions, follow-up work required, modifications suggested, PM
+                      schedule changes
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Sign-off</td>
+                    <td className="py-2">
+                      Technician name, signature, date, time completed, total time on task, handover
+                      confirmation
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Log Books and Site Records
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Switchroom log book:</strong> A bound, sequential record of all work,
-                  observations and events in the switchroom — a legal document that should never
-                  have pages removed
-                </li>
-                <li className="pl-1">
-                  <strong>Plant room log:</strong> Records operational parameters, abnormal
-                  conditions, maintenance visits and any concerns
-                </li>
-                <li className="pl-1">
-                  <strong>Permit to work file:</strong> Archived permits provide evidence of safe
-                  working practices and isolation procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Test record file:</strong> Periodic test results for the installation,
-                  enabling comparison over time
-                </li>
-                <li className="pl-1">
-                  <strong>Modification register:</strong> A chronological record of all
-                  modifications, with references to drawings, certificates and authorisations
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Professional tip:</strong> Write your fault report as if the reader is a
+          <ConceptBlock title="Log books and site records">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switchroom log book:</strong> a bound, sequential record of all work,
+                observations and events in the switchroom — a legal document that should never have
+                pages removed.
+              </li>
+              <li>
+                <strong>Plant room log:</strong> records operational parameters, abnormal
+                conditions, maintenance visits and any concerns.
+              </li>
+              <li>
+                <strong>Permit to work file:</strong> archived permits provide evidence of safe
+                working practices and isolation procedures.
+              </li>
+              <li>
+                <strong>Test record file:</strong> periodic test results for the installation,
+                enabling comparison over time.
+              </li>
+              <li>
+                <strong>Modification register:</strong> a chronological record of all modifications,
+                with references to drawings, certificates and authorisations.
+              </li>
+            </ul>
+            <p>
+              <strong>Professional tip:</strong> write your fault report as if the reader is a
               competent technician who has never seen this installation before. Avoid unexplained
               abbreviations. Be specific about locations, component references and measured values.
-              A report that states "fixed loose wire in panel" is far less useful than
-              "Re-terminated L3 supply conductor at contactor KM4 terminal 1 in MCC Panel 3 — found
-              loose with evidence of arcing and overheating. Torqued to 2.5 Nm per manufacturer
-              specification."
+              A report that states &quot;fixed loose wire in panel&quot; is far less useful than
+              &quot;Re-terminated L3 supply conductor at contactor KM4 terminal 1 in MCC Panel 3 —
+              found loose with evidence of arcing and overheating. Torqued to 2.5 Nm per
+              manufacturer specification.&quot;
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Root Cause Analysis Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Root cause analysis techniques</ContentEyebrow>
+
+          <ConceptBlock title="Root cause analysis techniques">
             <p>
               Root cause analysis (RCA) is the discipline of investigating not just what failed, but
               why it failed. A standard fault repair addresses the immediate symptom: the motor
@@ -625,125 +571,112 @@ const MOETModule4Section3_7 = () => {
               Was the motor misaligned? Was there excessive vibration from an external source? Only
               by identifying and addressing the root cause can you prevent the fault from recurring.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The 5 Whys Technique</p>
-              <p className="text-sm text-white mb-3">
-                The 5 Whys is a simple, effective technique that drills down from the symptom to the
-                root cause by repeatedly asking "why?" Each answer becomes the basis for the next
-                question. While the name suggests five iterations, the actual number varies — the
-                key is to keep asking until you reach a cause that can be addressed with a systemic
-                action.
-              </p>
-              <div className="bg-white/5 rounded p-3 text-sm text-white space-y-2">
-                <p>
-                  <strong className="text-elec-yellow/80">Problem:</strong> Motor overload
-                  protection tripped repeatedly on conveyor drive
-                </p>
-                <p>
-                  <strong className="text-elec-yellow/80">Why 1:</strong> Motor drawing excessive
-                  current → bearing had seized
-                </p>
-                <p>
-                  <strong className="text-elec-yellow/80">Why 2:</strong> Why did the bearing seize?
-                  → Lubrication had failed — bearing was dry
-                </p>
-                <p>
-                  <strong className="text-elec-yellow/80">Why 3:</strong> Why had lubrication
-                  failed? → Grease nipple was blocked and inaccessible
-                </p>
-                <p>
-                  <strong className="text-elec-yellow/80">Why 4:</strong> Why was the grease nipple
-                  blocked and inaccessible? → Motor mounting position makes the grease point
-                  unreachable without scaffolding
-                </p>
-                <p>
-                  <strong className="text-elec-yellow/80">Why 5:</strong> Why has this not been
-                  addressed? → No preventive maintenance task exists for this bearing point
-                </p>
-                <p className="pt-2 border-t border-white/10">
-                  <strong className="text-green-400">Root cause:</strong> Inaccessible grease point
-                  not included in PM schedule
-                </p>
-                <p>
-                  <strong className="text-green-400">Corrective actions:</strong> (1) Fit remote
-                  grease line to accessible location (2) Add to PM schedule at three-monthly
-                  interval (3) Audit other motors for similar access issues
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fishbone (Ishikawa) Diagram
-              </p>
-              <p className="text-sm text-white mb-3">
-                For more complex faults with multiple potential causes, the fishbone diagram
-                provides a structured framework. The fault (effect) is placed at the head of the
-                fish, and potential causes are categorised along the bones under standard headings:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Man (People):</strong> Operator error, inadequate training, incorrect
-                  procedure followed, fatigue
-                </li>
-                <li className="pl-1">
-                  <strong>Machine (Equipment):</strong> Component wear, design weakness, inadequate
-                  rating, age
-                </li>
-                <li className="pl-1">
-                  <strong>Method (Process):</strong> Incorrect operating procedure, inadequate
-                  maintenance strategy, poor work instructions
-                </li>
-                <li className="pl-1">
-                  <strong>Material (Components):</strong> Substandard parts, incorrect
-                  specification, material degradation, counterfeit components
-                </li>
-                <li className="pl-1">
-                  <strong>Measurement (Data):</strong> Incorrect calibration, wrong instrument used,
-                  misread results
-                </li>
-                <li className="pl-1">
-                  <strong>Mother Nature (Environment):</strong> Temperature, humidity,
-                  contamination, vibration, EMC
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Root Cause Categories in Electrical Maintenance
-              </p>
-              <p className="text-sm text-white">
-                Analysis of maintenance records across industrial sites consistently shows that the
-                most common root causes of electrical faults are: inadequate preventive maintenance
-                (connections not re-torqued, filters not cleaned, insulation not tested),
-                environmental factors not addressed (heat, moisture, contamination), design
-                weaknesses (undersized components, inadequate IP rating), and human factors
-                (incorrect installation, wrong settings, procedure not followed). Recognising these
-                categories helps you focus your RCA on the most probable areas.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The purpose of root cause analysis is not to assign blame
-              — it is to prevent recurrence. Focus on systemic causes (processes, procedures,
-              design) rather than individual actions. A finding of "operator error" is not a root
-              cause — it should prompt further questions: why did the operator make that error? Was
-              the procedure unclear? Was training inadequate? Was the equipment poorly designed?
+          <ConceptBlock title="The 5 Whys technique">
+            <p>
+              The 5 Whys is a simple, effective technique that drills down from the symptom to the
+              root cause by repeatedly asking &quot;why?&quot; Each answer becomes the basis for the
+              next question. While the name suggests five iterations, the actual number varies — the
+              key is to keep asking until you reach a cause that can be addressed with a systemic
+              action.
             </p>
-          </div>
-        </section>
+            <div className="space-y-2 rounded bg-white/5 p-3">
+              <p>
+                <strong className="text-elec-yellow/80">Problem:</strong> Motor overload protection
+                tripped repeatedly on conveyor drive
+              </p>
+              <p>
+                <strong className="text-elec-yellow/80">Why 1:</strong> Motor drawing excessive
+                current → bearing had seized
+              </p>
+              <p>
+                <strong className="text-elec-yellow/80">Why 2:</strong> Why did the bearing seize? →
+                Lubrication had failed — bearing was dry
+              </p>
+              <p>
+                <strong className="text-elec-yellow/80">Why 3:</strong> Why had lubrication failed?
+                → Grease nipple was blocked and inaccessible
+              </p>
+              <p>
+                <strong className="text-elec-yellow/80">Why 4:</strong> Why was the grease nipple
+                blocked and inaccessible? → Motor mounting position makes the grease point
+                unreachable without scaffolding
+              </p>
+              <p>
+                <strong className="text-elec-yellow/80">Why 5:</strong> Why has this not been
+                addressed? → No preventive maintenance task exists for this bearing point
+              </p>
+              <p className="border-t border-white/10 pt-2">
+                <strong className="text-emerald-400">Root cause:</strong> Inaccessible grease point
+                not included in PM schedule
+              </p>
+              <p>
+                <strong className="text-emerald-400">Corrective actions:</strong> (1) Fit remote
+                grease line to accessible location (2) Add to PM schedule at three-monthly interval
+                (3) Audit other motors for similar access issues
+              </p>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Fishbone (Ishikawa) diagram">
+            <p>
+              For more complex faults with multiple potential causes, the fishbone diagram provides
+              a structured framework. The fault (effect) is placed at the head of the fish, and
+              potential causes are categorised along the bones under standard headings:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Man (People):</strong> operator error, inadequate training, incorrect
+                procedure followed, fatigue.
+              </li>
+              <li>
+                <strong>Machine (Equipment):</strong> component wear, design weakness, inadequate
+                rating, age.
+              </li>
+              <li>
+                <strong>Method (Process):</strong> incorrect operating procedure, inadequate
+                maintenance strategy, poor work instructions.
+              </li>
+              <li>
+                <strong>Material (Components):</strong> substandard parts, incorrect specification,
+                material degradation, counterfeit components.
+              </li>
+              <li>
+                <strong>Measurement (Data):</strong> incorrect calibration, wrong instrument used,
+                misread results.
+              </li>
+              <li>
+                <strong>Mother Nature (Environment):</strong> temperature, humidity, contamination,
+                vibration, EMC.
+              </li>
+            </ul>
+            <p>
+              Analysis of maintenance records across industrial sites consistently shows that the
+              most common root causes of electrical faults are: inadequate preventive maintenance
+              (connections not re-torqued, filters not cleaned, insulation not tested),
+              environmental factors not addressed (heat, moisture, contamination), design weaknesses
+              (undersized components, inadequate IP rating), and human factors (incorrect
+              installation, wrong settings, procedure not followed). Recognising these categories
+              helps you focus your RCA on the most probable areas.
+            </p>
+            <p>
+              <strong>Key point:</strong> the purpose of root cause analysis is not to assign blame
+              — it is to prevent recurrence. Focus on systemic causes (processes, procedures,
+              design) rather than individual actions. A finding of &quot;operator error&quot; is not
+              a root cause — it should prompt further questions: why did the operator make that
+              error? Was the procedure unclear? Was training inadequate? Was the equipment poorly
+              designed?
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            CMMS and Digital Maintenance Records
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>CMMS and digital maintenance records</ContentEyebrow>
+
+          <ConceptBlock title="CMMS and digital maintenance records">
             <p>
               Computerised Maintenance Management Systems (CMMS) have transformed maintenance
               documentation from static paper files into dynamic, searchable databases that support
@@ -752,121 +685,104 @@ const MOETModule4Section3_7 = () => {
               quality of the data you enter directly determines the value the system provides to the
               organisation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CMMS Core Functions for Maintenance Technicians
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Work order management:</strong> Receiving, recording and closing out fault
-                  repair and preventive maintenance work orders
-                </li>
-                <li className="pl-1">
-                  <strong>Asset history:</strong> Viewing the complete maintenance history of any
-                  asset — previous faults, repairs, modifications, test results
-                </li>
-                <li className="pl-1">
-                  <strong>Spare parts:</strong> Recording parts used, checking stock availability,
-                  and triggering reorder when levels drop
-                </li>
-                <li className="pl-1">
-                  <strong>Failure coding:</strong> Classifying faults by type, cause and location
-                  using standardised codes — essential for trend analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Planned maintenance:</strong> Scheduling and recording preventive
-                  maintenance tasks at defined intervals
-                </li>
-                <li className="pl-1">
-                  <strong>Document management:</strong> Linking drawings, manuals, test certificates
-                  and photographs to asset records
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="CMMS core functions for maintenance technicians">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Work order management:</strong> receiving, recording and closing out fault
+                repair and preventive maintenance work orders.
+              </li>
+              <li>
+                <strong>Asset history:</strong> viewing the complete maintenance history of any
+                asset — previous faults, repairs, modifications, test results.
+              </li>
+              <li>
+                <strong>Spare parts:</strong> recording parts used, checking stock availability, and
+                triggering reorder when levels drop.
+              </li>
+              <li>
+                <strong>Failure coding:</strong> classifying faults by type, cause and location
+                using standardised codes — essential for trend analysis.
+              </li>
+              <li>
+                <strong>Planned maintenance:</strong> scheduling and recording preventive
+                maintenance tasks at defined intervals.
+              </li>
+              <li>
+                <strong>Document management:</strong> linking drawings, manuals, test certificates
+                and photographs to asset records.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Writing Effective CMMS Entries
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Be specific:</strong> "Re-terminated L1 at contactor KM3, terminal T1 —
-                  found loose with discolouration. Torqued to 2.5 Nm" is far better than "tightened
-                  connection"
-                </li>
-                <li className="pl-1">
-                  <strong>Include measurements:</strong> "Insulation resistance L1-E: 0.8 M ohm
-                  (minimum acceptable 1.0 M ohm per BS 7671)" — values provide evidence and enable
-                  trend comparison
-                </li>
-                <li className="pl-1">
-                  <strong>Use correct failure codes:</strong> Accurate coding enables the CMMS to
-                  produce meaningful reports on failure types and trends
-                </li>
-                <li className="pl-1">
-                  <strong>Record the diagnostic process:</strong> Not just the conclusion — the
-                  steps taken and tests performed are valuable for future reference
-                </li>
-                <li className="pl-1">
-                  <strong>Add recommendations:</strong> If you identified a preventive action,
-                  record it as a recommendation — this drives continuous improvement
-                </li>
-                <li className="pl-1">
-                  <strong>Attach photographs:</strong> Where relevant, attach photographs to the
-                  work order — a picture of a burnt-out contactor tells a story that words cannot
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Writing effective CMMS entries">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Be specific:</strong> &quot;Re-terminated L1 at contactor KM3, terminal T1 —
+                found loose with discolouration. Torqued to 2.5 Nm&quot; is far better than
+                &quot;tightened connection&quot;.
+              </li>
+              <li>
+                <strong>Include measurements:</strong> &quot;Insulation resistance L1-E: 0.8 M ohm
+                (minimum acceptable 1.0 M ohm per BS 7671)&quot; — values provide evidence and
+                enable trend comparison.
+              </li>
+              <li>
+                <strong>Use correct failure codes:</strong> accurate coding enables the CMMS to
+                produce meaningful reports on failure types and trends.
+              </li>
+              <li>
+                <strong>Record the diagnostic process:</strong> not just the conclusion — the steps
+                taken and tests performed are valuable for future reference.
+              </li>
+              <li>
+                <strong>Add recommendations:</strong> if you identified a preventive action, record
+                it as a recommendation — this drives continuous improvement.
+              </li>
+              <li>
+                <strong>Attach photographs:</strong> where relevant, attach photographs to the work
+                order — a picture of a burnt-out contactor tells a story that words cannot.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Trend Analysis from CMMS Data
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Increasing failure frequency on specific assets</li>
-                  <li className="pl-1">Common failure modes across asset types</li>
-                  <li className="pl-1">Seasonal or environmental patterns</li>
-                  <li className="pl-1">Mean time between failures (MTBF)</li>
-                  <li className="pl-1">Mean time to repair (MTTR)</li>
-                  <li className="pl-1">Cost per failure for replacement planning</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Key Performance Indicators
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Planned vs reactive maintenance ratio</li>
-                  <li className="pl-1">PM completion rate and compliance</li>
-                  <li className="pl-1">Equipment availability percentage</li>
-                  <li className="pl-1">Repeat failure rate (same fault, same asset)</li>
-                  <li className="pl-1">Work order backlog and aging</li>
-                  <li className="pl-1">Spare parts usage and stock turns</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Trend analysis from CMMS data">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Increasing failure frequency on specific assets.</li>
+              <li>Common failure modes across asset types.</li>
+              <li>Seasonal or environmental patterns.</li>
+              <li>Mean time between failures (MTBF).</li>
+              <li>Mean time to repair (MTTR).</li>
+              <li>Cost per failure for replacement planning.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Professional standard:</strong> The quality of your CMMS entries reflects your
+          <ConceptBlock title="Key performance indicators">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Planned vs reactive maintenance ratio.</li>
+              <li>PM completion rate and compliance.</li>
+              <li>Equipment availability percentage.</li>
+              <li>Repeat failure rate (same fault, same asset).</li>
+              <li>Work order backlog and aging.</li>
+              <li>Spare parts usage and stock turns.</li>
+            </ul>
+            <p>
+              <strong>Professional standard:</strong> the quality of your CMMS entries reflects your
               professionalism. Supervisors, engineers and managers read these entries. Future
               technicians rely on them. Auditors examine them. Take the same pride in your
               documentation as you do in your technical work — both are essential elements of
               professional maintenance practice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Handover, Communication and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Handover, communication and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="Handover, communication and continuous improvement">
             <p>
               Documentation does not exist in isolation — it is part of a broader communication
               process that includes verbal handover, team briefings, shift reports and management
@@ -875,197 +791,159 @@ const MOETModule4Section3_7 = () => {
               drive continuous improvement: learning from every fault, identifying systemic
               weaknesses, and progressively improving equipment reliability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Procedure After Fault Repair
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Verbal briefing:</strong> Explain to the operator and/or supervisor what
-                  was found, what was done, and whether there are any limitations or follow-up
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Demonstration:</strong> Where appropriate, demonstrate that the equipment
-                  is operating correctly and safely
-                </li>
-                <li className="pl-1">
-                  <strong>Written confirmation:</strong> Complete the fault report, CMMS entry and
-                  any relevant log book entries before leaving the site
-                </li>
-                <li className="pl-1">
-                  <strong>Safety confirmation:</strong> Confirm that all safety systems (guards,
-                  interlocks, emergency stops) are reinstated and functional
-                </li>
-                <li className="pl-1">
-                  <strong>Permit cancellation:</strong> If a permit to work was issued, follow the
-                  formal cancellation and handback procedure
-                </li>
-                <li className="pl-1">
-                  <strong>Outstanding work:</strong> If any follow-up work is required, record it as
-                  a new work order or recommendation — do not leave it to memory
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Handover procedure after fault repair">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Verbal briefing:</strong> explain to the operator and/or supervisor what was
+                found, what was done, and whether there are any limitations or follow-up
+                requirements.
+              </li>
+              <li>
+                <strong>Demonstration:</strong> where appropriate, demonstrate that the equipment is
+                operating correctly and safely.
+              </li>
+              <li>
+                <strong>Written confirmation:</strong> complete the fault report, CMMS entry and any
+                relevant log book entries before leaving the site.
+              </li>
+              <li>
+                <strong>Safety confirmation:</strong> confirm that all safety systems (guards,
+                interlocks, emergency stops) are reinstated and functional.
+              </li>
+              <li>
+                <strong>Permit cancellation:</strong> if a permit to work was issued, follow the
+                formal cancellation and handback procedure.
+              </li>
+              <li>
+                <strong>Outstanding work:</strong> if any follow-up work is required, record it as a
+                new work order or recommendation — do not leave it to memory.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Using Documentation for Continuous Improvement
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Failure review meetings:</strong> Regular review of significant faults and
-                  their root causes — sharing lessons learned across the team
-                </li>
-                <li className="pl-1">
-                  <strong>Reliability-centred maintenance:</strong> Using failure data to optimise
-                  PM frequencies — increase intervals where no faults occur, decrease where faults
-                  are frequent
-                </li>
-                <li className="pl-1">
-                  <strong>Design-out maintenance:</strong> Where recurring faults indicate a design
-                  weakness, proposing modifications to eliminate the fault mode
-                </li>
-                <li className="pl-1">
-                  <strong>Training needs:</strong> Analysis of fault records may reveal knowledge
-                  gaps that can be addressed through targeted training
-                </li>
-                <li className="pl-1">
-                  <strong>Spare parts optimisation:</strong> Usage data from fault records supports
-                  decisions about which parts to stock, in what quantity, and from which supplier
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Using documentation for continuous improvement">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Failure review meetings:</strong> regular review of significant faults and
+                their root causes — sharing lessons learned across the team.
+              </li>
+              <li>
+                <strong>Reliability-centred maintenance:</strong> using failure data to optimise PM
+                frequencies — increase intervals where no faults occur, decrease where faults are
+                frequent.
+              </li>
+              <li>
+                <strong>Design-out maintenance:</strong> where recurring faults indicate a design
+                weakness, proposing modifications to eliminate the fault mode.
+              </li>
+              <li>
+                <strong>Training needs:</strong> analysis of fault records may reveal knowledge gaps
+                that can be addressed through targeted training.
+              </li>
+              <li>
+                <strong>Spare parts optimisation:</strong> usage data from fault records supports
+                decisions about which parts to stock, in what quantity, and from which supplier.
+              </li>
+            </ul>
+            <p>
+              Any modification made to an electrical installation — whether planned or arising from
+              a fault repair — must be fully documented and reflected in the as-built drawings. An
+              undocumented modification is a serious safety risk. The next technician may isolate
+              the wrong circuit, apply the wrong test parameters, or misunderstand the circuit
+              operation because the documentation does not match reality. At minimum, a modification
+              requires: a description of the change, technical justification, authorisation, updated
+              drawings, an appropriate electrical certificate (Minor Works or Amendment), and a CMMS
+              record. Many organisations also require a formal Management of Change (MOC) process
+              for significant modifications.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Documentation and Modifications
-              </p>
-              <p className="text-sm text-white">
-                Any modification made to an electrical installation — whether planned or arising
-                from a fault repair — must be fully documented and reflected in the as-built
-                drawings. An undocumented modification is a serious safety risk. The next technician
-                may isolate the wrong circuit, apply the wrong test parameters, or misunderstand the
-                circuit operation because the documentation does not match reality. At minimum, a
-                modification requires: a description of the change, technical justification,
-                authorisation, updated drawings, an appropriate electrical certificate (Minor Works
-                or Amendment), and a CMMS record. Many organisations also require a formal
-                Management of Change (MOC) process for significant modifications.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Shift and Team Communication
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Shift handover:</strong> Brief the incoming shift on any outstanding
-                  faults, temporary repairs in place, or equipment operating under restrictions
-                </li>
-                <li className="pl-1">
-                  <strong>Team toolbox talks:</strong> Share significant fault findings with the
-                  team so everyone benefits from the diagnostic experience
-                </li>
-                <li className="pl-1">
-                  <strong>Escalation:</strong> If a fault reveals a safety concern or a systemic
-                  issue beyond your authority to resolve, escalate it in writing to the appropriate
-                  person
-                </li>
-                <li className="pl-1">
-                  <strong>Management reporting:</strong> Provide accurate data for KPI reports,
-                  downtime records and maintenance cost tracking
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> As an apprentice working towards your ST1426 End Point
+          <ConceptBlock title="Shift and team communication">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Shift handover:</strong> brief the incoming shift on any outstanding faults,
+                temporary repairs in place, or equipment operating under restrictions.
+              </li>
+              <li>
+                <strong>Team toolbox talks:</strong> share significant fault findings with the team
+                so everyone benefits from the diagnostic experience.
+              </li>
+              <li>
+                <strong>Escalation:</strong> if a fault reveals a safety concern or a systemic issue
+                beyond your authority to resolve, escalate it in writing to the appropriate person.
+              </li>
+              <li>
+                <strong>Management reporting:</strong> provide accurate data for KPI reports,
+                downtime records and maintenance cost tracking.
+              </li>
+            </ul>
+            <p className="italic">
+              <strong>Note:</strong> as an apprentice working towards your ST1426 End Point
               Assessment, your ability to document faults accurately and communicate effectively
               will be directly assessed. The EPA professional discussion will include questions
               about how you record and report maintenance activities. Developing good documentation
               habits now — during your apprenticeship — will serve you throughout your career and
               distinguish you as a thorough, professional technician.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Fault report — complete for every repair.',
+              'CMMS entry — searchable, coded, detailed.',
+              'Log book — chronological site record.',
+              'Root cause analysis — for significant faults.',
+              'Modification register — every change recorded.',
+              'Photographic evidence — conditions found.',
+              'Electricity at Work Regulations 1989 (Reg 4(2)).',
+              'HSE Guidance Note HSR25.',
+              'BS 7671 — Electrical Installation Certificates.',
+              'HASAWA 1974 — general duties.',
+              'IET Code of Practice — In-Service Testing.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Documentation Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Fault report — complete for every repair</li>
-                  <li>CMMS entry — searchable, coded, detailed</li>
-                  <li>Log book — chronological site record</li>
-                  <li>Root cause analysis — for significant faults</li>
-                  <li>Modification register — every change recorded</li>
-                  <li>Photographic evidence — conditions found</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>Electricity at Work Regulations 1989 (Reg 4(2))</li>
-                  <li>HSE Guidance Note HSR25</li>
-                  <li>BS 7671 — Electrical Installation Certificates</li>
-                  <li>HASAWA 1974 — General duties</li>
-                  <li>IET Code of Practice — In-Service Testing</li>
-                  <li>ST1426 — Documentation and reporting KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section3-6')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Intermittent Faults and Environmental Factors
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Safe Isolation and Verification
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Intermittent Faults
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

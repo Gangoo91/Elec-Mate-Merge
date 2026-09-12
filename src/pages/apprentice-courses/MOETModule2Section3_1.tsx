@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.3 · Subsection 1 — Transformers: Principles and
+ * Applications
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *   · "Electrical. Electrical engineering principles: circuit terminology,
+ *     Ohm’s Law, transformer theory, and power calculations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { TransformerSchematic, MagneticField } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Transformers: Principles and Applications - MOET Module 2.3.1';
@@ -14,12 +53,7 @@ const quickCheckQuestions = [
     id: 'turns-ratio-calc',
     question:
       'A transformer has 1,000 primary turns and 250 secondary turns. If the primary voltage is 400V, what is the secondary voltage?',
-    options: [
-      '50V',
-      '100V',
-      '250V',
-      '1,600V',
-    ],
+    options: ['50V', '100V', '250V', '1,600V'],
     correctIndex: 1,
     explanation:
       'Using the turns ratio: Vs/Vp = Ns/Np. So Vs = 400 x (250/1000) = 100V. The turns ratio is 4:1 step-down, meaning the secondary voltage is one quarter of the primary voltage.',
@@ -28,12 +62,7 @@ const quickCheckQuestions = [
     id: 'transformer-losses',
     question:
       'Which type of transformer loss is caused by eddy currents circulating in the core laminations?',
-    options: [
-      'Iron (core) losses',
-      'Dielectric losses',
-      'Copper losses',
-      'Stray losses',
-    ],
+    options: ['Iron (core) losses', 'Dielectric losses', 'Copper losses', 'Stray losses'],
     correctIndex: 0,
     explanation:
       'Iron losses (also called core losses) comprise eddy current losses and hysteresis losses. Eddy currents are minimised by laminating the core — dividing it into thin sheets insulated from each other, which interrupts the current paths.',
@@ -85,12 +114,7 @@ const quizQuestions = [
     id: 2,
     question:
       'A step-up transformer has a turns ratio of 1:5 and a primary voltage of 230V. What is the secondary voltage?',
-    options: [
-      '230V',
-      '46V',
-      '1,150V',
-      '460V',
-    ],
+    options: ['230V', '46V', '1,150V', '460V'],
     correctAnswer: 2,
     explanation:
       'For a 1:5 step-up transformer: Vs = Vp x (Ns/Np) = 230 x 5 = 1,150V. The secondary voltage is five times the primary voltage. Note that the secondary current will be one-fifth of the primary current (power is conserved, minus losses).',
@@ -138,12 +162,7 @@ const quizQuestions = [
     id: 6,
     question:
       'An instrument current transformer (CT) has a ratio of 200/5. If the primary current is 150A, what is the secondary current?',
-    options: [
-      '7.5A',
-      '1.5A',
-      '3.75A',
-      '37.5A',
-    ],
+    options: ['7.5A', '1.5A', '3.75A', '37.5A'],
     correctAnswer: 2,
     explanation:
       'Using the CT ratio: Is = Ip x (secondary rating / primary rating) = 150 x (5/200) = 3.75A. CTs step down high currents to safe, measurable levels (typically 5A or 1A secondary) for instruments and protection relays.',
@@ -152,12 +171,7 @@ const quizQuestions = [
     id: 7,
     question:
       'What minimum insulation resistance value would typically be expected for a healthy 11kV transformer winding at 20 degrees C?',
-    options: [
-      '0.5 megohms',
-      '5 megohms',
-      '1 kilohm',
-      '100 megohms or greater',
-    ],
+    options: ['0.5 megohms', '5 megohms', '1 kilohm', '100 megohms or greater'],
     correctAnswer: 3,
     explanation:
       "For an 11kV transformer, insulation resistance values of 100 megohms or greater are typical for a healthy winding. Values below the manufacturer's minimum indicate moisture ingress or insulation degradation. IR testing should be performed at the test voltage recommended by the manufacturer.",
@@ -261,120 +275,68 @@ const faqs = [
 ];
 
 const MOETModule2Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Transformers: Principles and Applications
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.3 · Subsection 1"
+        title="Transformers: Principles and Applications"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Electromagnetic induction, transformer construction, losses, efficiency, and maintenance
-            testing for the electrical maintenance technician
+            testing for the electrical maintenance technician.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Principle:</strong> Changing flux in primary induces EMF in secondary
-                (Faraday's law)
+          <TLDR
+            points={[
+              "Principle: changing flux in the primary induces EMF in the secondary (Faraday's law).",
+              'Turns ratio: Vs/Vp = Ns/Np determines voltage transformation.',
+              'Losses: copper (I squared R) and iron (eddy current + hysteresis).',
+              'Maintenance: IR testing, winding resistance, oil analysis (DGA).',
+            ]}
+          />
+
+          <ConceptBlock title="Why this matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Everywhere:</strong> transformers are in every substation, every
+                distribution board, and every control panel.
               </li>
-              <li className="pl-1">
-                <strong>Turns ratio:</strong> Vs/Vp = Ns/Np determines voltage transformation
+              <li>
+                <strong>CT danger:</strong> open-circuiting a current transformer secondary can be
+                lethal.
               </li>
-              <li className="pl-1">
-                <strong>Losses:</strong> Copper (I&sup2;R) and iron (eddy current + hysteresis)
+              <li>
+                <strong>ST1426 requirement:</strong> understand transformer principles, types, and
+                maintenance.
               </li>
-              <li className="pl-1">
-                <strong>Maintenance:</strong> IR testing, winding resistance, oil analysis (DGA)
+              <li>
+                <strong>Efficiency:</strong> modern power transformers exceed 99% efficiency.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Context — Why This Matters
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Everywhere:</strong> Transformers are in every substation, every
-                distribution board, and every control panel
-              </li>
-              <li className="pl-1">
-                <strong>CT danger:</strong> Open-circuiting a current transformer secondary can be
-                lethal
-              </li>
-              <li className="pl-1">
-                <strong>ST1426 requirement:</strong> Understand transformer principles, types, and
-                maintenance
-              </li>
-              <li className="pl-1">
-                <strong>Efficiency:</strong> Modern power transformers exceed 99% efficiency
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principle of electromagnetic induction and how it applies to transformer operation',
               'Calculate voltage, current, and turns ratio for step-up and step-down transformers',
               'Identify and explain copper losses, iron losses, and their effect on transformer efficiency',
               'Describe the construction, purpose, and safe handling of current transformers (CTs) and voltage transformers (VTs)',
               'Select appropriate maintenance tests including insulation resistance, winding resistance, and oil analysis',
               'Explain the function of tap changers and different transformer cooling methods',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Electromagnetic induction and transformer principle</ContentEyebrow>
 
-        {/* Section 1: Electromagnetic Induction and Transformer Principle */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Electromagnetic Induction and Transformer Principle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Electromagnetic induction and the transformer principle">
             <p>
               A transformer operates on the principle of electromagnetic induction, first described
               by Michael Faraday in 1831. When an alternating current flows through a coil of wire
@@ -390,722 +352,662 @@ const MOETModule2Section3_1 = () => {
               transformer, the alternating flux in the core changes continuously at the supply
               frequency (50Hz in the UK), producing a continuous alternating EMF in both windings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">The Turns Ratio</p>
-              <p className="text-sm text-white mb-3">
-                The voltage induced in each winding is proportional to the number of turns in that
-                winding. This gives us the fundamental transformer equation:
-              </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-medium mb-2">Voltage Ratio:</p>
+          <MagneticField />
+
+          <ConceptBlock title="The turns ratio">
+            <p>
+              The voltage induced in each winding is proportional to the number of turns in that
+              winding. This gives us the fundamental transformer equation:
+            </p>
+            <div className="my-4 space-y-3">
+              <div className="rounded bg-black/30 p-3 text-sm text-white">
+                <p className="mb-2 font-medium">Voltage Ratio:</p>
                 <p className="font-mono">Vs / Vp = Ns / Np</p>
-                <p className="text-xs text-white mt-2">
+                <p className="mt-2 text-xs text-white">
                   Where: Vs = secondary voltage, Vp = primary voltage, Ns = secondary turns, Np =
                   primary turns
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-medium mb-2">Current Ratio (for an ideal transformer):</p>
+              <div className="rounded bg-black/30 p-3 text-sm text-white">
+                <p className="mb-2 font-medium">Current Ratio (for an ideal transformer):</p>
                 <p className="font-mono">Is / Ip = Np / Ns</p>
-                <p className="text-xs text-white mt-2">
+                <p className="mt-2 text-xs text-white">
                   Current is inversely proportional to the turns ratio — step down voltage, step up
                   current (and vice versa)
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Power (ideal transformer — no losses):</p>
+              <div className="rounded bg-black/30 p-3 text-sm text-white">
+                <p className="mb-2 font-medium">Power (ideal transformer — no losses):</p>
                 <p className="font-mono">Vp x Ip = Vs x Is</p>
-                <p className="text-xs text-white mt-2">
+                <p className="mt-2 text-xs text-white">
                   Power in = Power out. A transformer cannot create power — it transforms voltage
                   and current.
                 </p>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Step-Up vs Step-Down</p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm font-medium text-blue-400 mb-2">Step-Down Transformer</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">More primary turns than secondary (Np &gt; Ns)</li>
-                    <li className="pl-1">Secondary voltage is lower than primary</li>
-                    <li className="pl-1">Secondary current is higher than primary</li>
-                    <li className="pl-1">Example: 11kV to 400V distribution transformer</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-purple-500/10 border border-purple-500/20">
-                  <p className="text-sm font-medium text-purple-400 mb-2">Step-Up Transformer</p>
-                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                    <li className="pl-1">More secondary turns than primary (Ns &gt; Np)</li>
-                    <li className="pl-1">Secondary voltage is higher than primary</li>
-                    <li className="pl-1">Secondary current is lower than primary</li>
-                    <li className="pl-1">
-                      Example: Generator output 11kV to 132kV for transmission
-                    </li>
-                  </ul>
-                </div>
+          <TransformerSchematic />
+
+          <ConceptBlock title="Step-up vs step-down">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded border border-blue-500/20 bg-blue-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-blue-400">Step-Down Transformer</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-blue-400/70">
+                  <li>More primary turns than secondary (Np &gt; Ns)</li>
+                  <li>Secondary voltage is lower than primary</li>
+                  <li>Secondary current is higher than primary</li>
+                  <li>Example: 11kV to 400V distribution transformer</li>
+                </ul>
+              </div>
+              <div className="rounded border border-purple-500/20 bg-purple-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-purple-400">Step-Up Transformer</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-400/70">
+                  <li>More secondary turns than primary (Ns &gt; Np)</li>
+                  <li>Secondary voltage is higher than primary</li>
+                  <li>Secondary current is lower than primary</li>
+                  <li>Example: Generator output 11kV to 132kV for transmission</li>
+                </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Worked Example</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="mb-2">
-                  <strong>Problem:</strong> A transformer has 2,000 primary turns and 100 secondary
-                  turns. The primary supply is 11,000V. Calculate the secondary voltage and, if the
-                  load draws 80A, the primary current.
-                </p>
-                <p className="mb-1">
-                  <strong>Secondary voltage:</strong> Vs = Vp x (Ns/Np) = 11,000 x (100/2,000) =
-                  550V
-                </p>
-                <p className="mb-1">
-                  <strong>Primary current:</strong> Ip = Is x (Ns/Np) = 80 x (100/2,000) = 4A
-                </p>
-                <p className="text-xs text-white mt-2">
-                  Check: Primary power = 11,000 x 4 = 44,000W. Secondary power = 550 x 80 = 44,000W.
-                  Power balanced (ideal transformer).
-                </p>
-              </div>
+          <ConceptBlock title="Worked example">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="mb-2">
+                <strong>Problem:</strong> a transformer has 2,000 primary turns and 100 secondary
+                turns. The primary supply is 11,000V. Calculate the secondary voltage and, if the
+                load draws 80A, the primary current.
+              </p>
+              <p className="mb-1">
+                <strong>Secondary voltage:</strong> Vs = Vp x (Ns/Np) = 11,000 x (100/2,000) = 550V
+              </p>
+              <p className="mb-1">
+                <strong>Primary current:</strong> Ip = Is x (Ns/Np) = 80 x (100/2,000) = 4A
+              </p>
+              <p className="mt-2 text-xs text-white">
+                Check: Primary power = 11,000 x 4 = 44,000W. Secondary power = 550 x 80 = 44,000W.
+                Power balanced (ideal transformer).
+              </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 2: Transformer Losses and Efficiency */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Transformer Losses and Efficiency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Transformer losses and efficiency</ContentEyebrow>
+
+          <ConceptBlock title="No transformer is 100% efficient">
             <p>
               No transformer is 100% efficient — some energy is always lost as heat. Understanding
               transformer losses is essential for the maintenance technician because changes in loss
               patterns (e.g., increased heating) are often the first sign of developing faults.
               Transformer losses are divided into two main categories.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-                <p className="text-sm font-medium text-red-400 mb-3">
-                  Copper Losses (I&sup2;R Losses)
+          <ConceptBlock title="Copper losses (I squared R losses)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-red-400/70">
+              <li>
+                <strong>Cause:</strong> current flowing through the resistance of the copper (or
+                aluminium) winding conductors
+              </li>
+              <li>
+                <strong>Formula:</strong> P = I squared x R (watts)
+              </li>
+              <li>
+                <strong>Varies with load:</strong> copper losses increase with the square of the
+                load current — double the current, quadruple the losses
+              </li>
+              <li>
+                <strong>At no-load:</strong> copper losses are negligible (only magnetising current
+                flows)
+              </li>
+              <li>
+                <strong>Reduction:</strong> use larger cross-section conductors (lower resistance),
+                keep connections tight
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Iron losses (core losses)">
+            <p>Iron losses consist of two components, both occurring in the core:</p>
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Eddy Current Losses</p>
+                <p className="text-xs text-white">
+                  The changing flux induces small circulating currents (eddy currents) in the core
+                  material, which cause I squared R heating. Minimised by laminating the core — each
+                  lamination is typically 0.35mm to 0.5mm thick, insulated from its neighbours by a
+                  thin oxide or varnish layer.
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Cause:</strong> Current flowing through the resistance of the copper (or
-                    aluminium) winding conductors
-                  </li>
-                  <li className="pl-1">
-                    <strong>Formula:</strong> P = I&sup2; x R (watts)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Varies with load:</strong> Copper losses increase with the square of the
-                    load current — double the current, quadruple the losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>At no-load:</strong> Copper losses are negligible (only magnetising
-                    current flows)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reduction:</strong> Use larger cross-section conductors (lower
-                    resistance), keep connections tight
-                  </li>
-                </ul>
               </div>
-
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-                <p className="text-sm font-medium text-amber-400 mb-3">Iron Losses (Core Losses)</p>
-                <p className="text-sm text-white mb-3">
-                  Iron losses consist of two components, both occurring in the core:
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Hysteresis Losses</p>
+                <p className="text-xs text-white">
+                  Energy is lost as the magnetic domains in the core material are repeatedly
+                  realigned by the alternating flux. Minimised by using grain-oriented silicon steel
+                  (GOSS), which has low hysteresis loss. The area of the B-H loop for the core
+                  material represents the energy lost per cycle.
                 </p>
-                <div className="space-y-3">
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">Eddy Current Losses</p>
-                    <p className="text-xs text-white">
-                      The changing flux induces small circulating currents (eddy currents) in the
-                      core material, which cause I&sup2;R heating. Minimised by laminating the core
-                      — each lamination is typically 0.35mm to 0.5mm thick, insulated from its
-                      neighbours by a thin oxide or varnish layer.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">Hysteresis Losses</p>
-                    <p className="text-xs text-white">
-                      Energy is lost as the magnetic domains in the core material are repeatedly
-                      realigned by the alternating flux. Minimised by using grain-oriented silicon
-                      steel (GOSS), which has low hysteresis loss. The area of the B-H loop for the
-                      core material represents the energy lost per cycle.
-                    </p>
-                  </div>
-                </div>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-3">
-                  <li className="pl-1">
-                    <strong>Constant:</strong> Iron losses are present whenever the transformer is
-                    energised, regardless of load
-                  </li>
-                  <li className="pl-1">
-                    <strong>Measured by:</strong> Open-circuit (no-load) test
-                  </li>
-                </ul>
               </div>
             </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-amber-400/70">
+              <li>
+                <strong>Constant:</strong> iron losses are present whenever the transformer is
+                energised, regardless of load
+              </li>
+              <li>
+                <strong>Measured by:</strong> open-circuit (no-load) test
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Transformer Efficiency</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-medium mb-2">Efficiency Formula:</p>
-                <p className="font-mono">Efficiency (%) = (Output Power / Input Power) x 100</p>
-                <p className="font-mono mt-1">
-                  Efficiency (%) = Output / (Output + Copper Losses + Iron Losses) x 100
-                </p>
-              </div>
-              <p className="text-sm text-white mb-3">
-                Modern power transformers achieve efficiencies of 97% to over 99%. Maximum
-                efficiency occurs when copper losses equal iron losses. Since iron losses are
-                constant and copper losses vary with load, there is a specific load level at which
-                the transformer operates most efficiently.
+          <ConceptBlock title="Transformer efficiency">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="mb-2 font-medium">Efficiency Formula:</p>
+              <p className="font-mono">Efficiency (%) = (Output Power / Input Power) x 100</p>
+              <p className="mt-1 font-mono">
+                Efficiency (%) = Output / (Output + Copper Losses + Iron Losses) x 100
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Worked Example:</p>
-                <p className="mb-1">
-                  A 100 kVA transformer has iron losses of 800W and full-load copper losses of
-                  1,200W.
-                </p>
-                <p className="mb-1">
-                  At full load: Efficiency = 100,000 / (100,000 + 800 + 1,200) x 100 ={' '}
-                  <strong>98.04%</strong>
-                </p>
-                <p className="text-xs text-white mt-2">
-                  Maximum efficiency occurs at: Load = Full load x sqrt(Iron losses / Copper losses)
-                  = 1.0 x sqrt(800/1200) = 0.816 = 81.6% load.
-                </p>
-              </div>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Cooling Methods</p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white font-medium">Code</th>
-                      <th className="py-2 pr-4 text-white font-medium">Method</th>
-                      <th className="py-2 text-white font-medium">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-mono">AN</td>
-                      <td className="py-2 pr-4">Air Natural</td>
-                      <td className="py-2">Dry-type transformers, small ratings</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-mono">AF</td>
-                      <td className="py-2 pr-4">Air Forced (fans)</td>
-                      <td className="py-2">Dry-type, higher ratings or confined spaces</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-mono">ONAN</td>
-                      <td className="py-2 pr-4">Oil Natural, Air Natural</td>
-                      <td className="py-2">Distribution transformers, common</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-mono">ONAF</td>
-                      <td className="py-2 pr-4">Oil Natural, Air Forced</td>
-                      <td className="py-2">Medium power transformers</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4 font-mono">OFAF</td>
-                      <td className="py-2 pr-4">Oil Forced, Air Forced</td>
-                      <td className="py-2">Large power transformers, high ratings</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <p>
+              Modern power transformers achieve efficiencies of 97% to over 99%. Maximum efficiency
+              occurs when copper losses equal iron losses. Since iron losses are constant and copper
+              losses vary with load, there is a specific load level at which the transformer
+              operates most efficiently.
+            </p>
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="mb-2 font-medium">Worked Example:</p>
+              <p className="mb-1">
+                A 100 kVA transformer has iron losses of 800W and full-load copper losses of 1,200W.
+              </p>
+              <p className="mb-1">
+                At full load: Efficiency = 100,000 / (100,000 + 800 + 1,200) x 100 ={' '}
+                <strong>98.04%</strong>
+              </p>
+              <p className="mt-2 text-xs text-white">
+                Maximum efficiency occurs at: Load = Full load x sqrt(Iron losses / Copper losses) =
+                1.0 x sqrt(800/1200) = 0.816 = 81.6% load.
+              </p>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Cooling methods">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Code</th>
+                    <th className="py-2 pr-4 font-medium text-white">Method</th>
+                    <th className="py-2 font-medium text-white">Application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-mono">AN</td>
+                    <td className="py-2 pr-4">Air Natural</td>
+                    <td className="py-2">Dry-type transformers, small ratings</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-mono">AF</td>
+                    <td className="py-2 pr-4">Air Forced (fans)</td>
+                    <td className="py-2">Dry-type, higher ratings or confined spaces</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-mono">ONAN</td>
+                    <td className="py-2 pr-4">Oil Natural, Air Natural</td>
+                    <td className="py-2">Distribution transformers, common</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-mono">ONAF</td>
+                    <td className="py-2 pr-4">Oil Natural, Air Forced</td>
+                    <td className="py-2">Medium power transformers</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-mono">OFAF</td>
+                    <td className="py-2 pr-4">Oil Forced, Air Forced</td>
+                    <td className="py-2">Large power transformers, high ratings</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 3: Transformer Types */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Transformer Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Transformer types</ContentEyebrow>
+
+          <ConceptBlock title="Classified by application, construction and purpose">
             <p>
               Transformers are classified by their application, construction, and purpose. The
               maintenance technician must recognise each type and understand its specific
               characteristics and safety requirements.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-blue-400 mb-3">Power Transformers</h3>
-                <p className="text-sm text-white mb-3">
-                  Used in electrical distribution to step voltage up or down between transmission,
-                  distribution, and utilisation levels. Found in substations, from 132kV grid
-                  transformers down to 11kV/400V distribution transformers.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Ratings from a few kVA to hundreds of MVA</li>
-                  <li className="pl-1">
-                    Oil-filled (mineral oil or ester) or dry-type (cast resin)
-                  </li>
-                  <li className="pl-1">
-                    Three-phase units use delta or star winding configurations
-                  </li>
-                  <li className="pl-1">Equipped with tap changers for voltage regulation</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Power transformers">
+            <p>
+              Used in electrical distribution to step voltage up or down between transmission,
+              distribution, and utilisation levels. Found in substations, from 132kV grid
+              transformers down to 11kV/400V distribution transformers.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Ratings from a few kVA to hundreds of MVA</li>
+              <li>Oil-filled (mineral oil or ester) or dry-type (cast resin)</li>
+              <li>Three-phase units use delta or star winding configurations</li>
+              <li>Equipped with tap changers for voltage regulation</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-                <h3 className="text-sm font-medium text-red-400 mb-3">
-                  Instrument Transformers — Current Transformers (CTs)
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  CTs step down high primary currents to a standard secondary current (typically 5A
-                  or 1A) for measurement instruments and protection relays.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Primary is the main circuit conductor (may be a single turn — the cable passing
-                    through the CT window)
-                  </li>
-                  <li className="pl-1">
-                    Secondary is a multi-turn winding connected to ammeters, energy meters, or
-                    protection relays
-                  </li>
-                  <li className="pl-1">Common ratios: 100/5, 200/5, 400/5, 800/5, etc.</li>
-                </ul>
-                <div className="mt-3 p-3 rounded bg-red-500/10 border border-red-500/30">
-                  <p className="text-sm font-medium text-red-400 mb-1">CRITICAL SAFETY WARNING</p>
-                  <p className="text-xs text-white">
-                    NEVER open-circuit the secondary of a CT while the primary is energised. The
-                    entire primary current becomes magnetising current, driving the core into deep
-                    saturation. This induces extremely high voltages (several kilovolts) across the
-                    open secondary terminals — a lethal shock and fire hazard. Always short-circuit
-                    the CT secondary before disconnecting any load.
-                  </p>
-                </div>
-              </div>
+          <ConceptBlock title="Instrument transformers — current transformers (CTs)">
+            <p>
+              CTs step down high primary currents to a standard secondary current (typically 5A or
+              1A) for measurement instruments and protection relays.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-red-400/70">
+              <li>
+                Primary is the main circuit conductor (may be a single turn — the cable passing
+                through the CT window)
+              </li>
+              <li>
+                Secondary is a multi-turn winding connected to ammeters, energy meters, or
+                protection relays
+              </li>
+              <li>Common ratios: 100/5, 200/5, 400/5, 800/5, etc.</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-purple-400 mb-3">
-                  Instrument Transformers — Voltage Transformers (VTs)
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  VTs step down high system voltages to a standard secondary voltage (typically
-                  110V) for measurement instruments and protection relays.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    High primary impedance — draws minimal current from the system
-                  </li>
-                  <li className="pl-1">
-                    Very accurate turns ratio for precise voltage measurement
-                  </li>
-                  <li className="pl-1">
-                    Secondary must never be short-circuited (causes high current and damage)
-                  </li>
-                  <li className="pl-1">Common ratios: 11,000/110V, 33,000/110V</li>
-                </ul>
-              </div>
+          <CommonMistake
+            title="Leaving a CT secondary open-circuit while the primary is energised"
+            whatHappens={
+              <>
+                The entire primary current becomes magnetising current, driving the core into deep
+                saturation. This induces extremely high voltages (several kilovolts) across the open
+                secondary terminals — a lethal shock and fire hazard.
+              </>
+            }
+            doInstead={<>Always short-circuit the CT secondary before disconnecting any load.</>}
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-green-400 mb-3">Isolation Transformers</h3>
-                <p className="text-sm text-white mb-3">
-                  Provide galvanic isolation with a 1:1 turns ratio — the output voltage equals the
-                  input voltage, but there is no direct electrical connection between primary and
-                  secondary.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Used for safety in medical environments, workshops, and electronic test areas
-                  </li>
-                  <li className="pl-1">Reduces the risk of electric shock from earth faults</li>
-                  <li className="pl-1">Blocks DC components and common-mode noise</li>
-                  <li className="pl-1">
-                    BS 3535 specifies requirements for isolating transformers
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Instrument transformers — voltage transformers (VTs)">
+            <p>
+              VTs step down high system voltages to a standard secondary voltage (typically 110V)
+              for measurement instruments and protection relays.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-400/70">
+              <li>High primary impedance — draws minimal current from the system</li>
+              <li>Very accurate turns ratio for precise voltage measurement</li>
+              <li>Secondary must never be short-circuited (causes high current and damage)</li>
+              <li>Common ratios: 11,000/110V, 33,000/110V</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-amber-400 mb-3">Auto-Transformers</h3>
-                <p className="text-sm text-white mb-3">
-                  Use a single winding with a tapping point — part of the winding is common to both
-                  the primary and secondary circuits. No galvanic isolation is provided.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Smaller, lighter, and cheaper than equivalent double-wound transformers
-                  </li>
-                  <li className="pl-1">
-                    Used where the voltage change is small (e.g., 240V to 110V for site
-                    transformers)
-                  </li>
-                  <li className="pl-1">
-                    Used in star-delta motor starting as the autotransformer starter
-                  </li>
-                  <li className="pl-1">
-                    <strong>Not suitable</strong> where isolation is required for safety
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Isolation transformers">
+            <p>
+              Provide galvanic isolation with a 1:1 turns ratio — the output voltage equals the
+              input voltage, but there is no direct electrical connection between primary and
+              secondary.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-green-400/70">
+              <li>Used for safety in medical environments, workshops, and electronic test areas</li>
+              <li>Reduces the risk of electric shock from earth faults</li>
+              <li>Blocks DC components and common-mode noise</li>
+              <li>BS 3535 specifies requirements for isolating transformers</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Auto-transformers">
+            <p>
+              Use a single winding with a tapping point — part of the winding is common to both the
+              primary and secondary circuits. No galvanic isolation is provided.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-amber-400/70">
+              <li>Smaller, lighter, and cheaper than equivalent double-wound transformers</li>
+              <li>
+                Used where the voltage change is small (e.g., 240V to 110V for site transformers)
+              </li>
+              <li>Used in star-delta motor starting as the autotransformer starter</li>
+              <li>
+                <strong>Not suitable</strong> where isolation is required for safety
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 4: Maintenance and Testing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintenance and Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Maintenance and testing</ContentEyebrow>
+
+          <ConceptBlock title="Maintenance is critical for reliability, safety and longevity">
             <p>
               Transformer maintenance is critical for reliability, safety, and longevity. A
               well-maintained transformer can operate for 30 to 50 years; a neglected one may fail
               catastrophically, causing fires, explosions (in oil-filled units), and extended power
               outages. The maintenance technician must understand the key tests and inspections.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                  Routine Visual Inspections
+          <ConceptBlock title="Routine visual inspections">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Oil level:</strong> check the oil level gauge — low oil indicates a leak or
+                seal failure
+              </li>
+              <li>
+                <strong>Oil leaks:</strong> inspect gaskets, valves, and bushings for weeping or
+                dripping
+              </li>
+              <li>
+                <strong>Temperature:</strong> record winding and oil temperature (compare with load
+                and ambient)
+              </li>
+              <li>
+                <strong>Cooling equipment:</strong> verify fans and pumps are operating (where
+                fitted)
+              </li>
+              <li>
+                <strong>Bushings:</strong> check for cracks, contamination, or tracking marks
+              </li>
+              <li>
+                <strong>Noise:</strong> listen for abnormal humming, buzzing, or clicking (indicates
+                core or tap changer problems)
+              </li>
+              <li>
+                <strong>Buchholz relay:</strong> check for gas accumulation (oil-filled
+                transformers)
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Electrical tests">
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-blue-400">
+                  Insulation Resistance (IR) Test
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Oil level:</strong> Check the oil level gauge — low oil indicates a leak
-                    or seal failure
-                  </li>
-                  <li className="pl-1">
-                    <strong>Oil leaks:</strong> Inspect gaskets, valves, and bushings for weeping or
-                    dripping
-                  </li>
-                  <li className="pl-1">
-                    <strong>Temperature:</strong> Record winding and oil temperature (compare with
-                    load and ambient)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Cooling equipment:</strong> Verify fans and pumps are operating (where
-                    fitted)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Bushings:</strong> Check for cracks, contamination, or tracking marks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Noise:</strong> Listen for abnormal humming, buzzing, or clicking
-                    (indicates core or tap changer problems)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Buchholz relay:</strong> Check for gas accumulation (oil-filled
-                    transformers)
-                  </li>
+                <p className="text-xs text-white">
+                  Measures the resistance of the winding insulation to earth and between windings.
+                  Performed at the voltage specified by the manufacturer (typically 1kV for LV, 5kV
+                  for HV). Minimum acceptable values depend on the rated voltage. Trending IR values
+                  over time is more useful than a single reading — a declining trend indicates
+                  deterioration.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-blue-400">
+                  Polarisation Index (PI) Test
+                </p>
+                <p className="text-xs text-white">
+                  Ratio of IR at 10 minutes to IR at 1 minute. A PI of 2.0 or greater indicates good
+                  insulation. A PI close to 1.0 suggests moisture contamination. Useful for large
+                  transformers where absolute IR values can be misleading due to the large
+                  insulation surface area.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-blue-400">Winding Resistance Test</p>
+                <p className="text-xs text-white">
+                  Measures the DC resistance of each winding using a low-resistance ohmmeter or
+                  Kelvin bridge. All three phases should read within 2% of each other. A low reading
+                  on one phase indicates inter-turn short circuits. High readings indicate poor
+                  connections or broken strands.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-blue-400">Turns Ratio Test</p>
+                <p className="text-xs text-white">
+                  Verifies the actual turns ratio matches the nameplate ratio. Performed using a
+                  turns ratio tester (TTR). Deviations greater than 0.5% indicate shorted turns or
+                  tap changer problems. Test on each tap position.
+                </p>
+              </div>
+            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Oil analysis">
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-amber-400">
+                  Dissolved Gas Analysis (DGA)
+                </p>
+                <p className="text-xs text-white">
+                  The most valuable diagnostic tool for oil-filled transformers. Different internal
+                  faults produce different gases: hydrogen (partial discharge), methane and ethane
+                  (thermal decomposition), ethylene (severe overheating), acetylene (arcing). DGA
+                  can detect developing faults long before they cause failure.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-amber-400">
+                  Dielectric Strength (Breakdown Voltage)
+                </p>
+                <p className="text-xs text-white">
+                  Tests the oil's ability to withstand electrical stress. A sample is tested in a
+                  standard test cell with electrodes 2.5mm apart. Minimum acceptable value is
+                  typically 30kV for distribution transformers, 40-50kV for power transformers. Low
+                  values indicate moisture, particles, or contamination.
+                </p>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-amber-400">Moisture Content</p>
+                <p className="text-xs text-white">
+                  Measured in parts per million (ppm) using Karl Fischer titration. Moisture in
+                  transformer oil dramatically reduces dielectric strength and accelerates
+                  insulation ageing. Typical limits: less than 20 ppm for power transformers, less
+                  than 30 ppm for distribution transformers.
+                </p>
+              </div>
+            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Tap changers">
+            <p>
+              Tap changers adjust the transformer output voltage by changing the effective number of
+              turns in the winding. They are one of the most maintenance-intensive components of a
+              power transformer.
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded border border-blue-500/20 bg-blue-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-blue-400">Off-Load Tap Changer</p>
+                <ul className="list-disc space-y-1 pl-4 text-xs marker:text-blue-400/70">
+                  <li>Must be de-energised before changing tap position</li>
+                  <li>Simple mechanical switch</li>
+                  <li>Typical range: +/- 5% in 2.5% steps</li>
+                  <li>Maintenance: Check contacts for wear, clean, re-grease</li>
                 </ul>
               </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-3">Electrical Tests</p>
-                <div className="space-y-3">
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-blue-400 mb-1">
-                      Insulation Resistance (IR) Test
-                    </p>
-                    <p className="text-xs text-white">
-                      Measures the resistance of the winding insulation to earth and between
-                      windings. Performed at the voltage specified by the manufacturer (typically
-                      1kV for LV, 5kV for HV). Minimum acceptable values depend on the rated
-                      voltage. Trending IR values over time is more useful than a single reading — a
-                      declining trend indicates deterioration.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-blue-400 mb-1">
-                      Polarisation Index (PI) Test
-                    </p>
-                    <p className="text-xs text-white">
-                      Ratio of IR at 10 minutes to IR at 1 minute. A PI of 2.0 or greater indicates
-                      good insulation. A PI close to 1.0 suggests moisture contamination. Useful for
-                      large transformers where absolute IR values can be misleading due to the large
-                      insulation surface area.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-blue-400 mb-1">
-                      Winding Resistance Test
-                    </p>
-                    <p className="text-xs text-white">
-                      Measures the DC resistance of each winding using a low-resistance ohmmeter or
-                      Kelvin bridge. All three phases should read within 2% of each other. A low
-                      reading on one phase indicates inter-turn short circuits. High readings
-                      indicate poor connections or broken strands.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-blue-400 mb-1">Turns Ratio Test</p>
-                    <p className="text-xs text-white">
-                      Verifies the actual turns ratio matches the nameplate ratio. Performed using a
-                      turns ratio tester (TTR). Deviations greater than 0.5% indicate shorted turns
-                      or tap changer problems. Test on each tap position.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-3">Oil Analysis</p>
-                <div className="space-y-3">
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-amber-400 mb-1">
-                      Dissolved Gas Analysis (DGA)
-                    </p>
-                    <p className="text-xs text-white">
-                      The most valuable diagnostic tool for oil-filled transformers. Different
-                      internal faults produce different gases: hydrogen (partial discharge), methane
-                      and ethane (thermal decomposition), ethylene (severe overheating), acetylene
-                      (arcing). DGA can detect developing faults long before they cause failure.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-amber-400 mb-1">
-                      Dielectric Strength (Breakdown Voltage)
-                    </p>
-                    <p className="text-xs text-white">
-                      Tests the oil's ability to withstand electrical stress. A sample is tested in
-                      a standard test cell with electrodes 2.5mm apart. Minimum acceptable value is
-                      typically 30kV for distribution transformers, 40-50kV for power transformers.
-                      Low values indicate moisture, particles, or contamination.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-amber-400 mb-1">Moisture Content</p>
-                    <p className="text-xs text-white">
-                      Measured in parts per million (ppm) using Karl Fischer titration. Moisture in
-                      transformer oil dramatically reduces dielectric strength and accelerates
-                      insulation ageing. Typical limits: less than 20 ppm for power transformers,
-                      less than 30 ppm for distribution transformers.
-                    </p>
-                  </div>
-                </div>
+              <div className="rounded border border-green-500/20 bg-green-500/10 p-3">
+                <p className="mb-2 text-sm font-medium text-green-400">
+                  On-Load Tap Changer (OLTC)
+                </p>
+                <ul className="list-disc space-y-1 pl-4 text-xs marker:text-green-400/70">
+                  <li>Changes taps while the transformer is energised and loaded</li>
+                  <li>
+                    Uses transition resistors or reactors to avoid open-circuit during tap change
+                  </li>
+                  <li>
+                    Requires regular maintenance: oil change, contact inspection, mechanism check
+                  </li>
+                  <li>Operation counter tracks number of tap changes</li>
+                </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Tap Changers</p>
-              <p className="text-sm text-white mb-3">
-                Tap changers adjust the transformer output voltage by changing the effective number
-                of turns in the winding. They are one of the most maintenance-intensive components
-                of a power transformer.
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm font-medium text-blue-400 mb-2">
-                    Off-Load Tap Changer (OLTC)
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Must be de-energised before changing tap position</li>
-                    <li>Simple mechanical switch</li>
-                    <li>Typical range: +/- 5% in 2.5% steps</li>
-                    <li>Maintenance: Check contacts for wear, clean, re-grease</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
-                  <p className="text-sm font-medium text-green-400 mb-2">
-                    On-Load Tap Changer (OLTC)
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Changes taps while the transformer is energised and loaded</li>
-                    <li>
-                      Uses transition resistors or reactors to avoid open-circuit during tap change
-                    </li>
-                    <li>
-                      Requires regular maintenance: oil change, contact inspection, mechanism check
-                    </li>
-                    <li>Operation counter tracks number of tap changes</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 5: Practical Applications for Maintenance Technicians */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Applications for Maintenance Technicians
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Practical applications for maintenance technicians</ContentEyebrow>
+
+          <ConceptBlock title="Transformers you will meet on site">
             <p>
               As an electrical maintenance technician, you will encounter transformers in many forms
               — from large oil-filled distribution transformers in substations to small control
               transformers in motor control centres. Understanding their characteristics helps you
               diagnose faults, plan maintenance, and ensure safe working practices.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">
-                Common Transformer Faults and Symptoms
-              </p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white font-medium">Symptom</th>
-                      <th className="py-2 pr-4 text-white font-medium">Possible Cause</th>
-                      <th className="py-2 text-white font-medium">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white text-xs">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Excessive heating</td>
-                      <td className="py-2 pr-4">Overloading, blocked cooling, shorted turns</td>
-                      <td className="py-2">Check load, inspect cooling, test winding resistance</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Low output voltage</td>
-                      <td className="py-2 pr-4">
-                        Wrong tap position, shorted turns, high voltage drop
-                      </td>
-                      <td className="py-2">
-                        Check tap position, turns ratio test, check connections
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Abnormal humming</td>
-                      <td className="py-2 pr-4">Loose core bolts, DC magnetisation, overfluxing</td>
-                      <td className="py-2">
-                        Inspect core clamping, check for DC sources on supply
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">Oil discolouration</td>
-                      <td className="py-2 pr-4">
-                        Overheating, insulation breakdown, contamination
-                      </td>
-                      <td className="py-2">Oil analysis (DGA, dielectric strength, moisture)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4">Buchholz relay alarm</td>
-                      <td className="py-2 pr-4">Gas generation from internal fault</td>
-                      <td className="py-2">
-                        Analyse gas, perform DGA, investigate — do not ignore
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common transformer faults and symptoms">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Symptom</th>
+                    <th className="py-2 pr-4 font-medium text-white">Possible Cause</th>
+                    <th className="py-2 font-medium text-white">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Excessive heating</td>
+                    <td className="py-2 pr-4">Overloading, blocked cooling, shorted turns</td>
+                    <td className="py-2">Check load, inspect cooling, test winding resistance</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Low output voltage</td>
+                    <td className="py-2 pr-4">
+                      Wrong tap position, shorted turns, high voltage drop
+                    </td>
+                    <td className="py-2">
+                      Check tap position, turns ratio test, check connections
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Abnormal humming</td>
+                    <td className="py-2 pr-4">Loose core bolts, DC magnetisation, overfluxing</td>
+                    <td className="py-2">Inspect core clamping, check for DC sources on supply</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Oil discolouration</td>
+                    <td className="py-2 pr-4">Overheating, insulation breakdown, contamination</td>
+                    <td className="py-2">Oil analysis (DGA, dielectric strength, moisture)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Buchholz relay alarm</td>
+                    <td className="py-2 pr-4">Gas generation from internal fault</td>
+                    <td className="py-2">Analyse gas, perform DGA, investigate — do not ignore</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                ST1426 Maintenance Competency
-              </p>
-              <p className="text-sm text-white">
-                The Level 3 Electrical Engineering Maintenance Technician apprenticeship standard
-                (ST1426) requires you to understand transformer principles, carry out routine
-                maintenance inspections, interpret test results, and recognise the safety hazards
-                associated with transformer work — including stored energy, hot oil, toxic gases (in
-                sealed units), and the lethal voltages present in instrument transformer secondary
-                circuits.
-              </p>
+          <ConceptBlock title="ST1426 maintenance competency">
+            <p>
+              The Level 3 Electrical Engineering Maintenance Technician apprenticeship standard
+              (ST1426) requires you to understand transformer principles, carry out routine
+              maintenance inspections, interpret test results, and recognise the safety hazards
+              associated with transformer work — including stored energy, hot oil, toxic gases (in
+              sealed units), and the lethal voltages present in instrument transformer secondary
+              circuits.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Safe working with transformers">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolation:</strong> follow the full safe isolation procedure before any
+                maintenance work — transformers can back-feed from the secondary side
+              </li>
+              <li>
+                <strong>Stored energy:</strong> large transformers retain magnetic energy after
+                de-energisation — wait before touching windings
+              </li>
+              <li>
+                <strong>Hot oil:</strong> oil-filled transformers operate at high temperatures —
+                risk of severe burns from hot oil or surfaces
+              </li>
+              <li>
+                <strong>Toxic gases:</strong> internal faults can produce toxic gases (CO,
+                acetylene) — ventilate sealed enclosures before entry
+              </li>
+              <li>
+                <strong>Weight:</strong> transformers are extremely heavy — use proper lifting
+                equipment and procedures
+              </li>
+              <li>
+                <strong>CTs:</strong> never open-circuit a CT secondary — always short before
+                disconnecting
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <VideoCard
+            url="https://www.youtube.com/watch?v=jcY4QN7awEc"
+
+            title="How Transformers Work"
+
+            channel="The Engineering Mindset"
+
+            duration="16:33"
+
+            topic="Mutual induction, turns ratio and losses, built up from the magnetic field"
+
+            caption="Covers the schematic above in motion, including why the core is laminated."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Vs/Vp = Ns/Np determines voltage transformation; Vp x Ip = Vs x Is for an ideal transformer.',
+              'Copper losses increase with the square of the load current — double the current, quadruple the losses.',
+              'Iron losses are present whenever the transformer is energised, regardless of load.',
+              'Modern power transformers achieve efficiencies of 97% to over 99%.',
+              'NEVER open-circuit the secondary of a CT while the primary is energised — always short-circuit the secondary before disconnecting any load.',
+              'Trending IR values over time is more useful than a single reading — a declining trend indicates deterioration.',
+              'ST1426 requires you to understand transformer principles, carry out routine maintenance inspections, interpret test results, and recognise the safety hazards associated with transformer work.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Transformers" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Electrical machines
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Induction Motors
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Safe Working with Transformers</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Isolation:</strong> Follow the full safe isolation procedure before any
-                  maintenance work — transformers can back-feed from the secondary side
-                </li>
-                <li className="pl-1">
-                  <strong>Stored energy:</strong> Large transformers retain magnetic energy after
-                  de-energisation — wait before touching windings
-                </li>
-                <li className="pl-1">
-                  <strong>Hot oil:</strong> Oil-filled transformers operate at high temperatures —
-                  risk of severe burns from hot oil or surfaces
-                </li>
-                <li className="pl-1">
-                  <strong>Toxic gases:</strong> Internal faults can produce toxic gases (CO,
-                  acetylene) — ventilate sealed enclosures before entry
-                </li>
-                <li className="pl-1">
-                  <strong>Weight:</strong> Transformers are extremely heavy — use proper lifting
-                  equipment and procedures
-                </li>
-                <li className="pl-1">
-                  <strong>CTs:</strong> Never open-circuit a CT secondary — always short before
-                  disconnecting
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Transformers" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.3
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-2">
-              Next: Induction Motors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -4,18 +4,54 @@ import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
-  { id: 1, title: 'Sensors and transducers', icon: Gauge, description: 'Sensing principles, proximity sensors, temperature/pressure measurement and signal conditioning.' },
-  { id: 2, title: 'PLCs and control systems', icon: Cpu, description: 'PLC hardware, I/O devices, ladder logic, programming software and troubleshooting.' },
-  { id: 3, title: 'Safety circuits and interlocks', icon: Shield, description: 'Emergency stops, interlocking devices, safety relays and functional safety principles.' },
-  { id: 4, title: 'Process control and instrumentation', icon: Settings, description: 'PID control, pneumatic and hydraulic controls, DCS systems and instrument calibration.' },
-  { id: 5, title: 'Testing and calibration of systems', icon: TestTube, description: 'Calibration procedures, test instruments, adjustments and documentation.' },
-  { id: 6, title: 'Networking and industrial communication', icon: Network, description: 'Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks.' },
+  {
+    id: 1,
+    title: 'Sensors and transducers',
+    icon: Gauge,
+    description:
+      'Sensing principles, proximity sensors, temperature/pressure measurement and signal conditioning.',
+  },
+  {
+    id: 2,
+    title: 'PLCs and control systems',
+    icon: Cpu,
+    description:
+      'PLC hardware, I/O devices, ladder logic, programming software and troubleshooting.',
+  },
+  {
+    id: 3,
+    title: 'Safety circuits and interlocks',
+    icon: Shield,
+    description:
+      'Emergency stops, interlocking devices, safety relays and functional safety principles.',
+  },
+  {
+    id: 4,
+    title: 'Process control and instrumentation',
+    icon: Settings,
+    description:
+      'PID control, pneumatic and hydraulic controls, DCS systems and instrument calibration.',
+  },
+  {
+    id: 5,
+    title: 'Testing and calibration of systems',
+    icon: TestTube,
+    description: 'Calibration procedures, test instruments, adjustments and documentation.',
+  },
+  {
+    id: 6,
+    title: 'Networking and industrial communication',
+    icon: Network,
+    description:
+      'Fieldbus, industrial Ethernet, wireless IoT and cybersecurity in industrial networks.',
+  },
 ];
 
 export default function MOETModule5() {
   useSEO({
     title: 'Module 5: Control, Automation and Instrumentation | MOET | Elec-Mate',
-    description: 'Sensors, PLCs, safety circuits, process control, calibration and industrial networks for maintenance engineers.',
+    description:
+      'Sensors, PLCs, safety circuits, process control, calibration and industrial networks for maintenance engineers.',
   });
 
   return (

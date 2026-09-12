@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import {
   Calculator,
   Info,
@@ -205,6 +207,121 @@ const R1R2Calculator = () => {
   };
 
   const hasValidInputs = cableLength && lineConductorCSA && cpcConductorCSA;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const csaList =
+      result.conductorMaterial === 'aluminium' ? ALUMINIUM_CSA_OPTIONS : COPPER_CSA_OPTIONS;
+    const csaLabel = (csa: string) => csaList.find((o) => o.value === csa)?.label || `${csa} mm²`;
+    const materialLabel =
+      MATERIAL_OPTIONS.find((o) => o.value === result.conductorMaterial)?.label ||
+      result.conductorMaterial;
+    const tempLabel =
+      TEMP_OPTIONS.find((o) => o.value === String(result.temperature))?.label ||
+      `${result.temperature}°C`;
+    const tempConstant = result.conductorMaterial === 'copper' ? '234.5' : '228';
+
+    // `measured` is a typed reading, so it is never a headline figure — only
+    // the comparison against the calculated maximum is.
+    const measuredEntered = Boolean(measuredValue) && !Number.isNaN(measured);
+    const passes = measuredEntered && measured <= result.r1r2AtAmbient;
+    const margin = Math.abs(result.r1r2AtAmbient - measured);
+
+    return {
+      meta: {
+        title: 'R1 + R2 Conductor Resistance',
+        subtitle: `Expected continuity reading for a ${result.cableLength} m ${materialLabel.toLowerCase()} circuit — ${csaLabel(
+          result.lineConductorCSA
+        )} line with a ${csaLabel(result.cpcConductorCSA)} protective conductor`,
+        standard: 'BS EN 60228 — conductor resistance at 20 °C',
+      },
+      headline: [
+        {
+          label: `R1 + R2 at ${result.temperature} °C`,
+          value: result.r1r2.toFixed(4),
+          unit: 'Ω',
+        },
+        {
+          label: 'Expected reading at ~20 °C',
+          value: result.r1r2AtAmbient.toFixed(4),
+          unit: 'Ω',
+        },
+        ...(measuredEntered
+          ? [
+              {
+                label: 'Site reading',
+                value: passes ? 'Pass' : 'Fail',
+                verdict: (passes ? 'pass' : 'fail') as 'pass' | 'fail',
+              },
+            ]
+          : []),
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'Cable length', value: `${result.cableLength} m` },
+            { label: 'Conductor material', value: materialLabel },
+            { label: 'Line conductor', value: csaLabel(result.lineConductorCSA) },
+            { label: 'Circuit protective conductor', value: csaLabel(result.cpcConductorCSA) },
+            { label: 'Operating temperature', value: tempLabel },
+            ...(measuredEntered
+              ? [{ label: 'Measured R1+R2 on site', value: `${measured.toFixed(4)} Ω` }]
+              : []),
+          ],
+        },
+        {
+          heading: 'Result',
+          // The working behind the headline totals, not a restatement of them.
+          rows: [
+            {
+              label: 'Temperature correction factor',
+              value: `×${result.tempCorrection.toFixed(4)}`,
+              note: `(${tempConstant} + ${result.temperature}) ÷ (${tempConstant} + 20)`,
+            },
+            {
+              label: 'R1 — line conductor',
+              value: `${result.r1.toFixed(4)} Ω`,
+              note: `${result.r20Line} mΩ/m at 20 °C × ${result.cableLength} m × ${result.tempCorrection.toFixed(4)}`,
+            },
+            {
+              label: 'R2 — circuit protective conductor',
+              value: `${result.r2.toFixed(4)} Ω`,
+              note: `${result.r20CPC} mΩ/m at 20 °C × ${result.cableLength} m × ${result.tempCorrection.toFixed(4)}`,
+            },
+          ],
+        },
+        ...(measuredEntered
+          ? [
+              {
+                heading: 'Measurement check',
+                rows: [
+                  {
+                    label: 'Site reading against the calculated maximum',
+                    value: `${measured.toFixed(4)} Ω ${passes ? '≤' : '>'} ${result.r1r2AtAmbient.toFixed(4)} Ω`,
+                    note: passes
+                      ? 'Within the resistance expected for this circuit'
+                      : 'Higher than expected — check terminations, the actual route length and the conductor sizes',
+                  },
+                  {
+                    label: 'Margin',
+                    value: `${passes ? '−' : '+'}${margin.toFixed(4)} Ω`,
+                  },
+                ],
+              },
+            ]
+          : []),
+      ],
+      notes: [
+        'R1+R2 is the combined resistance of the line conductor and the circuit protective conductor. It is added to Ze to give the earth fault loop impedance Zs at the far end of the circuit.',
+        'Conductor resistances are the standard values at 20 °C; the operating-temperature figure applies the correction factor shown above.',
+        'Continuity testing is carried out at ambient temperature, so a reading taken on a cold circuit should be at or below the ~20 °C figure.',
+      ].filter((t) => t.trim()),
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

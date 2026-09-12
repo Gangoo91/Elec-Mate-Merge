@@ -1,8 +1,54 @@
-import { ArrowLeft, Scale, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 7.2 · Subsection 2 — Balancing PPM and Corrective Maintenance
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge  · "Maintenance strategies: planned preventative maintenance
+ *                 (PPM), condition-based maintenance (CBM), scheduled
+ *                 maintenance, total productive maintenance (TPM),
+ *                 breakdown and run to failure maintenance."
+ *   Behaviour  · "Continuous improvement (CI) systems and techniques."
+ *
+ * Numeric detail (cost ratios, KPI targets, PM interval examples) is copied
+ * verbatim from the original page; the bs7671_facets RAG holds regulation
+ * rules, not this kind of maintenance-management data, so it could not be
+ * checked against it.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * page's decorative gradient "strategy spectrum" bar is not reproduced —
+ * only its text labels and caption carry teaching content, which are kept.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Balancing PPM and Corrective Maintenance - MOET Module 4 Section 7.2';
@@ -196,9 +242,9 @@ const quizQuestions = [
     question: 'A common mistake when developing a PPM programme is:',
     options: [
       "Basing the programme on the equipment's documented failure modes and criticality rather than on tradition or guesswork",
-      "Reviewing and adjusting PM intervals each year using condition data and feedback from the technicians who carry out the tasks",
+      'Reviewing and adjusting PM intervals each year using condition data and feedback from the technicians who carry out the tasks',
       "Applying the same strategy and frequency to every asset — a 'one size fits all' approach",
-      "Concentrating the most intensive preventive tasks on the most critical production equipment first",
+      'Concentrating the most intensive preventive tasks on the most critical production equipment first',
     ],
     correctAnswer: 2,
     explanation:
@@ -261,119 +307,72 @@ const faqs = [
 ];
 
 const MOETModule4Section7_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Scale className="h-4 w-4" />
-            <span>Module 4.7.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Balancing PPM and Corrective Maintenance
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.7 · Subsection 2"
+        title="Balancing PPM and Corrective Maintenance"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section7"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Finding the right mix of planned and reactive maintenance for maximum reliability at
-            minimum cost
+            minimum cost.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>PPM reduces failures:</strong> Planned tasks catch deterioration before it
-                becomes a breakdown
-              </li>
-              <li className="pl-1">
-                <strong>Not all reactive is bad:</strong> Deliberate run-to-failure is valid for
-                low-consequence items
-              </li>
-              <li className="pl-1">
-                <strong>Target ratio:</strong> World-class aims for 80%+ planned, 20% or less
-                reactive
-              </li>
-              <li className="pl-1">
-                <strong>Over-maintenance:</strong> Too much PM wastes resources and can introduce
-                failures
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'PPM reduces failures: Planned tasks catch deterioration before it becomes a breakdown',
+              'Not all reactive is bad: Deliberate run-to-failure is valid for low-consequence items',
+              'Target ratio: World-class aims for 80%+ planned, 20% or less reactive',
+              'Over-maintenance: Too much PM wastes resources and can introduce failures',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>PM feedback:</strong> Report what you find during PM visits — it drives
                 improvement
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Cost awareness:</strong> Understand the true cost difference between planned
                 and reactive work
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Optimisation:</strong> Help refine PM intervals based on equipment condition
                 data
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Demonstrates understanding of maintenance strategy and
                 continuous improvement
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the difference between planned preventive and corrective maintenance strategies',
               'Describe the cost-benefit case for preventive maintenance on critical equipment',
               'Identify when corrective (run-to-failure) maintenance is an appropriate strategy',
               'Interpret maintenance KPIs including the planned-to-reactive ratio',
               'Explain how PM optimisation improves both reliability and cost-effectiveness',
               'Contribute to continuous improvement of the maintenance programme through task feedback',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The maintenance strategy spectrum</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Maintenance Strategy Spectrum
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The Maintenance Strategy Spectrum"
+            onSite='Key point: The question is not "should we do preventive or reactive maintenance?" but rather "which failure modes should be managed preventively and which can be managed reactively?" The answer is different for every asset, every failure mode, and every operating context.'
+          >
             <p>
               Maintenance strategies exist on a spectrum from purely reactive (fix it when it
               breaks) to purely proactive (prevent every possible failure). Neither extreme is
@@ -384,130 +383,62 @@ const MOETModule4Section7_2 = () => {
               appropriate strategy to each failure mode based on its characteristics and
               consequences.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Maintenance Strategy Spectrum
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-24 text-right text-xs text-red-400 font-medium">
-                    Reactive Only
-                  </div>
-                  <div className="flex-1 h-3 rounded-full bg-gradient-to-r from-red-500/50 via-yellow-500/50 to-green-500/50"></div>
-                  <div className="w-24 text-left text-xs text-green-400 font-medium">
-                    Proactive Only
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-24 text-right text-xs text-white">High cost</div>
-                  <div className="flex-1 text-center text-xs text-elec-yellow/80 font-medium">
-                    Optimum balance
-                  </div>
-                  <div className="w-24 text-left text-xs text-white">High cost</div>
-                </div>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Total maintenance cost is minimised at the optimum balance point — enough preventive
-                maintenance to avoid costly breakdowns, but not so much that it wastes resources or
-                introduces new failures.
-              </p>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Maintenance Strategy Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Reactive (Corrective)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Planned Preventive (PPM)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Condition-Based (CBM)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Trigger</td>
-                      <td className="border border-white/10 px-3 py-2">Equipment fails</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Calendar or usage interval
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Detected deterioration</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Planning</td>
-                      <td className="border border-white/10 px-3 py-2">Unplanned, emergency</td>
-                      <td className="border border-white/10 px-3 py-2">Scheduled in advance</td>
-                      <td className="border border-white/10 px-3 py-2">Planned once detected</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Cost per event
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High (emergency rates, overtime, lost production)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate (planned, scheduled)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moderate (planned repair + monitoring cost)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Component life usage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100% (runs to failure)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Partial (replaced before end of life)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Near 100% (replaced when needed)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Best for</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-consequence, non-critical items
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Wear-out failure modes</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Random failures with detectable P-F interval
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The question is not "should we do preventive or reactive
-              maintenance?" but rather "which failure modes should be managed preventively and which
-              can be managed reactively?" The answer is different for every asset, every failure
-              mode, and every operating context.
+            <p>
+              The spectrum runs from &quot;Reactive Only&quot; to &quot;Proactive Only&quot;, with
+              both extremes carrying high cost and the optimum balance sitting between them. Total
+              maintenance cost is minimised at the optimum balance point — enough preventive
+              maintenance to avoid costly breakdowns, but not so much that it wastes resources or
+              introduces new failures.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <AppendixTable
+            caption="Maintenance Strategy Comparison"
+            headers={[
+              'Factor',
+              'Reactive (Corrective)',
+              'Planned Preventive (PPM)',
+              'Condition-Based (CBM)',
+            ]}
+            rows={[
+              [
+                'Trigger',
+                'Equipment fails',
+                'Calendar or usage interval',
+                'Detected deterioration',
+              ],
+              ['Planning', 'Unplanned, emergency', 'Scheduled in advance', 'Planned once detected'],
+              [
+                'Cost per event',
+                'High (emergency rates, overtime, lost production)',
+                'Moderate (planned, scheduled)',
+                'Moderate (planned repair + monitoring cost)',
+              ],
+              [
+                'Component life usage',
+                '100% (runs to failure)',
+                'Partial (replaced before end of life)',
+                'Near 100% (replaced when needed)',
+              ],
+              [
+                'Best for',
+                'Low-consequence, non-critical items',
+                'Wear-out failure modes',
+                'Random failures with detectable P-F interval',
+              ],
+            ]}
+          />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The True Cost of Reactive Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The true cost of reactive maintenance</ContentEyebrow>
+
+          <ConceptBlock
+            title="The True Cost of Reactive Maintenance"
+            onSite="Key point: When justifying preventive maintenance investment, always compare the full cost of the breakdowns it prevents (including production losses and secondary damage), not just the direct repair cost. The business case for preventive maintenance on critical equipment is almost always compelling when the full cost of failure is considered."
+          >
             <p>
               The direct repair cost of fixing a breakdown is only a fraction of the true total
               cost. Understanding the full cost of reactive maintenance is essential for building
@@ -515,105 +446,89 @@ const MOETModule4Section7_2 = () => {
               cost of an unplanned breakdown is 3-10 times the cost of the equivalent planned
               repair. On critical production equipment, the ratio can be even higher.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Iceberg Model of Breakdown Costs
-              </p>
-              <p className="text-sm text-white mb-3">
-                The visible cost (direct repair) is only the tip of the iceberg. Below the surface:
-              </p>
-              <div className="space-y-2">
-                <div className="p-2 rounded bg-red-500/10 border border-red-500/20">
-                  <p className="text-sm text-white">
-                    <strong>Direct costs (visible):</strong> Labour, spare parts, contractor charges
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-orange-500/10 border border-orange-500/20">
-                  <p className="text-sm text-white">
-                    <strong>Emergency premiums:</strong> Overtime rates, emergency call-out fees,
-                    expedited parts delivery
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-yellow-500/10 border border-yellow-500/20">
-                  <p className="text-sm text-white">
-                    <strong>Production losses:</strong> Lost output, missed orders, customer
-                    penalties, reduced quality
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm text-white">
-                    <strong>Secondary damage:</strong> Failed bearing damages shaft, winding
-                    burn-out from overheating, water damage from pump failure
-                  </p>
-                </div>
-                <div className="p-2 rounded bg-purple-500/10 border border-purple-500/20">
-                  <p className="text-sm text-white">
-                    <strong>Indirect costs:</strong> Disrupted planned work, investigation time,
-                    management attention, safety incidents
-                  </p>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="The iceberg model of breakdown costs">
+            <p>
+              The visible cost (direct repair) is only the tip of the iceberg. Below the surface:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct costs (visible):</strong> Labour, spare parts, contractor charges
+              </li>
+              <li>
+                <strong>Emergency premiums:</strong> Overtime rates, emergency call-out fees,
+                expedited parts delivery
+              </li>
+              <li>
+                <strong>Production losses:</strong> Lost output, missed orders, customer penalties,
+                reduced quality
+              </li>
+              <li>
+                <strong>Secondary damage:</strong> Failed bearing damages shaft, winding burn-out
+                from overheating, water damage from pump failure
+              </li>
+              <li>
+                <strong>Indirect costs:</strong> Disrupted planned work, investigation time,
+                management attention, safety incidents
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Worked Example: VSD Failure on a Critical Pump
-              </p>
-              <p className="text-sm text-white mb-2">
-                A variable speed drive fails on a critical cooling water pump at 02:00 on a
-                Saturday:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct repair:</strong> Replacement VSD module + 4 hours labour = moderate
-                  cost
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency call-out:</strong> Weekend overtime rate (double time + call-out
-                  premium)
-                </li>
-                <li className="pl-1">
-                  <strong>Expedited parts:</strong> Next-day delivery surcharge for the VSD module
-                </li>
-                <li className="pl-1">
-                  <strong>Production loss:</strong> 6 hours downtime on the production line at
-                  significant hourly cost
-                </li>
-                <li className="pl-1">
-                  <strong>Secondary damage:</strong> Overheated process due to loss of cooling —
-                  damaged product batch
-                </li>
-                <li className="pl-1">
-                  <strong>Investigation:</strong> Root cause analysis, reporting, management review
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2 italic">
+          <Scenario
+            title="Worked example: VSD failure on a critical pump"
+            situation={
+              <>
+                <p>
+                  A variable speed drive fails on a critical cooling water pump at 02:00 on a
+                  Saturday:
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-cyan-400/70">
+                  <li>
+                    <strong>Direct repair:</strong> Replacement VSD module + 4 hours labour =
+                    moderate cost
+                  </li>
+                  <li>
+                    <strong>Emergency call-out:</strong> Weekend overtime rate (double time +
+                    call-out premium)
+                  </li>
+                  <li>
+                    <strong>Expedited parts:</strong> Next-day delivery surcharge for the VSD module
+                  </li>
+                  <li>
+                    <strong>Production loss:</strong> 6 hours downtime on the production line at
+                    significant hourly cost
+                  </li>
+                  <li>
+                    <strong>Secondary damage:</strong> Overheated process due to loss of cooling —
+                    damaged product batch
+                  </li>
+                  <li>
+                    <strong>Investigation:</strong> Root cause analysis, reporting, management
+                    review
+                  </li>
+                </ul>
+              </>
+            }
+            whatToDo={
+              <p>
                 The total cost is typically many times the direct repair cost. A quarterly
                 thermographic survey of the VSD would have detected the overheating connection that
                 caused the failure, at a fraction of the total breakdown cost.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When justifying preventive maintenance investment, always
-              compare the full cost of the breakdowns it prevents (including production losses and
-              secondary damage), not just the direct repair cost. The business case for preventive
-              maintenance on critical equipment is almost always compelling when the full cost of
-              failure is considered.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Optimising PM Intervals and Tasks
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Optimising PM intervals and tasks</ContentEyebrow>
+
+          <ConceptBlock
+            title="Optimising PM Intervals and Tasks"
+            onSite='Key point: The technician performing the PM task is the most important source of optimisation data. Accurate, detailed feedback on what was found during each PM visit enables the maintenance planner to adjust intervals and techniques. "No issues found" is valuable feedback — it means the interval may be extendable. "Bearing showing early signs of wear" is equally valuable — it confirms the task is catching deterioration at the right time.'
+          >
             <p>
               An effective preventive maintenance programme is not static — it evolves continuously
               based on equipment condition data, failure history and operational experience. PM
@@ -621,143 +536,85 @@ const MOETModule4Section7_2 = () => {
               techniques to achieve the best balance between reliability and cost. This is a core
               aspect of continuous improvement in maintenance management.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Extending PM Intervals
-                </h3>
-                <p className="text-sm text-white">
-                  If a PM task consistently finds the component in good condition with no sign of
-                  deterioration, the interval may be too short. Gradually extend the interval (for
-                  example, from 6-monthly to 9-monthly) and monitor the results. If the component
-                  continues to be found in good condition, extend further. This process is sometimes
-                  called "age exploration" — finding the optimal point where the PM frequency
-                  matches the actual deterioration rate.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Shortening PM Intervals
-                </h3>
-                <p className="text-sm text-white">
-                  If failures are occurring between PM visits, the interval is too long. Analyse the
-                  failure data to determine the actual deterioration rate, and set the PM interval
-                  accordingly. Alternatively, consider switching to a more sensitive monitoring
-                  technique — for example, moving from visual inspection (which may only detect
-                  late-stage deterioration) to vibration monitoring (which can detect early-stage
-                  bearing deterioration).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Changing PM Techniques
-                </h3>
-                <p className="text-sm text-white">
-                  Sometimes the PM task itself is not the most effective approach. For example, a
-                  time-based motor bearing replacement every 3 years could be replaced with
-                  vibration monitoring — this detects actual deterioration rather than assuming it,
-                  maximises bearing life, and avoids the risk of maintenance-induced failure from
-                  unnecessary disassembly. The key question is: "Is there a better way to manage
-                  this failure mode?"
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Eliminating Non-Value Tasks
-                </h3>
-                <p className="text-sm text-white">
-                  Some PM tasks in legacy programmes may have no clear purpose — they were added
-                  historically and never reviewed. Every task should be challenged: "What failure
-                  mode does this task manage? What would happen if we stopped doing it?" If the task
-                  does not manage a specific failure mode with unacceptable consequences, it should
-                  be eliminated or replaced with something more effective.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PM Optimisation Data Sources
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Data Source</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Tells You
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        CMMS failure records
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Which failure modes are occurring, how often, and on which equipment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        PM task feedback
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What technicians find during PM visits — good condition, deterioration,
-                        unexpected issues
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Condition monitoring trends
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rate of deterioration, time from baseline to action level
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Root cause analyses
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Whether failures are PM-preventable, and if so, what tasks would be
-                        effective
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Manufacturer updates
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service bulletins, known issues, revised maintenance recommendations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The technician performing the PM task is the most
-              important source of optimisation data. Accurate, detailed feedback on what was found
-              during each PM visit enables the maintenance planner to adjust intervals and
-              techniques. "No issues found" is valuable feedback — it means the interval may be
-              extendable. "Bearing showing early signs of wear" is equally valuable — it confirms
-              the task is catching deterioration at the right time.
+          <ConceptBlock title="Extending PM intervals">
+            <p>
+              If a PM task consistently finds the component in good condition with no sign of
+              deterioration, the interval may be too short. Gradually extend the interval (for
+              example, from 6-monthly to 9-monthly) and monitor the results. If the component
+              continues to be found in good condition, extend further. This process is sometimes
+              called &quot;age exploration&quot; — finding the optimal point where the PM frequency
+              matches the actual deterioration rate.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Shortening PM intervals">
+            <p>
+              If failures are occurring between PM visits, the interval is too long. Analyse the
+              failure data to determine the actual deterioration rate, and set the PM interval
+              accordingly. Alternatively, consider switching to a more sensitive monitoring
+              technique — for example, moving from visual inspection (which may only detect
+              late-stage deterioration) to vibration monitoring (which can detect early-stage
+              bearing deterioration).
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Measuring and Improving the Maintenance Balance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Changing PM techniques">
+            <p>
+              Sometimes the PM task itself is not the most effective approach. For example, a
+              time-based motor bearing replacement every 3 years could be replaced with vibration
+              monitoring — this detects actual deterioration rather than assuming it, maximises
+              bearing life, and avoids the risk of maintenance-induced failure from unnecessary
+              disassembly. The key question is: &quot;Is there a better way to manage this failure
+              mode?&quot;
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Eliminating non-value tasks">
+            <p>
+              Some PM tasks in legacy programmes may have no clear purpose — they were added
+              historically and never reviewed. Every task should be challenged: &quot;What failure
+              mode does this task manage? What would happen if we stopped doing it?&quot; If the
+              task does not manage a specific failure mode with unacceptable consequences, it should
+              be eliminated or replaced with something more effective.
+            </p>
+          </ConceptBlock>
+
+          <AppendixTable
+            caption="PM Optimisation Data Sources"
+            headers={['Data Source', 'What It Tells You']}
+            rows={[
+              [
+                'CMMS failure records',
+                'Which failure modes are occurring, how often, and on which equipment',
+              ],
+              [
+                'PM task feedback',
+                'What technicians find during PM visits — good condition, deterioration, unexpected issues',
+              ],
+              [
+                'Condition monitoring trends',
+                'Rate of deterioration, time from baseline to action level',
+              ],
+              [
+                'Root cause analyses',
+                'Whether failures are PM-preventable, and if so, what tasks would be effective',
+              ],
+              [
+                'Manufacturer updates',
+                'Service bulletins, known issues, revised maintenance recommendations',
+              ],
+            ]}
+          />
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Measuring and improving the maintenance balance</ContentEyebrow>
+
+          <ConceptBlock title="Measuring and Improving the Maintenance Balance">
             <p>
               Achieving the right balance between planned and reactive maintenance requires
               measurement, analysis and continuous improvement. Key performance indicators (KPIs)
@@ -765,178 +622,112 @@ const MOETModule4Section7_2 = () => {
               occurring, and structured review processes drive the actions needed to close the gap
               between current performance and the target.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Maintenance KPIs
-              </p>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-medium min-w-[100px]">
-                    PM Compliance
-                  </span>
-                  <span>
-                    Percentage of scheduled PM tasks completed on time. Target: &gt;90%. Low
-                    compliance means the preventive programme is not being executed — failures will
-                    follow.
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-medium min-w-[100px]">
-                    Planned Ratio
-                  </span>
-                  <span>
-                    Planned work as a percentage of total work (by work orders or labour hours).
-                    Target: &gt;80%. Measures the effectiveness of the preventive programme.
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-medium min-w-[100px]">MTBF</span>
-                  <span>
-                    Mean Time Between Failures. Should be increasing if the maintenance programme is
-                    improving. Track per asset or asset class.
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-medium min-w-[100px]">MTTR</span>
-                  <span>
-                    Mean Time To Repair. Should be decreasing as planning, parts availability and
-                    technician skills improve.
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-medium min-w-[100px]">
-                    Availability
-                  </span>
-                  <span>
-                    Percentage of time the asset is available for production. MTBF / (MTBF + MTTR) x
-                    100. The ultimate measure of maintenance effectiveness.
-                  </span>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Essential maintenance KPIs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PM Compliance:</strong> Percentage of scheduled PM tasks completed on time.
+                Target: &gt;90%. Low compliance means the preventive programme is not being executed
+                — failures will follow.
+              </li>
+              <li>
+                <strong>Planned Ratio:</strong> Planned work as a percentage of total work (by work
+                orders or labour hours). Target: &gt;80%. Measures the effectiveness of the
+                preventive programme.
+              </li>
+              <li>
+                <strong>MTBF:</strong> Mean Time Between Failures. Should be increasing if the
+                maintenance programme is improving. Track per asset or asset class.
+              </li>
+              <li>
+                <strong>MTTR:</strong> Mean Time To Repair. Should be decreasing as planning, parts
+                availability and technician skills improve.
+              </li>
+              <li>
+                <strong>Availability:</strong> Percentage of time the asset is available for
+                production. MTBF / (MTBF + MTTR) x 100. The ultimate measure of maintenance
+                effectiveness.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Improving the Planned Ratio
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Analyse each reactive work order: was this failure preventable?
-                  </li>
-                  <li className="pl-1">For preventable failures, add targeted PM or CBM tasks</li>
-                  <li className="pl-1">Ensure PM compliance is high (schedule adherence)</li>
-                  <li className="pl-1">Review PM task quality (are tasks being done properly?)</li>
-                  <li className="pl-1">Address the top 5 breakdown causes each quarter</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Signs of Good Balance
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Breakdowns on critical equipment are rare</li>
-                  <li className="pl-1">Most repairs are planned and scheduled in advance</li>
-                  <li className="pl-1">
-                    PM tasks detect deterioration that leads to planned repairs
-                  </li>
-                  <li className="pl-1">Run-to-failure items are documented and justified</li>
-                  <li className="pl-1">
-                    Maintenance costs are stable or decreasing while reliability improves
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Improving the planned ratio">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Analyse each reactive work order: was this failure preventable?</li>
+              <li>For preventable failures, add targeted PM or CBM tasks</li>
+              <li>Ensure PM compliance is high (schedule adherence)</li>
+              <li>Review PM task quality (are tasks being done properly?)</li>
+              <li>Address the top 5 breakdown causes each quarter</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Improving the maintenance balance is a journey, not a
-              destination. Even world-class organisations continue to refine their maintenance
-              programmes. The key is to have a structured process for analysing failures, adjusting
-              preventive tasks, and measuring the results. Every breakdown is a learning opportunity
-              — it either confirms the current strategy or points to an improvement that should be
-              made.
+          <ConceptBlock title="Signs of good balance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Breakdowns on critical equipment are rare</li>
+              <li>Most repairs are planned and scheduled in advance</li>
+              <li>PM tasks detect deterioration that leads to planned repairs</li>
+              <li>Run-to-failure items are documented and justified</li>
+              <li>Maintenance costs are stable or decreasing while reliability improves</li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> Improving the maintenance balance is a
+              journey, not a destination. Even world-class organisations continue to refine their
+              maintenance programmes. The key is to have a structured process for analysing
+              failures, adjusting preventive tasks, and measuring the results. Every breakdown is a
+              learning opportunity — it either confirms the current strategy or points to an
+              improvement that should be made.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Maintenance strategy selection: safety/environmental consequence = proactive task mandatory; hidden failure = failure-finding task required; operational consequence = proactive if cost-justified; non-operational = run-to-failure acceptable; wear-out pattern = time-based replacement; random with P-F interval = condition-based monitoring.',
+              'Target KPIs: PM compliance >90% on time; planned ratio >80% of work; MTBF increasing trend; MTTR decreasing trend; availability >95% for critical assets; maintenance cost 2-5% of RAV.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Strategy Selection</p>
-                <ul className="space-y-0.5">
-                  <li>Safety/environmental consequence = proactive task mandatory</li>
-                  <li>Hidden failure = failure-finding task required</li>
-                  <li>Operational consequence = proactive if cost-justified</li>
-                  <li>Non-operational = run-to-failure acceptable</li>
-                  <li>Wear-out pattern = time-based replacement</li>
-                  <li>Random with P-F interval = condition-based monitoring</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Target KPIs</p>
-                <ul className="space-y-0.5">
-                  <li>PM compliance: &gt;90% on time</li>
-                  <li>Planned ratio: &gt;80% of work</li>
-                  <li>MTBF: increasing trend</li>
-                  <li>MTTR: decreasing trend</li>
-                  <li>Availability: &gt;95% for critical assets</li>
-                  <li>Maintenance cost: 2-5% of RAV</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Principles of Reliability-Centred Maintenance
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Criticality Analysis of Equipment
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Principles of RCM
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-3">
-              Next: Criticality Analysis of Equipment
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

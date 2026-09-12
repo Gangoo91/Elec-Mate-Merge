@@ -1,8 +1,42 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 1 · Subsection 5 — Exam Techniques and Strategies
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the
+ * End-Point Assessment knowledge test rather than a specific piece of
+ * engineering knowledge, so no ST1426 knowledge/skill/behaviour statement is
+ * quoted here — none of the verified KSB statements checked for this
+ * conversion describe exam or assessment-preparation technique.
+ *
+ * The original page's "next" button pointed back to the section hub because
+ * Module 7 Section 2 had not been written yet. Section 2 (2.1 Safe Isolation
+ * and Testing Routines) now exists in the same module, so the next button
+ * below points there instead, matching how every other section-to-section
+ * boundary in this course is handled (a "next subsection", not a dead end).
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Exam Techniques and Strategies - MOET Module 7 Section 1.5';
@@ -239,431 +273,361 @@ const faqs = [
 ];
 
 const MOETModule7Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Exam Techniques and Strategies
-          </h1>
-          <p className="text-white">
-            Proven techniques for maximising your score on the EPA knowledge test
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.1 · Subsection 5"
+        title="Exam Techniques and Strategies"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Proven techniques for maximising your score on the EPA knowledge test.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Read all options:</strong> Never select the first plausible answer
-              </li>
-              <li className="pl-1">
-                <strong>Eliminate:</strong> Remove wrong options to improve odds
-              </li>
-              <li className="pl-1">
-                <strong>Absolutes:</strong> 'Always/never' options are often distractors
-              </li>
-              <li className="pl-1">
-                <strong>Prepare:</strong> Sleep, eat, arrive early, breathe slowly
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safety first:</strong> When unsure, the safety answer is often correct
-              </li>
-              <li className="pl-1">
-                <strong>Regulations:</strong> Know BS 7671, EAWR, GS38 key points
-              </li>
-              <li className="pl-1">
-                <strong>Practical link:</strong> Relate questions to your workplace experience
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Knowledge test contributes to overall EPA grade
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Read all options: never select the first plausible answer.',
+              'Eliminate: remove wrong options to improve odds.',
+              "Absolutes: 'always/never' options are often distractors.",
+              'Prepare: sleep, eat, arrive early, breathe slowly.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply the technique of reading all options before selecting an answer',
               'Understand the first instinct fallacy and when to change answers',
               'Use the process of elimination to improve accuracy on uncertain questions',
               'Manage exam anxiety through breathing techniques and positive self-talk',
               'Prepare physically for the exam with proper sleep, nutrition and routine',
               'Execute an effective on-the-day routine from arrival to submission',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety first:</strong> when unsure, the safety answer is often correct.
+              </li>
+              <li>
+                <strong>Regulations:</strong> know BS 7671, EAWR, GS38 key points.
+              </li>
+              <li>
+                <strong>Practical link:</strong> relate questions to your workplace experience.
+              </li>
+              <li>
+                <strong>ST1426:</strong> knowledge test contributes to overall EPA grade.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Reading All Options and the Cover Technique
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Reading all options and the cover technique</ContentEyebrow>
+
+          <ConceptBlock title="Reading all options and the cover technique">
             <p>
               One of the most common mistakes in MCQ tests is selecting the first option that looks
-              correct without reading all alternatives. This is particularly dangerous with "best
-              answer" questions, where multiple options may be partially correct but one is more
-              complete or more accurate.
+              correct without reading all alternatives. This is particularly dangerous with
+              &quot;best answer&quot; questions, where multiple options may be partially correct but
+              one is more complete or more accurate.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Cover Technique</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Read the stem:</strong> Fully understand what is being asked
-                </li>
-                <li className="pl-1">
-                  <strong>Cover the options:</strong> Mentally or physically cover the answer
-                  choices
-                </li>
-                <li className="pl-1">
-                  <strong>Predict your answer:</strong> Think about what the correct answer should
-                  be
-                </li>
-                <li className="pl-1">
-                  <strong>Uncover and read all options:</strong> Compare each option against your
-                  prediction
-                </li>
-                <li className="pl-1">
-                  <strong>Select the best match:</strong> Choose the option closest to your
-                  predicted answer
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="The cover technique">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Read the stem:</strong> fully understand what is being asked.
+              </li>
+              <li>
+                <strong>Cover the options:</strong> mentally or physically cover the answer choices.
+              </li>
+              <li>
+                <strong>Predict your answer:</strong> think about what the correct answer should be.
+              </li>
+              <li>
+                <strong>Uncover and read all options:</strong> compare each option against your
+                prediction.
+              </li>
+              <li>
+                <strong>Select the best match:</strong> choose the option closest to your predicted
+                answer.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Watch Out For</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Watch out for"
+            whatHappens={
+              <>
                 Option A may be true but incomplete. Option C may include the same information as A
                 plus additional correct detail. If you selected A without reading C, you would miss
                 the better answer. This is particularly common in questions about safety procedures,
                 where one option describes part of the process and another describes the complete
                 process.
-              </p>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Always read every option. The 10 seconds it takes to read all four options can
+                prevent the loss of marks that took weeks of study to earn.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always read every option. The 10 seconds it takes to read
-              all four options can prevent the loss of marks that took weeks of study to earn.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            First Instinct and Changing Answers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>First instinct and changing answers</ContentEyebrow>
+
+          <ConceptBlock title="First instinct and changing answers">
             <p>
-              The "first instinct fallacy" is one of the most persistent myths in exam taking. Many
-              candidates believe their first answer is always correct and are reluctant to change
-              answers. Research contradicts this — studies show that carefully considered changes
-              are more often from wrong to right than the reverse.
+              The &quot;first instinct fallacy&quot; is one of the most persistent myths in exam
+              taking. Many candidates believe their first answer is always correct and are reluctant
+              to change answers. Research contradicts this — studies show that carefully considered
+              changes are more often from wrong to right than the reverse.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Change an Answer
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Change:</strong> You misread the question and now realise what it actually
-                  asks
-                </li>
-                <li className="pl-1">
-                  <strong>Change:</strong> You recalled a specific fact or principle that makes a
-                  different option clearly correct
-                </li>
-                <li className="pl-1">
-                  <strong>Change:</strong> Another question triggered knowledge relevant to this one
-                </li>
-                <li className="pl-1">
-                  <strong>Do not change:</strong> You are simply anxious about your selection
-                </li>
-                <li className="pl-1">
-                  <strong>Do not change:</strong> You cannot articulate a specific reason for the
-                  change
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="When to change an answer">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Change:</strong> you misread the question and now realise what it actually
+                asks.
+              </li>
+              <li>
+                <strong>Change:</strong> you recalled a specific fact or principle that makes a
+                different option clearly correct.
+              </li>
+              <li>
+                <strong>Change:</strong> another question triggered knowledge relevant to this one.
+              </li>
+              <li>
+                <strong>Do not change:</strong> you are simply anxious about your selection.
+              </li>
+              <li>
+                <strong>Do not change:</strong> you cannot articulate a specific reason for the
+                change.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">The Rule of Reason</h3>
-              <p className="text-sm text-white">
-                Only change an answer if you can state a specific reason. "I now remember that
-                Table 41.1 (Regulation 411.3.2) gives 0.2 seconds for a 230&nbsp;V TT final circuit,
-                not 0.4 seconds" is a valid reason. "I just feel like another option might be better"
-                is not. This simple rule
-                prevents anxiety-driven changes while allowing knowledge-driven corrections.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Trust your reasoning, not your anxiety. If you have a
+          <ConceptBlock title="The rule of reason">
+            <p>
+              Only change an answer if you can state a specific reason. &quot;I now remember that
+              Table 41.1 (Regulation 411.3.2) gives 0.2 seconds for a 230&nbsp;V TT final circuit,
+              not 0.4 seconds&quot; is a valid reason. &quot;I just feel like another option might
+              be better&quot; is not. This simple rule prevents anxiety-driven changes while
+              allowing knowledge-driven corrections.
+            </p>
+            <p>
+              <strong>Key point:</strong> trust your reasoning, not your anxiety. If you have a
               clear reason to change, change with confidence. If you do not, keep your original
               answer.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Managing Anxiety and Building Confidence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Managing anxiety and building confidence</ContentEyebrow>
+
+          <ConceptBlock title="Managing anxiety and building confidence">
             <p>
-              Exam anxiety is a physiological response — your body's fight-or-flight system
+              Exam anxiety is a physiological response — your body&apos;s fight-or-flight system
               activating in response to perceived threat. While you cannot eliminate this response
               entirely, you can manage it effectively using techniques that have been proven to work
               under pressure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The 4-4-6 Breathing Technique
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Inhale slowly</strong> through your nose for 4 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>Hold</strong> for 4 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>Exhale slowly</strong> through your mouth for 6 seconds
-                </li>
-                <li className="pl-1">
-                  <strong>Repeat</strong> 3-4 times until you feel calmer
-                </li>
-              </ol>
-              <p className="text-sm text-white mt-2">
-                The extended exhale activates the parasympathetic nervous system, counteracting the
-                stress response. Practise this technique before mock tests so it becomes automatic
-                under pressure.
-              </p>
-            </div>
+          <ConceptBlock title="The 4-4-6 breathing technique">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Inhale slowly</strong> through your nose for 4 seconds.
+              </li>
+              <li>
+                <strong>Hold</strong> for 4 seconds.
+              </li>
+              <li>
+                <strong>Exhale slowly</strong> through your mouth for 6 seconds.
+              </li>
+              <li>
+                <strong>Repeat</strong> 3-4 times until you feel calmer.
+              </li>
+            </ol>
+            <p>
+              The extended exhale activates the parasympathetic nervous system, counteracting the
+              stress response. Practise this technique before mock tests so it becomes automatic
+              under pressure.
+            </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cognitive Reframing
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Replace "I'm going to fail" with "I've prepared well"</li>
-                  <li className="pl-1">
-                    Replace "I don't know anything" with "I know many topics well"
-                  </li>
-                  <li className="pl-1">
-                    Replace "This is impossible" with "I'll take it one question at a time"
-                  </li>
-                  <li className="pl-1">
-                    Replace "Everyone else knows more" with "I'm ready for this"
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Physical Techniques
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Progressive muscle relaxation — tense and release shoulder muscles
-                  </li>
-                  <li className="pl-1">
-                    Ground yourself — feel your feet on the floor, hands on the desk
-                  </li>
-                  <li className="pl-1">Unclench your jaw and relax your face</li>
-                  <li className="pl-1">Sit upright — posture affects confidence and breathing</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Some nervousness is normal and even helpful — it sharpens
+          <ConceptBlock title="Cognitive reframing, and physical techniques">
+            <p>
+              <strong>Cognitive reframing:</strong> replace &quot;I&apos;m going to fail&quot; with
+              &quot;I&apos;ve prepared well&quot;. Replace &quot;I don&apos;t know anything&quot;
+              with &quot;I know many topics well&quot;. Replace &quot;This is impossible&quot; with
+              &quot;I&apos;ll take it one question at a time&quot;. Replace &quot;Everyone else
+              knows more&quot; with &quot;I&apos;m ready for this&quot;.
+            </p>
+            <p>
+              <strong>Physical techniques:</strong> progressive muscle relaxation — tense and
+              release shoulder muscles. Ground yourself — feel your feet on the floor, hands on the
+              desk. Unclench your jaw and relax your face. Sit upright — posture affects confidence
+              and breathing.
+            </p>
+            <p>
+              <strong>Remember:</strong> some nervousness is normal and even helpful — it sharpens
               your focus. The goal is not to eliminate all anxiety but to keep it at a manageable
               level where it helps rather than hinders.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Physical Preparation and On-the-Day Routine
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Physical preparation and on-the-day routine</ContentEyebrow>
+
+          <ConceptBlock title="Physical preparation and on-the-day routine">
             <p>
               Your brain is a physical organ that requires proper fuel, rest and conditions to
               perform at its best. Physical preparation for the exam is not an afterthought — it is
               as important as your knowledge revision. Candidates who are well-rested and properly
               nourished consistently outperform those who crammed all night on an empty stomach.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Week Before</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Establish sleep routine:</strong> Go to bed and wake at consistent times
-                </li>
-                <li className="pl-1">
-                  <strong>Light revision only:</strong> Review key facts, do not learn new material
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare materials:</strong> Check ID, gather permitted items, plan your
-                  route
-                </li>
-                <li className="pl-1">
-                  <strong>Physical activity:</strong> Moderate exercise reduces anxiety and improves
-                  sleep
-                </li>
-                <li className="pl-1">
-                  <strong>Reduce caffeine:</strong> Avoid excessive coffee/energy drinks that
-                  disrupt sleep
-                </li>
-              </ul>
+          <ConceptBlock title="The week before">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Establish sleep routine:</strong> go to bed and wake at consistent times.
+              </li>
+              <li>
+                <strong>Light revision only:</strong> review key facts, do not learn new material.
+              </li>
+              <li>
+                <strong>Prepare materials:</strong> check ID, gather permitted items, plan your
+                route.
+              </li>
+              <li>
+                <strong>Physical activity:</strong> moderate exercise reduces anxiety and improves
+                sleep.
+              </li>
+              <li>
+                <strong>Reduce caffeine:</strong> avoid excessive coffee/energy drinks that disrupt
+                sleep.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="On-the-day checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Morning:</strong> wake with plenty of time — no rushing.
+              </li>
+              <li>
+                <strong>Breakfast:</strong> protein and complex carbohydrates — eggs, porridge,
+                toast.
+              </li>
+              <li>
+                <strong>Hydrate:</strong> drink water — dehydration impairs concentration.
+              </li>
+              <li>
+                <strong>Bring:</strong> photo ID, pen, permitted calculator, water, light snack.
+              </li>
+              <li>
+                <strong>Arrive:</strong> 15-20 minutes early — use facilities, settle, breathe.
+              </li>
+              <li>
+                <strong>Avoid:</strong> do not discuss the exam with other candidates beforehand.
+              </li>
+              <li>
+                <strong>Final check:</strong> phone off, notes away, timer visible (if provided).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="The night before"
+            whatHappens={
+              <>
+                Cramming until midnight leaves you tired, anxious and less able to recall
+                information under pressure. Your brain needs sleep to consolidate the knowledge you
+                have already learned.
+              </>
+            }
+            doInstead={
+              <>
+                A brief glance at your revision summary (30 minutes maximum) followed by relaxation
+                and early bed is the optimal approach.
+              </>
+            }
+          />
+
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> treat the exam like a work task that requires you to be at
+            your best. A well-rested, well-fed, prepared candidate will always outperform a tired,
+            hungry, flustered one — even if the flustered one spent more hours studying.
+          </p>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Always read every option before selecting — a "best answer" question can hide a more complete option later in the list.',
+              'Change an answer only when you can state a specific reason. Anxiety alone is not a reason.',
+              'The 4-4-6 breathing technique (inhale 4, hold 4, exhale 6) counteracts exam stress in the moment.',
+              'Physical preparation — sleep, food, hydration, an unhurried arrival — is as important as knowledge revision.',
+              'Do not cram the night before. A brief review followed by proper sleep beats a late session every time.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Exam Techniques" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Identifying Knowledge Gaps
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Safe Isolation and Testing Routines
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">On-the-Day Checklist</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Morning:</strong> Wake with plenty of time — no rushing
-                </li>
-                <li className="pl-1">
-                  <strong>Breakfast:</strong> Protein and complex carbohydrates — eggs, porridge,
-                  toast
-                </li>
-                <li className="pl-1">
-                  <strong>Hydrate:</strong> Drink water — dehydration impairs concentration
-                </li>
-                <li className="pl-1">
-                  <strong>Bring:</strong> Photo ID, pen, permitted calculator, water, light snack
-                </li>
-                <li className="pl-1">
-                  <strong>Arrive:</strong> 15-20 minutes early — use facilities, settle, breathe
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid:</strong> Do not discuss the exam with other candidates beforehand
-                </li>
-                <li className="pl-1">
-                  <strong>Final check:</strong> Phone off, notes away, timer visible (if provided)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Night Before</p>
-              <p className="text-sm text-white">
-                Do not cram. Your brain needs sleep to consolidate the knowledge you have already
-                learned. A brief glance at your revision summary (30 minutes maximum) followed by
-                relaxation and early bed is the optimal approach. Cramming until midnight will leave
-                you tired, anxious and less able to recall information under pressure.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Treat the exam like a work task that requires you to be at
-              your best. A well-rested, well-fed, prepared candidate will always outperform a tired,
-              hungry, flustered one — even if the flustered one spent more hours studying.
-            </p>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Exam Techniques" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Identifying Knowledge Gaps
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section1">
-              Back to Section Hub
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

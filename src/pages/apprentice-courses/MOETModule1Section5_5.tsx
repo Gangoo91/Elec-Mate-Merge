@@ -1,8 +1,41 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.5 · Subsection 5 — Sustainable Work Practices
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Behaviours · "Consider sustainability when using resources and carrying out tasks."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Sustainable Work Practices - MOET Module 1 Section 5.5';
@@ -55,10 +88,10 @@ const quickCheckQuestions = [
     id: 'net-zero',
     question: "What does 'net zero' mean in the context of a maintenance company's operations?",
     options: [
-      "The company produces absolutely zero greenhouse gas emissions from any of its activities",
+      'The company produces absolutely zero greenhouse gas emissions from any of its activities',
       "The company's greenhouse gas emissions are balanced by an equivalent amount of carbon removal, resulting in no net addition to the atmosphere",
-      "The company offsets all of its emissions and stops measuring them entirely",
-      "The company only uses electricity from renewable sources and ignores other emissions",
+      'The company offsets all of its emissions and stops measuring them entirely',
+      'The company only uses electricity from renewable sources and ignores other emissions',
     ],
     correctIndex: 1,
     explanation:
@@ -257,116 +290,52 @@ const faqs = [
 ];
 
 const MOETModule1Section5_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.5.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Sustainable Work Practices
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.5 · Subsection 5"
+        title="Sustainable Work Practices"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Circular economy thinking, low-carbon choices and continuous improvement for maintenance
-            technicians
+            technicians.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Circular economy:</strong> Design out waste, keep materials in use
-              </li>
-              <li className="pl-1">
-                <strong>Repair vs replace:</strong> Whole-life cost and carbon analysis
-              </li>
-              <li className="pl-1">
-                <strong>Travel emissions:</strong> Often 30-50% of a maintenance company's footprint
-              </li>
-              <li className="pl-1">
-                <strong>Net zero:</strong> UK target by 2050 — drives demand for green skills
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Component repair:</strong> Replace capacitors, not entire boards
-              </li>
-              <li className="pl-1">
-                <strong>EV transition:</strong> Maintenance van electrification
-              </li>
-              <li className="pl-1">
-                <strong>Green skills:</strong> Heat pumps, EV charging, solar PV, battery storage
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Environmental awareness and continuous improvement KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Circular economy: Design out waste, keep materials in use.',
+              'Repair vs replace: Whole-life cost and carbon analysis.',
+              "Travel emissions: Often 30-50% of a maintenance company's footprint.",
+              'Net zero: UK target by 2050 — drives demand for green skills.',
+              'Component repair: Replace capacitors, not entire boards.',
+              'EV transition: Maintenance van electrification.',
+              'Green skills: Heat pumps, EV charging, solar PV, battery storage.',
+              'ST1426: Environmental awareness and continuous improvement KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply circular economy principles to maintenance decision making',
               'Evaluate repair vs replace decisions using whole-life cost and carbon analysis',
               'Understand life cycle assessment and its relevance to material and equipment selection',
               'Identify practical strategies for reducing travel emissions in maintenance operations',
               'Describe the green skills needed for the low-carbon transition in maintenance engineering',
               'Implement continuous improvement in sustainability performance and reporting',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Circular Economy Principles in Maintenance</ContentEyebrow>
 
-        {/* Section 01: Circular Economy Principles in Maintenance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Circular Economy Principles in Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Circular Economy Principles in Maintenance">
             <p>
               The traditional approach to maintenance has been largely linear: when something
               breaks, remove it, dispose of it, and install a new one. The circular economy
@@ -382,153 +351,135 @@ const MOETModule1Section5_5 = () => {
               refurbishment and condition-based maintenance is both an environmental imperative and
               a commercial opportunity.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circular Economy Strategies for Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Design for maintenance:</strong> When specifying new installations, choose
-                  equipment designed for easy repair, component-level replacement and eventual
-                  disassembly — modular designs with standardised fixings
-                </li>
-                <li className="pl-1">
-                  <strong>Extend product life:</strong> Through preventive and predictive
-                  maintenance, you keep equipment running at optimal performance for longer,
-                  delaying the need for replacement
-                </li>
-                <li className="pl-1">
-                  <strong>Component-level repair:</strong> Replace failed capacitors in a VSD rather
-                  than the entire drive. Replace a ballast in a luminaire rather than the whole
-                  fitting. Repair rather than replace where it is safe, effective and economical to
-                  do so
-                </li>
-                <li className="pl-1">
-                  <strong>Refurbishment:</strong> Older distribution boards, switchgear and control
-                  panels can often be refurbished — replacing worn components, cleaning, testing and
-                  returning to service
-                </li>
-                <li className="pl-1">
-                  <strong>Remanufacturing:</strong> Some manufacturers offer remanufactured products
-                  (e.g., electric motors, transformers) at lower cost and environmental impact than
-                  new
-                </li>
-                <li className="pl-1">
-                  <strong>Material recovery:</strong> At end of life, separate materials for
-                  recycling — copper, aluminium, steel, plastics — to maximise resource recovery
-                </li>
-              </ul>
+          <ConceptBlock title="Circular Economy Strategies for Maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Design for maintenance:</strong> When specifying new installations, choose
+                equipment designed for easy repair, component-level replacement and eventual
+                disassembly — modular designs with standardised fixings
+              </li>
+              <li>
+                <strong>Extend product life:</strong> Through preventive and predictive maintenance,
+                you keep equipment running at optimal performance for longer, delaying the need for
+                replacement
+              </li>
+              <li>
+                <strong>Component-level repair:</strong> Replace failed capacitors in a VSD rather
+                than the entire drive. Replace a ballast in a luminaire rather than the whole
+                fitting. Repair rather than replace where it is safe, effective and economical to do
+                so
+              </li>
+              <li>
+                <strong>Refurbishment:</strong> Older distribution boards, switchgear and control
+                panels can often be refurbished — replacing worn components, cleaning, testing and
+                returning to service
+              </li>
+              <li>
+                <strong>Remanufacturing:</strong> Some manufacturers offer remanufactured products
+                (e.g., electric motors, transformers) at lower cost and environmental impact than
+                new
+              </li>
+              <li>
+                <strong>Material recovery:</strong> At end of life, separate materials for recycling
+                — copper, aluminium, steel, plastics — to maximise resource recovery
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Repair vs Replace Decision Framework">
+            <p>
+              Making informed repair vs replace decisions is a core skill for sustainable
+              maintenance. Consider the following factors:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Favours Repair</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Favours Replace</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Remaining useful life</td>
+                    <td className="border border-white/10 px-3 py-2">Substantial life remaining</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Near end of life; further failures likely
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Energy efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Small efficiency gap between old and new
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      New model significantly more efficient
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Repair cost</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cost well below replacement
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Repair cost approaching replacement cost
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Spare parts</td>
+                    <td className="border border-white/10 px-3 py-2">Parts readily available</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Parts obsolete or hard to source
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Embodied carbon</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      High embodied carbon in replacement
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Low embodied carbon; high operating carbon saved
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Safety/compliance</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Meets current standards after repair
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cannot meet current standards
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Repair vs Replace Decision Framework
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Making informed repair vs replace decisions is a core skill for sustainable
-                maintenance. Consider the following factors:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Favours Repair</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Favours Replace
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Remaining useful life</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Substantial life remaining
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Near end of life; further failures likely
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Energy efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small efficiency gap between old and new
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        New model significantly more efficient
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Repair cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cost well below replacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Repair cost approaching replacement cost
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spare parts</td>
-                      <td className="border border-white/10 px-3 py-2">Parts readily available</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Parts obsolete or hard to source
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Embodied carbon</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High embodied carbon in replacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low embodied carbon; high operating carbon saved
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety/compliance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Meets current standards after repair
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cannot meet current standards
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">The 50% Rule of Thumb</p>
-              <p className="text-sm text-white">
-                A common industry guideline is that if the repair cost exceeds 50% of the
-                replacement cost and the equipment has used more than 50% of its expected service
-                life, replacement is usually more economical. However, this should be adjusted for
-                sustainability considerations — if the embodied carbon of the replacement is very
-                high and the efficiency gain is marginal, repair may be the more sustainable choice
-                even when it exceeds the 50% threshold.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
+              <strong>The 50% rule of thumb:</strong> A common industry guideline is that if the
+              repair cost exceeds 50% of the replacement cost and the equipment has used more than
+              50% of its expected service life, replacement is usually more economical. However,
+              this should be adjusted for sustainability considerations — if the embodied carbon of
+              the replacement is very high and the efficiency gain is marginal, repair may be the
+              more sustainable choice even when it exceeds the 50% threshold.
+            </p>
+            <p>
               <strong>Key point:</strong> The circular economy is not about keeping everything
               forever. It is about making informed decisions that balance operational needs, safety,
               cost and environmental impact. Sometimes the most sustainable action is to replace an
               old, inefficient piece of equipment with a modern, efficient one — but this decision
               should be made consciously, not by default.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Life Cycle Assessment and Low-Carbon Materials */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Life Cycle Assessment and Low-Carbon Materials
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Life Cycle Assessment and Low-Carbon Materials</ContentEyebrow>
+
+          <ConceptBlock title="Life Cycle Assessment and Low-Carbon Materials">
             <p>
               Life cycle assessment (LCA) is a systematic method for evaluating the environmental
               impact of a product, process or service throughout its entire life — from raw material
@@ -536,140 +487,129 @@ const MOETModule1Section5_5 = () => {
               maintenance technicians make more informed decisions about material selection,
               equipment specification and end-of-life management.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Life Cycle Stages</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>A1-A3 — Product stage:</strong> Raw material extraction, transport to
-                  factory, manufacturing. This is the 'embodied carbon' of the product. Copper has
-                  high embodied carbon due to energy-intensive mining and refining. Recycled
-                  aluminium has 95% less embodied carbon than virgin aluminium.
-                </li>
-                <li className="pl-1">
-                  <strong>A4-A5 — Construction/installation:</strong> Transport to site and
-                  installation process. Includes energy used by tools, equipment and vehicles during
-                  installation or replacement.
-                </li>
-                <li className="pl-1">
-                  <strong>B1-B7 — Use stage:</strong> Operational energy consumption, maintenance,
-                  repair and replacement during the product's service life. For electrical
-                  equipment, this is often the largest life cycle impact — a motor may consume 100
-                  times its embodied energy over its operating life.
-                </li>
-                <li className="pl-1">
-                  <strong>C1-C4 — End of life:</strong> Demolition/dismantling, transport to waste
-                  processing, recycling or disposal. Proper segregation at end of life maximises
-                  material recovery.
-                </li>
-                <li className="pl-1">
-                  <strong>D — Beyond life cycle:</strong> Benefits from recycling and reuse —
-                  recycled copper and aluminium offset the need for virgin material, avoiding the
-                  associated mining emissions.
-                </li>
-              </ul>
+          <ConceptBlock title="Life Cycle Stages">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>A1-A3 — Product stage:</strong> Raw material extraction, transport to
+                factory, manufacturing. This is the &apos;embodied carbon&apos; of the product.
+                Copper has high embodied carbon due to energy-intensive mining and refining.
+                Recycled aluminium has 95% less embodied carbon than virgin aluminium.
+              </li>
+              <li>
+                <strong>A4-A5 — Construction/installation:</strong> Transport to site and
+                installation process. Includes energy used by tools, equipment and vehicles during
+                installation or replacement.
+              </li>
+              <li>
+                <strong>B1-B7 — Use stage:</strong> Operational energy consumption, maintenance,
+                repair and replacement during the product&apos;s service life. For electrical
+                equipment, this is often the largest life cycle impact — a motor may consume 100
+                times its embodied energy over its operating life.
+              </li>
+              <li>
+                <strong>C1-C4 — End of life:</strong> Demolition/dismantling, transport to waste
+                processing, recycling or disposal. Proper segregation at end of life maximises
+                material recovery.
+              </li>
+              <li>
+                <strong>D — Beyond life cycle:</strong> Benefits from recycling and reuse — recycled
+                copper and aluminium offset the need for virgin material, avoiding the associated
+                mining emissions.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Low-Carbon Material Selection">
+            <p>
+              When specifying replacement materials during maintenance, consider the environmental
+              impact alongside technical suitability:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Recycled content:</strong> Specify cable, trunking, cable tray and
+                accessories with high recycled metal content where available
+              </li>
+              <li>
+                <strong>Low-smoke zero-halogen (LSZH):</strong> LSZH cables have a lower
+                environmental impact when incinerated at end of life compared to PVC, and do not
+                release hydrogen chloride gas
+              </li>
+              <li>
+                <strong>Durability:</strong> Specify materials with longer service life — stainless
+                steel cable tray in corrosive environments rather than galvanised steel that will
+                need replacing sooner
+              </li>
+              <li>
+                <strong>Packaging:</strong> Choose suppliers who minimise packaging and use
+                recyclable materials — reduce waste at source
+              </li>
+              <li>
+                <strong>Local sourcing:</strong> Where quality is equivalent, prefer locally
+                manufactured products to reduce transport emissions
+              </li>
+              <li>
+                <strong>Environmental Product Declarations (EPDs):</strong> Some manufacturers
+                publish EPDs — standardised LCA data for their products — which enable comparison
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Embodied Carbon in Common Electrical Materials">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Material</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Approx. Embodied Carbon (kgCO2e/kg)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Recycled Alternative
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Virgin copper</td>
+                    <td className="border border-white/10 px-3 py-2">3.5 - 4.0</td>
+                    <td className="border border-white/10 px-3 py-2">Recycled copper: ~0.5</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Virgin aluminium</td>
+                    <td className="border border-white/10 px-3 py-2">8.0 - 12.0</td>
+                    <td className="border border-white/10 px-3 py-2">Recycled aluminium: ~0.5</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Virgin steel</td>
+                    <td className="border border-white/10 px-3 py-2">1.5 - 2.5</td>
+                    <td className="border border-white/10 px-3 py-2">Recycled steel: ~0.4</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">PVC</td>
+                    <td className="border border-white/10 px-3 py-2">2.5 - 3.5</td>
+                    <td className="border border-white/10 px-3 py-2">Recycled PVC: ~1.0</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Low-Carbon Material Selection
-              </h3>
-              <p className="text-sm text-white mb-2">
-                When specifying replacement materials during maintenance, consider the environmental
-                impact alongside technical suitability:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Recycled content:</strong> Specify cable, trunking, cable tray and
-                  accessories with high recycled metal content where available
-                </li>
-                <li className="pl-1">
-                  <strong>Low-smoke zero-halogen (LSZH):</strong> LSZH cables have a lower
-                  environmental impact when incinerated at end of life compared to PVC, and do not
-                  release hydrogen chloride gas
-                </li>
-                <li className="pl-1">
-                  <strong>Durability:</strong> Specify materials with longer service life —
-                  stainless steel cable tray in corrosive environments rather than galvanised steel
-                  that will need replacing sooner
-                </li>
-                <li className="pl-1">
-                  <strong>Packaging:</strong> Choose suppliers who minimise packaging and use
-                  recyclable materials — reduce waste at source
-                </li>
-                <li className="pl-1">
-                  <strong>Local sourcing:</strong> Where quality is equivalent, prefer locally
-                  manufactured products to reduce transport emissions
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental Product Declarations (EPDs):</strong> Some manufacturers
-                  publish EPDs — standardised LCA data for their products — which enable comparison
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Embodied Carbon in Common Electrical Materials
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Material</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Approx. Embodied Carbon (kgCO2e/kg)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recycled Alternative
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Virgin copper</td>
-                      <td className="border border-white/10 px-3 py-2">3.5 - 4.0</td>
-                      <td className="border border-white/10 px-3 py-2">Recycled copper: ~0.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Virgin aluminium</td>
-                      <td className="border border-white/10 px-3 py-2">8.0 - 12.0</td>
-                      <td className="border border-white/10 px-3 py-2">Recycled aluminium: ~0.5</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Virgin steel</td>
-                      <td className="border border-white/10 px-3 py-2">1.5 - 2.5</td>
-                      <td className="border border-white/10 px-3 py-2">Recycled steel: ~0.4</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PVC</td>
-                      <td className="border border-white/10 px-3 py-2">2.5 - 3.5</td>
-                      <td className="border border-white/10 px-3 py-2">Recycled PVC: ~1.0</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Practical tip:</strong> When stripping out old cables, always segregate the
               copper from the insulation. Copper is one of the most valuable and recyclable
               materials — recycling copper saves 85% of the energy needed to produce virgin copper
               from ore. Your conscientious segregation directly reduces environmental impact and
               recovers economic value.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Reducing Travel Emissions and Remote Diagnostics */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Reducing Travel Emissions and Remote Diagnostics
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Reducing Travel Emissions and Remote Diagnostics</ContentEyebrow>
+
+          <ConceptBlock title="Reducing Travel Emissions and Remote Diagnostics">
             <p>
               For most maintenance companies, vehicle travel is the single largest source of carbon
               emissions — often accounting for 30-50% or more of the total footprint. Every
@@ -678,252 +618,226 @@ const MOETModule1Section5_5 = () => {
               emissions is therefore one of the most impactful sustainability actions a maintenance
               team can take.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Route Planning and Journey Consolidation
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Route optimisation:</strong> Use route planning software to minimise total
-                  distance and time. Cluster jobs by geographical area rather than by priority alone
-                  where possible
-                </li>
-                <li className="pl-1">
-                  <strong>Consolidate visits:</strong> Combine multiple tasks at one site into a
-                  single visit. Coordinate with other trades to reduce total journeys to a building
-                </li>
-                <li className="pl-1">
-                  <strong>First-fix rate:</strong> Carry the right parts and tools. A high first-fix
-                  rate means fewer return visits. Use job information and fault diagnostics to
-                  prepare before travelling
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid peak traffic:</strong> Where scheduling flexibility exists, travel
-                  outside peak hours to reduce time spent idling in traffic
-                </li>
-                <li className="pl-1">
-                  <strong>Van stock management:</strong> Maintain a well-stocked van with the most
-                  commonly needed parts. Reduce emergency parts runs to wholesalers
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Route Planning and Journey Consolidation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Route optimisation:</strong> Use route planning software to minimise total
+                distance and time. Cluster jobs by geographical area rather than by priority alone
+                where possible
+              </li>
+              <li>
+                <strong>Consolidate visits:</strong> Combine multiple tasks at one site into a
+                single visit. Coordinate with other trades to reduce total journeys to a building
+              </li>
+              <li>
+                <strong>First-fix rate:</strong> Carry the right parts and tools. A high first-fix
+                rate means fewer return visits. Use job information and fault diagnostics to prepare
+                before travelling
+              </li>
+              <li>
+                <strong>Avoid peak traffic:</strong> Where scheduling flexibility exists, travel
+                outside peak hours to reduce time spent idling in traffic
+              </li>
+              <li>
+                <strong>Van stock management:</strong> Maintain a well-stocked van with the most
+                commonly needed parts. Reduce emergency parts runs to wholesalers
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Remote Diagnostics and Condition Monitoring
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Technology is transforming maintenance from a reactive, travel-intensive activity to
-                a proactive, data-driven discipline. Remote diagnostics can significantly reduce the
-                need for physical site visits:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>IoT sensors:</strong> Vibration, temperature, current and power quality
-                  sensors on critical equipment provide continuous performance data accessible
-                  remotely
-                </li>
-                <li className="pl-1">
-                  <strong>BEMS remote access:</strong> Remote access to building management systems
-                  allows fault diagnosis, parameter adjustment and trend analysis without travelling
-                  to site
-                </li>
-                <li className="pl-1">
-                  <strong>Smart circuit breakers:</strong> Modern circuit breakers with built-in
-                  monitoring can report trip events, load profiles and contact wear data remotely
-                </li>
-                <li className="pl-1">
-                  <strong>Predictive maintenance:</strong> Analysis of sensor data can predict
-                  failures before they occur, enabling planned interventions rather than emergency
-                  call-outs
-                </li>
-                <li className="pl-1">
-                  <strong>Video-assisted diagnostics:</strong> Site personnel can share live video
-                  of a fault with a remote specialist, enabling diagnosis and parts identification
-                  before the technician travels
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Remote Diagnostics and Condition Monitoring">
+            <p>
+              Technology is transforming maintenance from a reactive, travel-intensive activity to a
+              proactive, data-driven discipline. Remote diagnostics can significantly reduce the
+              need for physical site visits:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IoT sensors:</strong> Vibration, temperature, current and power quality
+                sensors on critical equipment provide continuous performance data accessible
+                remotely
+              </li>
+              <li>
+                <strong>BEMS remote access:</strong> Remote access to building management systems
+                allows fault diagnosis, parameter adjustment and trend analysis without travelling
+                to site
+              </li>
+              <li>
+                <strong>Smart circuit breakers:</strong> Modern circuit breakers with built-in
+                monitoring can report trip events, load profiles and contact wear data remotely
+              </li>
+              <li>
+                <strong>Predictive maintenance:</strong> Analysis of sensor data can predict
+                failures before they occur, enabling planned interventions rather than emergency
+                call-outs
+              </li>
+              <li>
+                <strong>Video-assisted diagnostics:</strong> Site personnel can share live video of
+                a fault with a remote specialist, enabling diagnosis and parts identification before
+                the technician travels
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fleet Electrification
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The transition from diesel to electric maintenance vans is accelerating, driven by
-                government policy (ban on new diesel van sales from 2035), falling EV costs, and
-                corporate net zero commitments:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Carbon reduction:</strong> An electric van produces approximately 60-70%
-                  less carbon than a diesel van over its lifetime (including electricity generation
-                  emissions)
-                </li>
-                <li className="pl-1">
-                  <strong>Running costs:</strong> Electricity costs approximately 4-6p per mile vs
-                  15-20p per mile for diesel
-                </li>
-                <li className="pl-1">
-                  <strong>Clean Air Zones:</strong> Electric vans are exempt from Clean Air Zone
-                  charges — an increasing cost for diesel vans in many UK cities
-                </li>
-                <li className="pl-1">
-                  <strong>Range considerations:</strong> Most modern electric vans offer 150-200+
-                  miles range — sufficient for most maintenance routes with overnight charging
-                </li>
-                <li className="pl-1">
-                  <strong>As a maintenance technician:</strong> You may be asked to install and
-                  maintain the workplace charging infrastructure that supports your company's EV
-                  fleet
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Fleet Electrification">
+            <p>
+              The transition from diesel to electric maintenance vans is accelerating, driven by
+              government policy (ban on new diesel van sales from 2035), falling EV costs, and
+              corporate net zero commitments:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Carbon reduction:</strong> An electric van produces approximately 60-70%
+                less carbon than a diesel van over its lifetime (including electricity generation
+                emissions)
+              </li>
+              <li>
+                <strong>Running costs:</strong> Electricity costs approximately 4-6p per mile vs
+                15-20p per mile for diesel
+              </li>
+              <li>
+                <strong>Clean Air Zones:</strong> Electric vans are exempt from Clean Air Zone
+                charges — an increasing cost for diesel vans in many UK cities
+              </li>
+              <li>
+                <strong>Range considerations:</strong> Most modern electric vans offer 150-200+
+                miles range — sufficient for most maintenance routes with overnight charging
+              </li>
+              <li>
+                <strong>As a maintenance technician:</strong> You may be asked to install and
+                maintain the workplace charging infrastructure that supports your company&apos;s EV
+                fleet
+              </li>
+            </ul>
+            <p>
               <strong>Impact example:</strong> A maintenance technician driving 25,000 miles per
               year in a diesel van produces approximately 7.5 tonnes of CO2. Switching to an
               electric van reduces this to approximately 2.0 tonnes (based on current UK grid
               intensity). Over a 5-year vehicle life, that is 27.5 tonnes of CO2 avoided —
               equivalent to the annual emissions of about 5 average UK households.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Green Skills, Net Zero and Continuous Improvement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Green Skills, Net Zero and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Green Skills, Net Zero and Continuous Improvement</ContentEyebrow>
+
+          <ConceptBlock title="Green Skills, Net Zero and Continuous Improvement">
             <p>
               The transition to a net zero economy is creating unprecedented demand for skilled
-              maintenance technicians who understand low-carbon technologies. The Government's Green
-              Jobs Taskforce has identified that hundreds of thousands of workers will need 'green
-              skills' to deliver the UK's climate targets. As an apprentice maintenance technician,
-              you are entering the profession at exactly the right time to build these capabilities.
+              maintenance technicians who understand low-carbon technologies. The Government&apos;s
+              Green Jobs Taskforce has identified that hundreds of thousands of workers will need
+              &apos;green skills&apos; to deliver the UK&apos;s climate targets. As an apprentice
+              maintenance technician, you are entering the profession at exactly the right time to
+              build these capabilities.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Green Skills for Maintenance Technicians
-              </h3>
-              <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat pump systems:</strong> As gas boilers are phased out, heat pumps (air
-                  source and ground source) will become the primary heating technology. Maintenance
-                  technicians need to understand heat pump electrical systems, controls, refrigerant
-                  circuits and performance optimisation.
-                </li>
-                <li className="pl-1">
-                  <strong>Solar PV and battery storage:</strong> Rooftop solar PV and battery energy
-                  storage systems (BESS) are proliferating. Maintenance includes inverter checks,
-                  panel inspection, battery management system monitoring, and electrical protection
-                  verification.
-                </li>
-                <li className="pl-1">
-                  <strong>EV charging infrastructure:</strong> Workplace and public EV chargers
-                  require installation, commissioning, and ongoing maintenance. Understanding OCPP
-                  (Open Charge Point Protocol), load management, and smart charging is increasingly
-                  important.
-                </li>
-                <li className="pl-1">
-                  <strong>Smart building controls:</strong> Advanced BEMS, IoT integration,
-                  demand-side response and grid flexibility services require technicians who can
-                  work at the intersection of electrical, digital and control systems.
-                </li>
-                <li className="pl-1">
-                  <strong>Energy storage:</strong> Grid-scale and building-scale battery systems
-                  (lithium-ion, flow batteries) are becoming common. Maintenance includes BMS health
-                  checks, cell balancing verification, thermal management and safety system testing.
-                </li>
-                <li className="pl-1">
-                  <strong>Carbon literacy:</strong> Understanding carbon accounting, scope 1/2/3
-                  emissions, carbon budgets and net zero pathways helps you contribute to your
-                  organisation's sustainability objectives.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Green Skills for Maintenance Technicians">
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Heat pump systems:</strong> As gas boilers are phased out, heat pumps (air
+                source and ground source) will become the primary heating technology. Maintenance
+                technicians need to understand heat pump electrical systems, controls, refrigerant
+                circuits and performance optimisation.
+              </li>
+              <li>
+                <strong>Solar PV and battery storage:</strong> Rooftop solar PV and battery energy
+                storage systems (BESS) are proliferating. Maintenance includes inverter checks,
+                panel inspection, battery management system monitoring, and electrical protection
+                verification.
+              </li>
+              <li>
+                <strong>EV charging infrastructure:</strong> Workplace and public EV chargers
+                require installation, commissioning, and ongoing maintenance. Understanding OCPP
+                (Open Charge Point Protocol), load management, and smart charging is increasingly
+                important.
+              </li>
+              <li>
+                <strong>Smart building controls:</strong> Advanced BEMS, IoT integration,
+                demand-side response and grid flexibility services require technicians who can work
+                at the intersection of electrical, digital and control systems.
+              </li>
+              <li>
+                <strong>Energy storage:</strong> Grid-scale and building-scale battery systems
+                (lithium-ion, flow batteries) are becoming common. Maintenance includes BMS health
+                checks, cell balancing verification, thermal management and safety system testing.
+              </li>
+              <li>
+                <strong>Carbon literacy:</strong> Understanding carbon accounting, scope 1/2/3
+                emissions, carbon budgets and net zero pathways helps you contribute to your
+                organisation&apos;s sustainability objectives.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Net Zero Targets and Carbon Footprinting
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Many organisations are now setting net zero targets for their operations, driven by
-                the Climate Change Act 2008, investor pressure, customer expectations and employee
-                values. Understanding how these targets work helps you see where your role fits in:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Scope 1:</strong> Direct emissions from company-owned sources — vehicle
-                  fleet fuel, gas heating, SF6 releases
-                </li>
-                <li className="pl-1">
-                  <strong>Scope 2:</strong> Indirect emissions from purchased energy — electricity
-                  used in workshops, offices and depots
-                </li>
-                <li className="pl-1">
-                  <strong>Scope 3:</strong> Value chain emissions — materials purchased, waste
-                  disposal, business travel, employee commuting
-                </li>
-                <li className="pl-1">
-                  <strong>Reduction hierarchy:</strong> Avoid emissions (remote diagnostics), reduce
-                  emissions (efficient vehicles, optimised routes), substitute (EV fleet, green
-                  electricity), offset (last resort for residual emissions)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Net Zero Targets and Carbon Footprinting">
+            <p>
+              Many organisations are now setting net zero targets for their operations, driven by
+              the Climate Change Act 2008, investor pressure, customer expectations and employee
+              values. Understanding how these targets work helps you see where your role fits in:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scope 1:</strong> Direct emissions from company-owned sources — vehicle
+                fleet fuel, gas heating, SF6 releases
+              </li>
+              <li>
+                <strong>Scope 2:</strong> Indirect emissions from purchased energy — electricity
+                used in workshops, offices and depots
+              </li>
+              <li>
+                <strong>Scope 3:</strong> Value chain emissions — materials purchased, waste
+                disposal, business travel, employee commuting
+              </li>
+              <li>
+                <strong>Reduction hierarchy:</strong> Avoid emissions (remote diagnostics), reduce
+                emissions (efficient vehicles, optimised routes), substitute (EV fleet, green
+                electricity), offset (last resort for residual emissions)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Continuous Improvement in Sustainability
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Sustainable work practices are not a one-off project — they require continuous
-                improvement. Apply the Plan-Do-Check-Act cycle to your sustainability performance:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Plan:</strong> Set specific, measurable targets — "Reduce waste to
-                  landfill by 20% this year" or "Improve first-fix rate to 85% to reduce return
-                  visits"
-                </li>
-                <li className="pl-1">
-                  <strong>Do:</strong> Implement the actions — improve van stock, introduce waste
-                  segregation training, adopt route planning software
-                </li>
-                <li className="pl-1">
-                  <strong>Check:</strong> Monitor and measure results — track waste tonnages, fuel
-                  consumption, first-fix rates, recycling percentages
-                </li>
-                <li className="pl-1">
-                  <strong>Act:</strong> Review performance against targets, identify what worked and
-                  what did not, set new targets for the next period
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Continuous Improvement in Sustainability">
+            <p>
+              Sustainable work practices are not a one-off project — they require continuous
+              improvement. Apply the Plan-Do-Check-Act cycle to your sustainability performance:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Plan:</strong> Set specific, measurable targets — &quot;Reduce waste to
+                landfill by 20% this year&quot; or &quot;Improve first-fix rate to 85% to reduce
+                return visits&quot;
+              </li>
+              <li>
+                <strong>Do:</strong> Implement the actions — improve van stock, introduce waste
+                segregation training, adopt route planning software
+              </li>
+              <li>
+                <strong>Check:</strong> Monitor and measure results — track waste tonnages, fuel
+                consumption, first-fix rates, recycling percentages
+              </li>
+              <li>
+                <strong>Act:</strong> Review performance against targets, identify what worked and
+                what did not, set new targets for the next period
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Reporting Sustainability Metrics
-              </p>
-              <p className="text-sm text-white">
-                Organisations are increasingly required or expected to report sustainability
-                metrics. As a maintenance technician, the data you record contributes to these
-                reports: waste transfer notes (waste data), fuel receipts (fleet emissions),
-                materials purchased (embodied carbon), and energy audit observations (efficiency
-                opportunities). Accurate recording is essential — sustainability reporting is only
-                as good as the data behind it. Treat sustainability data with the same rigour as
-                safety data.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Reporting Sustainability Metrics">
+            <p>
+              Organisations are increasingly required or expected to report sustainability metrics.
+              As a maintenance technician, the data you record contributes to these reports: waste
+              transfer notes (waste data), fuel receipts (fleet emissions), materials purchased
+              (embodied carbon), and energy audit observations (efficiency opportunities). Accurate
+              recording is essential — sustainability reporting is only as good as the data behind
+              it. Treat sustainability data with the same rigour as safety data.
+            </p>
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard requires you to
               demonstrate environmental awareness and contribute to continuous improvement.
               Developing green skills, understanding net zero targets, and actively seeking to
@@ -931,18 +845,17 @@ const MOETModule1Section5_5 = () => {
               behaviours expected by the standard. Your environmental competence is not just an
               add-on — it is integral to being a skilled, modern maintenance technician.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Sustainable Procurement and Your Professional Responsibility */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+          <SectionRule />
+
+          <ContentEyebrow>
             Sustainable Procurement and Your Professional Responsibility
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          </ContentEyebrow>
+
+          <ConceptBlock title="Sustainable Procurement and Your Professional Responsibility">
             <p>
               Every purchasing decision in maintenance has an environmental dimension. The cable you
               specify, the luminaire you select, the consumables you order, the PPE you wear — each
@@ -950,177 +863,137 @@ const MOETModule1Section5_5 = () => {
               destination. Sustainable procurement brings environmental thinking into these everyday
               decisions without compromising on quality or safety.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sustainable Procurement Principles
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Whole-life cost:</strong> Consider not just purchase price but energy
-                  costs, maintenance costs, replacement frequency and disposal costs over the
-                  product's life
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental criteria:</strong> Include embodied carbon, recycled
-                  content, recyclability, hazardous substance content and packaging in purchasing
-                  decisions
-                </li>
-                <li className="pl-1">
-                  <strong>Supplier credentials:</strong> Prefer suppliers with ISO 14001
-                  certification, published environmental policies and carbon reduction targets
-                </li>
-                <li className="pl-1">
-                  <strong>Product longevity:</strong> Specify durable, repairable products with long
-                  warranties and available spare parts
-                </li>
-                <li className="pl-1">
-                  <strong>Reduce packaging waste:</strong> Request minimal or returnable packaging;
-                  avoid individually wrapped items where bulk alternatives exist
-                </li>
-                <li className="pl-1">
-                  <strong>Ethical sourcing:</strong> Consider the social and environmental
-                  conditions in the supply chain — conflict minerals in electronics, labour
-                  practices in manufacturing
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Sustainable Procurement Principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Whole-life cost:</strong> Consider not just purchase price but energy costs,
+                maintenance costs, replacement frequency and disposal costs over the product&apos;s
+                life
+              </li>
+              <li>
+                <strong>Environmental criteria:</strong> Include embodied carbon, recycled content,
+                recyclability, hazardous substance content and packaging in purchasing decisions
+              </li>
+              <li>
+                <strong>Supplier credentials:</strong> Prefer suppliers with ISO 14001
+                certification, published environmental policies and carbon reduction targets
+              </li>
+              <li>
+                <strong>Product longevity:</strong> Specify durable, repairable products with long
+                warranties and available spare parts
+              </li>
+              <li>
+                <strong>Reduce packaging waste:</strong> Request minimal or returnable packaging;
+                avoid individually wrapped items where bulk alternatives exist
+              </li>
+              <li>
+                <strong>Ethical sourcing:</strong> Consider the social and environmental conditions
+                in the supply chain — conflict minerals in electronics, labour practices in
+                manufacturing
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Your Professional Responsibility
-                </h3>
-                <p className="text-sm text-white">
-                  As a maintenance technician, you have a professional responsibility to work
-                  sustainably. This is not just about following company policy — it is about taking
-                  personal ownership of your environmental impact. Every cable offcut you segregate
-                  for recycling, every observation of energy waste you report, every journey you
-                  plan efficiently, and every repair vs replace decision you make thoughtfully
-                  contributes to a more sustainable maintenance profession.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Leading by Example</h3>
-                <p className="text-sm text-white">
-                  Sustainability culture in a maintenance team starts with individual behaviour.
-                  When you consistently demonstrate good environmental practices — tidying your work
-                  area, segregating waste, reporting energy waste, maintaining your vehicle,
-                  reducing material use — you set a standard that influences your colleagues. As you
-                  progress in your career, your sustainable habits become leadership behaviours that
-                  shape the culture of your team and organisation.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Your Professional Responsibility">
+            <p>
+              As a maintenance technician, you have a professional responsibility to work
+              sustainably. This is not just about following company policy — it is about taking
+              personal ownership of your environmental impact. Every cable offcut you segregate for
+              recycling, every observation of energy waste you report, every journey you plan
+              efficiently, and every repair vs replace decision you make thoughtfully contributes to
+              a more sustainable maintenance profession.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Future of Sustainable Maintenance
-              </h3>
-              <p className="text-sm text-white">
-                The maintenance engineering profession is undergoing a profound transformation. The
-                convergence of digital technology (IoT, AI, predictive analytics), decarbonisation
-                (electrification, renewables, heat pumps), circular economy thinking (repair,
-                refurbishment, material recovery) and regulatory pressure (net zero targets,
-                extended producer responsibility) is creating a new model of maintenance that is
-                smarter, cleaner and more resource-efficient. The technicians who embrace these
-                changes — who develop green skills, adopt sustainable practices, and contribute to
-                continuous improvement — will be the most valued and employable professionals in the
-                industry.
-              </p>
-            </div>
+          <ConceptBlock title="Leading by Example">
+            <p>
+              Sustainability culture in a maintenance team starts with individual behaviour. When
+              you consistently demonstrate good environmental practices — tidying your work area,
+              segregating waste, reporting energy waste, maintaining your vehicle, reducing material
+              use — you set a standard that influences your colleagues. As you progress in your
+              career, your sustainable habits become leadership behaviours that shape the culture of
+              your team and organisation.
+            </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="The Future of Sustainable Maintenance">
+            <p>
+              The maintenance engineering profession is undergoing a profound transformation. The
+              convergence of digital technology (IoT, AI, predictive analytics), decarbonisation
+              (electrification, renewables, heat pumps), circular economy thinking (repair,
+              refurbishment, material recovery) and regulatory pressure (net zero targets, extended
+              producer responsibility) is creating a new model of maintenance that is smarter,
+              cleaner and more resource-efficient. The technicians who embrace these changes — who
+              develop green skills, adopt sustainable practices, and contribute to continuous
+              improvement — will be the most valued and employable professionals in the industry.
+            </p>
+            <p>
               <strong>Final thought:</strong> Sustainability is not a separate discipline bolted
               onto maintenance — it is integral to good maintenance practice. A well-maintained
               system is an efficient system. An efficient system uses less energy and generates less
               waste. Less waste means lower costs and lower environmental impact. Good maintenance
               is sustainable maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              '1. Prevent waste — order correct quantities.',
+              '2. Extend life — maintain for longevity.',
+              '3. Repair — component-level where possible.',
+              '4. Refurbish — restore to service.',
+              '5. Recycle — segregate materials for recovery.',
+              '6. Replace responsibly — whole-life analysis.',
+              'Climate Change Act 2008 — Net zero by 2050.',
+              'ISO 14001 — Environmental management systems.',
+              'PAS 2080 — Carbon management in infrastructure.',
+              'SBTi — Science Based Targets initiative.',
+              'GHG Protocol — Scope 1, 2, 3 emissions.',
+              'ST1426 — Environmental awareness and CI KSBs.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Circular Economy Actions</p>
-                <ul className="space-y-0.5">
-                  <li>1. Prevent waste — order correct quantities</li>
-                  <li>2. Extend life — maintain for longevity</li>
-                  <li>3. Repair — component-level where possible</li>
-                  <li>4. Refurbish — restore to service</li>
-                  <li>5. Recycle — segregate materials for recovery</li>
-                  <li>6. Replace responsibly — whole-life analysis</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>Climate Change Act 2008 — Net zero by 2050</li>
-                  <li>ISO 14001 — Environmental management systems</li>
-                  <li>PAS 2080 — Carbon management in infrastructure</li>
-                  <li>SBTi — Science Based Targets initiative</li>
-                  <li>GHG Protocol — Scope 1, 2, 3 emissions</li>
-                  <li>ST1426 — Environmental awareness and CI KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Sustainable work practices knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Environmental Legislation and Local Policies
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Fire Safety and Extinguishers
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Environmental Legislation
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

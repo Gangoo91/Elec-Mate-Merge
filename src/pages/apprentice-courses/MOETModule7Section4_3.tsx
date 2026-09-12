@@ -1,8 +1,40 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 4 · Subsection 3 — Time Management and Organisation
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page covers general professional behaviours (prioritisation,
+ * planning, deadline management, organisation). None of the ST1426 statements
+ * verified elsewhere in this conversion (Modules 1-4) describe time
+ * management or organisation specifically, and the published KSB numbering
+ * has not been verified against a primary source, so no KSB quote is
+ * included here rather than inventing one. Flagged in the conversion report.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Time Management and Organisation - MOET Module 7 Section 4.3';
@@ -258,116 +290,65 @@ const faqs = [
 ];
 
 const MOETModule7Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Time Management and Organisation
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.4 · Subsection 3"
+        title="Time Management and Organisation"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Planning, prioritising and managing your workload effectively as a professional
-            engineering technician
+            engineering technician.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Prioritisation:</strong> Safety-critical, production, planned, non-urgent
-              </li>
-              <li className="pl-1">
-                <strong>Planning:</strong> Tools, parts, permits, coordination in advance
-              </li>
-              <li className="pl-1">
-                <strong>Communication:</strong> Realistic timescales and early notification
-              </li>
-              <li className="pl-1">
-                <strong>Adaptation:</strong> Responding to emergencies without losing control
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Professional behaviour:</strong> Assessed throughout all EPA components
-              </li>
-              <li className="pl-1">
-                <strong>Practical observation:</strong> Efficient, methodical working approach
-              </li>
-              <li className="pl-1">
-                <strong>Discussion:</strong> Describe how you manage competing priorities
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Core professional behaviour requirement
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Prioritisation: Safety-critical, production, planned, non-urgent.',
+              'Planning: Tools, parts, permits, coordination in advance.',
+              'Communication: Realistic timescales and early notification.',
+              'Adaptation: Responding to emergencies without losing control.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Prioritise maintenance tasks based on safety, production impact and urgency',
               'Plan work sequences to minimise wasted time and maximise efficiency',
               'Communicate realistic timescales and manage stakeholder expectations',
               'Handle interruptions and emergency work without losing control of planned tasks',
               'Use tracking systems to manage multiple ongoing commitments',
               'Demonstrate time management as a professional behaviour in the EPA',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Professional behaviour:</strong> assessed throughout all EPA components.
+              </li>
+              <li>
+                <strong>Practical observation:</strong> efficient, methodical working approach.
+              </li>
+              <li>
+                <strong>Discussion:</strong> describe how you manage competing priorities.
+              </li>
+              <li>
+                <strong>ST1426:</strong> core professional behaviour requirement.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Prioritisation in Maintenance Work
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Prioritisation in maintenance work</ContentEyebrow>
+
+          <ConceptBlock title="Urgency and impact are two different dimensions">
             <p>
               Maintenance technicians rarely have the luxury of working on one task at a time. You
               will have a planned maintenance schedule, reactive breakdown calls, improvement
@@ -375,7 +356,6 @@ const MOETModule7Section4_3 = () => {
               prioritisation is what separates a competent professional from someone who is always
               chasing their tail.
             </p>
-
             <p>
               The key to prioritisation is understanding both urgency and impact. A task might be
               urgent (it needs attention now) but low impact (the consequences of a short delay are
@@ -383,292 +363,239 @@ const MOETModule7Section4_3 = () => {
               done, there will be serious consequences). Professional technicians evaluate both
               dimensions before deciding what to work on first.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Priority Classification System
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Priority 1 — Safety critical:</strong> Immediate action required.
-                  Equipment failures that endanger people, electrical faults creating shock or fire
-                  risk, safety system failures. Drop everything and respond.
-                </li>
-                <li className="pl-1">
-                  <strong>Priority 2 — Production critical:</strong> Urgent response. Equipment
-                  breakdowns stopping or significantly affecting production. Respond promptly but
-                  safely — do not rush to the point of creating new hazards.
-                </li>
-                <li className="pl-1">
-                  <strong>Priority 3 — Planned maintenance:</strong> Scheduled work. Preventive
-                  maintenance, inspections, testing due within the planned window. Important but can
-                  usually be rescheduled if higher-priority work intervenes.
-                </li>
-                <li className="pl-1">
-                  <strong>Priority 4 — Non-urgent:</strong> Can be planned. Improvement projects,
-                  non-critical repairs, cosmetic issues, training activities. Schedule when capacity
-                  allows.
-                </li>
-              </ul>
+          <ConceptBlock title="Priority classification system">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Priority 1 — Safety critical:</strong> immediate action required. Equipment
+                failures that endanger people, electrical faults creating shock or fire risk, safety
+                system failures. Drop everything and respond.
+              </li>
+              <li>
+                <strong>Priority 2 — Production critical:</strong> urgent response. Equipment
+                breakdowns stopping or significantly affecting production. Respond promptly but
+                safely — do not rush to the point of creating new hazards.
+              </li>
+              <li>
+                <strong>Priority 3 — Planned maintenance:</strong> scheduled work. Preventive
+                maintenance, inspections, testing due within the planned window. Important but can
+                usually be rescheduled if higher-priority work intervenes.
+              </li>
+              <li>
+                <strong>Priority 4 — Non-urgent:</strong> can be planned. Improvement projects,
+                non-critical repairs, cosmetic issues, training activities. Schedule when capacity
+                allows.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Urgency vs impact matrix"
+            onSite="Prioritisation is a decision-making skill. Document your reasoning in your activity log — 'I prioritised the AHU breakdown (P2) over the scheduled lamp replacement (P3) because the AHU failure was affecting the clean room temperature control.' This demonstrates professional judgement to the assessor."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white" />
+                    <th className="py-2 pr-4 font-medium text-white">High impact</th>
+                    <th className="py-2 font-medium text-white">Low impact</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top font-medium">High urgency</td>
+                    <td className="py-2 pr-4 align-top">Do immediately (P1/P2)</td>
+                    <td className="py-2">Do promptly but do not drop critical work</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top font-medium">Low urgency</td>
+                    <td className="py-2 pr-4 align-top">
+                      Schedule soon — do not let it become urgent
+                    </td>
+                    <td className="py-2">Schedule when capacity allows (P4)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Urgency vs Impact Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left"></th>
-                      <th className="border border-white/10 px-3 py-2 text-left">High Impact</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Low Impact</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">High Urgency</td>
-                      <td className="border border-white/10 px-3 py-2">Do immediately (P1/P2)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Do promptly but do not drop critical work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Low Urgency</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schedule soon — do not let it become urgent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Schedule when capacity allows (P4)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Prioritisation is a decision-making skill. Document your
-              reasoning in your activity log — "I prioritised the AHU breakdown (P2) over the
-              scheduled lamp replacement (P3) because the AHU failure was affecting the clean room
-              temperature control." This demonstrates professional judgement to the assessor.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>Planning and preparation</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Planning and Preparation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Preparation is the foundation of efficient work">
             <p>
               The most productive maintenance technicians spend time planning before they start
               working. A few minutes of preparation prevents hours of delays — missing parts,
               unavailable access, wrong tools, flat batteries on test equipment. Preparation is not
               wasted time; it is the foundation of efficient work.
             </p>
-
             <p>
-              The old engineering saying "proper preparation prevents poor performance" exists
-              because it is consistently true. Technicians who jump straight into tasks without
-              preparation often find themselves making multiple trips to stores, waiting for
+              The old engineering saying &quot;proper preparation prevents poor performance&quot;
+              exists because it is consistently true. Technicians who jump straight into tasks
+              without preparation often find themselves making multiple trips to stores, waiting for
               permits, or discovering they need equipment that is not charged or calibrated. Each
               interruption costs time and breaks concentration.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pre-Task Planning Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Understand the scope:</strong> What exactly needs to be done? What is the
-                  expected outcome?
-                </li>
-                <li className="pl-1">
-                  <strong>Check drawings and manuals:</strong> Review relevant documentation before
-                  arriving at the equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Gather tools and materials:</strong> Assemble everything needed before
-                  starting — avoid return trips to stores
-                </li>
-                <li className="pl-1">
-                  <strong>Verify test equipment:</strong> Batteries charged, calibration current,
-                  correct leads and probes
-                </li>
-                <li className="pl-1">
-                  <strong>Obtain permits:</strong> If needed, arrange permits to work, hot permits,
-                  or access permits in advance
-                </li>
-                <li className="pl-1">
-                  <strong>Coordinate access:</strong> Inform production, building management or
-                  clients when you will need access
-                </li>
-                <li className="pl-1">
-                  <strong>Brief the team:</strong> If working with others, ensure everyone knows the
-                  plan, their role, and the safety requirements
-                </li>
-              </ul>
+          <ConceptBlock title="Pre-task planning checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Understand the scope:</strong> what exactly needs to be done? What is the
+                expected outcome?
+              </li>
+              <li>
+                <strong>Check drawings and manuals:</strong> review relevant documentation before
+                arriving at the equipment.
+              </li>
+              <li>
+                <strong>Gather tools and materials:</strong> assemble everything needed before
+                starting — avoid return trips to stores.
+              </li>
+              <li>
+                <strong>Verify test equipment:</strong> batteries charged, calibration current,
+                correct leads and probes.
+              </li>
+              <li>
+                <strong>Obtain permits:</strong> if needed, arrange permits to work, hot permits, or
+                access permits in advance.
+              </li>
+              <li>
+                <strong>Coordinate access:</strong> inform production, building management or
+                clients when you will need access.
+              </li>
+              <li>
+                <strong>Brief the team:</strong> if working with others, ensure everyone knows the
+                plan, their role, and the safety requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Common time-wasters and how to avoid them"
+            onSite="'Proper preparation prevents poor performance.' This engineering mantra exists because it is true. The time invested in preparation is always repaid in smoother, faster, safer execution."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Time-waster</th>
+                    <th className="py-2 font-medium text-white">Prevention</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Missing parts — trip to stores mid-task</td>
+                    <td className="py-2">Check parts availability and gather before starting</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Flat test equipment batteries</td>
+                    <td className="py-2">Charge after every use; check before each job</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Waiting for permit to work</td>
+                    <td className="py-2">Arrange permits in advance, not at the point of work</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Production cannot release equipment</td>
+                    <td className="py-2">Coordinate access windows in advance</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Wrong tools for the job</td>
+                    <td className="py-2">
+                      Review task requirements and check toolbox before leaving the workshop
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Time-Wasters and How to Avoid Them
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Time-Waster</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Prevention</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing parts — trip to stores mid-task
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check parts availability and gather before starting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flat test equipment batteries
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Charge after every use; check before each job
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Waiting for permit to work
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arrange permits in advance, not at the point of work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Production cannot release equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coordinate access windows in advance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Wrong tools for the job</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Review task requirements and check toolbox before leaving the workshop
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> "Proper preparation prevents poor performance." This
-              engineering mantra exists because it is true. The time invested in preparation is
-              always repaid in smoother, faster, safer execution.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>Managing deadlines and expectations</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Managing Deadlines and Expectations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Surprises are more damaging than bad news delivered early">
             <p>
               Meeting deadlines and managing expectations are closely linked. If you communicate
               realistic timescales at the outset and provide early warning when problems arise,
               stakeholders can plan accordingly. Surprises are far more damaging than bad news
               delivered early.
             </p>
-
             <p>
               In maintenance, deadlines come in many forms: planned maintenance windows, shutdown
               schedules, equipment return-to-service commitments, compliance inspection dates, and
               project milestones. Each carries different consequences for missing the deadline, and
               understanding those consequences helps you prioritise and communicate effectively.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Deadline Management Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Estimate realistically:</strong> Include time for preparation, the task
-                  itself, testing, documentation and clearing up
-                </li>
-                <li className="pl-1">
-                  <strong>Add contingency:</strong> Allow 15-20% extra for unexpected findings — in
-                  maintenance, surprises are normal
-                </li>
-                <li className="pl-1">
-                  <strong>Communicate early:</strong> If you realise a deadline is at risk, inform
-                  stakeholders immediately — not when it is already missed
-                </li>
-                <li className="pl-1">
-                  <strong>Offer solutions:</strong> When communicating delays, also suggest
-                  solutions: "The repair will take longer because X. I can complete by Y, or if we
-                  bring in Z as support, we can meet the original deadline."
-                </li>
-                <li className="pl-1">
-                  <strong>Document commitments:</strong> Keep a record of agreed deadlines and
-                  report completion
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Deadline management principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Estimate realistically:</strong> include time for preparation, the task
+                itself, testing, documentation and clearing up.
+              </li>
+              <li>
+                <strong>Add contingency:</strong> allow 15-20% extra for unexpected findings — in
+                maintenance, surprises are normal.
+              </li>
+              <li>
+                <strong>Communicate early:</strong> if you realise a deadline is at risk, inform
+                stakeholders immediately — not when it is already missed.
+              </li>
+              <li>
+                <strong>Offer solutions:</strong> when communicating delays, also suggest solutions:
+                &quot;The repair will take longer because X. I can complete by Y, or if we bring in
+                Z as support, we can meet the original deadline.&quot;
+              </li>
+              <li>
+                <strong>Document commitments:</strong> keep a record of agreed deadlines and report
+                completion.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Never Compromise Safety to Meet a Deadline
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Never compromise safety to meet a deadline"
+            whatHappens={
+              <>
                 Time pressure is one of the most common causes of accidents in maintenance work. If
                 completing a task safely will take longer than the deadline allows, communicate this
                 clearly. A professional technician never shortcuts safe isolation, skips testing, or
                 rushes live working because of time pressure. The assessor will look for evidence
                 that you maintain safety standards regardless of schedule pressure.
-              </p>
-            </div>
+              </>
+            }
+            doInstead={
+              <>
+                Under-promising and over-delivering is always better than over-promising and
+                under-delivering. A realistic estimate that you meet builds far more trust than an
+                optimistic estimate that you miss.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Under-promising and over-delivering is always better than
-              over-promising and under-delivering. A realistic estimate that you meet builds far
-              more trust than an optimistic estimate that you miss.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Organisation and Record-Keeping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Organisation and record-keeping</ContentEyebrow>
+
+          <ConceptBlock title="Systems that work, not obsessive tidiness">
             <p>
               Organisation extends beyond time management to how you manage your tools, equipment,
               documentation and workspace. A well-organised technician works more efficiently, makes
               fewer errors, and presents a more professional image — all of which contribute to your
               EPA assessment.
             </p>
-
             <p>
               Employers consistently rate organisation as one of the top professional attributes
               they look for in maintenance technicians. It is not about being obsessively tidy — it
@@ -676,80 +603,64 @@ const MOETModule7Section4_3 = () => {
               records, filing documentation correctly, and closing out work properly are all
               practical skills that save time and reduce errors.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Organisational Best Practices
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tool management:</strong> Keep tools clean, organised and accounted for.
-                  Use a tool inventory and check tools in and out of each job
-                </li>
-                <li className="pl-1">
-                  <strong>Test equipment:</strong> Maintain calibration records, charge batteries
-                  after use, and check leads for damage before each use
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Complete records as you work, not retrospectively.
-                  File documents systematically in your portfolio
-                </li>
-                <li className="pl-1">
-                  <strong>Workspace:</strong> Leave work areas clean and safe after completing
-                  tasks. Good housekeeping is a safety and professional requirement
-                </li>
-                <li className="pl-1">
-                  <strong>Knowledge management:</strong> Keep a reference file of common fault
-                  codes, wiring diagrams and maintenance procedures for equipment you work on
-                  regularly
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Organisational best practices">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Tool management:</strong> keep tools clean, organised and accounted for. Use
+                a tool inventory and check tools in and out of each job.
+              </li>
+              <li>
+                <strong>Test equipment:</strong> maintain calibration records, charge batteries
+                after use, and check leads for damage before each use.
+              </li>
+              <li>
+                <strong>Documentation:</strong> complete records as you work, not retrospectively.
+                File documents systematically in your portfolio.
+              </li>
+              <li>
+                <strong>Workspace:</strong> leave work areas clean and safe after completing tasks.
+                Good housekeeping is a safety and professional requirement.
+              </li>
+              <li>
+                <strong>Knowledge management:</strong> keep a reference file of common fault codes,
+                wiring diagrams and maintenance procedures for equipment you work on regularly.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation as a Time Management Tool
-              </p>
-              <p className="text-sm text-white mb-3">
-                Good documentation actually saves time, even though it takes time to create. Here is
-                why:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Completed records prevent having to revisit work to check what was done
-                </li>
-                <li className="pl-1">
-                  Accurate maintenance history speeds up future fault diagnosis on the same
-                  equipment
-                </li>
-                <li className="pl-1">
-                  Properly filed documents are found quickly when needed for audits or compliance
-                  checks
-                </li>
-                <li className="pl-1">
-                  Well-written handover notes prevent the next person from wasting time figuring out
-                  what happened
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Allocate 10-15 minutes at the end of each task
-              specifically for documentation. Treating documentation as part of the task — not an
-              addition to it — ensures records are completed while information is fresh.
+          <ConceptBlock
+            title="Documentation as a time management tool"
+            onSite="Allocate 10-15 minutes at the end of each task specifically for documentation. Treating documentation as part of the task — not an addition to it — ensures records are completed while information is fresh."
+          >
+            <p>
+              Good documentation actually saves time, even though it takes time to create. Here is
+              why:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Completed records prevent having to revisit work to check what was done.</li>
+              <li>
+                Accurate maintenance history speeds up future fault diagnosis on the same equipment.
+              </li>
+              <li>
+                Properly filed documents are found quickly when needed for audits or compliance
+                checks.
+              </li>
+              <li>
+                Well-written handover notes prevent the next person from wasting time figuring out
+                what happened.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Demonstrating Time Management in the EPA
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Demonstrating time management in the EPA</ContentEyebrow>
+
+          <ConceptBlock title="Consistent daily practice, not a single instance">
             <p>
               Time management and organisation are assessed as professional behaviours throughout
               the EPA. During the practical observation, the assessor will note your methodical
@@ -757,141 +668,118 @@ const MOETModule7Section4_3 = () => {
               may be asked to describe how you manage your workload, handle competing priorities, or
               organise your work.
             </p>
-
             <p>
               The strongest evidence of time management comes from your daily practice throughout
               the apprenticeship, not from a single instance. Consistent evidence of planning,
               prioritisation, deadline management and professional communication builds a compelling
               picture of a well-organised professional.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building EPA Evidence of Time Management
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Activity logs:</strong> Include descriptions of how you planned and
-                  prioritised your work each day
-                </li>
-                <li className="pl-1">
-                  <strong>Reflective accounts:</strong> Write about situations where you had to
-                  re-prioritise due to emergencies and how you managed it
-                </li>
-                <li className="pl-1">
-                  <strong>Witness statements:</strong> Ask supervisors to comment on your
-                  organisational skills and reliability
-                </li>
-                <li className="pl-1">
-                  <strong>Practical observation:</strong> Work methodically — the assessor notices
-                  preparation, efficient use of time, and tidy close-out
-                </li>
-                <li className="pl-1">
-                  <strong>Discussion preparation:</strong> Prepare specific examples of
-                  prioritisation decisions, deadline management, and workload communication
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Discussion Preparation Example
-              </p>
-              <p className="text-sm text-white">
-                "During a planned shutdown, I was asked to respond to an emergency breakdown on a
-                separate production line. I secured my current work safely, assessed the emergency
-                (a drive fault affecting the main packing line — P2 priority), and responded. I
-                communicated the impact on my shutdown tasks to my supervisor, who arranged for a
-                colleague to continue the planned work. I documented my decisions in my activity
-                log." This type of specific, structured example demonstrates professional time
-                management clearly.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Time management and organisation are woven into the
-              fabric of professional engineering practice. The assessor does not give a separate
-              grade for time management — they observe it as part of your overall professional
-              competence. A technician who works methodically, communicates well, and manages their
-              workload professionally demonstrates the behaviours the standard requires.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                Safety-critical tasks always take top priority regardless of other commitments
+          <ConceptBlock title="Building EPA evidence of time management">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Activity logs:</strong> include descriptions of how you planned and
+                prioritised your work each day.
               </li>
-              <li className="pl-1">
-                Plan and prepare before starting — 15 minutes of preparation saves hours of delays
+              <li>
+                <strong>Reflective accounts:</strong> write about situations where you had to
+                re-prioritise due to emergencies and how you managed it.
               </li>
-              <li className="pl-1">
-                Communicate realistic timescales and provide early warning of any delays
+              <li>
+                <strong>Witness statements:</strong> ask supervisors to comment on your
+                organisational skills and reliability.
               </li>
-              <li className="pl-1">Never compromise safety to meet a deadline</li>
-              <li className="pl-1">Use a tracking system to manage multiple tasks and deadlines</li>
-              <li className="pl-1">Complete documentation as part of the task, not afterwards</li>
-              <li className="pl-1">
-                Document prioritisation decisions in your activity log for EPA evidence
+              <li>
+                <strong>Practical observation:</strong> work methodically — the assessor notices
+                preparation, efficient use of time, and tidy close-out.
+              </li>
+              <li>
+                <strong>Discussion preparation:</strong> prepare specific examples of prioritisation
+                decisions, deadline management, and workload communication.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="Discussion preparation example"
+            situation={
+              <p>
+                During a planned shutdown, an apprentice was asked to respond to an emergency
+                breakdown on a separate production line.
+              </p>
+            }
+            whatToDo={
+              <p>
+                Secure your current work safely, assess the emergency (a drive fault affecting the
+                main packing line — P2 priority), and respond. Communicate the impact on your
+                shutdown tasks to your supervisor, who arranges for a colleague to continue the
+                planned work. Document your decisions in your activity log.
+              </p>
+            }
+            whyItMatters={
+              <>
+                This type of specific, structured example demonstrates professional time management
+                clearly. Time management and organisation are woven into the fabric of professional
+                engineering practice. The assessor does not give a separate grade for time
+                management — they observe it as part of your overall professional competence. A
+                technician who works methodically, communicates well, and manages their workload
+                professionally demonstrates the behaviours the standard requires.
+              </>
+            }
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Time Management" questions={quizQuestions} />
-        </section>
+          <KeyTakeaways
+            points={[
+              'Safety-critical tasks always take top priority regardless of other commitments.',
+              'Plan and prepare before starting — 15 minutes of preparation saves hours of delays.',
+              'Communicate realistic timescales and provide early warning of any delays.',
+              'Never compromise safety to meet a deadline.',
+              'Use a tracking system to manage multiple tasks and deadlines.',
+              'Complete documentation as part of the task, not afterwards.',
+              'Document prioritisation decisions in your activity log for EPA evidence.',
+            ]}
+          />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Communication Skills
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section4-4">
-              Next: Initiative and Problem-Solving
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Time Management" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Communication Skills
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Initiative and Problem-Solving
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

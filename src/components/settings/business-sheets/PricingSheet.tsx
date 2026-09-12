@@ -3,16 +3,12 @@ import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { WorkerRates, CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { hintCn, inputCn, labelCn, selectTriggerCn } from '@/components/settings/formStyles';
 
 const WORKER_TYPE_LABELS: Record<keyof WorkerRates, { name: string; description: string }> = {
   electrician: { name: 'Qualified Electrician', description: 'Fully qualified' },
@@ -21,6 +17,15 @@ const WORKER_TYPE_LABELS: Record<keyof WorkerRates, { name: string; description:
   designer: { name: 'Electrical Designer', description: 'Design specialist' },
   owner: { name: 'Business Owner', description: 'Senior electrician' },
 };
+
+const PAYMENT_TERMS_OPTIONS = [
+  { value: 'On receipt', label: 'Paid on receipt' },
+  { value: 'On completion', label: 'Payment due on completion' },
+  { value: '7 days', label: '7 days' },
+  { value: '14 days', label: '14 days' },
+  { value: '30 days', label: '30 days' },
+  { value: '60 days', label: '60 days' },
+];
 
 const DEFAULT_WORKER_RATES: WorkerRates = {
   electrician: 45,
@@ -82,8 +87,8 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Pricing & rates">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -99,18 +104,18 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Hourly rate (£)</Label>
+                <Label className={labelCn}>Hourly rate (£)</Label>
                 <Input
                   type="number"
                   step="0.50"
                   value={hourlyRate}
                   onChange={(e) => setHourlyRate(parseFloat(e.target.value) || 0)}
                   placeholder="45"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Day rate (£)</Label>
+                <Label className={labelCn}>Day rate (£)</Label>
                 <Input
                   type="number"
                   step="1"
@@ -119,25 +124,19 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                     setDayRate(e.target.value === '' ? '' : parseFloat(e.target.value) || 0)
                   }
                   placeholder={`${(hourlyRate || 45) * 8}`}
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
-                <p className="text-[11.5px] text-white">Leave blank to use hourly rate × 8</p>
+                <p className={hintCn}>Leave blank to use hourly rate × 8</p>
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Payment terms</Label>
-                <Select value={paymentTerms} onValueChange={setPaymentTerms}>
-                  <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
-                    <SelectValue placeholder="Select payment terms" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                    <SelectItem value="On receipt">Paid on receipt</SelectItem>
-                    <SelectItem value="On completion">Payment due on completion</SelectItem>
-                    <SelectItem value="7 days">7 days</SelectItem>
-                    <SelectItem value="14 days">14 days</SelectItem>
-                    <SelectItem value="30 days">30 days</SelectItem>
-                    <SelectItem value="60 days">60 days</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label className={labelCn}>Payment terms</Label>
+                <MobileSelectPicker
+                  value={paymentTerms}
+                  onValueChange={setPaymentTerms}
+                  options={PAYMENT_TERMS_OPTIONS}
+                  placeholder="Select payment terms"
+                  triggerClassName={selectTriggerCn}
+                />
               </div>
             </div>
 
@@ -160,9 +159,9 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                   const worker = WORKER_TYPE_LABELS[workerKey];
                   return (
                     <div key={workerKey} className="space-y-1.5">
-                      <Label className="text-white font-medium text-[12px]">{worker.name}</Label>
+                      <Label className={labelCn}>{worker.name}</Label>
                       <div className="relative">
-                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[14px] font-medium text-white">
+                        <span className="pointer-events-none absolute left-1 top-1/2 -translate-y-1/2 text-[14px] font-medium text-white">
                           £
                         </span>
                         <Input
@@ -175,10 +174,10 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                               [workerKey]: parseFloat(e.target.value) || 0,
                             });
                           }}
-                          className="h-11 bg-[hsl(0_0%_12%)] border-white/[0.08] pl-8 text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                          className={cn(inputCn, 'pl-6')}
                         />
                       </div>
-                      <p className="text-[11px] text-white">{worker.description}</p>
+                      <p className={hintCn}>{worker.description}</p>
                     </div>
                   );
                 })}
@@ -191,7 +190,7 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

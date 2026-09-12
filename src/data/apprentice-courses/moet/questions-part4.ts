@@ -195,7 +195,7 @@ export const questionsPart4: StandardMockQuestion[] = [
     options: [
       'We run every asset to failure, replacing components only when they break down',
       'We carry out preventive maintenance on a fixed monthly schedule, for all equipment regardless of criticality',
-      'Maintenance strategy is decided by the production manager, and is not a technician\'s concern',
+      "Maintenance strategy is decided by the production manager, and is not a technician's concern",
       'Matching planned, condition-based and run-to-failure work to asset criticality via a CMMS',
     ],
     correctAnswer: 3,
@@ -328,7 +328,7 @@ export const questionsPart4: StandardMockQuestion[] = [
       'The power rating only, taken from any similarly sized motor in the stores',
       'The colour and physical size of the old motor, so a visual match can be found',
       'Rating, voltage, speed, mounting, IP rating and duty from the nameplate and O&M data',
-      'The supplier\'s current catalogue, choosing whichever motor is in stock at the time',
+      "The supplier's current catalogue, choosing whichever motor is in stock at the time",
     ],
     correctAnswer: 2,
     explanation:
@@ -364,7 +364,7 @@ export const questionsPart4: StandardMockQuestion[] = [
       "What is the significance of power factor in an industrial installation and how does it affect the maintenance technician's work?",
     options: [
       'Poor power factor raises current for the same real power, causing losses and charges',
-      'Power factor only affects the supply authority, and has no impact on the technician\'s work',
+      "Power factor only affects the supply authority, and has no impact on the technician's work",
       'A poor power factor reduces the current drawn, lowering the load on cables and switchgear',
       'Power factor is fixed by the motor design at manufacture, and cannot change in service',
     ],
@@ -457,7 +457,7 @@ export const questionsPart4: StandardMockQuestion[] = [
     options: [
       'Communication matters only when dealing with customers, not within the maintenance team',
       'It underpins safe handovers, accurate fault reporting and coordination with production',
-      'Communication is the supervisor\'s responsibility, and not part of a technician\'s role',
+      "Communication is the supervisor's responsibility, and not part of a technician's role",
       'Communication is unimportant, provided the technical work itself is carried out correctly',
     ],
     correctAnswer: 1,
@@ -557,5 +557,153 @@ export const questionsPart4: StandardMockQuestion[] = [
     difficulty: 'basic',
     topic: 'Continuous Improvement',
     category: 'Cross-Module Integration',
+  },
+  {
+    id: 151,
+    question:
+      'The volt drop formula is Vd = (mV/A/m x I x L) / 1000. Transposed to find the maximum run length L, it becomes:',
+    options: [
+      'L = (Vd x 1000) / (mV/A/m x I)',
+      'L = (Vd x mV/A/m) / (I x 1000)',
+      'L = (mV/A/m x I) / (Vd x 1000)',
+      'L = Vd / (mV/A/m x I x 1000)',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Multiply both sides by 1000 to clear the division, giving Vd x 1000 = mV/A/m x I x L. Then divide both sides by everything still attached to L, which is (mV/A/m x I). This is one of the most useful transpositions on site because it answers how far a run can go before volt drop becomes the limiting factor.',
+    section: 'Engineering Mathematics',
+    difficulty: 'intermediate',
+    topic: 'Transposition',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 152,
+    question: 'An insulation resistance tester reads 0.47 GOhm. Expressed in megohms, this is:',
+    options: ['470 MOhm', '0.47 MOhm', '47 MOhm', '4700 MOhm'],
+    correctAnswer: 0,
+    explanation:
+      'Giga is 10^9 and mega is 10^6, so one gigohm is one thousand megohms: 0.47 x 1000 = 470 MOhm. Slipping a factor of a thousand here matters, because 0.47 MOhm would be a fail against the 1.0 MOhm minimum where 470 MOhm is a very healthy circuit.',
+    section: 'Engineering Mathematics',
+    difficulty: 'basic',
+    topic: 'Engineering notation',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 153,
+    question: 'A circuit has a resistance of 8 Ohm and a reactance of 6 Ohm. Its impedance is:',
+    options: ['10 Ohm', '14 Ohm', '2 Ohm', '48 Ohm'],
+    correctAnswer: 0,
+    explanation:
+      'Resistance and reactance act at right angles to one another, so they combine by Pythagoras rather than by arithmetic addition: Z = the square root of (8 squared + 6 squared) = the square root of 100 = 10 Ohm. Simply adding them to get 14 Ohm always overstates the impedance, and the error is largest when R and X are similar in size.',
+    section: 'Engineering Mathematics',
+    difficulty: 'intermediate',
+    topic: 'Trigonometry and Pythagoras',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 154,
+    question:
+      'A conduit offset of 120 mm is to be formed using a 30 degree set. The distance between the two bends is:',
+    options: ['240 mm', '138 mm', '104 mm', '60 mm'],
+    correctAnswer: 0,
+    explanation:
+      'The offset is the side opposite the angle and the distance between bends is the hypotenuse, so sin 30 = 120 / d, giving d = 120 / sin 30. Since sin 30 is exactly 0.5, d = 240 mm. This is why 30 degree sets are popular: the distance between bends is always exactly twice the offset, which can be worked out on a ladder.',
+    section: 'Engineering Mathematics',
+    difficulty: 'intermediate',
+    topic: 'Trigonometry and Pythagoras',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 155,
+    question:
+      'A circular duct has a diameter of 150 mm. Its cross-sectional area is approximately:',
+    options: ['17 700 mm2', '70 700 mm2', '35 300 mm2', '23 600 mm2'],
+    correctAnswer: 0,
+    explanation:
+      'Area is pi x r squared, and the radius is half the diameter: 75 mm, not 150 mm. So A = pi x 75 squared = 17 671 mm2. Using the diameter in place of the radius gives 70 700 mm2, four times too large, because the mistake doubles a quantity that is then squared.',
+    section: 'Engineering Mathematics',
+    difficulty: 'intermediate',
+    topic: 'Areas and volumes',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 156,
+    question:
+      'Downtime for six breakdowns, in hours, was 2, 2, 3, 3, 4 and 40. Which average best describes a typical breakdown?',
+    options: [
+      'The median, 3 hours',
+      'The mean, 9 hours',
+      'The range, 38 hours',
+      'The mode, 2 and 3 hours',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The single 40-hour outlier drags the mean up to 9 hours, which is longer than five of the six actual breakdowns. The median is the middle value once sorted and is barely affected by extremes, so it genuinely represents a typical event. Where one extreme value dominates a small data set, the median is the honest average to quote.',
+    section: 'Engineering Mathematics',
+    difficulty: 'intermediate',
+    topic: 'Statistics',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 157,
+    question:
+      'Two motors both average 4.0 mm/s vibration. Motor A ranges 3.9 to 4.1; motor B ranges 1.0 to 7.0. What does this indicate?',
+    options: [
+      'Motor B is far more variable, and the average alone conceals that',
+      'Both are in identical condition because their averages match',
+      'Motor A is in worse condition because its readings never change',
+      'Nothing can be concluded without knowing the mode',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Identical averages can hide completely different behaviour. Motor A is stable and predictable; motor B swings across 6 mm/s, which points to something intermittent such as a loose mounting, a varying load or a developing fault. An average quoted without a measure of spread beside it is only half the story.',
+    section: 'Engineering Mathematics',
+    difficulty: 'advanced',
+    topic: 'Statistics',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 158,
+    question:
+      'Copper has a temperature coefficient of resistance of about 0.004 per degree C. A conductor measuring 0.8 Ohm at 20 C will measure approximately what at 70 C?',
+    options: ['0.96 Ohm', '0.80 Ohm', '1.60 Ohm', '0.84 Ohm'],
+    correctAnswer: 0,
+    explanation:
+      'The temperature rise is 50 C, so the fractional increase is 0.004 x 50 = 0.2, or 20 per cent. R = 0.8 x 1.2 = 0.96 Ohm. This is the physical reason measured loop impedance values are corrected before comparison: the conductor tested cold is substantially more resistive when carrying fault current hot.',
+    section: 'Engineering Mathematics',
+    difficulty: 'advanced',
+    topic: 'Rates of change and coefficients',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 159,
+    question:
+      'Two machines both read 5 mm/s vibration today. Machine A has been at 5 for a year; machine B has climbed from 2 to 5 in two months. What should you conclude?',
+    options: [
+      'Machine B is deteriorating rapidly and needs attention despite the identical reading',
+      'They need identical treatment because the readings match',
+      'Machine A is worse because it has been elevated for longer',
+      'Neither needs attention until a threshold is exceeded',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The level is the same but the gradient is completely different. Machine A is stable; machine B is changing at roughly 1.5 mm/s per month and will reach a serious level within weeks. Judging condition on level alone treats these two identically, which is exactly the error trend analysis exists to prevent.',
+    section: 'Engineering Mathematics',
+    difficulty: 'advanced',
+    topic: 'Rates of change and coefficients',
+    category: 'Engineering Principles & Electrical Theory',
+  },
+  {
+    id: 160,
+    question:
+      'A capacitor charges through a resistor where R = 10 kOhm and C = 100 microfarad. The time constant is:',
+    options: ['1 second', '0.1 seconds', '10 seconds', '1000 seconds'],
+    correctAnswer: 0,
+    explanation:
+      'The time constant is R x C. Converting to base units, 10 kOhm is 10 000 Ohm and 100 microfarad is 0.0001 F, so the time constant is 10 000 x 0.0001 = 1 second. After one time constant the capacitor reaches about 63 per cent of its final voltage, and it is conventionally treated as fully charged after five.',
+    section: 'Engineering Mathematics',
+    difficulty: 'advanced',
+    topic: 'Rates of change and coefficients',
+    category: 'Engineering Principles & Electrical Theory',
   },
 ];

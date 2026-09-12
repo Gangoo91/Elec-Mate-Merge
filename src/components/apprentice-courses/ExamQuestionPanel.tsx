@@ -166,7 +166,7 @@ export function ExamQuestionPanel({
         {timeRemaining !== null && (
           <span
             className={cn(
-              'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-semibold tabular-nums',
+              'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-semibold tabular-nums',
               lowTime
                 ? 'border-red-400/40 bg-red-500/10 text-red-200'
                 : 'border-white/[0.12] bg-white/[0.06] text-white'
@@ -375,7 +375,7 @@ export function ExamQuestionPanel({
                 haptic.light();
                 onJump(nextUnanswered);
               }}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-elec-yellow/35 px-3 text-[12px] font-semibold text-white touch-manipulation active:scale-[0.97]"
+              className="flex h-11 items-center gap-1.5 rounded-full border border-elec-yellow/35 px-3 text-[12px] font-semibold text-white touch-manipulation active:scale-[0.97]"
             >
               <SkipForward className="h-3.5 w-3.5" />
               Next unanswered
@@ -387,7 +387,7 @@ export function ExamQuestionPanel({
               haptic.medium();
               onSubmit();
             }}
-            className="flex h-9 items-center gap-1.5 rounded-full border border-elec-yellow bg-elec-yellow px-3.5 text-[12px] font-bold text-black touch-manipulation active:scale-[0.97]"
+            className="flex h-11 items-center gap-1.5 rounded-full border border-elec-yellow bg-elec-yellow px-3.5 text-[12px] font-bold text-black touch-manipulation active:scale-[0.97]"
           >
             Finish
             <CheckCircle className="h-3.5 w-3.5" />

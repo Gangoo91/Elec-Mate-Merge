@@ -15,6 +15,22 @@ interface SecuritySectionProps {
   eyebrow: string;
 }
 
+/**
+ * Two-factor authentication is switched OFF at the project level.
+ *
+ * Supabase Auth returns 422 `mfa_totp_enroll_not_enabled` on every enrolment
+ * attempt until TOTP is enabled in the dashboard (Authentication →
+ * Multi-Factor Authentication). Rather than offer a button that can only
+ * fail, the row is hidden while this is false.
+ *
+ * 🔴 Flip to `true` the moment TOTP enrolment is switched on in Supabase —
+ * the enrolment flow beneath it is complete and tested.
+ *
+ * Anyone who already has a verified factor still sees the row (so they can
+ * turn it off), regardless of this flag.
+ */
+const TOTP_ENROLMENT_ENABLED = false;
+
 const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
   const { user } = useAuth();
 
@@ -136,9 +152,16 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
     try {
       // Clear any abandoned unverified factor first — Supabase blocks a second
       // enrolment while one is pending.
+      // `listFactors().totp` only ever contains VERIFIED factors (it is typed
+      // `Factor<'totp','verified'>[]`), so the old loop over it could never
+      // find an abandoned enrolment. `all` is the one that includes unverified
+      // factors. Without this, a cancelled setup leaves a pending factor
+      // behind and the next enrol returns 422 — the friendly name is taken.
       const { data: existing } = await supabase.auth.mfa.listFactors();
-      for (const f of existing?.totp ?? []) {
-        if (f.status !== 'verified') await supabase.auth.mfa.unenroll({ factorId: f.id });
+      for (const f of existing?.all ?? []) {
+        if (f.factor_type === 'totp' && f.status !== 'verified') {
+          await supabase.auth.mfa.unenroll({ factorId: f.id });
+        }
       }
       const { data, error } = await supabase.auth.mfa.enroll({
         factorType: 'totp',
@@ -150,7 +173,16 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
       setEnrollSecret(data.totp.secret);
       setShowEnrollSheet(true);
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : 'Could not start 2FA setup');
+      // `mfa_totp_enroll_not_enabled` is a PROJECT setting, not a user error:
+      // TOTP enrolment is switched off in Supabase Auth. Raw, it surfaces as
+      // "MFA enroll is disabled for TOTP", which reads like a bug in the app.
+      const code = (e as { code?: string })?.code;
+      const raw = e instanceof Error ? e.message : '';
+      toast.error(
+        code === 'mfa_totp_enroll_not_enabled' || /disabled for TOTP/i.test(raw)
+          ? 'Two-factor authentication is not switched on for this account yet. We are enabling it — try again shortly.'
+          : raw || 'Could not start 2FA setup'
+      );
     } finally {
       setEnrollBusy(false);
     }
@@ -228,30 +260,32 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
             setShowChangePasswordSheet(true);
           }}
         />
-        <ActionRow
-          label="Two-Factor Authentication"
-          subtitle={
-            mfaLoading
-              ? 'Checking…'
-              : totpFactorId
-                ? 'On — an authenticator code is required at sign-in'
-                : 'Add an authenticator app code at sign-in'
-          }
-          actionLabel={
-            mfaLoading
-              ? '…'
-              : totpFactorId
-                ? confirmDisable2fa
-                  ? 'Tap to confirm'
-                  : 'Turn off'
-                : enrollBusy
-                  ? 'Starting…'
-                  : 'Set up'
-          }
-          onAction={() => (totpFactorId ? disable2fa() : startEnroll())}
-          disabled={mfaLoading || enrollBusy}
-          destructive={!!totpFactorId}
-        />
+        {(TOTP_ENROLMENT_ENABLED || !!totpFactorId) && (
+          <ActionRow
+            label="Two-Factor Authentication"
+            subtitle={
+              mfaLoading
+                ? 'Checking…'
+                : totpFactorId
+                  ? 'On — an authenticator code is required at sign-in'
+                  : 'Add an authenticator app code at sign-in'
+            }
+            actionLabel={
+              mfaLoading
+                ? '…'
+                : totpFactorId
+                  ? confirmDisable2fa
+                    ? 'Tap to confirm'
+                    : 'Turn off'
+                  : enrollBusy
+                    ? 'Starting…'
+                    : 'Set up'
+            }
+            onAction={() => (totpFactorId ? disable2fa() : startEnroll())}
+            disabled={mfaLoading || enrollBusy}
+            destructive={!!totpFactorId}
+          />
+        )}
         <ActionRow
           label="Sign Out All Devices"
           subtitle="Ends every session, including this one"
@@ -273,15 +307,19 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
 
       {/* ── 2FA ENROL SHEET ── */}
       <Sheet open={showEnrollSheet} onOpenChange={(v) => !v && cancelEnroll()}>
-        <SettingsSheetContent mobileAuto className="bg-[hsl(0_0%_12%)]">
+        <SettingsSheetContent
+          mobileAuto
+          title="Sign out of all devices"
+          description="Ends every session, including this one."
+        >
           <div className="flex flex-col px-6 pt-8 pb-10 gap-5 max-w-md mx-auto w-full">
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold text-white tracking-tight">
                 Set up two-factor authentication
               </h2>
-              <p className="text-[13px] text-white/75 leading-relaxed">
-                Scan the code with Google Authenticator, 1Password, Authy or any authenticator
-                app, then enter the 6-digit code it shows.
+              <p className="text-[13px] text-white leading-relaxed">
+                Scan the code with Google Authenticator, 1Password, Authy or any authenticator app,
+                then enter the 6-digit code it shows.
               </p>
             </div>
 
@@ -297,7 +335,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
                 await navigator.clipboard.writeText(enrollSecret);
                 toast.success('Secret copied — paste it into your authenticator app');
               }}
-              className="mx-auto text-[11.5px] text-white/70 hover:text-white touch-manipulation min-h-[44px] px-3"
+              className="mx-auto text-[11.5px] text-white hover:text-white touch-manipulation min-h-[44px] px-3"
             >
               Can't scan? Copy the secret key instead
             </button>
@@ -319,7 +357,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
               placeholder="123456"
               className={cn(
                 'w-full h-14 px-4 rounded-xl text-center tracking-[0.5em] text-[20px] font-semibold tabular-nums',
-                'bg-white/[0.08] border text-white placeholder:text-white/40 placeholder:tracking-[0.5em]',
+                'bg-white/[0.08] border text-white placeholder:text-white placeholder:tracking-[0.5em]',
                 'outline-none transition-all border-white/[0.16] focus:border-elec-yellow/60'
               )}
             />
@@ -340,7 +378,11 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
         open={showChangePasswordSheet}
         onOpenChange={(v) => !v && setShowChangePasswordSheet(false)}
       >
-        <SettingsSheetContent mobileAuto className="bg-[hsl(0_0%_12%)]">
+        <SettingsSheetContent
+          mobileAuto
+          title="Change password"
+          description="Set a new password for your Elec-Mate account."
+        >
           <div className="flex flex-col px-6 pt-8 pb-10 gap-5">
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold text-white tracking-tight">Change password</h2>
@@ -363,7 +405,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
               autoComplete="new-password"
               className={cn(
                 'w-full h-12 px-4 rounded-xl',
-                'bg-white/[0.06] border text-white placeholder:text-white/50 [color-scheme:dark]',
+                'bg-white/[0.06] border text-white placeholder:text-white [color-scheme:dark]',
                 'text-[15px] outline-none transition-all',
                 'border-white/[0.08] focus:border-elec-yellow/50'
               )}
@@ -377,7 +419,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
               onKeyDown={(e) => e.key === 'Enter' && handleChangePassword()}
               className={cn(
                 'w-full h-12 px-4 rounded-xl',
-                'bg-white/[0.06] border text-white placeholder:text-white/50 [color-scheme:dark]',
+                'bg-white/[0.06] border text-white placeholder:text-white [color-scheme:dark]',
                 'text-[15px] outline-none transition-all',
                 'border-white/[0.08] focus:border-elec-yellow/50'
               )}
@@ -396,7 +438,11 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
 
       {/* ── BIOMETRIC PASSWORD CONFIRM SHEET ── */}
       <Sheet open={showPasswordSheet} onOpenChange={(v) => !v && setShowPasswordSheet(false)}>
-        <SettingsSheetContent mobileAuto className="bg-[hsl(0_0%_12%)]">
+        <SettingsSheetContent
+          mobileAuto
+          title="Set up two-factor authentication"
+          description="Scan the QR code with your authenticator app and enter the six-digit code."
+        >
           <div className="flex flex-col px-6 pt-8 pb-10 gap-5">
             <div className="text-center space-y-2">
               <h2 className="text-xl font-semibold text-white tracking-tight">
@@ -423,7 +469,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
                 onKeyDown={(e) => e.key === 'Enter' && handleBiometricPasswordSubmit()}
                 className={cn(
                   'w-full h-12 px-4 pr-14 rounded-xl',
-                  'bg-white/[0.06] border text-white placeholder:text-white/50 [color-scheme:dark]',
+                  'bg-white/[0.06] border text-white placeholder:text-white [color-scheme:dark]',
                   'text-[15px] outline-none transition-all',
                   'border-white/[0.08] focus:border-elec-yellow/50'
                 )}
@@ -440,7 +486,7 @@ const SecuritySection = ({ eyebrow }: SecuritySectionProps) => {
             <Button
               onClick={handleBiometricPasswordSubmit}
               disabled={biometricVerifying || !biometricPassword}
-              className="w-full h-12 rounded-full text-[14px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+              className="w-full h-12 rounded-full text-[14px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
             >
               {biometricVerifying ? 'Verifying…' : `Enable ${biometric.biometricType}`}
             </Button>

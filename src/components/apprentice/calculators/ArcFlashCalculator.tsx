@@ -263,7 +263,7 @@ const ArcFlashCalculator = () => {
     const verdict = result.ppeCategory <= 2 ? 'pass' : result.ppeCategory <= 3 ? 'warn' : 'fail';
     return {
       meta: {
-        title: 'Arc Flash Energy Calculator',
+        title: 'Arc Flash Energy',
         subtitle: 'Incident energy and PPE category per IEEE 1584-2002',
         standard: 'IEEE 1584-2002',
       },
@@ -286,6 +286,13 @@ const ArcFlashCalculator = () => {
             { label: 'Working distance', value: `${workingDistance} mm` },
             { label: 'Equipment type', value: EQUIPMENT_TYPE_LABELS[equipmentType] },
             { label: 'Electrode configuration', value: electrodeConfig },
+            {
+              label: 'Enclosure type',
+              value: enclosureType === 'open' ? 'Open air' : 'Enclosed (box)',
+            },
+            ...(!useAutoGap && conductorGap
+              ? [{ label: 'Conductor gap', value: `${conductorGap} mm` }]
+              : []),
           ],
         },
         {

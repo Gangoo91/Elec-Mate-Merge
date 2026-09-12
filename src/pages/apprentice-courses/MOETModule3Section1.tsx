@@ -4,50 +4,49 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '3.1.1',
-      title: 'Low voltage switchgear (MCBs, MCCBs)',
-      description: 'LV switchgear types, operation and selection criteria',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-1',
-    },
-    {
-      number: '3.1.2',
-      title: 'High voltage switchgear (overview for awareness)',
-      description: 'HV switchgear principles and safety considerations',
-      icon: AlertTriangle,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-2',
-    },
-    {
-      number: '3.1.3',
-      title: 'Distribution boards and consumer units',
-      description: 'Design, installation and maintenance of distribution equipment',
-      icon: CircuitBoard,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-3',
-    },
-    {
-      number: '3.1.4',
-      title: 'Busbars and cabling systems',
-      description: 'Busbar systems, cable routing and installation methods',
-      icon: Cable,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-4',
-    },
-    {
-      number: '3.1.5',
-      title: 'Isolation and switching devices',
-      description: 'Isolator types, operation and switching procedures',
-      icon: Power,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-5',
-    },
-    {
-      number: '3.1.6',
-      title: 'Protection coordination (discrimination, selectivity)',
-      description: 'Coordinating protective devices for selective operation',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module3-section1-6',
-    },
-  ];
-
+  {
+    number: '3.1.1',
+    title: 'Low voltage switchgear (MCBs, MCCBs)',
+    description: 'LV switchgear types, operation and selection criteria',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-1',
+  },
+  {
+    number: '3.1.2',
+    title: 'HV/LV switchgear types',
+    description: 'Switchgear types across HV and LV, and where each is used',
+    icon: AlertTriangle,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-2',
+  },
+  {
+    number: '3.1.3',
+    title: 'Circuit breaker operations',
+    description: 'How circuit breakers operate, and what that means for maintenance',
+    icon: CircuitBoard,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-3',
+  },
+  {
+    number: '3.1.4',
+    title: 'Busbars and cabling systems',
+    description: 'Busbar systems, cable routing and installation methods',
+    icon: Cable,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-4',
+  },
+  {
+    number: '3.1.5',
+    title: 'Isolation and switching devices',
+    description: 'Isolator types, operation and switching procedures',
+    icon: Power,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-5',
+  },
+  {
+    number: '3.1.6',
+    title: 'Protection coordination (discrimination, selectivity)',
+    description: 'Coordinating protective devices for selective operation',
+    icon: Shield,
+    href: '/study-centre/apprentice/m-o-e-t-module3-section1-6',
+  },
+];
 
 const MOETModule3Section1 = () => {
   useSEO(

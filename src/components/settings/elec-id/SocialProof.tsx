@@ -69,7 +69,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-5 space-y-4',
+        'bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden p-5 space-y-4',
         className
       )}
     >
@@ -86,7 +86,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="col-span-2 p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="col-span-2 p-4 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <p className="text-sm text-white">Profile views</p>
           <div className="flex items-baseline gap-2">
             <span className="text-4xl font-semibold text-white tabular-nums">{animatedViews}</span>
@@ -96,22 +96,22 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
           </div>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <p className="text-xs text-white">Saved</p>
           <p className="text-2xl font-semibold text-white tabular-nums">{stats.savedByEmployers}</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <p className="text-xs text-white">Messages</p>
           <p className="text-2xl font-semibold text-white tabular-nums">{stats.contactRequests}</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <p className="text-xs text-white">In searches</p>
           <p className="text-2xl font-semibold text-white tabular-nums">{stats.searchAppearances}</p>
         </div>
 
-        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="p-3 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <p className="text-xs text-white">Area rank</p>
           <p className="text-2xl font-semibold text-white tabular-nums">
             #{stats.rankInArea}
@@ -129,7 +129,7 @@ export function SocialProof({ stats, recentViewers, className }: SocialProofProp
             {recentViewers.slice(0, 4).map((viewer) => (
               <div
                 key={viewer.id}
-                className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.04] border border-white/[0.06]"
+                className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.04] border border-elec-yellow/35"
               >
                 <Avatar className="h-8 w-8">
                   {viewer.employerLogo ? (

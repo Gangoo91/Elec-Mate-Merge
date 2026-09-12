@@ -60,6 +60,14 @@ interface UserBrief {
   heldCerts: Array<{ label: string; invoiceNumber: string }>;
   unbilledHours: number;
   visitsThisWeek: number;
+  /**
+   * Ranked lines from `get_electrician_actions`. The eight legacy bits below
+   * know nothing about Part P deadlines, half-written certificates,
+   * re-inspections coming round again, or what is actually in the calendar —
+   * so for most electricians the brief had one true line and said the same
+   * thing every morning.
+   */
+  engineBits: string[];
 }
 
 const emptyBrief = (): UserBrief => ({
@@ -82,6 +90,7 @@ const emptyBrief = (): UserBrief => ({
   heldCerts: [],
   unbilledHours: 0,
   visitsThisWeek: 0,
+  engineBits: [],
 });
 
 const hasContent = (b: UserBrief) =>
@@ -92,7 +101,8 @@ const hasContent = (b: UserBrief) =>
   b.renewalsDueCount > 0 ||
   b.heldCerts.length > 0 ||
   b.unbilledHours >= 1 ||
-  b.visitsThisWeek > 0;
+  b.visitsThisWeek > 0 ||
+  b.engineBits.length > 0;
 
 const clientNameOf = (clientData: unknown): string => {
   const cd = (clientData || {}) as Record<string, unknown>;
@@ -117,8 +127,14 @@ const gbp = (n: number) =>
  * quotes, overdue, renewals, visits, unbilled time. Top four facts win.
  */
 function buildPush(firstName: string, b: UserBrief): { title: string; body: string } {
-  const title = `Morning, ${firstName} ☀️`;
+  // No emoji. Every other push in the app goes out without one, and the app
+  // icon already brands it — see the house style in notification-templates.
+  const title = `Morning, ${firstName}`;
   const bits: string[] = [];
+
+  // Ranked engine lines first: a statutory deadline or an unpaid invoice
+  // outranks anything the legacy list can produce.
+  for (const line of b.engineBits) bits.push(line);
 
   if (b.todayEvents.length > 0) {
     const first = b.todayEvents[0];
@@ -159,7 +175,20 @@ function buildPush(firstName: string, b: UserBrief): { title: string; body: stri
     bits.push(`${b.heldCerts.length} cert${b.heldCerts.length === 1 ? '' : 's'} release on payment`);
   }
 
-  return { title, body: bits.slice(0, 4).join(' · ') || 'Your day is clear — win some work.' };
+  // One fact per line, not a dot-separated string. iOS shows two lines of body
+  // in the banner and four when it is pulled down; Android expands the lot.
+  // Joined with ' · ' the whole brief read as a single fragment — "£5,862
+  // overdue" and nothing else — which is what made it look like there was
+  // barely anything in it.
+  // Four short lines, not four sentences — see the note on the engine bits.
+  const lines = bits.slice(0, 4).map((l) => (l.length > 42 ? `${l.slice(0, 41).trimEnd()}…` : l));
+  if (lines.length === 0) {
+    return { title, body: 'Nothing needs you today.' };
+  }
+
+  // The count tells someone at a glance whether it is worth pulling down.
+  const heading = lines.length > 1 ? `${title} — ${lines.length} things` : title;
+  return { title: heading, body: lines.join('\n') };
 }
 
 async function runBrief(req: Request): Promise<Response> {
@@ -350,6 +379,86 @@ async function runBrief(req: Request): Promise<Response> {
     if (r.key === 'morning_brief' && r.mode === 'off') optedOut.add(r.user_id);
     if (r.key === 'client_renewal_emails' && r.mode === 'auto') renewalsOn.add(r.user_id);
   }
+
+  // ── Ranked actions from the electrician engine ──────────────────────
+  //
+  // One round trip for everyone: 363 electricians and 802 actions in about
+  // 1.7s. Doing it per user inside the send loop below would be hundreds of
+  // round trips for a daily cron.
+  //
+  // Crucially this also ADDS people. `hasContent` only ever admitted users
+  // with one of the eight legacy bits, so an electrician whose only news is a
+  // Part P deadline or a certificate left half-written got no brief at all.
+  // Not filtered by role. `profiles.role` is unreliable — the founder account
+  // is labelled 'employer' while being used as an electrician, and a role
+  // filter silently excludes anyone mislabelled. The engine self-gates: it
+  // returns nothing for someone with no quotes, certificates or invoices, so
+  // asking about everyone costs a little time and cannot produce a wrong line.
+  //
+  // `.range()` is load-bearing: PostgREST caps a select at 1,000 rows by
+  // default and this returns ~1,263, so without it the id list is silently
+  // truncated and whoever falls past the cut gets no engine lines at all.
+  const { data: elecUsers, error: elecErr } = await admin
+    .from('profiles')
+    .select('id')
+    .neq('role', 'apprentice')
+    .order('id')
+    .range(0, 9999);
+  if (elecErr) console.warn('[morning-brief] profile fetch failed:', elecErr.message);
+  const elecIds = (elecUsers ?? []).map((r: { id: string }) => r.id);
+  console.log(`[morning-brief] engine: asking about ${elecIds.length} users`);
+
+  // Chunked. One call for 1,263 users runs ~3.7s server-side, which is close
+  // enough to the authenticator's 8s statement timeout to be fragile once
+  // PostgREST and network overhead are on top — and when it trips, the catch
+  // below swallows it and everyone silently loses their engine lines. 300 at a
+  // time keeps each call under a second.
+  let engineRows = 0;
+  for (let i = 0; i < elecIds.length; i += 300) {
+    const chunk = elecIds.slice(i, i + 300);
+    const { data: actions, error: actionsErr } = await admin.rpc('electrician_actions_bulk', {
+      p_user_ids: chunk,
+      p_limit: 3,
+    });
+    if (actionsErr) {
+      console.warn(
+        `[morning-brief] electrician_actions_bulk failed on chunk ${i}:`,
+        actionsErr.message
+      );
+      continue;
+    }
+    for (const a of (actions ?? []) as Array<{
+      user_id: string;
+      kind: string;
+      title: string;
+      reason: string;
+    }>) {
+      // Neither a feature tip nor "make your first certificate" is news. Both
+      // are prompts for someone with nothing on, and a daily brief is meant to
+      // say what today actually needs.
+      if (a.kind === 'feature_tip' || a.kind === 'first_cert') continue;
+      let brief = briefs.get(a.user_id);
+      if (!brief) {
+        brief = emptyBrief();
+        briefs.set(a.user_id, brief);
+      }
+      if (brief.engineBits.length < 3) {
+        // Compact. A tap on iOS opens the app — expanding takes a long-press
+        // that almost nobody does — so whatever is not in the first couple of
+        // visible lines is never read. "2 notifications past their deadline —
+        // The 30-day Building Regs window has closed. Submit it now" is 95
+        // characters and swallows the whole banner on its own.
+        //
+        // The title is already the fact. The only thing worth carrying over
+        // from the reason is a money figure the title does not have, because
+        // that is what makes someone open it.
+        const money = a.title.includes('£') ? null : a.reason.match(/£[\d,]+(?:\.\d{2})?/)?.[0];
+        brief.engineBits.push(money ? `${a.title} · ${money}` : a.title);
+        engineRows++;
+      }
+    }
+  }
+  console.log(`[morning-brief] engine produced ${engineRows} lines`);
 
   let userIds = [...briefs.keys()].filter((id) => hasContent(briefs.get(id)!) && !optedOut.has(id));
   if (testUserId) userIds = userIds.filter((id) => id === testUserId);

@@ -4,36 +4,35 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '6.2.1',
-      title: 'Circuit diagrams and symbols',
-      description: 'Standard electrical symbols, circuit representation and schematic conventions',
-      icon: CircuitBoard,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section2-1',
-    },
-    {
-      number: '6.2.2',
-      title: 'Single-line diagrams',
-      description: 'Power system representation, SLD conventions and system overviews',
-      icon: Minus,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section2-2',
-    },
-    {
-      number: '6.2.3',
-      title: 'Control circuit wiring diagrams',
-      description: 'Control circuit layouts, wiring methods and connection diagrams',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section2-3',
-    },
-    {
-      number: '6.2.4',
-      title: 'Labelling and numbering standards',
-      description: 'Component labelling, wire numbering and identification standards',
-      icon: Hash,
-      href: '/study-centre/apprentice/m-o-e-t-module6-section2-4',
-    },
-  ];
-
+  {
+    number: '6.2.1',
+    title: 'Circuit diagrams and symbols',
+    description: 'Standard electrical symbols, circuit representation and schematic conventions',
+    icon: CircuitBoard,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section2-1',
+  },
+  {
+    number: '6.2.2',
+    title: 'Wiring diagrams',
+    description: 'Point-to-point wiring diagrams and how they differ from circuit diagrams',
+    icon: Minus,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section2-2',
+  },
+  {
+    number: '6.2.3',
+    title: 'Piping and instrumentation diagrams (P&ID)',
+    description: 'Reading P&IDs and the symbols used on process plant',
+    icon: Settings,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section2-3',
+  },
+  {
+    number: '6.2.4',
+    title: 'Labelling and numbering standards',
+    description: 'Component labelling, wire numbering and identification standards',
+    icon: Hash,
+    href: '/study-centre/apprentice/m-o-e-t-module6-section2-4',
+  },
+];
 
 const MOETModule6Section2 = () => {
   useSEO(

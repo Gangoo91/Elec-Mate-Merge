@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '5.3.1',
-      title: 'Emergency stop circuits',
-      description: 'E-stop requirements, wiring methods and testing procedures',
-      icon: Square,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section3-1',
-    },
-    {
-      number: '5.3.2',
-      title: 'Guarding and interlocking devices',
-      description: 'Safety switches, light curtains and guard interlocking systems',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section3-2',
-    },
-    {
-      number: '5.3.3',
-      title: 'Safety relays and controllers',
-      description: 'Safety relay modules, monitoring relays and safety controllers',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section3-3',
-    },
-    {
-      number: '5.3.4',
-      title: 'Category and performance levels (ISO 13849)',
-      description: 'Safety categories, performance levels and risk assessment',
-      icon: Star,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section3-4',
-    },
-    {
-      number: '5.3.5',
-      title: 'Functional safety principles',
-      description: 'SIL levels, safety lifecycle and functional safety management',
-      icon: AlertTriangle,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section3-5',
-    },
-  ];
-
+  {
+    number: '5.3.1',
+    title: 'Emergency stop circuits',
+    description: 'E-stop requirements, wiring methods and testing procedures',
+    icon: Square,
+    href: '/study-centre/apprentice/m-o-e-t-module5-section3-1',
+  },
+  {
+    number: '5.3.2',
+    title: 'Guarding and interlocking devices',
+    description: 'Safety switches, light curtains and guard interlocking systems',
+    icon: Shield,
+    href: '/study-centre/apprentice/m-o-e-t-module5-section3-2',
+  },
+  {
+    number: '5.3.3',
+    title: 'Safety relays and controllers',
+    description: 'Safety relay modules, monitoring relays and safety controllers',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module5-section3-3',
+  },
+  {
+    number: '5.3.4',
+    title: 'Category and performance levels (ISO 13849)',
+    description: 'Safety categories, performance levels and risk assessment',
+    icon: Star,
+    href: '/study-centre/apprentice/m-o-e-t-module5-section3-4',
+  },
+  {
+    number: '5.3.5',
+    title: 'Functional safety principles',
+    description: 'SIL levels, safety lifecycle and functional safety management',
+    icon: AlertTriangle,
+    href: '/study-centre/apprentice/m-o-e-t-module5-section3-5',
+  },
+];
 
 const MOETModule5Section3 = () => {
   useSEO(

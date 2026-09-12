@@ -1,8 +1,49 @@
-import { ArrowLeft, Wind, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 4 · Subsection 3 — Pneumatic and Hydraulic
+ * Controls (Overview)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only statements that already appear verbatim in the brief's
+ * verified lists for other modules — and that genuinely fit this page's
+ * content — are used here.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. The original
+ * page's references to PUWER 1998 and the Pressure Systems Safety Regulations
+ * 2000 are paraphrases in the source, not verbatim quotes, so they remain
+ * plain prose here rather than a RegsCallout.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Pneumatic and Hydraulic Controls (Overview) - MOET Module 5 Section 4.3';
@@ -14,12 +55,7 @@ const quickCheckQuestions = [
     id: 'pneumatic-signal',
     question:
       'What is the standard pneumatic signal range used in process control instrumentation?',
-    options: [
-      '3-15 psi',
-      '0-100 psi',
-      '0-10 psi',
-      '15-30 psi',
-    ],
+    options: ['3-15 psi', '0-100 psi', '0-10 psi', '15-30 psi'],
     correctIndex: 0,
     explanation:
       "The standard pneumatic instrument signal range is 3-15 psi (approximately 0.2-1.0 bar). Like the 4-20 mA electrical standard, it uses a 'live zero' — 3 psi represents 0% of the process variable range, and 15 psi represents 100%. A signal of 0 psi indicates a fault (supply failure or disconnection) rather than a zero reading.",
@@ -262,110 +298,64 @@ const faqs = [
 ];
 
 const MOETModule5Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Wind className="h-4 w-4" />
-            <span>Module 5.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Pneumatic and Hydraulic Controls
-          </h1>
-          <p className="text-white">
-            Pneumatic and hydraulic control systems, components and maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.4 · Subsection 3"
+        title="Pneumatic and Hydraulic Controls"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Pneumatic and hydraulic control systems, components and maintenance.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Pneumatic:</strong> Uses compressed air; 3-15 psi signal standard
-              </li>
-              <li className="pl-1">
-                <strong>Hydraulic:</strong> Uses oil under pressure; high force, compact
-              </li>
-              <li className="pl-1">
-                <strong>I/P converter:</strong> Bridges electronic and pneumatic systems
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Stored energy hazards in both systems
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Air quality:</strong> Instrument air must be clean, dry, oil-free
-              </li>
-              <li className="pl-1">
-                <strong>Fluid analysis:</strong> Regular hydraulic fluid testing prevents failure
-              </li>
-              <li className="pl-1">
-                <strong>Fail-safe:</strong> Understand valve failure modes (fail-open/closed)
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Fluid power systems maintenance knowledge required
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Pneumatic: uses compressed air; 3-15 psi signal standard.',
+              'Hydraulic: uses oil under pressure; high force, compact.',
+              'I/P converter: bridges electronic and pneumatic systems.',
+              'Safety: stored energy hazards exist in both systems.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principles of pneumatic and hydraulic systems',
               'Identify the key components of pneumatic and hydraulic circuits',
               'Describe the 3-15 psi pneumatic signal standard and I/P conversion',
               'Explain fail-safe valve actions and their importance in process safety',
               'Identify safety hazards associated with compressed air and hydraulic pressure',
               'Describe routine maintenance requirements for fluid power systems under ST1426',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air quality:</strong> instrument air must be clean, dry and oil-free.
+              </li>
+              <li>
+                <strong>Fluid analysis:</strong> regular hydraulic fluid testing prevents failure.
+              </li>
+              <li>
+                <strong>Fail-safe:</strong> understand valve failure modes (fail-open/closed).
+              </li>
+              <li>
+                <strong>ST1426:</strong> fluid power systems maintenance knowledge is required.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fundamentals of Pneumatic Control Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Pneumatic control fundamentals</ContentEyebrow>
+
+          <ConceptBlock title="Fundamentals of pneumatic control systems">
             <p>
               Pneumatic control systems use compressed air as the power medium to drive actuators,
               transmit signals and operate control elements. Despite the dominance of electronic
@@ -380,232 +370,203 @@ const MOETModule5Section4_3 = () => {
               interface between the electronic control system and the pneumatic actuator is a key
               area of maintenance responsibility.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Components of a Pneumatic Control System
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Air compressor:</strong> Generates compressed air from atmospheric air —
-                  typically reciprocating or rotary screw type
-                </li>
-                <li className="pl-1">
-                  <strong>Air receiver:</strong> Storage vessel that smooths pulsations and provides
-                  a buffer for peak demands
-                </li>
-                <li className="pl-1">
-                  <strong>Air treatment:</strong> Filters, dryers and regulators that condition the
-                  air to instrument quality (clean, dry, oil-free)
-                </li>
-                <li className="pl-1">
-                  <strong>Distribution pipework:</strong> Header and branch piping delivering
-                  instrument air to field devices
-                </li>
-                <li className="pl-1">
-                  <strong>I/P converter:</strong> Converts 4-20 mA electronic signal to 3-15 psi
-                  pneumatic signal
-                </li>
-                <li className="pl-1">
-                  <strong>Valve positioner:</strong> Ensures accurate valve position by using local
-                  feedback from the valve stem
-                </li>
-                <li className="pl-1">
-                  <strong>Pneumatic actuator:</strong> Converts air pressure into linear or rotary
-                  motion to position the control valve
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Components of a pneumatic control system">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Air compressor:</strong> generates compressed air from atmospheric air —
+                typically reciprocating or rotary screw type.
+              </li>
+              <li>
+                <strong>Air receiver:</strong> storage vessel that smooths pulsations and provides a
+                buffer for peak demands.
+              </li>
+              <li>
+                <strong>Air treatment:</strong> filters, dryers and regulators that condition the
+                air to instrument quality (clean, dry, oil-free).
+              </li>
+              <li>
+                <strong>Distribution pipework:</strong> header and branch piping delivering
+                instrument air to field devices.
+              </li>
+              <li>
+                <strong>I/P converter:</strong> converts a 4-20 mA electronic signal to a 3-15 psi
+                pneumatic signal.
+              </li>
+              <li>
+                <strong>Valve positioner:</strong> ensures accurate valve position by using local
+                feedback from the valve stem.
+              </li>
+              <li>
+                <strong>Pneumatic actuator:</strong> converts air pressure into linear or rotary
+                motion to position the control valve.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The 3-15 psi Signal Standard
-              </p>
-              <p className="text-sm text-white mb-3">
-                The 3-15 psi standard is the pneumatic equivalent of the 4-20 mA electrical
-                standard. The signal range of 12 psi (15 minus 3) corresponds to 0-100% of the
-                controlled range. Like 4-20 mA, the live zero at 3 psi allows distinction between a
-                genuine zero reading and a supply failure.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Pneumatic (psi)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical (mA)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Percentage</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">0%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">25%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9</td>
-                      <td className="border border-white/10 px-3 py-2">12</td>
-                      <td className="border border-white/10 px-3 py-2">50%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">12</td>
-                      <td className="border border-white/10 px-3 py-2">16</td>
-                      <td className="border border-white/10 px-3 py-2">75%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">15</td>
-                      <td className="border border-white/10 px-3 py-2">20</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Many existing process plants have a mixture of pneumatic
-              and electronic instrumentation. The I/P converter is the critical interface —
-              understanding its operation, calibration and fault modes is essential for maintenance
-              technicians.
+          <ConceptBlock
+            title="The 3-15 psi signal standard"
+            onSite="Many existing process plants have a mixture of pneumatic and electronic instrumentation. The I/P converter is the critical interface — understanding its operation, calibration and fault modes is essential for maintenance technicians."
+          >
+            <p>
+              The 3-15 psi standard is the pneumatic equivalent of the 4-20 mA electrical standard.
+              The signal range of 12 psi (15 minus 3) corresponds to 0-100% of the controlled range.
+              Like 4-20 mA, the live zero at 3 psi allows distinction between a genuine zero reading
+              and a supply failure.
             </p>
-          </div>
-        </section>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Pneumatic (psi)</th>
+                    <th className="py-2 pr-4 font-medium text-white">Electrical (mA)</th>
+                    <th className="py-2 font-medium text-white">Percentage</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">3</td>
+                    <td className="py-2 pr-4">4</td>
+                    <td className="py-2">0%</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">6</td>
+                    <td className="py-2 pr-4">8</td>
+                    <td className="py-2">25%</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">9</td>
+                    <td className="py-2 pr-4">12</td>
+                    <td className="py-2">50%</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">12</td>
+                    <td className="py-2 pr-4">16</td>
+                    <td className="py-2">75%</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">15</td>
+                    <td className="py-2 pr-4">20</td>
+                    <td className="py-2">100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fundamentals of Hydraulic Control Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Hydraulic control fundamentals</ContentEyebrow>
+
+          <ConceptBlock title="Fundamentals of hydraulic control systems">
             <p>
               Hydraulic systems use pressurised fluid (typically mineral oil or synthetic hydraulic
-              fluid) to transmit force and motion. The fundamental principle is Pascal's law:
+              fluid) to transmit force and motion. The fundamental principle is Pascal&apos;s law:
               pressure applied to a confined fluid is transmitted equally in all directions. This
               allows hydraulic systems to multiply force, making them ideal for applications
               requiring high force in a compact space.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Components of a Hydraulic System
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Hydraulic power unit (HPU):</strong> Electric motor, pump, reservoir,
-                  filters, cooler and relief valve — the heart of the system
-                </li>
-                <li className="pl-1">
-                  <strong>Pump:</strong> Converts mechanical energy from the motor into hydraulic
-                  pressure (gear, vane or piston types)
-                </li>
-                <li className="pl-1">
-                  <strong>Reservoir (tank):</strong> Stores the hydraulic fluid, allows air
-                  separation and heat dissipation
-                </li>
-                <li className="pl-1">
-                  <strong>Directional control valves:</strong> Solenoid or pilot-operated valves
-                  that direct fluid to the actuators
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure relief valve:</strong> Limits maximum system pressure to protect
-                  components — a critical safety device
-                </li>
-                <li className="pl-1">
-                  <strong>Flow control valves:</strong> Regulate the speed of actuator movement by
-                  controlling fluid flow rate
-                </li>
-                <li className="pl-1">
-                  <strong>Actuators:</strong> Cylinders (linear motion) and motors (rotary motion)
-                  that perform the physical work
-                </li>
-                <li className="pl-1">
-                  <strong>Accumulators:</strong> Pressurised vessels that store hydraulic energy for
-                  peak demands or emergency operation
-                </li>
-              </ul>
+          <ConceptBlock title="Components of a hydraulic system">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hydraulic power unit (HPU):</strong> electric motor, pump, reservoir,
+                filters, cooler and relief valve — the heart of the system.
+              </li>
+              <li>
+                <strong>Pump:</strong> converts mechanical energy from the motor into hydraulic
+                pressure (gear, vane or piston types).
+              </li>
+              <li>
+                <strong>Reservoir (tank):</strong> stores the hydraulic fluid, allows air separation
+                and heat dissipation.
+              </li>
+              <li>
+                <strong>Directional control valves:</strong> solenoid or pilot-operated valves that
+                direct fluid to the actuators.
+              </li>
+              <li>
+                <strong>Pressure relief valve:</strong> limits maximum system pressure to protect
+                components — a critical safety device.
+              </li>
+              <li>
+                <strong>Flow control valves:</strong> regulate the speed of actuator movement by
+                controlling fluid flow rate.
+              </li>
+              <li>
+                <strong>Actuators:</strong> cylinders (linear motion) and motors (rotary motion)
+                that perform the physical work.
+              </li>
+              <li>
+                <strong>Accumulators:</strong> pressurised vessels that store hydraulic energy for
+                peak demands or emergency operation.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Pneumatic vs hydraulic comparison"
+            onSite="In many industrial plants, you will encounter both systems — pneumatic actuators on control valves and hydraulic systems on presses, injection moulding machines, and heavy mechanical equipment. Understanding both is essential for the multi-skilled maintenance technician."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Characteristic</th>
+                    <th className="py-2 pr-4 font-medium text-white">Pneumatic</th>
+                    <th className="py-2 font-medium text-white">Hydraulic</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Medium</td>
+                    <td className="py-2 pr-4">Compressed air (compressible)</td>
+                    <td className="py-2">Oil (incompressible)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Pressure range</td>
+                    <td className="py-2 pr-4">6-10 bar typical</td>
+                    <td className="py-2">100-350 bar typical</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Force capability</td>
+                    <td className="py-2 pr-4">Low to moderate</td>
+                    <td className="py-2">Very high</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Speed</td>
+                    <td className="py-2 pr-4">Fast but imprecise</td>
+                    <td className="py-2">Precise speed control</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Cleanliness</td>
+                    <td className="py-2 pr-4">Clean exhaust (air)</td>
+                    <td className="py-2">Potential oil leaks</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Hazardous areas</td>
+                    <td className="py-2 pr-4">Intrinsically safe</td>
+                    <td className="py-2">Not intrinsically safe</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pneumatic vs Hydraulic Comparison
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pneumatic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Hydraulic</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Medium</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compressed air (compressible)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Oil (incompressible)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressure range</td>
-                      <td className="border border-white/10 px-3 py-2">6-10 bar typical</td>
-                      <td className="border border-white/10 px-3 py-2">100-350 bar typical</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Force capability</td>
-                      <td className="border border-white/10 px-3 py-2">Low to moderate</td>
-                      <td className="border border-white/10 px-3 py-2">Very high</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed</td>
-                      <td className="border border-white/10 px-3 py-2">Fast but imprecise</td>
-                      <td className="border border-white/10 px-3 py-2">Precise speed control</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cleanliness</td>
-                      <td className="border border-white/10 px-3 py-2">Clean exhaust (air)</td>
-                      <td className="border border-white/10 px-3 py-2">Potential oil leaks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hazardous areas</td>
-                      <td className="border border-white/10 px-3 py-2">Intrinsically safe</td>
-                      <td className="border border-white/10 px-3 py-2">Not intrinsically safe</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical note:</strong> In many industrial plants, you will encounter both
-              systems — pneumatic actuators on control valves and hydraulic systems on presses,
-              injection moulding machines, and heavy mechanical equipment. Understanding both is
-              essential for the multi-skilled maintenance technician.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>Electro-pneumatic and electro-hydraulic interfaces</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Electro-Pneumatic and Electro-Hydraulic Interfaces
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Electro-pneumatic and electro-hydraulic interfaces"
+            onSite="Carry a pneumatic test gauge and a 4-20 mA loop calibrator together when fault-finding control valve problems. You can then quickly check both the electrical and pneumatic sides of the interface at the valve."
+          >
             <p>
               Modern industrial control systems are predominantly electronic or digital, but the
               final control elements are often pneumatic or hydraulic. The interface between these
@@ -613,85 +574,79 @@ const MOETModule5Section4_3 = () => {
               for the electrical maintenance technician, as faults at this interface are common and
               can be difficult to diagnose without understanding both sides.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electro-Pneumatic Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>I/P converter:</strong> Converts 4-20 mA to 3-15 psi — the primary
-                  proportional interface for analogue control valve positioning
-                </li>
-                <li className="pl-1">
-                  <strong>Solenoid valve:</strong> Converts digital (on/off) electrical signals to
-                  pneumatic switching — used for discrete actuators and safety systems
-                </li>
-                <li className="pl-1">
-                  <strong>Smart positioner:</strong> Combines I/P conversion, position feedback and
-                  diagnostics in a single device — increasingly common in modern plants
-                </li>
-                <li className="pl-1">
-                  <strong>Pneumatic limit switch:</strong> Converts valve position into a pneumatic
-                  signal for non-electrical areas
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Electro-pneumatic components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>I/P converter:</strong> converts 4-20 mA to 3-15 psi — the primary
+                proportional interface for analogue control valve positioning.
+              </li>
+              <li>
+                <strong>Solenoid valve:</strong> converts digital (on/off) electrical signals to
+                pneumatic switching — used for discrete actuators and safety systems.
+              </li>
+              <li>
+                <strong>Smart positioner:</strong> combines I/P conversion, position feedback and
+                diagnostics in a single device — increasingly common in modern plants.
+              </li>
+              <li>
+                <strong>Pneumatic limit switch:</strong> converts valve position into a pneumatic
+                signal for non-electrical areas.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Electro-Hydraulic Components
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Solenoid directional valve:</strong> Uses electrical solenoids to shift a
-                  hydraulic spool valve, directing oil flow to actuators
-                </li>
-                <li className="pl-1">
-                  <strong>Proportional valve:</strong> Provides proportional control of hydraulic
-                  flow or pressure from an analogue electrical signal
-                </li>
-                <li className="pl-1">
-                  <strong>Servo valve:</strong> High-precision proportional valve used in
-                  closed-loop position, velocity or force control systems
-                </li>
-                <li className="pl-1">
-                  <strong>Pressure transducer:</strong> Converts hydraulic pressure into a 4-20 mA
-                  or digital signal for monitoring and control
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Electro-hydraulic components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Solenoid directional valve:</strong> uses electrical solenoids to shift a
+                hydraulic spool valve, directing oil flow to actuators.
+              </li>
+              <li>
+                <strong>Proportional valve:</strong> provides proportional control of hydraulic flow
+                or pressure from an analogue electrical signal.
+              </li>
+              <li>
+                <strong>Servo valve:</strong> high-precision proportional valve used in closed-loop
+                position, velocity or force control systems.
+              </li>
+              <li>
+                <strong>Pressure transducer:</strong> converts hydraulic pressure into a 4-20 mA or
+                digital signal for monitoring and control.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Common Interface Faults</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Common interface faults"
+            whatHappens={
+              <p>
                 When a control valve is not responding correctly, the fault could be in the
                 electronic signal chain, the electro-pneumatic interface, or the pneumatic actuator.
+              </p>
+            }
+            doInstead={
+              <p>
                 A systematic approach is essential: check the controller output signal (4-20 mA),
                 verify the I/P converter output (3-15 psi), check the positioner output, and finally
                 check the valve position. Isolating the fault to the correct domain saves
                 significant time and avoids the common problem of electrical technicians blaming
                 instrument engineers and vice versa.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> Carry a pneumatic test gauge and a 4-20 mA loop
-              calibrator together when fault-finding control valve problems. You can then quickly
-              check both the electrical and pneumatic sides of the interface at the valve.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Safety Considerations and Maintenance Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Safety and maintenance</ContentEyebrow>
+
+          <ConceptBlock
+            title="Safety considerations and maintenance requirements"
+            onSite="Under the Pressure Systems Safety Regulations 2000, certain pneumatic and hydraulic components (receivers, accumulators, high-pressure vessels) require a written scheme of examination prepared by a competent person. As a maintenance technician, you must ensure these examinations are carried out at the specified intervals and that any defects found are rectified before the system is returned to service."
+          >
             <p>
               Both pneumatic and hydraulic systems store significant energy in compressed fluids,
               springs and accumulators. This stored energy presents serious safety hazards that must
@@ -700,144 +655,101 @@ const MOETModule5Section4_3 = () => {
               2000 provide the regulatory framework for safe operation and maintenance of these
               systems.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">Pneumatic Hazards</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">High-velocity air jets causing skin penetration</li>
-                  <li className="pl-1">Noise damage from venting or leaks</li>
-                  <li className="pl-1">Eye injuries from blown debris</li>
-                  <li className="pl-1">Whiplash from unsecured hoses</li>
-                  <li className="pl-1">Spring-loaded actuators releasing when air is removed</li>
-                  <li className="pl-1">
-                    Asphyxiation in confined spaces (nitrogen-driven systems)
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">Hydraulic Hazards</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Fluid injection through skin from pinhole leaks</li>
-                  <li className="pl-1">Burns from hot hydraulic fluid</li>
-                  <li className="pl-1">Crushing from uncontrolled actuator movement</li>
-                  <li className="pl-1">Accumulator energy release after pump shutdown</li>
-                  <li className="pl-1">Slip hazards from oil leaks</li>
-                  <li className="pl-1">Fire risk from oil mist or spray on hot surfaces</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Pneumatic hazards">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>High-velocity air jets causing skin penetration.</li>
+              <li>Noise damage from venting or leaks.</li>
+              <li>Eye injuries from blown debris.</li>
+              <li>Whiplash from unsecured hoses.</li>
+              <li>Spring-loaded actuators releasing when air is removed.</li>
+              <li>Asphyxiation in confined spaces (nitrogen-driven systems).</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Hydraulic hazards">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Fluid injection through skin from pinhole leaks.</li>
+              <li>Burns from hot hydraulic fluid.</li>
+              <li>Crushing from uncontrolled actuator movement.</li>
+              <li>Accumulator energy release after pump shutdown.</li>
+              <li>Slip hazards from oil leaks.</li>
+              <li>Fire risk from oil mist or spray on hot surfaces.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Routine maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pneumatic:</strong> check air quality (moisture, oil), drain condensate from
+                receivers and traps, replace filters, check for leaks (using ultrasonic leak
+                detector), verify regulator settings, inspect hoses and fittings.
+              </li>
+              <li>
+                <strong>Hydraulic:</strong> check fluid level and condition, sample fluid for
+                analysis, change filters (pressure and return line), inspect hoses for damage, check
+                for leaks, monitor system pressure and temperature, verify relief valve settings.
+              </li>
+              <li>
+                <strong>Both:</strong> test safety devices (relief valves, emergency stops), check
+                actuator operation and stroke, verify control signal calibration, inspect mounting
+                and support structures.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Pneumatic signal standard: 3-15 psi (0.2-1.0 bar). Electronic signal standard: 4-20 mA. The I/P converter bridges the two, and both use a live zero for fault detection.',
+              'Always depressurise before maintenance, and discharge hydraulic accumulators before starting work.',
+              'Never check for leaks with your hand — use cardboard or paper to detect fine leaks.',
+              'Lock out/tag out all energy sources before work begins.',
+              'The Pressure Systems Safety Regulations 2000 govern pressure equipment such as receivers and accumulators.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  PID Control Loops
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Control Valves and Actuators
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Routine Maintenance Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pneumatic:</strong> Check air quality (moisture, oil), drain condensate
-                  from receivers and traps, replace filters, check for leaks (using ultrasonic leak
-                  detector), verify regulator settings, inspect hoses and fittings
-                </li>
-                <li className="pl-1">
-                  <strong>Hydraulic:</strong> Check fluid level and condition, sample fluid for
-                  analysis, change filters (pressure and return line), inspect hoses for damage,
-                  check for leaks, monitor system pressure and temperature, verify relief valve
-                  settings
-                </li>
-                <li className="pl-1">
-                  <strong>Both:</strong> Test safety devices (relief valves, emergency stops), check
-                  actuator operation and stroke, verify control signal calibration, inspect mounting
-                  and support structures
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under the Pressure Systems Safety Regulations 2000, certain
-              pneumatic and hydraulic components (receivers, accumulators, high-pressure vessels)
-              require a written scheme of examination prepared by a competent person. As a
-              maintenance technician, you must ensure these examinations are carried out at the
-              specified intervals and that any defects found are rectified before the system is
-              returned to service.
-            </p>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[3]} />
-
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Signal Standards</p>
-                <ul className="space-y-0.5">
-                  <li>Pneumatic: 3-15 psi (0.2-1.0 bar)</li>
-                  <li>Electronic: 4-20 mA</li>
-                  <li>I/P converter bridges the two</li>
-                  <li>Both use live zero for fault detection</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safety Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Always depressurise before maintenance</li>
-                  <li>Discharge hydraulic accumulators</li>
-                  <li>Never check for leaks with your hand</li>
-                  <li>Lock out/tag out all energy sources</li>
-                  <li>PSSR 2000 for pressure equipment</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: PID Control Loops
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-4">
-              Next: Control Valves and Actuators
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

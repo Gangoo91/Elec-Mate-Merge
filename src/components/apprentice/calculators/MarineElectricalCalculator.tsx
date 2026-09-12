@@ -286,10 +286,40 @@ const MarineElectricalCalculator = () => {
     const compliance = getComplianceStatus();
     const verdict: 'pass' | 'fail' | 'warn' =
       compliance.status === 'pass' ? 'pass' : compliance.status === 'warning' ? 'warn' : 'fail';
+    const vesselTypeLabel = vesselTypeOptions.find((o) => o.value === vesselType)?.label || vesselType;
+    const batteryTypeLabel =
+      batteryTypeOptions.find((o) => o.value === batteryType)?.label || batteryType;
+
+    // The individual loads and charging sources behind the aggregate peak-load
+    // and battery-bank figures — the first version showed only the totals, so
+    // a client had no way to see what was actually counted to reach them.
+    const loadRows = [
+      { label: 'Navigation lights', value: navigationLights },
+      { label: 'Cabin lighting', value: cabinLights },
+      { label: 'Galley equipment', value: galleyLoad },
+      { label: 'Electronics', value: electronics },
+      { label: 'Fresh water pump', value: freshWaterPump },
+      { label: 'Bilge pump', value: bilgePump },
+      { label: 'Ventilation fans', value: ventilationFans },
+      { label: 'Winch/windlass', value: winch },
+      { label: 'Additional load', value: additionalLoad },
+    ]
+      .filter((l) => parseFloat(l.value) > 0)
+      .map((l) => ({ label: l.label, value: `${l.value} W` }));
+
+    const chargingRows = [
+      { label: 'Alternator', value: alternatorRating },
+      { label: 'Solar panels', value: solarPanels },
+      { label: 'Wind generator', value: windGenerator },
+      { label: 'Shore charger', value: shoreCharger },
+    ]
+      .filter((l) => parseFloat(l.value) > 0)
+      .map((l) => ({ label: l.label, value: `${l.value} W` }));
+
     return {
       meta: {
-        title: 'Marine Electrical Calculator',
-        subtitle: `${vesselType} — ${vesselLength} m, ${systemVoltage} V system`,
+        title: 'Marine Electrical',
+        subtitle: `${vesselTypeLabel} — ${vesselLength} m, ${systemVoltage} V system`,
         standard: 'ISO 13297 / ABYC E-11 / BS 7671 Section 709',
       },
       headline: [
@@ -301,18 +331,27 @@ const MarineElectricalCalculator = () => {
         {
           heading: 'Inputs',
           rows: [
-            { label: 'Vessel type', value: vesselType },
+            { label: 'Vessel type', value: vesselTypeLabel },
             { label: 'Vessel length', value: `${vesselLength} m` },
             { label: 'System voltage', value: `${systemVoltage} V` },
-            { label: 'Battery type', value: batteryType },
+            { label: 'Battery type', value: batteryTypeLabel },
             { label: 'Cable length', value: `${cableLength} m` },
             { label: 'Voltage drop limit', value: `${voltageDropLimit}%` },
           ],
         },
+        ...(loadRows.length ? [{ heading: 'Loads entered', rows: loadRows }] : []),
+        ...(chargingRows.length
+          ? [{ heading: 'Charging sources entered', rows: chargingRows }]
+          : []),
         {
+          // Deliberately does not repeat the headline's peak-load figure — this
+          // shows the continuous/intermittent split it's built from instead.
           heading: 'Result',
           rows: [
-            { label: 'Peak load', value: `${results.peakLoad} W` },
+            {
+              label: 'Load split',
+              value: `${results.totalContinuousLoad} W continuous + ${results.totalIntermittentLoad} W intermittent`,
+            },
             { label: 'Daily consumption', value: `${results.dailyEnergyConsumption.toFixed(0)} Ah` },
             {
               label: 'Battery bank',

@@ -25,6 +25,7 @@ import {
   toneText,
   type Tone,
 } from '@/components/college/primitives';
+import { chipBase, chipOff, chipOn, inputCn } from '@/components/settings/formStyles';
 
 interface Skill {
   id: string;
@@ -40,17 +41,6 @@ const LEVEL_TONE: Record<SkillLevel, Tone> = {
   intermediate: 'emerald',
   advanced: 'orange',
   expert: 'yellow',
-};
-
-const CATEGORY_TONE: Record<string, Tone> = {
-  installation: 'yellow',
-  testing: 'blue',
-  specialist: 'purple',
-  renewable: 'green',
-  maintenance: 'orange',
-  design: 'cyan',
-  safety: 'red',
-  software: 'indigo',
 };
 
 const SkillsSkeleton = () => (
@@ -280,7 +270,6 @@ const ElecIdSkills = () => {
         <Eyebrow>01 · Select category</Eyebrow>
         <div className="grid grid-cols-2 gap-2">
           {Object.entries(UK_ELECTRICAL_SKILLS).map(([key, cat]) => {
-            const tone = CATEGORY_TONE[key] ?? 'yellow';
             const isSelected = selectedCategory === key;
             return (
               <button
@@ -294,19 +283,15 @@ const ElecIdSkills = () => {
                 }}
                 disabled={isEdit}
                 className={cn(
-                  'p-3 rounded-xl border transition-all touch-manipulation text-left',
-                  isSelected
-                    ? `bg-${tone === 'yellow' ? 'elec-yellow' : tone}-500/10 border-${
-                        tone === 'yellow' ? 'elec-yellow' : tone
-                      }-500/20`
-                    : 'bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08]',
+                  chipBase,
+                  'h-auto flex-none px-3 py-3 text-left',
+                  isSelected ? chipOn : chipOff,
                   isEdit && 'opacity-50 cursor-not-allowed'
                 )}
+                aria-pressed={isSelected}
               >
-                <span className={cn('text-sm font-medium', isSelected ? 'text-white' : 'text-white')}>
-                  {cat.label}
-                </span>
-                <p className="text-[10px] text-white mt-1">{cat.skills.length} skills</p>
+                <span className="text-sm font-medium">{cat.label}</span>
+                <p className="text-[10px] mt-1">{cat.skills.length} skills</p>
               </button>
             );
           })}
@@ -316,7 +301,7 @@ const ElecIdSkills = () => {
       {selectedCategory && (
         <div className="space-y-2">
           <Eyebrow>02 · Select skill</Eyebrow>
-          <div className="max-h-[200px] overflow-y-auto rounded-xl border border-white/[0.06] bg-white/[0.02]">
+          <div className="max-h-[200px] overflow-y-auto rounded-xl border border-elec-yellow/35 bg-white/[0.02]">
             {getCategorySkills(selectedCategory).map((skill) => {
               const isSelected = selectedSkill === skill;
               return (
@@ -327,7 +312,7 @@ const ElecIdSkills = () => {
                   disabled={isEdit}
                   className={cn(
                     'w-full flex items-center gap-3 p-3 border-b border-white/[0.04] last:border-0 transition-all touch-manipulation text-left',
-                    isSelected ? 'bg-elec-yellow/10' : 'hover:bg-white/[0.04]',
+                    isSelected ? 'bg-white/[0.06]' : 'hover:bg-white/[0.04]',
                     isEdit && 'opacity-50 cursor-not-allowed'
                   )}
                 >
@@ -366,23 +351,23 @@ const ElecIdSkills = () => {
                 type="button"
                 onClick={() => setFormData({ ...formData, level: level.value })}
                 className={cn(
-                  'p-4 rounded-xl border-2 text-left transition-all touch-manipulation',
-                  isSelected
-                    ? 'bg-elec-yellow/10 border-elec-yellow/30'
-                    : 'bg-white/[0.04] border-white/[0.06]'
+                  chipBase,
+                  'h-auto flex-none px-4 py-3 text-left',
+                  isSelected ? chipOn : chipOff
                 )}
+                aria-pressed={isSelected}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <span
                     className={cn(
                       'text-[10px] font-medium uppercase tracking-[0.15em]',
-                      toneText[LEVEL_TONE[level.value]]
+                      isSelected ? 'text-black' : toneText[LEVEL_TONE[level.value]]
                     )}
                   >
                     {level.label}
                   </span>
                 </div>
-                <p className="text-xs text-white leading-relaxed">{level.description}</p>
+                <p className="text-xs leading-relaxed">{level.description}</p>
               </button>
             );
           })}
@@ -399,9 +384,9 @@ const ElecIdSkills = () => {
             value={formData.yearsExperience}
             onChange={(e) => setFormData({ ...formData, yearsExperience: e.target.value })}
             placeholder="Years"
-            className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-lg font-medium text-white placeholder:text-white pr-16"
+            className={cn(inputCn, 'pr-14')}
           />
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-sm">years</div>
+          <div className="absolute right-1 top-1/2 -translate-y-1/2 text-white text-sm">years</div>
         </div>
 
         <div className="grid grid-cols-6 gap-2">
@@ -411,11 +396,11 @@ const ElecIdSkills = () => {
               type="button"
               onClick={() => setFormData({ ...formData, yearsExperience: years.toString() })}
               className={cn(
-                'min-h-[44px] rounded-lg text-sm font-medium transition-all touch-manipulation',
-                formData.yearsExperience === years.toString()
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-white/[0.04] text-white hover:bg-white/[0.08]'
+                chipBase,
+                'flex-none',
+                formData.yearsExperience === years.toString() ? chipOn : chipOff
               )}
+              aria-pressed={formData.yearsExperience === years.toString()}
             >
               {years}y
             </button>
@@ -424,7 +409,7 @@ const ElecIdSkills = () => {
       </div>
 
       {selectedSkill && formData.level && (
-        <div className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+        <div className="p-4 rounded-xl bg-white/[0.04] border border-elec-yellow/35">
           <Eyebrow>Preview</Eyebrow>
           <div className="mt-2 space-y-2">
             <p className="font-medium text-white text-sm">{selectedSkill}</p>
@@ -450,7 +435,7 @@ const ElecIdSkills = () => {
   const renderFooter = (isEdit: boolean, onClose: () => void) => (
     <div className="flex gap-3">
       <button
-        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation disabled:opacity-60"
+        className="flex-1 h-11 rounded-xl border border-elec-yellow/35 text-white touch-manipulation disabled:opacity-60"
         onClick={() => {
           onClose();
           resetForm();
@@ -460,7 +445,7 @@ const ElecIdSkills = () => {
         Cancel
       </button>
       <button
-        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70"
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:bg-white/[0.08] disabled:text-white"
         onClick={isEdit ? handleEditSkill : handleAddSkill}
         disabled={(!isEdit && (!selectedCategory || !selectedSkill || !formData.level)) || isLoading}
       >
@@ -486,7 +471,7 @@ const ElecIdSkills = () => {
 
       {/* Add */}
       <Sheet open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Add skill" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -512,7 +497,7 @@ const ElecIdSkills = () => {
 
       {/* Edit */}
       <Sheet open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent title="Edit skill" className="bg-elec-dark flex flex-col">
           <div className="lg:hidden flex justify-center pt-3 pb-2">
             <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
           </div>
@@ -555,14 +540,14 @@ const ElecIdSkills = () => {
 
           <div>
             <Eyebrow>Level distribution</Eyebrow>
-            <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-elec-yellow/35 rounded-2xl overflow-hidden">
               {SKILL_LEVELS.map((level) => {
                 const count = skills.filter((s) => s.level === level.value).length;
                 const tone = LEVEL_TONE[level.value];
                 return (
                   <div
                     key={level.value}
-                    className="bg-[hsl(0_0%_12%)] px-4 py-5 text-center"
+                    className="bg-white/[0.05] px-4 py-5 text-center"
                   >
                     <span
                       className={cn(
@@ -619,11 +604,11 @@ const ElecIdSkills = () => {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -10 }}
-                            className="bg-[hsl(0_0%_12%)] rounded-2xl border border-white/[0.06] overflow-hidden"
+                            className="bg-white/[0.05] rounded-2xl border border-elec-yellow/35 overflow-hidden"
                           >
                             <button
                               onClick={() => openEditSheet(skill)}
-                              className="w-full p-4 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                              className="w-full p-4 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
                             >
                               <div className="flex items-start justify-between gap-3">
                                 <div className="flex-1 min-w-0">
@@ -639,7 +624,7 @@ const ElecIdSkills = () => {
                                     >
                                       {levelInfo?.label}
                                     </span>
-                                    <span className="text-xs text-white/65">
+                                    <span className="text-xs text-white">
                                       {skill.yearsExperience} year
                                       {skill.yearsExperience !== 1 ? 's' : ''}
                                     </span>
@@ -696,7 +681,7 @@ const ElecIdSkills = () => {
                         <button
                           key={skill.id}
                           onClick={() => openEditSheet(skill)}
-                          className="w-full p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-left touch-manipulation hover:bg-[hsl(0_0%_15%)]"
+                          className="w-full p-4 rounded-2xl bg-white/[0.05] border border-elec-yellow/35 text-left touch-manipulation hover:bg-white/[0.06]"
                         >
                           <p className="font-medium text-white text-sm">{skill.skillName}</p>
                           <div className="flex items-center gap-2 mt-1">
@@ -708,7 +693,7 @@ const ElecIdSkills = () => {
                             >
                               {levelInfo?.label}
                             </span>
-                            <span className="text-xs text-white/65">{skill.yearsExperience}y</span>
+                            <span className="text-xs text-white">{skill.yearsExperience}y</span>
                           </div>
                         </button>
                       );

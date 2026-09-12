@@ -1,8 +1,44 @@
-import { ArrowLeft, Cable, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 5.1 · Subsection 1 — Conductors and Insulation
+ * Materials
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Different types of cables; their specifications and application.  "
+ *   · "Properties of engineering materials and impact on use."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { CableCrossSection } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Conductors and Insulation Materials - MOET Module 2 Section 5.1';
@@ -26,12 +62,7 @@ const quickCheckQuestions = [
   {
     id: 'pvc-temperature',
     question: 'What is the maximum continuous operating temperature for PVC-insulated cables?',
-    options: [
-      '50°C',
-      '105°C',
-      '90°C',
-      '70°C',
-    ],
+    options: ['50°C', '105°C', '90°C', '70°C'],
     correctIndex: 3,
     explanation:
       "PVC (polyvinyl chloride) thermoplastic insulation has a maximum continuous operating temperature of 70°C. Exceeding this temperature causes the PVC to soften, deform and eventually degrade, reducing the insulation's effectiveness and lifespan. This temperature limit is one of the factors that determines the current-carrying capacity of PVC-insulated cables as tabulated in BS 7671 Appendix 4.",
@@ -255,108 +286,49 @@ const faqs = [
 ];
 
 const MOETModule2Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cable className="h-4 w-4" />
-            <span>Module 2.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Conductors and Insulation Materials
-          </h1>
-          <p className="text-white">
-            Electrical materials, properties and selection criteria for maintenance technicians
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.5 · Subsection 1"
+        title="Conductors and Insulation Materials"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Electrical materials, properties and selection criteria for maintenance technicians —
+            what conductors and insulation are actually made of, why that matters for every
+            connection you make, and how to identify the cable in front of you.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Copper:</strong> Standard conductor — low resistivity, easy termination
-              </li>
-              <li className="pl-1">
-                <strong>Aluminium:</strong> Lighter, cheaper — needs special termination care
-              </li>
-              <li className="pl-1">
-                <strong>PVC:</strong> Thermoplastic, 70°C max — most common insulation
-              </li>
-              <li className="pl-1">
-                <strong>XLPE:</strong> Thermosetting, 90°C max — higher current ratings
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Identification:</strong> Recognise cable types and markings
-              </li>
-              <li className="pl-1">
-                <strong>Selection:</strong> Correct cable for the application and environment
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Insulation resistance measurement and interpretation
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to materials and engineering principles KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Copper: standard conductor — low resistivity, easy termination',
+              'Aluminium: lighter, cheaper — needs special termination care',
+              'PVC: thermoplastic, 70°C max — most common insulation',
+              'XLPE: thermosetting, 90°C max — higher current ratings',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Compare the properties of copper and aluminium as conductor materials',
               'Describe common insulation materials (PVC, XLPE, EPR, MICC) and their temperature ratings',
               'Identify standard cable types used in UK installations (6242Y, SWA, FP200, MICC)',
               'Understand factors affecting cable current-carrying capacity and derating',
               'Apply BS 7671 Appendix 4 for cable selection and correction factors',
               'Test insulation resistance and interpret results during periodic inspection',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Conductor materials — copper and aluminium</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Conductor Materials — Copper and Aluminium
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Conductor Materials — Copper and Aluminium">
             <p>
               The choice of conductor material has a direct impact on the performance, reliability
               and maintainability of an electrical installation. Two metals dominate in electrical
@@ -366,83 +338,85 @@ const MOETModule2Section5_1 = () => {
             </p>
             <p>
               Copper is the standard conductor material for the vast majority of UK electrical
-              installations. Its combination of low electrical resistivity (1.72 &times;
-              10&#8315;&#8312; ohm-metres at 20°C), excellent ductility, good corrosion resistance
-              and ease of termination makes it the preferred choice for all but the largest
-              conductors. Aluminium, with a resistivity approximately 1.6 times that of copper,
-              requires a larger cross-sectional area to carry the same current — but it is
-              significantly lighter (density 2,700 kg/m³ vs copper's 8,960 kg/m³) and cheaper.
+              installations. Its combination of low electrical resistivity (1.72 &times; 10&#8315;
+              &#8312; ohm-metres at 20°C), excellent ductility, good corrosion resistance and ease
+              of termination makes it the preferred choice for all but the largest conductors.
+              Aluminium, with a resistivity approximately 1.6 times that of copper, requires a
+              larger cross-sectional area to carry the same current — but it is significantly
+              lighter (density 2,700 kg/m³ vs copper's 8,960 kg/m³) and cheaper.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Material Comparison</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Property</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Copper</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Aluminium</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistivity (20°C)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1.72 &times; 10&#8315;&#8312; ohm-m
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2.82 &times; 10&#8315;&#8312; ohm-m
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Density</td>
-                      <td className="border border-white/10 px-3 py-2">8,960 kg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">2,700 kg/m³</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Termination</td>
-                      <td className="border border-white/10 px-3 py-2">Standard crimps/screws</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Special connectors required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Typical application</td>
-                      <td className="border border-white/10 px-3 py-2">All general wiring</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large cables, overhead lines
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Aluminium Termination Hazards
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Material comparison
               </p>
-              <p className="text-sm text-white">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Property</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Copper</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Aluminium</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Resistivity (20°C)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      1.72 &times; 10&#8315;&#8312; ohm-m
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      2.82 &times; 10&#8315;&#8312; ohm-m
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Density</td>
+                    <td className="border border-white/10 px-3 py-2">8,960 kg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">2,700 kg/m³</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Termination</td>
+                    <td className="border border-white/10 px-3 py-2">Standard crimps/screws</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Special connectors required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Typical application</td>
+                    <td className="border border-white/10 px-3 py-2">All general wiring</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large cables, overhead lines
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Aluminium termination hazards"
+            whatHappens={
+              <p>
                 Hot spots and fires caused by loose or high-resistance aluminium connections are a
                 significant hazard. The combination of oxide formation, cold flow (creep under
                 sustained pressure), and differential thermal expansion means aluminium terminations
-                must be periodically re-torqued and inspected. Thermal imaging during maintenance is
-                particularly valuable for identifying deteriorating aluminium connections before
-                they fail.
+                loosen over time.
               </p>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead={
+              <p>
+                Aluminium terminations must be periodically re-torqued and inspected. Thermal
+                imaging during maintenance is particularly valuable for identifying deteriorating
+                aluminium connections before they fail.
+              </p>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Insulation Materials and Temperature Ratings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Insulation materials and temperature ratings</ContentEyebrow>
+
+          <ConceptBlock title="Insulation Materials and Temperature Ratings">
             <p>
               Cable insulation serves two critical functions: preventing current leakage between
               conductors and between conductors and earth (electrical function), and preventing
@@ -450,138 +424,116 @@ const MOETModule2Section5_1 = () => {
               temperature rating directly determines how much current the cable can carry — because
               current flow generates heat, and the insulation must not exceed its rated temperature.
             </p>
+            <p>
+              <strong>PVC (Polyvinyl Chloride) — 70°C.</strong> The most widely used insulation
+              material in UK installations. PVC is a thermoplastic — it softens when heated and
+              re-hardens on cooling. Maximum continuous operating temperature is 70°C. PVC becomes
+              brittle at low temperatures (below -5°C) and should not be installed or handled in
+              very cold conditions. It emits toxic hydrogen chloride gas and dense smoke when
+              burned, which limits its use in some applications.
+            </p>
+            <p>
+              <strong>XLPE (Cross-Linked Polyethylene) — 90°C.</strong> A thermosetting material
+              that undergoes irreversible chemical cross-linking during manufacture. The higher
+              temperature rating (90°C) allows approximately 15-20% more current than PVC for the
+              same conductor size. XLPE has excellent moisture resistance and dielectric properties.
+              It is the standard insulation for SWA power cables and is increasingly used for
+              domestic cables in demanding applications.
+            </p>
+            <p>
+              <strong>Mineral Insulation (MgO) — 250°C.</strong> MICC cable uses compacted magnesium
+              oxide powder as insulation. This inorganic mineral provides exceptional fire
+              resistance and a very high operating temperature (up to 250°C for PVC-sheathed types,
+              higher for bare). The cable will continue to function during a fire, making it the
+              premium choice for fire alarm circuits, emergency lighting and other safety-critical
+              applications. MgO is hygroscopic — it must be properly sealed at terminations.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  PVC (Polyvinyl Chloride) — 70°C
-                </h3>
-                <p className="text-sm text-white">
-                  The most widely used insulation material in UK installations. PVC is a
-                  thermoplastic — it softens when heated and re-hardens on cooling. Maximum
-                  continuous operating temperature is 70°C. PVC becomes brittle at low temperatures
-                  (below -5°C) and should not be installed or handled in very cold conditions. It
-                  emits toxic hydrogen chloride gas and dense smoke when burned, which limits its
-                  use in some applications.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  XLPE (Cross-Linked Polyethylene) — 90°C
-                </h3>
-                <p className="text-sm text-white">
-                  A thermosetting material that undergoes irreversible chemical cross-linking during
-                  manufacture. The higher temperature rating (90°C) allows approximately 15-20% more
-                  current than PVC for the same conductor size. XLPE has excellent moisture
-                  resistance and dielectric properties. It is the standard insulation for SWA power
-                  cables and is increasingly used for domestic cables in demanding applications.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Mineral Insulation (MgO) — 250°C
-                </h3>
-                <p className="text-sm text-white">
-                  MICC cable uses compacted magnesium oxide powder as insulation. This inorganic
-                  mineral provides exceptional fire resistance and a very high operating temperature
-                  (up to 250°C for PVC-sheathed types, higher for bare). The cable will continue to
-                  function during a fire, making it the premium choice for fire alarm circuits,
-                  emergency lighting and other safety- critical applications. MgO is hygroscopic —
-                  it must be properly sealed at terminations.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Never downgrade the insulation type on a like-for-like replacement">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Key point:</strong> When replacing cables, always use the same or better
               insulation type. Downgrading from XLPE to PVC on the same circuit would reduce the
               current-carrying capacity and potentially overload the cable. Always check BS 7671
               Appendix 4 tables for the correct current-carrying capacity of the cable type being
               installed.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Common Cable Types in UK Installations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Common cable types in UK installations</ContentEyebrow>
+
+          <ConceptBlock title="Common Cable Types in UK Installations">
             <p>
               A maintenance technician will encounter a wide range of cable types during their
               career. Being able to identify the cable type, understand its construction and know
               its limitations is essential for safe maintenance, fault diagnosis and cable
               replacement.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Cable Types</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Designation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flat twin and earth</td>
-                      <td className="border border-white/10 px-3 py-2">6242Y</td>
-                      <td className="border border-white/10 px-3 py-2">Domestic fixed wiring</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Three-core and earth</td>
-                      <td className="border border-white/10 px-3 py-2">6243Y</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two-way switching circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SWA (XLPE)</td>
-                      <td className="border border-white/10 px-3 py-2">6943X / 6944X</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Underground, external, industrial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MICC</td>
-                      <td className="border border-white/10 px-3 py-2">Various</td>
-                      <td className="border border-white/10 px-3 py-2">Fire-rated circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">FP200 Gold</td>
-                      <td className="border border-white/10 px-3 py-2">FP200</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm, emergency lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flexible cord</td>
-                      <td className="border border-white/10 px-3 py-2">3183Y / 3183TQ</td>
-                      <td className="border border-white/10 px-3 py-2">Appliance connections</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">Common cable types</p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Designation</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Flat twin and earth</td>
+                    <td className="border border-white/10 px-3 py-2">6242Y</td>
+                    <td className="border border-white/10 px-3 py-2">Domestic fixed wiring</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Three-core and earth</td>
+                    <td className="border border-white/10 px-3 py-2">6243Y</td>
+                    <td className="border border-white/10 px-3 py-2">Two-way switching circuits</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">SWA (XLPE)</td>
+                    <td className="border border-white/10 px-3 py-2">6943X / 6944X</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Underground, external, industrial
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MICC</td>
+                    <td className="border border-white/10 px-3 py-2">Various</td>
+                    <td className="border border-white/10 px-3 py-2">Fire-rated circuits</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">FP200 Gold</td>
+                    <td className="border border-white/10 px-3 py-2">FP200</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fire alarm, emergency lighting
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Flexible cord</td>
+                    <td className="border border-white/10 px-3 py-2">3183Y / 3183TQ</td>
+                    <td className="border border-white/10 px-3 py-2">Appliance connections</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <CableCrossSection type="twin-and-earth" />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Current-Carrying Capacity and Derating Factors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Current-carrying capacity and derating factors</ContentEyebrow>
+
+          <ConceptBlock title="Current-Carrying Capacity and Derating Factors">
             <p>
               The current-carrying capacity (Iz) of a cable is not a fixed value — it depends on the
               conditions under which the cable is installed. BS 7671 Appendix 4 provides tabulated
@@ -589,115 +541,105 @@ const MOETModule2Section5_1 = () => {
               values must then be adjusted using correction factors for grouping, ambient
               temperature, and thermal insulation proximity.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ca — Ambient temperature:</strong> If the ambient temperature exceeds 30°C,
+                the cable can carry less current. If below 30°C, it can carry slightly more.
+              </li>
+              <li>
+                <strong>Cg — Grouping:</strong> Multiple cables close together reduce each cable's
+                capacity due to mutual heating. Factors from Table 4C1.
+              </li>
+              <li>
+                <strong>Ci — Thermal insulation:</strong> Cables enclosed in thermal insulation
+                (loft insulation, wall insulation) cannot dissipate heat and must be heavily derated
+                — up to 0.5 for cables completely surrounded.
+              </li>
+              <li>
+                <strong>Cc — BS 3036 fuse correction:</strong> 0.725 factor when BS 3036 fuses are
+                used (due to their poor fusing factor).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Correction Factors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ca — Ambient temperature:</strong> If the ambient temperature exceeds
-                  30°C, the cable can carry less current. If below 30°C, it can carry slightly more.
-                </li>
-                <li className="pl-1">
-                  <strong>Cg — Grouping:</strong> Multiple cables close together reduce each cable's
-                  capacity due to mutual heating. Factors from Table 4C1.
-                </li>
-                <li className="pl-1">
-                  <strong>Ci — Thermal insulation:</strong> Cables enclosed in thermal insulation
-                  (loft insulation, wall insulation) cannot dissipate heat and must be heavily
-                  derated — up to 0.5 for cables completely surrounded.
-                </li>
-                <li className="pl-1">
-                  <strong>Cc — BS 3036 fuse correction:</strong> 0.725 factor when BS 3036 fuses are
-                  used (due to their poor fusing factor).
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Check what changed since the original design">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Maintenance relevance:</strong> When investigating overheating cables or
               nuisance tripping, check whether the installation conditions have changed since the
               original design. Additional loft insulation, extra cables added to trunking, or
               increased ambient temperatures (e.g., above a hot process) can all reduce the
               effective current-carrying capacity below the original design.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=e3xA3t6wAmY"
 
-        <hr className="border-white/5 my-12" />
+            title="Cable Grouping and the Impact on Installations"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Insulation Temperature Ratings</p>
-                <ul className="space-y-0.5">
-                  <li>PVC — 70°C (thermoplastic)</li>
-                  <li>XLPE — 90°C (thermosetting)</li>
-                  <li>EPR — 90°C (thermosetting)</li>
-                  <li>Silicone rubber — 180°C</li>
-                  <li>Mineral (MgO) — 250°C+</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Appendix 4 — Current-carrying capacity</li>
-                  <li>Table 4C1 — Grouping factors</li>
-                  <li>Table 4B1 — Ambient temperature factors</li>
-                  <li>BS 6004 — PVC-insulated cables</li>
-                  <li>BS 5467 — SWA cables</li>
-                </ul>
-              </div>
+            channel="SparkyNinja"
+
+            duration="26:19"
+
+            topic="How grouping, insulation and ambient temperature erode a cable’s rating"
+
+            caption="Goes beyond the cross-section above into why the same cable carries less current in a bunch — the correction factors you meet in Appendix 4."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Insulation temperature ratings: PVC — 70°C (thermoplastic); XLPE — 90°C (thermosetting); EPR — 90°C (thermosetting); silicone rubber — 180°C; mineral (MgO) — 250°C+.',
+              'Copper is the standard conductor — low resistivity, easy termination. Aluminium is lighter and cheaper but needs oxide-aware connectors and periodic re-torquing.',
+              'Identify the cable type before you touch it: 6242Y flat twin-and-earth, 6243Y three-core-and-earth, SWA (6943X/6944X), MICC, FP200 Gold, flexible cord.',
+              'Current-carrying capacity is not fixed — it is derated for ambient temperature (Ca), grouping (Cg), thermal insulation (Ci) and BS 3036 fuses (Cc).',
+              'Minimum insulation resistance is 1 MΩ at 500 V DC for circuits up to 500 V (BS 7671 Table 6A) — a healthy new installation reads far higher.',
+              'Key references: BS 7671 Appendix 4 — current-carrying capacity; Table 4C1 — grouping factors; Table 4B1 — ambient temperature factors; Regulation 514.4.2 — CPC sleeving; BS 6004; BS 5467.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Materials, tools and test equipment
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Selection and Use of Hand Tools
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-2">
-              Next: Selection and Use of Hand Tools
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -581,10 +581,14 @@ const BatteryStorageCalculator = () => {
           heading: 'Inputs',
           rows: [
             { label: 'Critical load', value: `${criticalLoad} kW` },
+            ...(peakLoad ? [{ label: 'Peak load', value: `${peakLoad} kW` }] : []),
             { label: 'Daily consumption', value: `${dailyConsumption} kWh` },
             { label: 'Days of autonomy', value: `${daysOfAutonomy} days` },
             { label: 'Battery chemistry', value: batteryLabel },
             { label: 'System voltage', value: `${systemVoltage} V` },
+            { label: 'Battery unit', value: `${batteryUnitCapacity} Ah @ ${batteryUnitVoltage} V` },
+            ...(chargerPower ? [{ label: 'Charger power', value: `${chargerPower} kW` }] : []),
+            { label: 'Design reserve', value: `${designReserve}%` },
             { label: 'Installation environment', value: installEnvironment },
           ],
         },
@@ -596,8 +600,6 @@ const BatteryStorageCalculator = () => {
               value: `${result.numberOfBatteries} × ${batteryUnitCapacity} Ah (${result.batteriesInSeries}S${result.batteriesInParallel}P)`,
             },
             { label: 'Bank capacity', value: `${result.batteryBankCapacityKwh.toFixed(1)} kWh` },
-            { label: 'Usable capacity', value: `${result.usableCapacityKwh.toFixed(1)} kWh` },
-            { label: 'Backup duration', value: `${result.backupDurationHours.toFixed(1)} hours` },
             { label: 'Inverter size', value: `${result.inverterSizeKw.toFixed(1)} kW` },
             { label: 'Charging time', value: `${result.chargingTimeHours.toFixed(1)} hours` },
             {

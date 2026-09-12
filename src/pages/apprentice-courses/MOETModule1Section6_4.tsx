@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.6 · Subsection 4 — Reporting Incidents, Accidents and Near Misses
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *              · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *              · "Health and safety regulations – key features and impact on role."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Reporting Incidents, Accidents and Near Misses - MOET Module 1 Section 6.4';
@@ -108,12 +146,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Over-7-day incapacitation injuries must be reported to the HSE within:',
-    options: [
-      '15 days of the accident',
-      '10 days',
-      '24 hours',
-      '30 days',
-    ],
+    options: ['15 days of the accident', '10 days', '24 hours', '30 days'],
     correctAnswer: 0,
     explanation:
       'If a worker is incapacitated for more than 7 consecutive days (not counting the day of the accident) as a result of a work-related injury, the employer must report this to the HSE within 15 days of the accident. The report is submitted online using Form F2508.',
@@ -189,10 +222,10 @@ const quizQuestions = [
     question:
       'A near miss during electrical maintenance work (e.g., touching a conductor that turned out to be dead, but could have been live) should be:',
     options: [
-      "Ignored, because no injury occurred and there is nothing to report",
-      "Recorded only in your own notebook in case it is needed later",
+      'Ignored, because no injury occurred and there is nothing to report',
+      'Recorded only in your own notebook in case it is needed later',
       "Reported through the company's near-miss reporting system and investigated to identify the failure",
-      "Reported directly to the HSE by telephone as a dangerous occurrence",
+      'Reported directly to the HSE by telephone as a dangerous occurrence',
     ],
     correctAnswer: 2,
     explanation:
@@ -256,119 +289,52 @@ const faqs = [
 ];
 
 const MOETModule1Section6_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.6.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Reporting Incidents, Accidents and Near Misses
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.6 · Subsection 4"
+        title="Reporting Incidents, Accidents and Near Misses"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             RIDDOR requirements, internal reporting, accident investigation and learning from near
-            misses
+            misses.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>RIDDOR:</strong> Report deaths, specified injuries, 7-day incapacitation,
-                dangerous occurrences
-              </li>
-              <li className="pl-1">
-                <strong>Timeframes:</strong> Immediate (fatal/specified), 15 days (7-day), 10 days
-                (online form)
-              </li>
-              <li className="pl-1">
-                <strong>Near misses:</strong> Report internally — they are early warnings
-              </li>
-              <li className="pl-1">
-                <strong>Investigation:</strong> Find root causes, not blame
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Electrical fires:</strong> Short circuit causing fire = dangerous occurrence
-              </li>
-              <li className="pl-1">
-                <strong>Electric shock:</strong> Hospital treatment = reportable injury
-              </li>
-              <li className="pl-1">
-                <strong>Near misses:</strong> Failed isolation, wrong circuit = must report
-                internally
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to reporting and compliance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'RIDDOR: Report deaths, specified injuries, 7-day incapacitation, dangerous occurrences',
+              'Timeframes: Immediate (fatal/specified), 15 days (7-day), 10 days (online form)',
+              'Near misses: Report internally — they are early warnings',
+              'Investigation: Find root causes, not blame',
+              'Electrical fires: Short circuit causing fire = dangerous occurrence',
+              'Electric shock: Hospital treatment = reportable injury',
+              'Near misses: Failed isolation, wrong circuit = must report internally',
+              'ST1426: Maps to reporting and compliance KSBs',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify which injuries, diseases and occurrences are reportable under RIDDOR 2013',
               'Explain the reporting timeframes and methods for different categories of incident',
               'Describe the purpose and process of internal near-miss reporting',
               'Carry out a structured accident investigation using root cause analysis',
               'Record incidents correctly in the accident book with GDPR compliance',
               'Recognise electrical-specific dangerous occurrences and their reporting requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>RIDDOR 2013 — what must be reported</ContentEyebrow>
 
-        {/* Section 01: RIDDOR 2013 — What Must Be Reported */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            RIDDOR 2013 — What Must Be Reported
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Categories of Reportable Incident">
             <p>
               The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
               (RIDDOR) require employers, the self-employed and persons in control of premises to
@@ -377,153 +343,130 @@ const MOETModule1Section6_4 = () => {
               target enforcement action where it is most needed. Failure to report is a criminal
               offence.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Categories of Reportable Incident
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Deaths:</strong> Any death arising from a work-related accident, including
-                  deaths of non-workers (members of the public) as a result of a work activity
-                </li>
-                <li className="pl-1">
-                  <strong>Specified injuries:</strong> Fractures (except fingers/thumbs/toes),
-                  amputations, permanent loss of sight or reduction in sight, crush injuries to the
-                  head or torso, scalping, burns covering more than 10% of the body, loss of
-                  consciousness from head injury or asphyxia, hypothermia or heat-induced illness
-                  requiring hospital admission for more than 24 hours
-                </li>
-                <li className="pl-1">
-                  <strong>Over-7-day incapacitation:</strong> Where a worker is incapacitated for
-                  more than 7 consecutive days (not counting the day of the accident) as a result of
-                  a work-related injury
-                </li>
-                <li className="pl-1">
-                  <strong>Non-fatal injuries to non-workers:</strong> Where a member of the public
-                  is injured as a result of a work activity and is taken to hospital for treatment
-                </li>
-                <li className="pl-1">
-                  <strong>Occupational diseases:</strong> Carpal tunnel syndrome, hand-arm vibration
-                  syndrome, occupational dermatitis, occupational asthma, and other specified
-                  diseases when linked to the work activity
-                </li>
-                <li className="pl-1">
-                  <strong>Dangerous occurrences:</strong> Specified near-miss events with high
-                  potential for serious harm (see below)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Deaths:</strong> Any death arising from a work-related accident, including
+                deaths of non-workers (members of the public) as a result of a work activity
+              </li>
+              <li>
+                <strong>Specified injuries:</strong> Fractures (except fingers/thumbs/toes),
+                amputations, permanent loss of sight or reduction in sight, crush injuries to the
+                head or torso, scalping, burns covering more than 10% of the body, loss of
+                consciousness from head injury or asphyxia, hypothermia or heat-induced illness
+                requiring hospital admission for more than 24 hours
+              </li>
+              <li>
+                <strong>Over-7-day incapacitation:</strong> Where a worker is incapacitated for more
+                than 7 consecutive days (not counting the day of the accident) as a result of a
+                work-related injury
+              </li>
+              <li>
+                <strong>Non-fatal injuries to non-workers:</strong> Where a member of the public is
+                injured as a result of a work activity and is taken to hospital for treatment
+              </li>
+              <li>
+                <strong>Occupational diseases:</strong> Carpal tunnel syndrome, hand-arm vibration
+                syndrome, occupational dermatitis, occupational asthma, and other specified diseases
+                when linked to the work activity
+              </li>
+              <li>
+                <strong>Dangerous occurrences:</strong> Specified near-miss events with high
+                potential for serious harm (see below)
+              </li>
+            </ul>
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+              <p className="mb-2 text-sm font-medium text-red-400">
                 Dangerous Occurrences Relevant to Electrical Work
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 text-sm text-white marker:text-elec-yellow/70">
+                <li>
                   <strong>Electrical short circuit or overload causing fire or explosion:</strong>{' '}
                   Even if no one is injured, an electrical fault that results in fire or explosion
                   is a reportable dangerous occurrence
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>
                     Electrical incidents causing stoppage of plant for more than 24 hours:
                   </strong>{' '}
                   Where an electrical fault causes a cessation of work for more than 24 hours
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>
                     Explosion or fire causing suspension of normal work for over 24 hours:
                   </strong>{' '}
                   Any fire or explosion that prevents normal working for more than 24 hours
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Collapse of building or structure:</strong> Where an electrical fault
                   causes structural damage
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Incidents involving overhead electric lines:</strong> Contact with or
                   close approach to overhead power lines
                 </li>
               </ul>
             </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reporting Timeframes</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Initial Report</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Written Report</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Death or specified injury
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediately by telephone (0345 300 9923)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Online form within 10 days
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Over-7-day incapacitation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not required by telephone
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Online form within 15 days of the accident
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Dangerous occurrence
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Immediately by telephone</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Online form within 10 days
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Occupational disease
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not required by telephone
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Online form as soon as a doctor confirms diagnosis
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Category</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Initial Report</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Written Report</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Death or specified injury
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Immediately by telephone (0345 300 9923)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Online form within 10 days</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Over-7-day incapacitation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Not required by telephone</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Online form within 15 days of the accident
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Dangerous occurrence
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Immediately by telephone</td>
+                    <td className="border border-white/10 px-3 py-2">Online form within 10 days</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Occupational disease
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Not required by telephone</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Online form as soon as a doctor confirms diagnosis
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> RIDDOR records must be kept for at least 3 years from the
               date the incident was reported. These records may be needed for HSE investigations,
               civil claims, insurance purposes and organisational learning.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Internal Reporting and the Accident Book */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Internal Reporting and the Accident Book
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Internal reporting and the accident book</ContentEyebrow>
+
+          <ConceptBlock title="The Accident Book (BI 510)">
             <p>
               Not all incidents meet the RIDDOR threshold for external reporting, but ALL incidents
               — no matter how minor — should be recorded internally. The accident book (BI 510) is
@@ -531,81 +474,58 @@ const MOETModule1Section6_4 = () => {
               Comprehensive internal reporting creates a complete picture of safety performance and
               enables trend analysis.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Accident Book (BI 510)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Legal requirement:</strong> The Social Security (Claims and Payments)
-                  Regulations 1979 require employers to keep an accident book or equivalent system
-                </li>
-                <li className="pl-1">
-                  <strong>What to record:</strong> Date and time, location, name and occupation of
-                  the injured person, details of the injury or condition, description of what
-                  happened, treatment given, name of the person making the entry
-                </li>
-                <li className="pl-1">
-                  <strong>Who records:</strong> The injured person should make the entry if
-                  possible, or a colleague on their behalf
-                </li>
-                <li className="pl-1">
-                  <strong>Timeliness:</strong> Entries should be made as soon as practicable after
-                  the incident, while details are fresh
-                </li>
-                <li className="pl-1">
-                  <strong>GDPR compliance:</strong> Modern accident books use individually removable
-                  pages so previous entries cannot be seen by others. Electronic systems must
-                  restrict access to authorised personnel
-                </li>
-                <li className="pl-1">
-                  <strong>Retention:</strong> Records must be kept for at least 3 years
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Internal Reporting Systems
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  In addition to the accident book, most organisations have internal reporting
-                  systems that capture more detail for investigation and trend analysis:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Incident report forms (paper or electronic)</li>
-                  <li className="pl-1">Near-miss reporting cards or apps</li>
-                  <li className="pl-1">Safety observation systems</li>
-                  <li className="pl-1">Toolbox talk feedback and records</li>
-                  <li className="pl-1">Supervisor daily safety reports</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Data Protection Considerations
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Accident and incident records contain personal data and must be handled in
-                  accordance with GDPR:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Only collect data that is necessary and proportionate</li>
-                  <li className="pl-1">Store records securely with restricted access</li>
-                  <li className="pl-1">
-                    Do not retain records longer than necessary (minimum 3 years for RIDDOR)
-                  </li>
-                  <li className="pl-1">Individuals have the right to access their own records</li>
-                  <li className="pl-1">
-                    Consider anonymising data for trend analysis and reporting
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Contractor Reporting</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Legal requirement:</strong> The Social Security (Claims and Payments)
+                Regulations 1979 require employers to keep an accident book or equivalent system
+              </li>
+              <li>
+                <strong>What to record:</strong> Date and time, location, name and occupation of the
+                injured person, details of the injury or condition, description of what happened,
+                treatment given, name of the person making the entry
+              </li>
+              <li>
+                <strong>Who records:</strong> The injured person should make the entry if possible,
+                or a colleague on their behalf
+              </li>
+              <li>
+                <strong>Timeliness:</strong> Entries should be made as soon as practicable after the
+                incident, while details are fresh
+              </li>
+              <li>
+                <strong>GDPR compliance:</strong> Modern accident books use individually removable
+                pages so previous entries cannot be seen by others. Electronic systems must restrict
+                access to authorised personnel
+              </li>
+              <li>
+                <strong>Retention:</strong> Records must be kept for at least 3 years
+              </li>
+            </ul>
+            <p>
+              <strong>Internal Reporting Systems.</strong> In addition to the accident book, most
+              organisations have internal reporting systems that capture more detail for
+              investigation and trend analysis:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Incident report forms (paper or electronic)</li>
+              <li>Near-miss reporting cards or apps</li>
+              <li>Safety observation systems</li>
+              <li>Toolbox talk feedback and records</li>
+              <li>Supervisor daily safety reports</li>
+            </ul>
+            <p>
+              <strong>Data Protection Considerations.</strong> Accident and incident records contain
+              personal data and must be handled in accordance with GDPR:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Only collect data that is necessary and proportionate</li>
+              <li>Store records securely with restricted access</li>
+              <li>Do not retain records longer than necessary (minimum 3 years for RIDDOR)</li>
+              <li>Individuals have the right to access their own records</li>
+              <li>Consider anonymising data for trend analysis and reporting</li>
+            </ul>
+            <div className="rounded-lg border border-orange-500/30 bg-orange-500/10 p-4">
+              <p className="mb-2 text-sm font-medium text-orange-400">Contractor Reporting</p>
               <p className="text-sm text-white">
                 As a maintenance electrician working as a contractor, you have dual reporting
                 responsibilities. You must report incidents to the building/client's management
@@ -615,25 +535,21 @@ const MOETModule1Section6_4 = () => {
                 you understand both reporting channels before starting work on any site.
               </p>
             </div>
-
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> If in doubt about whether an incident is reportable, report
               it. It is far better to report an incident that turns out not to be RIDDOR-reportable
               than to fail to report one that is. Your supervisor or health and safety manager can
               help determine the correct reporting category.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03: Near-Miss Reporting and the Safety Triangle */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Near-Miss Reporting and the Safety Triangle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Near-miss reporting and the safety triangle</ContentEyebrow>
+
+          <ConceptBlock title="Heinrich's Safety Triangle">
             <p>
               Near misses are events that could have caused injury or damage but, by chance or good
               fortune, did not. They are the most valuable source of safety intelligence available
@@ -641,105 +557,92 @@ const MOETModule1Section6_4 = () => {
               hurt. For electrical maintenance work — where the consequences of a genuine incident
               can be fatal — near-miss reporting is especially critical.
             </p>
+            <p>
+              Herbert Heinrich's research (later updated by Frank Bird) identified a statistical
+              relationship between the severity levels of workplace incidents:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1</strong> serious or major injury
+              </li>
+              <li>
+                <strong>29</strong> minor injuries
+              </li>
+              <li>
+                <strong>300</strong> near misses / no-injury incidents / unsafe acts
+              </li>
+            </ul>
+            <p>
+              The principle is clear: by addressing the large number of near misses at the base of
+              the triangle, you reduce the likelihood of the minor injuries in the middle and the
+              serious injuries at the top. Near-miss reporting is the foundation of proactive
+              (rather than reactive) safety management.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Heinrich's Safety Triangle
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Herbert Heinrich's research (later updated by Frank Bird) identified a statistical
-                relationship between the severity levels of workplace incidents:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1</strong> serious or major injury
-                </li>
-                <li className="pl-1">
-                  <strong>29</strong> minor injuries
-                </li>
-                <li className="pl-1">
-                  <strong>300</strong> near misses / no-injury incidents / unsafe acts
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                The principle is clear: by addressing the large number of near misses at the base of
-                the triangle, you reduce the likelihood of the minor injuries in the middle and the
-                serious injuries at the top. Near-miss reporting is the foundation of proactive
-                (rather than reactive) safety management.
-              </p>
-            </div>
+          <ConceptBlock title="Examples of Near Misses in Electrical Maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Isolation failure:</strong> You isolated what you believed was the correct
+                circuit, but when proving dead, discovered the circuit was still live — you had
+                isolated the wrong circuit. No shock because you followed safe isolation procedure,
+                but the labelling was incorrect
+              </li>
+              <li>
+                <strong>Live working near miss:</strong> While removing a consumer unit cover, you
+                noticed exposed live busbars that were not adequately shrouded. You did not touch
+                them, but a less experienced person might have
+              </li>
+              <li>
+                <strong>Arc flash risk:</strong> You opened a distribution board panel and noticed
+                significant evidence of previous arcing and overheating — black deposits, melted
+                connections — indicating an imminent failure that could have caused an arc flash
+              </li>
+              <li>
+                <strong>Falling equipment:</strong> A cable tray bracket failed and the tray
+                dropped, narrowly missing a colleague working below. No injury, but the same failure
+                at a different moment could have been fatal
+              </li>
+              <li>
+                <strong>Incorrect labelling:</strong> Circuit labels on a distribution board were
+                wrong — circuits were not where the schedule said they were. Discovered during
+                testing, not during live work, but the potential for working on the wrong live
+                circuit was real
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Examples of Near Misses in Electrical Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Isolation failure:</strong> You isolated what you believed was the correct
-                  circuit, but when proving dead, discovered the circuit was still live — you had
-                  isolated the wrong circuit. No shock because you followed safe isolation
-                  procedure, but the labelling was incorrect
-                </li>
-                <li className="pl-1">
-                  <strong>Live working near miss:</strong> While removing a consumer unit cover, you
-                  noticed exposed live busbars that were not adequately shrouded. You did not touch
-                  them, but a less experienced person might have
-                </li>
-                <li className="pl-1">
-                  <strong>Arc flash risk:</strong> You opened a distribution board panel and noticed
-                  significant evidence of previous arcing and overheating — black deposits, melted
-                  connections — indicating an imminent failure that could have caused an arc flash
-                </li>
-                <li className="pl-1">
-                  <strong>Falling equipment:</strong> A cable tray bracket failed and the tray
-                  dropped, narrowly missing a colleague working below. No injury, but the same
-                  failure at a different moment could have been fatal
-                </li>
-                <li className="pl-1">
-                  <strong>Incorrect labelling:</strong> Circuit labels on a distribution board were
-                  wrong — circuits were not where the schedule said they were. Discovered during
-                  testing, not during live work, but the potential for working on the wrong live
-                  circuit was real
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Creating a Positive Reporting Culture
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Many near misses go unreported because workers fear blame, embarrassment or
-                disciplinary action. A positive reporting culture requires:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>No blame:</strong> The focus is on system failures, not individual errors.
-                  Punishing reporters guarantees under-reporting
-                </li>
-                <li className="pl-1">
-                  <strong>Easy reporting:</strong> Simple, quick reporting methods — cards, apps,
-                  verbal reports to supervisors
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback:</strong> Reporters must see that their reports lead to action.
-                  If nothing changes, people stop reporting
-                </li>
-                <li className="pl-1">
-                  <strong>Recognition:</strong> Acknowledge and thank people who report near misses
-                  — they are contributing to safety
-                </li>
-                <li className="pl-1">
-                  <strong>Leadership:</strong> Managers must actively encourage reporting and report
-                  their own near misses
-                </li>
-                <li className="pl-1">
-                  <strong>Learning:</strong> Share anonymised near-miss lessons in toolbox talks and
-                  safety briefings
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="Creating a Positive Reporting Culture">
+            <p>
+              Many near misses go unreported because workers fear blame, embarrassment or
+              disciplinary action. A positive reporting culture requires:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>No blame:</strong> The focus is on system failures, not individual errors.
+                Punishing reporters guarantees under-reporting
+              </li>
+              <li>
+                <strong>Easy reporting:</strong> Simple, quick reporting methods — cards, apps,
+                verbal reports to supervisors
+              </li>
+              <li>
+                <strong>Feedback:</strong> Reporters must see that their reports lead to action. If
+                nothing changes, people stop reporting
+              </li>
+              <li>
+                <strong>Recognition:</strong> Acknowledge and thank people who report near misses —
+                they are contributing to safety
+              </li>
+              <li>
+                <strong>Leadership:</strong> Managers must actively encourage reporting and report
+                their own near misses
+              </li>
+              <li>
+                <strong>Learning:</strong> Share anonymised near-miss lessons in toolbox talks and
+                safety briefings
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> If you experience a near miss, report it immediately — do
               not wait until the end of the day or think "it doesn't matter because nothing
@@ -747,157 +650,127 @@ const MOETModule1Section6_4 = () => {
               a serious injury to the next person. Reporting near misses is one of the most
               important things you can do as a safety-conscious maintenance technician.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04: Accident Investigation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Accident Investigation Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Accident investigation process</ContentEyebrow>
+
+          <ConceptBlock title="Step 1 and 2 — Secure the Scene, Gather Evidence">
             <p>
               When an accident or serious near miss occurs, a thorough investigation is essential to
               understand what happened, why it happened, and how to prevent it from happening again.
               The investigation should be carried out by a competent person (or team) as soon as
               practicable after the incident, while evidence is fresh and the scene is intact.
             </p>
+            <p>
+              <strong>Step 1 — Secure the Scene</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Ensure the area is safe — no continuing danger to investigators or others</li>
+              <li>Preserve the scene — do not move equipment, tools or materials</li>
+              <li>Take photographs and video from multiple angles</li>
+              <li>Make sketches showing positions of people, equipment and materials</li>
+              <li>
+                Note the position of switches, isolators, lockout devices and test instruments
+              </li>
+              <li>Secure any physical evidence (failed components, damaged cables, PPE)</li>
+            </ul>
+            <p>
+              <strong>Step 2 — Gather Evidence</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Witness statements:</strong> Interview witnesses individually as soon as
+                possible. Ask open questions ("What did you see?") not leading questions ("Did he
+                forget to isolate?")
+              </li>
+              <li>
+                <strong>Documentation:</strong> Collect risk assessments, method statements, permits
+                to work, training records, maintenance records, calibration certificates for test
+                instruments
+              </li>
+              <li>
+                <strong>Environmental data:</strong> Note lighting levels, temperature, noise, time
+                of day, weather (for outdoor work), shift patterns
+              </li>
+              <li>
+                <strong>Equipment examination:</strong> Inspect and test equipment involved (by a
+                competent person). Record serial numbers, calibration dates, condition
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Secure the Scene
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Ensure the area is safe — no continuing danger to investigators or others
-                  </li>
-                  <li className="pl-1">
-                    Preserve the scene — do not move equipment, tools or materials
-                  </li>
-                  <li className="pl-1">Take photographs and video from multiple angles</li>
-                  <li className="pl-1">
-                    Make sketches showing positions of people, equipment and materials
-                  </li>
-                  <li className="pl-1">
-                    Note the position of switches, isolators, lockout devices and test instruments
-                  </li>
-                  <li className="pl-1">
-                    Secure any physical evidence (failed components, damaged cables, PPE)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Gather Evidence
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Witness statements:</strong> Interview witnesses individually as soon as
-                    possible. Ask open questions ("What did you see?") not leading questions ("Did
-                    he forget to isolate?")
-                  </li>
-                  <li className="pl-1">
-                    <strong>Documentation:</strong> Collect risk assessments, method statements,
-                    permits to work, training records, maintenance records, calibration certificates
-                    for test instruments
-                  </li>
-                  <li className="pl-1">
-                    <strong>Environmental data:</strong> Note lighting levels, temperature, noise,
-                    time of day, weather (for outdoor work), shift patterns
-                  </li>
-                  <li className="pl-1">
-                    <strong>Equipment examination:</strong> Inspect and test equipment involved (by
-                    a competent person). Record serial numbers, calibration dates, condition
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Analyse and Identify Root Causes
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Root cause analysis goes beyond the immediate cause (e.g., "he touched a live
-                  conductor") to identify the underlying systemic failures. Common root cause
-                  analysis techniques include:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>5 Whys:</strong> Ask "why?" repeatedly until you reach the fundamental
-                    cause. Example: Why did he touch the live conductor? Because it was not
-                    isolated. Why was it not isolated? Because the wrong circuit was identified. Why
-                    was the wrong circuit identified? Because the labelling was out of date. Why was
-                    the labelling out of date? Because there is no system for updating labels after
-                    modifications
-                  </li>
-                  <li className="pl-1">
-                    <strong>Fishbone diagram (Ishikawa):</strong> Categorise causes under headings:
-                    People, Procedures, Plant, Place, Policies
-                  </li>
-                  <li className="pl-1">
-                    <strong>Timeline analysis:</strong> Map out the sequence of events to identify
-                    where the chain could have been broken
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Implement Corrective Actions
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Immediate actions:</strong> Address any continuing hazards straight away
-                  </li>
-                  <li className="pl-1">
-                    <strong>Short-term actions:</strong> Implement temporary controls while
-                    permanent solutions are developed
-                  </li>
-                  <li className="pl-1">
-                    <strong>Long-term actions:</strong> Address root causes through procedure
-                    changes, training, design modifications, management systems
-                  </li>
-                  <li className="pl-1">
-                    <strong>Follow the hierarchy of control:</strong> Eliminate, substitute,
-                    engineer, administrate, PPE
-                  </li>
-                  <li className="pl-1">
-                    <strong>Assign responsibility:</strong> Each corrective action must have a named
-                    owner and a target completion date
-                  </li>
-                  <li className="pl-1">
-                    <strong>Verify effectiveness:</strong> Check that corrective actions have been
-                    implemented and are working
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Case Study: Investigation of an Electrical Near Miss
-              </h3>
-              <p className="text-sm text-white">
-                A maintenance technician was tasked with replacing a contactor in a motor control
-                centre (MCC). They isolated the supply at the local isolator, locked off and proved
-                dead. However, when they removed the contactor, they discovered that the isolator
-                only disconnected two of the three phases — the third phase remained live due to a
-                faulty isolator mechanism. The technician was not injured because they were wearing
-                insulated gloves and noticed the live indicator before touching the busbars.
-                Investigation using the 5 Whys revealed: (1) the isolator was faulty, (2) the fault
-                had not been detected during the last periodic inspection, (3) the inspection did
-                not include functional testing of isolators, (4) the inspection checklist was
-                incomplete. Corrective actions included adding isolator functional testing to the
-                inspection procedure, replacing all isolators of the same age and type, and
-                retraining inspection staff.
-              </p>
-            </div>
-
+          <ConceptBlock title="Step 3 and 4 — Root Causes and Corrective Actions">
+            <p>
+              <strong>Step 3 — Analyse and Identify Root Causes</strong>
+            </p>
+            <p>
+              Root cause analysis goes beyond the immediate cause (e.g., "he touched a live
+              conductor") to identify the underlying systemic failures. Common root cause analysis
+              techniques include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>5 Whys:</strong> Ask "why?" repeatedly until you reach the fundamental
+                cause. Example: Why did he touch the live conductor? Because it was not isolated.
+                Why was it not isolated? Because the wrong circuit was identified. Why was the wrong
+                circuit identified? Because the labelling was out of date. Why was the labelling out
+                of date? Because there is no system for updating labels after modifications
+              </li>
+              <li>
+                <strong>Fishbone diagram (Ishikawa):</strong> Categorise causes under headings:
+                People, Procedures, Plant, Place, Policies
+              </li>
+              <li>
+                <strong>Timeline analysis:</strong> Map out the sequence of events to identify where
+                the chain could have been broken
+              </li>
+            </ul>
+            <p>
+              <strong>Step 4 — Implement Corrective Actions</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Immediate actions:</strong> Address any continuing hazards straight away
+              </li>
+              <li>
+                <strong>Short-term actions:</strong> Implement temporary controls while permanent
+                solutions are developed
+              </li>
+              <li>
+                <strong>Long-term actions:</strong> Address root causes through procedure changes,
+                training, design modifications, management systems
+              </li>
+              <li>
+                <strong>Follow the hierarchy of control:</strong> Eliminate, substitute, engineer,
+                administrate, PPE
+              </li>
+              <li>
+                <strong>Assign responsibility:</strong> Each corrective action must have a named
+                owner and a target completion date
+              </li>
+              <li>
+                <strong>Verify effectiveness:</strong> Check that corrective actions have been
+                implemented and are working
+              </li>
+            </ul>
+            <p>
+              <strong>Case Study: Investigation of an Electrical Near Miss.</strong> A maintenance
+              technician was tasked with replacing a contactor in a motor control centre (MCC). They
+              isolated the supply at the local isolator, locked off and proved dead. However, when
+              they removed the contactor, they discovered that the isolator only disconnected two of
+              the three phases — the third phase remained live due to a faulty isolator mechanism.
+              The technician was not injured because they were wearing insulated gloves and noticed
+              the live indicator before touching the busbars. Investigation using the 5 Whys
+              revealed: (1) the isolator was faulty, (2) the fault had not been detected during the
+              last periodic inspection, (3) the inspection did not include functional testing of
+              isolators, (4) the inspection checklist was incomplete. Corrective actions included
+              adding isolator functional testing to the inspection procedure, replacing all
+              isolators of the same age and type, and retraining inspection staff.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard requires you to be
               able to participate in incident investigations and contribute to corrective actions.
@@ -905,18 +778,15 @@ const MOETModule1Section6_4 = () => {
               gathering, and implement corrective actions relevant to your work. You are also
               expected to report hazards and near misses proactively.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05: Lessons Learned and Continuous Improvement */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Lessons Learned and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Lessons learned and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="Trend Analysis and Pattern Recognition">
             <p>
               The true value of incident reporting and investigation lies not in the paperwork
               itself but in the lessons learned and the improvements that follow. A proactive safety
@@ -925,202 +795,208 @@ const MOETModule1Section6_4 = () => {
               For electrical maintenance technicians, this means being an active participant in the
               feedback loop, not just a data source.
             </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Accident data review:</strong> Regularly analyse accident book entries,
+                RIDDOR reports and near-miss records to identify trends — are certain types of
+                incident recurring? Are there common locations, times, tasks or equipment involved?
+              </li>
+              <li>
+                <strong>Leading indicators:</strong> Track proactive measures such as the number of
+                near misses reported, safety observations completed, toolbox talks delivered and
+                training hours. A drop in near-miss reporting may indicate under-reporting, not
+                improved safety
+              </li>
+              <li>
+                <strong>Lagging indicators:</strong> Track reactive measures such as injury rates,
+                lost-time incidents, RIDDOR reports and enforcement actions. These tell you what has
+                happened, not what will happen
+              </li>
+              <li>
+                <strong>Benchmarking:</strong> Compare your organisation's incident rates with
+                industry averages to identify areas for improvement
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Trend Analysis and Pattern Recognition
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Accident data review:</strong> Regularly analyse accident book entries,
-                  RIDDOR reports and near-miss records to identify trends — are certain types of
-                  incident recurring? Are there common locations, times, tasks or equipment
-                  involved?
-                </li>
-                <li className="pl-1">
-                  <strong>Leading indicators:</strong> Track proactive measures such as the number
-                  of near misses reported, safety observations completed, toolbox talks delivered
-                  and training hours. A drop in near-miss reporting may indicate under-reporting,
-                  not improved safety
-                </li>
-                <li className="pl-1">
-                  <strong>Lagging indicators:</strong> Track reactive measures such as injury rates,
-                  lost-time incidents, RIDDOR reports and enforcement actions. These tell you what
-                  has happened, not what will happen
-                </li>
-                <li className="pl-1">
-                  <strong>Benchmarking:</strong> Compare your organisation's incident rates with
-                  industry averages to identify areas for improvement
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Communicating Lessons Learned">
+            <p>
+              Lessons from investigations are only valuable if they reach the people who need to
+              know. Effective communication methods include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety alerts:</strong> Immediate notifications of serious incidents with
+                key lessons — distributed by email, noticeboard, or safety app
+              </li>
+              <li>
+                <strong>Toolbox talks:</strong> Short, focused discussions at the start of shifts or
+                work activities, using real incident case studies to reinforce safe practices
+              </li>
+              <li>
+                <strong>Safety briefings:</strong> Formal briefings for larger teams, covering
+                investigation findings, root causes and corrective actions
+              </li>
+              <li>
+                <strong>Notice boards:</strong> Display anonymised incident summaries and safety
+                statistics in common areas
+              </li>
+              <li>
+                <strong>Industry sharing:</strong> Organisations such as the HSE, ECA, JIB and
+                NICEIC publish safety bulletins and incident alerts that provide lessons from across
+                the industry
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Communicating Lessons Learned
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Lessons from investigations are only valuable if they reach the people who need to
-                know. Effective communication methods include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety alerts:</strong> Immediate notifications of serious incidents with
-                  key lessons — distributed by email, noticeboard, or safety app
-                </li>
-                <li className="pl-1">
-                  <strong>Toolbox talks:</strong> Short, focused discussions at the start of shifts
-                  or work activities, using real incident case studies to reinforce safe practices
-                </li>
-                <li className="pl-1">
-                  <strong>Safety briefings:</strong> Formal briefings for larger teams, covering
-                  investigation findings, root causes and corrective actions
-                </li>
-                <li className="pl-1">
-                  <strong>Notice boards:</strong> Display anonymised incident summaries and safety
-                  statistics in common areas
-                </li>
-                <li className="pl-1">
-                  <strong>Industry sharing:</strong> Organisations such as the HSE, ECA, JIB and
-                  NICEIC publish safety bulletins and incident alerts that provide lessons from
-                  across the industry
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Closing the Loop</h3>
-                <p className="text-sm text-white">
-                  Every corrective action identified in an investigation must be tracked to
-                  completion. This means assigning a named owner, setting a deadline, providing the
-                  resources needed, verifying that the action has been completed, and then checking
-                  that it is effective in preventing recurrence. An investigation that identifies
-                  corrective actions but never implements them is worse than no investigation — it
-                  creates a false sense of security.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Your Role in Continuous Improvement
-                </h3>
-                <p className="text-sm text-white">
-                  As a maintenance technician, you contribute to continuous improvement by:
-                  reporting all incidents and near misses honestly, participating in investigations
-                  when asked, attending safety briefings and toolbox talks, implementing corrective
-                  actions in your work, sharing safety knowledge with colleagues, and challenging
-                  unsafe practices when you see them. Safety is not a one-person job — it requires
-                  everyone's participation.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                HSE Enforcement and the Consequences of Failure
-              </h3>
-              <p className="text-sm text-white">
-                The HSE has the power to investigate workplace incidents, issue improvement notices
-                and prohibition notices, and prosecute employers and individuals who fail to comply
-                with health and safety law. Penalties for RIDDOR offences and health and safety
-                breaches include unlimited fines for organisations, imprisonment for individuals (up
-                to 2 years under the Health and Safety at Work etc. Act 1974), and corporate
-                manslaughter charges in the most serious cases. Beyond the legal consequences, a
-                failure to report and learn from incidents is a moral failure — every accident that
-                could have been prevented represents a failure of the safety management system.
-              </p>
-            </div>
-
+          <ConceptBlock title="Closing the Loop and Your Role">
+            <p>
+              <strong>Closing the Loop.</strong> Every corrective action identified in an
+              investigation must be tracked to completion. This means assigning a named owner,
+              setting a deadline, providing the resources needed, verifying that the action has been
+              completed, and then checking that it is effective in preventing recurrence. An
+              investigation that identifies corrective actions but never implements them is worse
+              than no investigation — it creates a false sense of security.
+            </p>
+            <p>
+              <strong>Your Role in Continuous Improvement.</strong> As a maintenance technician, you
+              contribute to continuous improvement by: reporting all incidents and near misses
+              honestly, participating in investigations when asked, attending safety briefings and
+              toolbox talks, implementing corrective actions in your work, sharing safety knowledge
+              with colleagues, and challenging unsafe practices when you see them. Safety is not a
+              one-person job — it requires everyone's participation.
+            </p>
+            <p>
+              <strong>HSE Enforcement and the Consequences of Failure.</strong> The HSE has the
+              power to investigate workplace incidents, issue improvement notices and prohibition
+              notices, and prosecute employers and individuals who fail to comply with health and
+              safety law. Penalties for RIDDOR offences and health and safety breaches include
+              unlimited fines for organisations, imprisonment for individuals (up to 2 years under
+              the Health and Safety at Work etc. Act 1974), and corporate manslaughter charges in
+              the most serious cases. Beyond the legal consequences, a failure to report and learn
+              from incidents is a moral failure — every accident that could have been prevented
+              represents a failure of the safety management system.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard includes behaviours
               relating to continuous improvement and taking responsibility for safety. Demonstrating
               that you actively participate in reporting, investigation and corrective action
               implementation is a key part of your end-point assessment evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="The near miss nobody reported"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            situation={
+              <>
+                <p>
+                  An apprentice opens a panel and finds a live conductor where the drawing showed an
+                  isolated one. Nothing happens — they notice before touching it, close the panel
+                  and find their supervisor.
+                </p>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RIDDOR Reporting</p>
-                <ul className="space-y-0.5">
-                  <li>Deaths/specified injuries — phone immediately + online within 10 days</li>
-                  <li>Over-7-day incapacitation — online within 15 days</li>
-                  <li>Dangerous occurrences — phone immediately + online within 10 days</li>
-                  <li>Occupational diseases — online when doctor confirms</li>
-                  <li>HSE telephone: 0345 300 9923</li>
-                  <li>Online: www.hse.gov.uk/riddor</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>RIDDOR 2013 — Reporting regulations</li>
-                  <li>HSWA 1974 — General duties</li>
-                  <li>BI 510 — Accident book</li>
-                  <li>GDPR / DPA 2018 — Data protection</li>
-                  <li>HSG245 — Investigating accidents</li>
-                  <li>ST1426 — Reporting and compliance KSBs</li>
-                </ul>
-              </div>
+                <p>Because nobody was hurt, it is dealt with verbally and never written down.</p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Report it anyway. A near miss is the same event as an accident with the outcome
+                  changed by luck, and it carries the same information about what is wrong with the
+                  installation or the process.
+                </p>
+
+                <p>
+                  Record what the drawing said and what was actually there. That discrepancy is the
+                  real finding — someone else will open that panel expecting the same thing the
+                  drawing promised.
+                </p>
+
+                <p>
+                  Separate the report from blame. Near-miss reporting only works if people can raise
+                  one without it becoming an investigation into them; a workforce that has learned
+                  reporting is costly stops reporting.
+                </p>
+
+                <p>
+                  Check whether it is reportable under RIDDOR. Most near misses are not, but some
+                  are classed as dangerous occurrences, and that assessment should be made
+                  deliberately rather than assumed.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                The drawing is now known to be wrong and nobody has written that down. The next
+                person to open that panel gets the same surprise with no guarantee they will notice
+                in time. Near-miss reporting is the cheapest safety information a site can get — it
+                describes a failure that has already happened, at no cost, and the only way it gets
+                wasted is by not recording it.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Deaths/specified injuries — phone immediately + online within 10 days',
+              'Over-7-day incapacitation — online within 15 days',
+              'Dangerous occurrences — phone immediately + online within 10 days',
+              'Occupational diseases — online when doctor confirms',
+              'HSE telephone: 0345 300 9923',
+              'Online: www.hse.gov.uk/riddor',
+              'RIDDOR 2013 — Reporting regulations',
+              'HSWA 1974 — General duties',
+              'BI 510 — Accident book',
+              'GDPR / DPA 2018 — Data protection',
+              'HSG245 — Investigating accidents',
+              'ST1426 — Reporting and compliance KSBs',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Evacuation Procedures
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section6-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Role of First Responders on Site
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Evacuation Procedures
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section6-5">
-              Next: Role of First Responders
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

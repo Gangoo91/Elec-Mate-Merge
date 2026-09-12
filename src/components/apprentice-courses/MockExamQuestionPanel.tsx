@@ -64,17 +64,16 @@ export function MockExamQuestionPanel({
         <div className="flex items-start justify-between gap-4 mb-2">
           <div className="min-w-0">
             <div className="text-[10.5px] font-medium uppercase tracking-[0.2em] text-elec-yellow">
-              Question {questionIndex + 1} <span className="text-white/40">of {totalQuestions}</span>
+              Question {questionIndex + 1}{' '}
+              <span className="text-white/40">of {totalQuestions}</span>
             </div>
-            <div className="mt-1 text-[12px] text-white/60 truncate">
-              {topicLabel}
-            </div>
+            <div className="mt-1 text-[12px] text-white/60 truncate">{topicLabel}</div>
           </div>
           <button
             type="button"
             onClick={onToggleFlag}
             className={cn(
-              'shrink-0 inline-flex items-center gap-1.5 h-9 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
+              'shrink-0 inline-flex items-center gap-1.5 h-11 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
               isFlagged
                 ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
                 : 'bg-white/[0.03] border border-white/[0.08] text-white/70 hover:text-white hover:bg-white/[0.06]'

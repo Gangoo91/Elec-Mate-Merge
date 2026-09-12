@@ -1,8 +1,60 @@
-import { ArrowLeft, ToggleRight, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.4 · Subsection 4 — Functional Testing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *   Skills    · "Electrical. Conduct functional testing."
+ *   Knowledge · "Documentation requirements: documentation control,
+ *                auditable records."
+ *
+ * Numeric values (RCD trip times, Type S time windows, emergency lighting
+ * durations) are copied verbatim from the original page. The bs7671_facets
+ * RAG holds regulation rules, not numeric tables, so none of these can be
+ * checked against it — see the conversion report for what should be
+ * verified against BS 7671 / BS 5266-1 / BS 5839-1.
+ *
+ * ⚠️ CORRECTED (not verbatim): the original FAQ claimed BS 7671 recommends
+ * RCD test-button checks at "quarterly intervals". There is no quarterly
+ * RCD requirement — the figure is six-monthly, per the Regulation 514.12.2
+ * notice wording. Corrected here per verified primary-source direction.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Functional Testing - MOET Module 4.5.4';
@@ -27,12 +79,7 @@ const quickCheckQuestions = [
     id: 'func-rcd-test',
     question:
       'When conducting a functional test on a 30 mA Type AC RCD, the device must trip within which time at rated residual current (IΔn)?',
-    options: [
-      '40 ms',
-      '1 second',
-      '300 ms (0.3 seconds)',
-      '5 seconds',
-    ],
+    options: ['40 ms', '1 second', '300 ms (0.3 seconds)', '5 seconds'],
     correctIndex: 2,
     explanation:
       'BS 7671 requires a Type AC general-purpose RCD to trip within 300 ms when tested at its rated residual operating current (IΔn). At 5 × IΔn (150 mA for a 30 mA device), it must trip within 40 ms. These test times verify that the device provides adequate protection against electric shock within the physiological time limits for ventricular fibrillation.',
@@ -233,7 +280,7 @@ const faqs = [
   {
     question: 'How often should RCDs be functionally tested?',
     answer:
-      "BS 7671 recommends that RCDs be tested using the integral test button at quarterly intervals by the user. Full instrument testing (at 50%, 100%, and 5× IΔn) should be carried out during periodic inspection (EICR) at the intervals appropriate to the installation type. For critical applications (medical locations, construction sites), more frequent instrument testing may be specified. The test button check takes seconds and should be encouraged as part of the user's routine.",
+      "BS 7671 Regulation 514.12.2 requires a notice at or near the consumer unit recommending that the integral test button be operated every six months by the user. Full instrument testing (at 50%, 100%, and 5× IΔn) should be carried out during periodic inspection (EICR) at the intervals appropriate to the installation type. For critical applications (medical locations, construction sites), more frequent instrument testing may be specified. The test button check takes seconds and should be encouraged as part of the user's routine.",
   },
   {
     question: 'What is the difference between functional testing and commissioning?',
@@ -258,120 +305,92 @@ const faqs = [
 ];
 
 const MOETModule4Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <ToggleRight className="h-4 w-4" />
-            <span>Module 4.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Functional Testing
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 4"
+        title="Functional Testing"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Verifying correct operation of protective devices, control systems, interlocks, and
-            emergency systems
+            emergency systems.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Verify that devices and systems operate as intended
-              </li>
-              <li className="pl-1">
-                <strong>RCDs:</strong> Test at 50%, 100%, and 5x IΔn with calibrated instrument
-              </li>
-              <li className="pl-1">
-                <strong>Interlocks:</strong> Verify all safety interlocks function after maintenance
-              </li>
-              <li className="pl-1">
-                <strong>Emergency:</strong> Test emergency stops, lighting, and fire alarm systems
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Purpose: Verify that devices and systems operate as intended',
+              'RCDs: Test at 50%, 100%, and 5x IΔn with calibrated instrument',
+              'Interlocks: Verify all safety interlocks function after maintenance',
+              'Emergency: Test emergency stops, lighting, and fire alarm systems',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Safety-critical:</strong> Functional testing proves protective devices will
                 operate when needed
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Post-maintenance:</strong> Always test devices that have been disturbed
                 during work
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Documentation:</strong> Record all functional test results on appropriate
                 schedules
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to testing, commissioning, and safety system
                 competencies
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and scope of functional testing in electrical maintenance',
               'Conduct the full RCD test sequence (50%, 100%, 5x IΔn) using a calibrated instrument',
               'Functionally test circuit breakers, contactors, and switchgear operating mechanisms',
               'Verify interlock operation on switchgear, machine guards, and access panels',
               'Test emergency systems including emergency stops, emergency lighting, and fire alarms',
               'Document functional test results on appropriate schedules and commissioning records',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The role of functional testing</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Role of Functional Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="The Role of Functional Testing"
+            onSite="The hidden risk: Protective devices that are never functionally tested can develop latent faults that only become apparent when the device is called upon to operate during a real fault. By then, it is too late — the device that should have protected against electric shock, fire, or injury has failed silently. Functional testing is the only way to detect these hidden deficiencies before they have real consequences."
+          >
             <p>
               Functional testing bridges the gap between electrical parameter testing and real-world
               operation. While insulation resistance, continuity, and earth fault loop impedance
@@ -398,79 +417,27 @@ const MOETModule4Section5_4 = () => {
               systems (BS 5839-1), emergency lighting (BS 5266-1), and machine safety systems (BS EN
               60204-1) is required by their respective standards.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Functional Testing Scope
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device/System</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What Functional Testing Verifies
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCDs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trip sensitivity, trip time, non-trip at 50% IΔn
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Circuit breakers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trip-free operation, smooth mechanism, contact condition
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Interlocks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prevention of dangerous operations, correct sequencing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency stops</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate de-energisation, latching, anti-restart
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Emergency lighting</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Changeover, illumination level, battery duration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Functional Testing Scope"
+            headers={['Device/System', 'What Functional Testing Verifies']}
+            rows={[
+              ['RCDs', 'Trip sensitivity, trip time, non-trip at 50% IΔn'],
+              ['Circuit breakers', 'Trip-free operation, smooth mechanism, contact condition'],
+              ['Interlocks', 'Prevention of dangerous operations, correct sequencing'],
+              ['Emergency stops', 'Immediate de-energisation, latching, anti-restart'],
+              ['Emergency lighting', 'Changeover, illumination level, battery duration'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Hidden Risk</p>
-              <p className="text-sm text-white">
-                Protective devices that are never functionally tested can develop latent faults that
-                only become apparent when the device is called upon to operate during a real fault.
-                By then, it is too late — the device that should have protected against electric
-                shock, fire, or injury has failed silently. Functional testing is the only way to
-                detect these hidden deficiencies before they have real consequences.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            RCD Testing — The Full Test Sequence
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>RCD testing — the full test sequence</ContentEyebrow>
+
+          <ConceptBlock title="RCD Testing — The Full Test Sequence">
             <p>
               Residual current devices (RCDs) are among the most important protective devices in
               modern electrical installations, providing protection against electric shock from
@@ -479,72 +446,51 @@ const MOETModule4Section5_4 = () => {
               time provides a false sense of security. Comprehensive functional testing using a
               calibrated RCD test instrument is essential.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>No-trip test (50% IΔn).</strong> Apply a test current equal to 50% of the
+                rated residual operating current (e.g., 15 mA for a 30 mA RCD). The RCD should NOT
+                trip. This test confirms that the device will not nuisance-trip under normal leakage
+                conditions. If the RCD trips at 50% IΔn, it may be oversensitive (indicating a fault
+                in the device) or the circuit may have excessive standing leakage current that is
+                combining with the test current to exceed the trip threshold.
+              </li>
+              <li>
+                <strong>Trip test (100% IΔn).</strong> Apply a test current equal to the rated
+                residual operating current (e.g., 30 mA). The RCD must trip within 300 ms for a Type
+                AC or Type A non-delayed device. Record the actual trip time. If the device does not
+                trip or takes longer than 300 ms, it is defective and must be replaced. This test
+                should be performed on both positive and negative half-cycles of the supply waveform
+                (the instrument typically has a selection for this) to verify operation on both
+                polarities.
+              </li>
+              <li>
+                <strong>Fast trip test (5× IΔn).</strong> Apply a test current equal to five times
+                the rated residual operating current (e.g., 150 mA for a 30 mA device). The RCD must
+                trip within 40 ms. This test verifies fast disconnection under higher fault current
+                conditions, which is critical for protection against electric shock at the
+                let-through energy levels that can cause ventricular fibrillation.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Test 1 — No-Trip Test (50% IΔn)
-                </h3>
-                <p className="text-sm text-white">
-                  Apply a test current equal to 50% of the rated residual operating current (e.g.,
-                  15 mA for a 30 mA RCD). The RCD should NOT trip. This test confirms that the
-                  device will not nuisance-trip under normal leakage conditions. If the RCD trips at
-                  50% IΔn, it may be oversensitive (indicating a fault in the device) or the circuit
-                  may have excessive standing leakage current that is combining with the test
-                  current to exceed the trip threshold.
-                </p>
-              </div>
+          <ConceptBlock title="Type S (time-delayed) RCDs">
+            <p>
+              Type S RCDs have an intentional time delay for discrimination with downstream
+              non-delayed RCDs. At IΔn, a Type S must trip between 130 ms and 500 ms (not within 300
+              ms like a standard RCD). At 5× IΔn, it must trip between 50 ms and 200 ms. These wider
+              time windows reflect the intentional delay. The test instrument must be set to the
+              correct RCD type to apply the appropriate acceptance criteria.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Test 2 — Trip Test (100% IΔn)
-                </h3>
-                <p className="text-sm text-white">
-                  Apply a test current equal to the rated residual operating current (e.g., 30 mA).
-                  The RCD must trip within 300 ms for a Type AC or Type A non-delayed device. Record
-                  the actual trip time. If the device does not trip or takes longer than 300 ms, it
-                  is defective and must be replaced. This test should be performed on both positive
-                  and negative half-cycles of the supply waveform (the instrument typically has a
-                  selection for this) to verify operation on both polarities.
-                </p>
-              </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Test 3 — Fast Trip Test (5× IΔn)
-                </h3>
-                <p className="text-sm text-white">
-                  Apply a test current equal to five times the rated residual operating current
-                  (e.g., 150 mA for a 30 mA device). The RCD must trip within 40 ms. This test
-                  verifies fast disconnection under higher fault current conditions, which is
-                  critical for protection against electric shock at the let-through energy levels
-                  that can cause ventricular fibrillation.
-                </p>
-              </div>
-            </div>
+          <SectionRule />
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Type S (Time-Delayed) RCDs</p>
-              <p className="text-sm text-white">
-                Type S RCDs have an intentional time delay for discrimination with downstream
-                non-delayed RCDs. At IΔn, a Type S must trip between 130 ms and 500 ms (not within
-                300 ms like a standard RCD). At 5× IΔn, it must trip between 50 ms and 200 ms. These
-                wider time windows reflect the intentional delay. The test instrument must be set to
-                the correct RCD type to apply the appropriate acceptance criteria.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ContentEyebrow>Switchgear and circuit breaker functional tests</ContentEyebrow>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Switchgear and Circuit Breaker Functional Tests
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Switchgear and Circuit Breaker Functional Tests">
             <p>
               Circuit breakers and switchgear are mechanical devices with moving parts, springs,
               latches, and contacts. Over time, these mechanisms can deteriorate: springs lose
@@ -553,67 +499,58 @@ const MOETModule4Section5_4 = () => {
               no protection despite appearing to be in good condition from the outside. Functional
               testing exercises the mechanism and reveals these hidden deficiencies.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circuit Breaker Functional Test Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Manual operation:</strong> Open and close the breaker several times. The
-                  mechanism should be smooth, positive, and require consistent force. Stiff, sticky,
-                  or inconsistent operation indicates mechanical deterioration.
-                </li>
-                <li className="pl-1">
-                  <strong>Trip-free mechanism:</strong> With the breaker in the on position, attempt
-                  to trip it using the test button or trip coil while holding the handle in the on
-                  position. The breaker must trip regardless — this is the trip-free requirement
-                  that prevents the operator from overriding the protection.
-                </li>
-                <li className="pl-1">
-                  <strong>Contact condition:</strong> For withdrawable breakers, inspect the
-                  contacts for pitting, discolouration, or deposits. For moulded case breakers,
-                  operate the breaker several times to exercise the contacts.
-                </li>
-                <li className="pl-1">
-                  <strong>Auxiliary contacts:</strong> Verify that any auxiliary contacts (for
-                  status indication, interlocking, or alarm purposes) operate correctly and in
-                  synchronisation with the main contacts.
-                </li>
-                <li className="pl-1">
-                  <strong>Racking mechanism:</strong> For withdrawable breakers, verify that the
-                  racking mechanism operates smoothly and that the shutters operate correctly in all
-                  positions (connected, test, disconnected).
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Circuit breaker functional test checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Manual operation:</strong> Open and close the breaker several times. The
+                mechanism should be smooth, positive, and require consistent force. Stiff, sticky,
+                or inconsistent operation indicates mechanical deterioration.
+              </li>
+              <li>
+                <strong>Trip-free mechanism:</strong> With the breaker in the on position, attempt
+                to trip it using the test button or trip coil while holding the handle in the on
+                position. The breaker must trip regardless — this is the trip-free requirement that
+                prevents the operator from overriding the protection.
+              </li>
+              <li>
+                <strong>Contact condition:</strong> For withdrawable breakers, inspect the contacts
+                for pitting, discolouration, or deposits. For moulded case breakers, operate the
+                breaker several times to exercise the contacts.
+              </li>
+              <li>
+                <strong>Auxiliary contacts:</strong> Verify that any auxiliary contacts (for status
+                indication, interlocking, or alarm purposes) operate correctly and in
+                synchronisation with the main contacts.
+              </li>
+              <li>
+                <strong>Racking mechanism:</strong> For withdrawable breakers, verify that the
+                racking mechanism operates smoothly and that the shutters operate correctly in all
+                positions (connected, test, disconnected).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contactor and Relay Testing
-              </h3>
-              <p className="text-sm text-white">
-                Contactors and relays should be tested for correct pick-up and drop-out by
-                energising and de-energising the coil. Listen for clean, positive operation —
-                chattering or buzzing indicates problems with the coil, the magnetic circuit, or the
-                contact springs. For contactors, check that the main contacts are not welded (a
-                common failure mode that prevents the contactor from opening). For relays, verify
-                correct changeover operation and check that the contact rating is appropriate for
-                the load being switched.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Contactor and relay testing">
+            <p>
+              Contactors and relays should be tested for correct pick-up and drop-out by energising
+              and de-energising the coil. Listen for clean, positive operation — chattering or
+              buzzing indicates problems with the coil, the magnetic circuit, or the contact
+              springs. For contactors, check that the main contacts are not welded (a common failure
+              mode that prevents the contactor from opening). For relays, verify correct changeover
+              operation and check that the contact rating is appropriate for the load being
+              switched.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Interlocks and Safety Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Interlocks and safety systems</ContentEyebrow>
+
+          <ConceptBlock title="Interlocks and Safety Systems">
             <p>
               Electrical interlocks are safety devices that enforce safe operating sequences by
               preventing dangerous operations — such as opening an energised switchgear compartment,
@@ -621,78 +558,62 @@ const MOETModule4Section5_4 = () => {
               sources. They are one of the most important barriers in the Swiss cheese model of
               safety, and their correct operation after maintenance is critical.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Switchgear Interlocks
-                </h3>
-                <p className="text-sm text-white">
-                  Switchgear typically incorporates multiple interlocks: the panel door cannot be
-                  opened with the breaker closed, the breaker cannot be closed with the panel door
-                  open, the breaker cannot be racked in or out with the breaker closed, and earthing
-                  devices cannot be applied with the breaker closed. Each interlock must be tested
-                  individually by attempting the prevented action and confirming that the interlock
-                  blocks it. Never assume an interlock works because it worked previously —
-                  mechanical interlocks can be defeated by wear, corrosion, or incorrect reassembly.
-                </p>
-              </div>
+          <CommonMistake
+            title="Assuming an interlock still works because it worked previously"
+            whatHappens={
+              <p>
+                Switchgear typically incorporates multiple interlocks: the panel door cannot be
+                opened with the breaker closed, the breaker cannot be closed with the panel door
+                open, the breaker cannot be racked in or out with the breaker closed, and earthing
+                devices cannot be applied with the breaker closed. Mechanical interlocks can be
+                defeated by wear, corrosion, or incorrect reassembly.
+              </p>
+            }
+            doInstead={
+              <p>
+                Test each interlock individually by attempting the prevented action and confirming
+                that the interlock blocks it. Never assume an interlock works because it worked
+                previously.
+              </p>
+            }
+          />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Emergency Stop Testing
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Emergency stop testing must verify the complete functional chain:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Pressing the emergency stop immediately de-energises all hazardous motion and
-                    energy
-                  </li>
-                  <li className="pl-1">
-                    The stop is latched — it remains in the stopped condition until manually reset
-                  </li>
-                  <li className="pl-1">
-                    Resetting the emergency stop does not automatically restart the machine
-                  </li>
-                  <li className="pl-1">
-                    A separate, deliberate start action is required after reset
-                  </li>
-                  <li className="pl-1">
-                    All emergency stops on the machine/system perform identically
-                  </li>
-                  <li className="pl-1">
-                    Emergency stop wiring is monitored for open-circuit faults (fail-safe design)
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Emergency stop testing">
+            <p>Emergency stop testing must verify the complete functional chain:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Pressing the emergency stop immediately de-energises all hazardous motion and energy
+              </li>
+              <li>
+                The stop is latched — it remains in the stopped condition until manually reset
+              </li>
+              <li>Resetting the emergency stop does not automatically restart the machine</li>
+              <li>A separate, deliberate start action is required after reset</li>
+              <li>All emergency stops on the machine/system perform identically</li>
+              <li>Emergency stop wiring is monitored for open-circuit faults (fail-safe design)</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Guard Interlocks</h3>
-                <p className="text-sm text-white">
-                  Machine guard interlocks prevent the machine from operating when a guard is open
-                  and, for some applications, prevent the guard from being opened while the machine
-                  is running (guard locking). Test by attempting to start the machine with the guard
-                  open (it should not start), opening the guard while running (the machine should
-                  stop), and attempting to defeat the interlock by manipulating the guard or switch
-                  (it should resist defeat). BS EN 14119 specifies the requirements for guard
-                  interlocks.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Guard interlocks">
+            <p>
+              Machine guard interlocks prevent the machine from operating when a guard is open and,
+              for some applications, prevent the guard from being opened while the machine is
+              running (guard locking). Test by attempting to start the machine with the guard open
+              (it should not start), opening the guard while running (the machine should stop), and
+              attempting to defeat the interlock by manipulating the guard or switch (it should
+              resist defeat). BS EN 14119 specifies the requirements for guard interlocks.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Emergency Lighting and Fire Alarm Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Emergency lighting and fire alarm testing</ContentEyebrow>
+
+          <ConceptBlock title="Emergency Lighting and Fire Alarm Testing">
             <p>
               Emergency lighting and fire alarm systems are life-safety systems that must function
               reliably when called upon — typically during a power failure or fire, which are
@@ -700,147 +621,111 @@ const MOETModule4Section5_4 = () => {
               these systems is not optional; it is a legal requirement under the Regulatory Reform
               (Fire Safety) Order 2005 and the associated British Standards.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Emergency Lighting Test Schedule (BS 5266-1)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Monthly (brief test):</strong> Simulate mains failure and verify that all
-                  emergency luminaires illuminate. Duration is typically sufficient to verify
-                  operation (a few minutes). Check for failed lamps, damaged fittings, and
-                  obstruction of light output. Reset and verify correct recharging.
-                </li>
-                <li className="pl-1">
-                  <strong>Annually (full duration):</strong> Discharge the batteries for the full
-                  rated duration (1 hour or 3 hours depending on the system design). Verify that
-                  illumination is maintained throughout and that light levels remain adequate on
-                  escape routes. Record the performance and replace any luminaires that fail to
-                  maintain illumination for the full duration.
-                </li>
-                <li className="pl-1">
-                  <strong>After any modification:</strong> Re-test affected luminaires and verify
-                  that escape route illumination is still adequate. Changes to building layout,
-                  furniture, or partitions may affect emergency lighting coverage.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Emergency lighting test schedule (BS 5266-1)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Monthly (brief test):</strong> Simulate mains failure and verify that all
+                emergency luminaires illuminate. Duration is typically sufficient to verify
+                operation (a few minutes). Check for failed lamps, damaged fittings, and obstruction
+                of light output. Reset and verify correct recharging.
+              </li>
+              <li>
+                <strong>Annually (full duration):</strong> Discharge the batteries for the full
+                rated duration (1 hour or 3 hours depending on the system design). Verify that
+                illumination is maintained throughout and that light levels remain adequate on
+                escape routes. Record the performance and replace any luminaires that fail to
+                maintain illumination for the full duration.
+              </li>
+              <li>
+                <strong>After any modification:</strong> Re-test affected luminaires and verify that
+                escape route illumination is still adequate. Changes to building layout, furniture,
+                or partitions may affect emergency lighting coverage.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fire Alarm Testing (BS 5839-1)
-              </h3>
-              <p className="text-sm text-white mb-2">Fire alarm functional testing includes:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Weekly:</strong> Activate a different call point each week to verify the
-                  complete alarm chain — call point to panel to sounders. Rotate through all call
-                  points over the course of the testing cycle.
-                </li>
-                <li className="pl-1">
-                  <strong>Quarterly/annually:</strong> Test detector operation using appropriate
-                  test devices (smoke generators, heat sources). Verify cause-and-effect programming
-                  (specific detectors trigger specific outputs). Test auxiliary functions (door
-                  holders, damper controls, lift recall, ARC transmission).
-                </li>
-                <li className="pl-1">
-                  <strong>Before and after:</strong> Always notify the alarm receiving centre (ARC)
-                  and building occupants before testing. Always restore the system and confirm
-                  normal operation afterwards.
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> Functional testing of protective devices and safety
-              systems is a core competency for the maintenance technician standard. The ability to
-              conduct these tests correctly, interpret the results, and take appropriate action when
-              tests fail is directly assessed in the end-point assessment. Building your practical
-              experience in functional testing during your apprenticeship is essential.
+          <ConceptBlock title="Fire alarm testing (BS 5839-1)">
+            <p>Fire alarm functional testing includes:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Weekly:</strong> Activate a different call point each week to verify the
+                complete alarm chain — call point to panel to sounders. Rotate through all call
+                points over the course of the testing cycle.
+              </li>
+              <li>
+                <strong>Quarterly/annually:</strong> Test detector operation using appropriate test
+                devices (smoke generators, heat sources). Verify cause-and-effect programming
+                (specific detectors trigger specific outputs). Test auxiliary functions (door
+                holders, damper controls, lift recall, ARC transmission).
+              </li>
+              <li>
+                <strong>Before and after:</strong> Always notify the alarm receiving centre (ARC)
+                and building occupants before testing. Always restore the system and confirm normal
+                operation afterwards.
+              </li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> Functional testing of protective
+              devices and safety systems is a core competency for the maintenance technician
+              standard. The ability to conduct these tests correctly, interpret the results, and
+              take appropriate action when tests fail is directly assessed in the end-point
+              assessment. Building your practical experience in functional testing during your
+              apprenticeship is essential.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'RCD test sequence (30 mA): 50% IΔn (15 mA) should NOT trip; 100% IΔn (30 mA) must trip within 300 ms; 5× IΔn (150 mA) must trip within 40 ms. Test on both half-cycles (+ve and -ve).',
+              'Type S RCDs: 130-500 ms at IΔn, 50-200 ms at 5×.',
+              'Emergency lighting: monthly brief test, annual full-duration discharge test.',
+              'Fire alarm: weekly call point rotation, quarterly/annual detector testing.',
+              'Emergency stops: immediate stop, latching, anti-restart.',
+              'Always notify the ARC before fire alarm tests, and always restore systems after testing.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RCD Test Sequence (30 mA)</p>
-                <ul className="space-y-0.5">
-                  <li>50% IΔn (15 mA): should NOT trip</li>
-                  <li>100% IΔn (30 mA): must trip within 300 ms</li>
-                  <li>5× IΔn (150 mA): must trip within 40 ms</li>
-                  <li>Test on both half-cycles (+ve and -ve)</li>
-                  <li>Type S: 130-500 ms at IΔn, 50-200 ms at 5×</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Emergency System Tests</p>
-                <ul className="space-y-0.5">
-                  <li>Emergency lighting: monthly brief, annual full duration</li>
-                  <li>Fire alarm: weekly call point, quarterly detectors</li>
-                  <li>Emergency stops: immediate stop, latching, anti-restart</li>
-                  <li>Always notify ARC before fire alarm tests</li>
-                  <li>Always restore systems after testing</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Earth Fault Loop Impedance Testing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Test Documentation and Certification
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Earth Fault Loop Impedance Testing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-5">
-              Next: Test Documentation and Certification
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

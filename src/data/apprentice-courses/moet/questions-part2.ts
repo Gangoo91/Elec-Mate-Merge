@@ -119,12 +119,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 47,
     question:
       'What is the minimum safe working distance (approach distance) for an unqualified person near 11 kV exposed live conductors?',
-    options: [
-      '0.5 metres',
-      '1.2 metres',
-      '5 metres',
-      '3 metres',
-    ],
+    options: ['0.5 metres', '1.2 metres', '5 metres', '3 metres'],
     correctAnswer: 3,
     explanation:
       'For 11 kV systems, the safe approach distance for unqualified (untrained) persons is typically 3 metres as specified in ENA TS 43-8. Authorised persons working under formal safety rules may work closer with appropriate precautions. These distances are critical for maintenance technicians who may work in areas adjacent to HV equipment.',
@@ -242,12 +237,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 54,
     question:
       'What type of control panel enclosure rating would be required for a motor starter installed in a washdown area of a food processing plant?',
-    options: [
-      'IP20 or IP21',
-      'IP54 or IP55',
-      'IP65 or IP66',
-      'IP00 or IP10',
-    ],
+    options: ['IP20 or IP21', 'IP54 or IP55', 'IP65 or IP66', 'IP00 or IP10'],
     correctAnswer: 2,
     explanation:
       'Washdown areas in food processing plants require enclosures rated to IP65 (dust tight, protected against water jets from any direction) or IP66 (dust tight, protected against powerful water jets). The IP rating is defined by BS EN 60529. IP65/66 enclosures prevent ingress of water during cleaning operations which typically involve high-pressure hoses and chemical cleaning agents.',
@@ -316,12 +306,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 58,
     question:
       'Under BS 5266, what is the minimum rated duration for maintained emergency escape lighting in most premises?',
-    options: [
-      '1 hour',
-      '30 minutes',
-      '3 hours',
-      '8 hours',
-    ],
+    options: ['1 hour', '30 minutes', '3 hours', '8 hours'],
     correctAnswer: 2,
     explanation:
       'BS 5266-1 specifies that emergency escape lighting should have a minimum rated duration of 3 hours for most premises. In some cases, such as sleeping accommodation, 3 hours is mandatory. For premises where evacuation is expected to be rapid (such as cinemas), 1 hour may be acceptable. The 3-hour requirement ensures sufficient illumination for evacuation and for essential safety operations.',
@@ -430,12 +415,7 @@ export const questionsPart2: StandardMockQuestion[] = [
     id: 64,
     question:
       'What is the recommended minimum insulation resistance value for a motor with a rated voltage of 400 V, according to BS 7671 and IEC 60364?',
-    options: [
-      '1 megohm',
-      '0.5 megohm',
-      '2 megohm',
-      '0.25 megohm',
-    ],
+    options: ['1 megohm', '0.5 megohm', '2 megohm', '0.25 megohm'],
     correctAnswer: 0,
     explanation:
       'For circuits up to and including 500 V (other than SELV/PELV), which includes 400 V motors, BS 7671 Table 64 specifies a minimum insulation resistance of 1.0 megohm when tested at 500 V DC. In practice, a healthy motor should have a much higher insulation resistance, and values approaching the minimum should be investigated as a sign of insulation degradation.',

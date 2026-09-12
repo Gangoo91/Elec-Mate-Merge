@@ -45,6 +45,13 @@ jobs:
       - name: Question quality
         run: npm run check:question-quality:ci
 
+      # Green from the start, so enforced. Guards the 65 calculator -> client
+      # PDF reports: coverage, ungrounded standards (a report cited a BS 7671
+      # regulation that does not exist), duplicate titles, and headline
+      # restatement. tsc and eslint are clean on every one of those faults.
+      - name: Calculator report contract
+        run: npm run check:calc-reports
+
       # Advisory ONLY because it is currently red: four general-upskilling mock
       # exam banks report CHANGED KEYS against HEAD (asbestos, first aid, MEWP,
       # PASMA). Those banks are graded against their keys, so this needs a

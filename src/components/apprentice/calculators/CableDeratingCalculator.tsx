@@ -543,7 +543,7 @@ const CableDeratingCalculator = () => {
 
     return {
       meta: {
-        title: 'Cable Derating Calculator',
+        title: 'Cable Derating',
         subtitle: 'Derated current-carrying capacity for the stated installation conditions',
         standard: 'BS 7671:2018+A4:2026 — Appendix 4',
       },
@@ -570,7 +570,12 @@ const CableDeratingCalculator = () => {
             { label: 'Thermal insulation', value: thermalInsulationLabel },
             ...(isBuried
               ? [
-                  { label: 'Cable-to-cable clearance', value: burialClearance },
+                  {
+                    label: 'Cable-to-cable clearance',
+                    value:
+                      burialClearances.find((c) => c.value === burialClearance)?.label ??
+                      burialClearance,
+                  },
                   { label: 'Soil thermal resistivity', value: `${soilThermalResistivity} K·m/W` },
                 ]
               : []),
@@ -595,8 +600,6 @@ const CableDeratingCalculator = () => {
             { label: 'Derated capacity (Iz)', value: `${result.finalRating.toFixed(1)} A` },
             ...(result.compliance
               ? [
-                  { label: 'Design current (Ib)', value: `${result.compliance.Ib} A` },
-                  { label: 'Device rating (In)', value: `${result.compliance.In} A` },
                   {
                     label: 'Ib ≤ In ≤ Iz',
                     value: result.compliance.overallCompliant ? 'COMPLIANT' : 'NON-COMPLIANT',

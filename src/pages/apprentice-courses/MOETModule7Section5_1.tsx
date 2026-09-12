@@ -1,8 +1,37 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 5 · Subsection 1 — Employer and Training Provider Sign-Off
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page describes the EPA gateway sign-off process itself — an
+ * administrative/procedural step of the apprenticeship, not a knowledge,
+ * skill or behaviour drawn from the standard's content. No KSB quote applies
+ * and none is included.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Employer and Training Provider Sign-Off - MOET Module 7 Section 5.1';
@@ -255,123 +284,71 @@ const faqs = [
 ];
 
 const MOETModule7Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Employer and Training Provider Sign-Off
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.5 · Subsection 1"
+        title="Employer and Training Provider Sign-Off"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Understanding the gateway approval process and ensuring you are ready for end-point
-            assessment
+            assessment.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Both parties:</strong> Employer AND training provider must sign off
-              </li>
-              <li className="pl-1">
-                <strong>Confirms:</strong> Competence, qualifications, portfolio completeness
-              </li>
-              <li className="pl-1">
-                <strong>Tripartite:</strong> You, employer and provider review together
-              </li>
-              <li className="pl-1">
-                <strong>Pre-requisites:</strong> Level 2 English, maths, off-the-job hours
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Gateway:</strong> Sign-off opens the door to EPA scheduling
-              </li>
-              <li className="pl-1">
-                <strong>Quality gate:</strong> Ensures you are not assessed prematurely
-              </li>
-              <li className="pl-1">
-                <strong>Preparation time:</strong> Typically 2-4 weeks between gateway and EPA
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Mandatory step before any EPA component
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Both parties: Employer AND training provider must sign off.',
+              'Confirms: Competence, qualifications, portfolio completeness.',
+              'Tripartite: You, employer and provider review together.',
+              'Pre-requisites: Level 2 English, maths, off-the-job hours.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand the purpose and process of employer and training provider sign-off',
               'Know what pre-requisites must be completed before the gateway can be opened',
               'Prepare effectively for the tripartite gateway readiness review',
               'Resolve outstanding issues identified during the sign-off process',
               'Understand your rights and responsibilities in the gateway decision',
               'Know what happens after sign-off and how the EPA is then scheduled',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gateway:</strong> sign-off opens the door to EPA scheduling.
+              </li>
+              <li>
+                <strong>Quality gate:</strong> ensures you are not assessed prematurely.
+              </li>
+              <li>
+                <strong>Preparation time:</strong> typically 2-4 weeks between gateway and EPA.
+              </li>
+              <li>
+                <strong>ST1426:</strong> mandatory step before any EPA component.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Sign-Off Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The sign-off process</ContentEyebrow>
+
+          <ConceptBlock title="A quality gate, not a rubber stamp">
             <p>
               The sign-off process is the formal mechanism that confirms you have completed all
               on-programme requirements and are ready for end-point assessment. It is a quality gate
               — designed to protect you from being assessed before you are genuinely prepared. Both
               your employer and training provider must independently confirm your readiness.
             </p>
-
             <p>
               This dual sign-off requirement exists because the employer and training provider have
               different perspectives on your readiness. The employer sees your workplace competence
@@ -379,322 +356,257 @@ const MOETModule7Section5_1 = () => {
               ability to work independently. The training provider sees your academic achievement —
               qualifications completed, knowledge demonstrated, and portfolio evidence assembled.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What Must Be Confirmed</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Qualifications:</strong> Level 3 Diploma (or equivalent) completed and
-                  passed
-                </li>
-                <li className="pl-1">
-                  <strong>English and maths:</strong> Level 2 achieved (GCSE grade 4/C or Functional
-                  Skills Level 2)
-                </li>
-                <li className="pl-1">
-                  <strong>Off-the-job training:</strong> Minimum 20% hours completed and evidenced
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio:</strong> Work-based evidence portfolio meets minimum
-                  requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Workplace competence:</strong> Employer confirms demonstration of required
-                  KSBs
-                </li>
-                <li className="pl-1">
-                  <strong>Readiness:</strong> Genuine professional judgement that the apprentice is
-                  ready for assessment
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What must be confirmed">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Qualifications:</strong> Level 3 Diploma (or equivalent) completed and
+                passed.
+              </li>
+              <li>
+                <strong>English and maths:</strong> Level 2 achieved (GCSE grade 4/C or Functional
+                Skills Level 2).
+              </li>
+              <li>
+                <strong>Off-the-job training:</strong> minimum 20% hours completed and evidenced.
+              </li>
+              <li>
+                <strong>Portfolio:</strong> work-based evidence portfolio meets minimum
+                requirements.
+              </li>
+              <li>
+                <strong>Workplace competence:</strong> employer confirms demonstration of required
+                KSBs.
+              </li>
+              <li>
+                <strong>Readiness:</strong> genuine professional judgement that the apprentice is
+                ready for assessment.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Sign-Off Is Not a Rubber Stamp
-              </p>
-              <p className="text-sm text-white">
-                The sign-off should involve genuine assessment of readiness, not just checking
-                boxes. If either party has concerns about your readiness, these should be discussed
-                openly and addressed before proceeding. Being entered for EPA before you are ready
-                is one of the most common causes of failure — a short delay for additional
-                preparation is far better than a failed attempt.
-              </p>
-            </div>
+          <CommonMistake
+            title="Sign-off is not a rubber stamp"
+            whatHappens={
+              <>
+                Being entered for EPA before you are ready is one of the most common causes of
+                failure. A sign-off that just checks boxes without genuine assessment of readiness
+                leaves gaps unaddressed until the assessment itself exposes them.
+              </>
+            }
+            doInstead={
+              <>
+                If either party has concerns about your readiness, these should be discussed openly
+                and addressed before proceeding. A short delay for additional preparation is far
+                better than a failed attempt. The sign-off protects you: it ensures you are not
+                assessed before you are ready and confirms that everyone — you, your employer and
+                your training provider — agrees that you are prepared for the EPA.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The sign-off protects you. It ensures you are not assessed
-              before you are ready and confirms that everyone — you, your employer and your training
-              provider — agrees that you are prepared for the EPA.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Tripartite Gateway Review
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The tripartite gateway review</ContentEyebrow>
+
+          <ConceptBlock
+            title="A meeting between you, your employer and your training provider"
+            onSite="Be honest during the review. If you have concerns about specific areas, raise them. It is far better to address a gap now than to discover it during the EPA."
+          >
             <p>
               The tripartite review is a formal meeting between you, your employer representative
               (usually your line manager or supervisor) and your training provider. It is the
               meeting where the gateway decision is made — to proceed, to delay pending specific
               actions, or to agree that more time is needed.
             </p>
-
             <p>
               Regular tripartite reviews throughout the apprenticeship (at least quarterly) ensure
               there are no surprises at the final gateway review. If progress has been tracked
               consistently, the gateway review should be a confirmation of readiness rather than a
               discovery of problems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preparing for the Gateway Review
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Complete your portfolio:</strong> Ensure all evidence is in place, mapped
-                  to KSBs, and well-organised
-                </li>
-                <li className="pl-1">
-                  <strong>Check qualifications:</strong> Confirm all required qualifications have
-                  been achieved and certificates obtained
-                </li>
-                <li className="pl-1">
-                  <strong>Review off-the-job hours:</strong> Verify your training log shows the
-                  required hours have been completed
-                </li>
-                <li className="pl-1">
-                  <strong>Self-assess:</strong> Honestly evaluate your readiness against each KSB —
-                  are there areas you feel weak on?
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare questions:</strong> If you have concerns or uncertainties about
-                  the EPA process, prepare questions for the review
-                </li>
-                <li className="pl-1">
-                  <strong>Bring evidence:</strong> Have your portfolio, qualification certificates
-                  and training records available
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Preparing for the gateway review">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Complete your portfolio:</strong> ensure all evidence is in place, mapped to
+                KSBs, and well-organised.
+              </li>
+              <li>
+                <strong>Check qualifications:</strong> confirm all required qualifications have been
+                achieved and certificates obtained.
+              </li>
+              <li>
+                <strong>Review off-the-job hours:</strong> verify your training log shows the
+                required hours have been completed.
+              </li>
+              <li>
+                <strong>Self-assess:</strong> honestly evaluate your readiness against each KSB —
+                are there areas you feel weak on?
+              </li>
+              <li>
+                <strong>Prepare questions:</strong> if you have concerns or uncertainties about the
+                EPA process, prepare questions for the review.
+              </li>
+              <li>
+                <strong>Bring evidence:</strong> have your portfolio, qualification certificates and
+                training records available.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Gateway Review Agenda
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Progress review:</strong> Summary of on-programme achievements and
-                  remaining actions
-                </li>
-                <li className="pl-1">
-                  <strong>Qualification check:</strong> Confirmation that all required
-                  qualifications are completed
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio review:</strong> Assessment of portfolio completeness and
-                  quality
-                </li>
-                <li className="pl-1">
-                  <strong>Employer feedback:</strong> Employer's assessment of workplace competence
-                  and readiness
-                </li>
-                <li className="pl-1">
-                  <strong>Apprentice self-assessment:</strong> Your honest evaluation of your
-                  readiness and any concerns
-                </li>
-                <li className="pl-1">
-                  <strong>Decision:</strong> Proceed, action plan, or agree more time is needed
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Typical gateway review agenda">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Progress review:</strong> summary of on-programme achievements and remaining
+                actions.
+              </li>
+              <li>
+                <strong>Qualification check:</strong> confirmation that all required qualifications
+                are completed.
+              </li>
+              <li>
+                <strong>Portfolio review:</strong> assessment of portfolio completeness and quality.
+              </li>
+              <li>
+                <strong>Employer feedback:</strong> employer&apos;s assessment of workplace
+                competence and readiness.
+              </li>
+              <li>
+                <strong>Apprentice self-assessment:</strong> your honest evaluation of your
+                readiness and any concerns.
+              </li>
+              <li>
+                <strong>Decision:</strong> proceed, action plan, or agree more time is needed.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Be honest during the review. If you have concerns about
-              specific areas, raise them. It is far better to address a gap now than to discover it
-              during the EPA.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Resolving Outstanding Issues
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Resolving outstanding issues</ContentEyebrow>
+
+          <ConceptBlock
+            title="Specificity is the key to resolving issues efficiently"
+            onSite="Every issue identified should have a specific action plan: what needs to be done, who is responsible, and when it will be completed. Review progress against the action plan at a follow-up meeting before confirming sign-off."
+          >
             <p>
               It is not uncommon for the gateway review to identify outstanding issues that need
               addressing. This is the process working as intended — better to find and fix gaps now
               than during the EPA itself. Every issue identified should have a specific, time-bound
               action plan.
             </p>
-
             <p>
-              The key to resolving issues efficiently is specificity. "Complete more portfolio
-              evidence" is too vague. "Add a reflective account covering a fault diagnosis on the
-              packaging line, mapped to KSB K12 and S7, by 15th March" is actionable and can be
-              tracked.
+              The key to resolving issues efficiently is specificity. &quot;Complete more portfolio
+              evidence&quot; is too vague. &quot;Add a reflective account covering a fault diagnosis
+              on the packaging line, mapped to KSB K12 and S7, by 15th March&quot; is actionable and
+              can be tracked.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Gateway Issues and Solutions
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Issue</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Solution</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Timeline
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Portfolio evidence gaps</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Add specific evidence for missing KSBs
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        English/maths not yet achieved
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complete and pass the required exam
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Next exam sitting</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Off-the-job hours shortfall
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan and complete remaining hours
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Depends on shortfall</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Limited experience in specific area
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arrange targeted workplace activities
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-6 weeks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Knowledge gaps identified
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Additional revision or training sessions
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-4 weeks</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Certificate not yet received
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chase awarding body; obtain interim confirmation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">1-4 weeks</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common gateway issues and solutions">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Issue</th>
+                    <th className="py-2 pr-4 font-medium text-white">Solution</th>
+                    <th className="py-2 font-medium text-white">Typical timeline</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Portfolio evidence gaps</td>
+                    <td className="py-2 pr-4 align-top">Add specific evidence for missing KSBs</td>
+                    <td className="py-2">2-4 weeks</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">English/maths not yet achieved</td>
+                    <td className="py-2 pr-4 align-top">Complete and pass the required exam</td>
+                    <td className="py-2">Next exam sitting</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Off-the-job hours shortfall</td>
+                    <td className="py-2 pr-4 align-top">Plan and complete remaining hours</td>
+                    <td className="py-2">Depends on shortfall</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Limited experience in specific area</td>
+                    <td className="py-2 pr-4 align-top">Arrange targeted workplace activities</td>
+                    <td className="py-2">2-6 weeks</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Knowledge gaps identified</td>
+                    <td className="py-2 pr-4 align-top">
+                      Additional revision or training sessions
+                    </td>
+                    <td className="py-2">2-4 weeks</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">Certificate not yet received</td>
+                    <td className="py-2 pr-4 align-top">
+                      Chase awarding body; obtain interim confirmation
+                    </td>
+                    <td className="py-2">1-4 weeks</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Every issue identified should have a specific action plan:
-              what needs to be done, who is responsible, and when it will be completed. Review
-              progress against the action plan at a follow-up meeting before confirming sign-off.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Your Rights and Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Your rights and responsibilities</ContentEyebrow>
+
+          <ConceptBlock
+            title="A three-way agreement"
+            onSite="The sign-off process works best when all three parties communicate openly and honestly. If you feel you are not ready, say so. If you feel you are being held back unfairly, raise it with your training provider. The process is designed to serve your interests — use it."
+          >
             <p>
               The sign-off process is a three-way agreement. You are not a passive participant — you
               have both rights and responsibilities. Understanding these ensures the process works
               fairly and effectively.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Your Rights</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  To be informed about the gateway requirements well in advance
-                </li>
-                <li className="pl-1">To have your concerns heard and taken seriously</li>
-                <li className="pl-1">
-                  To request additional time or support if you do not feel ready
-                </li>
-                <li className="pl-1">To understand the reasons if sign-off is delayed</li>
-                <li className="pl-1">
-                  To have decisions based on competence, not business convenience
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Your rights">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>To be informed about the gateway requirements well in advance.</li>
+              <li>To have your concerns heard and taken seriously.</li>
+              <li>To request additional time or support if you do not feel ready.</li>
+              <li>To understand the reasons if sign-off is delayed.</li>
+              <li>To have decisions based on competence, not business convenience.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Your Responsibilities</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Keep your portfolio up to date throughout the apprenticeship
-                </li>
-                <li className="pl-1">Complete qualifications within the agreed timeframes</li>
-                <li className="pl-1">
-                  Track your off-the-job training hours and flag any shortfall early
-                </li>
-                <li className="pl-1">Honestly assess your own readiness and raise concerns</li>
-                <li className="pl-1">
-                  Actively participate in progress reviews and the gateway review
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Your responsibilities">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Keep your portfolio up to date throughout the apprenticeship.</li>
+              <li>Complete qualifications within the agreed timeframes.</li>
+              <li>Track your off-the-job training hours and flag any shortfall early.</li>
+              <li>Honestly assess your own readiness and raise concerns.</li>
+              <li>Actively participate in progress reviews and the gateway review.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The sign-off process works best when all three parties
-              communicate openly and honestly. If you feel you are not ready, say so. If you feel
-              you are being held back unfairly, raise it with your training provider. The process is
-              designed to serve your interests — use it.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            After Sign-Off: Opening the Gateway
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>After sign-off: opening the gateway</ContentEyebrow>
+
+          <ConceptBlock
+            title="Use the preparation window wisely"
+            onSite="The gateway is the final checkpoint before the independent EPA. Once through the gateway, you are in the hands of the EPAO and their appointed assessor. Everything you have done during your apprenticeship — the learning, the experience, the portfolio building — has prepared you for this. Trust your preparation and approach the EPA with confidence."
+          >
             <p>
               Once both parties have signed off and all pre-requisites are confirmed, the gateway
               paperwork is submitted to the EPAO. The EPAO reviews the submission, confirms
@@ -702,125 +614,84 @@ const MOETModule7Section5_1 = () => {
               of 2-4 weeks between gateway opening and the first assessment — use this time wisely
               for final preparation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Post-Gateway Preparation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Review your portfolio:</strong> Final check that everything is in order,
-                  well-organised, and you can discuss every piece of evidence
-                </li>
-                <li className="pl-1">
-                  <strong>Practise discussions:</strong> Rehearse talking through your evidence and
-                  answering probing questions
-                </li>
-                <li className="pl-1">
-                  <strong>Revise key knowledge:</strong> Review the technical content most likely to
-                  be assessed
-                </li>
-                <li className="pl-1">
-                  <strong>Practise practical tasks:</strong> Refresh your practical skills,
-                  particularly safe isolation and testing procedures
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare mentally:</strong> Build confidence through preparation — you have
-                  been signed off because you are ready
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The gateway is the final checkpoint before the
-              independent EPA. Once through the gateway, you are in the hands of the EPAO and their
-              appointed assessor. Everything you have done during your apprenticeship — the
-              learning, the experience, the portfolio building — has prepared you for this. Trust
-              your preparation and approach the EPA with confidence.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                Both employer and training provider must sign off before the gateway opens
+          <ConceptBlock title="Post-gateway preparation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Review your portfolio:</strong> final check that everything is in order,
+                well-organised, and you can discuss every piece of evidence.
               </li>
-              <li className="pl-1">
-                All qualifications (Level 3 Diploma, Level 2 English and maths) must be achieved
+              <li>
+                <strong>Practise discussions:</strong> rehearse talking through your evidence and
+                answering probing questions.
               </li>
-              <li className="pl-1">
-                Off-the-job training hours (20% minimum) must be completed and evidenced
+              <li>
+                <strong>Revise key knowledge:</strong> review the technical content most likely to
+                be assessed.
               </li>
-              <li className="pl-1">
-                Your portfolio must be substantially complete and mapped to KSBs
+              <li>
+                <strong>Practise practical tasks:</strong> refresh your practical skills,
+                particularly safe isolation and testing procedures.
               </li>
-              <li className="pl-1">
-                You are an active participant — raise any concerns about your readiness
-              </li>
-              <li className="pl-1">
-                Typically 2-4 weeks between gateway opening and first EPA component
-              </li>
-              <li className="pl-1">
-                A short delay for proper preparation is always better than a premature EPA
+              <li>
+                <strong>Prepare mentally:</strong> build confidence through preparation — you have
+                been signed off because you are ready.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Both employer and training provider must sign off before the gateway opens.',
+              'All qualifications (Level 3 Diploma, Level 2 English and maths) must be achieved.',
+              'Off-the-job training hours (20% minimum) must be completed and evidenced.',
+              'Your portfolio must be substantially complete and mapped to KSBs.',
+              'You are an active participant — raise any concerns about your readiness.',
+              'Typically 2-4 weeks between gateway opening and first EPA component.',
+              'A short delay for proper preparation is always better than a premature EPA.',
+            ]}
+          />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Sign-Off and Gateway" questions={quizQuestions} />
-        </section>
+          <FAQ items={faqs} />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5-2">
-              Next: EPA Gateway Requirements
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Sign-Off and Gateway" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section overview
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  EPA Gateway Requirements
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

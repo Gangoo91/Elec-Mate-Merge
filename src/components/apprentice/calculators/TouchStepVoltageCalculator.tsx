@@ -317,7 +317,7 @@ const TouchStepVoltageCalculator = () => {
 
     return {
       meta: {
-        title: 'Touch & Step Voltage Calculator',
+        title: 'Touch & Step Voltage',
         subtitle: 'Touch and step voltage assessment for an earthing installation',
         standard: 'BS EN 50522; ENA TS 41-24',
       },
@@ -337,7 +337,11 @@ const TouchStepVoltageCalculator = () => {
             { label: 'Earth fault current', value: `${earthFaultCurrent} A` },
             { label: 'Fault duration', value: `${faultDuration} s` },
             { label: 'Soil resistivity', value: `${soilResistivity} Ω·m` },
-            { label: 'Electrode type', value: electrodeType },
+            {
+              label: 'Electrode type',
+              value:
+                ELECTRODE_OPTIONS.find((o) => o.value === electrodeType)?.label ?? electrodeType,
+            },
             ...electrodeDimensionRows,
             { label: 'Contact scenario', value: contactScenario === 'touch' ? 'Touch (hand-to-foot)' : 'Step (foot-to-foot)' },
             { label: 'Body impedance', value: `${bodyImpedance || 1000} Ω` },

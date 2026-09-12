@@ -1,8 +1,65 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 2 · Subsection 3 — Vibration Analysis
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Common electrical plant, equipment, and systems failure
+ *     modes."
+ *   · "Electrical. Electrical fault-finding and rectification techniques;
+ *     diagnostic equipment."
+ *   · "Electrical. Electrical maintenance tools, measurement, and test
+ *     equipment application, operation, care and calibration
+ *     requirements."
+ *
+ * ⚠️ Not fixed, flagged instead per the conversion brief: quiz questions 8
+ * and 10 have distractor options that read as copy-paste leftovers from
+ * other questions in this bank (Q8's wrong options are about transformer
+ * losses and ventilation positioning; Q10's wrong options repeat text from
+ * Q7 and Q9) — nonsensical against their own question stem, though the
+ * marked correct answer for each is right. Preserved byte-identical per the
+ * data-fidelity rule; worth a content pass by Andrew.
+ *
+ * ISO 10816/20816 zone descriptions, bearing defect frequency ratios and
+ * P-F interval figures are copied verbatim from the original page and were
+ * not independently re-verified against the standard in this pass.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * ✎ CONTENT FIX (12 Sep): quiz Q8 and Q10 had broken distractors — Q8's three
+ *   wrong options were copy-paste leftovers from unrelated transformer and
+ *   switchgear questions, and Q10's first two options were verbatim copies of
+ *   Q7's and Q9's correct answers. Both questions were answerable without any
+ *   knowledge, since only one option was even on-topic. Rewritten with
+ *   plausible distractors (real ISO standards for Q8; real maintenance
+ *   intervals for Q10). correctAnswer indices unchanged.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Vibration Analysis - MOET Module 4.2.3';
@@ -168,9 +225,9 @@ const quizQuestions = [
       'Which ISO standard provides guidance on acceptable vibration severity levels for rotating machinery?',
     options: [
       'ISO 10816 (now superseded by ISO 20816)',
-      'Copper losses and iron (core) losses',
-      'Approximately mid-height of the ventilated space',
-      'Limited access for tools and reduced working space',
+      'ISO 18436 — which certifies condition monitoring personnel, not machine severity',
+      'ISO 14224 — which covers reliability and maintenance data collection',
+      'ISO 55000 — which covers asset management systems',
     ],
     correctAnswer: 0,
     explanation:
@@ -194,10 +251,10 @@ const quizQuestions = [
     id: 10,
     question: 'The P-F interval in condition monitoring refers to:',
     options: [
-      'An electrical fault such as broken rotor bars or uneven air gap',
-      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
+      'The interval between scheduled preventive maintenance visits on a plant item',
+      'The time a machine may continue running after protection detects a fault',
       'The time between a detectable potential failure (P) and the actual functional failure (F)',
-      'After the motor has reached stable thermal equilibrium at normal operating load',
+      'The period over which a machine degrades from new condition to the end of its design life',
     ],
     correctAnswer: 2,
     explanation:
@@ -261,122 +318,71 @@ const faqs = [
 ];
 
 const MOETModule4Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Vibration Analysis
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.2 · Subsection 3"
+        title="Vibration Analysis"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Monitoring rotating machinery health through vibration measurement and frequency
-            analysis
+            analysis.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>What:</strong> Measuring machine vibration to detect developing faults
+          <TLDR
+            points={[
+              'What: Measuring machine vibration to detect developing faults.',
+              'Parameters: Displacement, velocity and acceleration.',
+              'Analysis: FFT converts time waveform to frequency spectrum.',
+              'Standard: ISO 10816 / 20816 for severity classification.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motors:</strong> Imbalance, misalignment, bearing wear, electrical faults.
               </li>
-              <li className="pl-1">
-                <strong>Parameters:</strong> Displacement, velocity and acceleration
+              <li>
+                <strong>Drives:</strong> Belt tension, coupling wear, gear mesh defects.
               </li>
-              <li className="pl-1">
-                <strong>Analysis:</strong> FFT converts time waveform to frequency spectrum
+              <li>
+                <strong>Trending:</strong> P-F curve and condition-based scheduling.
               </li>
-              <li className="pl-1">
-                <strong>Standard:</strong> ISO 10816 / 20816 for severity classification
+              <li>
+                <strong>ST1426:</strong> Condition monitoring knowledge requirement.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Motors:</strong> Imbalance, misalignment, bearing wear, electrical faults
-              </li>
-              <li className="pl-1">
-                <strong>Drives:</strong> Belt tension, coupling wear, gear mesh defects
-              </li>
-              <li className="pl-1">
-                <strong>Trending:</strong> P-F curve and condition-based scheduling
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Condition monitoring knowledge requirement
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principles of vibration and its three fundamental parameters',
               'Identify common sensor types and correct mounting techniques',
               'Interpret frequency spectra to diagnose imbalance, misalignment and bearing faults',
               'Apply ISO 10816 severity zones to assess machinery condition',
               'Describe the P-F curve and determine appropriate monitoring intervals',
               'Link vibration analysis to ST1426 condition monitoring requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Fundamentals of vibration</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Fundamentals of Vibration
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Every machine vibrates to some degree">
             <p>
               All rotating machinery vibrates. In a perfectly balanced, perfectly aligned machine
               with flawless bearings, vibration would be negligible. In reality, manufacturing
               tolerances, wear, thermal distortion and process forces mean that every machine
               vibrates to some degree. The goal of vibration analysis is not to eliminate vibration
-              but to monitor it, understand what it tells us about the machine's condition, and
+              but to monitor it, understand what it tells us about the machine&apos;s condition, and
               detect changes that indicate developing faults.
             </p>
             <p>
@@ -384,80 +390,71 @@ const MOETModule4Section2_3 = () => {
               described by three fundamental parameters, each of which is most useful in different
               frequency ranges and for different fault types.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Vibration Parameters
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Displacement (microns peak-to-peak):</strong> The actual distance the
-                  machine moves. Most useful at low frequencies (below ~10 Hz), for example shaft
-                  displacement measurements on large turbines using proximity probes
-                </li>
-                <li className="pl-1">
-                  <strong>Velocity (mm/s RMS):</strong> The rate of movement. This is the standard
-                  parameter for general machinery condition assessment because it gives
-                  approximately equal weighting across a broad frequency range (10 Hz to 1000 Hz).
-                  ISO 10816 uses velocity as the primary severity metric
-                </li>
-                <li className="pl-1">
-                  <strong>Acceleration (g or m/s squared):</strong> The rate of change of velocity.
-                  Emphasises high-frequency vibration and is essential for detecting bearing faults,
-                  gear mesh problems and impacts that produce high-frequency energy above 1000 Hz
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The three vibration parameters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Displacement (microns peak-to-peak):</strong> The actual distance the
+                machine moves. Most useful at low frequencies (below ~10 Hz), for example shaft
+                displacement measurements on large turbines using proximity probes
+              </li>
+              <li>
+                <strong>Velocity (mm/s RMS):</strong> The rate of movement. This is the standard
+                parameter for general machinery condition assessment because it gives approximately
+                equal weighting across a broad frequency range (10 Hz to 1000 Hz). ISO 10816 uses
+                velocity as the primary severity metric
+              </li>
+              <li>
+                <strong>Acceleration (g or m/s squared):</strong> The rate of change of velocity.
+                Emphasises high-frequency vibration and is essential for detecting bearing faults,
+                gear mesh problems and impacts that produce high-frequency energy above 1000 Hz
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Frequency and Amplitude
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Every vibration signal has two key characteristics: frequency (how fast it
-                oscillates, measured in Hz or CPM) and amplitude (how much it moves, measured in the
-                appropriate parameter). The frequency tells us what is causing the vibration — for
-                example, a peak at shaft speed indicates imbalance, while a peak at a bearing defect
-                frequency indicates bearing damage. The amplitude tells us how severe the problem
-                is.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1x shaft speed:</strong> Imbalance — the most common vibration fault
-                </li>
-                <li className="pl-1">
-                  <strong>2x shaft speed:</strong> Misalignment, looseness or ovality
-                </li>
-                <li className="pl-1">
-                  <strong>Bearing defect frequencies:</strong> Specific to each bearing type and
-                  geometry
-                </li>
-                <li className="pl-1">
-                  <strong>Mains frequency (50 Hz):</strong> Electrical faults in motors
-                </li>
-                <li className="pl-1">
-                  <strong>Sub-harmonics (below 1x):</strong> Oil whirl, rubbing, belt faults
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A vibration reading without knowing the machine's running
-              speed is almost meaningless. Always record the shaft RPM when taking vibration
-              measurements — it is the reference against which all frequency analysis is based.
+          <ConceptBlock title="Frequency and amplitude">
+            <p>
+              Every vibration signal has two key characteristics: frequency (how fast it oscillates,
+              measured in Hz or CPM) and amplitude (how much it moves, measured in the appropriate
+              parameter). The frequency tells us what is causing the vibration — for example, a peak
+              at shaft speed indicates imbalance, while a peak at a bearing defect frequency
+              indicates bearing damage. The amplitude tells us how severe the problem is.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1x shaft speed:</strong> Imbalance — the most common vibration fault
+              </li>
+              <li>
+                <strong>2x shaft speed:</strong> Misalignment, looseness or ovality
+              </li>
+              <li>
+                <strong>Bearing defect frequencies:</strong> Specific to each bearing type and
+                geometry
+              </li>
+              <li>
+                <strong>Mains frequency (50 Hz):</strong> Electrical faults in motors
+              </li>
+              <li>
+                <strong>Sub-harmonics (below 1x):</strong> Oil whirl, rubbing, belt faults
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">Key point: </span>A vibration
+            reading without knowing the machine&apos;s running speed is almost meaningless. Always
+            record the shaft RPM when taking vibration measurements — it is the reference against
+            which all frequency analysis is based.
+          </p>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Sensors and Measurement Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Sensors and measurement techniques</ContentEyebrow>
+
+          <ConceptBlock title="Data quality depends on the sensor and its mounting">
             <p>
               The quality of vibration data depends entirely on the sensor, its mounting and the
               measurement setup. The most common sensor for machinery monitoring is the
@@ -465,131 +462,126 @@ const MOETModule4Section2_3 = () => {
               signal. Understanding sensor selection and mounting is essential for reliable
               condition monitoring.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Sensor Types for Vibration Monitoring
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Sensor Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Principle</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Piezoelectric accelerometer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Piezoelectric crystal generates charge proportional to acceleration
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General machinery monitoring, motors, pumps, fans
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">IEPE / ICP sensor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integrated electronics provide constant current voltage output
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Portable data collectors, online monitoring systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Velocity sensor (electrodynamic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Coil moving through magnetic field generates voltage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-frequency measurements, legacy installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proximity probe (eddy current)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-contact measurement of shaft displacement
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large turbines, journal bearings, shaft displacement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Sensor types for vibration monitoring">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Sensor type
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Principle
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Typical application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Piezoelectric accelerometer
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Piezoelectric crystal generates charge proportional to acceleration
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      General machinery monitoring, motors, pumps, fans
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">IEPE / ICP sensor</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Integrated electronics provide constant current voltage output
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Portable data collectors, online monitoring systems
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Velocity sensor (electrodynamic)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Coil moving through magnetic field generates voltage
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Low-frequency measurements, legacy installations
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Proximity probe (eddy current)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Non-contact measurement of shaft displacement
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large turbines, journal bearings, shaft displacement
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mounting Methods and Their Effect
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The method of mounting an accelerometer directly affects the usable frequency range.
-                The best mounting gives the highest frequency response; poor mounting severely
-                limits the data quality.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stud mount (threaded):</strong> Best — usable to the sensor's full
-                  frequency range (typically 10 kHz+). Requires a drilled and tapped hole on the
-                  bearing housing
-                </li>
-                <li className="pl-1">
-                  <strong>Adhesive mount:</strong> Very good — usable to approximately 5-7 kHz.
-                  Epoxy or cyanoacrylate bonded mounting pad. Suitable for permanent online
-                  monitoring points
-                </li>
-                <li className="pl-1">
-                  <strong>Magnetic mount:</strong> Good — usable to approximately 2-3 kHz.
-                  Convenient for portable route-based data collection. Must be placed on a flat,
-                  clean, ferrous surface
-                </li>
-                <li className="pl-1">
-                  <strong>Handheld (probe tip):</strong> Poor — usable to approximately 500-1000 Hz
-                  only. Inconsistent results. Should only be used for quick screening, never for
-                  spectral analysis or trending
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Measurement Points</p>
-              <p className="text-sm text-white">
-                Always measure at the bearing housings — this is where vibration from internal
-                forces is transmitted to the machine structure. Take readings in three directions:
-                vertical radial (V), horizontal radial (H) and axial (A) at each bearing location.
-                Consistent measurement points and directions are essential for meaningful trending.
-                Mark the exact sensor location on the machine to ensure repeatability.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Before taking a reading, ensure the magnetic mount
-              surface is clean and free of paint flakes, rust or debris. A poor surface contact can
-              reduce the usable frequency range by half and introduce measurement errors.
+          <ConceptBlock title="Mounting methods and their effect">
+            <p>
+              The method of mounting an accelerometer directly affects the usable frequency range.
+              The best mounting gives the highest frequency response; poor mounting severely limits
+              the data quality.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stud mount (threaded):</strong> Best — usable to the sensor&apos;s full
+                frequency range (typically 10 kHz+). Requires a drilled and tapped hole on the
+                bearing housing
+              </li>
+              <li>
+                <strong>Adhesive mount:</strong> Very good — usable to approximately 5-7 kHz. Epoxy
+                or cyanoacrylate bonded mounting pad. Suitable for permanent online monitoring
+                points
+              </li>
+              <li>
+                <strong>Magnetic mount:</strong> Good — usable to approximately 2-3 kHz. Convenient
+                for portable route-based data collection. Must be placed on a flat, clean, ferrous
+                surface
+              </li>
+              <li>
+                <strong>Handheld (probe tip):</strong> Poor — usable to approximately 500-1000 Hz
+                only. Inconsistent results. Should only be used for quick screening, never for
+                spectral analysis or trending
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Measurement points">
+            <p>
+              Always measure at the bearing housings — this is where vibration from internal forces
+              is transmitted to the machine structure. Take readings in three directions: vertical
+              radial (V), horizontal radial (H) and axial (A) at each bearing location. Consistent
+              measurement points and directions are essential for meaningful trending. Mark the
+              exact sensor location on the machine to ensure repeatability.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Frequency Analysis and Fault Identification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">Practical tip: </span>
+            Before taking a reading, ensure the magnetic mount surface is clean and free of paint
+            flakes, rust or debris. A poor surface contact can reduce the usable frequency range by
+            half and introduce measurement errors.
+          </p>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Frequency analysis and fault identification</ContentEyebrow>
+
+          <ConceptBlock title="Diagnosing faults without disassembly">
             <p>
               The real power of vibration analysis lies in frequency analysis — the ability to
               decompose a complex vibration signal into its individual frequency components using
@@ -598,133 +590,121 @@ const MOETModule4Section2_3 = () => {
               By identifying these frequencies in the spectrum, technicians can diagnose the
               specific fault without disassembling the machine.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Fault Signatures in Rotating Machinery
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Frequency Pattern
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Direction</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mass imbalance</td>
-                      <td className="border border-white/10 px-3 py-2">1x shaft speed, dominant</td>
-                      <td className="border border-white/10 px-3 py-2">Radial (V and H similar)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Parallel misalignment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2x dominant, with 1x and 3x
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Radial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Angular misalignment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        1x dominant in axial, 2x in radial
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Axial primarily</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mechanical looseness</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple harmonics (1x, 2x, 3x, 4x...)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Radial, often directional
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rolling element bearing defect
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BPFO, BPFI, BSF, FTF with harmonics
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Radial</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Electrical (motor)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2x line frequency (100 Hz) with slip sidebands
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Radial, disappears on power off
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Fault
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Frequency pattern
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Direction
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Mass imbalance</td>
+                    <td className="border border-white/10 px-3 py-2">1x shaft speed, dominant</td>
+                    <td className="border border-white/10 px-3 py-2">Radial (V and H similar)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Parallel misalignment</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      2x dominant, with 1x and 3x
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Radial</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Angular misalignment</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      1x dominant in axial, 2x in radial
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Axial primarily</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Mechanical looseness</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Multiple harmonics (1x, 2x, 3x, 4x...)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Radial, often directional</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Rolling element bearing defect
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      BPFO, BPFI, BSF, FTF with harmonics
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">Radial</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Electrical (motor)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      2x line frequency (100 Hz) with slip sidebands
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Radial, disappears on power off
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Bearing Defect Frequencies
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Rolling element bearings produce vibration at specific frequencies determined by the
-                bearing geometry. These frequencies are calculated or obtained from bearing
-                manufacturer databases.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>BPFO (Ball Pass Frequency Outer race):</strong> Defect on the outer race —
-                  the most common bearing fault. Typically 3-5 x shaft speed
-                </li>
-                <li className="pl-1">
-                  <strong>BPFI (Ball Pass Frequency Inner race):</strong> Defect on the inner race.
-                  Amplitude modulated at 1x shaft speed because the defect rotates with the shaft
-                </li>
-                <li className="pl-1">
-                  <strong>BSF (Ball Spin Frequency):</strong> Defect on a rolling element (ball or
-                  roller). Often shows at 2x BSF
-                </li>
-                <li className="pl-1">
-                  <strong>FTF (Fundamental Train Frequency):</strong> Cage defect. Typically
-                  0.35-0.45 x shaft speed. Often erratic rather than a clean peak
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Electrical vs Mechanical — The Power Cut Test
-              </p>
-              <p className="text-sm text-white">
-                To distinguish electrical vibration from mechanical vibration in a motor, observe
-                the vibration level at the instant power is disconnected. If the vibration drops
-                immediately to near zero, the source is electrical (electromagnetic forces). If it
-                decays gradually (coasts down), the source is mechanical. This is one of the most
-                valuable diagnostic tests for motor vibration.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> A single spectrum is a snapshot. Trending spectra over time
-              reveals whether a fault is stable, slowly progressing or rapidly deteriorating — this
-              is where the real value of condition monitoring lies.
+          <ConceptBlock title="Bearing defect frequencies">
+            <p>
+              Rolling element bearings produce vibration at specific frequencies determined by the
+              bearing geometry. These frequencies are calculated or obtained from bearing
+              manufacturer databases.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BPFO (Ball Pass Frequency Outer race):</strong> Defect on the outer race —
+                the most common bearing fault. Typically 3-5 x shaft speed
+              </li>
+              <li>
+                <strong>BPFI (Ball Pass Frequency Inner race):</strong> Defect on the inner race.
+                Amplitude modulated at 1x shaft speed because the defect rotates with the shaft
+              </li>
+              <li>
+                <strong>BSF (Ball Spin Frequency):</strong> Defect on a rolling element (ball or
+                roller). Often shows at 2x BSF
+              </li>
+              <li>
+                <strong>FTF (Fundamental Train Frequency):</strong> Cage defect. Typically 0.35-0.45
+                x shaft speed. Often erratic rather than a clean peak
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Electrical vs mechanical — the power cut test">
+            <p>
+              To distinguish electrical vibration from mechanical vibration in a motor, observe the
+              vibration level at the instant power is disconnected. If the vibration drops
+              immediately to near zero, the source is electrical (electromagnetic forces). If it
+              decays gradually (coasts down), the source is mechanical. This is one of the most
+              valuable diagnostic tests for motor vibration.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            ISO 10816 Severity Standards and Trending
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">Remember: </span>A single
+            spectrum is a snapshot. Trending spectra over time reveals whether a fault is stable,
+            slowly progressing or rapidly deteriorating — this is where the real value of condition
+            monitoring lies.
+          </p>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>ISO 10816 severity standards and trending</ContentEyebrow>
+
+          <ConceptBlock title="A framework for evaluating vibration severity">
             <p>
               ISO 10816 (now being superseded by ISO 20816) provides a framework for evaluating
               vibration severity on rotating machinery. It classifies machines into groups based on
@@ -732,140 +712,136 @@ const MOETModule4Section2_3 = () => {
               (excellent) to Zone D (dangerous). Understanding these standards is essential for
               deciding whether a machine requires maintenance action.
             </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                ISO 10816 Vibration Severity Zones
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Zone</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone A</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        New or reconditioned machines — excellent condition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No action — record as baseline
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone B</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acceptable for unrestricted long-term operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continue normal monitoring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone C</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tolerable only for limited periods
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Plan remedial action at next scheduled outage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Zone D</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Severity sufficient to cause damage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate action — risk of catastrophic failure
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Zone
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Description
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Zone A
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      New or reconditioned machines — excellent condition
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      No action — record as baseline
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Zone B
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Acceptable for unrestricted long-term operation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Continue normal monitoring
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Zone C
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Tolerable only for limited periods
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Plan remedial action at next scheduled outage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium text-white">
+                      Zone D
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Severity sufficient to cause damage
+                    </td>
+                    <td className="border border-white/10 px-3 py-2 text-white">
+                      Immediate action — risk of catastrophic failure
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The P-F Curve and Monitoring Intervals
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The P-F (Potential failure to Functional failure) curve is a fundamental concept in
-                condition-based maintenance. It describes how a fault develops from the point at
-                which it first becomes detectable (P) to the point of actual breakdown (F).
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>P-F interval:</strong> The time between detectable potential failure and
-                  functional failure. For bearing faults, this is typically weeks to months
-                  depending on speed, load and lubrication
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring interval:</strong> Must be less than half the P-F interval to
-                  ensure at least two data points are captured before failure. For monthly
-                  route-based monitoring, the P-F interval must be at least 2-3 months
-                </li>
-                <li className="pl-1">
-                  <strong>Trending:</strong> Plot vibration level against time to establish the
-                  deterioration rate. A linear increase suggests gradual wear; an exponential
-                  increase indicates accelerating damage requiring urgent intervention
-                </li>
-                <li className="pl-1">
-                  <strong>Alarm and trip levels:</strong> Set alarm levels at Zone B/C boundary
-                  (investigate) and trip levels at Zone C/D boundary (shut down). These should be
-                  based on the specific machine's baseline, not just generic standards
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Baseline Measurements
-                </h3>
-                <p className="text-sm text-white">
-                  A meaningful vibration monitoring programme begins with baseline measurements
-                  taken when the machine is in known good condition — typically after installation,
-                  overhaul or rebalancing. The baseline includes overall vibration levels and full
-                  spectra at all measurement points, taken at normal operating load and temperature.
-                  All future measurements are compared against this baseline.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Online vs Route-Based Monitoring
-                </h3>
-                <p className="text-sm text-white">
-                  Route-based monitoring uses portable data collectors to measure vibration at
-                  regular intervals (weekly, monthly). Online monitoring uses permanently installed
-                  sensors with continuous data acquisition. The choice depends on equipment
-                  criticality, P-F interval and cost. Critical assets with short P-F intervals
-                  justify online monitoring; non-critical assets are typically route-based.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires knowledge
-              of condition monitoring techniques and the ability to interpret monitoring data to
-              plan maintenance activities. Understanding vibration severity standards and trending
-              is a core competence for predictive maintenance under this standard.
+          <ConceptBlock title="The P-F curve and monitoring intervals">
+            <p>
+              The P-F (Potential failure to Functional failure) curve is a fundamental concept in
+              condition-based maintenance. It describes how a fault develops from the point at which
+              it first becomes detectable (P) to the point of actual breakdown (F).
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>P-F interval:</strong> The time between detectable potential failure and
+                functional failure. For bearing faults, this is typically weeks to months depending
+                on speed, load and lubrication
+              </li>
+              <li>
+                <strong>Monitoring interval:</strong> Must be less than half the P-F interval to
+                ensure at least two data points are captured before failure. For monthly route-based
+                monitoring, the P-F interval must be at least 2-3 months
+              </li>
+              <li>
+                <strong>Trending:</strong> Plot vibration level against time to establish the
+                deterioration rate. A linear increase suggests gradual wear; an exponential increase
+                indicates accelerating damage requiring urgent intervention
+              </li>
+              <li>
+                <strong>Alarm and trip levels:</strong> Set alarm levels at Zone B/C boundary
+                (investigate) and trip levels at Zone C/D boundary (shut down). These should be
+                based on the specific machine&apos;s baseline, not just generic standards
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Baseline measurements">
+            <p>
+              A meaningful vibration monitoring programme begins with baseline measurements taken
+              when the machine is in known good condition — typically after installation, overhaul
+              or rebalancing. The baseline includes overall vibration levels and full spectra at all
+              measurement points, taken at normal operating load and temperature. All future
+              measurements are compared against this baseline.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Application in Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Online vs route-based monitoring">
+            <p>
+              Route-based monitoring uses portable data collectors to measure vibration at regular
+              intervals (weekly, monthly). Online monitoring uses permanently installed sensors with
+              continuous data acquisition. The choice depends on equipment criticality, P-F interval
+              and cost. Critical assets with short P-F intervals justify online monitoring;
+              non-critical assets are typically route-based.
+            </p>
+          </ConceptBlock>
+
+          <p className="text-[13.5px] leading-relaxed text-elec-yellow/90">
+            <span className="mr-1.5 font-semibold text-elec-yellow">ST1426 link: </span>
+            The maintenance technician standard requires knowledge of condition monitoring
+            techniques and the ability to interpret monitoring data to plan maintenance activities.
+            Understanding vibration severity standards and trending is a core competence for
+            predictive maintenance under this standard.
+          </p>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Practical application in electrical maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Motors, motor-driven equipment and rotating electrical machines">
             <p>
               For electrical maintenance technicians, vibration analysis is primarily applied to
               electric motors, motor-driven equipment (pumps, fans, compressors) and rotating
@@ -873,179 +849,151 @@ const MOETModule4Section2_3 = () => {
               indicates core or winding issues). Understanding how to integrate vibration monitoring
               into your daily maintenance practice is essential.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Motor Vibration Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pre-start check:</strong> Visually inspect mounting bolts, coupling
-                  alignment marks, and belt tension before energising
-                </li>
-                <li className="pl-1">
-                  <strong>Running check:</strong> Use a handheld vibration meter for quick overall
-                  level screening during routine inspections
-                </li>
-                <li className="pl-1">
-                  <strong>Detailed analysis:</strong> Route-based data collection at bearing
-                  housings (V, H, A at each bearing) using a magnetic-mount accelerometer and data
-                  collector
-                </li>
-                <li className="pl-1">
-                  <strong>Power cut test:</strong> If motor vibration is elevated, observe the
-                  instant of power removal to distinguish electrical from mechanical sources
-                </li>
-                <li className="pl-1">
-                  <strong>Record keeping:</strong> Log all readings, operating conditions (load,
-                  speed, temperature) and any observations in the CMMS or maintenance log
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Motor vibration checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pre-start check:</strong> Visually inspect mounting bolts, coupling
+                alignment marks, and belt tension before energising
+              </li>
+              <li>
+                <strong>Running check:</strong> Use a handheld vibration meter for quick overall
+                level screening during routine inspections
+              </li>
+              <li>
+                <strong>Detailed analysis:</strong> Route-based data collection at bearing housings
+                (V, H, A at each bearing) using a magnetic-mount accelerometer and data collector
+              </li>
+              <li>
+                <strong>Power cut test:</strong> If motor vibration is elevated, observe the instant
+                of power removal to distinguish electrical from mechanical sources
+              </li>
+              <li>
+                <strong>Record keeping:</strong> Log all readings, operating conditions (load,
+                speed, temperature) and any observations in the CMMS or maintenance log
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common Scenarios for Electrical Maintenance Technicians
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Post-replacement check:</strong> After replacing a motor or coupling, take
-                  baseline vibration readings to confirm acceptable levels before handover
-                </li>
-                <li className="pl-1">
-                  <strong>Complaint investigation:</strong> When operators report unusual noise from
-                  a motor, vibration analysis can identify the specific fault without disassembly
-                </li>
-                <li className="pl-1">
-                  <strong>VSD-driven motors:</strong> Variable speed drive motors may exhibit
-                  different vibration characteristics at different speeds. Note the running speed at
-                  the time of measurement and be aware of structural resonance issues
-                </li>
-                <li className="pl-1">
-                  <strong>Soft foot check:</strong> Uneven mounting (soft foot) distorts the motor
-                  frame and affects alignment. Check for soft foot before detailed vibration
-                  analysis by loosening and tightening each mounting bolt in turn
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common scenarios for electrical maintenance technicians">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Post-replacement check:</strong> After replacing a motor or coupling, take
+                baseline vibration readings to confirm acceptable levels before handover
+              </li>
+              <li>
+                <strong>Complaint investigation:</strong> When operators report unusual noise from a
+                motor, vibration analysis can identify the specific fault without disassembly
+              </li>
+              <li>
+                <strong>VSD-driven motors:</strong> Variable speed drive motors may exhibit
+                different vibration characteristics at different speeds. Note the running speed at
+                the time of measurement and be aware of structural resonance issues
+              </li>
+              <li>
+                <strong>Soft foot check:</strong> Uneven mounting (soft foot) distorts the motor
+                frame and affects alignment. Check for soft foot before detailed vibration analysis
+                by loosening and tightening each mounting bolt in turn
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Integration with Other Condition Monitoring Techniques
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Vibration analysis is most powerful when combined with other condition monitoring
-                methods. Together, they provide a comprehensive picture of machinery health.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal imaging:</strong> Confirms hot bearings, coupling misalignment
-                  heating, and overloaded motors identified by vibration
-                </li>
-                <li className="pl-1">
-                  <strong>Oil analysis:</strong> Wear debris analysis confirms bearing and gear
-                  deterioration trends from vibration data
-                </li>
-                <li className="pl-1">
-                  <strong>Motor current analysis:</strong> Current signature analysis (CSA)
-                  complements vibration for detecting electrical faults in induction motors
-                </li>
-                <li className="pl-1">
-                  <strong>Ultrasound:</strong> High-frequency airborne and structure-borne
-                  ultrasound detects bearing lubrication issues and electrical discharge before
-                  vibration changes are measurable
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Vibration analysis requires training and practice to develop
-              competence. Start with overall level trending and severity assessment, then
-              progressively develop spectral analysis skills. The ISO 18436-2 certification pathway
-              provides a structured route from basic to advanced analyst competence.
+          <ConceptBlock title="Integration with other condition monitoring techniques">
+            <p>
+              Vibration analysis is most powerful when combined with other condition monitoring
+              methods. Together, they provide a comprehensive picture of machinery health.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal imaging:</strong> Confirms hot bearings, coupling misalignment
+                heating, and overloaded motors identified by vibration
+              </li>
+              <li>
+                <strong>Oil analysis:</strong> Wear debris analysis confirms bearing and gear
+                deterioration trends from vibration data
+              </li>
+              <li>
+                <strong>Motor current analysis:</strong> Current signature analysis (CSA)
+                complements vibration for detecting electrical faults in induction motors
+              </li>
+              <li>
+                <strong>Ultrasound:</strong> High-frequency airborne and structure-borne ultrasound
+                detects bearing lubrication issues and electrical discharge before vibration changes
+                are measurable
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <p className="text-[13.5px] italic leading-relaxed text-white">
+            <span className="mr-1.5 font-semibold not-italic text-white">Note: </span>
+            Vibration analysis requires training and practice to develop competence. Start with
+            overall level trending and severity assessment, then progressively develop spectral
+            analysis skills. The ISO 18436-2 certification pathway provides a structured route from
+            basic to advanced analyst competence.
+          </p>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            title="Vibration parameters"
+            points={[
+              'Displacement — low frequency (microns p-p).',
+              'Velocity — general assessment (mm/s RMS).',
+              'Acceleration — high frequency (g).',
+              'FFT converts time waveform to spectrum.',
+              '1x = imbalance, 2x = misalignment.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Vibration Parameters</p>
-                <ul className="space-y-0.5">
-                  <li>Displacement — low frequency (microns p-p)</li>
-                  <li>Velocity — general assessment (mm/s RMS)</li>
-                  <li>Acceleration — high frequency (g)</li>
-                  <li>FFT converts time waveform to spectrum</li>
-                  <li>1x = imbalance, 2x = misalignment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>ISO 10816 / 20816 — severity zones A to D</li>
-                  <li>ISO 18436-2 — analyst certification</li>
-                  <li>P-F interval defines monitoring frequency</li>
-                  <li>ST1426 — condition monitoring KSBs</li>
-                  <li>Always record shaft RPM with readings</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            title="Key standards"
+            points={[
+              'ISO 10816 / 20816 — severity zones A to D.',
+              'ISO 18436-2 — analyst certification.',
+              'P-F interval defines monitoring frequency.',
+              'ST1426 — condition monitoring KSBs.',
+              'Always record shaft RPM with readings.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Prev subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Thermal Imaging
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section2-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Insulation Resistance Testing
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Thermal Imaging
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section2-4">
-              Next: Insulation Resistance Testing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

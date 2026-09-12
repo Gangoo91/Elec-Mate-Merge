@@ -35,6 +35,7 @@ import { CalculatorPicker } from '@/components/calculators/shared/CalculatorPick
 import { CALCULATOR_COMPONENTS } from '@/components/calculators/shared/calculatorComponents';
 import { CalcReportProvider } from '@/lib/calculator-report-context';
 import { CalculatorReportAction } from '@/components/calculators/CalculatorReportAction';
+import { SavedReports } from '@/components/calculators/SavedReports';
 import { CALCULATOR_BY_SLUG, CALCULATORS } from '@/data/calculators';
 import { CARD_SURFACE } from '@/components/ui/card-recipe';
 import { cn } from '@/lib/utils';
@@ -59,11 +60,17 @@ const Calculations = ({
   const entry = CALCULATOR_BY_SLUG.get(slug) ?? CALCULATOR_BY_SLUG.get(DEFAULT_SLUG)!;
   const Active = CALCULATOR_COMPONENTS[entry.value] ?? CALCULATOR_COMPONENTS[DEFAULT_SLUG];
 
+  // 11 of the registry labels already end in "Calculator" (or "Tool"), which gave
+  // "AC Power Calculator Calculator | BS 7671" in the tab and the search snippet.
+  // Normalising here rather than editing the labels keeps the picker's wording
+  // intact and covers any calculator added later.
+  const subject = entry.label.replace(/\s+(Calculator|Tool)$/i, '');
+
   useSEO({
     // No " | Elec-Mate" here — useSEO appends it, and passing it gave
     // "… | BS 7671 | Elec-Mate | Elec-Mate" in the tab and the search snippet.
-    title: `${entry.label} Calculator | BS 7671`,
-    description: `${entry.label} calculator for UK electricians — BS 7671:2018+A4:2026. Part of ${CALCULATORS.length} electrical calculators.`,
+    title: `${subject} Calculator | BS 7671`,
+    description: `${subject} calculator for UK electricians — BS 7671:2018+A4:2026. Part of ${CALCULATORS.length} electrical calculators.`,
   });
 
   const choose = useCallback(
@@ -95,12 +102,13 @@ const Calculations = ({
       <HubMasthead section={section} title={title} backTo={backTo} />
       <HubBody>
         <CalculatorPicker value={entry.value} onChange={choose} />
-        <CalcReportProvider>
+        <CalcReportProvider calculatorSlug={entry.value}>
           <div className="mb-3 flex justify-end">
             <CalculatorReportAction />
           </div>
           {body}
         </CalcReportProvider>
+        <SavedReports />
       </HubBody>
     </HubPage>
   );

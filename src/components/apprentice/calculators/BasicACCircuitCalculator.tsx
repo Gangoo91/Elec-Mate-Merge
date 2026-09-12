@@ -197,7 +197,7 @@ const BasicACCircuitCalculator = () => {
     if (!results) return null;
     return {
       meta: {
-        title: 'Basic AC Circuit Calculator',
+        title: 'Basic AC Circuit',
         subtitle: 'Impedance, current and power for an AC circuit',
       },
       headline: [
@@ -219,8 +219,6 @@ const BasicACCircuitCalculator = () => {
         {
           heading: 'Result',
           rows: [
-            { label: 'Impedance (Z)', value: `${results.impedance?.toFixed(2)} Ω` },
-            { label: 'Current (I)', value: `${results.current?.toFixed(3)} A` },
             { label: 'Phase angle', value: `${results.phaseAngle?.toFixed(1) ?? '0'} °` },
             { label: 'Power factor', value: `${results.powerFactor?.toFixed(3) ?? '0'}` },
             { label: 'Active power', value: `${results.activePower?.toFixed(2) ?? '0'} W` },

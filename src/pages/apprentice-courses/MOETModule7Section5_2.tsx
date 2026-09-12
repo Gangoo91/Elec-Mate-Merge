@@ -1,8 +1,37 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 5 · Subsection 2 — EPA Gateway Requirements
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs: this page describes the EPA gateway's specific pre-requisites and
+ * submission process — an administrative/procedural step of the
+ * apprenticeship, not a knowledge, skill or behaviour drawn from the
+ * standard's content. No KSB quote applies and none is included.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'EPA Gateway Requirements - MOET Module 7 Section 5.2';
@@ -29,7 +58,7 @@ const quickCheckQuestions = [
     options: [
       "The portfolio must contain sufficient evidence mapped to the standard's KSBs, meeting the EPAO's minimum requirements",
       "Only a single reflective account summarising the apprentice's best piece of work is needed, as the professional discussion covers everything else in detail",
-      "The portfolio is not required at gateway and is instead built up by the assessor during the practical observation on the day of assessment",
+      'The portfolio is not required at gateway and is instead built up by the assessor during the practical observation on the day of assessment',
       "A copy of the employer's company policies and procedures, with the apprentice's signature confirming they have read each one during the apprenticeship",
     ],
     correctIndex: 0,
@@ -110,9 +139,9 @@ const quizQuestions = [
     question: 'The portfolio submitted at gateway should include:',
     options: [
       "Evidence from across the apprenticeship, mapped to KSBs, meeting the EPAO's minimum requirements",
-      "Only the evidence gathered in the final three months of the apprenticeship, as earlier work is considered out of date",
+      'Only the evidence gathered in the final three months of the apprenticeship, as earlier work is considered out of date',
       "A single bound document written entirely by the training provider on the apprentice's behalf to ensure consistency",
-      "Copies of every job sheet and timesheet from the whole apprenticeship, submitted without any mapping or commentary",
+      'Copies of every job sheet and timesheet from the whole apprenticeship, submitted without any mapping or commentary',
     ],
     correctAnswer: 0,
     explanation:
@@ -164,9 +193,9 @@ const quizQuestions = [
       'An apprentice who has achieved all qualifications but whose portfolio is incomplete should:',
     options: [
       "Complete the portfolio before the gateway opens, as it must meet the EPAO's minimum standards first",
-      "Open the gateway on the strength of the qualifications and finish the portfolio during the EPA window",
-      "Ask the assessor to base the grade on the qualifications alone, treating the portfolio as optional",
-      "Submit the incomplete portfolio and rely on the professional discussion to fill any evidence gaps",
+      'Open the gateway on the strength of the qualifications and finish the portfolio during the EPA window',
+      'Ask the assessor to base the grade on the qualifications alone, treating the portfolio as optional',
+      'Submit the incomplete portfolio and rely on the professional discussion to fill any evidence gaps',
     ],
     correctAnswer: 0,
     explanation:
@@ -256,115 +285,67 @@ const faqs = [
 ];
 
 const MOETModule7Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            EPA Gateway Requirements
-          </h1>
-          <p className="text-white">
-            Understanding the specific pre-requisites and processes for opening the EPA gateway
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.5 · Subsection 2"
+        title="EPA Gateway Requirements"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Understanding the specific pre-requisites and processes for opening the EPA gateway.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Gateway:</strong> Formal checkpoint before independent assessment
-              </li>
-              <li className="pl-1">
-                <strong>Qualifications:</strong> Level 3 Diploma, Level 2 English and maths
-              </li>
-              <li className="pl-1">
-                <strong>Portfolio:</strong> Complete, mapped to KSBs, meets EPAO standards
-              </li>
-              <li className="pl-1">
-                <strong>Submission:</strong> Formal paperwork to EPAO with all evidence
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Mandatory:</strong> No EPA components until gateway is open
-              </li>
-              <li className="pl-1">
-                <strong>EPAO verified:</strong> Pre-requisites checked by assessment organisation
-              </li>
-              <li className="pl-1">
-                <strong>Scheduling:</strong> EPA components scheduled after gateway confirmation
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Specific requirements in the assessment plan
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Gateway: Formal checkpoint before independent assessment.',
+              'Qualifications: Level 3 Diploma, Level 2 English and maths.',
+              'Portfolio: Complete, mapped to KSBs, meets EPAO standards.',
+              'Submission: Formal paperwork to EPAO with all evidence.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand the specific gateway requirements for the ST1426 MOET standard',
               'Know which qualifications must be achieved and evidenced before gateway',
               "Ensure your portfolio meets the EPAO's minimum gateway requirements",
               'Understand the formal submission process to the EPAO',
               'Know the typical timeframe between gateway and EPA scheduling',
               'Prepare for potential issues and know how to resolve them before submission',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mandatory:</strong> no EPA components until gateway is open.
+              </li>
+              <li>
+                <strong>EPAO verified:</strong> pre-requisites checked by assessment organisation.
+              </li>
+              <li>
+                <strong>Scheduling:</strong> EPA components scheduled after gateway confirmation.
+              </li>
+              <li>
+                <strong>ST1426:</strong> specific requirements in the assessment plan.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding the Gateway
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Understanding the gateway</ContentEyebrow>
+
+          <ConceptBlock
+            title="The formal boundary between training and assessment"
+            onSite="Missing even one pre-requisite means the gateway cannot be opened. Check every requirement well in advance and address any shortfalls early."
+          >
             <p>
               The EPA gateway is the formal boundary between your on-programme apprenticeship and
               the independent end-point assessment. Once the gateway is opened, you transition from
@@ -372,7 +353,6 @@ const MOETModule7Section5_2 = () => {
               standard. Nothing about the EPA — no scheduling, no assessment, no grading — can
               happen until the gateway is confirmed.
             </p>
-
             <p>
               The gateway exists to ensure consistency and fairness across all apprentices taking
               the same standard. By requiring the same pre-requisites for everyone, it ensures that
@@ -380,65 +360,53 @@ const MOETModule7Section5_2 = () => {
               experience. This protects both the integrity of the standard and your interests as a
               candidate.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Gateway Pre-Requisites Checklist
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Level 3 Diploma:</strong> Completed and certificate available (or
-                  confirmed results from awarding body)
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2 English:</strong> GCSE grade 4/C or Functional Skills Level 2
-                  achieved
-                </li>
-                <li className="pl-1">
-                  <strong>Level 2 Maths:</strong> GCSE grade 4/C or Functional Skills Level 2
-                  achieved
-                </li>
-                <li className="pl-1">
-                  <strong>Off-the-job training:</strong> Minimum 20% hours completed and logged
-                </li>
-                <li className="pl-1">
-                  <strong>Employer sign-off:</strong> Written confirmation of workplace competence
-                  and readiness
-                </li>
-                <li className="pl-1">
-                  <strong>Training provider sign-off:</strong> Written confirmation of programme
-                  completion and readiness
-                </li>
-                <li className="pl-1">
-                  <strong>Portfolio:</strong> Complete, mapped to KSBs, meeting EPAO minimum
-                  requirements
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Gateway pre-requisites checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Level 3 Diploma:</strong> completed and certificate available (or confirmed
+                results from awarding body).
+              </li>
+              <li>
+                <strong>Level 2 English:</strong> GCSE grade 4/C or Functional Skills Level 2
+                achieved.
+              </li>
+              <li>
+                <strong>Level 2 Maths:</strong> GCSE grade 4/C or Functional Skills Level 2
+                achieved.
+              </li>
+              <li>
+                <strong>Off-the-job training:</strong> minimum 20% hours completed and logged.
+              </li>
+              <li>
+                <strong>Employer sign-off:</strong> written confirmation of workplace competence and
+                readiness.
+              </li>
+              <li>
+                <strong>Training provider sign-off:</strong> written confirmation of programme
+                completion and readiness.
+              </li>
+              <li>
+                <strong>Portfolio:</strong> complete, mapped to KSBs, meeting EPAO minimum
+                requirements.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Missing even one pre-requisite means the gateway cannot be
-              opened. Check every requirement well in advance and address any shortfalls early.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Portfolio Requirements at Gateway
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Portfolio requirements at gateway</ContentEyebrow>
+
+          <ConceptBlock title="A structured demonstration of competence, not a pile of documents">
             <p>
               Your portfolio must be substantially complete at the gateway stage. The assessor will
               review it before the professional discussion, using it to prepare questions and verify
               your evidence coverage. A poorly prepared or incomplete portfolio undermines the
               entire assessment process.
             </p>
-
             <p>
               The portfolio is not just a collection of documents — it is a structured demonstration
               of your competence mapped to the standard. Every piece of evidence should be
@@ -446,334 +414,262 @@ const MOETModule7Section5_2 = () => {
               a few well-chosen, well-described pieces of evidence are worth more than a large
               volume of poorly organised material.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                EPAO Portfolio Standards
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Minimum evidence items:</strong> Check your EPAO's specification —
-                  typically 10-15 significant pieces of evidence
-                </li>
-                <li className="pl-1">
-                  <strong>Evidence types:</strong> Usually requires a mix: work logs, reflective
-                  accounts, witness statements, photographs, completed documents
-                </li>
-                <li className="pl-1">
-                  <strong>KSB mapping:</strong> A clear matrix showing which evidence addresses
-                  which KSBs
-                </li>
-                <li className="pl-1">
-                  <strong>Format:</strong> Check whether your EPAO requires digital or physical
-                  submission, and the accepted file formats
-                </li>
-                <li className="pl-1">
-                  <strong>Confidentiality:</strong> Ensure all client and commercially sensitive
-                  information is appropriately redacted
-                </li>
-                <li className="pl-1">
-                  <strong>Currency:</strong> Evidence should span the apprenticeship period, not
-                  just the final months
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="EPAO portfolio standards"
+            onSite="The portfolio is not just evidence — it is your preparation tool for the professional discussion. Every piece of evidence should be something you can discuss confidently, in detail, and link to the standard's requirements."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Minimum evidence items:</strong> check your EPAO&apos;s specification —
+                typically 10-15 significant pieces of evidence.
+              </li>
+              <li>
+                <strong>Evidence types:</strong> usually requires a mix: work logs, reflective
+                accounts, witness statements, photographs, completed documents.
+              </li>
+              <li>
+                <strong>KSB mapping:</strong> a clear matrix showing which evidence addresses which
+                KSBs.
+              </li>
+              <li>
+                <strong>Format:</strong> check whether your EPAO requires digital or physical
+                submission, and the accepted file formats.
+              </li>
+              <li>
+                <strong>Confidentiality:</strong> ensure all client and commercially sensitive
+                information is appropriately redacted.
+              </li>
+              <li>
+                <strong>Currency:</strong> evidence should span the apprenticeship period, not just
+                the final months.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Check Your Specific EPAO's Requirements
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Check your specific EPAO's requirements"
+            whatHappens={
+              <>
                 Different EPAOs may have different portfolio specifications. Some require a specific
                 number of reflective accounts, others mandate certain types of evidence, and formats
-                vary. Always refer to your specific EPAO's EPA specification document — do not rely
+                vary. Relying on general guidance alone can leave gaps against your own EPAO's
+                actual requirements.
+              </>
+            }
+            doInstead={
+              <>
+                Always refer to your specific EPAO&apos;s EPA specification document — do not rely
                 on general guidance alone. Your training provider should have a copy of the
                 specification and can confirm the exact requirements.
-              </p>
-            </div>
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The portfolio is not just evidence — it is your
-              preparation tool for the professional discussion. Every piece of evidence should be
-              something you can discuss confidently, in detail, and link to the standard's
-              requirements.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Qualification Evidence Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Qualification evidence requirements</ContentEyebrow>
+
+          <ConceptBlock
+            title="Certificate processing is the most common avoidable delay"
+            onSite="Qualification certificates are the most common cause of gateway delays. Request them well in advance and have a backup plan (results confirmation) if processing takes longer than expected."
+          >
             <p>
               Qualification evidence must be robust and verifiable. The EPAO will check that
               certificates are genuine and that the qualifications match the requirements. Planning
               ahead for certificate processing times prevents last-minute delays.
             </p>
-
             <p>
               Certificate processing is the single most common cause of avoidable gateway delays.
               Awarding bodies can take 4-8 weeks to issue certificates after results are confirmed.
               If you wait until the gateway review to request certificates, you may face weeks of
               unnecessary delay.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Preparing Qualification Evidence
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Request certificates early:</strong> Awarding bodies can take several
-                  weeks to issue certificates — do not wait until the last minute
-                </li>
-                <li className="pl-1">
-                  <strong>Keep copies:</strong> Take photographs or scans of all certificates for
-                  your records
-                </li>
-                <li className="pl-1">
-                  <strong>Check details:</strong> Ensure your name, qualification title and level
-                  are correct on all certificates
-                </li>
-                <li className="pl-1">
-                  <strong>Gather all evidence:</strong> Include the Level 3 Diploma, English and
-                  maths certificates, and any additional qualifications
-                </li>
-                <li className="pl-1">
-                  <strong>Interim evidence:</strong> If a certificate has not yet arrived, ask the
-                  awarding body or training provider for a results confirmation letter
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Preparing qualification evidence">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Request certificates early:</strong> awarding bodies can take several weeks
+                to issue certificates — do not wait until the last minute.
+              </li>
+              <li>
+                <strong>Keep copies:</strong> take photographs or scans of all certificates for your
+                records.
+              </li>
+              <li>
+                <strong>Check details:</strong> ensure your name, qualification title and level are
+                correct on all certificates.
+              </li>
+              <li>
+                <strong>Gather all evidence:</strong> include the Level 3 Diploma, English and maths
+                certificates, and any additional qualifications.
+              </li>
+              <li>
+                <strong>Interim evidence:</strong> if a certificate has not yet arrived, ask the
+                awarding body or training provider for a results confirmation letter.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Qualification certificates are the most common cause of
-              gateway delays. Request them well in advance and have a backup plan (results
-              confirmation) if processing takes longer than expected.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            The Gateway Submission Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The gateway submission process</ContentEyebrow>
+
+          <ConceptBlock
+            title="A structured document pack for the EPAO"
+            onSite="The submission process typically takes 1-2 weeks from submission to confirmation. Factor this into your timeline — the gateway needs to be submitted well before your target EPA date."
+          >
             <p>
               The gateway submission is the formal communication to the EPAO that you are ready for
               assessment. Your training provider typically manages this process, but understanding
               what is involved helps you ensure everything is in order.
             </p>
-
             <p>
               The submission is a structured document pack that provides the EPAO with everything
               they need to verify your readiness and begin arranging the assessment. An incomplete
               or poorly organised submission will be returned, causing delays.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Submission Process</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gateway review completed:</strong> Tripartite meeting confirms readiness
-                  and both parties sign off
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation compiled:</strong> Sign-off forms, qualification
-                  certificates, portfolio, off-the-job hours evidence
-                </li>
-                <li className="pl-1">
-                  <strong>Training provider submits:</strong> Formal submission to the EPAO through
-                  their designated process
-                </li>
-                <li className="pl-1">
-                  <strong>EPAO reviews:</strong> Checks all pre-requisites are met and documentation
-                  is complete
-                </li>
-                <li className="pl-1">
-                  <strong>Gateway confirmed:</strong> EPAO confirms the gateway is open and begins
-                  scheduling
-                </li>
-                <li className="pl-1">
-                  <strong>EPA scheduled:</strong> Assessment dates agreed and communicated to all
-                  parties
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="The submission process">
+            <ol className="list-decimal space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gateway review completed:</strong> tripartite meeting confirms readiness and
+                both parties sign off.
+              </li>
+              <li>
+                <strong>Documentation compiled:</strong> sign-off forms, qualification certificates,
+                portfolio, off-the-job hours evidence.
+              </li>
+              <li>
+                <strong>Training provider submits:</strong> formal submission to the EPAO through
+                their designated process.
+              </li>
+              <li>
+                <strong>EPAO reviews:</strong> checks all pre-requisites are met and documentation
+                is complete.
+              </li>
+              <li>
+                <strong>Gateway confirmed:</strong> EPAO confirms the gateway is open and begins
+                scheduling.
+              </li>
+              <li>
+                <strong>EPA scheduled:</strong> assessment dates agreed and communicated to all
+                parties.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The submission process typically takes 1-2 weeks from
-              submission to confirmation. Factor this into your timeline — the gateway needs to be
-              submitted well before your target EPA date.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            From Gateway to Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>From gateway to assessment</ContentEyebrow>
+
+          <ConceptBlock
+            title="Your final preparation window"
+            onSite="The gateway is the final administrative step before the EPA. Once confirmed, the focus shifts entirely to assessment preparation. Use the time between gateway confirmation and the first assessment component for final revision, portfolio review, and building your confidence. You have been signed off because you are ready — trust the process."
+          >
             <p>
               Once the gateway is confirmed, the focus shifts entirely to assessment preparation.
               The EPAO assigns an assessor, the assessor reviews your portfolio, and assessment
               dates are arranged. This is your final preparation window — use it wisely.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Gateway-to-EPA Timeline
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Stage</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Timeframe
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Your Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gateway confirmed</td>
-                      <td className="border border-white/10 px-3 py-2">Day 0</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Begin focused final revision
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Assessor assigned</td>
-                      <td className="border border-white/10 px-3 py-2">1-2 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Continue preparation; review portfolio
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assessment dates confirmed
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">2-3 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Finalise preparation; practical skills refresh
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EPA day</td>
-                      <td className="border border-white/10 px-3 py-2">3-4 weeks</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Light revision; rest; arrive prepared
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="The gateway-to-EPA timeline">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Stage</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical timeframe</th>
+                    <th className="py-2 font-medium text-white">Your action</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Gateway confirmed</td>
+                    <td className="py-2 pr-4 align-top">Day 0</td>
+                    <td className="py-2">Begin focused final revision</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Assessor assigned</td>
+                    <td className="py-2 pr-4 align-top">1-2 weeks</td>
+                    <td className="py-2">Continue preparation; review portfolio</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 align-top">Assessment dates confirmed</td>
+                    <td className="py-2 pr-4 align-top">2-3 weeks</td>
+                    <td className="py-2">Finalise preparation; practical skills refresh</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 align-top">EPA day</td>
+                    <td className="py-2 pr-4 align-top">3-4 weeks</td>
+                    <td className="py-2">Light revision; rest; arrive prepared</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The gateway is the final administrative step before the
-              EPA. Once confirmed, the focus shifts entirely to assessment preparation. Use the time
-              between gateway confirmation and the first assessment component for final revision,
-              portfolio review, and building your confidence. You have been signed off because you
-              are ready — trust the process.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'No EPA component can take place until the gateway is formally confirmed.',
+              'All qualifications must be achieved and certificated (or confirmed) before gateway.',
+              'Your portfolio must be complete, mapped to KSBs, and meet EPAO minimum standards.',
+              "Check your specific EPAO's requirements early — they vary between organisations.",
+              'Request qualification certificates well in advance to avoid delays.',
+              'The submission process takes 1-2 weeks — factor this into your timeline.',
+              'Typically 2-4 weeks between gateway confirmation and first EPA component.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                No EPA component can take place until the gateway is formally confirmed
-              </li>
-              <li className="pl-1">
-                All qualifications must be achieved and certificated (or confirmed) before gateway
-              </li>
-              <li className="pl-1">
-                Your portfolio must be complete, mapped to KSBs, and meet EPAO minimum standards
-              </li>
-              <li className="pl-1">
-                Check your specific EPAO's requirements early — they vary between organisations
-              </li>
-              <li className="pl-1">
-                Request qualification certificates well in advance to avoid delays
-              </li>
-              <li className="pl-1">
-                The submission process takes 1-2 weeks — factor this into your timeline
-              </li>
-              <li className="pl-1">
-                Typically 2-4 weeks between gateway confirmation and first EPA component
-              </li>
-            </ul>
-          </div>
-        </section>
+          <FAQ items={faqs} />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Gateway Requirements" questions={quizQuestions} />
+          </Bleed>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Gateway Requirements" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Employer Sign-Off
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section5-3">
-              Next: Final Revision
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Employer Sign-Off
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section5-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Final Revision
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

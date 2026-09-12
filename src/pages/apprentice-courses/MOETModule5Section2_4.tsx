@@ -1,8 +1,49 @@
-import { ArrowLeft, Clock, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 4 — Timers, Counters and Sequencing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Electrical. Functions and applications of electrical
+ *                 circuits."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Timers, Counters and Sequencing - MOET Module 5 Section 2.4';
@@ -253,115 +294,66 @@ const faqs = [
 ];
 
 const MOETModule5Section2_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Clock className="h-4 w-4" />
-            <span>Module 5.2.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Timers, Counters and Sequencing
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 4"
+        title="Timers, Counters and Sequencing"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Programming timers, counters and sequential control operations in industrial PLC systems
+            — the building blocks behind almost every automated sequence you will maintain.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>TON:</strong> Delays output ON by preset time after enable
-              </li>
-              <li className="pl-1">
-                <strong>TOF:</strong> Keeps output ON for preset time after input goes OFF
-              </li>
-              <li className="pl-1">
-                <strong>CTU/CTD:</strong> Count up/down on rising edge of count input
-              </li>
-              <li className="pl-1">
-                <strong>Sequencer:</strong> Step-by-step control with transition conditions
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Diagnosis:</strong> Check accumulated vs preset values via online monitoring
-              </li>
-              <li className="pl-1">
-                <strong>Run-time tracking:</strong> Retentive timers for maintenance scheduling
-              </li>
-              <li className="pl-1">
-                <strong>Batch control:</strong> Counters for production counting and dispensing
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Understand automated sequences for fault diagnosis
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'TON: Delays output ON by preset time after enable.',
+              'TOF: Keeps output ON for preset time after input goes OFF.',
+              'CTU/CTD: Count up/down on rising edge of count input.',
+              'Sequencer: Step-by-step control with transition conditions.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain TON, TOF and TP timer operations and their industrial applications',
               'Configure CTU and CTD counters for production counting and batch control',
               'Distinguish between retentive and non-retentive timer behaviour',
               'Design basic sequential control using step-transition logic and GRAFCET',
               'Diagnose timer and counter faults using online monitoring techniques',
               'Apply cascaded timers and high-speed counters for advanced applications',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Diagnosis:</strong> Check accumulated vs preset values via online
+                monitoring.
+              </li>
+              <li>
+                <strong>Run-time tracking:</strong> Retentive timers for maintenance scheduling.
+              </li>
+              <li>
+                <strong>Batch control:</strong> Counters for production counting and dispensing.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Understand automated sequences for fault diagnosis.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            PLC Timer Instructions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>PLC timer instructions</ContentEyebrow>
+
+          <ConceptBlock title="Every automated machine uses timers">
             <p>
               Timers are among the most frequently used PLC instructions, controlling delays, pulse
               durations, and timed sequences throughout industrial processes. Every automated
@@ -369,117 +361,88 @@ const MOETModule5Section2_4 = () => {
               timing. Understanding how each timer type works is essential for diagnosing why a
               machine is not advancing, why an output stays on too long, or why a sequence is stuck.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Timer</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Reset Behaviour
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TON</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output ON after preset; resets when input FALSE
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-retentive (resets to zero)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor start delay, debounce
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TOF</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Output stays ON for preset time after input FALSE
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Non-retentive</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cooling fan run-on, light delay
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TP</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fixed-duration pulse on rising edge
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Runs to completion</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Solenoid pulse, signal shaping
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TONR</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Accumulates time; retains when input FALSE
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Retentive (requires explicit reset)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total run-time, maintenance alerts
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Timer types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Timer</th>
+                    <th className="py-2 pr-4 font-medium text-white">Function</th>
+                    <th className="py-2 pr-4 font-medium text-white">Reset behaviour</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">TON</td>
+                    <td className="py-2 pr-4">Output ON after preset; resets when input FALSE</td>
+                    <td className="py-2 pr-4">Non-retentive (resets to zero)</td>
+                    <td className="py-2">Motor start delay, debounce</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">TOF</td>
+                    <td className="py-2 pr-4">Output stays ON for preset time after input FALSE</td>
+                    <td className="py-2 pr-4">Non-retentive</td>
+                    <td className="py-2">Cooling fan run-on, light delay</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">TP</td>
+                    <td className="py-2 pr-4">Fixed-duration pulse on rising edge</td>
+                    <td className="py-2 pr-4">Runs to completion</td>
+                    <td className="py-2">Solenoid pulse, signal shaping</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">TONR</td>
+                    <td className="py-2 pr-4">Accumulates time; retains when input FALSE</td>
+                    <td className="py-2 pr-4">Retentive (requires explicit reset)</td>
+                    <td className="py-2">Total run-time, maintenance alerts</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Timer Data Structure</p>
-              <p className="text-sm text-white mb-3">
-                Every timer instruction has the same fundamental data elements, regardless of PLC
-                brand:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Preset (PT/PV):</strong> The target time value set by the programmer — the
-                  duration before the done bit activates
-                </li>
-                <li className="pl-1">
-                  <strong>Elapsed (ET/CV):</strong> The current elapsed time since the timer started
-                  counting — this increments while the timer is running
-                </li>
-                <li className="pl-1">
-                  <strong>Done bit (Q/DN):</strong> Turns ON when the elapsed time reaches the
-                  preset — this is the output used in programme logic
-                </li>
-                <li className="pl-1">
-                  <strong>Enable (IN/EN):</strong> The input that starts timing — the timer runs
-                  while this is TRUE (for TON/TONR)
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Timer data structure">
+            <p>
+              Every timer instruction has the same fundamental data elements, regardless of PLC
+              brand:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Preset (PT/PV):</strong> The target time value set by the programmer — the
+                duration before the done bit activates.
+              </li>
+              <li>
+                <strong>Elapsed (ET/CV):</strong> The current elapsed time since the timer started
+                counting — this increments while the timer is running.
+              </li>
+              <li>
+                <strong>Done bit (Q/DN):</strong> Turns ON when the elapsed time reaches the preset
+                — this is the output used in programme logic.
+              </li>
+              <li>
+                <strong>Enable (IN/EN):</strong> The input that starts timing — the timer runs while
+                this is TRUE (for TON/TONR).
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When diagnosing a timer issue online, check the
               elapsed value (ET) against the preset (PT). If ET is counting but never reaches PT,
               the enable input is dropping out before completion. If ET stays at zero, the enable
               input is never going TRUE. If ET has reached PT but the expected action has not
               occurred, the done bit may be blocked by downstream logic.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Counter Instructions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Counter instructions</ContentEyebrow>
+
+          <ConceptBlock title="Tracking discrete events, not duration">
             <p>
               Counters track discrete events — sensor pulses, machine cycles, products produced,
               parts dispensed. Unlike timers which measure duration, counters respond to signal
@@ -487,134 +450,123 @@ const MOETModule5Section2_4 = () => {
               event. They are fundamental to batch control, production monitoring, and any
               application that requires a specific number of events before the next action.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">CTU -- Count Up</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Starts at zero, increments by one on each rising edge</li>
-                  <li className="pl-1">Done bit turns ON when accumulated reaches preset</li>
-                  <li className="pl-1">Reset input clears accumulated to zero</li>
-                  <li className="pl-1">Continues counting past preset unless reset</li>
-                  <li className="pl-1">Example: counting bottles into a box</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">CTD -- Count Down</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Starts at preset value, decrements on each pulse</li>
-                  <li className="pl-1">Done bit turns ON when accumulated reaches zero</li>
-                  <li className="pl-1">Load input resets accumulated to preset value</li>
-                  <li className="pl-1">Useful for "remaining items" displays</li>
-                  <li className="pl-1">Example: dispensing a fixed quantity of fasteners</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="CTU — Count Up">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Starts at zero, increments by one on each rising edge.</li>
+              <li>Done bit turns ON when accumulated reaches preset.</li>
+              <li>Reset input clears accumulated to zero.</li>
+              <li>Continues counting past preset unless reset.</li>
+              <li>Example: counting bottles into a box.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                CTUD -- Bidirectional Counter
-              </p>
-              <p className="text-sm text-white mb-3">
-                A CTUD (Count Up/Down) has separate count-up and count-down inputs and can track
-                both additions and removals. This is useful for:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Tracking items entering and leaving a buffer zone on a conveyor
-                </li>
-                <li className="pl-1">
-                  Monitoring parking space availability (entry sensor counts up, exit counts down)
-                </li>
-                <li className="pl-1">Stock level monitoring in automated warehousing</li>
-              </ul>
-            </div>
+          <ConceptBlock title="CTD — Count Down">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Starts at preset value, decrements on each pulse.</li>
+              <li>Done bit turns ON when accumulated reaches zero.</li>
+              <li>Load input resets accumulated to preset value.</li>
+              <li>Useful for &quot;remaining items&quot; displays.</li>
+              <li>Example: dispensing a fixed quantity of fasteners.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Counter Input Bounce</p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="CTUD — bidirectional counter">
+            <p>
+              A CTUD (Count Up/Down) has separate count-up and count-down inputs and can track both
+              additions and removals. This is useful for:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Tracking items entering and leaving a buffer zone on a conveyor.</li>
+              <li>
+                Monitoring parking space availability (entry sensor counts up, exit counts down).
+              </li>
+              <li>Stock level monitoring in automated warehousing.</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Counter input bounce"
+            whatHappens={
+              <>
                 Mechanical switches and some sensors produce contact bounce — multiple rapid
                 transitions when they change state. This causes the counter to register multiple
-                counts for a single event. Solutions include: hardware debouncing (RC filter on the
-                input), using sensors with clean electronic outputs (e.g., photoelectric rather than
-                mechanical), or adding a software debounce timer before the counter input. Always
-                verify the count accuracy during commissioning.
-              </p>
-            </div>
-          </div>
-        </section>
+                counts for a single event.
+              </>
+            }
+            doInstead={
+              <>
+                Use hardware debouncing (RC filter on the input), sensors with clean electronic
+                outputs (e.g. photoelectric rather than mechanical), or a software debounce timer
+                before the counter input. Always verify the count accuracy during commissioning.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Sequential Control and GRAFCET
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Sequential control and GRAFCET</ContentEyebrow>
+
+          <ConceptBlock title="Fixed sequences need step-by-step control">
             <p>
               Many industrial processes follow fixed sequences: fill a vessel, heat to temperature,
               mix for a duration, cool, drain, and repeat. Sequential programmes manage these
               step-by-step operations, ensuring each action occurs in the correct order and only
               when the previous step has completed successfully. Understanding sequential control is
-              essential for diagnosing "stuck machine" faults — the most common complaint in
-              automated manufacturing.
+              essential for diagnosing &quot;stuck machine&quot; faults — the most common complaint
+              in automated manufacturing.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Elements of Sequential Control
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Steps:</strong> Each step represents a state of the machine with specific
-                  outputs active and actions being performed
-                </li>
-                <li className="pl-1">
-                  <strong>Transitions:</strong> Conditions that must be satisfied to advance from
-                  one step to the next
-                </li>
-                <li className="pl-1">
-                  <strong>Actions:</strong> The outputs and operations associated with each step
-                  (e.g., open valve, start motor, energise heater)
-                </li>
-                <li className="pl-1">
-                  <strong>Initial step:</strong> The starting point of the sequence after reset or
-                  power-up — typically an "idle" or "home position" state
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Elements of sequential control">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Steps:</strong> Each step represents a state of the machine with specific
+                outputs active and actions being performed.
+              </li>
+              <li>
+                <strong>Transitions:</strong> Conditions that must be satisfied to advance from one
+                step to the next.
+              </li>
+              <li>
+                <strong>Actions:</strong> The outputs and operations associated with each step (e.g.
+                open valve, start motor, energise heater).
+              </li>
+              <li>
+                <strong>Initial step:</strong> The starting point of the sequence after reset or
+                power-up — typically an &quot;idle&quot; or &quot;home position&quot; state.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Implementation Methods</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bit-based (flag method):</strong> Uses individual memory bits (M-bits) as
-                  step flags. Only one step bit is active at any time. The transition logic sets the
-                  next step bit and resets the current one.
-                </li>
-                <li className="pl-1">
-                  <strong>Integer-based (step register):</strong> A single integer variable holds
-                  the current step number. Transition logic increments (or sets) the step number.
-                  CASE or comparison instructions select the active step's outputs.
-                </li>
-                <li className="pl-1">
-                  <strong>SFC (Sequential Function Chart):</strong> A dedicated IEC 61131-3
-                  graphical programming language purpose-built for sequential control. Steps and
-                  transitions are drawn graphically; actions within each step can be written in any
-                  IEC language.
-                </li>
-                <li className="pl-1">
-                  <strong>GRAFCET (IEC 60848):</strong> A design methodology and documentation
-                  standard for sequential processes. Used to design the sequence before coding.
-                  GRAFCET diagrams define steps, transitions, parallel branches (simultaneous
-                  sequences), and selection branches (alternative paths).
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Implementation methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bit-based (flag method):</strong> Uses individual memory bits (M-bits) as
+                step flags. Only one step bit is active at any time. The transition logic sets the
+                next step bit and resets the current one.
+              </li>
+              <li>
+                <strong>Integer-based (step register):</strong> A single integer variable holds the
+                current step number. Transition logic increments (or sets) the step number. CASE or
+                comparison instructions select the active step&apos;s outputs.
+              </li>
+              <li>
+                <strong>SFC (Sequential Function Chart):</strong> A dedicated IEC 61131-3 graphical
+                programming language purpose-built for sequential control. Steps and transitions are
+                drawn graphically; actions within each step can be written in any IEC language.
+              </li>
+              <li>
+                <strong>GRAFCET (IEC 60848):</strong> A design methodology and documentation
+                standard for sequential processes. Used to design the sequence before coding.
+                GRAFCET diagrams define steps, transitions, parallel branches (simultaneous
+                sequences), and selection branches (alternative paths).
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When a machine is stuck and not advancing to the
               next step, identify the active step (check step flags or the step register value
               online) and then examine the transition condition for that step. The machine is
@@ -622,18 +574,15 @@ const MOETModule5Section2_4 = () => {
               field — a sensor not detecting, a limit switch not reaching, or a process condition
               not being met.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Practical Fault Diagnosis
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Practical fault diagnosis</ContentEyebrow>
+
+          <ConceptBlock title="The programming software already has the tools you need">
             <p>
               Efficient diagnosis of timer, counter, and sequencer faults directly reduces
               maintenance response time and improves plant availability. The PLC programming
@@ -641,210 +590,196 @@ const MOETModule5Section2_4 = () => {
               cross-referencing — to systematically identify why a timed or counted operation is not
               behaving as expected.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Timer Faults
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Timer not reaching preset (enable input intermittent)</li>
-                  <li className="pl-1">
-                    Timer reaching preset but output not activating (downstream logic blocking)
-                  </li>
-                  <li className="pl-1">
-                    Timer running too fast or slow (wrong time base configured)
-                  </li>
-                  <li className="pl-1">
-                    Retentive timer never resetting (reset condition not met)
-                  </li>
-                  <li className="pl-1">Timer preset changed by HMI to incorrect value</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Counter Faults
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Counter double-counting (input bounce or noise)</li>
-                  <li className="pl-1">Counter missing counts (pulse rate exceeds scan time)</li>
-                  <li className="pl-1">Counter not resetting (reset logic fault or timing)</li>
-                  <li className="pl-1">Counter overflowing past maximum integer value</li>
-                  <li className="pl-1">Incorrect preset value loaded by operator</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Common timer faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Timer not reaching preset (enable input intermittent).</li>
+              <li>Timer reaching preset but output not activating (downstream logic blocking).</li>
+              <li>Timer running too fast or slow (wrong time base configured).</li>
+              <li>Retentive timer never resetting (reset condition not met).</li>
+              <li>Timer preset changed by HMI to incorrect value.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Online Diagnosis Steps</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1.</strong> Go online and navigate to the timer or counter instruction in
-                  the programme
-                </li>
-                <li className="pl-1">
-                  <strong>2.</strong> Check the accumulated value (ET/CV) — is it counting? Is it
-                  stuck at zero? Has it reached the preset?
-                </li>
-                <li className="pl-1">
-                  <strong>3.</strong> Verify the enable/count input is stable — watch for flickering
-                  or intermittent dropout
-                </li>
-                <li className="pl-1">
-                  <strong>4.</strong> Check the done bit status — if it is ON, follow the logic
-                  downstream to find why the expected action is not happening
-                </li>
-                <li className="pl-1">
-                  <strong>5.</strong> Verify the reset condition — use cross-referencing to find
-                  what resets the timer/counter and check if it is activating unexpectedly
-                </li>
-                <li className="pl-1">
-                  <strong>6.</strong> Compare the preset value with documentation — it may have been
-                  changed by an operator or during previous maintenance
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common counter faults">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Counter double-counting (input bounce or noise).</li>
+              <li>Counter missing counts (pulse rate exceeds scan time).</li>
+              <li>Counter not resetting (reset logic fault or timing).</li>
+              <li>Counter overflowing past maximum integer value.</li>
+              <li>Incorrect preset value loaded by operator.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Online diagnosis steps">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1.</strong> Go online and navigate to the timer or counter instruction in
+                the programme.
+              </li>
+              <li>
+                <strong>2.</strong> Check the accumulated value (ET/CV) — is it counting? Is it
+                stuck at zero? Has it reached the preset?
+              </li>
+              <li>
+                <strong>3.</strong> Verify the enable/count input is stable — watch for flickering
+                or intermittent dropout.
+              </li>
+              <li>
+                <strong>4.</strong> Check the done bit status — if it is ON, follow the logic
+                downstream to find why the expected action is not happening.
+              </li>
+              <li>
+                <strong>5.</strong> Verify the reset condition — use cross-referencing to find what
+                resets the timer/counter and check if it is activating unexpectedly.
+              </li>
+              <li>
+                <strong>6.</strong> Compare the preset value with documentation — it may have been
+                changed by an operator or during previous maintenance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Advanced Timer and Counter Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Advanced timer and counter applications</ContentEyebrow>
+
+          <ConceptBlock title="Combining basic instructions into complex behaviour">
             <p>
               Beyond basic timing and counting, these instructions are combined in sophisticated
               ways to create complex automated behaviour. Understanding these advanced patterns
               helps you diagnose more complex faults and appreciate why machines behave the way they
               do.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cascaded Timers</p>
-              <p className="text-sm text-white mb-3">
-                When the required delay exceeds the maximum value of a single timer, multiple timers
-                are cascaded — the done bit of one timer enables the next. The total delay is the
-                sum of all presets.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Timer 1: 30,000 seconds (done bit enables Timer 2)</li>
-                <li className="pl-1">Timer 2: 6,000 seconds (total = 36,000 seconds = 10 hours)</li>
-                <li className="pl-1">
-                  Also used to create multiple timed events within one operation
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Oscillating Timer (Flasher)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Two TON timers can be cross-connected to create an oscillating output (flasher).
-                Timer 1's done bit enables Timer 2 and resets Timer 1. Timer 2's done bit resets
-                Timer 2 and restarts Timer 1. The result is a continuously toggling output with
-                independently adjustable ON and OFF periods.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Used for warning beacons, intermittent lubrication, and cyclic operations
-                </li>
-                <li className="pl-1">
-                  ON time and OFF time can be set independently via the two presets
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">High-Speed Counters</p>
-              <p className="text-sm text-white mb-3">
-                Standard PLC counters are limited by the scan cycle — if pulses arrive faster than
-                the scan time, counts are missed. High-speed counter (HSC) inputs use dedicated
-                hardware that counts independently:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Encoder feedback:</strong> Incremental encoders on motors, conveyors, and
-                  positioning systems
-                </li>
-                <li className="pl-1">
-                  <strong>Flow measurement:</strong> Turbine flow meters generating pulses
-                  proportional to flow rate
-                </li>
-                <li className="pl-1">
-                  <strong>Frequency measurement:</strong> Converting pulse frequency to speed or
-                  rate values
-                </li>
-                <li className="pl-1">
-                  Typical HSC capability: 10 kHz to 200 kHz depending on PLC model
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand the operation of timers, counters, and sequential control as used in
-              industrial automation. This includes diagnosing faults in timed and counted
-              operations, understanding sequence progression, and using online monitoring to
-              identify stuck steps and failed transitions.
+          <ConceptBlock title="Cascaded timers">
+            <p>
+              When the required delay exceeds the maximum value of a single timer, multiple timers
+              are cascaded — the done bit of one timer enables the next. The total delay is the sum
+              of all presets.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Timer 1: 30,000 seconds (done bit enables Timer 2).</li>
+              <li>Timer 2: 6,000 seconds (total = 36,000 seconds = 10 hours).</li>
+              <li>Also used to create multiple timed events within one operation.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Oscillating timer (flasher)">
+            <p>
+              Two TON timers can be cross-connected to create an oscillating output (flasher). Timer
+              1&apos;s done bit enables Timer 2 and resets Timer 1. Timer 2&apos;s done bit resets
+              Timer 2 and restarts Timer 1. The result is a continuously toggling output with
+              independently adjustable ON and OFF periods.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Used for warning beacons, intermittent lubrication, and cyclic operations.</li>
+              <li>ON time and OFF time can be set independently via the two presets.</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="High-speed counters">
+            <p>
+              Standard PLC counters are limited by the scan cycle — if pulses arrive faster than the
+              scan time, counts are missed. High-speed counter (HSC) inputs use dedicated hardware
+              that counts independently:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Encoder feedback:</strong> Incremental encoders on motors, conveyors, and
+                positioning systems.
+              </li>
+              <li>
+                <strong>Flow measurement:</strong> Turbine flow meters generating pulses
+                proportional to flow rate.
+              </li>
+              <li>
+                <strong>Frequency measurement:</strong> Converting pulse frequency to speed or rate
+                values.
+              </li>
+              <li>Typical HSC capability: 10 kHz to 200 kHz depending on PLC model.</li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to understand the operation of
+              timers, counters, and sequential control as used in industrial automation. This
+              includes diagnosing faults in timed and counted operations, understanding sequence
+              progression, and using online monitoring to identify stuck steps and failed
+              transitions.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=RwSga-zQy0I"
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Ladder Logic Basics
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-5">
-              Next: PLC Programming Software
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            title="Time Delay Relays Explained"
+
+            channel="The Engineering Mindset"
+
+            duration="12:29"
+
+            topic="On-delay and off-delay timing, in hardware"
+
+            caption="The hardware ancestor of the PLC timer instruction. Seeing the mechanical version makes on-delay versus off-delay much harder to mix up."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'TON delays turning ON after enable; TOF delays turning OFF after the input drops; TP fires a fixed pulse regardless of how long the input is held; TONR is retentive and needs an explicit reset.',
+              'A timer has a preset (the target), an elapsed/accumulated value (progress so far) and a done bit (fires when elapsed reaches preset) — check all three online before condemning a timer.',
+              'CTU counts up on a rising edge to a preset; CTD counts down from a preset to zero; CTUD tracks both additions and removals with separate up/down inputs.',
+              'Contact bounce causes a counter to register multiple counts for one event — cure it with hardware debouncing, a clean electronic sensor, or a software debounce timer.',
+              'Sequential control needs steps, transitions, actions and an initial step; GRAFCET (IEC 60848) is the design methodology, SFC (IEC 61131-3) is how it gets programmed.',
+              "A stuck machine is almost always waiting on its current step's transition condition — find the active step, then check the field device the transition depends on.",
+              "Cascaded timers sum their presets to exceed a single timer's maximum; two cross-connected TON timers with independent presets make a flasher with adjustable ON/OFF times.",
+              'Standard counters can miss pulses faster than the scan cycle — a high-speed counter (HSC) uses dedicated hardware to count independently, essential for encoders and flow meters.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Ladder Logic Basics
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  PLC Programming Software
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

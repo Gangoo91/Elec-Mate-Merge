@@ -370,7 +370,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
+        className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl p-5 sm:p-6"
       >
         <div className="flex items-center gap-5">
           <div className="relative w-20 h-20 shrink-0">
@@ -447,14 +447,14 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+            className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden"
           >
             <div className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06]">
               <Eyebrow>Renewal plan</Eyebrow>
               <h3 className="mt-1 text-lg font-semibold text-white">
                 {due.length} renewal{due.length > 1 ? 's' : ''} to sort
               </h3>
-              <p className="text-[12.5px] text-white/70 mt-0.5">
+              <p className="text-[12.5px] text-white mt-0.5">
                 Never turn up with a dead card — here's what each one needs.
               </p>
             </div>
@@ -480,7 +480,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                         {days < 0 ? `${Math.abs(days)}d overdue` : `${days}d left`}
                       </span>
                     </div>
-                    <p className="mt-1.5 text-[12.5px] text-white/75 leading-relaxed">
+                    <p className="mt-1.5 text-[12.5px] text-white leading-relaxed">
                       {play.what}
                     </p>
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -653,7 +653,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       {recommendations && recommendations.trending.length > 0 && (
         <div>
           <SectionHeader eyebrow="Market demand" title="Trending in the industry" />
-          <div className="mt-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5">
+          <div className="mt-4 rounded-2xl bg-white/[0.05] border border-elec-yellow/35 p-5">
             <div className="flex flex-wrap gap-2 mb-3">
               {recommendations.trending.map((trend) => (
                 <button
@@ -663,7 +663,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                     'px-3 py-1.5 rounded-full text-sm font-medium transition-all touch-manipulation',
                     trend.userHasSkill
                       ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                      : 'bg-white/[0.04] text-white border border-white/[0.06] hover:bg-white/[0.08]'
+                      : 'bg-white/[0.04] text-white border border-elec-yellow/35 hover:bg-white/[0.08]'
                   )}
                 >
                   {trend.userHasSkill && '✓ '}

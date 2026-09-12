@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.1 · Subsection 3 — Energy and Efficiency
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical engineering principles: circuit terminology,
+ *     Ohm’s Law, transformer theory, and power calculations."
+ *   · "Use mathematical principles and formulae to support engineering
+ *     maintenance."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Energy and Efficiency - MOET Module 2 Section 1.3';
@@ -14,12 +50,7 @@ const quickCheckQuestions = [
     id: 'kwh-calc',
     question:
       'A 7.5 kW motor runs for 8 hours per day, 5 days per week. What is the weekly energy consumption in kWh?',
-    options: [
-      '37.5 kWh',
-      '300 kWh',
-      '60 kWh',
-      '1500 kWh',
-    ],
+    options: ['37.5 kWh', '300 kWh', '60 kWh', '1500 kWh'],
     correctIndex: 1,
     explanation:
       'Energy = Power x Time = 7.5 kW x 8 hours x 5 days = 300 kWh per week. At a typical industrial tariff of 20p per kWh, this would cost 300 x 0.20 = 60 GBP per week, or approximately 3120 GBP per year. This demonstrates why motor efficiency is so important in maintenance — even a small improvement can yield significant savings.',
@@ -28,12 +59,7 @@ const quickCheckQuestions = [
     id: 'efficiency-calc',
     question:
       'A motor has an electrical input of 5 kW and a mechanical output of 4.25 kW. What is its efficiency?',
-    options: [
-      '82.5%',
-      '75%',
-      '85%',
-      '117.6%',
-    ],
+    options: ['82.5%', '75%', '85%', '117.6%'],
     correctIndex: 2,
     explanation:
       'Efficiency = (Output / Input) x 100% = (4.25 / 5) x 100% = 85%. The remaining 15% (0.75 kW or 750 W) is lost as heat in the motor windings (copper losses), core (iron losses), friction, and windage. This lost energy must be dissipated — which is why adequate ventilation is essential for motor longevity.',
@@ -42,12 +68,7 @@ const quickCheckQuestions = [
     id: 'copper-loss',
     question:
       'A cable carries 25 A and has a resistance of 0.3 ohms. What is the power wasted as heat in the cable?',
-    options: [
-      '187.5 W',
-      '7.5 W',
-      '750 W',
-      '75 W',
-    ],
+    options: ['187.5 W', '7.5 W', '750 W', '75 W'],
     correctIndex: 0,
     explanation:
       'Copper loss = I² x R = 25² x 0.3 = 625 x 0.3 = 187.5 W. This is pure waste heat generated in the cable. If the cable is enclosed in insulation or grouped with other cables, this heat cannot escape easily, raising the cable temperature. This is why BS 7671 applies derating factors for grouping, ambient temperature, and thermal insulation.',
@@ -72,12 +93,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'One kilowatt-hour (kWh) is equivalent to:',
-    options: [
-      '1000 joules',
-      '3,600,000 joules',
-      '3,600 joules',
-      '1,000,000 joules',
-    ],
+    options: ['1000 joules', '3,600,000 joules', '3,600 joules', '1,000,000 joules'],
     correctAnswer: 1,
     explanation:
       '1 kWh = 1000 W x 3600 s = 3,600,000 J = 3.6 MJ. The kilowatt-hour is a practical unit of energy used for electricity billing. One kWh is the energy consumed by a 1 kW load running for one hour, or equivalently a 100 W lamp running for 10 hours.',
@@ -99,12 +115,7 @@ const quizQuestions = [
     id: 3,
     question:
       'A transformer has a primary input of 2400 VA and a secondary output of 2280 VA. What are the losses?',
-    options: [
-      '12 W',
-      '5 W',
-      '120 VA',
-      '120 W',
-    ],
+    options: ['12 W', '5 W', '120 VA', '120 W'],
     correctAnswer: 3,
     explanation:
       'Losses = Input - Output = 2400 - 2280 = 120 W (expressed in watts as losses are real power dissipated as heat). The efficiency would be (2280/2400) x 100% = 95%. For a distribution transformer, this is typical. These losses generate heat that must be dissipated, which is why transformer cooling is important in maintenance.',
@@ -126,12 +137,7 @@ const quizQuestions = [
     id: 5,
     question:
       'A 15 kW motor with 90% efficiency runs at full load for 2000 hours per year. What is the annual energy cost at 18p/kWh?',
-    options: [
-      '3,000 GBP',
-      '6,000 GBP',
-      '5,400 GBP',
-      '2,700 GBP',
-    ],
+    options: ['3,000 GBP', '6,000 GBP', '5,400 GBP', '2,700 GBP'],
     correctAnswer: 1,
     explanation:
       'Always use INPUT power for cost. Input power = Output / Efficiency = 15 / 0.90 = 16.67 kW. Annual energy = 16.67 x 2000 = 33,333 kWh. Annual cost = 33,333 x 0.18 = 6,000 GBP. Using the 15 kW output directly would understate the cost, because the 10% lost as heat is still paid for.',
@@ -194,12 +200,7 @@ const quizQuestions = [
     id: 10,
     question:
       'A factory replaces ten 5.5 kW IE1 motors (88% efficient) with IE3 motors (92.6% efficient). The motors run 4000 hours per year at full load. What is the approximate annual energy saving?',
-    options: [
-      '1,240 kWh',
-      '6,200 kWh',
-      '12,400 kWh',
-      '27,500 kWh',
-    ],
+    options: ['1,240 kWh', '6,200 kWh', '12,400 kWh', '27,500 kWh'],
     correctAnswer: 2,
     explanation:
       'IE1 input per motor: 5.5/0.88 = 6.25 kW. IE3 input per motor: 5.5/0.926 = 5.94 kW. Saving per motor: 6.25 - 5.94 = 0.31 kW. For 10 motors over 4000 hours: 0.31 x 10 x 4000 = 12,400 kWh. At 20p/kWh, this saves approximately 2,480 GBP per year.',
@@ -263,116 +264,51 @@ const faqs = [
 ];
 
 const MOETModule2Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Energy and Efficiency
-          </h1>
-          <p className="text-white">
-            Energy calculations, efficiency analysis and loss reduction for electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.1 · Subsection 3"
+        title="Energy and Efficiency"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Energy calculations, efficiency analysis and loss reduction for electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Energy:</strong> E = P x t — measured in joules (J) or kilowatt-hours (kWh)
-              </li>
-              <li className="pl-1">
-                <strong>Efficiency:</strong> eta = (Output / Input) x 100% — always less than 100%
-              </li>
-              <li className="pl-1">
-                <strong>Copper losses:</strong> I²R — proportional to the square of current
-              </li>
-              <li className="pl-1">
-                <strong>Iron losses:</strong> Hysteresis + eddy currents — approximately constant
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Motor classes:</strong> IE1 to IE4 — minimum IE3 for new motors since 2021
-              </li>
-              <li className="pl-1">
-                <strong>Energy auditing:</strong> Identify oversized equipment, poor power factor,
-                waste
-              </li>
-              <li className="pl-1">
-                <strong>Cost saving:</strong> Motor efficiency upgrades, VSDs, LED lighting
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Energy awareness and efficiency in maintenance practice
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Energy: E = P x t — measured in joules (J) or kilowatt-hours (kWh)',
+              'Efficiency: eta = (Output / Input) x 100% — always less than 100%',
+              'Copper losses: I²R — proportional to the square of current',
+              'Iron losses: Hysteresis + eddy currents — approximately constant',
+              'Motor classes: IE1 to IE4 — minimum IE3 for new motors since 2021',
+              'Energy auditing: Identify oversized equipment, poor power factor, waste',
+              'Cost saving: Motor efficiency upgrades, VSDs, LED lighting',
+              'ST1426: Energy awareness and efficiency in maintenance practice',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Calculate electrical energy consumption in kWh and convert to/from joules',
               'Determine the efficiency of motors, transformers and other electrical equipment',
               'Identify and quantify copper losses (I²R) and iron losses in electrical systems',
               'Explain motor efficiency classes IE1 to IE4 and current regulatory requirements',
               'Assess the economic case for efficiency improvements in maintenance decisions',
               'Conduct basic energy auditing and identify energy-saving opportunities',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Energy vs power — understanding the difference</ContentEyebrow>
 
-        {/* Section 01: Energy vs Power */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Energy vs Power — Understanding the Difference
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Energy vs Power — Understanding the Difference">
             <p>
               Power and energy are related but fundamentally different quantities. Power is the rate
               of energy transfer — how quickly energy is being used or converted at any instant.
@@ -380,17 +316,11 @@ const MOETModule2Section1_3 = () => {
               pay your electricity supplier for energy (measured in kWh), not for power (measured in
               kW).
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5 text-center">
-              <div className="space-y-3">
-                <div>
-                  <p className="text-lg font-mono text-elec-yellow">Energy = Power x Time</p>
-                  <p className="text-sm text-white">E (joules) = P (watts) x t (seconds)</p>
-                  <p className="text-sm text-white">E (kWh) = P (kW) x t (hours)</p>
-                </div>
-              </div>
+            <div className="rounded-lg bg-white/5 p-4 text-center">
+              <p className="font-mono text-base text-elec-yellow">Energy = Power x Time</p>
+              <p className="text-sm text-white">E (joules) = P (watts) x t (seconds)</p>
+              <p className="text-sm text-white">E (kWh) = P (kW) x t (hours)</p>
             </div>
-
             <p>
               The SI unit of energy is the <strong>joule</strong> (J). However, one joule is a very
               small amount of energy for electrical work — a 100 W lamp uses 100 joules every
@@ -398,227 +328,203 @@ const MOETModule2Section1_3 = () => {
               <strong>kilowatt-hour</strong> (kWh), where 1 kWh = 3,600,000 J = 3.6 MJ. This is the
               'unit' shown on electricity meters and bills.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Energy Calculations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Power (kW)</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Daily Use (hours)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Daily Energy (kWh)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Annual Cost (at 30p/kWh)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED panel light</td>
-                      <td className="border border-white/10 px-3 py-2">0.040</td>
-                      <td className="border border-white/10 px-3 py-2">10</td>
-                      <td className="border border-white/10 px-3 py-2">0.4</td>
-                      <td className="border border-white/10 px-3 py-2">43.80 GBP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Office PC + monitor</td>
-                      <td className="border border-white/10 px-3 py-2">0.200</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">1.6</td>
-                      <td className="border border-white/10 px-3 py-2">175.20 GBP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3 kW immersion heater</td>
-                      <td className="border border-white/10 px-3 py-2">3.0</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">6.0</td>
-                      <td className="border border-white/10 px-3 py-2">657.00 GBP</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">11 kW compressor motor</td>
-                      <td className="border border-white/10 px-3 py-2">11.0</td>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">88.0</td>
-                      <td className="border border-white/10 px-3 py-2">9,636.00 GBP</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Annual costs based on 365 days/year. Industrial use would typically be 250-300
-                working days.
-              </p>
+          <ConceptBlock title="Practical Energy Calculations">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Power (kW)</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Daily Use (hours)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Daily Energy (kWh)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Annual Cost (at 30p/kWh)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">LED panel light</td>
+                    <td className="border border-white/10 px-3 py-2">0.040</td>
+                    <td className="border border-white/10 px-3 py-2">10</td>
+                    <td className="border border-white/10 px-3 py-2">0.4</td>
+                    <td className="border border-white/10 px-3 py-2">43.80 GBP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Office PC + monitor</td>
+                    <td className="border border-white/10 px-3 py-2">0.200</td>
+                    <td className="border border-white/10 px-3 py-2">8</td>
+                    <td className="border border-white/10 px-3 py-2">1.6</td>
+                    <td className="border border-white/10 px-3 py-2">175.20 GBP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">3 kW immersion heater</td>
+                    <td className="border border-white/10 px-3 py-2">3.0</td>
+                    <td className="border border-white/10 px-3 py-2">2</td>
+                    <td className="border border-white/10 px-3 py-2">6.0</td>
+                    <td className="border border-white/10 px-3 py-2">657.00 GBP</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">11 kW compressor motor</td>
+                    <td className="border border-white/10 px-3 py-2">11.0</td>
+                    <td className="border border-white/10 px-3 py-2">8</td>
+                    <td className="border border-white/10 px-3 py-2">88.0</td>
+                    <td className="border border-white/10 px-3 py-2">9,636.00 GBP</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p className="text-xs text-white">
+              Annual costs based on 365 days/year. Industrial use would typically be 250-300 working
+              days.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Why This Matters for Maintenance
-              </p>
-              <p className="text-sm text-white">
-                Understanding energy costs helps you make better maintenance decisions. For example,
-                the 11 kW compressor motor above costs nearly 10,000 GBP per year to run. If
-                replacing it with a more efficient model saves just 5% of energy, that is nearly 500
-                GBP per year — the additional cost of a premium efficiency motor is often recovered
-                within 1-2 years. Energy awareness is increasingly expected of maintenance
-                technicians under ST1426.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Why This Matters for Maintenance">
+            <p>
+              Understanding energy costs helps you make better maintenance decisions. For example,
+              the 11 kW compressor motor above costs nearly 10,000 GBP per year to run. If replacing
+              it with a more efficient model saves just 5% of energy, that is nearly 500 GBP per
+              year — the additional cost of a premium efficiency motor is often recovered within 1-2
+              years. Energy awareness is increasingly expected of maintenance technicians under
+              ST1426.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Efficiency */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Efficiency — Input, Output and Losses
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Efficiency — input, output and losses</ContentEyebrow>
+
+          <ConceptBlock title="Efficiency — Input, Output and Losses">
             <p>
               Efficiency describes how well a device converts input energy into useful output
               energy. No real device is 100% efficient — some energy is always lost, primarily as
               heat. The efficiency of electrical equipment directly affects both energy costs and
               the heat that must be managed within an installation.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5 text-center">
-              <div className="space-y-3">
-                <div>
-                  <p className="text-lg font-mono text-elec-yellow">
-                    Efficiency (eta) = (Output Power / Input Power) x 100%
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-mono text-white">
-                    Losses = Input Power - Output Power
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm font-mono text-white">
-                    Input Power = Output Power / Efficiency
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Efficiencies of Electrical Equipment
+            <div className="rounded-lg bg-white/5 p-4 text-center">
+              <p className="font-mono text-base text-elec-yellow">
+                Efficiency (eta) = (Output Power / Input Power) x 100%
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Efficiency
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Main Loss Mechanisms
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Large power transformer</td>
-                      <td className="border border-white/10 px-3 py-2">97-99.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Iron losses (core), copper losses (windings)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution transformer</td>
-                      <td className="border border-white/10 px-3 py-2">95-98%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Iron losses, copper losses
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large induction motor (IE3)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">90-96%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Copper, iron, friction, windage, stray
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Small induction motor (IE3)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">82-90%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Copper, iron, friction, windage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LED luminaire</td>
-                      <td className="border border-white/10 px-3 py-2">80-90% (luminous)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat in LED driver and junction
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Variable speed drive (VSD)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">95-98%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switching losses, conduction losses in IGBTs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <p className="font-mono text-sm text-white">Losses = Input Power - Output Power</p>
+              <p className="font-mono text-sm text-white">
+                Input Power = Output Power / Efficiency
+              </p>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cascaded Efficiency</p>
-              <p className="text-sm text-white mb-3">
+          <ConceptBlock title="Typical Efficiencies of Electrical Equipment">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Equipment</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical Efficiency
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Main Loss Mechanisms
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Large power transformer</td>
+                    <td className="border border-white/10 px-3 py-2">97-99.5%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Iron losses (core), copper losses (windings)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Distribution transformer</td>
+                    <td className="border border-white/10 px-3 py-2">95-98%</td>
+                    <td className="border border-white/10 px-3 py-2">Iron losses, copper losses</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large induction motor (IE3)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">90-96%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Copper, iron, friction, windage, stray
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Small induction motor (IE3)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">82-90%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Copper, iron, friction, windage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">LED luminaire</td>
+                    <td className="border border-white/10 px-3 py-2">80-90% (luminous)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Heat in LED driver and junction
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Variable speed drive (VSD)</td>
+                    <td className="border border-white/10 px-3 py-2">95-98%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Switching losses, conduction losses in IGBTs
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <Scenario
+            title="Cascaded Efficiency"
+            situation={
+              <>
                 When equipment is connected in series (e.g., transformer feeding a VSD feeding a
                 motor), the overall efficiency is the product of the individual efficiencies:
+                Overall efficiency = eta1 x eta2 x eta3.
+              </>
+            }
+            whatToDo={
+              <p>
+                Example: Transformer (97%) x VSD (96%) x Motor (92%) = 0.97 x 0.96 x 0.92 ={' '}
+                <strong>85.7%</strong>
               </p>
-              <div className="text-sm text-white space-y-1 ml-4">
-                <p>Overall efficiency = eta1 x eta2 x eta3</p>
-                <p className="mt-2">
-                  Example: Transformer (97%) x VSD (96%) x Motor (92%) = 0.97 x 0.96 x 0.92 ={' '}
-                  <strong>85.7%</strong>
-                </p>
-                <p className="text-white mt-1">
-                  This means 14.3% of the electrical input is lost as heat before reaching the
-                  driven load
-                </p>
-              </div>
-            </div>
+            }
+            whyItMatters={
+              <>
+                This means 14.3% of the electrical input is lost as heat before reaching the driven
+                load.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Always use input power for cost">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Key point:</strong> When calculating the actual power drawn from the supply,
               always use the input power: P(input) = P(output) / efficiency. A 15 kW motor at 92%
               efficiency actually draws 15/0.92 = 16.3 kW from the supply. Cable sizing, protective
               device rating, and energy cost calculations must all be based on the input power, not
               the rated output.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Power Losses */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Power Losses — Copper Losses, Iron Losses and Heat Dissipation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Power losses — copper, iron and heat dissipation</ContentEyebrow>
+
+          <ConceptBlock title="Power Losses — Copper Losses, Iron Losses and Heat Dissipation">
             <p>
               Understanding where energy is lost in electrical equipment is essential for effective
               maintenance. Losses generate heat, and heat is the primary enemy of electrical
@@ -627,104 +533,92 @@ const MOETModule2Section1_3 = () => {
               that for every 10 degrees C above the rated temperature, the insulation life is
               approximately halved.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Copper Losses (I²R Losses)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Copper losses occur in any conductor carrying current. They are caused by the
-                  resistance of the conductor material and are proportional to the{' '}
-                  <strong>square</strong> of the current.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Formula:</strong> P(loss) = I² x R
-                  </li>
-                  <li className="pl-1">
-                    <strong>Where found:</strong> Motor windings, transformer windings, cables,
-                    busbars, connections
-                  </li>
-                  <li className="pl-1">
-                    <strong>Characteristic:</strong> Load-dependent — increase with the square of
-                    load current
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reduction:</strong> Use larger cross-section conductors, shorter cable
-                    runs, better connections
-                  </li>
-                  <li className="pl-1">
-                    <strong>Danger:</strong> High-resistance connections cause localised extreme
-                    heating — fire risk
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Copper Losses (I²R Losses)">
+            <p>
+              Copper losses occur in any conductor carrying current. They are caused by the
+              resistance of the conductor material and are proportional to the{' '}
+              <strong>square</strong> of the current.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Formula:</strong> P(loss) = I² x R
+              </li>
+              <li>
+                <strong>Where found:</strong> Motor windings, transformer windings, cables, busbars,
+                connections
+              </li>
+              <li>
+                <strong>Characteristic:</strong> Load-dependent — increase with the square of load
+                current
+              </li>
+              <li>
+                <strong>Reduction:</strong> Use larger cross-section conductors, shorter cable runs,
+                better connections
+              </li>
+              <li>
+                <strong>Danger:</strong> High-resistance connections cause localised extreme heating
+                — fire risk
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Iron Losses (Core Losses)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Iron losses occur in the magnetic cores of transformers, motors, and other
-                  electromagnetic devices. They comprise two components:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hysteresis losses:</strong> Energy used to repeatedly magnetise and
-                    demagnetise the core material each cycle. Reduced by using silicon steel or
-                    amorphous metal cores
-                  </li>
-                  <li className="pl-1">
-                    <strong>Eddy current losses:</strong> Circulating currents induced in the core
-                    by the changing magnetic field. Reduced by laminating the core (thin insulated
-                    sheets) to break the current paths
-                  </li>
-                  <li className="pl-1">
-                    <strong>Characteristic:</strong> Approximately constant regardless of load —
-                    present whenever the equipment is energised
-                  </li>
-                  <li className="pl-1">
-                    <strong>Maintenance note:</strong> Degraded core lamination insulation (from
-                    overheating or vibration) increases eddy current losses
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Iron Losses (Core Losses)">
+            <p>
+              Iron losses occur in the magnetic cores of transformers, motors, and other
+              electromagnetic devices. They comprise two components:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hysteresis losses:</strong> Energy used to repeatedly magnetise and
+                demagnetise the core material each cycle. Reduced by using silicon steel or
+                amorphous metal cores
+              </li>
+              <li>
+                <strong>Eddy current losses:</strong> Circulating currents induced in the core by
+                the changing magnetic field. Reduced by laminating the core (thin insulated sheets)
+                to break the current paths
+              </li>
+              <li>
+                <strong>Characteristic:</strong> Approximately constant regardless of load — present
+                whenever the equipment is energised
+              </li>
+              <li>
+                <strong>Maintenance note:</strong> Degraded core lamination insulation (from
+                overheating or vibration) increases eddy current losses
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Mechanical Losses (Motors Only)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Friction losses:</strong> In bearings and brushes. Increase with bearing
-                    wear — a key maintenance indicator. Noisy or hot bearings suggest increased
-                    friction losses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Windage losses:</strong> Air resistance on the rotating parts. Include
-                    the cooling fan — which consumes energy to keep the motor cool
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Mechanical Losses (Motors Only)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Friction losses:</strong> In bearings and brushes. Increase with bearing
+                wear — a key maintenance indicator. Noisy or hot bearings suggest increased friction
+                losses
+              </li>
+              <li>
+                <strong>Windage losses:</strong> Air resistance on the rotating parts. Include the
+                cooling fan — which consumes energy to keep the motor cool
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Heat Dissipation and Cable Derating
-              </p>
-              <p className="text-sm text-white">
-                All power losses convert to heat that must be dissipated to the surrounding
-                environment. BS 7671 Appendix 4 provides correction factors for cable
-                current-carrying capacity based on the ability to dissipate heat: ambient
-                temperature (Ca), grouping with other cables (Cg), thermal insulation (Ci), and
-                installation method. These factors are all about heat management. A cable that
-                cannot dissipate its I²R losses will overheat, degrade its insulation, and
-                eventually fail — potentially causing a fire.
-              </p>
-            </div>
+          <ConceptBlock title="Heat Dissipation and Cable Derating">
+            <p>
+              All power losses convert to heat that must be dissipated to the surrounding
+              environment. BS 7671 Appendix 4 provides correction factors for cable current-carrying
+              capacity based on the ability to dissipate heat: ambient temperature (Ca), grouping
+              with other cables (Cg), thermal insulation (Ci), and installation method. These
+              factors are all about heat management. A cable that cannot dissipate its I²R losses
+              will overheat, degrade its insulation, and eventually fail — potentially causing a
+              fire.
+            </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Record operating temperatures over time">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Maintenance application:</strong> During preventive maintenance, measure and
               record the operating temperature of motors, transformers, and switchgear. A gradual
               increase over time indicates deteriorating efficiency — possibly due to increased
@@ -732,18 +626,15 @@ const MOETModule2Section1_3 = () => {
               surveys are an effective tool for identifying abnormal heating before it leads to
               failure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Motor Efficiency Classes and Regulations */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Motor Efficiency Classes and Regulatory Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Motor efficiency classes and regulatory requirements</ContentEyebrow>
+
+          <ConceptBlock title="Motor Efficiency Classes and Regulatory Requirements">
             <p>
               Electric motors account for approximately 70% of industrial electricity consumption.
               International standards define efficiency classes to drive continuous improvement in
@@ -751,80 +642,79 @@ const MOETModule2Section1_3 = () => {
               that replacement motors comply with current regulations and offer the best lifetime
               value.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                IEC Motor Efficiency Classes (IEC 60034-30-1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Efficiency (11 kW, 4-pole)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Regulatory Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IE1</td>
-                      <td className="border border-white/10 px-3 py-2">Standard Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">87.6%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No longer permitted for new installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IE2</td>
-                      <td className="border border-white/10 px-3 py-2">High Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">89.4%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Permitted only with VSD (certain sizes)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IE3</td>
-                      <td className="border border-white/10 px-3 py-2">Premium Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">91.4%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum requirement since July 2021 (0.75-1000 kW)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IE4</td>
-                      <td className="border border-white/10 px-3 py-2">Super Premium Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">93.0%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Required for 75-200 kW with VSD (from July 2023)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">IE5</td>
-                      <td className="border border-white/10 px-3 py-2">Ultra Premium Efficiency</td>
-                      <td className="border border-white/10 px-3 py-2">~94.5%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emerging — not yet mandated
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="IEC Motor Efficiency Classes (IEC 60034-30-1)">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Class</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Description</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical Efficiency (11 kW, 4-pole)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Regulatory Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">IE1</td>
+                    <td className="border border-white/10 px-3 py-2">Standard Efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">87.6%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      No longer permitted for new installations
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">IE2</td>
+                    <td className="border border-white/10 px-3 py-2">High Efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">89.4%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Permitted only with VSD (certain sizes)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">IE3</td>
+                    <td className="border border-white/10 px-3 py-2">Premium Efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">91.4%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Minimum requirement since July 2021 (0.75-1000 kW)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">IE4</td>
+                    <td className="border border-white/10 px-3 py-2">Super Premium Efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">93.0%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Required for 75-200 kW with VSD (from July 2023)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">IE5</td>
+                    <td className="border border-white/10 px-3 py-2">Ultra Premium Efficiency</td>
+                    <td className="border border-white/10 px-3 py-2">~94.5%</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Emerging — not yet mandated
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Economic Impact of Efficiency Classes
-              </p>
-              <p className="text-sm text-white mb-2">
+          <Scenario
+            title="Economic Impact of Efficiency Classes"
+            situation={
+              <>
                 For a motor running 4000 hours per year at full load, the difference in annual
-                running cost between efficiency classes can be substantial:
-              </p>
-              <div className="text-sm text-white space-y-1 ml-4">
+                running cost between efficiency classes can be substantial.
+              </>
+            }
+            whatToDo={
+              <>
                 <p>
                   11 kW motor, IE1 (87.6%): Input = 11/0.876 = 12.56 kW. Annual energy = 50,228 kWh
                 </p>
@@ -834,163 +724,148 @@ const MOETModule2Section1_3 = () => {
                 <p>
                   Annual saving: 2,088 kWh x 0.20 GBP = <strong>418 GBP per year per motor</strong>
                 </p>
-                <p className="text-white mt-1">
-                  In a factory with 20 such motors, this represents 8,360 GBP per year
-                </p>
-              </div>
-            </div>
+              </>
+            }
+            whyItMatters={
+              <>In a factory with 20 such motors, this represents 8,360 GBP per year.</>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Variable Speed Drives and Efficiency
-              </p>
-              <p className="text-sm text-white mb-3">
-                Variable speed drives (VSDs) improve system efficiency by matching motor speed to
-                the actual load requirement. The energy savings can be dramatic, especially on
-                variable-load applications:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fans and pumps:</strong> Power is proportional to speed cubed (affinity
-                  laws). Reducing speed by 20% saves approximately 49% of energy
-                </li>
-                <li className="pl-1">
-                  <strong>Conveyors:</strong> Speed adjustment to match production rate saves energy
-                  and reduces mechanical wear
-                </li>
-                <li className="pl-1">
-                  <strong>Soft starting:</strong> VSDs eliminate the high inrush current of
-                  direct-on-line starting, reducing I²R losses during start-up
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance benefit:</strong> Reduced mechanical stress extends bearing
-                  and coupling life
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Variable Speed Drives and Efficiency">
+            <p>
+              Variable speed drives (VSDs) improve system efficiency by matching motor speed to the
+              actual load requirement. The energy savings can be dramatic, especially on
+              variable-load applications:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fans and pumps:</strong> Power is proportional to speed cubed (affinity
+                laws). Reducing speed by 20% saves approximately 49% of energy
+              </li>
+              <li>
+                <strong>Conveyors:</strong> Speed adjustment to match production rate saves energy
+                and reduces mechanical wear
+              </li>
+              <li>
+                <strong>Soft starting:</strong> VSDs eliminate the high inrush current of
+                direct-on-line starting, reducing I²R losses during start-up
+              </li>
+              <li>
+                <strong>Maintenance benefit:</strong> Reduced mechanical stress extends bearing and
+                coupling life
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Always specify at least IE3">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Key point:</strong> Under EU Ecodesign Regulation (EU 2019/1781), retained in
               UK law, you must not install an IE1 motor as a replacement. Always specify at least
               IE3 for new installations. When ordering replacement motors, include the efficiency
               class on the purchase specification. The motor nameplate must show the IE class and
               efficiency values.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Energy Auditing in Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Energy Auditing and Monitoring in Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Energy auditing and monitoring in maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Energy Auditing and Monitoring in Maintenance">
             <p>
               Energy auditing is becoming an increasingly important part of the maintenance
               technician's role. Organisations are under pressure to reduce energy consumption and
               carbon emissions, and the maintenance team is best placed to identify waste because
               they have detailed knowledge of the equipment and how it operates.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Audit Checklist for Maintenance Technicians
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor loading:</strong> Measure running current and compare to nameplate
-                  full-load current. Motors consistently running below 50% load are candidates for
-                  replacement with a smaller, more efficient unit
-                </li>
-                <li className="pl-1">
-                  <strong>Power factor:</strong> Measure with a power analyser. Poor power factor
-                  (below 0.9) means the supply is delivering more current than necessary, increasing
-                  I²R losses in cables and transformers. Power factor correction capacitors can
-                  improve this
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage drop:</strong> Excessive voltage drop in long cable runs wastes
-                  energy as heat. Measure voltage at the supply and load ends under full-load
-                  conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting:</strong> Identify old fluorescent or discharge lighting that
-                  could be replaced with LED. LED upgrades typically save 50-70% of lighting energy
-                </li>
-                <li className="pl-1">
-                  <strong>Heating:</strong> Check that electric heating is correctly controlled —
-                  timers, thermostats, and optimisers should be functioning and correctly set
-                </li>
-                <li className="pl-1">
-                  <strong>Standby loads:</strong> Identify equipment left energised when not in use.
-                  Even transformers on standby consume iron losses continuously
-                </li>
-                <li className="pl-1">
-                  <strong>Compressed air:</strong> Check for leaks — a 3 mm hole in a compressed air
-                  system at 7 bar wastes approximately 1.5 kW continuously
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Energy Audit Checklist for Maintenance Technicians">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor loading:</strong> Measure running current and compare to nameplate
+                full-load current. Motors consistently running below 50% load are candidates for
+                replacement with a smaller, more efficient unit
+              </li>
+              <li>
+                <strong>Power factor:</strong> Measure with a power analyser. Poor power factor
+                (below 0.9) means the supply is delivering more current than necessary, increasing
+                I²R losses in cables and transformers. Power factor correction capacitors can
+                improve this
+              </li>
+              <li>
+                <strong>Voltage drop:</strong> Excessive voltage drop in long cable runs wastes
+                energy as heat. Measure voltage at the supply and load ends under full-load
+                conditions
+              </li>
+              <li>
+                <strong>Lighting:</strong> Identify old fluorescent or discharge lighting that could
+                be replaced with LED. LED upgrades typically save 50-70% of lighting energy
+              </li>
+              <li>
+                <strong>Heating:</strong> Check that electric heating is correctly controlled —
+                timers, thermostats, and optimisers should be functioning and correctly set
+              </li>
+              <li>
+                <strong>Standby loads:</strong> Identify equipment left energised when not in use.
+                Even transformers on standby consume iron losses continuously
+              </li>
+              <li>
+                <strong>Compressed air:</strong> Check for leaks — a 3 mm hole in a compressed air
+                system at 7 bar wastes approximately 1.5 kW continuously
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Monitoring Tools
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Portable power analyser:</strong> Clamp-on CTs and voltage leads for
-                  non-invasive measurement of V, I, P, PF, energy, and harmonics
-                </li>
-                <li className="pl-1">
-                  <strong>Energy data logger:</strong> Records energy consumption over days or weeks
-                  to identify patterns, peak demands, and baseload
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal imaging camera:</strong> Detects abnormal heating at connections,
-                  switchgear, motors, and transformers — indicative of energy waste and potential
-                  failure
-                </li>
-                <li className="pl-1">
-                  <strong>Sub-metering:</strong> Permanent energy meters on individual circuits or
-                  machines allow continuous monitoring and benchmarking
-                </li>
-                <li className="pl-1">
-                  <strong>Building management system (BMS):</strong> Integrates energy data with
-                  HVAC, lighting, and other systems for comprehensive energy management
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Energy Monitoring Tools">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Portable power analyser:</strong> Clamp-on CTs and voltage leads for
+                non-invasive measurement of V, I, P, PF, energy, and harmonics
+              </li>
+              <li>
+                <strong>Energy data logger:</strong> Records energy consumption over days or weeks
+                to identify patterns, peak demands, and baseload
+              </li>
+              <li>
+                <strong>Thermal imaging camera:</strong> Detects abnormal heating at connections,
+                switchgear, motors, and transformers — indicative of energy waste and potential
+                failure
+              </li>
+              <li>
+                <strong>Sub-metering:</strong> Permanent energy meters on individual circuits or
+                machines allow continuous monitoring and benchmarking
+              </li>
+              <li>
+                <strong>Building management system (BMS):</strong> Integrates energy data with HVAC,
+                lighting, and other systems for comprehensive energy management
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Transformer Efficiency and Loading
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Transformers have an optimum loading point where their efficiency is highest. This
-                occurs when copper losses equal iron losses — typically between 50% and 75% of rated
-                load.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  At light load: iron losses dominate (constant) and efficiency is low
-                </li>
-                <li className="pl-1">
-                  At optimum load: copper losses = iron losses and efficiency is maximum
-                </li>
-                <li className="pl-1">
-                  At full load: copper losses dominate and efficiency begins to decrease slightly
-                </li>
-                <li className="pl-1">
-                  A transformer energised at no load still consumes its full iron losses — consider
-                  de-energising transformers that are not needed during low-demand periods
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Transformer Efficiency and Loading">
+            <p>
+              Transformers have an optimum loading point where their efficiency is highest. This
+              occurs when copper losses equal iron losses — typically between 50% and 75% of rated
+              load.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>At light load: iron losses dominate (constant) and efficiency is low</li>
+              <li>At optimum load: copper losses = iron losses and efficiency is maximum</li>
+              <li>
+                At full load: copper losses dominate and efficiency begins to decrease slightly
+              </li>
+              <li>
+                A transformer energised at no load still consumes its full iron losses — consider
+                de-energising transformers that are not needed during low-demand periods
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Report energy-saving opportunities">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard includes energy
               awareness and efficiency as part of the knowledge requirements. You should be able to
               identify energy-saving opportunities during routine maintenance activities and report
@@ -998,88 +873,72 @@ const MOETModule2Section1_3 = () => {
               sustainability targets and corporate responsibility, making it a valued skill in
               modern maintenance practice.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=SMPhh8gT_1E"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="What Is a kWh? Kilowatt Hour Explained + Calculations"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Energy and Efficiency Formulae</p>
-                <ul className="space-y-0.5">
-                  <li>Energy: E = P x t (joules or kWh)</li>
-                  <li>1 kWh = 3,600,000 J = 3.6 MJ</li>
-                  <li>Efficiency: eta = (Pout / Pin) x 100%</li>
-                  <li>Copper losses: P = I²R</li>
-                  <li>Cost = Energy (kWh) x Tariff (GBP/kWh)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Motor Efficiency Classes</p>
-                <ul className="space-y-0.5">
-                  <li>IE1 — Standard (no longer permitted new)</li>
-                  <li>IE2 — High (with VSD only)</li>
-                  <li>IE3 — Premium (minimum since July 2021)</li>
-                  <li>IE4 — Super Premium (75-200 kW + VSD)</li>
-                  <li>EU 2019/1781 — Ecodesign Regulation</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="6:02"
+
+            topic="The unit every energy bill and efficiency calculation is built on"
+
+            caption="Short, and it is the unit this whole page turns on. Worth six minutes before the worked examples."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Energy: E = P x t (joules or kWh); 1 kWh = 3,600,000 J = 3.6 MJ.',
+              'Efficiency: eta = (Pout / Pin) x 100%. Copper losses: P = I²R. Cost = Energy (kWh) x Tariff (GBP/kWh).',
+              'Motor efficiency classes: IE1 — Standard (no longer permitted new); IE2 — High (with VSD only); IE3 — Premium (minimum since July 2021); IE4 — Super Premium (75-200 kW + VSD).',
+              'Key reference: EU 2019/1781 — Ecodesign Regulation.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section1-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Ohm's Law and Watt's Law
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section1-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Units and Measurement
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Ohm's Law and Watt's Law
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1-4">
-              Next: Units and Measurement
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

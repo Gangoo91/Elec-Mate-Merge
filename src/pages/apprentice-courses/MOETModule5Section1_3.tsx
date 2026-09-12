@@ -1,8 +1,54 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 1 · Subsection 3 — Temperature and Pressure Sensors
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *   Skills     · "Electrical. Use electrical diagnostic equipment and apply
+ *                 fault finding and rectification techniques."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Structural note: the original placed InlineCheck quickCheckQuestions[3]
+ * ("3-wire-rtd") after section 03 (Thermistors and infrared sensors) rather
+ * than after section 02 (RTDs), where it topically belongs. That is a quirk
+ * of the original page, not something this conversion introduced or should
+ * silently "fix" — the question, its position in the reading flow, and its
+ * content are preserved exactly as they were.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page. BS 7671 is not cited here.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Temperature and Pressure Sensors - MOET Module 5 Section 1.3';
@@ -83,12 +129,7 @@ const quizQuestions = [
     id: 2,
     question:
       'A Pt100 RTD has a resistance of 100 ohms at 0 degrees C. At 100 degrees C, its resistance is approximately:',
-    options: [
-      '200 ohms',
-      '100 ohms',
-      '138.5 ohms',
-      '1000 ohms',
-    ],
+    options: ['200 ohms', '100 ohms', '138.5 ohms', '1000 ohms'],
     correctAnswer: 2,
     explanation:
       'Platinum has a temperature coefficient of approximately 0.385 ohms per degree C for a Pt100 element. At 100 degrees C: R = 100 + (0.385 x 100) = 138.5 ohms. This near-linear relationship is one of the key advantages of platinum RTDs. A Pt1000 element has 1000 ohms at 0 degrees C and 1385 ohms at 100 degrees C.',
@@ -124,12 +165,7 @@ const quizQuestions = [
     id: 5,
     question:
       'A pressure transmitter with a range of 0-10 bar gauge is reading 6.5 bar. The corresponding 4-20 mA output should be:',
-    options: [
-      '6.5 mA',
-      '14.4 mA',
-      '16.0 mA',
-      '10.4 mA',
-    ],
+    options: ['6.5 mA', '14.4 mA', '16.0 mA', '10.4 mA'],
     correctAnswer: 1,
     explanation:
       'The percentage of range = (6.5 / 10) x 100 = 65 %. The 4-20 mA output = 4 + (0.65 x 16) = 4 + 10.4 = 14.4 mA. This calculation is fundamental to verifying transmitter calibration: measure the loop current, calculate the expected pressure, and compare with an independent reference gauge.',
@@ -221,7 +257,7 @@ const quizQuestions = [
     options: [
       'A calibrated reference thermometer or dry-block calibrator traceable to national standards',
       'Another uncalibrated transmitter of the same model on the same process',
-      'The transmitter\'s own displayed reading taken as the true value',
+      "The transmitter's own displayed reading taken as the true value",
       'A handheld infrared thermometer pointed at the sensor housing',
     ],
     correctAnswer: 0,
@@ -259,123 +295,69 @@ const faqs = [
 ];
 
 const MOETModule5Section1_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 5.1.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Temperature and Pressure Sensors
-          </h1>
-          <p className="text-white">
-            Thermocouples, RTDs, thermistors, pressure transmitters and calibration fundamentals
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.1 · Subsection 3"
+        title="Temperature and Pressure Sensors"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Thermocouples, RTDs, thermistors, pressure transmitters and calibration fundamentals —
+            the temperature and pressure measurement every plant depends on.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Thermocouples:</strong> Two dissimilar metals, Seebeck effect, millivolt
-                output, wide range
-              </li>
-              <li className="pl-1">
-                <strong>RTDs (Pt100):</strong> Platinum resistance, high accuracy, 3/4-wire
-                compensation
-              </li>
-              <li className="pl-1">
-                <strong>Pressure:</strong> Gauge (relative to atmosphere), absolute (relative to
-                vacuum), differential
-              </li>
-              <li className="pl-1">
-                <strong>Calibration:</strong> Traceable standards, 4:1 accuracy ratio, regular
-                intervals
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Measure RTD resistance, thermocouple millivolts,
-                loop current
-              </li>
-              <li className="pl-1">
-                <strong>Replacement:</strong> Match sensor type, range, wiring config and process
-                connection
-              </li>
-              <li className="pl-1">
-                <strong>Commissioning:</strong> Verify output against known temperature/pressure
-                reference
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to instrumentation knowledge and maintenance
-                competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Thermocouples: Two dissimilar metals, Seebeck effect, millivolt output, wide range.',
+              'RTDs (Pt100): Platinum resistance, high accuracy, 3/4-wire compensation.',
+              'Pressure: Gauge (relative to atmosphere), absolute (relative to vacuum), differential.',
+              'Calibration: Traceable standards, 4:1 accuracy ratio, regular intervals.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the operating principles of thermocouples, RTDs and thermistors',
               'Compare thermocouple types (K, J, T) and their temperature ranges',
               'Describe 2-wire, 3-wire and 4-wire RTD configurations and cable compensation',
               'Distinguish between gauge, absolute and differential pressure measurement',
               'Identify piezoresistive, capacitive and mechanical pressure sensing elements',
               'Apply calibration principles using traceable reference standards',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault-finding:</strong> Measure RTD resistance, thermocouple millivolts,
+                loop current.
+              </li>
+              <li>
+                <strong>Replacement:</strong> Match sensor type, range, wiring config and process
+                connection.
+              </li>
+              <li>
+                <strong>Commissioning:</strong> Verify output against known temperature/pressure
+                reference.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to instrumentation knowledge and maintenance
+                competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Thermocouples
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Thermocouples</ContentEyebrow>
+
+          <ConceptBlock title="The most widely used temperature sensor in industry">
             <p>
               Thermocouples are the most widely used temperature sensors in industry. They are
               simple, robust, cover an enormous temperature range (-270 to +1800 degrees C depending
@@ -386,126 +368,107 @@ const MOETModule5Section1_3 = () => {
             </p>
             <p>
               The operating principle is the Seebeck effect, discovered by Thomas Johann Seebeck in
-              1821. When two dissimilar metals are joined at a point (the measuring or "hot"
-              junction) and exposed to a temperature, a small voltage is generated. This voltage is
-              proportional to the temperature difference between the measuring junction and the
-              reference ("cold") junction where the wires connect to the measuring instrument.
+              1821. When two dissimilar metals are joined at a point (the measuring or
+              &quot;hot&quot; junction) and exposed to a temperature, a small voltage is generated.
+              This voltage is proportional to the temperature difference between the measuring
+              junction and the reference (&quot;cold&quot;) junction where the wires connect to the
+              measuring instrument.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Thermocouple Types
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Metals</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">BS Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">K</td>
-                      <td className="border border-white/10 px-3 py-2">Chromel / Alumel</td>
-                      <td className="border border-white/10 px-3 py-2">-200 to +1250 degrees C</td>
-                      <td className="border border-white/10 px-3 py-2">Green</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose, furnaces, ovens
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">J</td>
-                      <td className="border border-white/10 px-3 py-2">Iron / Constantan</td>
-                      <td className="border border-white/10 px-3 py-2">-40 to +750 degrees C</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Older installations, plastics processing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">T</td>
-                      <td className="border border-white/10 px-3 py-2">Copper / Constantan</td>
-                      <td className="border border-white/10 px-3 py-2">-200 to +350 degrees C</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low temperature, food, HVAC
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">N</td>
-                      <td className="border border-white/10 px-3 py-2">Nicrosil / Nisil</td>
-                      <td className="border border-white/10 px-3 py-2">-270 to +1300 degrees C</td>
-                      <td className="border border-white/10 px-3 py-2">Pink</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High stability, replacing Type K
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">R/S</td>
-                      <td className="border border-white/10 px-3 py-2">Platinum / Pt-Rhodium</td>
-                      <td className="border border-white/10 px-3 py-2">0 to +1600 degrees C</td>
-                      <td className="border border-white/10 px-3 py-2">Orange (R)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High temperature, glass, ceramics
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common thermocouple types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Metals</th>
+                    <th className="py-2 pr-4 font-medium text-white">Range</th>
+                    <th className="py-2 pr-4 font-medium text-white">BS colour</th>
+                    <th className="py-2 font-medium text-white">Typical use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">K</td>
+                    <td className="py-2 pr-4">Chromel / Alumel</td>
+                    <td className="py-2 pr-4">-200 to +1250 degrees C</td>
+                    <td className="py-2 pr-4">Green</td>
+                    <td className="py-2">General purpose, furnaces, ovens</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">J</td>
+                    <td className="py-2 pr-4">Iron / Constantan</td>
+                    <td className="py-2 pr-4">-40 to +750 degrees C</td>
+                    <td className="py-2 pr-4">Black</td>
+                    <td className="py-2">Older installations, plastics processing</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">T</td>
+                    <td className="py-2 pr-4">Copper / Constantan</td>
+                    <td className="py-2 pr-4">-200 to +350 degrees C</td>
+                    <td className="py-2 pr-4">Brown</td>
+                    <td className="py-2">Low temperature, food, HVAC</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">N</td>
+                    <td className="py-2 pr-4">Nicrosil / Nisil</td>
+                    <td className="py-2 pr-4">-270 to +1300 degrees C</td>
+                    <td className="py-2 pr-4">Pink</td>
+                    <td className="py-2">High stability, replacing Type K</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">R/S</td>
+                    <td className="py-2 pr-4">Platinum / Pt-Rhodium</td>
+                    <td className="py-2 pr-4">0 to +1600 degrees C</td>
+                    <td className="py-2 pr-4">Orange (R)</td>
+                    <td className="py-2">High temperature, glass, ceramics</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cold Junction Compensation
-              </p>
-              <p className="text-sm text-white mb-3">
-                Because the thermocouple measures temperature difference, the system must know the
-                cold junction temperature to calculate the actual measurement. Modern instruments
-                use automatic cold junction compensation (CJC):
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  A precision temperature sensor (thermistor or RTD) at the instrument terminals
-                  measures the cold junction temperature
-                </li>
-                <li className="pl-1">
-                  The instrument adds the equivalent voltage for the cold junction temperature to
-                  the measured thermocouple voltage
-                </li>
-                <li className="pl-1">
-                  The total voltage is converted to temperature using the type-specific look-up
-                  table (IEC 60584)
-                </li>
-                <li className="pl-1">
-                  Incorrect thermocouple type selection in the instrument configuration will give
-                  wrong readings
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Cold junction compensation">
+            <p>
+              Because the thermocouple measures temperature difference, the system must know the
+              cold junction temperature to calculate the actual measurement. Modern instruments use
+              automatic cold junction compensation (CJC):
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                A precision temperature sensor (thermistor or RTD) at the instrument terminals
+                measures the cold junction temperature.
+              </li>
+              <li>
+                The instrument adds the equivalent voltage for the cold junction temperature to the
+                measured thermocouple voltage.
+              </li>
+              <li>
+                The total voltage is converted to temperature using the type-specific look-up table
+                (IEC 60584).
+              </li>
+              <li>
+                Incorrect thermocouple type selection in the instrument configuration will give
+                wrong readings.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When fault-finding a thermocouple circuit, always
               use the correct compensating cable or extension wire for the thermocouple type. Using
               standard copper wire creates additional thermoelectric junctions that introduce
               measurement errors. The error increases as the temperature at the junction between the
               copper and thermocouple wire differs from ambient.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Resistance Temperature Detectors (RTDs)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Resistance Temperature Detectors (RTDs)</ContentEyebrow>
+
+          <ConceptBlock title="A predictable, repeatable change in resistance">
             <p>
               Resistance temperature detectors exploit the predictable change in electrical
               resistance of a metal wire with temperature. Platinum is the preferred material
@@ -514,181 +477,149 @@ const MOETModule5Section1_3 = () => {
               the industry standard — 100 ohms at 0 degrees C with a temperature coefficient of
               approximately 0.385 ohms per degree C.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">RTD Specifications</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Pt100:</strong> 100 ohms at 0 degrees C — the most common industrial RTD
-                  standard
-                </li>
-                <li className="pl-1">
-                  <strong>Pt1000:</strong> 1000 ohms at 0 degrees C — better for long cable runs
-                  (cable resistance is smaller proportion of total)
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature range:</strong> -200 to +600 degrees C (some to +850 degrees
-                  C)
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy classes:</strong> IEC 60751 defines Class A (plus or minus 0.15 +
-                  0.002 x T) and Class B (plus or minus 0.3 + 0.005 x T)
-                </li>
-                <li className="pl-1">
-                  <strong>Alpha value:</strong> 0.00385 ohms/ohm/degrees C (European standard
-                  DIN/IEC)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="RTD specifications">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pt100:</strong> 100 ohms at 0 degrees C — the most common industrial RTD
+                standard.
+              </li>
+              <li>
+                <strong>Pt1000:</strong> 1000 ohms at 0 degrees C — better for long cable runs
+                (cable resistance is smaller proportion of total).
+              </li>
+              <li>
+                <strong>Temperature range:</strong> -200 to +600 degrees C (some to +850 degrees C).
+              </li>
+              <li>
+                <strong>Accuracy classes:</strong> IEC 60751 defines Class A (plus or minus 0.15 +
+                0.002 x T) and Class B (plus or minus 0.3 + 0.005 x T).
+              </li>
+              <li>
+                <strong>Alpha value:</strong> 0.00385 ohms/ohm/degrees C (European standard
+                DIN/IEC).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">2-Wire Connection</h3>
-                <p className="text-sm text-white">
-                  The simplest but least accurate method. Both lead wires carry the measurement
-                  current and their resistance is added to the RTD resistance. Acceptable only for
-                  short cable runs (under 3 m) or where accuracy requirements are low (plus or minus
-                  2 degrees C).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">3-Wire Connection</h3>
-                <p className="text-sm text-white">
-                  The most common industrial configuration. The third wire allows the measuring
-                  instrument to measure the cable resistance and compensate for it. This assumes all
-                  three wires have equal resistance (same length, same gauge, same temperature).
-                  Accuracy is typically plus or minus 0.5 degrees C with reasonable cable lengths.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  4-Wire (Kelvin) Connection
-                </h3>
-                <p className="text-sm text-white">
-                  The most accurate method — two wires carry the excitation current and two separate
-                  wires measure the voltage across the RTD element. Cable resistance is completely
-                  eliminated from the measurement. Used in laboratory instruments and precision
-                  applications where accuracy better than plus or minus 0.1 degrees C is required.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="2-wire connection">
+            <p>
+              The simplest but least accurate method. Both lead wires carry the measurement current
+              and their resistance is added to the RTD resistance. Acceptable only for short cable
+              runs (under 3 m) or where accuracy requirements are low (plus or minus 2 degrees C).
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Practical Fault-Finding</p>
-              <p className="text-sm text-white">
-                To test a Pt100 sensor, disconnect it from the transmitter and measure the
-                resistance across the element terminals. At room temperature (20 degrees C), a
-                healthy Pt100 should read approximately 107.8 ohms. An open circuit (infinite
-                resistance) indicates a broken element or wire. A very low reading (near 0 ohms)
-                indicates a short circuit. Compare the reading with the Pt100 resistance table to
-                verify the indicated temperature is reasonable.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="3-wire connection">
+            <p>
+              The most common industrial configuration. The third wire allows the measuring
+              instrument to measure the cable resistance and compensate for it. This assumes all
+              three wires have equal resistance (same length, same gauge, same temperature).
+              Accuracy is typically plus or minus 0.5 degrees C with reasonable cable lengths.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="4-wire (Kelvin) connection">
+            <p>
+              The most accurate method — two wires carry the excitation current and two separate
+              wires measure the voltage across the RTD element. Cable resistance is completely
+              eliminated from the measurement. Used in laboratory instruments and precision
+              applications where accuracy better than plus or minus 0.1 degrees C is required.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Thermistors and Infrared Temperature Sensors
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Practical fault-finding: testing a Pt100">
+            <p>
+              To test a Pt100 sensor, disconnect it from the transmitter and measure the resistance
+              across the element terminals. At room temperature (20 degrees C), a healthy Pt100
+              should read approximately 107.8 ohms. An open circuit (infinite resistance) indicates
+              a broken element or wire. A very low reading (near 0 ohms) indicates a short circuit.
+              Compare the reading with the Pt100 resistance table to verify the indicated
+              temperature is reasonable.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Thermistors and infrared temperature sensors</ContentEyebrow>
+
+          <ConceptBlock title="Beyond thermocouples and RTDs">
             <p>
               Beyond thermocouples and RTDs, two other temperature sensing technologies are commonly
               encountered in electrical maintenance: thermistors (used in motor winding protection
               and HVAC) and infrared (non-contact) temperature sensors (used for surface temperature
               measurement and rotating equipment monitoring).
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">NTC Thermistors</h3>
-                <p className="text-sm text-white mb-2">
-                  Negative Temperature Coefficient — resistance decreases as temperature increases.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Very high sensitivity (large resistance change per degree)
-                  </li>
-                  <li className="pl-1">Non-linear response — exponential characteristic</li>
-                  <li className="pl-1">Narrow useful range (typically -40 to +150 degrees C)</li>
-                  <li className="pl-1">Used in HVAC, automotive, consumer electronics</li>
-                  <li className="pl-1">Low cost, fast response, small size</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">PTC Thermistors</h3>
-                <p className="text-sm text-white mb-2">
-                  Positive Temperature Coefficient — resistance increases sharply at a defined trip
-                  temperature.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Used as over-temperature protection in motor windings</li>
-                  <li className="pl-1">
-                    Three PTC sensors embedded in stator windings (one per phase)
-                  </li>
-                  <li className="pl-1">Connected to a thermistor relay (motor protection unit)</li>
-                  <li className="pl-1">
-                    Sharp resistance transition at the rated temperature (e.g., 155 degrees C)
-                  </li>
-                  <li className="pl-1">
-                    Provides binary trip/no-trip rather than proportional measurement
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="NTC thermistors">
+            <p>Negative Temperature Coefficient — resistance decreases as temperature increases.</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Very high sensitivity (large resistance change per degree).</li>
+              <li>Non-linear response — exponential characteristic.</li>
+              <li>Narrow useful range (typically -40 to +150 degrees C).</li>
+              <li>Used in HVAC, automotive, consumer electronics.</li>
+              <li>Low cost, fast response, small size.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Infrared (Non-Contact) Temperature Sensors
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Infrared temperature sensors measure the thermal radiation emitted by a surface
-                without physical contact. They are essential for measuring rotating equipment,
-                high-voltage components, hot surfaces and objects that are moving or inaccessible.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Spot pyrometers:</strong> Handheld instruments for maintenance checks —
-                  point, trigger, read
-                </li>
-                <li className="pl-1">
-                  <strong>Fixed sensors:</strong> Process-mounted for continuous monitoring
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal cameras:</strong> Create a temperature map of a surface — used in
-                  predictive maintenance for detecting hot joints, overloaded connections and
-                  insulation faults
-                </li>
-                <li className="pl-1">
-                  <strong>Emissivity:</strong> Must be set correctly for the target surface — shiny
-                  metals have low emissivity (0.1-0.3) and will read incorrectly unless compensated
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="PTC thermistors">
+            <p>
+              Positive Temperature Coefficient — resistance increases sharply at a defined trip
+              temperature.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Used as over-temperature protection in motor windings.</li>
+              <li>Three PTC sensors embedded in stator windings (one per phase).</li>
+              <li>Connected to a thermistor relay (motor protection unit).</li>
+              <li>Sharp resistance transition at the rated temperature (e.g. 155 degrees C).</li>
+              <li>Provides binary trip/no-trip rather than proportional measurement.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Infrared (non-contact) temperature sensors">
+            <p>
+              Infrared temperature sensors measure the thermal radiation emitted by a surface
+              without physical contact. They are essential for measuring rotating equipment,
+              high-voltage components, hot surfaces and objects that are moving or inaccessible.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Spot pyrometers:</strong> Handheld instruments for maintenance checks —
+                point, trigger, read.
+              </li>
+              <li>
+                <strong>Fixed sensors:</strong> Process-mounted for continuous monitoring.
+              </li>
+              <li>
+                <strong>Thermal cameras:</strong> Create a temperature map of a surface — used in
+                predictive maintenance for detecting hot joints, overloaded connections and
+                insulation faults.
+              </li>
+              <li>
+                <strong>Emissivity:</strong> Must be set correctly for the target surface — shiny
+                metals have low emissivity (0.1-0.3) and will read incorrectly unless compensated.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When using a handheld IR thermometer, be aware of
               the distance-to-spot ratio (D:S). A sensor with D:S of 12:1 measures a spot 1 cm in
               diameter at 12 cm distance. At 1 m, the spot is approximately 8 cm. If the target is
               smaller than the measurement spot, the reading will include surrounding surfaces and
               be inaccurate.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Pressure Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Pressure measurement</ContentEyebrow>
+
+          <ConceptBlock title="Three references, three applications">
             <p>
               Pressure measurement is fundamental to industrial process control, building services
               and plant maintenance. From monitoring boiler steam pressure to verifying compressed
@@ -696,261 +627,240 @@ const MOETModule5Section1_3 = () => {
               measurement types and the instruments used. The three primary pressure measurement
               references — gauge, absolute and differential — each serve different applications.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Measurement Types
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gauge pressure (barg):</strong> Measured relative to atmospheric pressure.
-                  A tyre gauge reads 0 when exposed to atmosphere. Most common in industrial
-                  applications.
-                </li>
-                <li className="pl-1">
-                  <strong>Absolute pressure (bara):</strong> Measured relative to a perfect vacuum.
-                  Atmospheric pressure = approximately 1.013 bara. Used in vacuum systems,
-                  meteorology, altitude measurement.
-                </li>
-                <li className="pl-1">
-                  <strong>Differential pressure (delta P):</strong> The difference between two
-                  pressure points. Used for flow measurement (orifice plates), filter monitoring and
-                  level measurement in sealed vessels.
-                </li>
-              </ul>
+          <ConceptBlock title="Pressure measurement types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gauge pressure (barg):</strong> Measured relative to atmospheric pressure. A
+                tyre gauge reads 0 when exposed to atmosphere. Most common in industrial
+                applications.
+              </li>
+              <li>
+                <strong>Absolute pressure (bara):</strong> Measured relative to a perfect vacuum.
+                Atmospheric pressure = approximately 1.013 bara. Used in vacuum systems,
+                meteorology, altitude measurement.
+              </li>
+              <li>
+                <strong>Differential pressure (delta P):</strong> The difference between two
+                pressure points. Used for flow measurement (orifice plates), filter monitoring and
+                level measurement in sealed vessels.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Piezoresistive (strain gauge on diaphragm)">
+            <p>
+              The dominant technology in modern electronic transmitters. Strain gauges bonded to a
+              diaphragm change resistance as pressure deflects the diaphragm. Four gauges in a
+              Wheatstone bridge provide a proportional voltage output. Typical accuracy: plus or
+              minus 0.1 to 0.5 % of span.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Capacitive">
+            <p>
+              Pressure deflects a diaphragm between two capacitor plates, changing the capacitance.
+              Used in high-accuracy differential pressure transmitters. Rosemount (Emerson)
+              capacitive DP cells are the industry benchmark for flow and level measurement.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Bourdon tube (mechanical)">
+            <p>
+              A curved metal tube straightens under pressure, driving a pointer via a mechanical
+              linkage. Still widely used in local pressure gauges. Simple, reliable, no power
+              required, but no electrical output for remote monitoring.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Pressure units conversion">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Unit</th>
+                    <th className="py-2 pr-4 font-medium text-white">1 bar equals</th>
+                    <th className="py-2 font-medium text-white">Common use</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">bar</td>
+                    <td className="py-2 pr-4">1</td>
+                    <td className="py-2">European industry standard</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">kPa</td>
+                    <td className="py-2 pr-4">100</td>
+                    <td className="py-2">SI unit</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">psi</td>
+                    <td className="py-2 pr-4">14.504</td>
+                    <td className="py-2">Imperial (US, older UK equipment)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">mbar</td>
+                    <td className="py-2 pr-4">1000</td>
+                    <td className="py-2">Low pressure, HVAC, gas systems</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">mmH2O</td>
+                    <td className="py-2 pr-4">10,197</td>
+                    <td className="py-2">Duct pressure, filter differential</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Sensing Technologies
-              </h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">
-                    Piezoresistive (Strain Gauge on Diaphragm)
-                  </p>
-                  <p className="text-sm text-white">
-                    The dominant technology in modern electronic transmitters. Strain gauges bonded
-                    to a diaphragm change resistance as pressure deflects the diaphragm. Four gauges
-                    in a Wheatstone bridge provide a proportional voltage output. Typical accuracy:
-                    plus or minus 0.1 to 0.5 % of span.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">Capacitive</p>
-                  <p className="text-sm text-white">
-                    Pressure deflects a diaphragm between two capacitor plates, changing the
-                    capacitance. Used in high-accuracy differential pressure transmitters. Rosemount
-                    (Emerson) capacitive DP cells are the industry benchmark for flow and level
-                    measurement.
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-white font-medium mb-1">Bourdon Tube (Mechanical)</p>
-                  <p className="text-sm text-white">
-                    A curved metal tube straightens under pressure, driving a pointer via a
-                    mechanical linkage. Still widely used in local pressure gauges. Simple,
-                    reliable, no power required, but no electrical output for remote monitoring.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pressure Units Conversion
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Unit</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">1 bar Equals</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Common Use</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">bar</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        European industry standard
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">kPa</td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">SI unit</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">psi</td>
-                      <td className="border border-white/10 px-3 py-2">14.504</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Imperial (US, older UK equipment)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">mbar</td>
-                      <td className="border border-white/10 px-3 py-2">1000</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low pressure, HVAC, gas systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">mmH2O</td>
-                      <td className="border border-white/10 px-3 py-2">10,197</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Duct pressure, filter differential
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Key point:</strong> When specifying or replacing a pressure transmitter,
               always confirm the pressure type (gauge, absolute or differential), the range, the
               process connection (thread size and type), wetted materials compatibility with the
               process media, and the output signal. A transmitter specified for gauge pressure will
               not read correctly in a vacuum application.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Calibration Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Calibration principles</ContentEyebrow>
+
+          <ConceptBlock title="Comparing against a known, traceable reference">
             <p>
-              Calibration is the process of comparing an instrument's readings against a known,
+              Calibration is the process of comparing an instrument&apos;s readings against a known,
               traceable reference standard and adjusting if necessary to bring it within
               specification. For temperature and pressure sensors, regular calibration is essential
               to maintain measurement accuracy, ensure process quality and meet safety requirements.
               Poorly calibrated instruments can lead to product defects, energy waste, equipment
               damage or safety incidents.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calibration Principles</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Traceability:</strong> The reference standard must be traceable through an
-                  unbroken chain to national standards (UKAS in the UK)
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy ratio:</strong> The reference should be at least 4 times more
-                  accurate than the instrument being calibrated (4:1 TUR — Test Uncertainty Ratio)
-                </li>
-                <li className="pl-1">
-                  <strong>As-found / as-left:</strong> Record the readings before and after
-                  adjustment to track drift over time
-                </li>
-                <li className="pl-1">
-                  <strong>Five-point check:</strong> Calibrate at 0 %, 25 %, 50 %, 75 % and 100 % of
-                  range, both ascending and descending
-                </li>
-                <li className="pl-1">
-                  <strong>Calibration certificate:</strong> Document the results, reference standard
-                  used, environmental conditions and pass/fail status
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Calibration principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Traceability:</strong> The reference standard must be traceable through an
+                unbroken chain to national standards (UKAS in the UK).
+              </li>
+              <li>
+                <strong>Accuracy ratio:</strong> The reference should be at least 4 times more
+                accurate than the instrument being calibrated (4:1 TUR — Test Uncertainty Ratio).
+              </li>
+              <li>
+                <strong>As-found / as-left:</strong> Record the readings before and after adjustment
+                to track drift over time.
+              </li>
+              <li>
+                <strong>Five-point check:</strong> Calibrate at 0 %, 25 %, 50 %, 75 % and 100 % of
+                range, both ascending and descending.
+              </li>
+              <li>
+                <strong>Calibration certificate:</strong> Document the results, reference standard
+                used, environmental conditions and pass/fail status.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Temperature Calibration Equipment
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Dry-block calibrator (portable, field use)</li>
-                  <li className="pl-1">Liquid bath calibrator (higher accuracy)</li>
-                  <li className="pl-1">Reference thermometer (Pt100 or SPRT)</li>
-                  <li className="pl-1">Ice point reference (0 degrees C check)</li>
-                  <li className="pl-1">Decade resistance box (for simulating RTDs)</li>
-                  <li className="pl-1">mV source (for simulating thermocouples)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Pressure Calibration Equipment
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Dead-weight tester (primary standard)</li>
-                  <li className="pl-1">Pneumatic hand pump with reference gauge</li>
-                  <li className="pl-1">Digital pressure calibrator (portable)</li>
-                  <li className="pl-1">Pressure comparator</li>
-                  <li className="pl-1">mA source/measure (for loop simulation)</li>
-                  <li className="pl-1">HART communicator (for smart transmitters)</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Temperature calibration equipment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Dry-block calibrator (portable, field use).</li>
+              <li>Liquid bath calibrator (higher accuracy).</li>
+              <li>Reference thermometer (Pt100 or SPRT).</li>
+              <li>Ice point reference (0 degrees C check).</li>
+              <li>Decade resistance box (for simulating RTDs).</li>
+              <li>mV source (for simulating thermocouples).</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians should be able to carry
-              out basic calibration checks using portable calibration equipment, interpret
-              calibration certificates, and understand when an instrument requires recalibration.
-              Full calibration and adjustment of safety-critical instruments may require specialist
-              instrumentation personnel.
+          <ConceptBlock title="Pressure calibration equipment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Dead-weight tester (primary standard).</li>
+              <li>Pneumatic hand pump with reference gauge.</li>
+              <li>Digital pressure calibrator (portable).</li>
+              <li>Pressure comparator.</li>
+              <li>mA source/measure (for loop simulation).</li>
+              <li>HART communicator (for smart transmitters).</li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians should be able to carry out basic calibration
+              checks using portable calibration equipment, interpret calibration certificates, and
+              understand when an instrument requires recalibration. Full calibration and adjustment
+              of safety-critical instruments may require specialist instrumentation personnel.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=v7NUi88Lxi8"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="How Thermocouples Work"
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+            channel="The Engineering Mindset"
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Proximity and Position Sensors
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-4">
-              Next: Flow and Level Measurement
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            duration="9:05"
+
+            topic="The Seebeck effect, cold-junction compensation and thermocouple types"
+
+            caption="Explains why a thermocouple needs a reference junction at all — the thing that catches people out when a reading drifts with ambient temperature."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Thermocouples generate a millivolt signal via the Seebeck effect and need cold junction compensation — they cover a wide range but are less accurate than RTDs.',
+              'The Pt100 is 100 ohms at 0 degrees C, rising by about 0.385 ohms per degree C; Pt1000 is ten times that, which helps over long cable runs.',
+              '2-wire RTD wiring adds cable resistance to the reading; 3-wire compensates for it; 4-wire (Kelvin) eliminates it entirely.',
+              'NTC thermistors are highly sensitive but non-linear and narrow-range; PTC thermistors give a sharp trip at a set temperature and are used for motor winding protection.',
+              'Infrared sensors measure emitted radiation, not reflected light — emissivity must be set for the target surface, and the distance-to-spot ratio limits how far away you can measure a small target.',
+              'Gauge pressure is referenced to atmosphere, absolute pressure to a perfect vacuum, and differential pressure is the difference between two points — used for flow, level and filter condition.',
+              'Piezoresistive strain gauges on a diaphragm are the dominant modern pressure-sensing technology; Bourdon tubes remain common in local mechanical gauges with no electrical output.',
+              'Calibration needs a traceable reference at least 4 times more accurate than the instrument (4:1 TUR), checked at five points, both ascending and descending, with as-found/as-left readings recorded.',
+              'Always confirm a replacement pressure transmitter matches on pressure type, range, process connection and wetted materials — a gauge-pressure transmitter will not read correctly under vacuum.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Proximity and Position Sensors
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section1-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Flow and Level Measurement
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

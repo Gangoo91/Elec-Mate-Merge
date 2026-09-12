@@ -1,8 +1,43 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.3 · Subsection 2 — Induction Motors
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { MotorEffect, FlemingsLeftHandRule } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Induction Motors - MOET Module 2.3.2';
@@ -14,12 +49,7 @@ const quickCheckQuestions = [
     id: 'slip-calculation',
     question:
       'A 4-pole induction motor operates on a 50Hz supply. The synchronous speed is 1,500 rev/min and the rotor runs at 1,440 rev/min. What is the slip?',
-    options: [
-      '2%',
-      '10%',
-      '6%',
-      '4%',
-    ],
+    options: ['2%', '10%', '6%', '4%'],
     correctIndex: 3,
     explanation:
       'Slip = (Ns - Nr) / Ns x 100 = (1500 - 1440) / 1500 x 100 = 60/1500 x 100 = 4%. Typical full-load slip for a standard induction motor is between 3% and 6%. At no-load, slip is very small (less than 1%).',
@@ -71,12 +101,7 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The synchronous speed of a 2-pole motor on a 50Hz supply is:',
-    options: [
-      '750 rev/min',
-      '1,500 rev/min',
-      '3,000 rev/min',
-      '1,000 rev/min',
-    ],
+    options: ['750 rev/min', '1,500 rev/min', '3,000 rev/min', '1,000 rev/min'],
     correctAnswer: 2,
     explanation:
       'Synchronous speed Ns = (120 x f) / p = (120 x 50) / 2 = 3,000 rev/min. A 2-pole motor has the highest synchronous speed. Adding more poles reduces the speed: 4-pole = 1,500, 6-pole = 1,000, 8-pole = 750 rev/min.',
@@ -124,12 +149,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the typical full-load slip for a standard squirrel cage induction motor?',
-    options: [
-      '0% — it runs at synchronous speed',
-      '15% to 20%',
-      '3% to 6%',
-      '50%',
-    ],
+    options: ['0% — it runs at synchronous speed', '15% to 20%', '3% to 6%', '50%'],
     correctAnswer: 2,
     explanation:
       'Typical full-load slip for a standard squirrel cage motor is 3% to 6%. High-efficiency motors tend to have lower slip (closer to 3%). High-slip motors (used for intermittent loads like cranes) may have slip up to 10-15%.',
@@ -245,121 +265,68 @@ const faqs = [
 ];
 
 const MOETModule2Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 2.3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Induction Motors
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.3 · Subsection 2"
+        title="Induction Motors"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             The workhorse of industry — rotating magnetic fields, slip, torque characteristics,
-            motor types, fault diagnosis, and maintenance
+            motor types, fault diagnosis, and maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Principle:</strong> Rotating stator field induces current in rotor,
-                producing torque
+          <TLDR
+            points={[
+              'Principle: rotating stator field induces current in rotor, producing torque.',
+              'Slip: rotor always runs slower than the field — typically 3-6% at full load.',
+              'Types: squirrel cage (90%+ of motors) and wound rotor.',
+              'Faults: bearing failure, winding insulation breakdown, shaft misalignment.',
+            ]}
+          />
+
+          <ConceptBlock title="Why this matters">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Most common motor:</strong> over 90% of industrial motors are induction
+                type.
               </li>
-              <li className="pl-1">
-                <strong>Slip:</strong> Rotor always runs slower than the field — typically 3-6% at
-                full load
+              <li>
+                <strong>Energy:</strong> electric motors consume approximately 45% of global
+                electricity.
               </li>
-              <li className="pl-1">
-                <strong>Types:</strong> Squirrel cage (90%+ of motors) and wound rotor
+              <li>
+                <strong>ST1426 requirement:</strong> diagnose faults, perform maintenance,
+                understand motor principles.
               </li>
-              <li className="pl-1">
-                <strong>Faults:</strong> Bearing failure, winding insulation breakdown, shaft
-                misalignment
+              <li>
+                <strong>Cost impact:</strong> motor failure causes expensive production downtime.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Context — Why This Matters
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Most common motor:</strong> Over 90% of industrial motors are induction type
-              </li>
-              <li className="pl-1">
-                <strong>Energy:</strong> Electric motors consume approximately 45% of global
-                electricity
-              </li>
-              <li className="pl-1">
-                <strong>ST1426 requirement:</strong> Diagnose faults, perform maintenance,
-                understand motor principles
-              </li>
-              <li className="pl-1">
-                <strong>Cost impact:</strong> Motor failure causes expensive production downtime
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain how a rotating magnetic field is produced and how it creates torque in an induction motor',
               'Calculate synchronous speed and slip for motors with different pole numbers',
               'Compare squirrel cage and wound rotor induction motors and state their applications',
               'Describe single-phase motor types including capacitor-start, capacitor-run, and split phase',
               'Interpret motor nameplate data including power, voltage, current, IP rating, and insulation class',
               'Identify common motor faults and describe appropriate maintenance and testing procedures',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The rotating magnetic field</ContentEyebrow>
 
-        {/* Section 1: The Rotating Magnetic Field and Motor Principle */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Rotating Magnetic Field
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The most widely used electric motor in industry">
             <p>
               The three-phase induction motor is the most widely used electric motor in industry.
               Its operation depends on a fundamental principle: when three balanced alternating
@@ -373,550 +340,530 @@ const MOETModule2Section3_2 = () => {
               determined by two factors: the supply frequency and the number of magnetic poles in
               the stator winding.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Synchronous Speed Formula
+          <MotorEffect />
+
+          <ConceptBlock title="Synchronous speed formula">
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="font-mono">Ns = (120 x f) / p</p>
+              <p className="mt-2 text-xs text-white">
+                Where: Ns = synchronous speed (rev/min), f = supply frequency (Hz), p = number of
+                poles
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-mono">Ns = (120 x f) / p</p>
-                <p className="text-xs text-white mt-2">
-                  Where: Ns = synchronous speed (rev/min), f = supply frequency (Hz), p = number of
-                  poles
-                </p>
-              </div>
-              <div className="overflow-x-auto mt-3">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white font-medium">Poles</th>
-                      <th className="py-2 pr-4 text-white font-medium">
-                        Synchronous Speed (50Hz)
-                      </th>
-                      <th className="py-2 text-white font-medium">Typical Full-Load Speed</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">2</td>
-                      <td className="py-2 pr-4">3,000 rev/min</td>
-                      <td className="py-2">2,880 - 2,950 rev/min</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">4</td>
-                      <td className="py-2 pr-4">1,500 rev/min</td>
-                      <td className="py-2">1,420 - 1,470 rev/min</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4">6</td>
-                      <td className="py-2 pr-4">1,000 rev/min</td>
-                      <td className="py-2">940 - 970 rev/min</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4">8</td>
-                      <td className="py-2 pr-4">750 rev/min</td>
-                      <td className="py-2">710 - 730 rev/min</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
             </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Poles</th>
+                    <th className="py-2 pr-4 font-medium text-white">Synchronous Speed (50Hz)</th>
+                    <th className="py-2 font-medium text-white">Typical Full-Load Speed</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">2</td>
+                    <td className="py-2 pr-4">3,000 rev/min</td>
+                    <td className="py-2">2,880 - 2,950 rev/min</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">4</td>
+                    <td className="py-2 pr-4">1,500 rev/min</td>
+                    <td className="py-2">1,420 - 1,470 rev/min</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">6</td>
+                    <td className="py-2 pr-4">1,000 rev/min</td>
+                    <td className="py-2">940 - 970 rev/min</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">8</td>
+                    <td className="py-2 pr-4">750 rev/min</td>
+                    <td className="py-2">710 - 730 rev/min</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Slip</p>
-              <p className="text-sm text-white mb-3">
-                The rotor of an induction motor can never reach synchronous speed. If it did, there
-                would be no relative motion between the rotor conductors and the rotating stator
-                field, no change of flux linkage, no induced EMF, no rotor current, and no torque.
-                The rotor must always "slip" behind the field.
+          <ConceptBlock title="Slip">
+            <p>
+              The rotor of an induction motor can never reach synchronous speed. If it did, there
+              would be no relative motion between the rotor conductors and the rotating stator
+              field, no change of flux linkage, no induced EMF, no rotor current, and no torque. The
+              rotor must always "slip" behind the field.
+            </p>
+            <div className="rounded bg-black/30 p-3 text-sm text-white">
+              <p className="font-mono">s = (Ns - Nr) / Ns x 100%</p>
+              <p className="mt-2 text-xs text-white">
+                Where: s = slip (%), Ns = synchronous speed, Nr = rotor speed
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
-                <p className="font-medium mb-2">Slip Formula:</p>
-                <p className="font-mono">s = (Ns - Nr) / Ns x 100%</p>
-                <p className="text-xs text-white mt-2">
-                  Where: s = slip (%), Ns = synchronous speed, Nr = rotor speed
-                </p>
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>At no-load:</strong> Slip is very small (less than 1%) — rotor nearly
-                  reaches synchronous speed
-                </li>
-                <li className="pl-1">
-                  <strong>At full load:</strong> Typical slip is 3-6% for standard motors
-                </li>
-                <li className="pl-1">
-                  <strong>At standstill:</strong> Slip = 100% (starting condition)
-                </li>
-                <li className="pl-1">
-                  <strong>As load increases:</strong> Rotor slows down, slip increases, more torque
-                  is produced
-                </li>
-              </ul>
             </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>At no-load:</strong> slip is very small (less than 1%) — rotor nearly
+                reaches synchronous speed
+              </li>
+              <li>
+                <strong>At full load:</strong> typical slip is 3-6% for standard motors
+              </li>
+              <li>
+                <strong>At standstill:</strong> slip = 100% (starting condition)
+              </li>
+              <li>
+                <strong>As load increases:</strong> rotor slows down, slip increases, more torque is
+                produced
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Torque-Speed Characteristic</p>
-              <p className="text-sm text-white mb-3">
-                The torque-speed curve of an induction motor shows how torque varies with speed from
-                standstill to synchronous speed. Key points on the curve include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Starting torque:</strong> Torque produced at standstill — typically 1.5 to
-                  2.5 times full-load torque for a squirrel cage motor
-                </li>
-                <li className="pl-1">
-                  <strong>Pull-up torque:</strong> Minimum torque during acceleration — must exceed
-                  load torque at all speeds for successful starting
-                </li>
-                <li className="pl-1">
-                  <strong>Breakdown (pull-out) torque:</strong> Maximum torque the motor can produce
-                  — typically 2 to 3 times full-load torque
-                </li>
-                <li className="pl-1">
-                  <strong>Full-load torque:</strong> The rated continuous torque at the nameplate
-                  speed
-                </li>
-                <li className="pl-1">
-                  <strong>Stall:</strong> If the load torque exceeds the breakdown torque, the motor
-                  stalls and draws locked-rotor current
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <FlemingsLeftHandRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Torque-speed characteristic">
+            <p>
+              The torque-speed curve of an induction motor shows how torque varies with speed from
+              standstill to synchronous speed. Key points on the curve include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Starting torque:</strong> torque produced at standstill — typically 1.5 to
+                2.5 times full-load torque for a squirrel cage motor
+              </li>
+              <li>
+                <strong>Pull-up torque:</strong> minimum torque during acceleration — must exceed
+                load torque at all speeds for successful starting
+              </li>
+              <li>
+                <strong>Breakdown (pull-out) torque:</strong> maximum torque the motor can produce —
+                typically 2 to 3 times full-load torque
+              </li>
+              <li>
+                <strong>Full-load torque:</strong> the rated continuous torque at the nameplate
+                speed
+              </li>
+              <li>
+                <strong>Stall:</strong> if the load torque exceeds the breakdown torque, the motor
+                stalls and draws locked-rotor current
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 2: Motor Types */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Motor Types: Squirrel Cage, Wound Rotor, and Single-Phase
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Motor types: squirrel cage, wound rotor and single-phase</ContentEyebrow>
+
+          <ConceptBlock title="Suited to different applications">
             <p>
               Induction motors come in several variants, each suited to different applications. The
               maintenance technician must recognise each type and understand its specific
               characteristics, advantages, and maintenance requirements.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-                <h3 className="text-sm font-medium text-blue-400 mb-3">
-                  Squirrel Cage Induction Motor
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  The most common industrial motor — accounts for over 90% of all motors in service.
-                  Named for its rotor construction, which resembles a squirrel cage.
+          <ConceptBlock title="Squirrel cage induction motor">
+            <p>
+              The most common industrial motor — accounts for over 90% of all motors in service.
+              Named for its rotor construction, which resembles a squirrel cage.
+            </p>
+            <div className="rounded-lg border-l-2 border-blue-500/50 bg-blue-500/10 p-4">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-blue-400/70">
+                <li>
+                  <strong>Rotor:</strong> cast aluminium or copper bars set in slots in the rotor
+                  core, short-circuited at each end by conducting rings
+                </li>
+                <li>
+                  <strong>No brushes or slip rings:</strong> no external rotor connections, no
+                  wearing parts (except bearings)
+                </li>
+                <li>
+                  <strong>Robust and reliable:</strong> simple construction, low maintenance, long
+                  service life
+                </li>
+                <li>
+                  <strong>Limitation:</strong> fixed speed (determined by supply frequency and pole
+                  number) — speed control requires a VSD
+                </li>
+                <li>
+                  <strong>High starting current:</strong> typically 6-8 times full-load current —
+                  may require reduced-voltage starting methods
+                </li>
+              </ul>
+            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Wound rotor induction motor">
+            <p>
+              Used for applications requiring high starting torque or controlled acceleration — such
+              as cranes, hoists, large fans, and crushers.
+            </p>
+            <div className="rounded-lg border-l-2 border-purple-500/50 bg-purple-500/10 p-4">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-purple-400/70">
+                <li>
+                  <strong>Rotor:</strong> three-phase windings connected to external resistance
+                  through slip rings and brushes
+                </li>
+                <li>
+                  <strong>Speed control:</strong> varying the external rotor resistance changes the
+                  torque-speed characteristic
+                </li>
+                <li>
+                  <strong>Starting:</strong> full rotor resistance inserted at start (reduces
+                  starting current, increases starting torque), then progressively removed as motor
+                  accelerates
+                </li>
+                <li>
+                  <strong>Maintenance:</strong> brushes and slip rings require regular inspection
+                  and replacement — more maintenance than squirrel cage
+                </li>
+                <li>
+                  <strong>Declining use:</strong> being replaced by squirrel cage motors with
+                  variable speed drives in many applications
+                </li>
+              </ul>
+            </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Single-phase induction motors">
+            <p>
+              A single-phase supply cannot create a rotating magnetic field on its own — it produces
+              a pulsating field. Special arrangements are needed to produce starting torque.
+            </p>
+            <div className="space-y-3">
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Capacitor-Start Motor</p>
+                <p className="text-xs text-white">
+                  Has a start winding with a capacitor in series, creating a phase displacement that
+                  simulates a two-phase supply. A centrifugal switch disconnects the start winding
+                  at approximately 75% speed. Good starting torque — used for compressors, pumps,
+                  and machine tools up to about 3kW.
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Rotor:</strong> Cast aluminium or copper bars set in slots in the rotor
-                    core, short-circuited at each end by conducting rings
-                  </li>
-                  <li className="pl-1">
-                    <strong>No brushes or slip rings:</strong> No external rotor connections, no
-                    wearing parts (except bearings)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Robust and reliable:</strong> Simple construction, low maintenance, long
-                    service life
-                  </li>
-                  <li className="pl-1">
-                    <strong>Limitation:</strong> Fixed speed (determined by supply frequency and
-                    pole number) — speed control requires a VSD
-                  </li>
-                  <li className="pl-1">
-                    <strong>High starting current:</strong> Typically 6-8 times full-load current —
-                    may require reduced-voltage starting methods
-                  </li>
-                </ul>
               </div>
-
-              <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
-                <h3 className="text-sm font-medium text-purple-400 mb-3">
-                  Wound Rotor Induction Motor
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Used for applications requiring high starting torque or controlled acceleration —
-                  such as cranes, hoists, large fans, and crushers.
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">
+                  Capacitor-Start, Capacitor-Run Motor
                 </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Rotor:</strong> Three-phase windings connected to external resistance
-                    through slip rings and brushes
-                  </li>
-                  <li className="pl-1">
-                    <strong>Speed control:</strong> Varying the external rotor resistance changes
-                    the torque-speed characteristic
-                  </li>
-                  <li className="pl-1">
-                    <strong>Starting:</strong> Full rotor resistance inserted at start (reduces
-                    starting current, increases starting torque), then progressively removed as
-                    motor accelerates
-                  </li>
-                  <li className="pl-1">
-                    <strong>Maintenance:</strong> Brushes and slip rings require regular inspection
-                    and replacement — more maintenance than squirrel cage
-                  </li>
-                  <li className="pl-1">
-                    <strong>Declining use:</strong> Being replaced by squirrel cage motors with
-                    variable speed drives in many applications
-                  </li>
-                </ul>
+                <p className="text-xs text-white">
+                  Two capacitors: a large electrolytic capacitor for starting (switched out by
+                  centrifugal switch) and a smaller oil-filled capacitor that remains in circuit
+                  during running. Better running performance and power factor than capacitor-start
+                  alone.
+                </p>
               </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-green-400 mb-3">
-                  Single-Phase Induction Motors
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  A single-phase supply cannot create a rotating magnetic field on its own — it
-                  produces a pulsating field. Special arrangements are needed to produce starting
-                  torque.
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Split-Phase Motor</p>
+                <p className="text-xs text-white">
+                  Uses a start winding with higher resistance (thinner wire) to create a small phase
+                  displacement from the run winding. Lower starting torque than capacitor-start.
+                  Used for light-duty applications such as fans and small pumps. Centrifugal switch
+                  disconnects start winding.
                 </p>
-                <div className="space-y-3 mt-3">
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">Capacitor-Start Motor</p>
-                    <p className="text-xs text-white">
-                      Has a start winding with a capacitor in series, creating a phase displacement
-                      that simulates a two-phase supply. A centrifugal switch disconnects the start
-                      winding at approximately 75% speed. Good starting torque — used for
-                      compressors, pumps, and machine tools up to about 3kW.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">
-                      Capacitor-Start, Capacitor-Run Motor
-                    </p>
-                    <p className="text-xs text-white">
-                      Two capacitors: a large electrolytic capacitor for starting (switched out by
-                      centrifugal switch) and a smaller oil-filled capacitor that remains in circuit
-                      during running. Better running performance and power factor than
-                      capacitor-start alone.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">Split-Phase Motor</p>
-                    <p className="text-xs text-white">
-                      Uses a start winding with higher resistance (thinner wire) to create a small
-                      phase displacement from the run winding. Lower starting torque than
-                      capacitor-start. Used for light-duty applications such as fans and small
-                      pumps. Centrifugal switch disconnects start winding.
-                    </p>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-sm font-medium text-white mb-1">Shaded-Pole Motor</p>
-                    <p className="text-xs text-white">
-                      Simplest single-phase motor — a copper ring (shading coil) on part of each
-                      pole face delays the flux in that area, creating a weak rotating component.
-                      Very low starting torque, low efficiency, small ratings only. Used for fans,
-                      small pumps, and domestic appliances.
-                    </p>
-                  </div>
-                </div>
+              </div>
+              <div className="rounded bg-black/30 p-3">
+                <p className="mb-1 text-sm font-medium text-white">Shaded-Pole Motor</p>
+                <p className="text-xs text-white">
+                  Simplest single-phase motor — a copper ring (shading coil) on part of each pole
+                  face delays the flux in that area, creating a weak rotating component. Very low
+                  starting torque, low efficiency, small ratings only. Used for fans, small pumps,
+                  and domestic appliances.
+                </p>
               </div>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 3: Motor Nameplate Data and Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Motor Nameplate Data and Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Motor nameplate data and selection</ContentEyebrow>
+
+          <ConceptBlock title="Everything you need to know about the motor's design operating conditions">
             <p>
               Every motor carries a nameplate (rating plate) that provides essential information for
               installation, operation, and maintenance. Understanding nameplate data is a core
               competency for the maintenance technician — it tells you everything you need to know
               about the motor's design operating conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Key Nameplate Parameters
-              </p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white font-medium">Parameter</th>
-                      <th className="py-2 text-white font-medium">Meaning</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-white text-xs">
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Rated Power (kW)</td>
-                      <td className="py-2">Mechanical output power at the shaft at full load</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Rated Voltage (V)</td>
-                      <td className="py-2">
-                        Supply voltage for rated performance (e.g., 400V, 690V)
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Rated Current (A)</td>
-                      <td className="py-2">Full-load current at rated voltage and power</td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Rated Speed (rev/min)</td>
-                      <td className="py-2">
-                        Full-load speed — slightly less than synchronous speed due to slip
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Power Factor (cos phi)</td>
-                      <td className="py-2">
-                        The ratio of real power to apparent power at full load
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Efficiency (%)</td>
-                      <td className="py-2">
-                        Ratio of mechanical output to electrical input (IE class)
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Insulation Class</td>
-                      <td className="py-2">
-                        Maximum winding temperature (B=130, F=155, H=180 degrees C)
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">IP Rating</td>
-                      <td className="py-2">
-                        Ingress protection (e.g., IP55 = dust protected, water jets)
-                      </td>
-                    </tr>
-                    <tr className="border-b border-white/5">
-                      <td className="py-2 pr-4 font-medium">Duty Type (S1-S10)</td>
-                      <td className="py-2">
-                        S1 = continuous, S2 = short-time, S3 = intermittent periodic
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-4 font-medium">Connection (Delta/Star)</td>
-                      <td className="py-2">
-                        Winding configuration: delta for lower voltage, star for higher
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Key nameplate parameters">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Parameter</th>
+                    <th className="py-2 font-medium text-white">Meaning</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Rated Power (kW)</td>
+                    <td className="py-2">Mechanical output power at the shaft at full load</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Rated Voltage (V)</td>
+                    <td className="py-2">
+                      Supply voltage for rated performance (e.g., 400V, 690V)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Rated Current (A)</td>
+                    <td className="py-2">Full-load current at rated voltage and power</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Rated Speed (rev/min)</td>
+                    <td className="py-2">
+                      Full-load speed — slightly less than synchronous speed due to slip
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Power Factor (cos phi)</td>
+                    <td className="py-2">The ratio of real power to apparent power at full load</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Efficiency (%)</td>
+                    <td className="py-2">
+                      Ratio of mechanical output to electrical input (IE class)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Insulation Class</td>
+                    <td className="py-2">
+                      Maximum winding temperature (B=130, F=155, H=180 degrees C)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">IP Rating</td>
+                    <td className="py-2">
+                      Ingress protection (e.g., IP55 = dust protected, water jets)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Duty Type (S1-S10)</td>
+                    <td className="py-2">
+                      S1 = continuous, S2 = short-time, S3 = intermittent periodic
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Connection (Delta/Star)</td>
+                    <td className="py-2">
+                      Winding configuration: delta for lower voltage, star for higher
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-white mb-3">Motor Selection Considerations</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Load torque profile:</strong> Constant torque (conveyors), variable torque
-                  (fans, pumps), or high starting torque (crushers)
-                </li>
-                <li className="pl-1">
-                  <strong>Duty cycle:</strong> Continuous (S1), intermittent (S3), or short-time
-                  (S2) — affects thermal rating
-                </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Temperature, altitude, humidity, dust, corrosive
-                  gases — determines enclosure (IP rating) and cooling method
-                </li>
-                <li className="pl-1">
-                  <strong>Starting method:</strong> DOL, star-delta, soft starter, or VSD — affects
-                  motor design and cable sizing
-                </li>
-                <li className="pl-1">
-                  <strong>Speed requirements:</strong> Fixed speed or variable speed — VSD
-                  compatibility may require inverter-duty insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Efficiency class:</strong> IE3 minimum for most applications (current
-                  regulations)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Motor selection considerations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Load torque profile:</strong> constant torque (conveyors), variable torque
+                (fans, pumps), or high starting torque (crushers)
+              </li>
+              <li>
+                <strong>Duty cycle:</strong> continuous (S1), intermittent (S3), or short-time (S2)
+                — affects thermal rating
+              </li>
+              <li>
+                <strong>Environment:</strong> temperature, altitude, humidity, dust, corrosive gases
+                — determines enclosure (IP rating) and cooling method
+              </li>
+              <li>
+                <strong>Starting method:</strong> DOL, star-delta, soft starter, or VSD — affects
+                motor design and cable sizing
+              </li>
+              <li>
+                <strong>Speed requirements:</strong> fixed speed or variable speed — VSD
+                compatibility may require inverter-duty insulation
+              </li>
+              <li>
+                <strong>Efficiency class:</strong> IE3 minimum for most applications (current
+                regulations)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 4: Common Faults and Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Common Faults and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Common faults and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Enabling effective preventive and predictive maintenance">
             <p>
               Understanding common motor failure modes enables the maintenance technician to
               implement effective preventive and predictive maintenance strategies, reducing
               unplanned downtime and extending motor service life.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
-                <p className="text-sm font-medium text-red-400 mb-3">
-                  Bearing Failure (40-50% of motor failures)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Causes:</strong> Inadequate or excessive lubrication, contamination,
-                    misalignment, overloading, electrical discharge (VSD-induced shaft currents)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Symptoms:</strong> Increased vibration, elevated temperature, noise
-                    (grinding, rumbling), shaft play
-                  </li>
-                  <li className="pl-1">
-                    <strong>Prevention:</strong> Correct lubrication schedule, vibration monitoring,
-                    laser alignment, shaft grounding (for VSD applications)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Testing:</strong> Vibration analysis (time domain and frequency
-                    spectrum), bearing temperature monitoring, acoustic emission
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
-                <p className="text-sm font-medium text-amber-400 mb-3">
-                  Winding Insulation Failure (30-40% of motor failures)
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Causes:</strong> Thermal ageing (10 degree rule), moisture ingress,
-                    voltage spikes (VSD dV/dt), contamination, mechanical damage
-                  </li>
-                  <li className="pl-1">
-                    <strong>Symptoms:</strong> Tripping on earth fault or overcurrent, reduced IR
-                    readings, increased winding temperature, smell of burnt insulation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Prevention:</strong> Correct operating temperature, clean environment,
-                    surge protection for VSD-fed motors
-                  </li>
-                  <li className="pl-1">
-                    <strong>Testing:</strong> Insulation resistance (IR), polarisation index (PI),
-                    surge comparison test, motor circuit analysis (MCA)
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-3">Shaft Misalignment</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Types:</strong> Angular (shaft axes at an angle), parallel/offset (shaft
-                    axes parallel but displaced), axial (excessive end-play)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Symptoms:</strong> Vibration at 1x and 2x running speed, premature
-                    bearing and coupling failure, seal leaks, excessive energy consumption
-                  </li>
-                  <li className="pl-1">
-                    <strong>Prevention:</strong> Laser alignment during installation and after any
-                    work that disturbs the motor position
-                  </li>
-                  <li className="pl-1">
-                    <strong>Tolerance:</strong> Typically 0.05mm offset and 0.05mm/100mm angular for
-                    standard couplings
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm font-medium text-white mb-3">Electrical Supply Problems</p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Single phasing:</strong> Loss of one supply phase — motor runs hot on
-                    remaining phases, uneven magnetic pull
-                  </li>
-                  <li className="pl-1">
-                    <strong>Voltage unbalance:</strong> Even a small voltage unbalance (2%) can
-                    cause significant current unbalance (12-15%) and overheating
-                  </li>
-                  <li className="pl-1">
-                    <strong>Undervoltage:</strong> Motor draws more current to maintain torque,
-                    increasing copper losses and heat
-                  </li>
-                  <li className="pl-1">
-                    <strong>Overvoltage:</strong> Increases iron losses and magnetising current, can
-                    damage insulation
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Bearing failure (40-50% of motor failures)">
+            <div className="rounded-lg border-l-2 border-red-500/50 bg-red-500/10 p-4">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-red-400/70">
+                <li>
+                  <strong>Causes:</strong> inadequate or excessive lubrication, contamination,
+                  misalignment, overloading, electrical discharge (VSD-induced shaft currents)
+                </li>
+                <li>
+                  <strong>Symptoms:</strong> increased vibration, elevated temperature, noise
+                  (grinding, rumbling), shaft play
+                </li>
+                <li>
+                  <strong>Prevention:</strong> correct lubrication schedule, vibration monitoring,
+                  laser alignment, shaft grounding (for VSD applications)
+                </li>
+                <li>
+                  <strong>Testing:</strong> vibration analysis (time domain and frequency spectrum),
+                  bearing temperature monitoring, acoustic emission
+                </li>
+              </ul>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                ST1426 Maintenance Competency
-              </p>
-              <p className="text-sm text-white">
-                The Level 3 apprenticeship standard (ST1426) requires you to diagnose motor faults
-                using a systematic approach, carry out routine maintenance including lubrication,
-                alignment checks, and electrical testing, interpret motor nameplate data, and select
-                replacement motors to match the application requirements.
-              </p>
+          <ConceptBlock title="Winding insulation failure (30-40% of motor failures)">
+            <div className="rounded-lg border-l-2 border-amber-500/50 bg-amber-500/10 p-4">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-amber-400/70">
+                <li>
+                  <strong>Causes:</strong> thermal ageing (10 degree rule), moisture ingress,
+                  voltage spikes (VSD dV/dt), contamination, mechanical damage
+                </li>
+                <li>
+                  <strong>Symptoms:</strong> tripping on earth fault or overcurrent, reduced IR
+                  readings, increased winding temperature, smell of burnt insulation
+                </li>
+                <li>
+                  <strong>Prevention:</strong> correct operating temperature, clean environment,
+                  surge protection for VSD-fed motors
+                </li>
+                <li>
+                  <strong>Testing:</strong> insulation resistance (IR), polarisation index (PI),
+                  surge comparison test, motor circuit analysis (MCA)
+                </li>
+              </ul>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Shaft misalignment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Types:</strong> angular (shaft axes at an angle), parallel/offset (shaft
+                axes parallel but displaced), axial (excessive end-play)
+              </li>
+              <li>
+                <strong>Symptoms:</strong> vibration at 1x and 2x running speed, premature bearing
+                and coupling failure, seal leaks, excessive energy consumption
+              </li>
+              <li>
+                <strong>Prevention:</strong> laser alignment during installation and after any work
+                that disturbs the motor position
+              </li>
+              <li>
+                <strong>Tolerance:</strong> typically 0.05mm offset and 0.05mm/100mm angular for
+                standard couplings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Electrical supply problems">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Single phasing:</strong> loss of one supply phase — motor runs hot on
+                remaining phases, uneven magnetic pull
+              </li>
+              <li>
+                <strong>Voltage unbalance:</strong> even a small voltage unbalance (2%) can cause
+                significant current unbalance (12-15%) and overheating
+              </li>
+              <li>
+                <strong>Undervoltage:</strong> motor draws more current to maintain torque,
+                increasing copper losses and heat
+              </li>
+              <li>
+                <strong>Overvoltage:</strong> increases iron losses and magnetising current, can
+                damage insulation
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="ST1426 maintenance competency">
+            <p>
+              The Level 3 apprenticeship standard (ST1426) requires you to diagnose motor faults
+              using a systematic approach, carry out routine maintenance including lubrication,
+              alignment checks, and electrical testing, interpret motor nameplate data, and select
+              replacement motors to match the application requirements.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Induction Motors" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Transformers
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-3">
-              Next: Synchronous Motors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=59HBoIXzX_c"
+
+            title="How Electric Motors Work — 3 Phase AC Induction Motors"
+
+            channel="The Engineering Mindset"
+
+            duration="15:33"
+
+            topic="The rotating field, slip, and why an induction motor turns at all"
+
+            caption="The rotating magnetic field is very hard to picture from a still diagram. This is the one to watch."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Ns = (120 x f) / p; slip s = (Ns - Nr) / Ns x 100% and can never reach zero while the motor produces torque.',
+              'Typical full-load slip for a standard squirrel cage motor is 3% to 6%.',
+              'Over 90% of industrial motors are squirrel cage type — robust, low-maintenance, no brushes or slip rings.',
+              'Starting currents are typically 6 to 8 times the full-load current.',
+              'Bearing failure accounts for 40-50% of motor failures; winding insulation failure for 30-40%.',
+              'IP (Ingress Protection) is defined by BS EN 60529; insulation classes define maximum safe operating temperature.',
+              'Single phasing causes the motor to run hot on the remaining two phases and can fail within minutes.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Induction Motors" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Transformers
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Synchronous Motors
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.5 · Subsection 2 — Hazardous Substances: COSHH Awareness
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Skills · "Identify environmental and health and safety  hazards and risks
+ *             and apply control measures."
+ *          · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Hazardous Substances — COSHH Awareness - MOET Module 1 Section 5.2';
@@ -40,12 +77,7 @@ const quickCheckQuestions = [
     id: 'sds-sections',
     question:
       'How many sections does a safety data sheet (SDS) contain under GHS/CLP requirements?',
-    options: [
-      '12 sections',
-      '8 sections',
-      '16 sections',
-      '20 sections',
-    ],
+    options: ['12 sections', '8 sections', '16 sections', '20 sections'],
     correctIndex: 2,
     explanation:
       'Under the Globally Harmonised System (GHS) as implemented by the CLP Regulation, a safety data sheet must contain 16 sections in a standardised order. These cover identification, hazards, composition, first aid, fire-fighting, accidental release, handling/storage, exposure controls, physical/chemical properties, stability, toxicology, ecology, disposal, transport, regulatory and other information.',
@@ -254,116 +286,52 @@ const faqs = [
 ];
 
 const MOETModule1Section5_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.5.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Hazardous Substances — COSHH Awareness
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.5 · Subsection 2"
+        title="Hazardous Substances — COSHH Awareness"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Identifying, assessing and controlling exposure to hazardous substances in electrical
-            maintenance
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>COSHH:</strong> Control of Substances Hazardous to Health Regulations 2002
-              </li>
-              <li className="pl-1">
-                <strong>Duty:</strong> Assess exposure risks and implement adequate controls
-              </li>
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> Eliminate, substitute, control, PPE (last resort)
-              </li>
-              <li className="pl-1">
-                <strong>SDS:</strong> 16-section safety data sheet — your key information source
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Solder flux:</strong> Colophony fumes cause occupational asthma
-              </li>
-              <li className="pl-1">
-                <strong>SF6 gas:</strong> Asphyxiant; toxic decomposition products from arcing
-              </li>
-              <li className="pl-1">
-                <strong>Battery acid:</strong> Corrosive; requires bunded storage
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to safe working practices and health awareness KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'COSHH: Control of Substances Hazardous to Health Regulations 2002.',
+              'Duty: Assess exposure risks and implement adequate controls.',
+              'Hierarchy: Eliminate, substitute, control, PPE (last resort).',
+              'SDS: 16-section safety data sheet — your key information source.',
+              'Solder flux: Colophony fumes cause occupational asthma.',
+              'SF6 gas: Asphyxiant; toxic decomposition products from arcing.',
+              'Battery acid: Corrosive; requires bunded storage.',
+              'ST1426: Maps to safe working practices and health awareness KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose and scope of the COSHH Regulations 2002',
               'Identify hazardous substance categories and interpret GHS/CLP pictograms',
               'Describe the 8-step COSHH assessment process',
               'Understand workplace exposure limits (WELs) and how they protect workers',
               'Identify hazardous substances commonly encountered in electrical maintenance',
               'Apply the hierarchy of control to reduce exposure in practical work situations',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>COSHH Regulations and Hazardous Substance Categories</ContentEyebrow>
 
-        {/* Section 01: COSHH Regulations and Hazardous Substance Categories */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            COSHH Regulations and Hazardous Substance Categories
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="COSHH Regulations and Hazardous Substance Categories">
             <p>
               The Control of Substances Hazardous to Health (COSHH) Regulations 2002 are the primary
               legislation protecting workers from exposure to hazardous substances. Under COSHH,
@@ -379,442 +347,387 @@ const MOETModule1Section5_2 = () => {
               gases (SF6, refrigerants), mists (from spray applications), and even biological agents
               (mould in damp electrical enclosures).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What COSHH Covers</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Chemicals:</strong> Solvents, acids, alkalis, adhesives, cleaning agents,
-                  lubricants, paints
-                </li>
-                <li className="pl-1">
-                  <strong>Products containing chemicals:</strong> Solder flux, cable-pulling
-                  lubricant, PVC cement, resin compounds
-                </li>
-                <li className="pl-1">
-                  <strong>Dusts:</strong> Wood dust, silica dust (from concrete), general
-                  construction dust, mineral fibre
-                </li>
-                <li className="pl-1">
-                  <strong>Fumes:</strong> Solder fumes, welding fumes, metal fumes from cutting
-                  operations
-                </li>
-                <li className="pl-1">
-                  <strong>Vapours:</strong> Solvent vapours, fuel vapours, SF6 decomposition
-                  products
-                </li>
-                <li className="pl-1">
-                  <strong>Gases:</strong> SF6, carbon monoxide, hydrogen (from battery charging),
-                  refrigerants
-                </li>
-                <li className="pl-1">
-                  <strong>Biological agents:</strong> Bacteria, fungi, viruses encountered during
-                  maintenance work
-                </li>
-              </ul>
+          <ConceptBlock title="What COSHH Covers">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chemicals:</strong> Solvents, acids, alkalis, adhesives, cleaning agents,
+                lubricants, paints
+              </li>
+              <li>
+                <strong>Products containing chemicals:</strong> Solder flux, cable-pulling
+                lubricant, PVC cement, resin compounds
+              </li>
+              <li>
+                <strong>Dusts:</strong> Wood dust, silica dust (from concrete), general construction
+                dust, mineral fibre
+              </li>
+              <li>
+                <strong>Fumes:</strong> Solder fumes, welding fumes, metal fumes from cutting
+                operations
+              </li>
+              <li>
+                <strong>Vapours:</strong> Solvent vapours, fuel vapours, SF6 decomposition products
+              </li>
+              <li>
+                <strong>Gases:</strong> SF6, carbon monoxide, hydrogen (from battery charging),
+                refrigerants
+              </li>
+              <li>
+                <strong>Biological agents:</strong> Bacteria, fungi, viruses encountered during
+                maintenance work
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="What COSHH Does NOT Cover">
+            <p>
+              COSHH does not cover lead (covered by the Control of Lead at Work Regulations 2002),
+              asbestos (covered by the Control of Asbestos Regulations 2012), or radioactive
+              substances (covered by the Ionising Radiations Regulations 2017). However, you may
+              encounter lead and asbestos in older electrical installations, and separate
+              regulations apply to these substances.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="GHS Pictograms (CLP Regulation)">
+            <p>
+              The Globally Harmonised System (GHS), implemented in the UK through the CLP Regulation
+              (Classification, Labelling and Packaging), uses standardised red-bordered
+              diamond-shaped pictograms to communicate hazards. You must recognise these pictograms
+              to understand the hazards of substances you encounter:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Pictogram</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Hazard</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Electrical Maintenance Example
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Flame</td>
+                    <td className="border border-white/10 px-3 py-2">Flammable</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Contact cleaners, solvents, cable-pulling lubricants
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Skull and crossbones</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Acute toxicity (fatal/toxic)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Certain pesticides used in cable ducts, some industrial solvents
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Exclamation mark</td>
+                    <td className="border border-white/10 px-3 py-2">Harmful / irritant</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Many cleaning products, some adhesives, mild solvents
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Corrosion</td>
+                    <td className="border border-white/10 px-3 py-2">Corrosive</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Battery acid, drain cleaners, strong flux residue removers
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Health hazard</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Serious health hazard (CMR, respiratory sensitiser)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Colophony-based solder flux (respiratory sensitiser), some resins
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Gas cylinder</td>
+                    <td className="border border-white/10 px-3 py-2">Gas under pressure</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      SF6 cylinders, refrigerant cylinders, compressed air
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Environment</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Hazardous to aquatic environment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Transformer oil, some cleaning solvents
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Flame over circle</td>
+                    <td className="border border-white/10 px-3 py-2">Oxidising</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Some cleaning agents, peroxide-based products
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Exploding bomb</td>
+                    <td className="border border-white/10 px-3 py-2">Explosive</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cartridge-operated fixing tools, some gas mixtures
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">What COSHH Does NOT Cover</p>
-              <p className="text-sm text-white">
-                COSHH does not cover lead (covered by the Control of Lead at Work Regulations 2002),
-                asbestos (covered by the Control of Asbestos Regulations 2012), or radioactive
-                substances (covered by the Ionising Radiations Regulations 2017). However, you may
-                encounter lead and asbestos in older electrical installations, and separate
-                regulations apply to these substances.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                GHS Pictograms (CLP Regulation)
-              </p>
-              <p className="text-sm text-white mb-3">
-                The Globally Harmonised System (GHS), implemented in the UK through the CLP
-                Regulation (Classification, Labelling and Packaging), uses standardised red-bordered
-                diamond-shaped pictograms to communicate hazards. You must recognise these
-                pictograms to understand the hazards of substances you encounter:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Pictogram</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Hazard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Maintenance Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flame</td>
-                      <td className="border border-white/10 px-3 py-2">Flammable</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contact cleaners, solvents, cable-pulling lubricants
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Skull and crossbones</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acute toxicity (fatal/toxic)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Certain pesticides used in cable ducts, some industrial solvents
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exclamation mark</td>
-                      <td className="border border-white/10 px-3 py-2">Harmful / irritant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Many cleaning products, some adhesives, mild solvents
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corrosion</td>
-                      <td className="border border-white/10 px-3 py-2">Corrosive</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Battery acid, drain cleaners, strong flux residue removers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Health hazard</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Serious health hazard (CMR, respiratory sensitiser)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Colophony-based solder flux (respiratory sensitiser), some resins
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Gas cylinder</td>
-                      <td className="border border-white/10 px-3 py-2">Gas under pressure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SF6 cylinders, refrigerant cylinders, compressed air
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Environment</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hazardous to aquatic environment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformer oil, some cleaning solvents
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flame over circle</td>
-                      <td className="border border-white/10 px-3 py-2">Oxidising</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Some cleaning agents, peroxide-based products
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Exploding bomb</td>
-                      <td className="border border-white/10 px-3 py-2">Explosive</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cartridge-operated fixing tools, some gas mixtures
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Key point:</strong> Always check the label and SDS before using any substance.
               If a product has no label or the label is damaged and unreadable, do not use it —
               return it and obtain a properly labelled replacement.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: The 8-Step COSHH Assessment Process */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The 8-Step COSHH Assessment Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The 8-Step COSHH Assessment Process</ContentEyebrow>
+
+          <ConceptBlock title="The 8-Step COSHH Assessment Process">
             <p>
               A COSHH assessment is a structured evaluation of the risks from hazardous substances
               in the workplace and the controls needed to manage those risks. It is a legal
               requirement under Regulation 6 of COSHH, and it must be carried out before any work
-              involving hazardous substances begins. The assessment must be 'suitable and
-              sufficient' — meaning it must genuinely identify the risks and determine effective
-              controls, not just be a tick-box exercise.
+              involving hazardous substances begins. The assessment must be &apos;suitable and
+              sufficient&apos; — meaning it must genuinely identify the risks and determine
+              effective controls, not just be a tick-box exercise.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 1 — Identify Hazardous Substances
-                </h3>
-                <p className="text-sm text-white">
-                  List all substances present in the workplace or generated by work activities. This
-                  includes purchased products (check SDS documents), substances produced by
-                  processes (solder fumes, dust from chasing), and naturally occurring substances
-                  (mould, bacteria). For electrical maintenance, survey your van stock, workshop
-                  chemicals, and substances encountered on client sites.
-                </p>
-              </div>
+          <ConceptBlock title="Step 1 — Identify Hazardous Substances">
+            <p>
+              List all substances present in the workplace or generated by work activities. This
+              includes purchased products (check SDS documents), substances produced by processes
+              (solder fumes, dust from chasing), and naturally occurring substances (mould,
+              bacteria). For electrical maintenance, survey your van stock, workshop chemicals, and
+              substances encountered on client sites.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 2 — Decide Who Might Be Harmed
-                </h3>
-                <p className="text-sm text-white">
-                  Consider not just the person using the substance, but also others nearby —
-                  colleagues working in the same area, building occupants, cleaners, visitors. Pay
-                  particular attention to vulnerable groups: pregnant workers, young workers,
-                  workers with pre-existing health conditions (e.g., asthma), and members of the
-                  public who might be affected.
-                </p>
-              </div>
+          <ConceptBlock title="Step 2 — Decide Who Might Be Harmed">
+            <p>
+              Consider not just the person using the substance, but also others nearby — colleagues
+              working in the same area, building occupants, cleaners, visitors. Pay particular
+              attention to vulnerable groups: pregnant workers, young workers, workers with
+              pre-existing health conditions (e.g., asthma), and members of the public who might be
+              affected.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 3 — Evaluate the Risks
-                </h3>
-                <p className="text-sm text-white">
-                  Consider the hazard properties of the substance (from the SDS), the route of
-                  exposure (inhalation, skin, ingestion), the duration and frequency of exposure,
-                  the amount used, the work environment (ventilation, temperature, confined space),
-                  and the effectiveness of existing controls. Compare exposure levels with workplace
-                  exposure limits (WELs) where applicable.
-                </p>
-              </div>
+          <ConceptBlock title="Step 3 — Evaluate the Risks">
+            <p>
+              Consider the hazard properties of the substance (from the SDS), the route of exposure
+              (inhalation, skin, ingestion), the duration and frequency of exposure, the amount
+              used, the work environment (ventilation, temperature, confined space), and the
+              effectiveness of existing controls. Compare exposure levels with workplace exposure
+              limits (WELs) where applicable.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 4 — Record Significant Findings
-                </h3>
-                <p className="text-sm text-white">
-                  Document the assessment in a clear, accessible format. Record the substances
-                  identified, who is at risk, the nature of the risk, and the control measures
-                  needed. The record must be accessible to workers and available for inspection by
-                  enforcement authorities. Electronic records are acceptable provided they can be
-                  retrieved and presented when needed.
-                </p>
-              </div>
+          <ConceptBlock title="Step 4 — Record Significant Findings">
+            <p>
+              Document the assessment in a clear, accessible format. Record the substances
+              identified, who is at risk, the nature of the risk, and the control measures needed.
+              The record must be accessible to workers and available for inspection by enforcement
+              authorities. Electronic records are acceptable provided they can be retrieved and
+              presented when needed.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 5 — Implement Control Measures
-                </h3>
-                <p className="text-sm text-white">
-                  Put in place the controls identified in the assessment, following the hierarchy:
-                  elimination, substitution, engineering controls (ventilation, enclosure),
-                  administrative controls (procedures, rotation, time limits), and PPE. Ensure all
-                  controls are in place before work begins. Controls must be proportionate to the
-                  risk — you do not need a full-face respirator to use a marker pen, but you do need
-                  fume extraction to solder.
-                </p>
-              </div>
+          <ConceptBlock title="Step 5 — Implement Control Measures">
+            <p>
+              Put in place the controls identified in the assessment, following the hierarchy:
+              elimination, substitution, engineering controls (ventilation, enclosure),
+              administrative controls (procedures, rotation, time limits), and PPE. Ensure all
+              controls are in place before work begins. Controls must be proportionate to the risk —
+              you do not need a full-face respirator to use a marker pen, but you do need fume
+              extraction to solder.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 6 — Plan Monitoring and Maintenance
-                </h3>
-                <p className="text-sm text-white">
-                  Establish how you will verify that controls remain effective. This may include
-                  routine inspection of LEV systems (LEV testing is required at least every 14
-                  months under Regulation 9), exposure monitoring (air sampling), workplace
-                  inspections, and maintenance schedules for engineering controls. Record all
-                  monitoring results.
-                </p>
-              </div>
+          <ConceptBlock title="Step 6 — Plan Monitoring and Maintenance">
+            <p>
+              Establish how you will verify that controls remain effective. This may include routine
+              inspection of LEV systems (LEV testing is required at least every 14 months under
+              Regulation 9), exposure monitoring (air sampling), workplace inspections, and
+              maintenance schedules for engineering controls. Record all monitoring results.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 7 — Provide Information, Instruction and Training
-                </h3>
-                <p className="text-sm text-white">
-                  Workers must understand the hazards of the substances they work with, the control
-                  measures in place, how to use those controls correctly (including PPE), the
-                  results of exposure monitoring and health surveillance, and what to do in an
-                  emergency. Training must be repeated when circumstances change and refreshed at
-                  suitable intervals.
-                </p>
-              </div>
+          <ConceptBlock title="Step 7 — Provide Information, Instruction and Training">
+            <p>
+              Workers must understand the hazards of the substances they work with, the control
+              measures in place, how to use those controls correctly (including PPE), the results of
+              exposure monitoring and health surveillance, and what to do in an emergency. Training
+              must be repeated when circumstances change and refreshed at suitable intervals.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-1">
-                  Step 8 — Review the Assessment
-                </h3>
-                <p className="text-sm text-white">
-                  Review the assessment regularly (at least annually) and whenever there is reason
-                  to believe it is no longer valid — for example, if new substances are introduced,
-                  processes change, monitoring reveals unexpectedly high exposure, or cases of ill
-                  health are reported. Update the assessment and communicate changes to all affected
-                  workers.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Step 8 — Review the Assessment">
+            <p>
+              Review the assessment regularly (at least annually) and whenever there is reason to
+              believe it is no longer valid — for example, if new substances are introduced,
+              processes change, monitoring reveals unexpectedly high exposure, or cases of ill
+              health are reported. Update the assessment and communicate changes to all affected
+              workers.
+            </p>
+            <p>
               <strong>Practical note:</strong> As a maintenance technician, you may not write COSHH
               assessments yourself (this is typically done by your employer or a health and safety
               adviser), but you must understand the assessment for your work activities, follow the
               control measures specified, and report any concerns about the adequacy of the
               controls.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 03: Workplace Exposure Limits and Health Surveillance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Workplace Exposure Limits and Health Surveillance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Workplace Exposure Limits and Health Surveillance</ContentEyebrow>
+
+          <ConceptBlock title="Workplace Exposure Limits and Health Surveillance">
             <p>
               Workplace exposure limits (WELs) are legal limits on the concentration of hazardous
               substances in the air that workers breathe. They are published in the HSE document
               EH40/2005 (Workplace Exposure Limits) and are set at levels intended to prevent ill
-              health in most workers. However, WELs are not 'safe' levels — they are maximum
-              permitted levels, and exposure should always be reduced to as low as is reasonably
-              practicable, even when it is below the WEL.
+              health in most workers. However, WELs are not &apos;safe&apos; levels — they are
+              maximum permitted levels, and exposure should always be reduced to as low as is
+              reasonably practicable, even when it is below the WEL.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Types of Exposure Limit
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>8-hour TWA (Time-Weighted Average):</strong> The maximum average
-                  concentration over an 8-hour working day. This accounts for variable exposure
-                  throughout the day — short periods above the TWA are acceptable provided the
-                  overall average stays below the limit.
-                </li>
-                <li className="pl-1">
-                  <strong>15-minute STEL (Short-Term Exposure Limit):</strong> The maximum average
-                  concentration over a 15-minute reference period. This protects against acute
-                  effects from short, high-intensity exposures. No more than 4 STELs in any 8-hour
-                  period, with at least 60 minutes between them.
-                </li>
-              </ul>
+          <ConceptBlock title="Types of Exposure Limit">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>8-hour TWA (Time-Weighted Average):</strong> The maximum average
+                concentration over an 8-hour working day. This accounts for variable exposure
+                throughout the day — short periods above the TWA are acceptable provided the overall
+                average stays below the limit.
+              </li>
+              <li>
+                <strong>15-minute STEL (Short-Term Exposure Limit):</strong> The maximum average
+                concentration over a 15-minute reference period. This protects against acute effects
+                from short, high-intensity exposures. No more than 4 STELs in any 8-hour period,
+                with at least 60 minutes between them.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="WELs Relevant to Electrical Maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Substance</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">8-hour TWA</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">15-min STEL</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Context</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Rosin-based solder flux fume
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">0.05 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">0.15 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Soldering electrical connections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Sulphuric acid mist</td>
+                    <td className="border border-white/10 px-3 py-2">0.05 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">0.15 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Battery maintenance, charging areas
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Isopropyl alcohol</td>
+                    <td className="border border-white/10 px-3 py-2">999 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">1250 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Contact cleaner for PCBs and relays
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Respirable dust (general)</td>
+                    <td className="border border-white/10 px-3 py-2">4 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">—</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Dust from chasing, drilling, cutting
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Respirable crystalline silica
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">0.1 mg/m³</td>
+                    <td className="border border-white/10 px-3 py-2">—</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cutting/chasing concrete and brick
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                WELs Relevant to Electrical Maintenance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Substance</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">8-hour TWA</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">15-min STEL</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Context</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rosin-based solder flux fume
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.05 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">0.15 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Soldering electrical connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Sulphuric acid mist</td>
-                      <td className="border border-white/10 px-3 py-2">0.05 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">0.15 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Battery maintenance, charging areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isopropyl alcohol</td>
-                      <td className="border border-white/10 px-3 py-2">999 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">1250 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contact cleaner for PCBs and relays
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Respirable dust (general)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">4 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">—</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Dust from chasing, drilling, cutting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Respirable crystalline silica
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.1 mg/m³</td>
-                      <td className="border border-white/10 px-3 py-2">—</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cutting/chasing concrete and brick
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Health Surveillance</h3>
-              <p className="text-sm text-white mb-2">
-                Where workers are exposed to substances that can cause identifiable diseases or
-                adverse health effects, and valid techniques exist to detect early signs, your
-                employer must provide health surveillance. For electrical maintenance technicians,
-                this may include:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lung function tests:</strong> For workers regularly exposed to solder
-                  fumes (colophony can cause occupational asthma)
-                </li>
-                <li className="pl-1">
-                  <strong>Skin checks:</strong> For workers regularly handling solvents, oils or
-                  cutting fluids (can cause dermatitis)
-                </li>
-                <li className="pl-1">
-                  <strong>Biological monitoring:</strong> Blood or urine tests for specific
-                  substances where indicated
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                You have a duty to attend health surveillance appointments when required. If you
-                develop any symptoms that might be related to workplace exposure — persistent cough,
-                skin rashes, breathing difficulty — report them immediately.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Health Surveillance">
+            <p>
+              Where workers are exposed to substances that can cause identifiable diseases or
+              adverse health effects, and valid techniques exist to detect early signs, your
+              employer must provide health surveillance. For electrical maintenance technicians,
+              this may include:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lung function tests:</strong> For workers regularly exposed to solder fumes
+                (colophony can cause occupational asthma)
+              </li>
+              <li>
+                <strong>Skin checks:</strong> For workers regularly handling solvents, oils or
+                cutting fluids (can cause dermatitis)
+              </li>
+              <li>
+                <strong>Biological monitoring:</strong> Blood or urine tests for specific substances
+                where indicated
+              </li>
+            </ul>
+            <p>
+              You have a duty to attend health surveillance appointments when required. If you
+              develop any symptoms that might be related to workplace exposure — persistent cough,
+              skin rashes, breathing difficulty — report them immediately.
+            </p>
+            <p>
               <strong>Remember:</strong> A WEL is a legal maximum, not a target. Your employer must
               reduce exposure to as low as is reasonably practicable, even if current levels are
               below the WEL. If a substance is a known carcinogen, mutagen or reproductive toxicant,
               exposure must be reduced to as low as is technically possible.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04: Hazardous Substances in Electrical Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Hazardous Substances in Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Hazardous Substances in Electrical Maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Hazardous Substances in Electrical Maintenance">
             <p>
               Electrical maintenance technicians encounter a surprising range of hazardous
               substances in their daily work. Many of these are so familiar that complacency can set
@@ -822,208 +735,180 @@ const MOETModule1Section5_2 = () => {
               acid you top up periodically. Understanding the specific hazards and required controls
               for each substance is essential for protecting your health.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Solder and Solder Flux
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Traditional tin-lead solder with rosin (colophony) flux is one of the most
-                  significant COSHH hazards for electricians. When heated, the flux produces a
-                  complex mixture of fumes that includes aldehydes and organic acids. These fumes
-                  are a known respiratory sensitiser — meaning they can cause occupational asthma, a
-                  condition that may be permanent and disabling.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Respiratory sensitisation, skin sensitisation, eye
-                    irritation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> Local exhaust ventilation (fume extraction),
-                    lead-free solder where possible, avoid leaning over the work, good hand hygiene
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE (if LEV insufficient):</strong> FFP2 respirator as a minimum, safety
-                    glasses
-                  </li>
-                  <li className="pl-1">
-                    <strong>Health surveillance:</strong> Lung function testing for regular
-                    solderers
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Solder and Solder Flux">
+            <p>
+              Traditional tin-lead solder with rosin (colophony) flux is one of the most significant
+              COSHH hazards for electricians. When heated, the flux produces a complex mixture of
+              fumes that includes aldehydes and organic acids. These fumes are a known respiratory
+              sensitiser — meaning they can cause occupational asthma, a condition that may be
+              permanent and disabling.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Respiratory sensitisation, skin sensitisation, eye
+                irritation
+              </li>
+              <li>
+                <strong>Controls:</strong> Local exhaust ventilation (fume extraction), lead-free
+                solder where possible, avoid leaning over the work, good hand hygiene
+              </li>
+              <li>
+                <strong>PPE (if LEV insufficient):</strong> FFP2 respirator as a minimum, safety
+                glasses
+              </li>
+              <li>
+                <strong>Health surveillance:</strong> Lung function testing for regular solderers
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Contact Cleaners and Solvents
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Electrical contact cleaners typically contain isopropyl alcohol, acetone, or
-                  proprietary solvent blends. They are used to clean relay contacts, PCB surfaces,
-                  and switchgear components. The rapid evaporation that makes them effective also
-                  means they produce significant vapour concentrations, especially in enclosed
-                  spaces.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Flammable vapours, CNS depression from inhalation, skin
-                    defatting, eye irritation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> Adequate ventilation, minimal quantities, no ignition
-                    sources nearby, sealed containers when not in use
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE:</strong> Chemical-resistant gloves (nitrile), safety glasses,
-                    respiratory protection in poorly ventilated areas
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Contact Cleaners and Solvents">
+            <p>
+              Electrical contact cleaners typically contain isopropyl alcohol, acetone, or
+              proprietary solvent blends. They are used to clean relay contacts, PCB surfaces, and
+              switchgear components. The rapid evaporation that makes them effective also means they
+              produce significant vapour concentrations, especially in enclosed spaces.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Flammable vapours, CNS depression from inhalation, skin
+                defatting, eye irritation
+              </li>
+              <li>
+                <strong>Controls:</strong> Adequate ventilation, minimal quantities, no ignition
+                sources nearby, sealed containers when not in use
+              </li>
+              <li>
+                <strong>PPE:</strong> Chemical-resistant gloves (nitrile), safety glasses,
+                respiratory protection in poorly ventilated areas
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cable-Pulling Lubricants
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Used to reduce friction when drawing cables through conduit and trunking. Products
-                  range from water-based (lower hazard) to petroleum-based (higher hazard).
-                  Prolonged skin contact can cause dermatitis, and inhalation of mist in enclosed
-                  spaces is a concern.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Skin irritation/dermatitis, eye irritation, slipping
-                    hazard
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> Use water-based products where possible
-                    (substitution), barrier cream, wash hands frequently
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE:</strong> Nitrile gloves, safety glasses when applying
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Cable-Pulling Lubricants">
+            <p>
+              Used to reduce friction when drawing cables through conduit and trunking. Products
+              range from water-based (lower hazard) to petroleum-based (higher hazard). Prolonged
+              skin contact can cause dermatitis, and inhalation of mist in enclosed spaces is a
+              concern.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Skin irritation/dermatitis, eye irritation, slipping hazard
+              </li>
+              <li>
+                <strong>Controls:</strong> Use water-based products where possible (substitution),
+                barrier cream, wash hands frequently
+              </li>
+              <li>
+                <strong>PPE:</strong> Nitrile gloves, safety glasses when applying
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Battery Acid (Sulphuric Acid)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Lead-acid batteries in UPS systems, emergency lighting, and standby power supplies
-                  contain dilute sulphuric acid (typically 30-40% concentration). During charging,
-                  batteries can also release hydrogen gas, creating an explosion risk, and acid
-                  mist, which is a respiratory hazard.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Severe burns to skin and eyes, respiratory damage from
-                    acid mist, hydrogen gas explosion risk
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> Bunded, ventilated battery rooms; no naked flames;
-                    eye wash stations; spill kits
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE:</strong> Chemical splash goggles, acid-resistant gloves, face
-                    shield for topping up, apron
-                  </li>
-                  <li className="pl-1">
-                    <strong>Storage:</strong> Acid-resistant containers, bunded area (110% of
-                    largest container), away from alkalis and metals
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Battery Acid (Sulphuric Acid)">
+            <p>
+              Lead-acid batteries in UPS systems, emergency lighting, and standby power supplies
+              contain dilute sulphuric acid (typically 30-40% concentration). During charging,
+              batteries can also release hydrogen gas, creating an explosion risk, and acid mist,
+              which is a respiratory hazard.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Severe burns to skin and eyes, respiratory damage from acid
+                mist, hydrogen gas explosion risk
+              </li>
+              <li>
+                <strong>Controls:</strong> Bunded, ventilated battery rooms; no naked flames; eye
+                wash stations; spill kits
+              </li>
+              <li>
+                <strong>PPE:</strong> Chemical splash goggles, acid-resistant gloves, face shield
+                for topping up, apron
+              </li>
+              <li>
+                <strong>Storage:</strong> Acid-resistant containers, bunded area (110% of largest
+                container), away from alkalis and metals
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  SF6 Gas (Sulphur Hexafluoride)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Used as an insulating and arc-quenching medium in medium and high-voltage
-                  switchgear (gas-insulated switchgear — GIS). While SF6 itself has low toxicity, it
-                  is denser than air and can displace oxygen in enclosed spaces. More critically,
-                  when SF6 is exposed to electrical arcing, it decomposes into highly toxic
-                  by-products.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Asphyxiation (oxygen displacement), toxic decomposition
-                    products (SO2, HF, metal fluorides)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> Gas detection/monitoring, forced ventilation in GIS
-                    rooms, leak detection, certified personnel only
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE:</strong> Self-contained breathing apparatus (SCBA) for emergency
-                    response; air-supplied respirator for decomposition products
-                  </li>
-                  <li className="pl-1">
-                    <strong>Regulation:</strong> F-Gas Regulations require recovery; SF6 is also
-                    covered by COSHH for health risks
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="SF6 Gas (Sulphur Hexafluoride)">
+            <p>
+              Used as an insulating and arc-quenching medium in medium and high-voltage switchgear
+              (gas-insulated switchgear — GIS). While SF6 itself has low toxicity, it is denser than
+              air and can displace oxygen in enclosed spaces. More critically, when SF6 is exposed
+              to electrical arcing, it decomposes into highly toxic by-products.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Asphyxiation (oxygen displacement), toxic decomposition
+                products (SO2, HF, metal fluorides)
+              </li>
+              <li>
+                <strong>Controls:</strong> Gas detection/monitoring, forced ventilation in GIS
+                rooms, leak detection, certified personnel only
+              </li>
+              <li>
+                <strong>PPE:</strong> Self-contained breathing apparatus (SCBA) for emergency
+                response; air-supplied respirator for decomposition products
+              </li>
+              <li>
+                <strong>Regulation:</strong> F-Gas Regulations require recovery; SF6 is also covered
+                by COSHH for health risks
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Transformer Oil</h3>
-                <p className="text-sm text-white mb-2">
-                  Mineral insulating oil used in power transformers. Prolonged skin contact causes
-                  dermatitis, and older oils may be contaminated with PCBs (polychlorinated
-                  biphenyls), which are carcinogenic. Oil mist from heated transformers is a
-                  respiratory hazard.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hazard:</strong> Skin irritation/dermatitis, potential PCB contamination
-                    (carcinogen), oil mist inhalation, environmental pollution
-                  </li>
-                  <li className="pl-1">
-                    <strong>Controls:</strong> PCB testing before maintenance, bunded storage, drip
-                    trays during work, oil-resistant gloves
-                  </li>
-                  <li className="pl-1">
-                    <strong>PPE:</strong> Oil-resistant gloves, safety glasses, overalls, RPE if oil
-                    mist present
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Transformer Oil">
+            <p>
+              Mineral insulating oil used in power transformers. Prolonged skin contact causes
+              dermatitis, and older oils may be contaminated with PCBs (polychlorinated biphenyls),
+              which are carcinogenic. Oil mist from heated transformers is a respiratory hazard.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard:</strong> Skin irritation/dermatitis, potential PCB contamination
+                (carcinogen), oil mist inhalation, environmental pollution
+              </li>
+              <li>
+                <strong>Controls:</strong> PCB testing before maintenance, bunded storage, drip
+                trays during work, oil-resistant gloves
+              </li>
+              <li>
+                <strong>PPE:</strong> Oil-resistant gloves, safety glasses, overalls, RPE if oil
+                mist present
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Storage Requirements</p>
-              <p className="text-sm text-white">
-                All hazardous substances must be stored in accordance with their SDS requirements.
-                General principles include: store in original containers with labels intact; keep
-                incompatible substances separated (acids from alkalis, flammables from oxidisers);
-                ensure adequate ventilation; keep quantities to the minimum needed; provide bunding
-                for liquids; secure against unauthorised access; maintain appropriate temperature;
-                and ensure spill response equipment is nearby. In your van, secure chemicals so they
-                cannot spill or leak during transit.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Storage Requirements">
+            <p>
+              All hazardous substances must be stored in accordance with their SDS requirements.
+              General principles include: store in original containers with labels intact; keep
+              incompatible substances separated (acids from alkalis, flammables from oxidisers);
+              ensure adequate ventilation; keep quantities to the minimum needed; provide bunding
+              for liquids; secure against unauthorised access; maintain appropriate temperature; and
+              ensure spill response equipment is nearby. In your van, secure chemicals so they
+              cannot spill or leak during transit.
+            </p>
+            <p>
               <strong>ST1426 link:</strong> Understanding the hazardous substances in your work
               environment and knowing how to work safely with them is a core competency for the
               maintenance technician standard. You must demonstrate that you can identify hazards,
               follow COSHH assessments, use PPE correctly, and report concerns.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05: Safety Data Sheets and Practical Application */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Safety Data Sheets and Practical Application
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety Data Sheets and Practical Application</ContentEyebrow>
+
+          <ConceptBlock title="Safety Data Sheets and Practical Application">
             <p>
               The safety data sheet (SDS) is the most important source of information about a
               hazardous substance. Under the CLP Regulation and REACH, suppliers must provide an SDS
@@ -1031,244 +916,214 @@ const MOETModule1Section5_2 = () => {
               need to know to use, store and dispose of the substance safely — but only if you
               actually read it.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The 16 Sections of an SDS
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Section</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Why It Matters</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">Identification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Product name, supplier, emergency contact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">Hazards identification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Classification, pictograms, signal words, hazard statements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3</td>
-                      <td className="border border-white/10 px-3 py-2">Composition</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chemical ingredients and concentrations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4</td>
-                      <td className="border border-white/10 px-3 py-2">First aid measures</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate actions for each exposure route
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">5</td>
-                      <td className="border border-white/10 px-3 py-2">Fire-fighting measures</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Suitable extinguishing media, special hazards in fire
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6</td>
-                      <td className="border border-white/10 px-3 py-2">Accidental release</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Spill response procedures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">7</td>
-                      <td className="border border-white/10 px-3 py-2">Handling and storage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe handling precautions, storage conditions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">8</td>
-                      <td className="border border-white/10 px-3 py-2">Exposure controls / PPE</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        WELs, engineering controls, PPE specifications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">9–16</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical/chemical, stability, toxicology, ecology, disposal, transport,
-                        regulatory, other
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Detailed technical information for specialist use
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="The 16 Sections of an SDS">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Section</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Content</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Why It Matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">1</td>
+                    <td className="border border-white/10 px-3 py-2">Identification</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Product name, supplier, emergency contact
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">2</td>
+                    <td className="border border-white/10 px-3 py-2">Hazards identification</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Classification, pictograms, signal words, hazard statements
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">3</td>
+                    <td className="border border-white/10 px-3 py-2">Composition</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Chemical ingredients and concentrations
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">4</td>
+                    <td className="border border-white/10 px-3 py-2">First aid measures</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Immediate actions for each exposure route
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">5</td>
+                    <td className="border border-white/10 px-3 py-2">Fire-fighting measures</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Suitable extinguishing media, special hazards in fire
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">6</td>
+                    <td className="border border-white/10 px-3 py-2">Accidental release</td>
+                    <td className="border border-white/10 px-3 py-2">Spill response procedures</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">7</td>
+                    <td className="border border-white/10 px-3 py-2">Handling and storage</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Safe handling precautions, storage conditions
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">8</td>
+                    <td className="border border-white/10 px-3 py-2">Exposure controls / PPE</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      WELs, engineering controls, PPE specifications
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">9–16</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Physical/chemical, stability, toxicology, ecology, disposal, transport,
+                      regulatory, other
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Detailed technical information for specialist use
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Practical COSHH Application: Scenario
-              </h3>
-              <p className="text-sm text-white mb-2">
+          <Scenario
+            title="Practical COSHH Application: Replacing a UPS Battery Bank"
+            situation={
+              <>
                 You are tasked with replacing a failed UPS battery bank in a small plant room. Here
-                is how COSHH applies to this routine maintenance task:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+                is how COSHH applies to this routine maintenance task.
+              </>
+            }
+            whatToDo={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Hazardous substances:</strong> Sulphuric acid (battery electrolyte),
                   hydrogen gas (from charging), lead dust (from corroded terminals)
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>COSHH assessment:</strong> Check the assessment covers battery maintenance
                   in confined plant rooms
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Controls:</strong> Ensure plant room ventilation is working (hydrogen gas
                   accumulation risk); use acid-resistant PPE; have eye wash and spill kit available
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>PPE:</strong> Chemical splash goggles, acid-resistant gloves, face shield,
                   overalls
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Waste:</strong> Old batteries are hazardous waste — arrange collection by
                   a licensed carrier with consignment note
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Emergency:</strong> Know the first aid procedures for acid splash to eyes
                   and skin before starting work
                 </li>
               </ul>
-            </div>
+            }
+          />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">COSHH Register</h3>
-                <p className="text-sm text-white">
-                  Your company should maintain a COSHH register — a list of all hazardous substances
-                  used, with the corresponding SDS and COSHH assessment for each. The register
-                  should be kept up to date and accessible to all workers. When you bring a new
-                  product onto site, check whether it is on the register. If not, obtain the SDS and
-                  ensure an assessment is carried out before use.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Reporting Concerns</h3>
-                <p className="text-sm text-white">
-                  If you believe that COSHH controls are inadequate, that you are being exposed to
-                  substances without proper assessment, or that you are developing symptoms that
-                  might be related to substance exposure, you have a duty to report this to your
-                  supervisor. Under the Health and Safety at Work Act 1974, you also have the right
-                  to raise safety concerns without fear of detriment. RIDDOR requires reporting of
-                  occupational diseases including occupational asthma.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> COSHH compliance is not optional. Under the Health and Safety
-              at Work Act 1974 and COSHH Regulations 2002, employers face unlimited fines and
-              imprisonment for failure to control exposure to hazardous substances. Workers who
-              deliberately bypass COSHH controls may also face personal prosecution.
+          <ConceptBlock title="COSHH Register">
+            <p>
+              Your company should maintain a COSHH register — a list of all hazardous substances
+              used, with the corresponding SDS and COSHH assessment for each. The register should be
+              kept up to date and accessible to all workers. When you bring a new product onto site,
+              check whether it is on the register. If not, obtain the SDS and ensure an assessment
+              is carried out before use.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Reporting Concerns">
+            <p>
+              If you believe that COSHH controls are inadequate, that you are being exposed to
+              substances without proper assessment, or that you are developing symptoms that might
+              be related to substance exposure, you have a duty to report this to your supervisor.
+              Under the Health and Safety at Work Act 1974, you also have the right to raise safety
+              concerns without fear of detriment. RIDDOR requires reporting of occupational diseases
+              including occupational asthma.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="COSHH Compliance is Not Optional">
+            <p>
+              COSHH compliance is not optional. Under the Health and Safety at Work Act 1974 and
+              COSHH Regulations 2002, employers face unlimited fines and imprisonment for failure to
+              control exposure to hazardous substances. Workers who deliberately bypass COSHH
+              controls may also face personal prosecution.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">COSHH Assessment (8 Steps)</p>
-                <ul className="space-y-0.5">
-                  <li>1. Identify hazardous substances</li>
-                  <li>2. Decide who might be harmed</li>
-                  <li>3. Evaluate the risks</li>
-                  <li>4. Record significant findings</li>
-                  <li>5. Implement control measures</li>
-                  <li>6. Plan monitoring and maintenance</li>
-                  <li>7. Provide information/training</li>
-                  <li>8. Review the assessment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>COSHH Regulations 2002 — Primary legislation</li>
-                  <li>CLP Regulation — Classification and labelling</li>
-                  <li>EH40/2005 — Workplace exposure limits</li>
-                  <li>HSG97 — A Step by Step Guide to COSHH</li>
-                  <li>INDG136 — Working with substances hazardous to health</li>
-                  <li>ST1426 — Safe working practices KSBs</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              '1. Identify hazardous substances.',
+              '2. Decide who might be harmed.',
+              '3. Evaluate the risks.',
+              '4. Record significant findings.',
+              '5. Implement control measures.',
+              '6. Plan monitoring and maintenance.',
+              '7. Provide information/training.',
+              '8. Review the assessment.',
+              'COSHH Regulations 2002 — Primary legislation.',
+              'CLP Regulation — Classification and labelling.',
+              'EH40/2005 — Workplace exposure limits.',
+              'HSG97 — A Step by Step Guide to COSHH.',
+              'INDG136 — Working with substances hazardous to health.',
+              'ST1426 — Safe working practices KSBs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="COSHH awareness knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Waste Management and Recycling
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Energy Efficiency in Maintenance
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Waste Management
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-3">
-              Next: Energy Efficiency
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

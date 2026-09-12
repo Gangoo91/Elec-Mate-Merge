@@ -185,7 +185,7 @@ const EmergencyLightingCalculator = () => {
 
     return {
       meta: {
-        title: 'Emergency Lighting Calculator',
+        title: 'Emergency Lighting',
         subtitle: 'Luminaire count, spacing and battery sizing for an emergency escape lighting system',
         standard: 'BS 5266-1',
       },

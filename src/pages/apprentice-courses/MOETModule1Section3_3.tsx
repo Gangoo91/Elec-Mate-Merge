@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.3 · Subsection 3 — Hierarchy of Controls
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Work environment hazards and risks. Risk assessments."
+ *              · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Hierarchy of Controls - MOET Module 1 Section 3.3';
@@ -42,12 +80,7 @@ const quickCheckQuestions = [
     id: 'residual-risk',
     question:
       'After applying all reasonably practicable controls from the hierarchy, what remains is called:',
-    options: [
-      'Eliminated risk',
-      'Transferred risk',
-      'Residual risk',
-      'Theoretical risk',
-    ],
+    options: ['Eliminated risk', 'Transferred risk', 'Residual risk', 'Theoretical risk'],
     correctIndex: 2,
     explanation:
       'Residual risk is the level of risk that remains after all reasonably practicable control measures have been applied. It is the risk the work team must manage through ongoing vigilance, monitoring and compliance with the safe system of work. Residual risk must be ALARP (as low as reasonably practicable) before work can proceed.',
@@ -100,12 +133,7 @@ const quizQuestions = [
     id: 3,
     question:
       'Substituting a solvent-based contact cleaner with a water-based alternative is an example of:',
-    options: [
-      'Engineering control',
-      'Elimination',
-      'Administrative control',
-      'Substitution',
-    ],
+    options: ['Engineering control', 'Elimination', 'Administrative control', 'Substitution'],
     correctAnswer: 3,
     explanation:
       'Substitution involves replacing a hazardous substance, process or piece of equipment with a less hazardous alternative. Replacing a flammable, toxic solvent with a water-based cleaner reduces the chemical hazard without eliminating the cleaning activity. The hazard is not removed entirely (the water-based cleaner may still have some hazards), but it is significantly reduced.',
@@ -263,116 +291,54 @@ const faqs = [
 ];
 
 const MOETModule1Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Hierarchy of Controls
-          </h1>
-          <p className="text-white">
-            Selecting and applying control measures in order of effectiveness
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.3 · Subsection 3"
+        title="Hierarchy of Controls"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Selecting and applying control measures in order of effectiveness.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>5 levels:</strong> Elimination, substitution, engineering, administrative,
-                PPE
-              </li>
-              <li className="pl-1">
-                <strong>Principle:</strong> Higher levels are more effective and reliable
-              </li>
-              <li className="pl-1">
-                <strong>Application:</strong> Start at elimination, work down to PPE
-              </li>
-              <li className="pl-1">
-                <strong>Residual risk:</strong> What remains after all controls are applied
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Elimination:</strong> De-energise circuits (safe isolation)
-              </li>
-              <li className="pl-1">
-                <strong>Engineering:</strong> IP-rated enclosures, interlocks, RCDs
-              </li>
-              <li className="pl-1">
-                <strong>Administrative:</strong> Permits to work, safe systems, training
-              </li>
-              <li className="pl-1">
-                <strong>PPE:</strong> Insulated gloves, arc flash suits, safety footwear
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              '5 levels: elimination, substitution, engineering, administrative, PPE.',
+              'Principle: higher levels are more effective and reliable.',
+              'Application: start at elimination, work down to PPE.',
+              'Residual risk: what remains after all controls are applied.',
+              'Elimination: de-energise circuits (safe isolation).',
+              'Engineering: IP-rated enclosures, interlocks, RCDs.',
+              'Administrative: permits to work, safe systems, training.',
+              'PPE: insulated gloves, arc flash suits, safety footwear.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'List the five levels of the hierarchy of controls in order of effectiveness',
               'Give practical examples of each control level in electrical maintenance',
               'Explain why higher-level controls are preferred over lower-level controls',
               'Understand the concept of combined controls and defence in depth',
               'Define residual risk and explain how it should be managed',
               'Apply the hierarchy to select appropriate controls for electrical work',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>The five-level hierarchy</ContentEyebrow>
 
-        {/* Section 01: Overview of the Hierarchy */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Five-Level Hierarchy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Controls that act on the hazard beat controls that depend on behaviour"
+            plainEnglish="Higher up the ladder, the control works whether or not anyone remembers to follow it. Lower down, it only works if people do the right thing every time."
+          >
             <p>
               The hierarchy of controls is a universally accepted framework for selecting and
               implementing risk control measures. It is based on a simple principle: controls that
@@ -380,108 +346,71 @@ const MOETModule1Section3_3 = () => {
               human behaviour. The hierarchy arranges control measures in order from most effective
               (elimination) to least effective (personal protective equipment).
             </p>
-
             <p>
               This framework is embedded in the Management of Health and Safety at Work Regulations
               1999 (Schedule 1, General Principles of Prevention) and is referenced in numerous
               sector-specific regulations and guidance. For electrical maintenance technicians, it
               is a fundamental tool for deciding how to make your work safe.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-green-400 bg-green-500/20 px-2 py-0.5 rounded">
-                    LEVEL 1
-                  </span>
-                  <h3 className="text-sm font-medium text-green-400">Elimination</h3>
-                </div>
-                <p className="text-sm text-white mb-2">
-                  Physically remove the hazard from the workplace entirely. This is the most
-                  effective control because the hazard no longer exists — there is zero residual
-                  risk from that specific hazard.
-                </p>
-                <p className="text-xs text-white">
-                  <strong>Effectiveness:</strong> Highest — removes the hazard at source. No
-                  reliance on human behaviour.
-                </p>
-              </div>
+          <ConceptBlock title="Level 1 — Elimination">
+            <p>
+              Physically remove the hazard from the workplace entirely. This is the most effective
+              control because the hazard no longer exists — there is zero residual risk from that
+              specific hazard.
+            </p>
+            <p>
+              <strong>Effectiveness:</strong> Highest — removes the hazard at source. No reliance on
+              human behaviour.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-green-300 bg-green-500/15 px-2 py-0.5 rounded">
-                    LEVEL 2
-                  </span>
-                  <h3 className="text-sm font-medium text-green-300">Substitution</h3>
-                </div>
-                <p className="text-sm text-white mb-2">
-                  Replace the hazardous substance, process, equipment or activity with a less
-                  hazardous alternative. The hazard is not removed entirely but is reduced at
-                  source.
-                </p>
-                <p className="text-xs text-white">
-                  <strong>Effectiveness:</strong> Very high — reduces the hazard at source. Minimal
-                  reliance on human behaviour.
-                </p>
-              </div>
+          <ConceptBlock title="Level 2 — Substitution">
+            <p>
+              Replace the hazardous substance, process, equipment or activity with a less hazardous
+              alternative. The hazard is not removed entirely but is reduced at source.
+            </p>
+            <p>
+              <strong>Effectiveness:</strong> Very high — reduces the hazard at source. Minimal
+              reliance on human behaviour.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-yellow-500/5 border border-yellow-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-yellow-400 bg-yellow-500/15 px-2 py-0.5 rounded">
-                    LEVEL 3
-                  </span>
-                  <h3 className="text-sm font-medium text-yellow-400">Engineering Controls</h3>
-                </div>
-                <p className="text-sm text-white mb-2">
-                  Isolate people from the hazard through physical means — guards, barriers,
-                  enclosures, interlocks, ventilation systems, or redesigned equipment. The hazard
-                  still exists, but access to it is physically restricted.
-                </p>
-                <p className="text-xs text-white">
-                  <strong>Effectiveness:</strong> High — creates a physical barrier. Works
-                  automatically without human action (if maintained).
-                </p>
-              </div>
+          <ConceptBlock title="Level 3 — Engineering controls">
+            <p>
+              Isolate people from the hazard through physical means — guards, barriers, enclosures,
+              interlocks, ventilation systems, or redesigned equipment. The hazard still exists, but
+              access to it is physically restricted.
+            </p>
+            <p>
+              <strong>Effectiveness:</strong> High — creates a physical barrier. Works automatically
+              without human action (if maintained).
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-orange-500/5 border border-orange-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-orange-400 bg-orange-500/15 px-2 py-0.5 rounded">
-                    LEVEL 4
-                  </span>
-                  <h3 className="text-sm font-medium text-orange-400">Administrative Controls</h3>
-                </div>
-                <p className="text-sm text-white mb-2">
-                  Change the way people work through procedures, training, supervision, signage,
-                  permits to work, job rotation, or scheduling. The hazard and the potential for
-                  exposure remain — control depends on people following the system.
-                </p>
-                <p className="text-xs text-white">
-                  <strong>Effectiveness:</strong> Moderate — depends entirely on human compliance.
-                  Subject to drift, complacency and error.
-                </p>
-              </div>
+          <ConceptBlock title="Level 4 — Administrative controls">
+            <p>
+              Change the way people work through procedures, training, supervision, signage, permits
+              to work, job rotation, or scheduling. The hazard and the potential for exposure remain
+              — control depends on people following the system.
+            </p>
+            <p>
+              <strong>Effectiveness:</strong> Moderate — depends entirely on human compliance.
+              Subject to drift, complacency and error.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-red-500/5 border border-red-500/20">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs font-bold text-red-400 bg-red-500/15 px-2 py-0.5 rounded">
-                    LEVEL 5
-                  </span>
-                  <h3 className="text-sm font-medium text-red-400">
-                    Personal Protective Equipment (PPE)
-                  </h3>
-                </div>
-                <p className="text-sm text-white mb-2">
-                  Protect the individual from the hazard using personal equipment — gloves, safety
-                  glasses, helmets, hearing protection, respiratory protection, arc flash suits. The
-                  hazard remains at full strength; the PPE is the only barrier.
-                </p>
-                <p className="text-xs text-white">
-                  <strong>Effectiveness:</strong> Lowest — protects only the wearer. Depends on
-                  correct selection, fitting, use and maintenance.
-                </p>
-              </div>
-            </div>
-
+          <ConceptBlock title="Level 5 — Personal protective equipment (PPE)">
+            <p>
+              Protect the individual from the hazard using personal equipment — gloves, safety
+              glasses, helmets, hearing protection, respiratory protection, arc flash suits. The
+              hazard remains at full strength; the PPE is the only barrier.
+            </p>
+            <p>
+              <strong>Effectiveness:</strong> Lowest — protects only the wearer. Depends on correct
+              selection, fitting, use and maintenance.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> The hierarchy is not a pick list — it is a decision
               framework. You must start at Level 1 and work downwards, applying the most effective
@@ -489,290 +418,209 @@ const MOETModule1Section3_3 = () => {
               controls have been fully considered and either applied or ruled out (with
               justification) should you move to lower levels.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Electrical Maintenance Examples */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Applying the Hierarchy to Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Applying the hierarchy to electrical maintenance</ContentEyebrow>
+
+          <ConceptBlock title="From theory to the real hazards of the job">
             <p>
               Understanding the hierarchy in theory is one thing — applying it to the real hazards
               of electrical maintenance work is what matters. The following examples show how each
               level of the hierarchy applies to common electrical maintenance tasks.
             </p>
+            <p>
+              <strong>Elimination</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-green-400/70">
+              <li>
+                De-energise the circuit before work begins (safe isolation) — eliminates the live
+                working hazard
+              </li>
+              <li>
+                Remove redundant wiring or equipment entirely instead of leaving it disconnected in
+                situ
+              </li>
+              <li>Redesign the installation to eliminate a cable route through a hazardous area</li>
+              <li>
+                Replace an overhead cable crossing with an underground route to eliminate contact
+                risk
+              </li>
+            </ul>
+            <p>
+              <strong>Substitution</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-green-300/70">
+              <li>
+                Replace 110 V site tools with battery-powered alternatives (lower electrical risk)
+              </li>
+              <li>Substitute a flammable solvent cleaner with a water-based alternative</li>
+              <li>
+                Replace MIMS cable with thermoplastic-insulated cable where conditions allow (easier
+                handling, lower mechanical hazard)
+              </li>
+              <li>
+                Use pre-fabricated wiring assemblies instead of on-site fabrication to reduce
+                exposure time
+              </li>
+            </ul>
+            <p>
+              <strong>Engineering</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-yellow-400/70">
+              <li>Install IP2X (finger-safe) covers on distribution board busbars</li>
+              <li>
+                Fit interlocked isolators so equipment cannot be energised with guards removed
+              </li>
+              <li>Install RCDs for additional shock protection (30 mA for socket circuits)</li>
+              <li>
+                Use cable protection systems (conduit, trunking, armoured cable) to prevent
+                mechanical damage
+              </li>
+              <li>Install barriers and insulating screens when live working is justified</li>
+              <li>Provide local exhaust ventilation when soldering in enclosed spaces</li>
+            </ul>
+            <p>
+              <strong>Administrative</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-orange-400/70">
+              <li>Implement a permit to work system for HV switching and live working</li>
+              <li>Write and follow safe systems of work for electrical maintenance tasks</li>
+              <li>Provide competence-based training and regular refresher training</li>
+              <li>Display warning signs and labels on electrical equipment</li>
+              <li>Conduct toolbox talks on specific hazards before starting work</li>
+              <li>Rotate workers to reduce fatigue on repetitive or demanding tasks</li>
+              <li>Implement a lock-out/tag-out (LOTO) procedure for isolation</li>
+            </ul>
+            <p>
+              <strong>PPE</strong>
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-red-400/70">
+              <li>Insulated gloves (Class 00/0 for LV work) when live working is authorised</li>
+              <li>Arc flash rated face shield and clothing for work on high fault-level systems</li>
+              <li>Safety footwear with insulating soles</li>
+              <li>Safety glasses/goggles when there is a risk of ejected particles</li>
+              <li>Hearing protection when working near noisy equipment (generators, UPS)</li>
+              <li>Respiratory protection when working with chemicals or in dusty environments</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Maintenance Examples
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
-                        Elimination
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        <ul className="space-y-1 list-disc list-outside ml-4">
-                          <li>
-                            De-energise the circuit before work begins (safe isolation) — eliminates
-                            the live working hazard
-                          </li>
-                          <li>
-                            Remove redundant wiring or equipment entirely instead of leaving it
-                            disconnected in situ
-                          </li>
-                          <li>
-                            Redesign the installation to eliminate a cable route through a hazardous
-                            area
-                          </li>
-                          <li>
-                            Replace an overhead cable crossing with an underground route to
-                            eliminate contact risk
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-green-300">
-                        Substitution
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        <ul className="space-y-1 list-disc list-outside ml-4">
-                          <li>
-                            Replace 110 V site tools with battery-powered alternatives (lower
-                            electrical risk)
-                          </li>
-                          <li>
-                            Substitute a flammable solvent cleaner with a water-based alternative
-                          </li>
-                          <li>
-                            Replace MIMS cable with thermoplastic-insulated cable where conditions
-                            allow (easier handling, lower mechanical hazard)
-                          </li>
-                          <li>
-                            Use pre-fabricated wiring assemblies instead of on-site fabrication to
-                            reduce exposure time
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-yellow-400">
-                        Engineering
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        <ul className="space-y-1 list-disc list-outside ml-4">
-                          <li>Install IP2X (finger-safe) covers on distribution board busbars</li>
-                          <li>
-                            Fit interlocked isolators so equipment cannot be energised with guards
-                            removed
-                          </li>
-                          <li>
-                            Install RCDs for additional shock protection (30 mA for socket circuits)
-                          </li>
-                          <li>
-                            Use cable protection systems (conduit, trunking, armoured cable) to
-                            prevent mechanical damage
-                          </li>
-                          <li>
-                            Install barriers and insulating screens when live working is justified
-                          </li>
-                          <li>
-                            Provide local exhaust ventilation when soldering in enclosed spaces
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-orange-400">
-                        Administrative
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        <ul className="space-y-1 list-disc list-outside ml-4">
-                          <li>
-                            Implement a permit to work system for HV switching and live working
-                          </li>
-                          <li>
-                            Write and follow safe systems of work for electrical maintenance tasks
-                          </li>
-                          <li>Provide competence-based training and regular refresher training</li>
-                          <li>Display warning signs and labels on electrical equipment</li>
-                          <li>Conduct toolbox talks on specific hazards before starting work</li>
-                          <li>Rotate workers to reduce fatigue on repetitive or demanding tasks</li>
-                          <li>Implement a lock-out/tag-out (LOTO) procedure for isolation</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
-                        PPE
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        <ul className="space-y-1 list-disc list-outside ml-4">
-                          <li>
-                            Insulated gloves (Class 00/0 for LV work) when live working is
-                            authorised
-                          </li>
-                          <li>
-                            Arc flash rated face shield and clothing for work on high fault-level
-                            systems
-                          </li>
-                          <li>Safety footwear with insulating soles</li>
-                          <li>Safety glasses/goggles when there is a risk of ejected particles</li>
-                          <li>
-                            Hearing protection when working near noisy equipment (generators, UPS)
-                          </li>
-                          <li>
-                            Respiratory protection when working with chemicals or in dusty
-                            environments
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <ConceptBlock title="Safe isolation — the hierarchy in action">
+            <p>
+              Safe isolation is the single most important application of the hierarchy of controls
+              in electrical maintenance. By de-energising a circuit (elimination), you remove the
+              risk of electric shock and arc flash for the duration of the work. This is why
+              Regulation 14 of the Electricity at Work Regulations 1989 establishes dead working as
+              the default — it is the most effective control available. The safe isolation procedure
+              (isolate, lock off, prove dead, post warning notices) combines elimination with
+              engineering controls (locks) and administrative controls (notices, permits), creating
+              a robust multi-layered defence.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm font-medium text-elec-yellow mb-2">
-                Safe Isolation — The Hierarchy in Action
-              </p>
-              <p className="text-sm text-white">
-                Safe isolation is the single most important application of the hierarchy of controls
-                in electrical maintenance. By de-energising a circuit (elimination), you remove the
-                risk of electric shock and arc flash for the duration of the work. This is why
-                Regulation 14 of the Electricity at Work Regulations 1989 establishes dead working
-                as the default — it is the most effective control available. The safe isolation
-                procedure (isolate, lock off, prove dead, post warning notices) combines elimination
-                with engineering controls (locks) and administrative controls (notices, permits),
-                creating a robust multi-layered defence.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: Combined Controls and Defence in Depth */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Combined Controls and Defence in Depth
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Combined controls and defence in depth</ContentEyebrow>
+
+          <ConceptBlock title="No single control should be a single point of failure">
             <p>
               In practice, most hazards require a combination of controls from multiple levels of
-              the hierarchy. This approach — known as "defence in depth" — provides multiple layers
-              of protection so that if one control fails, the others still provide some degree of
-              safety. Relying on a single control, no matter how robust, creates a single point of
-              failure.
+              the hierarchy. This approach — known as &quot;defence in depth&quot; — provides
+              multiple layers of protection so that if one control fails, the others still provide
+              some degree of safety. Relying on a single control, no matter how robust, creates a
+              single point of failure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example: Working on a Distribution Board
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Consider a maintenance technician replacing a circuit breaker in a three-phase
-                distribution board. The following combined controls would typically be applied:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Elimination:</strong> Isolate the supply to the board — de-energise the
-                  hazard
-                </li>
-                <li className="pl-1">
-                  <strong>Engineering:</strong> Apply a lock to the isolator so it cannot be
-                  re-energised; use an approved voltage indicator to prove dead (GS38 compliant)
-                </li>
-                <li className="pl-1">
-                  <strong>Administrative:</strong> Obtain a permit to work (if required by the
-                  organisation's policy); follow the safe system of work; post warning notices at
-                  the isolation point; brief the work team
-                </li>
-                <li className="pl-1">
-                  <strong>PPE:</strong> Wear safety footwear and safety glasses as a baseline; keep
-                  insulated gloves available for the proving dead procedure
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                If any single control fails — for example, if the lock is accidentally removed — the
-                remaining controls (warning notice, permit, prove dead procedure) still provide
-                protection. No single failure should result in a worker being exposed to the full,
-                uncontrolled hazard.
-              </p>
-            </div>
+          <ConceptBlock title="Example: working on a distribution board">
+            <p>
+              Consider a maintenance technician replacing a circuit breaker in a three-phase
+              distribution board. The following combined controls would typically be applied:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Elimination:</strong> Isolate the supply to the board — de-energise the
+                hazard
+              </li>
+              <li>
+                <strong>Engineering:</strong> Apply a lock to the isolator so it cannot be
+                re-energised; use an approved voltage indicator to prove dead (GS38 compliant)
+              </li>
+              <li>
+                <strong>Administrative:</strong> Obtain a permit to work (if required by the
+                organisation&apos;s policy); follow the safe system of work; post warning notices at
+                the isolation point; brief the work team
+              </li>
+              <li>
+                <strong>PPE:</strong> Wear safety footwear and safety glasses as a baseline; keep
+                insulated gloves available for the proving dead procedure
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Swiss Cheese Model</p>
-              <p className="text-sm text-white">
-                Professor James Reason's "Swiss cheese model" illustrates defence in depth. Each
-                control measure is like a slice of Swiss cheese — it has holes (weaknesses). When
-                the holes in multiple slices line up, the hazard passes through all the defences and
-                an accident occurs. By having multiple layers with different types of holes (i.e.,
-                controls from different levels of the hierarchy, with different failure modes), the
-                probability of all holes aligning is dramatically reduced. This is why combined
-                controls are always more effective than a single control.
-              </p>
-            </div>
+          <ConceptBlock title="What happens if one layer fails">
+            <p>
+              If any single control fails — for example, if the lock is accidentally removed — the
+              remaining controls (warning notice, permit, prove dead procedure) still provide
+              protection. No single failure should result in a worker being exposed to the full,
+              uncontrolled hazard.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Selecting the Right Combination
-              </h3>
-              <p className="text-sm text-white mb-3">When selecting controls, consider:</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>The nature of the hazard:</strong> Electrical, mechanical, chemical,
-                  ergonomic — different hazards respond differently to different controls
-                </li>
-                <li className="pl-1">
-                  <strong>The level of risk:</strong> Higher risks require more robust, higher-level
-                  controls and more layers
-                </li>
-                <li className="pl-1">
-                  <strong>The work environment:</strong> What is practicable on site — a confined
-                  substation limits the engineering controls that can be installed
-                </li>
-                <li className="pl-1">
-                  <strong>The duration of exposure:</strong> Short-duration tasks may justify
-                  different controls from long-duration activities
-                </li>
-                <li className="pl-1">
-                  <strong>The competence of the workforce:</strong> Administrative controls are only
-                  effective if workers understand and follow them
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance requirements:</strong> Engineering controls need ongoing
-                  maintenance to remain effective
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="The Swiss cheese model">
+            <p>
+              Professor James Reason&apos;s &quot;Swiss cheese model&quot; illustrates defence in
+              depth. Each control measure is like a slice of Swiss cheese — it has holes
+              (weaknesses). When the holes in multiple slices line up, the hazard passes through all
+              the defences and an accident occurs. By having multiple layers with different types of
+              holes (i.e., controls from different levels of the hierarchy, with different failure
+              modes), the probability of all holes aligning is dramatically reduced. This is why
+              combined controls are always more effective than a single control.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Selecting the right combination">
+            <p>When selecting controls, consider:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>The nature of the hazard:</strong> Electrical, mechanical, chemical,
+                ergonomic — different hazards respond differently to different controls
+              </li>
+              <li>
+                <strong>The level of risk:</strong> Higher risks require more robust, higher-level
+                controls and more layers
+              </li>
+              <li>
+                <strong>The work environment:</strong> What is practicable on site — a confined
+                substation limits the engineering controls that can be installed
+              </li>
+              <li>
+                <strong>The duration of exposure:</strong> Short-duration tasks may justify
+                different controls from long-duration activities
+              </li>
+              <li>
+                <strong>The competence of the workforce:</strong> Administrative controls are only
+                effective if workers understand and follow them
+              </li>
+              <li>
+                <strong>Maintenance requirements:</strong> Engineering controls need ongoing
+                maintenance to remain effective
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Residual Risk and Monitoring */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Residual Risk and Control Effectiveness Monitoring
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Residual risk and control effectiveness monitoring</ContentEyebrow>
+
+          <ConceptBlock title="Some risk will usually remain">
             <p>
               After applying all reasonably practicable controls from the hierarchy, some risk will
               usually remain. This is residual risk — the level of risk that the work team must
@@ -780,116 +628,116 @@ const MOETModule1Section3_3 = () => {
               system of work. Understanding and communicating residual risk is critical because it
               tells workers what hazards they are still exposed to, even with controls in place.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Managing Residual Risk
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Communicate:</strong> Ensure all members of the work team understand what
-                  residual risks remain and what they need to do to manage them
-                </li>
-                <li className="pl-1">
-                  <strong>Monitor:</strong> Watch for changes in conditions that could increase the
-                  residual risk — weather changes, additional workers, equipment failures
-                </li>
-                <li className="pl-1">
-                  <strong>Review:</strong> Regularly check that controls are still effective and
-                  that the residual risk has not increased
-                </li>
-                <li className="pl-1">
-                  <strong>Record:</strong> Document the residual risk level in the risk assessment —
-                  typically using the "with controls" column of the risk matrix
-                </li>
-                <li className="pl-1">
-                  <strong>Accept only if ALARP:</strong> The residual risk must be ALARP — as low as
-                  reasonably practicable. If it is not, further controls are needed before work
-                  proceeds
-                </li>
-              </ul>
+          <ConceptBlock title="Managing residual risk">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Communicate:</strong> Ensure all members of the work team understand what
+                residual risks remain and what they need to do to manage them
+              </li>
+              <li>
+                <strong>Monitor:</strong> Watch for changes in conditions that could increase the
+                residual risk — weather changes, additional workers, equipment failures
+              </li>
+              <li>
+                <strong>Review:</strong> Regularly check that controls are still effective and that
+                the residual risk has not increased
+              </li>
+              <li>
+                <strong>Record:</strong> Document the residual risk level in the risk assessment —
+                typically using the &quot;with controls&quot; column of the risk matrix
+              </li>
+              <li>
+                <strong>Accept only if ALARP:</strong> The residual risk must be ALARP — as low as
+                reasonably practicable. If it is not, further controls are needed before work
+                proceeds
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Monitoring control effectiveness">
+            <p>
+              Controls are only as good as their ongoing maintenance and monitoring. All types of
+              controls can degrade, be defeated or prove inadequate over time:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Control type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">How it can fail</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Monitoring method
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Engineering (interlocks)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Mechanical wear, deliberate defeat, lack of maintenance
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Periodic functional testing, planned preventive maintenance
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Engineering (RCDs)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Internal component failure, nuisance tripping leading to bypass
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      6-monthly push-button test (user), periodic instrument test (electrician)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Administrative (procedures)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Procedural drift, poor training, complacency, time pressure
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Supervision, audits, observations, refresher training
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">PPE (insulated gloves)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Puncture, contamination, age degradation, incorrect class for voltage
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Pre-use visual inspection, inflation test, periodic dielectric test
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Monitoring Control Effectiveness
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Controls are only as good as their ongoing maintenance and monitoring. All types of
-                controls can degrade, be defeated or prove inadequate over time:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Control Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        How It Can Fail
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Monitoring Method
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Engineering (interlocks)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mechanical wear, deliberate defeat, lack of maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic functional testing, planned preventive maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Engineering (RCDs)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Internal component failure, nuisance tripping leading to bypass
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        6-monthly push-button test (user), periodic instrument test (electrician)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Administrative (procedures)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Procedural drift, poor training, complacency, time pressure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supervision, audits, observations, refresher training
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PPE (insulated gloves)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Puncture, contamination, age degradation, incorrect class for voltage
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pre-use visual inspection, inflation test, periodic dielectric test
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Defeating Controls</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Defeating controls"
+            whatHappens={
+              <>
                 One of the most dangerous failures is the deliberate defeat of engineering controls
                 by workers — for example, taping down an interlock switch so a machine can be
                 operated with the guard open, or bypassing an RCD because it causes nuisance
                 tripping. Defeating controls is almost always a sign of underlying problems: the
                 control may be poorly designed, causing productivity issues, or workers may not
-                understand its purpose. If you encounter a defeated control, report it immediately.
-                Under the Health and Safety at Work Act 1974, Section 8, it is a criminal offence to
-                intentionally or recklessly interfere with anything provided in the interests of
-                health and safety.
-              </p>
-            </div>
+                understand its purpose.
+              </>
+            }
+            doInstead={
+              <>
+                If you encounter a defeated control, report it immediately. Under the Health and
+                Safety at Work Act 1974, Section 8, it is a criminal offence to intentionally or
+                recklessly interfere with anything provided in the interests of health and safety.
+              </>
+            }
+          />
 
+          <ConceptBlock title="A behaviour you are responsible for">
             <p className="text-sm text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard requires you to
               monitor the effectiveness of control measures as part of your ongoing
@@ -898,16 +746,13 @@ const MOETModule1Section3_3 = () => {
               This behaviour is assessed in the end-point assessment professional discussion and
               practical observation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Section 05: Cost-Benefit Analysis */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Cost-Benefit Considerations in Control Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Cost-benefit considerations in control selection</ContentEyebrow>
+
+          <ConceptBlock title="Proportionate, not cheapest">
             <p>
               The ALARP principle requires that the cost of control measures be weighed against the
               risk reduction they achieve. This does not mean choosing the cheapest option — it
@@ -915,135 +760,122 @@ const MOETModule1Section3_3 = () => {
               high-severity hazards such as electrical contact, the expectation is that significant
               investment in controls is justified.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Factors in Cost-Benefit Analysis
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Initial cost:</strong> Purchase, installation and commissioning of the
-                  control measure
-                </li>
-                <li className="pl-1">
-                  <strong>Ongoing cost:</strong> Maintenance, inspection, replacement, training,
-                  supervision
-                </li>
-                <li className="pl-1">
-                  <strong>Reliability:</strong> How consistently the control works in practice —
-                  engineering controls are generally more reliable than administrative controls over
-                  time
-                </li>
-                <li className="pl-1">
-                  <strong>Effectiveness:</strong> How much risk reduction the control actually
-                  achieves
-                </li>
-                <li className="pl-1">
-                  <strong>Practicability:</strong> Whether the control can be implemented in the
-                  specific work environment and conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Impact on productivity:</strong> Controls that excessively impede work may
-                  be resisted or bypassed — good design integrates safety with efficiency
-                </li>
-                <li className="pl-1">
-                  <strong>Cost of failure:</strong> The potential consequences if the control fails
-                  — for fatal hazards, this is effectively infinite
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Factors in cost-benefit analysis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Initial cost:</strong> Purchase, installation and commissioning of the
+                control measure
+              </li>
+              <li>
+                <strong>Ongoing cost:</strong> Maintenance, inspection, replacement, training,
+                supervision
+              </li>
+              <li>
+                <strong>Reliability:</strong> How consistently the control works in practice —
+                engineering controls are generally more reliable than administrative controls over
+                time
+              </li>
+              <li>
+                <strong>Effectiveness:</strong> How much risk reduction the control actually
+                achieves
+              </li>
+              <li>
+                <strong>Practicability:</strong> Whether the control can be implemented in the
+                specific work environment and conditions
+              </li>
+              <li>
+                <strong>Impact on productivity:</strong> Controls that excessively impede work may
+                be resisted or bypassed — good design integrates safety with efficiency
+              </li>
+              <li>
+                <strong>Cost of failure:</strong> The potential consequences if the control fails —
+                for fatal hazards, this is effectively infinite
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 grid sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Higher-Level Controls
-                </h3>
-                <p className="text-sm text-white">
-                  Higher-level controls (elimination, substitution, engineering) often have higher
-                  upfront costs but lower ongoing costs because they do not require constant human
-                  compliance. A properly designed interlocked enclosure works every time it is
-                  engaged, regardless of training levels, fatigue or distraction. Over the life of
-                  an installation, engineering controls are often more cost-effective than
-                  continuous administrative measures.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Lower-Level Controls
-                </h3>
-                <p className="text-sm text-white">
-                  Lower-level controls (administrative, PPE) often have lower upfront costs but
-                  higher ongoing costs — training must be refreshed, procedures must be supervised,
-                  PPE must be replaced, and compliance must be monitored. They also have a higher
-                  failure rate because they depend on human behaviour, which is inherently variable.
-                  A permit to work system is only as good as the people operating it.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Higher-level controls">
+            <p>
+              Higher-level controls (elimination, substitution, engineering) often have higher
+              upfront costs but lower ongoing costs because they do not require constant human
+              compliance. A properly designed interlocked enclosure works every time it is engaged,
+              regardless of training levels, fatigue or distraction. Over the life of an
+              installation, engineering controls are often more cost-effective than continuous
+              administrative measures.
+            </p>
+          </ConceptBlock>
 
+          <ConceptBlock title="Lower-level controls">
+            <p>
+              Lower-level controls (administrative, PPE) often have lower upfront costs but higher
+              ongoing costs — training must be refreshed, procedures must be supervised, PPE must be
+              replaced, and compliance must be monitored. They also have a higher failure rate
+              because they depend on human behaviour, which is inherently variable. A permit to work
+              system is only as good as the people operating it.
+            </p>
             <p className="text-sm text-elec-yellow/70">
               <strong>Remember:</strong> For electrical hazards where the potential outcome is
               death, the courts have consistently held that the cost of prevention must be very high
-              indeed before it can be considered "grossly disproportionate" to the risk. In
-              practical terms, this means that safe isolation equipment, competence training,
+              indeed before it can be considered &quot;grossly disproportionate&quot; to the risk.
+              In practical terms, this means that safe isolation equipment, competence training,
               properly rated PPE and robust safe systems of work are always justified — their cost
               is trivial compared to the value of a human life.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'The hierarchy is not a pick list — it is a decision framework. You must start at Level 1 and work downwards, applying the most effective controls that are reasonably practicable at each level.',
+              'The safe isolation procedure (isolate, lock off, prove dead, post warning notices) combines elimination with engineering controls (locks) and administrative controls (notices, permits), creating a robust multi-layered defence.',
+              'By having multiple layers with different types of holes (controls from different levels of the hierarchy, with different failure modes), the probability of all holes aligning is dramatically reduced — this is why combined controls are always more effective than a single control.',
+              'The maintenance technician standard requires you to monitor the effectiveness of control measures as part of your ongoing responsibilities, including reporting when controls are inadequate, damaged or not being followed.',
+              'For electrical hazards where the potential outcome is death, the cost of prevention must be very high indeed before it can be considered "grossly disproportionate" to the risk — their cost is trivial compared to the value of a human life.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Risk Evaluation
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3-4">
-              Next: Method Statements
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Hierarchy of controls knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Risk Evaluation
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Writing and Following Method Statements
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

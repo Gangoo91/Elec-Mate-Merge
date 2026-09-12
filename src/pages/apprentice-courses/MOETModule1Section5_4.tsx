@@ -1,8 +1,51 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.5 · Subsection 4 — Environmental Legislation and Local Policies
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge · "Environmental regulations and standards – impact on role:
+ *                Environmental Management Systems standard, Environmental
+ *                Protection Act, and Hazardous Waste Regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Statutory references in this page (Environmental Protection Act 1990,
+ * Environment Act 2021, Climate Change Act 2008, F-Gas Regulations, Oil
+ * Storage Regulations, Control of Noise at Work Regulations 2005) are
+ * paraphrases of the legislation, not verbatim quotes — none are wrapped in
+ * <RegsCallout>, per the conversion rule that RegsCallout is reserved for an
+ * original that already contains a verbatim quote.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Environmental Legislation and Local Policies - MOET Module 1 Section 5.4';
@@ -111,12 +154,7 @@ const quizQuestions = [
   {
     id: 4,
     question: 'SF6 has a global warming potential (GWP) of approximately:',
-    options: [
-      '23,500 times CO2',
-      '1,000 times CO2',
-      '100 times CO2',
-      '100,000 times CO2',
-    ],
+    options: ['23,500 times CO2', '1,000 times CO2', '100 times CO2', '100,000 times CO2'],
     correctAnswer: 0,
     explanation:
       'SF6 has a global warming potential of approximately 23,500 — meaning one kilogram of SF6 released to the atmosphere has the same warming effect as 23,500 kilograms of CO2. Its atmospheric lifetime is over 3,200 years. This extreme potency is why the F-Gas Regulations strictly control its use, require leak detection and repair, mandate recovery during maintenance, and encourage the development of SF6-free switchgear alternatives.',
@@ -207,12 +245,7 @@ const quizQuestions = [
     id: 11,
     question:
       'The Environment Agency incident hotline number for reporting pollution incidents in England is:',
-    options: [
-      '999',
-      '101',
-      '111',
-      '0800 80 70 60',
-    ],
+    options: ['999', '101', '111', '0800 80 70 60'],
     correctAnswer: 3,
     explanation:
       'The Environment Agency incident hotline is 0800 80 70 60. This should be used to report pollution incidents (oil spills, chemical releases, fish kills, illegal waste disposal, water contamination) in England. In Scotland, contact SEPA on 0800 80 70 60 (same number). In Wales, contact Natural Resources Wales on 0300 065 3000. The hotline operates 24 hours a day, 7 days a week.',
@@ -262,116 +295,52 @@ const faqs = [
 ];
 
 const MOETModule1Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Environmental Legislation and Local Policies
-          </h1>
-          <p className="text-white">
-            Understanding the legal framework for environmental protection in electrical maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.5 · Subsection 4"
+        title="Environmental Legislation and Local Policies"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Understanding the legal framework for environmental protection in electrical
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>EPA 1990:</strong> Waste duty of care, pollution control, statutory nuisance
-              </li>
-              <li className="pl-1">
-                <strong>Environment Act 2021:</strong> OEP, biodiversity net gain, producer
-                responsibility
-              </li>
-              <li className="pl-1">
-                <strong>Climate Change Act:</strong> Net zero by 2050 — legally binding target
-              </li>
-              <li className="pl-1">
-                <strong>F-Gas Regs:</strong> SF6 recovery, leak detection, certified personnel
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Oil storage:</strong> Transformer oil requires bunding and spill prevention
-              </li>
-              <li className="pl-1">
-                <strong>SF6 switchgear:</strong> F-Gas certified technicians only
-              </li>
-              <li className="pl-1">
-                <strong>Part L:</strong> Applies to lighting and controls upgrades
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to environmental and regulatory compliance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'EPA 1990: Waste duty of care, pollution control, statutory nuisance.',
+              'Environment Act 2021: OEP, biodiversity net gain, producer responsibility.',
+              'Climate Change Act: Net zero by 2050 — legally binding target.',
+              'F-Gas Regs: SF6 recovery, leak detection, certified personnel.',
+              'Oil storage: Transformer oil requires bunding and spill prevention.',
+              'SF6 switchgear: F-Gas certified technicians only.',
+              'Part L: Applies to lighting and controls upgrades.',
+              'ST1426: Maps to environmental and regulatory compliance KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the key provisions of the Environmental Protection Act 1990 and Environment Act 2021',
               "Describe the UK's net zero commitment under the Climate Change Act 2008",
               'Apply Building Regulations Part L requirements to electrical maintenance and upgrade work',
               'Understand F-Gas Regulations as they apply to SF6 in switchgear',
               'Implement oil storage and pollution prevention measures on maintenance sites',
               'Develop appropriate spill response plans for electrical oils and hazardous substances',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Core Environmental Legislation</ContentEyebrow>
 
-        {/* Section 01: Core Environmental Legislation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Core Environmental Legislation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Core Environmental Legislation">
             <p>
               UK environmental legislation has developed over decades into a comprehensive framework
               that protects air, water, land and communities from pollution. As a maintenance
@@ -379,135 +348,120 @@ const MOETModule1Section5_4 = () => {
               to avoid prosecution, but because environmental responsibility is a professional
               obligation and a core part of the ST1426 standard.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environmental Protection Act 1990 (EPA)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The EPA is the foundation of UK environmental law. Its key parts relevant to
-                  electrical maintenance are:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Part I — Integrated Pollution Control:</strong> Controls emissions to
-                    air, water and land from industrial processes. Applies to large industrial
-                    installations where you may carry out maintenance
-                  </li>
-                  <li className="pl-1">
-                    <strong>Part II — Waste Management:</strong> Establishes the duty of care for
-                    waste (Section 34), the offence of unlawful deposit (Section 33), and the
-                    licensing system for waste management. This part is directly relevant every time
-                    you create waste on site
-                  </li>
-                  <li className="pl-1">
-                    <strong>Part III — Statutory Nuisance:</strong> Covers noise, dust, fumes,
-                    artificial light and other nuisances from premises. Your maintenance activities
-                    must not create a statutory nuisance for neighbouring occupants
-                  </li>
-                  <li className="pl-1">
-                    <strong>Part IIA — Contaminated Land:</strong> Establishes the regime for
-                    identifying and remediating contaminated land. Relevant when working on
-                    brownfield sites or near historically contaminated areas
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Environmental Protection Act 1990 (EPA)">
+            <p>
+              The EPA is the foundation of UK environmental law. Its key parts relevant to
+              electrical maintenance are:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Part I — Integrated Pollution Control:</strong> Controls emissions to air,
+                water and land from industrial processes. Applies to large industrial installations
+                where you may carry out maintenance
+              </li>
+              <li>
+                <strong>Part II — Waste Management:</strong> Establishes the duty of care for waste
+                (Section 34), the offence of unlawful deposit (Section 33), and the licensing system
+                for waste management. This part is directly relevant every time you create waste on
+                site
+              </li>
+              <li>
+                <strong>Part III — Statutory Nuisance:</strong> Covers noise, dust, fumes,
+                artificial light and other nuisances from premises. Your maintenance activities must
+                not create a statutory nuisance for neighbouring occupants
+              </li>
+              <li>
+                <strong>Part IIA — Contaminated Land:</strong> Establishes the regime for
+                identifying and remediating contaminated land. Relevant when working on brownfield
+                sites or near historically contaminated areas
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environment Act 2021
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The Environment Act 2021 is the most significant piece of environmental
-                  legislation since the EPA. It was enacted partly to replace EU environmental
-                  governance following Brexit and introduces several new provisions:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Office for Environmental Protection (OEP):</strong> Independent body to
-                    scrutinise government environmental policy and enforce environmental law
-                  </li>
-                  <li className="pl-1">
-                    <strong>Legally binding environmental targets:</strong> For air quality, water,
-                    biodiversity and resource efficiency
-                  </li>
-                  <li className="pl-1">
-                    <strong>Biodiversity net gain:</strong> New developments must deliver a minimum
-                    10% biodiversity net gain — affects construction and major refurbishment
-                    projects
-                  </li>
-                  <li className="pl-1">
-                    <strong>Extended producer responsibility:</strong> Manufacturers bear greater
-                    responsibility for the end-of-life costs of their products — relevant to WEEE
-                  </li>
-                  <li className="pl-1">
-                    <strong>Deposit return schemes:</strong> For drinks containers — may affect
-                    waste management on sites
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Environment Act 2021">
+            <p>
+              The Environment Act 2021 is the most significant piece of environmental legislation
+              since the EPA. It was enacted partly to replace EU environmental governance following
+              Brexit and introduces several new provisions:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Office for Environmental Protection (OEP):</strong> Independent body to
+                scrutinise government environmental policy and enforce environmental law
+              </li>
+              <li>
+                <strong>Legally binding environmental targets:</strong> For air quality, water,
+                biodiversity and resource efficiency
+              </li>
+              <li>
+                <strong>Biodiversity net gain:</strong> New developments must deliver a minimum 10%
+                biodiversity net gain — affects construction and major refurbishment projects
+              </li>
+              <li>
+                <strong>Extended producer responsibility:</strong> Manufacturers bear greater
+                responsibility for the end-of-life costs of their products — relevant to WEEE
+              </li>
+              <li>
+                <strong>Deposit return schemes:</strong> For drinks containers — may affect waste
+                management on sites
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Climate Change Act 2008 (as amended 2019)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The Climate Change Act set the world's first legally binding national greenhouse
-                  gas reduction target. As amended in 2019, it commits the UK to net zero emissions
-                  by 2050.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Net zero target:</strong> All sectors must reduce emissions to achieve
-                    net zero by 2050
-                  </li>
-                  <li className="pl-1">
-                    <strong>Carbon budgets:</strong> Five-yearly caps on total UK emissions,
-                    enforced by the Climate Change Committee
-                  </li>
-                  <li className="pl-1">
-                    <strong>Adaptation:</strong> Organisations must assess and plan for climate
-                    change impacts
-                  </li>
-                  <li className="pl-1">
-                    <strong>Maintenance impact:</strong> Drives demand for energy efficiency,
-                    electrification of heating, SF6 phase-down, and low-carbon technologies
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Climate Change Act 2008 (as amended 2019)">
+            <p>
+              The Climate Change Act set the world&apos;s first legally binding national greenhouse
+              gas reduction target. As amended in 2019, it commits the UK to net zero emissions by
+              2050.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Net zero target:</strong> All sectors must reduce emissions to achieve net
+                zero by 2050
+              </li>
+              <li>
+                <strong>Carbon budgets:</strong> Five-yearly caps on total UK emissions, enforced by
+                the Climate Change Committee
+              </li>
+              <li>
+                <strong>Adaptation:</strong> Organisations must assess and plan for climate change
+                impacts
+              </li>
+              <li>
+                <strong>Maintenance impact:</strong> Drives demand for energy efficiency,
+                electrification of heating, SF6 phase-down, and low-carbon technologies
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Enforcement Powers</p>
-              <p className="text-sm text-white">
-                Environmental legislation is enforced by the Environment Agency in England, Natural
-                Resources Wales, SEPA in Scotland, and NIEA in Northern Ireland. These regulators
-                have extensive powers including prosecution (unlimited fines and imprisonment),
-                civil sanctions (variable monetary penalties), enforcement notices, and stop
-                notices. Local authorities enforce statutory nuisance provisions. Environmental
-                offences carry a criminal record and can result in directors' personal liability.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Enforcement Powers">
+            <p>
+              Environmental legislation is enforced by the Environment Agency in England, Natural
+              Resources Wales, SEPA in Scotland, and NIEA in Northern Ireland. These regulators have
+              extensive powers including prosecution (unlimited fines and imprisonment), civil
+              sanctions (variable monetary penalties), enforcement notices, and stop notices. Local
+              authorities enforce statutory nuisance provisions. Environmental offences carry a
+              criminal record and can result in directors&apos; personal liability.
+            </p>
+            <p>
               <strong>Key point:</strong> Environmental legislation applies to everyone — not just
               large industrial companies. A sole trader electrician who fly-tips waste, allows oil
               to pollute a watercourse, or releases SF6 to atmosphere faces the same criminal
               penalties as a multinational corporation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Building Regulations Part L and Energy-Related Legislation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
+          <SectionRule />
+
+          <ContentEyebrow>
             Building Regulations Part L and Energy-Related Legislation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          </ContentEyebrow>
+
+          <ConceptBlock title="Building Regulations Part L and Energy-Related Legislation">
             <p>
               Building Regulations Approved Document L (Conservation of fuel and power) sets minimum
               energy efficiency standards for buildings. While Part L primarily applies to new
@@ -515,138 +469,125 @@ const MOETModule1Section5_4 = () => {
               involves replacing or upgrading controlled services — including lighting, heating
               controls, and mechanical ventilation systems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Part L Requirements for Electrical Work
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lighting efficacy:</strong> When replacing lighting systems, new
-                  luminaires must meet minimum efficacy requirements (lumens per circuit watt). This
-                  effectively mandates LED or other high-efficiency sources in most applications
-                </li>
-                <li className="pl-1">
-                  <strong>Lighting controls:</strong> Replaced lighting systems must include
-                  appropriate controls — time switches, occupancy sensors, daylight dimming —
-                  depending on the building type and space
-                </li>
-                <li className="pl-1">
-                  <strong>Metering:</strong> Part L requires energy metering provisions for new and
-                  refurbished buildings to enable monitoring of energy consumption
-                </li>
-                <li className="pl-1">
-                  <strong>Consequential improvements:</strong> When extending or renovating a
-                  building above certain thresholds, energy efficiency improvements to the existing
-                  building may be required
-                </li>
-              </ul>
+          <ConceptBlock title="Part L Requirements for Electrical Work">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lighting efficacy:</strong> When replacing lighting systems, new luminaires
+                must meet minimum efficacy requirements (lumens per circuit watt). This effectively
+                mandates LED or other high-efficiency sources in most applications
+              </li>
+              <li>
+                <strong>Lighting controls:</strong> Replaced lighting systems must include
+                appropriate controls — time switches, occupancy sensors, daylight dimming —
+                depending on the building type and space
+              </li>
+              <li>
+                <strong>Metering:</strong> Part L requires energy metering provisions for new and
+                refurbished buildings to enable monitoring of energy consumption
+              </li>
+              <li>
+                <strong>Consequential improvements:</strong> When extending or renovating a building
+                above certain thresholds, energy efficiency improvements to the existing building
+                may be required
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Energy Performance Certificates (EPCs)">
+            <p>
+              EPCs rate buildings from A (most efficient) to G (least efficient). The Minimum Energy
+              Efficiency Standards (MEES) set minimum EPC ratings for rented buildings:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Current requirement:</strong> Commercial and residential rented properties
+                must achieve a minimum EPC rating of E
+              </li>
+              <li>
+                <strong>Future trajectory:</strong> The government has indicated that minimum
+                standards will rise to EPC C for commercial properties, driving significant demand
+                for energy efficiency upgrades
+              </li>
+              <li>
+                <strong>Maintenance relevance:</strong> Energy efficiency improvements carried out
+                during maintenance (LED lighting, controls upgrades, power factor correction)
+                directly improve EPC ratings
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Energy Efficiency Related Legislation">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Legislation</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Relevance to Maintenance
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Building Regulations Part L
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Minimum standards for lighting, controls and metering in new and refurbished
+                      buildings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">ESOS Regulations</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Large organisations must carry out energy audits — maintenance data feeds into
+                      these assessments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">SECR Regulations</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Companies must report energy consumption and carbon emissions — maintenance
+                      affects these figures
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      EU Ecodesign (retained UK law)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Minimum efficiency classes for motors (IE3/IE4), fans, pumps, lighting —
+                      affects replacement specifications
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MEES Regulations</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Minimum EPC rating for rented properties — drives demand for efficiency
+                      upgrades
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Performance Certificates (EPCs)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                EPCs rate buildings from A (most efficient) to G (least efficient). The Minimum
-                Energy Efficiency Standards (MEES) set minimum EPC ratings for rented buildings:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Current requirement:</strong> Commercial and residential rented properties
-                  must achieve a minimum EPC rating of E
-                </li>
-                <li className="pl-1">
-                  <strong>Future trajectory:</strong> The government has indicated that minimum
-                  standards will rise to EPC C for commercial properties, driving significant demand
-                  for energy efficiency upgrades
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance relevance:</strong> Energy efficiency improvements carried out
-                  during maintenance (LED lighting, controls upgrades, power factor correction)
-                  directly improve EPC ratings
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Energy Efficiency Related Legislation
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Legislation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Relevance to Maintenance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building Regulations Part L
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum standards for lighting, controls and metering in new and refurbished
-                        buildings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ESOS Regulations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large organisations must carry out energy audits — maintenance data feeds
-                        into these assessments
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SECR Regulations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Companies must report energy consumption and carbon emissions — maintenance
-                        affects these figures
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        EU Ecodesign (retained UK law)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum efficiency classes for motors (IE3/IE4), fans, pumps, lighting —
-                        affects replacement specifications
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MEES Regulations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Minimum EPC rating for rented properties — drives demand for efficiency
-                        upgrades
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Practical note:</strong> When specifying replacement motors during
               maintenance, you must now comply with Ecodesign requirements. Since 1 July 2023,
               single-speed three-phase motors from 0.75 kW to 200 kW must be IE3 efficiency class
               (IE4 for 75-200 kW). Do not replace a failed motor with a lower efficiency unit — it
               may be illegal and it will increase energy costs.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: F-Gas Regulations and SF6 in Switchgear */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            F-Gas Regulations and SF6 in Switchgear
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>F-Gas Regulations and SF6 in Switchgear</ContentEyebrow>
+
+          <ConceptBlock title="F-Gas Regulations and SF6 in Switchgear">
             <p>
               The Fluorinated Greenhouse Gases Regulations (commonly called the F-Gas Regulations)
               control the use, handling and disposal of fluorinated greenhouse gases, including SF6
@@ -655,110 +596,104 @@ const MOETModule1Section5_4 = () => {
               and an atmospheric lifetime exceeding 3,200 years. Even small releases have a
               disproportionate climate impact.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                SF6 in Electrical Switchgear
-              </h3>
-              <p className="text-sm text-white mb-2">
-                SF6 is used as an insulating and arc-quenching medium in gas-insulated switchgear
-                (GIS) and ring main units (RMUs) at voltages from 6.6 kV to 400 kV and above. Its
-                excellent dielectric properties allow compact switchgear designs, but its
-                environmental impact is driving a transition to alternative technologies.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Applications:</strong> GIS, RMUs, circuit breakers, current transformers,
-                  bushings
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity:</strong> A typical 11 kV RMU may contain 1-5 kg of SF6; large
-                  400 kV GIS substations may contain hundreds of kilograms
-                </li>
-                <li className="pl-1">
-                  <strong>Alternatives:</strong> Manufacturers are developing SF6-free switchgear
-                  using clean air, fluoronitrile (C4F7N) and fluoroketone (C5F10O) mixtures
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="SF6 in Electrical Switchgear">
+            <p>
+              SF6 is used as an insulating and arc-quenching medium in gas-insulated switchgear
+              (GIS) and ring main units (RMUs) at voltages from 6.6 kV to 400 kV and above. Its
+              excellent dielectric properties allow compact switchgear designs, but its
+              environmental impact is driving a transition to alternative technologies.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Applications:</strong> GIS, RMUs, circuit breakers, current transformers,
+                bushings
+              </li>
+              <li>
+                <strong>Quantity:</strong> A typical 11 kV RMU may contain 1-5 kg of SF6; large 400
+                kV GIS substations may contain hundreds of kilograms
+              </li>
+              <li>
+                <strong>Alternatives:</strong> Manufacturers are developing SF6-free switchgear
+                using clean air, fluoronitrile (C4F7N) and fluoroketone (C5F10O) mixtures
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                F-Gas Regulation Requirements for SF6
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Leak detection:</strong> Equipment containing SF6 above 5 tonnes CO2e
-                  (approx. 0.21 kg SF6) must have regular leak checks at intervals depending on
-                  quantity
-                </li>
-                <li className="pl-1">
-                  <strong>Leak repair:</strong> Detected leaks must be repaired without undue delay,
-                  with a follow-up check within 1 month
-                </li>
-                <li className="pl-1">
-                  <strong>Recovery:</strong> SF6 must be recovered during maintenance and
-                  decommissioning — never vented to atmosphere
-                </li>
-                <li className="pl-1">
-                  <strong>Certification:</strong> Personnel handling SF6 must hold appropriate
-                  certification
-                </li>
-                <li className="pl-1">
-                  <strong>Record keeping:</strong> Operators must maintain records of SF6 quantities
-                  installed, added, recovered, recycled, reclaimed and destroyed — records kept for
-                  5 years minimum
-                </li>
-                <li className="pl-1">
-                  <strong>Labelling:</strong> Equipment containing SF6 must be labelled with the
-                  type and quantity of gas
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="F-Gas Regulation Requirements for SF6">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Leak detection:</strong> Equipment containing SF6 above 5 tonnes CO2e
+                (approx. 0.21 kg SF6) must have regular leak checks at intervals depending on
+                quantity
+              </li>
+              <li>
+                <strong>Leak repair:</strong> Detected leaks must be repaired without undue delay,
+                with a follow-up check within 1 month
+              </li>
+              <li>
+                <strong>Recovery:</strong> SF6 must be recovered during maintenance and
+                decommissioning — never vented to atmosphere
+              </li>
+              <li>
+                <strong>Certification:</strong> Personnel handling SF6 must hold appropriate
+                certification
+              </li>
+              <li>
+                <strong>Record keeping:</strong> Operators must maintain records of SF6 quantities
+                installed, added, recovered, recycled, reclaimed and destroyed — records kept for 5
+                years minimum
+              </li>
+              <li>
+                <strong>Labelling:</strong> Equipment containing SF6 must be labelled with the type
+                and quantity of gas
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Deliberate Release is a Criminal Offence
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Venting SF6 to atmosphere during maintenance"
+            whatHappens={
+              <>
                 The deliberate release of SF6 to the atmosphere is a criminal offence under the
                 F-Gas Regulations. This includes venting gas during maintenance rather than using
                 recovery equipment. Penalties include unlimited fines. Even accidental releases
-                through poor maintenance must be reported and recorded. If you discover that SF6
-                equipment has a leak, report it immediately and arrange certified repair.
-              </p>
-            </div>
+                through poor maintenance must be reported and recorded.
+              </>
+            }
+            doInstead={
+              <>
+                If you discover that SF6 equipment has a leak, report it immediately and arrange
+                certified repair.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">SF6 Phase-Down</h3>
-              <p className="text-sm text-white">
-                The UK (and EU) are progressively restricting the use of SF6 in new equipment. The
-                trend is towards SF6-free switchgear using alternative insulating media. As a
-                maintenance technician, you should expect to encounter both legacy SF6 equipment
-                (requiring certified maintenance and eventual decommissioning) and new SF6-free
-                technologies. Understanding both is important for your career development and for
-                supporting your employer's environmental objectives.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="SF6 Phase-Down">
+            <p>
+              The UK (and EU) are progressively restricting the use of SF6 in new equipment. The
+              trend is towards SF6-free switchgear using alternative insulating media. As a
+              maintenance technician, you should expect to encounter both legacy SF6 equipment
+              (requiring certified maintenance and eventual decommissioning) and new SF6-free
+              technologies. Understanding both is important for your career development and for
+              supporting your employer&apos;s environmental objectives.
+            </p>
+            <p>
               <strong>Key point:</strong> If you are asked to work on SF6-containing switchgear and
               you do not hold the appropriate F-Gas certification, you must refuse and explain why.
               Working on SF6 equipment without certification is not only illegal — it is potentially
               dangerous due to the toxic decomposition products of SF6 after arcing.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Oil Storage, Pollution Prevention and Spill Response */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Oil Storage, Pollution Prevention and Spill Response
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Oil Storage, Pollution Prevention and Spill Response</ContentEyebrow>
+
+          <ConceptBlock title="Oil Storage, Pollution Prevention and Spill Response">
             <p>
               Oil is one of the most common pollutants in the UK environment. Transformer oil,
               hydraulic oil, lubricating oil and diesel fuel are all present on many maintenance
@@ -767,138 +702,125 @@ const MOETModule1Section5_4 = () => {
               technician handling or working near oil-filled equipment, you must understand your
               obligations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Oil Storage Regulations
-              </h3>
-              <p className="text-sm text-white mb-2">
-                The Control of Pollution (Oil Storage) (England) Regulations 2001 set out
-                requirements for the storage of oil in containers above 200 litres:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Containers:</strong> Must be of sufficient strength and structural
-                  integrity to prevent leakage in normal use
-                </li>
-                <li className="pl-1">
-                  <strong>Bunding:</strong> Secondary containment (bund) must hold 110% of the
-                  largest container or 25% of total volume, whichever is greater
-                </li>
-                <li className="pl-1">
-                  <strong>Bund construction:</strong> Impermeable to water and oil, with no drainage
-                  valve
-                </li>
-                <li className="pl-1">
-                  <strong>Fittings:</strong> Taps, valves, sight gauges and fill pipes must be
-                  within the bund and protected from damage
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Away from drains, watercourses, sensitive areas; on
-                  stable, impermeable ground
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Oil Storage Regulations">
+            <p>
+              The Control of Pollution (Oil Storage) (England) Regulations 2001 set out requirements
+              for the storage of oil in containers above 200 litres:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Containers:</strong> Must be of sufficient strength and structural integrity
+                to prevent leakage in normal use
+              </li>
+              <li>
+                <strong>Bunding:</strong> Secondary containment (bund) must hold 110% of the largest
+                container or 25% of total volume, whichever is greater
+              </li>
+              <li>
+                <strong>Bund construction:</strong> Impermeable to water and oil, with no drainage
+                valve
+              </li>
+              <li>
+                <strong>Fittings:</strong> Taps, valves, sight gauges and fill pipes must be within
+                the bund and protected from damage
+              </li>
+              <li>
+                <strong>Location:</strong> Away from drains, watercourses, sensitive areas; on
+                stable, impermeable ground
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Pollution Prevention for Electrical Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Transformer maintenance:</strong> Use drip trays under any connection
-                  being broken; have absorbent material ready; check bund condition before oil-fill
-                  or oil-drain operations
-                </li>
-                <li className="pl-1">
-                  <strong>Cable installation:</strong> When pulling cables near watercourses, use
-                  containment measures for cable-pulling lubricant
-                </li>
-                <li className="pl-1">
-                  <strong>Generator maintenance:</strong> Diesel generators have fuel tanks and
-                  lubricating oil — check bunding, inspect for leaks, and have spill kits available
-                </li>
-                <li className="pl-1">
-                  <strong>Hydraulic equipment:</strong> Hydraulic access platforms and lifting
-                  equipment contain oil that can leak — inspect hoses and connections before use
-                </li>
-                <li className="pl-1">
-                  <strong>Vehicle drips:</strong> Your maintenance van or work vehicle can drip oil
-                  and fuel — be aware of parking location relative to drains
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Pollution Prevention for Electrical Maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Transformer maintenance:</strong> Use drip trays under any connection being
+                broken; have absorbent material ready; check bund condition before oil-fill or
+                oil-drain operations
+              </li>
+              <li>
+                <strong>Cable installation:</strong> When pulling cables near watercourses, use
+                containment measures for cable-pulling lubricant
+              </li>
+              <li>
+                <strong>Generator maintenance:</strong> Diesel generators have fuel tanks and
+                lubricating oil — check bunding, inspect for leaks, and have spill kits available
+              </li>
+              <li>
+                <strong>Hydraulic equipment:</strong> Hydraulic access platforms and lifting
+                equipment contain oil that can leak — inspect hoses and connections before use
+              </li>
+              <li>
+                <strong>Vehicle drips:</strong> Your maintenance van or work vehicle can drip oil
+                and fuel — be aware of parking location relative to drains
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Spill Response Procedure</p>
-              <p className="text-sm text-white mb-2">
-                If an oil or chemical spill occurs during maintenance, follow the STOP procedure:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>S — Stop the source:</strong> Close valves, stem the flow, prevent further
-                  release
-                </li>
-                <li className="pl-1">
-                  <strong>T — Tell someone:</strong> Report to your supervisor. If the spill reaches
-                  or threatens a watercourse or drain, call the Environment Agency on 0800 80 70 60
-                </li>
-                <li className="pl-1">
-                  <strong>O — Obstruct the flow:</strong> Deploy drain covers, absorbent booms,
-                  earth bunds to contain the spill and prevent it reaching drains or water
-                </li>
-                <li className="pl-1">
-                  <strong>P — Prevent recurrence:</strong> Investigate the cause. Implement
-                  corrective actions to prevent a similar incident
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                <strong>Never</strong> wash oil into a drain with water. Never use detergent to
-                disperse an oil spill — this makes it harder to recover and increases environmental
-                damage. Always contain, absorb and recover.
-              </p>
-            </div>
+          <ConceptBlock title="Spill Response Procedure">
+            <p>If an oil or chemical spill occurs during maintenance, follow the STOP procedure:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>S — Stop the source:</strong> Close valves, stem the flow, prevent further
+                release
+              </li>
+              <li>
+                <strong>T — Tell someone:</strong> Report to your supervisor. If the spill reaches
+                or threatens a watercourse or drain, call the Environment Agency on 0800 80 70 60
+              </li>
+              <li>
+                <strong>O — Obstruct the flow:</strong> Deploy drain covers, absorbent booms, earth
+                bunds to contain the spill and prevent it reaching drains or water
+              </li>
+              <li>
+                <strong>P — Prevent recurrence:</strong> Investigate the cause. Implement corrective
+                actions to prevent a similar incident
+              </li>
+            </ul>
+            <p>
+              <strong>Never</strong> wash oil into a drain with water. Never use detergent to
+              disperse an oil spill — this makes it harder to recover and increases environmental
+              damage. Always contain, absorb and recover.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Noise Regulations</h3>
-              <p className="text-sm text-white mb-2">
-                Noise from maintenance activities is controlled by two separate regulatory
-                frameworks:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Occupational noise:</strong> The Control of Noise at Work Regulations 2005
-                  protect workers. Lower exposure action value: 80 dB(A) daily average (provide
-                  hearing protection). Upper action value: 85 dB(A) (hearing protection mandatory,
-                  exposure reduction required). Exposure limit: 87 dB(A) (must not be exceeded)
-                </li>
-                <li className="pl-1">
-                  <strong>Environmental noise:</strong> The EPA 1990 Part III covers statutory
-                  nuisance from noise. Local planning conditions may also restrict hours and noise
-                  levels. Best practice: Section 61 of the Control of Pollution Act 1974 allows you
-                  to agree a 'prior consent' with the local authority for noisy works
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Noise Regulations">
+            <p>
+              Noise from maintenance activities is controlled by two separate regulatory frameworks:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Occupational noise:</strong> The Control of Noise at Work Regulations 2005
+                protect workers. Lower exposure action value: 80 dB(A) daily average (provide
+                hearing protection). Upper action value: 85 dB(A) (hearing protection mandatory,
+                exposure reduction required). Exposure limit: 87 dB(A) (must not be exceeded)
+              </li>
+              <li>
+                <strong>Environmental noise:</strong> The EPA 1990 Part III covers statutory
+                nuisance from noise. Local planning conditions may also restrict hours and noise
+                levels. Best practice: Section 61 of the Control of Pollution Act 1974 allows you to
+                agree a &apos;prior consent&apos; with the local authority for noisy works
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> Environmental incidents must be reported and recorded.
               Even if a spill is contained and cleaned up quickly, record it as a near miss.
               Analysis of near misses prevents future incidents that could result in prosecution,
               environmental damage and reputational harm.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Site Environmental Management and Corporate Responsibility */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
+          <SectionRule />
+
+          <ContentEyebrow>
             Site Environmental Management and Corporate Responsibility
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          </ContentEyebrow>
+
+          <ConceptBlock title="Site Environmental Management and Corporate Responsibility">
             <p>
               Beyond individual legal obligations, organisations are increasingly expected to
               demonstrate broader environmental responsibility. Clients, regulators and the public
@@ -907,202 +829,160 @@ const MOETModule1Section5_4 = () => {
               context helps you appreciate why environmental compliance matters and how your actions
               contribute to the bigger picture.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Site Environmental Management Plans (SEMPs)
-              </h3>
-              <p className="text-sm text-white mb-2">
-                For maintenance projects — particularly those on sensitive sites or involving
-                hazardous substances — a site environmental management plan (SEMP) sets out how
-                environmental risks will be managed:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Risk identification:</strong> What environmental risks does the work
-                  create? (Oil spill, chemical release, dust, noise, waste)
-                </li>
-                <li className="pl-1">
-                  <strong>Prevention measures:</strong> How will each risk be prevented? (Bunding,
-                  containment, dust suppression, noise barriers)
-                </li>
-                <li className="pl-1">
-                  <strong>Waste management:</strong> How will waste be segregated, stored,
-                  documented and disposed of?
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency response:</strong> What are the procedures for spills, releases
-                  and pollution incidents?
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring:</strong> How will environmental performance be checked during
-                  the works?
-                </li>
-                <li className="pl-1">
-                  <strong>Responsibilities:</strong> Who is responsible for each element of the
-                  SEMP?
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Site Environmental Management Plans (SEMPs)">
+            <p>
+              For maintenance projects — particularly those on sensitive sites or involving
+              hazardous substances — a site environmental management plan (SEMP) sets out how
+              environmental risks will be managed:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Risk identification:</strong> What environmental risks does the work create?
+                (Oil spill, chemical release, dust, noise, waste)
+              </li>
+              <li>
+                <strong>Prevention measures:</strong> How will each risk be prevented? (Bunding,
+                containment, dust suppression, noise barriers)
+              </li>
+              <li>
+                <strong>Waste management:</strong> How will waste be segregated, stored, documented
+                and disposed of?
+              </li>
+              <li>
+                <strong>Emergency response:</strong> What are the procedures for spills, releases
+                and pollution incidents?
+              </li>
+              <li>
+                <strong>Monitoring:</strong> How will environmental performance be checked during
+                the works?
+              </li>
+              <li>
+                <strong>Responsibilities:</strong> Who is responsible for each element of the SEMP?
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  ISO 14001 Environmental Management
-                </h3>
-                <p className="text-sm text-white">
-                  ISO 14001 is the international standard for environmental management systems
-                  (EMS). Many maintenance companies and their clients are certified to ISO 14001,
-                  which requires the organisation to identify its environmental impacts, set
-                  objectives and targets for improvement, implement operational controls, monitor
-                  performance, and carry out regular management reviews. As a technician working for
-                  an ISO 14001 certified company, you must follow the EMS procedures and contribute
-                  to the environmental objectives.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Environmental Permits
-                </h3>
-                <p className="text-sm text-white">
-                  Some sites where you carry out maintenance will operate under environmental
-                  permits issued by the Environment Agency. These permits set conditions for
-                  emissions, waste management, noise and other environmental aspects. When working
-                  on a permitted site, you must understand and comply with any permit conditions
-                  that affect your work — for example, restrictions on hours of operation,
-                  requirements for pollution prevention measures, or specific waste handling
-                  procedures.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="ISO 14001 Environmental Management">
+            <p>
+              ISO 14001 is the international standard for environmental management systems (EMS).
+              Many maintenance companies and their clients are certified to ISO 14001, which
+              requires the organisation to identify its environmental impacts, set objectives and
+              targets for improvement, implement operational controls, monitor performance, and
+              carry out regular management reviews. As a technician working for an ISO 14001
+              certified company, you must follow the EMS procedures and contribute to the
+              environmental objectives.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Corporate Environmental Responsibility
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Modern businesses are expected to go beyond minimum legal compliance. Corporate
-                environmental responsibility includes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Carbon reporting:</strong> Measuring and reporting the company's carbon
-                  footprint under SECR or voluntary schemes
-                </li>
-                <li className="pl-1">
-                  <strong>Net zero commitments:</strong> Setting science-based targets for reducing
-                  greenhouse gas emissions
-                </li>
-                <li className="pl-1">
-                  <strong>Supply chain engagement:</strong> Working with suppliers and
-                  subcontractors to improve environmental performance
-                </li>
-                <li className="pl-1">
-                  <strong>Staff training:</strong> Ensuring all employees understand their
-                  environmental responsibilities
-                </li>
-                <li className="pl-1">
-                  <strong>Continuous improvement:</strong> Setting and reviewing annual
-                  environmental performance targets
-                </li>
-                <li className="pl-1">
-                  <strong>Transparency:</strong> Publishing environmental performance data in annual
-                  reports and on company websites
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Environmental Permits">
+            <p>
+              Some sites where you carry out maintenance will operate under environmental permits
+              issued by the Environment Agency. These permits set conditions for emissions, waste
+              management, noise and other environmental aspects. When working on a permitted site,
+              you must understand and comply with any permit conditions that affect your work — for
+              example, restrictions on hours of operation, requirements for pollution prevention
+              measures, or specific waste handling procedures.
+            </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
+          <ConceptBlock title="Corporate Environmental Responsibility">
+            <p>
+              Modern businesses are expected to go beyond minimum legal compliance. Corporate
+              environmental responsibility includes:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Carbon reporting:</strong> Measuring and reporting the company&apos;s carbon
+                footprint under SECR or voluntary schemes
+              </li>
+              <li>
+                <strong>Net zero commitments:</strong> Setting science-based targets for reducing
+                greenhouse gas emissions
+              </li>
+              <li>
+                <strong>Supply chain engagement:</strong> Working with suppliers and subcontractors
+                to improve environmental performance
+              </li>
+              <li>
+                <strong>Staff training:</strong> Ensuring all employees understand their
+                environmental responsibilities
+              </li>
+              <li>
+                <strong>Continuous improvement:</strong> Setting and reviewing annual environmental
+                performance targets
+              </li>
+              <li>
+                <strong>Transparency:</strong> Publishing environmental performance data in annual
+                reports and on company websites
+              </li>
+            </ul>
+            <p>
               <strong>Note:</strong> Many major clients now require contractors to demonstrate
               environmental competence as a condition of tendering for maintenance contracts. PAS
               2080 (carbon management in infrastructure), ISO 14001, and sector-specific
               environmental qualifications are increasingly required. Building your environmental
               knowledge is not just about compliance — it is about employability.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'EPA 1990 — Waste, pollution, statutory nuisance.',
+              'Environment Act 2021 — OEP, biodiversity, targets.',
+              'Climate Change Act 2008 — Net zero by 2050.',
+              'Building Regulations Part L — Energy efficiency.',
+              'F-Gas Regulations — SF6 recovery, leak checks.',
+              'Oil Storage Regulations — Bunding, containment.',
+              'Environment Agency — 0800 80 70 60.',
+              'SEPA (Scotland) — 0800 80 70 60.',
+              'NRW (Wales) — 0300 065 3000.',
+              'HSE — 0345 300 9923.',
+              'Emergency services — 999.',
+              'Spill procedure — STOP (Stop, Tell, Obstruct, Prevent).',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Legislation</p>
-                <ul className="space-y-0.5">
-                  <li>EPA 1990 — Waste, pollution, statutory nuisance</li>
-                  <li>Environment Act 2021 — OEP, biodiversity, targets</li>
-                  <li>Climate Change Act 2008 — Net zero by 2050</li>
-                  <li>Building Regulations Part L — Energy efficiency</li>
-                  <li>F-Gas Regulations — SF6 recovery, leak checks</li>
-                  <li>Oil Storage Regulations — Bunding, containment</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Emergency Numbers</p>
-                <ul className="space-y-0.5">
-                  <li>Environment Agency — 0800 80 70 60</li>
-                  <li>SEPA (Scotland) — 0800 80 70 60</li>
-                  <li>NRW (Wales) — 0300 065 3000</li>
-                  <li>HSE — 0345 300 9923</li>
-                  <li>Emergency services — 999</li>
-                  <li>Spill procedure — STOP (Stop, Tell, Obstruct, Prevent)</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Environmental legislation knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Energy Efficiency in Maintenance
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section5-5')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Sustainable Work Practices
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Energy Efficiency
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section5-5">
-              Next: Sustainable Work Practices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

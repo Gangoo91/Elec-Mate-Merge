@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.4 · Subsection 3 — BS 7671 Wiring Regulations
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *              · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and calibration
+ *                 requirements."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *
+ * Content preserved from the original page; structure, shell and reading
+ * measure rebuilt on the study-centre learning kit.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'BS 7671 Wiring Regulations - MOET Module 1 Section 4.3';
@@ -26,12 +65,7 @@ const quickCheckQuestions = [
   {
     id: 'bs7671-parts',
     question: 'How many main parts does BS 7671:2018+A4:2026 contain?',
-    options: [
-      '5 parts',
-      '4 parts',
-      '7 parts',
-      '10 parts',
-    ],
+    options: ['5 parts', '4 parts', '7 parts', '10 parts'],
     correctIndex: 2,
     explanation:
       'BS 7671 is structured in 7 parts: Part 1 (Scope, object and fundamental principles), Part 2 (Definitions), Part 3 (Assessment of general characteristics), Part 4 (Protection for safety), Part 5 (Selection and erection of equipment), Part 6 (Inspection and testing), and Part 7 (Special installations or locations).',
@@ -190,12 +224,7 @@ const quizQuestions = [
     id: 10,
     question:
       'The recommended maximum interval for periodic inspection and testing of an industrial installation under BS 7671 guidance is:',
-    options: [
-      '1 year',
-      '3 years',
-      '5 years',
-      '10 years',
-    ],
+    options: ['1 year', '3 years', '5 years', '10 years'],
     correctAnswer: 2,
     explanation:
       'IET Guidance Note 3 (Inspection and Testing) recommends maximum intervals for periodic inspection. For industrial installations, the recommended interval is typically 3 years (more frequently for harsher environments). Commercial installations are typically 5 years, and domestic installations are 10 years or on change of occupancy.',
@@ -243,7 +272,7 @@ const faqs = [
   {
     question: 'How often is BS 7671 updated?',
     answer:
-      'BS 7671 is typically updated on a cycle of approximately 3-5 years through amendments, with a full new edition every 10-15 years. The current edition is the 18th Edition (2018), with amendments A2:2022 and A3:2024. The 19th Edition is expected in due course. Electricians should keep up to date with amendments as they can introduce significant changes to specific requirements.',
+      'BS 7671 is typically updated on a cycle of approximately 3-5 years through amendments, with a full new edition every 10-15 years. The current edition is the 18th Edition (2018) incorporating Amendment 4, cited as BS 7671:2018+A4:2026; the earlier A2:2022 and A3:2024 amendments are superseded. The 19th Edition is expected in due course. Electricians should keep up to date with amendments as they can introduce significant changes to specific requirements.',
   },
   {
     question: 'Is BS 7671 based on international or European standards?',
@@ -258,122 +287,70 @@ const faqs = [
 ];
 
 const MOETModule1Section4_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.4.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            BS 7671 Wiring Regulations
-          </h1>
-          <p className="text-white">
-            The UK national standard for electrical installation and maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.4 · Subsection 3"
+        title="BS 7671 Wiring Regulations"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            The UK national standard for electrical installation and maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Non-statutory British Standard — the IET Wiring
-                Regulations
-              </li>
-              <li className="pl-1">
-                <strong>Structure:</strong> 7 parts + appendices covering design to testing
-              </li>
-              <li className="pl-1">
-                <strong>Current:</strong> 18th Edition (2018) + Amendment 4 (2026)
-              </li>
-              <li className="pl-1">
-                <strong>Relationship:</strong> Provides means of compliance with EAWR 1989
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'BS 7671: Non-statutory British Standard — the IET Wiring Regulations',
+              'Structure: 7 parts + appendices covering design to testing',
+              'Current: 18th Edition (2018) + Amendment 4 (2026)',
+              'Relationship: Provides means of compliance with EAWR 1989',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical Maintenance Context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Part 6:</strong> Inspection, testing and certification requirements
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Part 4:</strong> Protection measures you verify during maintenance
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Part 7:</strong> Special locations requiring additional precautions
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Knowledge of BS 7671 as technical compliance standard
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the structure and scope of BS 7671:2018+A4:2026',
               'Describe the non-statutory status of BS 7671 and its relationship to the EAWR 1989',
               'Identify the content and purpose of each of the 7 parts',
               'Explain the fundamental principles established in Part 1 (Chapter 13)',
               'Understand the role of Part 6 in inspection, testing and certification',
               'Describe the amendment history and how updates are incorporated',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Status, scope and relationship to legislation</ContentEyebrow>
 
-        {/* Section 01: Status and Scope */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Status, Scope and Relationship to Legislation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Status, Scope and Relationship to Legislation">
             <p>
-              BS 7671 — Requirements for Electrical Installations — is the UK's national standard
-              for the design, erection, and verification of electrical installations. It is
+              BS 7671 — Requirements for Electrical Installations — is the UK&apos;s national
+              standard for the design, erection, and verification of electrical installations. It is
               published jointly by the British Standards Institution (BSI) and the Institution of
               Engineering and Technology (IET), and is commonly referred to as the IET Wiring
-              Regulations or simply "the Regs".
+              Regulations or simply &quot;the Regs&quot;.
             </p>
             <p>
               The current edition is BS 7671:2018+A4:2026 — the 18th Edition with Amendment 4. The
@@ -381,316 +358,276 @@ const MOETModule1Section4_3 = () => {
               national deviations. It has a long history, with the first edition of the IEE (now
               IET) Wiring Regulations published in 1882.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Legal Status</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Non-statutory:</strong> BS 7671 is not law. It is a British Standard —
-                  compliance is not legally mandated by the EAWR 1989
-                </li>
-                <li className="pl-1">
-                  <strong>De facto benchmark:</strong> However, it is universally accepted as the
-                  principal means of demonstrating compliance with the EAWR for LV installations
-                </li>
-                <li className="pl-1">
-                  <strong>Court recognition:</strong> In legal proceedings, compliance with BS 7671
-                  is generally accepted as evidence that the EAWR have been satisfied (and vice
-                  versa — non-compliance may be evidence of breach)
-                </li>
-                <li className="pl-1">
-                  <strong>Building Regulations:</strong> Part P of the Building Regulations (England
-                  and Wales) references BS 7671 for domestic electrical work, giving it indirect
-                  regulatory force in that context
-                </li>
-                <li className="pl-1">
-                  <strong>Not an ACoP:</strong> Unlike some HSE publications, BS 7671 is not an
-                  approved code of practice under Section 16 of the HSWA 1974 — it does not have the
-                  special legal status of an ACoP
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Legal Status">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Non-statutory:</strong> BS 7671 is not law. It is a British Standard —
+                compliance is not legally mandated by the EAWR 1989
+              </li>
+              <li>
+                <strong>De facto benchmark:</strong> However, it is universally accepted as the
+                principal means of demonstrating compliance with the EAWR for LV installations
+              </li>
+              <li>
+                <strong>Court recognition:</strong> In legal proceedings, compliance with BS 7671 is
+                generally accepted as evidence that the EAWR have been satisfied (and vice versa —
+                non-compliance may be evidence of breach)
+              </li>
+              <li>
+                <strong>Building Regulations:</strong> Part P of the Building Regulations (England
+                and Wales) references BS 7671 for domestic electrical work, giving it indirect
+                regulatory force in that context
+              </li>
+              <li>
+                <strong>Not an ACoP:</strong> Unlike some HSE publications, BS 7671 is not an
+                approved code of practice under Section 16 of the HSWA 1974 — it does not have the
+                special legal status of an ACoP
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Scope of BS 7671</p>
-              <p className="text-sm text-white mb-3">BS 7671 applies to:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Electrical installations of buildings (domestic, commercial, industrial)
-                </li>
-                <li className="pl-1">
-                  Fixed wiring and associated equipment from the origin of the installation
-                </li>
-                <li className="pl-1">
-                  Circuits supplied at nominal voltages up to and including 1000 V AC or 1500 V DC
-                </li>
-                <li className="pl-1">Alterations and additions to existing installations</li>
-                <li className="pl-1">
-                  Temporary installations (exhibitions, fairgrounds, construction sites)
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3 mb-2">BS 7671 does NOT apply to:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">Electricity distribution systems (covered by ESQCR 2002)</li>
-                <li className="pl-1">Lightning protection systems (BS EN 62305)</li>
-                <li className="pl-1">Electrical equipment of machines (BS EN 60204)</li>
-                <li className="pl-1">Equipment on board ships (BS 8450)</li>
-                <li className="pl-1">Mining installations (separate regulations)</li>
-                <li className="pl-1">
-                  Systems above 1000 V AC (though some general principles apply)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Scope of BS 7671">
+            <p>BS 7671 applies to:</p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Electrical installations of buildings (domestic, commercial, industrial)</li>
+              <li>Fixed wiring and associated equipment from the origin of the installation</li>
+              <li>
+                Circuits supplied at nominal voltages up to and including 1000 V AC or 1500 V DC
+              </li>
+              <li>Alterations and additions to existing installations</li>
+              <li>Temporary installations (exhibitions, fairgrounds, construction sites)</li>
+            </ul>
+            <p>BS 7671 does NOT apply to:</p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Electricity distribution systems (covered by ESQCR 2002)</li>
+              <li>Lightning protection systems (BS EN 62305)</li>
+              <li>Electrical equipment of machines (BS EN 60204)</li>
+              <li>Equipment on board ships (BS 8450)</li>
+              <li>Mining installations (separate regulations)</li>
+              <li>Systems above 1000 V AC (though some general principles apply)</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Misconception</p>
-              <p className="text-sm text-white">
-                Many electricians believe BS 7671 is "the law". It is not. The law is the EAWR 1989,
-                the HSWA 1974, and associated statutory regulations. BS 7671 is a standard that
-                provides a means of complying with the law. This distinction matters: in some
-                circumstances, compliance with BS 7671 alone may not be sufficient to prevent danger
-                (e.g., in unusual environments or applications not fully covered by the standard).
-                Equally, an installation that does not comply with BS 7671 in every respect may
-                still be safe and lawful if alternative measures provide equivalent protection.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Common Misconception">
+            <p>
+              Many electricians believe BS 7671 is &quot;the law&quot;. It is not. The law is the
+              EAWR 1989, the HSWA 1974, and associated statutory regulations. BS 7671 is a standard
+              that provides a means of complying with the law. This distinction matters: in some
+              circumstances, compliance with BS 7671 alone may not be sufficient to prevent danger
+              (e.g., in unusual environments or applications not fully covered by the standard).
+              Equally, an installation that does not comply with BS 7671 in every respect may still
+              be safe and lawful if alternative measures provide equivalent protection.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Structure — The 7 Parts */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Structure of BS 7671 — The Seven Parts
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Structure of BS 7671 — the seven parts</ContentEyebrow>
+
+          <ConceptBlock title="Structure of BS 7671 — The Seven Parts">
             <p>
               BS 7671 is organised into seven parts, each addressing a different aspect of
               electrical installations. The numbering follows the CENELEC/IEC 60364 structure.
               Understanding this structure helps you navigate the standard efficiently — which is
               essential when you need to reference specific requirements on site.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 1 — Scope, Object and Fundamental Principles
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 1 defines the scope of BS 7671 and establishes the fundamental principles
-                  that underpin every other requirement. Chapter 13 is particularly important — it
-                  states the fundamental principles of protection for safety.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Chapter 11:</strong> Scope — what BS 7671 covers and excludes
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 12:</strong> Object and effects — the aims of the standard
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 13:</strong> Fundamental principles — protection against
-                    electric shock, thermal effects, overcurrent, fault currents; isolation and
-                    switching; good workmanship; competent persons
-                  </li>
-                </ul>
-                <p className="text-sm text-elec-yellow/70 mt-2">
-                  <strong>Key principle (13.1):</strong> Persons and livestock shall be protected
-                  against the dangers that may arise from contact with or approach to live parts of
-                  the installation.
-                </p>
-              </div>
+          <ConceptBlock
+            title="Part 1 — Scope, Object and Fundamental Principles"
+            onSite="Key principle (13.1): Persons and livestock shall be protected against the dangers that may arise from contact with or approach to live parts of the installation."
+          >
+            <p>
+              Part 1 defines the scope of BS 7671 and establishes the fundamental principles that
+              underpin every other requirement. Chapter 13 is particularly important — it states the
+              fundamental principles of protection for safety.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chapter 11:</strong> Scope — what BS 7671 covers and excludes
+              </li>
+              <li>
+                <strong>Chapter 12:</strong> Object and effects — the aims of the standard
+              </li>
+              <li>
+                <strong>Chapter 13:</strong> Fundamental principles — protection against electric
+                shock, thermal effects, overcurrent, fault currents; isolation and switching; good
+                workmanship; competent persons
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 2 — Definitions
-                </h3>
-                <p className="text-sm text-white">
-                  Part 2 provides definitions for all technical terms used in BS 7671. These are not
-                  general dictionary definitions — they are precise technical definitions with
-                  specific legal and technical meaning. Always refer to Part 2 if you are uncertain
-                  about a term. Key definitions include "basic protection", "fault protection",
-                  "protective conductor", "earth fault loop impedance", and "prospective fault
-                  current".
-                </p>
-              </div>
+          <ConceptBlock title="Part 2 — Definitions">
+            <p>
+              Part 2 provides definitions for all technical terms used in BS 7671. These are not
+              general dictionary definitions — they are precise technical definitions with specific
+              legal and technical meaning. Always refer to Part 2 if you are uncertain about a term.
+              Key definitions include &quot;basic protection&quot;, &quot;fault protection&quot;,
+              &quot;protective conductor&quot;, &quot;earth fault loop impedance&quot;, and
+              &quot;prospective fault current&quot;.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 3 — Assessment of General Characteristics
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 3 requires the designer/installer to assess the characteristics of the supply
-                  and the installation before design begins. This is critical for maintenance
-                  technicians because changes to any of these characteristics may require
-                  alterations to the installation.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Chapter 31:</strong> Purposes, supplies and structure
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 32:</strong> Classification of external influences (environment,
-                    utilisation, building construction)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 33:</strong> Compatibility of equipment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 34:</strong> Maintainability — the installation must be designed
-                    so it can be safely maintained
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 35:</strong> Safety services (emergency lighting, fire alarms)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 36:</strong> Continuity of service
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Part 3 — Assessment of General Characteristics">
+            <p>
+              Part 3 requires the designer/installer to assess the characteristics of the supply and
+              the installation before design begins. This is critical for maintenance technicians
+              because changes to any of these characteristics may require alterations to the
+              installation.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chapter 31:</strong> Purposes, supplies and structure
+              </li>
+              <li>
+                <strong>Chapter 32:</strong> Classification of external influences (environment,
+                utilisation, building construction)
+              </li>
+              <li>
+                <strong>Chapter 33:</strong> Compatibility of equipment
+              </li>
+              <li>
+                <strong>Chapter 34:</strong> Maintainability — the installation must be designed so
+                it can be safely maintained
+              </li>
+              <li>
+                <strong>Chapter 35:</strong> Safety services (emergency lighting, fire alarms)
+              </li>
+              <li>
+                <strong>Chapter 36:</strong> Continuity of service
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 4 — Protection for Safety
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 4 contains the core protective requirements — the technical heart of BS 7671.
-                  As a maintenance technician, you will reference Part 4 frequently when assessing
-                  whether an installation's protective measures remain effective.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Chapter 41:</strong> Protection against electric shock — basic
-                    protection (insulation, barriers, enclosures) and fault protection (ADS,
-                    earthing, protective conductors, RCDs)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 42:</strong> Protection against thermal effects — fire
-                    protection, burns
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 43:</strong> Protection against overcurrent — overload and
-                    short-circuit protection
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 44:</strong> Protection against voltage disturbances and
-                    electromagnetic influences — surges, EMC
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Part 4 — Protection for Safety">
+            <p>
+              Part 4 contains the core protective requirements — the technical heart of BS 7671. As
+              a maintenance technician, you will reference Part 4 frequently when assessing whether
+              an installation&apos;s protective measures remain effective.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chapter 41:</strong> Protection against electric shock — basic protection
+                (insulation, barriers, enclosures) and fault protection (ADS, earthing, protective
+                conductors, RCDs)
+              </li>
+              <li>
+                <strong>Chapter 42:</strong> Protection against thermal effects — fire protection,
+                burns
+              </li>
+              <li>
+                <strong>Chapter 43:</strong> Protection against overcurrent — overload and
+                short-circuit protection
+              </li>
+              <li>
+                <strong>Chapter 44:</strong> Protection against voltage disturbances and
+                electromagnetic influences — surges, EMC
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 5 — Selection and Erection of Equipment
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 5 specifies the requirements for selecting and installing equipment to
-                  satisfy the protection requirements of Part 4.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Chapter 51:</strong> Common rules for selection and erection
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 52:</strong> Wiring systems — cable types, installation methods,
-                    current-carrying capacities, voltage drop
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 53:</strong> Switchgear and controlgear — devices for
-                    protection, isolation and switching
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 54:</strong> Earthing arrangements and protective conductors
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 55:</strong> Other equipment (generators, UPS, luminaires, etc.)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 56:</strong> Supplies for safety services
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Part 5 — Selection and Erection of Equipment">
+            <p>
+              Part 5 specifies the requirements for selecting and installing equipment to satisfy
+              the protection requirements of Part 4.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chapter 51:</strong> Common rules for selection and erection
+              </li>
+              <li>
+                <strong>Chapter 52:</strong> Wiring systems — cable types, installation methods,
+                current-carrying capacities, voltage drop
+              </li>
+              <li>
+                <strong>Chapter 53:</strong> Switchgear and controlgear — devices for protection,
+                isolation and switching
+              </li>
+              <li>
+                <strong>Chapter 54:</strong> Earthing arrangements and protective conductors
+              </li>
+              <li>
+                <strong>Chapter 55:</strong> Other equipment (generators, UPS, luminaires, etc.)
+              </li>
+              <li>
+                <strong>Chapter 56:</strong> Supplies for safety services
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 6 — Inspection and Testing
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 6 defines the requirements for verifying that installations comply with BS
-                  7671. It covers both initial verification (new work) and periodic inspection and
-                  testing (existing installations).
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Chapter 61:</strong> Initial verification — inspection and testing
-                    before energisation
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 62:</strong> Periodic inspection and testing — assessing
-                    condition of existing installations
-                  </li>
-                  <li className="pl-1">
-                    <strong>Chapter 63:</strong> Requirements for reporting — EIC, MEIWC, EICR
-                    formats
-                  </li>
-                  <li className="pl-1">
-                    <strong>Test sequence:</strong> Continuity → insulation resistance → polarity →
-                    earth fault loop impedance → RCD operation → prospective fault current
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Part 6 — Inspection and Testing">
+            <p>
+              Part 6 defines the requirements for verifying that installations comply with BS 7671.
+              It covers both initial verification (new work) and periodic inspection and testing
+              (existing installations).
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chapter 61:</strong> Initial verification — inspection and testing before
+                energisation
+              </li>
+              <li>
+                <strong>Chapter 62:</strong> Periodic inspection and testing — assessing condition
+                of existing installations
+              </li>
+              <li>
+                <strong>Chapter 63:</strong> Requirements for reporting — EIC, MEIWC, EICR formats
+              </li>
+              <li>
+                <strong>Test sequence:</strong> Continuity → insulation resistance → polarity →
+                earth fault loop impedance → RCD operation → prospective fault current
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Part 7 — Special Installations or Locations
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Part 7 provides additional or modified requirements for locations where the risk
-                  is higher than normal. Each section (7XX) addresses a specific installation type
-                  or location.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Section 701:</strong> Bathrooms and shower rooms
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 702:</strong> Swimming pools and fountains
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 704:</strong> Construction and demolition sites
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 705:</strong> Agricultural and horticultural premises
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 708:</strong> Electrical installations in caravan/camping parks
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 711:</strong> Exhibitions, shows and stands
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 712:</strong> Solar photovoltaic (PV) systems
-                  </li>
-                  <li className="pl-1">
-                    <strong>Section 722:</strong> Electric vehicle charging installations
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Part 7 — Special Installations or Locations">
+            <p>
+              Part 7 provides additional or modified requirements for locations where the risk is
+              higher than normal. Each section (7XX) addresses a specific installation type or
+              location.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Section 701:</strong> Bathrooms and shower rooms
+              </li>
+              <li>
+                <strong>Section 702:</strong> Swimming pools and fountains
+              </li>
+              <li>
+                <strong>Section 704:</strong> Construction and demolition sites
+              </li>
+              <li>
+                <strong>Section 705:</strong> Agricultural and horticultural premises
+              </li>
+              <li>
+                <strong>Section 708:</strong> Electrical installations in caravan/camping parks
+              </li>
+              <li>
+                <strong>Section 711:</strong> Exhibitions, shows and stands
+              </li>
+              <li>
+                <strong>Section 712:</strong> Solar photovoltaic (PV) systems
+              </li>
+              <li>
+                <strong>Section 722:</strong> Electric vehicle charging installations
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Fundamental Principles */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Fundamental Principles (Chapter 13)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Fundamental principles (Chapter 13)</ContentEyebrow>
+
+          <ConceptBlock
+            title="Fundamental Principles (Chapter 13)"
+            onSite="Maintenance link: Chapter 34 (Part 3) specifically addresses maintainability. It requires that the frequency and quality of maintenance expected over the installation's life be assessed at the design stage. As a maintenance technician, if you find an installation that is practically impossible to maintain safely (e.g., no isolation facility, insufficient working space), this is a design deficiency that should be reported."
+          >
             <p>
               Chapter 13 of Part 1 establishes the fundamental principles that every other
               requirement in BS 7671 serves to implement. These principles are not merely
@@ -698,321 +635,266 @@ const MOETModule1Section4_3 = () => {
               maintenance technicians, they provide the framework for assessing whether an
               installation remains safe.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Protection Against Electric Shock (131.1–131.6)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Basic protection:</strong> Protection against contact with live parts in
-                  normal service conditions — achieved by insulation, barriers, enclosures, or
-                  obstacles/placing out of reach
-                </li>
-                <li className="pl-1">
-                  <strong>Fault protection:</strong> Protection against contact with parts made live
-                  by a fault — achieved by automatic disconnection of supply (ADS), the most common
-                  method, using earthing, protective conductors, and overcurrent/RCD devices
-                </li>
-                <li className="pl-1">
-                  <strong>Additional protection:</strong> Supplementary measures such as 30 mA RCD
-                  protection and supplementary bonding — providing an additional safety net
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Protection Against Electric Shock (131.1–131.6)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Basic protection:</strong> Protection against contact with live parts in
+                normal service conditions — achieved by insulation, barriers, enclosures, or
+                obstacles/placing out of reach
+              </li>
+              <li>
+                <strong>Fault protection:</strong> Protection against contact with parts made live
+                by a fault — achieved by automatic disconnection of supply (ADS), the most common
+                method, using earthing, protective conductors, and overcurrent/RCD devices
+              </li>
+              <li>
+                <strong>Additional protection:</strong> Supplementary measures such as 30 mA RCD
+                protection and supplementary bonding — providing an additional safety net
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Other Fundamental Principles
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Protection against thermal effects (131.3):</strong> Persons, fixed
-                  equipment and materials adjacent to electrical equipment must be protected against
-                  harmful thermal effects (fire, burns, impairment of equipment safety function)
-                </li>
-                <li className="pl-1">
-                  <strong>Protection against overcurrent (131.4):</strong> Persons and property must
-                  be protected against injury or damage due to excessive currents from overloads or
-                  short circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Protection against fault currents (131.5):</strong> Conductors (other than
-                  circuit conductors) and connections must be able to carry fault current without
-                  danger
-                </li>
-                <li className="pl-1">
-                  <strong>Isolation and switching (132):</strong> Effective means must be provided
-                  for isolation, switching off for mechanical maintenance, emergency switching, and
-                  functional switching
-                </li>
-                <li className="pl-1">
-                  <strong>Good workmanship and materials (134):</strong> Every installation must be
-                  designed and erected with good workmanship and proper materials
-                </li>
-                <li className="pl-1">
-                  <strong>Competent persons (134.1.1):</strong> Design, erection, verification and
-                  operation must be carried out by competent persons
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Other Fundamental Principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Protection against thermal effects (131.3):</strong> Persons, fixed
+                equipment and materials adjacent to electrical equipment must be protected against
+                harmful thermal effects (fire, burns, impairment of equipment safety function)
+              </li>
+              <li>
+                <strong>Protection against overcurrent (131.4):</strong> Persons and property must
+                be protected against injury or damage due to excessive currents from overloads or
+                short circuits
+              </li>
+              <li>
+                <strong>Protection against fault currents (131.5):</strong> Conductors (other than
+                circuit conductors) and connections must be able to carry fault current without
+                danger
+              </li>
+              <li>
+                <strong>Isolation and switching (132):</strong> Effective means must be provided for
+                isolation, switching off for mechanical maintenance, emergency switching, and
+                functional switching
+              </li>
+              <li>
+                <strong>Good workmanship and materials (134):</strong> Every installation must be
+                designed and erected with good workmanship and proper materials
+              </li>
+              <li>
+                <strong>Competent persons (134.1.1):</strong> Design, erection, verification and
+                operation must be carried out by competent persons
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance link:</strong> Chapter 34 (Part 3) specifically addresses
-              maintainability. It requires that the frequency and quality of maintenance expected
-              over the installation's life be assessed at the design stage. As a maintenance
-              technician, if you find an installation that is practically impossible to maintain
-              safely (e.g., no isolation facility, insufficient working space), this is a design
-              deficiency that should be reported.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04: Amendments and Relevance to Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Amendment History and Relevance to Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Amendment history and relevance to maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Amendment History and Relevance to Maintenance">
             <p>
               BS 7671 is a living document that evolves to reflect new technology, updated safety
               research, and changes in installation practice. Understanding the amendment history
               helps you identify which requirements apply to installations of different ages and
               recognise when older installations may need upgrading.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recent Edition and Amendment History
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Edition/Amendment
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Year</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Changes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">17th Edition</td>
-                      <td className="border border-white/10 px-3 py-2">2008</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Major restructure to CENELEC format; new chapter numbering
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">17th Ed. Amd 1</td>
-                      <td className="border border-white/10 px-3 py-2">2011</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable calculations; metal consumer units (later introduced in Amd 3)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">17th Ed. Amd 3</td>
-                      <td className="border border-white/10 px-3 py-2">2015</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Consumer unit enclosures; RCD protection for socket outlets; cable in walls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">18th Edition</td>
-                      <td className="border border-white/10 px-3 py-2">2018</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Arc fault detection; energy efficiency; prosumers; EV charging (Section 722)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">18th Ed. A2:2022</td>
-                      <td className="border border-white/10 px-3 py-2">2022</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Onshore generating sets (Section 717); PME at caravans/marinas; wiring in
-                        escape routes
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">18th Ed. A3:2024</td>
-                      <td className="border border-white/10 px-3 py-2">2024</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Updated requirements for EV charging, PV systems, energy storage; prosumer
-                        installations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">18th Ed. A4:2026</td>
-                      <td className="border border-white/10 px-3 py-2">2026</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Current edition. Revised Reg 411.3.3 (socket-outlets ≤ 32 A, with a
-                        documented risk-assessment exception outside dwellings); new Chapter 57 for
-                        stationary batteries; revised RCD verification
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Recent Edition and Amendment History">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-[13px] text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Edition/Amendment
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Year</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key Changes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">17th Edition</td>
+                    <td className="border border-white/10 px-3 py-2">2008</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Major restructure to CENELEC format; new chapter numbering
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">17th Ed. Amd 1</td>
+                    <td className="border border-white/10 px-3 py-2">2011</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cable calculations; metal consumer units (later introduced in Amd 3)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">17th Ed. Amd 3</td>
+                    <td className="border border-white/10 px-3 py-2">2015</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Consumer unit enclosures; RCD protection for socket outlets; cable in walls
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">18th Edition</td>
+                    <td className="border border-white/10 px-3 py-2">2018</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Arc fault detection; energy efficiency; prosumers; EV charging (Section 722)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">18th Ed. A2:2022</td>
+                    <td className="border border-white/10 px-3 py-2">2022</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Onshore generating sets (Section 717); PME at caravans/marinas; wiring in
+                      escape routes
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">18th Ed. A3:2024</td>
+                    <td className="border border-white/10 px-3 py-2">2024</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Updated requirements for EV charging, PV systems, energy storage; prosumer
+                      installations
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">18th Ed. A4:2026</td>
+                    <td className="border border-white/10 px-3 py-2">2026</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Current edition. Revised Reg 411.3.3 (socket-outlets ≤ 32 A, with a documented
+                      risk-assessment exception outside dwellings); new Chapter 57 for stationary
+                      batteries; revised RCD verification
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Maintenance and Older Installations
-                </h3>
-                <p className="text-sm text-white">
-                  When you carry out maintenance or periodic inspection on an existing installation,
-                  you assess it against the edition of BS 7671 that applied when it was installed
-                  (or last significantly altered). However, the EAWR 1989 require that the system is
-                  maintained to prevent danger — if an older installation has features that are now
-                  known to be unsafe (e.g., no RCD protection on socket circuits in a domestic
-                  premises), this should be reported as a departure that may need remediation.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Alterations and Additions
-                </h3>
-                <p className="text-sm text-white">
-                  Any alteration or addition to an existing installation must comply with the
-                  current edition of BS 7671. The existing installation need not be upgraded, but
-                  the new work must not make the existing installation less safe. Regulation 132.16
-                  requires you to verify that the existing installation can safely support the
-                  proposed alteration — including confirming adequate earthing, protective conductor
-                  integrity, and fault level capability.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Appendices</p>
-              <p className="text-sm text-white mb-3">
-                BS 7671 includes several appendices that provide essential reference data:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Appendix 1:</strong> British Standards for electrical installations
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 2:</strong> Statutory regulations and associated memoranda
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 3:</strong> Time/current characteristics of protective devices
-                  and cables
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 4:</strong> Current-carrying capacity and voltage drop tables
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 5:</strong> Classification of external influences
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 6:</strong> Model forms for certification and reporting (EIC,
-                  MEIWC, EICR)
-                </li>
-                <li className="pl-1">
-                  <strong>Appendix 15:</strong> Ring and radial final circuit arrangements
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 note:</strong> You are expected to understand the structure and purpose
-              of BS 7671, and how it relates to your maintenance work. You do not need to memorise
-              every regulation number, but you should be able to navigate the standard, identify
-              which part addresses a particular requirement, and understand how it connects to the
-              legal framework of the EAWR 1989.
+          <ConceptBlock title="Maintenance and Older Installations">
+            <p>
+              When you carry out maintenance or periodic inspection on an existing installation, you
+              assess it against the edition of BS 7671 that applied when it was installed (or last
+              significantly altered). However, the EAWR 1989 require that the system is maintained
+              to prevent danger — if an older installation has features that are now known to be
+              unsafe (e.g., no RCD protection on socket circuits in a domestic premises), this
+              should be reported as a departure that may need remediation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Alterations and Additions">
+            <p>
+              Any alteration or addition to an existing installation must comply with the current
+              edition of BS 7671. The existing installation need not be upgraded, but the new work
+              must not make the existing installation less safe. Regulation 132.16 requires you to
+              verify that the existing installation can safely support the proposed alteration —
+              including confirming adequate earthing, protective conductor integrity, and fault
+              level capability.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Appendices">
+            <p>BS 7671 includes several appendices that provide essential reference data:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Appendix 1:</strong> British Standards for electrical installations
+              </li>
+              <li>
+                <strong>Appendix 2:</strong> Statutory regulations and associated memoranda
+              </li>
+              <li>
+                <strong>Appendix 3:</strong> Time/current characteristics of protective devices and
+                cables
+              </li>
+              <li>
+                <strong>Appendix 4:</strong> Current-carrying capacity and voltage drop tables
+              </li>
+              <li>
+                <strong>Appendix 5:</strong> Classification of external influences
+              </li>
+              <li>
+                <strong>Appendix 6:</strong> Model forms for certification and reporting (EIC,
+                MEIWC, EICR)
+              </li>
+              <li>
+                <strong>Appendix 15:</strong> Ring and radial final circuit arrangements
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Relevance to your ST1426 assessment">
+            <p>
+              <em>
+                You are expected to understand the structure and purpose of BS 7671, and how it
+                relates to your maintenance work. You do not need to memorise every regulation
+                number, but you should be able to navigate the standard, identify which part
+                addresses a particular requirement, and understand how it connects to the legal
+                framework of the EAWR 1989.
+              </em>
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">The 7 Parts</p>
-                <ul className="space-y-0.5">
-                  <li>Part 1 — Scope and fundamental principles</li>
-                  <li>Part 2 — Definitions</li>
-                  <li>Part 3 — Assessment of general characteristics</li>
-                  <li>Part 4 — Protection for safety</li>
-                  <li>Part 5 — Selection and erection of equipment</li>
-                  <li>Part 6 — Inspection and testing</li>
-                  <li>Part 7 — Special installations or locations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Facts</p>
-                <ul className="space-y-0.5">
-                  <li>Non-statutory British Standard (not law)</li>
-                  <li>Published by BSI and IET</li>
-                  <li>Current: 18th Edition + A4:2026</li>
-                  <li>Based on CENELEC HD 60364 series</li>
-                  <li>Scope: up to 1000 V AC / 1500 V DC</li>
-                  <li>Certification: EIC, MEIWC, EICR (Appendix 6)</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Part 1 — Scope and fundamental principles',
+              'Part 2 — Definitions',
+              'Part 3 — Assessment of general characteristics',
+              'Part 4 — Protection for safety',
+              'Part 5 — Selection and erection of equipment',
+              'Part 6 — Inspection and testing',
+              'Part 7 — Special installations or locations',
+              'Non-statutory British Standard (not law)',
+              'Published by BSI and IET',
+              'Current: 18th Edition + A4:2026',
+              'Based on CENELEC HD 60364 series',
+              'Scope: up to 1000 V AC / 1500 V DC',
+              'Certification: EIC, MEIWC, EICR (Appendix 6)',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Electricity at Work Regulations 1989
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">PUWER 1998</div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-4">
-              Next: PUWER 1998
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

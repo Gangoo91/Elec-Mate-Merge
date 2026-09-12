@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.3 · Subsection 2 — Cable Types and Selection
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Different types of cables; their specifications and
+ *      application."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import { CableCrossSection } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Cable Types and Selection - MOET Module 3.3.2';
@@ -163,9 +199,9 @@ const quizQuestions = [
     question: 'The grouping correction factor (Cg) is applied because:',
     options: [
       "Cables grouped together share heat, reducing each cable's ability to dissipate its own heat, thereby reducing its safe current-carrying capacity",
-      "Grouped cables induce circulating currents in each other, increasing the voltage drop along the run",
-      "Grouped cables are more likely to suffer mechanical damage, so a safety margin is added",
-      "Grouping increases the prospective fault current, requiring a larger protective device",
+      'Grouped cables induce circulating currents in each other, increasing the voltage drop along the run',
+      'Grouped cables are more likely to suffer mechanical damage, so a safety margin is added',
+      'Grouping increases the prospective fault current, requiring a larger protective device',
     ],
     correctAnswer: 0,
     explanation:
@@ -256,112 +292,69 @@ const faqs = [
 ];
 
 const MOETModule3Section3_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.3.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Cable Types and Selection
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.3 · Subsection 2"
+        title="Cable Types and Selection"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Cable specifications, selection criteria and application guidelines for electrical
-            maintenance
+            maintenance — the construction underneath every gland you undo, and the sizing logic
+            behind whether that cable is even the right one for the job.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Construction:</strong> Conductor, insulation, armour (optional), sheath
-              </li>
-              <li className="pl-1">
-                <strong>Insulation:</strong> PVC (70 degrees C), XLPE (90 degrees C), MI
-                (fire-rated)
-              </li>
-              <li className="pl-1">
-                <strong>Sizing:</strong> CCC, voltage drop, Zs and CPC thermal withstand
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS 7671 Appendix 4, BS 5467, BS 6004, BS 6724
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Replacement:</strong> Must comply with current BS 7671, not original spec
-              </li>
-              <li className="pl-1">
-                <strong>Identification:</strong> Sheath markings, colour codes, construction type
-              </li>
-              <li className="pl-1">
-                <strong>Testing:</strong> Insulation resistance, continuity, loop impedance
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to electrical plant and equipment maintenance KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Construction: conductor, insulation, armour (optional), sheath.',
+              'Insulation: PVC (70 degrees C), XLPE (90 degrees C), MI (fire-rated).',
+              'Sizing: CCC, voltage drop, Zs and CPC thermal withstand.',
+              'Standards: BS 7671 Appendix 4, BS 5467, BS 6004, BS 6724.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Identify common cable types used in industrial and commercial installations',
               'Explain the cable sizing process including CCC, voltage drop and loop impedance',
               'Apply BS 7671 correction factors for ambient temperature, grouping and thermal insulation',
               'Select appropriate cable types for specific maintenance applications',
               'Describe the construction and properties of SWA, MI and fire-performance cables',
               'Interpret cable designation codes and harmonised colour identification',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Cable construction and types</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Cable Construction and Types
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cable Construction and Types">
             <p>
               Understanding cable construction is fundamental for every maintenance technician. The
               choice of cable type directly affects the safety, reliability and longevity of an
@@ -376,179 +369,173 @@ const MOETModule3Section3_2 = () => {
               armour for mechanical protection, and fire-resistant barriers for life-safety
               circuits.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Cable Types in Industrial Maintenance
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Common cable types in industrial maintenance
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Cable Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PVC/PVC singles</td>
-                      <td className="border border-white/10 px-3 py-2">BS 6004</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Wiring in conduit and trunking
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PVC/SWA/PVC</td>
-                      <td className="border border-white/10 px-3 py-2">BS 6346</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General power distribution, underground
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">XLPE/SWA/PVC</td>
-                      <td className="border border-white/10 px-3 py-2">BS 5467</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher-rated power distribution, industrial
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MI (pyro)</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 60702</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire-rated circuits, hazardous areas
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">FP200 Gold</td>
-                      <td className="border border-white/10 px-3 py-2">BS 7846</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fire alarm, emergency lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SY/CY flexible</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 50525</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control circuits, machine connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">LSZH</td>
-                      <td className="border border-white/10 px-3 py-2">BS 7211</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Public buildings, transport, enclosed areas
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Cable type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">PVC/PVC singles</td>
+                    <td className="border border-white/10 px-3 py-2">BS 6004</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Wiring in conduit and trunking
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">PVC/SWA/PVC</td>
+                    <td className="border border-white/10 px-3 py-2">BS 6346</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      General power distribution, underground
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">XLPE/SWA/PVC</td>
+                    <td className="border border-white/10 px-3 py-2">BS 5467</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher-rated power distribution, industrial
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MI (pyro)</td>
+                    <td className="border border-white/10 px-3 py-2">BS EN 60702</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fire-rated circuits, hazardous areas
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">FP200 Gold</td>
+                    <td className="border border-white/10 px-3 py-2">BS 7846</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Fire alarm, emergency lighting
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">SY/CY flexible</td>
+                    <td className="border border-white/10 px-3 py-2">BS EN 50525</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Control circuits, machine connections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">LSZH</td>
+                    <td className="border border-white/10 px-3 py-2">BS 7211</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Public buildings, transport, enclosed areas
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Insulation Materials Compared
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>PVC (polyvinyl chloride):</strong> Maximum continuous temperature 70
-                  degrees C; economical, flexible, widely used; emits toxic fumes (HCl) in fire
-                </li>
-                <li className="pl-1">
-                  <strong>XLPE (cross-linked polyethylene):</strong> Maximum continuous temperature
-                  90 degrees C; higher CCC; excellent short-circuit performance (250 degrees C);
-                  standard for HV and increasingly for LV
-                </li>
-                <li className="pl-1">
-                  <strong>Magnesium oxide (MI cable):</strong> Non-combustible; operates above 1,000
-                  degrees C; inherently fire-resistant; requires specialist termination
-                </li>
-                <li className="pl-1">
-                  <strong>EPR (ethylene propylene rubber):</strong> Maximum continuous temperature
-                  90 degrees C; highly flexible; good for trailing cables and mobile equipment
-                </li>
-                <li className="pl-1">
-                  <strong>LSF/LSZH:</strong> Low smoke and fume or zero halogen; reduced toxicity in
-                  fire; specified for life-safety applications
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Conductor Materials</h3>
-              <p className="text-sm text-white mb-3">
-                The two conductor materials used in power cables are copper and aluminium. Each has
-                distinct properties that affect cable selection, installation and maintenance.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Copper:</strong> Higher conductivity (requires smaller cross-section for
-                  the same current), easier to terminate, does not oxidise as readily, more ductile;
-                  standard for most LV installations and all cable sizes up to 300 mm squared
-                </li>
-                <li className="pl-1">
-                  <strong>Aluminium:</strong> Lighter weight (approximately 50% of copper for the
-                  same current capacity), lower cost, but requires larger cross-section, specialist
-                  termination techniques (bimetallic lugs), and is susceptible to oxidation and
-                  creep under pressure; used primarily for larger cables (typically 50 mm squared
-                  and above) and overhead lines
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Designation Codes Explained
-              </h3>
-              <p className="text-sm text-white mb-3">
-                British Standard cable designation codes follow a structured system that, once
-                understood, tells the maintenance technician everything about a cable from its
-                printed marking alone.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>First digit — manufacturing standard:</strong> 6 = BS 5467 (XLPE/SWA/PVC),
-                  5 = BS 6346 (PVC/SWA/PVC)
-                </li>
-                <li className="pl-1">
-                  <strong>Second digit — conductor material:</strong> 9 = copper, 3 = aluminium
-                </li>
-                <li className="pl-1">
-                  <strong>Third digit — insulation type:</strong> 4 = thermosetting (XLPE), 3 =
-                  thermoplastic (PVC)
-                </li>
-                <li className="pl-1">
-                  <strong>Fourth digit — number of cores:</strong> 2 = two-core, 3 = three-core, 4 =
-                  four-core
-                </li>
-                <li className="pl-1">
-                  <strong>Suffix letter:</strong> X = XLPE insulation, Y = PVC insulation
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                <strong>Example:</strong> 6944X = BS 5467 (6), copper (9), thermosetting insulation
-                (4), four-core (4), XLPE (X). This is a four-core copper XLPE/SWA/PVC cable
-                manufactured to BS 5467 — one of the most common industrial power cables in the UK.
-              </p>
-            </div>
+          <CableCrossSection type="SWA" />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When replacing cables during maintenance, always verify
-              the correct cable type for the application. Do not assume the existing cable was the
-              correct specification — it may have been a compromise or the requirements may have
-              changed since original installation.
+          <ConceptBlock title="Insulation materials compared">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PVC (polyvinyl chloride):</strong> Maximum continuous temperature 70 degrees
+                C; economical, flexible, widely used; emits toxic fumes (HCl) in fire.
+              </li>
+              <li>
+                <strong>XLPE (cross-linked polyethylene):</strong> Maximum continuous temperature 90
+                degrees C; higher CCC; excellent short-circuit performance (250 degrees C); standard
+                for HV and increasingly for LV.
+              </li>
+              <li>
+                <strong>Magnesium oxide (MI cable):</strong> Non-combustible; operates above 1,000
+                degrees C; inherently fire-resistant; requires specialist termination.
+              </li>
+              <li>
+                <strong>EPR (ethylene propylene rubber):</strong> Maximum continuous temperature 90
+                degrees C; highly flexible; good for trailing cables and mobile equipment.
+              </li>
+              <li>
+                <strong>LSF/LSZH:</strong> Low smoke and fume or zero halogen; reduced toxicity in
+                fire; specified for life-safety applications.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Conductor materials">
+            <p>
+              The two conductor materials used in power cables are copper and aluminium. Each has
+              distinct properties that affect cable selection, installation and maintenance.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Copper:</strong> Higher conductivity (requires smaller cross-section for the
+                same current), easier to terminate, does not oxidise as readily, more ductile;
+                standard for most LV installations and all cable sizes up to 300 mm squared.
+              </li>
+              <li>
+                <strong>Aluminium:</strong> Lighter weight (approximately 50% of copper for the same
+                current capacity), lower cost, but requires larger cross-section, specialist
+                termination techniques (bimetallic lugs), and is susceptible to oxidation and creep
+                under pressure; used primarily for larger cables (typically 50 mm squared and above)
+                and overhead lines.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Cable designation codes explained">
+            <p>
+              British Standard cable designation codes follow a structured system that, once
+              understood, tells the maintenance technician everything about a cable from its printed
+              marking alone.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>First digit — manufacturing standard:</strong> 6 = BS 5467 (XLPE/SWA/PVC), 5
+                = BS 6346 (PVC/SWA/PVC).
+              </li>
+              <li>
+                <strong>Second digit — conductor material:</strong> 9 = copper, 3 = aluminium.
+              </li>
+              <li>
+                <strong>Third digit — insulation type:</strong> 4 = thermosetting (XLPE), 3 =
+                thermoplastic (PVC).
+              </li>
+              <li>
+                <strong>Fourth digit — number of cores:</strong> 2 = two-core, 3 = three-core, 4 =
+                four-core.
+              </li>
+              <li>
+                <strong>Suffix letter:</strong> X = XLPE insulation, Y = PVC insulation.
+              </li>
+            </ul>
+            <p>
+              <strong>Example:</strong> 6944X = BS 5467 (6), copper (9), thermosetting insulation
+              (4), four-core (4), XLPE (X). This is a four-core copper XLPE/SWA/PVC cable
+              manufactured to BS 5467 — one of the most common industrial power cables in the UK.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cable Sizing: Current-Carrying Capacity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              When replacing cables during maintenance, always verify the correct cable type for the
+              application. Do not assume the existing cable was the correct specification — it may
+              have been a compromise or the requirements may have changed since original
+              installation.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cable sizing: current-carrying capacity</ContentEyebrow>
+
+          <ConceptBlock title="Cable Sizing: Current-Carrying Capacity">
             <p>
               Cable sizing is one of the most fundamental skills for an electrical maintenance
               technician. An undersized cable overheats, causing insulation degradation, fire risk
@@ -563,239 +550,222 @@ const MOETModule3Section3_2 = () => {
               the element. The protective device rating (In) must be not less than Ib but not
               greater than the cable's current-carrying capacity (Iz).
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Correction Factors (BS 7671 Appendix 4)
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Correction factors (BS 7671 Appendix 4)
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Accounts For
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ambient temperature</td>
-                      <td className="border border-white/10 px-3 py-2">Ca</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher ambient reduces heat dissipation (Table 4B1/4B2)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Grouping</td>
-                      <td className="border border-white/10 px-3 py-2">Cg</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mutual heating from adjacent loaded cables (Table 4C1)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Thermal insulation</td>
-                      <td className="border border-white/10 px-3 py-2">Ci</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation contact reduces heat dissipation (Table 52.2)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Semi-enclosed fuse</td>
-                      <td className="border border-white/10 px-3 py-2">Cf</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BS 3036 fuses need 0.725 factor due to fusing factor
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Symbol</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      What it accounts for
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Ambient temperature</td>
+                    <td className="border border-white/10 px-3 py-2">Ca</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher ambient reduces heat dissipation (Table 4B1/4B2)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Grouping</td>
+                    <td className="border border-white/10 px-3 py-2">Cg</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Mutual heating from adjacent loaded cables (Table 4C1)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Thermal insulation</td>
+                    <td className="border border-white/10 px-3 py-2">Ci</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Insulation contact reduces heat dissipation (Table 52.2)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Semi-enclosed fuse</td>
+                    <td className="border border-white/10 px-3 py-2">Cf</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      BS 3036 fuses need 0.725 factor due to fusing factor
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Sizing Worked Example
-              </h3>
-              <p className="text-sm text-white mb-3">
-                A 15 kW three-phase motor (full-load current 27.5 A) is supplied via XLPE/SWA cable
-                on a perforated cable tray in a plant room at 35 degrees C ambient, grouped with 5
-                other loaded cables.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Design current (Ib) = 27.5 A</li>
-                <li className="pl-1">Protective device: 32 A BS 88-2 fuse (In = 32 A)</li>
-                <li className="pl-1">Ca (35 degrees C ambient, XLPE) = 0.96 (from Table 4B2)</li>
-                <li className="pl-1">Cg (6 cables on tray, touching) = 0.57 (from Table 4C1)</li>
-                <li className="pl-1">Required tabulated CCC: It = 32 / (0.96 x 0.57) = 58.5 A</li>
-                <li className="pl-1">
-                  Select 10 mm squared 4-core XLPE/SWA (rated 63 A in reference method E)
-                </li>
-                <li className="pl-1">Then verify voltage drop and earth fault loop impedance</li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Installation Method Reference
-              </p>
-              <p className="text-sm text-white">
-                BS 7671 defines standard installation methods (reference methods) that determine the
-                cable's tabulated current-carrying capacity. Common reference methods include:
-                Method A (clipped direct to a surface, enclosed in conduit or trunking on a wall);
-                Method B (enclosed in conduit or trunking in a thermally insulating wall); Method C
-                (clipped direct to a non-metallic surface); Method E (on perforated cable tray); and
-                Method G (spaced in free air). The same cable has different current ratings
-                depending on the installation method — Method E (cable tray) typically gives the
-                highest rating because of better heat dissipation, while Method B (enclosed in an
-                insulated wall) gives the lowest.
-              </p>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Correction Factor Application Order
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When multiple correction factors apply simultaneously, they must all be applied to
-                determine the required tabulated current-carrying capacity. The formula is:
-              </p>
-              <p className="text-sm text-white font-mono bg-white/5 p-2 rounded mb-3">
-                It = In / (Ca x Cg x Ci x Cf)
-              </p>
-              <p className="text-sm text-white">
-                Where It is the minimum tabulated current-carrying capacity, In is the protective
-                device rating, and Ca, Cg, Ci, Cf are the applicable correction factors. If only
-                some factors apply (for example, no thermal insulation contact means Ci = 1.0),
-                those factors are set to 1.0. Always document which factors were applied and their
-                source tables — this is essential evidence for compliance verification during
-                periodic inspection.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Cable sizing is not simply looking up a current in a
-              table. Every installation has specific conditions that affect the cable's performance.
-              Failure to apply correction factors is a common cause of cable overheating in
-              industrial installations.
+          <ConceptBlock title="Cable sizing worked example">
+            <p>
+              A 15 kW three-phase motor (full-load current 27.5 A) is supplied via XLPE/SWA cable on
+              a perforated cable tray in a plant room at 35 degrees C ambient, grouped with 5 other
+              loaded cables.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Design current (Ib) = 27.5 A</li>
+              <li>Protective device: 32 A BS 88-2 fuse (In = 32 A)</li>
+              <li>Ca (35 degrees C ambient, XLPE) = 0.96 (from Table 4B2)</li>
+              <li>Cg (6 cables on tray, touching) = 0.57 (from Table 4C1)</li>
+              <li>Required tabulated CCC: It = 32 / (0.96 x 0.57) = 58.5 A</li>
+              <li>Select 10 mm squared 4-core XLPE/SWA (rated 63 A in reference method E)</li>
+              <li>Then verify voltage drop and earth fault loop impedance</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Installation method reference">
+            <p>
+              BS 7671 defines standard installation methods (reference methods) that determine the
+              cable's tabulated current-carrying capacity. Common reference methods include: Method
+              A (clipped direct to a surface, enclosed in conduit or trunking on a wall); Method B
+              (enclosed in conduit or trunking in a thermally insulating wall); Method C (clipped
+              direct to a non-metallic surface); Method E (on perforated cable tray); and Method G
+              (spaced in free air). The same cable has different current ratings depending on the
+              installation method — Method E (cable tray) typically gives the highest rating because
+              of better heat dissipation, while Method B (enclosed in an insulated wall) gives the
+              lowest.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Voltage Drop and Earth Fault Loop Impedance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Correction factor application order">
+            <p>
+              When multiple correction factors apply simultaneously, they must all be applied to
+              determine the required tabulated current-carrying capacity. The formula is:
+            </p>
+            <p className="font-mono text-white">It = In / (Ca x Cg x Ci x Cf)</p>
+            <p>
+              Where It is the minimum tabulated current-carrying capacity, In is the protective
+              device rating, and Ca, Cg, Ci, Cf are the applicable correction factors. If only some
+              factors apply (for example, no thermal insulation contact means Ci = 1.0), those
+              factors are set to 1.0. Always document which factors were applied and their source
+              tables — this is essential evidence for compliance verification during periodic
+              inspection.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Cable sizing is not simply looking up a current in a table. Every installation has
+              specific conditions that affect the cable's performance. Failure to apply correction
+              factors is a common cause of cable overheating in industrial installations.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Voltage drop and earth fault loop impedance</ContentEyebrow>
+
+          <ConceptBlock title="Voltage Drop and Earth Fault Loop Impedance">
             <p>
               After selecting a cable for current-carrying capacity, two further checks are
               essential: voltage drop and earth fault loop impedance. A cable that passes the CCC
               test may still fail on voltage drop (causing poor equipment performance) or loop
               impedance (failing to provide adequate fault protection).
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage Drop</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Limits:</strong> 3% for lighting (6.9 V at 230 V), 5% for other uses (11.5
-                  V at 230 V) — BS 7671 Appendix 4, Section 6.4
-                </li>
-                <li className="pl-1">
-                  <strong>Calculation:</strong> VD = (mV/A/m x Ib x L) / 1,000 — where mV/A/m is
-                  from BS 7671 tables, Ib is design current and L is cable length in metres
-                </li>
-                <li className="pl-1">
-                  <strong>Long runs:</strong> Voltage drop often governs cable size for long cable
-                  runs, requiring a larger cable than CCC alone would demand
-                </li>
-                <li className="pl-1">
-                  <strong>Motor starting:</strong> Starting current (typically 6-8 times FLC) causes
-                  significant transient voltage drop — check this does not affect adjacent equipment
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Earth Fault Loop Impedance (Zs)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purpose:</strong> The total loop impedance must be low enough for the
-                  protective device to operate within the required disconnection time (0.4 s for 32
-                  A circuits, 5 s for distribution circuits)
-                </li>
-                <li className="pl-1">
-                  <strong>Calculation:</strong> Zs = Ze + (R1 + R2), where Ze is the external loop
-                  impedance and (R1 + R2) is the resistance of the line and CPC within the circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature correction:</strong> Measured values at ambient temperature
-                  must be corrected to operating temperature using a factor of 1.2 for comparison
-                  with tabulated maximum values
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance check:</strong> Loop impedance testing during periodic
-                  inspection verifies that fault protection remains effective throughout the
-                  installation's life
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Cable Selection Errors</p>
-              <p className="text-sm text-white">
+          </ConceptBlock>
+
+          <ConceptBlock title="Voltage drop">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Limits:</strong> 3% for lighting (6.9 V at 230 V), 5% for other uses (11.5 V
+                at 230 V) — BS 7671 Appendix 4, Section 6.4.
+              </li>
+              <li>
+                <strong>Calculation:</strong> VD = (mV/A/m x Ib x L) / 1,000 — where mV/A/m is from
+                BS 7671 tables, Ib is design current and L is cable length in metres.
+              </li>
+              <li>
+                <strong>Long runs:</strong> Voltage drop often governs cable size for long cable
+                runs, requiring a larger cable than CCC alone would demand.
+              </li>
+              <li>
+                <strong>Motor starting:</strong> Starting current (typically 6-8 times FLC) causes
+                significant transient voltage drop — check this does not affect adjacent equipment.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Earth fault loop impedance (Zs)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Purpose:</strong> The total loop impedance must be low enough for the
+                protective device to operate within the required disconnection time (0.4 s for 32 A
+                circuits, 5 s for distribution circuits).
+              </li>
+              <li>
+                <strong>Calculation:</strong> Zs = Ze + (R1 + R2), where Ze is the external loop
+                impedance and (R1 + R2) is the resistance of the line and CPC within the circuit.
+              </li>
+              <li>
+                <strong>Temperature correction:</strong> Measured values at ambient temperature must
+                be corrected to operating temperature using a factor of 1.2 for comparison with
+                tabulated maximum values.
+              </li>
+              <li>
+                <strong>Maintenance check:</strong> Loop impedance testing during periodic
+                inspection verifies that fault protection remains effective throughout the
+                installation's life.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Common cable selection errors"
+            whatHappens={
+              <>
                 The most common errors are: selecting cable based solely on current without checking
                 voltage drop (common on long submain runs); ignoring grouping factors when
                 additional cables are added to existing containment; not verifying loop impedance
                 when extending circuits; and using PVC cables in environments where XLPE or
-                fire-rated cables are required. Each of these errors can result in an unsafe
-                installation.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                CPC Thermal Withstand (Adiabatic Equation)
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The final verification in cable selection is ensuring the circuit protective
-                conductor (CPC) can withstand the thermal energy of the maximum earth fault current
-                for the disconnection time of the protective device. This is calculated using the
-                adiabatic equation:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Formula:</strong> S = sqrt(I squared t) / k — where S is the minimum CPC
-                  cross-sectional area, I is the fault current, t is the disconnection time, and k
-                  is a material constant (143 for copper PVC, 176 for copper XLPE)
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> If the calculated minimum S exceeds the actual CPC
-                  size, a larger CPC or separate earth conductor is required
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance relevance:</strong> When extending circuits or changing
-                  protective devices, the CPC adequacy must be re-verified
-                </li>
-              </ul>
-            </div>
+                fire-rated cables are required.
+              </>
+            }
+            doInstead={<>Each of these errors can result in an unsafe installation.</>}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Cable selection requires all three criteria (CCC, voltage
-              drop and Zs) to be satisfied simultaneously. The cable size is determined by whichever
-              criterion demands the largest conductor.
+          <ConceptBlock title="CPC thermal withstand (adiabatic equation)">
+            <p>
+              The final verification in cable selection is ensuring the circuit protective conductor
+              (CPC) can withstand the thermal energy of the maximum earth fault current for the
+              disconnection time of the protective device. This is calculated using the adiabatic
+              equation:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Formula:</strong> S = sqrt(I squared t) / k — where S is the minimum CPC
+                cross-sectional area, I is the fault current, t is the disconnection time, and k is
+                a material constant (143 for copper PVC, 176 for copper XLPE).
+              </li>
+              <li>
+                <strong>Application:</strong> If the calculated minimum S exceeds the actual CPC
+                size, a larger CPC or separate earth conductor is required.
+              </li>
+              <li>
+                <strong>Maintenance relevance:</strong> When extending circuits or changing
+                protective devices, the CPC adequacy must be re-verified.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Cable selection requires all three criteria (CCC, voltage drop and Zs) to be satisfied
+              simultaneously. The cable size is determined by whichever criterion demands the
+              largest conductor.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Special Cable Types and Fire Performance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Special cable types and fire performance</ContentEyebrow>
+
+          <ConceptBlock title="Special Cable Types and Fire Performance">
             <p>
               Certain applications demand cables with specific properties beyond standard power
               distribution. Fire-resistant cables maintain circuit integrity during fire, screened
@@ -803,164 +773,151 @@ const MOETModule3Section3_2 = () => {
               damage. Understanding when and why these special cables are specified is essential for
               maintenance work where like-for-like replacement is critical for safety.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Mineral Insulated Cable (MI / Pyro)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Construction:</strong> Copper conductors in compacted magnesium oxide
-                  (MgO) insulation within a seamless copper or stainless steel sheath
-                </li>
-                <li className="pl-1">
-                  <strong>Fire performance:</strong> Maintains circuit integrity above 1,000 degrees
-                  C; non-combustible; zero smoke emission
-                </li>
-                <li className="pl-1">
-                  <strong>Applications:</strong> Fire pump supplies, smoke extraction fan circuits,
-                  fire alarm circuits (BS 5839), emergency lighting (BS 5266), hazardous areas
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance note:</strong> MgO insulation is hygroscopic (absorbs
-                  moisture). Exposed cable ends must be sealed immediately. Failed seals cause low
-                  insulation resistance readings — a common maintenance fault
-                </li>
-                <li className="pl-1">
-                  <strong>Termination:</strong> Requires specialist termination pots and seals;
-                  incorrect termination is the most common cause of MI cable failure
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Fire-Performance Cables (FP200, FP Plus)
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Standard:</strong> Tested to BS 8434-2 (fire resistance) and classified to
-                  BS EN 13501-6
-                </li>
-                <li className="pl-1">
-                  <strong>Construction:</strong> Solid copper conductors, silicone rubber
-                  insulation, aluminium tape moisture barrier, LSZH outer sheath
-                </li>
-                <li className="pl-1">
-                  <strong>Advantage over MI:</strong> Easier to install and terminate using standard
-                  accessories; more flexible; no moisture ingress issues
-                </li>
-                <li className="pl-1">
-                  <strong>Limitation:</strong> Does not match MI cable's extreme temperature
-                  performance; requires clip fixings rated for fire conditions
-                </li>
-              </ul>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">SWA Cables</h3>
-                <p className="text-sm text-white">
-                  Steel wire armour provides mechanical protection for cables installed on open
-                  cable trays, cleated to surfaces, or buried underground. The armour can serve as a
-                  CPC if the cross-sectional area meets BS 7671 requirements. SWA cables must be
-                  correctly terminated using appropriate glands (BW for indoor, CW for outdoor with
-                  weather seal) to maintain the armour continuity for earth fault protection.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Screened Cables</h3>
-                <p className="text-sm text-white">
-                  Screened (shielded) cables are used for control and signal circuits in
-                  environments with electromagnetic interference. The screen — typically braided
-                  copper or aluminium foil — prevents external fields from inducing noise in the
-                  signal conductors. EMC glands must be used to maintain 360-degree screen
-                  termination at the panel entry. Broken or incorrectly terminated screens are a
-                  common cause of control system malfunctions in industrial environments.
-                </p>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Installation Considerations
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Beyond cable selection, proper installation practice is essential for reliable
-                performance throughout the cable's service life. Incorrect installation can damage
-                even the best cable.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bending radius:</strong> Never exceed the minimum bending radius —
-                  typically 6 times cable diameter for SWA cables up to 25 mm, 8 times for larger
-                  cables; tighter bends damage armour and deform insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Pulling tension:</strong> Maximum sidewall pressure and pulling force must
-                  not exceed manufacturer limits — excessive force during cable pulling stretches
-                  conductors and compresses insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature limits:</strong> PVC cables should not be installed below 0
-                  degrees C as the sheath becomes brittle and can crack during bending; XLPE can be
-                  installed at lower temperatures
-                </li>
-                <li className="pl-1">
-                  <strong>UV protection:</strong> Standard PVC sheaths degrade in direct sunlight —
-                  use UV-resistant types or provide physical protection for outdoor exposed runs
-                </li>
-                <li className="pl-1">
-                  <strong>Proximity to heat sources:</strong> Cables routed near hot surfaces (steam
-                  pipes, heaters, flues) require additional derating or physical separation
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Testing During Maintenance
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Cable condition assessment is a key part of periodic inspection and ongoing
-                maintenance. Degraded cables must be identified before they fail in service.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Insulation resistance (IR):</strong> Measured at 500 V DC for LV cables;
-                  minimum acceptable value is 1 Mohm but healthy cables typically read much higher;
-                  a falling trend indicates deterioration
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity testing:</strong> Verifies all conductors and CPC are intact;
-                  essential after any physical disturbance or building works
-                </li>
-                <li className="pl-1">
-                  <strong>Earth fault loop impedance:</strong> Confirms the protective device will
-                  operate within required time during a fault; must be within BS 7671 maximum Zs
-                  values
-                </li>
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Check for physical damage, heat
-                  discolouration, rodent damage, water ingress and sheath deterioration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Mineral insulated cable (MI / Pyro)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Construction:</strong> Copper conductors in compacted magnesium oxide (MgO)
+                insulation within a seamless copper or stainless steel sheath.
+              </li>
+              <li>
+                <strong>Fire performance:</strong> Maintains circuit integrity above 1,000 degrees
+                C; non-combustible; zero smoke emission.
+              </li>
+              <li>
+                <strong>Applications:</strong> Fire pump supplies, smoke extraction fan circuits,
+                fire alarm circuits (BS 5839), emergency lighting (BS 5266), hazardous areas.
+              </li>
+              <li>
+                <strong>Maintenance note:</strong> MgO insulation is hygroscopic (absorbs moisture).
+                Exposed cable ends must be sealed immediately. Failed seals cause low insulation
+                resistance readings — a common maintenance fault.
+              </li>
+              <li>
+                <strong>Termination:</strong> Requires specialist termination pots and seals;
+                incorrect termination is the most common cause of MI cable failure.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under BS 5839-1 and BS 5266-1, fire-resistant cables must be
-              used for critical fire safety circuits. Replacing a fire-rated cable with a standard
-              cable during maintenance is a serious compliance failure that could endanger lives
-              during a fire.
+          <ConceptBlock title="Fire-performance cables (FP200, FP Plus)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Standard:</strong> Tested to BS 8434-2 (fire resistance) and classified to
+                BS EN 13501-6.
+              </li>
+              <li>
+                <strong>Construction:</strong> Solid copper conductors, silicone rubber insulation,
+                aluminium tape moisture barrier, LSZH outer sheath.
+              </li>
+              <li>
+                <strong>Advantage over MI:</strong> Easier to install and terminate using standard
+                accessories; more flexible; no moisture ingress issues.
+              </li>
+              <li>
+                <strong>Limitation:</strong> Does not match MI cable's extreme temperature
+                performance; requires clip fixings rated for fire conditions.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="SWA cables">
+            <p>
+              Steel wire armour provides mechanical protection for cables installed on open cable
+              trays, cleated to surfaces, or buried underground. The armour can serve as a CPC if
+              the cross-sectional area meets BS 7671 requirements. SWA cables must be correctly
+              terminated using appropriate glands (BW for indoor, CW for outdoor with weather seal)
+              to maintain the armour continuity for earth fault protection.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Screened cables">
+            <p>
+              Screened (shielded) cables are used for control and signal circuits in environments
+              with electromagnetic interference. The screen — typically braided copper or aluminium
+              foil — prevents external fields from inducing noise in the signal conductors. EMC
+              glands must be used to maintain 360-degree screen termination at the panel entry.
+              Broken or incorrectly terminated screens are a common cause of control system
+              malfunctions in industrial environments.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Harmonised Colours and Cable Identification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cable installation considerations">
+            <p>
+              Beyond cable selection, proper installation practice is essential for reliable
+              performance throughout the cable's service life. Incorrect installation can damage
+              even the best cable.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bending radius:</strong> Never exceed the minimum bending radius — typically
+                6 times cable diameter for SWA cables up to 25 mm, 8 times for larger cables;
+                tighter bends damage armour and deform insulation.
+              </li>
+              <li>
+                <strong>Pulling tension:</strong> Maximum sidewall pressure and pulling force must
+                not exceed manufacturer limits — excessive force during cable pulling stretches
+                conductors and compresses insulation.
+              </li>
+              <li>
+                <strong>Temperature limits:</strong> PVC cables should not be installed below 0
+                degrees C as the sheath becomes brittle and can crack during bending; XLPE can be
+                installed at lower temperatures.
+              </li>
+              <li>
+                <strong>UV protection:</strong> Standard PVC sheaths degrade in direct sunlight —
+                use UV-resistant types or provide physical protection for outdoor exposed runs.
+              </li>
+              <li>
+                <strong>Proximity to heat sources:</strong> Cables routed near hot surfaces (steam
+                pipes, heaters, flues) require additional derating or physical separation.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Cable testing during maintenance">
+            <p>
+              Cable condition assessment is a key part of periodic inspection and ongoing
+              maintenance. Degraded cables must be identified before they fail in service.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Insulation resistance (IR):</strong> Measured at 500 V DC for LV cables;
+                minimum acceptable value is 1 Mohm but healthy cables typically read much higher; a
+                falling trend indicates deterioration.
+              </li>
+              <li>
+                <strong>Continuity testing:</strong> Verifies all conductors and CPC are intact;
+                essential after any physical disturbance or building works.
+              </li>
+              <li>
+                <strong>Earth fault loop impedance:</strong> Confirms the protective device will
+                operate within required time during a fault; must be within BS 7671 maximum Zs
+                values.
+              </li>
+              <li>
+                <strong>Visual inspection:</strong> Check for physical damage, heat discolouration,
+                rodent damage, water ingress and sheath deterioration.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Note">
+            <p className="italic">
+              Under BS 5839-1 and BS 5266-1, fire-resistant cables must be used for critical fire
+              safety circuits. Replacing a fire-rated cable with a standard cable during maintenance
+              is a serious compliance failure that could endanger lives during a fire.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Harmonised colours and cable identification</ContentEyebrow>
+
+          <ConceptBlock title="Harmonised Colours and Cable Identification">
             <p>
               Correct cable identification is fundamental to safe maintenance work. Misidentifying a
               conductor can result in short circuits, equipment damage or fatal electric shock. BS
@@ -968,193 +925,164 @@ const MOETModule3Section3_2 = () => {
               must be familiar with both the current and legacy colour schemes encountered in
               existing installations.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Harmonised vs Legacy Colours
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Harmonised vs legacy colours
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Current (Harmonised)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Legacy UK</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line (single-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L1 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L2 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                      <td className="border border-white/10 px-3 py-2">Yellow</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">L3 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Neutral</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective (earth)</td>
-                      <td className="border border-white/10 px-3 py-2">Green/yellow</td>
-                      <td className="border border-white/10 px-3 py-2">Green/yellow</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Conductor</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Current (harmonised)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Legacy UK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Line (single-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">Brown</td>
+                    <td className="border border-white/10 px-3 py-2">Red</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">L1 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">Brown</td>
+                    <td className="border border-white/10 px-3 py-2">Red</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">L2 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">Black</td>
+                    <td className="border border-white/10 px-3 py-2">Yellow</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">L3 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">Grey</td>
+                    <td className="border border-white/10 px-3 py-2">Blue</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Neutral</td>
+                    <td className="border border-white/10 px-3 py-2">Blue</td>
+                    <td className="border border-white/10 px-3 py-2">Black</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Protective (earth)</td>
+                    <td className="border border-white/10 px-3 py-2">Green/yellow</td>
+                    <td className="border border-white/10 px-3 py-2">Green/yellow</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Danger: Mixed Colour Installations
-              </p>
-              <p className="text-sm text-white">
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Danger: mixed colour installations"
+            whatHappens={
+              <>
                 Many existing installations contain both old and new colour codes. The critical
                 confusion point is that old-code neutral (black) is the same as new-code L2. A
                 maintenance technician working on a distribution board with mixed colours must
-                exercise extreme caution. BS 7671 requires warning notices at distribution boards
-                where both old and new colours are present. If no notice exists, fit one.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Identification Markings
-              </h3>
-              <p className="text-sm text-white mb-3">
-                In addition to conductor colour coding, cables carry printed markings on their outer
-                sheath that provide essential identification information for maintenance
-                technicians.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Manufacturer name or trademark:</strong> Identifies the cable source for
-                  warranty and specification queries
-                </li>
-                <li className="pl-1">
-                  <strong>British Standard reference:</strong> Confirms the manufacturing standard
-                  (e.g., BS 5467 for XLPE/SWA/PVC)
-                </li>
-                <li className="pl-1">
-                  <strong>Cable designation code:</strong> The alphanumeric type designation (e.g.,
-                  6944X for 4-core XLPE/SWA)
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor size and number of cores:</strong> e.g., 4 x 16 mm squared
-                </li>
-                <li className="pl-1">
-                  <strong>Voltage rating:</strong> e.g., 600/1,000 V
-                </li>
-                <li className="pl-1">
-                  <strong>Date of manufacture:</strong> Year and sometimes quarter — useful for
-                  assessing cable age during periodic inspections
-                </li>
-              </ul>
-            </div>
+                exercise extreme caution.
+              </>
+            }
+            doInstead={
+              <>
+                BS 7671 requires warning notices at distribution boards where both old and new
+                colours are present. If no notice exists, fit one.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in cable identification, selection and installation. Cable identification is a
-              critical safety skill that underpins all electrical maintenance work. Always prove
-              dead before touching any conductor, regardless of its colour.
+          <ConceptBlock title="Cable identification markings">
+            <p>
+              In addition to conductor colour coding, cables carry printed markings on their outer
+              sheath that provide essential identification information for maintenance technicians.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Manufacturer name or trademark:</strong> Identifies the cable source for
+                warranty and specification queries.
+              </li>
+              <li>
+                <strong>British Standard reference:</strong> Confirms the manufacturing standard
+                (e.g., BS 5467 for XLPE/SWA/PVC).
+              </li>
+              <li>
+                <strong>Cable designation code:</strong> The alphanumeric type designation (e.g.,
+                6944X for 4-core XLPE/SWA).
+              </li>
+              <li>
+                <strong>Conductor size and number of cores:</strong> e.g., 4 x 16 mm squared.
+              </li>
+              <li>
+                <strong>Voltage rating:</strong> e.g., 600/1,000 V.
+              </li>
+              <li>
+                <strong>Date of manufacture:</strong> Year and sometimes quarter — useful for
+                assessing cable age during periodic inspections.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="ST1426 link">
+            <p className="text-elec-yellow/70">
+              The maintenance technician standard requires competence in cable identification,
+              selection and installation. Cable identification is a critical safety skill that
+              underpins all electrical maintenance work. Always prove dead before touching any
+              conductor, regardless of its colour.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Cable sizing process: determine Ib, select In >= Ib, apply correction factors Ca, Cg, Ci, Cf, calculate It = In / (Ca x Cg x Ci), verify voltage drop (3% lighting / 5% power), verify Zs.',
+              'Key cable standards: BS 7671 Appendix 4 (current-carrying capacity tables), BS 5467 (XLPE/SWA/PVC), BS 6004 (PVC singles), BS EN 60702 (mineral insulated), BS 7846 (fire-performance, FP200).',
+              'Harmonised colours: Brown L1, Black L2, Grey L3, Blue neutral, Green/yellow protective conductor.',
+              'PVC (70 degrees C) vs XLPE (90 degrees C) insulation drives current rating; MI and FP200 are the fire-performance choices for life-safety circuits.',
+              'The cable size is set by whichever of CCC, voltage drop or Zs demands the largest conductor — all three must be satisfied.',
+              'SWA armour is mechanical protection first, CPC second; screened cables need 360-degree EMC gland termination to actually work.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Cable Sizing Process</p>
-                <ul className="space-y-0.5">
-                  <li>1. Determine design current (Ib)</li>
-                  <li>2. Select protective device rating (In &ge; Ib)</li>
-                  <li>3. Apply correction factors: Ca, Cg, Ci, Cf</li>
-                  <li>4. Calculate required It = In / (Ca x Cg x Ci)</li>
-                  <li>5. Verify voltage drop within 3% (lighting) / 5% (power)</li>
-                  <li>6. Verify earth fault loop impedance (Zs)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Cable Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Appendix 4 — current-carrying capacity tables</li>
-                  <li>BS 5467 — XLPE/SWA/PVC cables</li>
-                  <li>BS 6004 — PVC singles</li>
-                  <li>BS EN 60702 — mineral insulated cable</li>
-                  <li>BS 7846 — fire-performance cables (FP200)</li>
-                  <li>Harmonised colours: Brown L1, Black L2, Grey L3</li>
-                </ul>
-              </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Layout and Design of Control Panels
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Terminations and Connectors
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Control Panel Layout
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-3">
-              Next: Terminations &amp; Connectors
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

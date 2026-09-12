@@ -60,10 +60,22 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
             </span>
           </div>
         )}
-        <span
-          aria-hidden
-          className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_12%)]"
-        />
+        {/*
+          The green dot is presence, so it only shows for actual presence.
+
+          It rendered unconditionally on every supporter in the list, which
+          meant someone who last opened the app five months ago carried the
+          same "online" dot as someone reading right now. `last_active_at` is
+          written when a supporter toggles their availability on, so an hour is
+          the most it can honestly support.
+        */}
+        {supporter.last_active_at &&
+          Date.now() - new Date(supporter.last_active_at).getTime() < 60 * 60 * 1000 && (
+            <span
+              aria-hidden
+              className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_12%)]"
+            />
+          )}
       </div>
 
       {/* Body */}

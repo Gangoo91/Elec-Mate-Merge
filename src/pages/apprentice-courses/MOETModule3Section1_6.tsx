@@ -1,13 +1,49 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.1 · Subsection 6 — Protection Coordination (Discrimination and Selectivity)
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use of monitoring and protection equipment."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Substation Layout and Design - MOET Module 3 Section 1.6';
+const TITLE =
+  'Protection Coordination (Discrimination and Selectivity) - MOET Module 3 Section 1.6';
 const DESCRIPTION =
-  'Comprehensive guide to protection coordination and substation layout for electrical maintenance technicians: discrimination, selectivity, time grading, current grading, cascading, back-up protection, fault level considerations and BS 7671 compliance.';
+  'Comprehensive guide to protection coordination for electrical maintenance technicians: discrimination, selectivity, time grading, current grading, cascading, back-up protection, fault level considerations and BS 7671 compliance.';
 
 const quickCheckQuestions = [
   {
@@ -26,12 +62,7 @@ const quickCheckQuestions = [
   {
     id: 'time-grading-interval',
     question: 'What is the typical time grading interval between successive protective devices?',
-    options: [
-      '0.01 to 0.05 seconds',
-      '0.1 to 0.3 seconds',
-      '1 to 2 seconds',
-      '5 to 10 seconds',
-    ],
+    options: ['0.01 to 0.05 seconds', '0.1 to 0.3 seconds', '1 to 2 seconds', '5 to 10 seconds'],
     correctIndex: 1,
     explanation:
       'The typical time grading interval is 0.1 to 0.3 seconds. This accounts for the breaker operating time, relay operating time and a safety margin to ensure the downstream device clears the fault before the upstream device operates.',
@@ -96,12 +127,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the typical time grading interval between successive protection devices?',
-    options: [
-      '1 to 2 s',
-      '0.01 s',
-      '5 s',
-      '0.1 to 0.3 s',
-    ],
+    options: ['1 to 2 s', '0.01 s', '5 s', '0.1 to 0.3 s'],
     correctAnswer: 3,
     explanation:
       'The typical time grading interval is 0.1 to 0.3 seconds, accounting for device operating times and safety margins.',
@@ -148,12 +174,7 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What ratio of current ratings is generally needed for reliable current grading?',
-    options: [
-      '1.1:1',
-      '1.5:1',
-      '10:1',
-      '2:1 or greater',
-    ],
+    options: ['1.1:1', '1.5:1', '10:1', '2:1 or greater'],
     correctAnswer: 3,
     explanation:
       'A ratio of at least 2:1 between upstream and downstream device ratings is generally needed for reliable current grading, though exact requirements depend on specific device characteristics.',
@@ -174,12 +195,7 @@ const quizQuestions = [
   {
     id: 9,
     question: 'Which BS 7671 Regulation requires discrimination where it is necessary for safety?',
-    options: [
-      'Regulation 411.3',
-      'Regulation 536.4',
-      'Regulation 434.5',
-      'Regulation 643.1',
-    ],
+    options: ['Regulation 411.3', 'Regulation 536.4', 'Regulation 434.5', 'Regulation 643.1'],
     correctAnswer: 1,
     explanation:
       'Regulation 536.4 requires that where discrimination between protective devices is necessary for safety, the characteristics shall be chosen accordingly.',
@@ -214,12 +230,7 @@ const quizQuestions = [
   {
     id: 12,
     question: 'What is a typical breaking capacity range for MCCBs?',
-    options: [
-      '25 to 70 kA',
-      '100 to 150 kA',
-      '6 to 10 kA',
-      '10 to 15 kA',
-    ],
+    options: ['25 to 70 kA', '100 to 150 kA', '6 to 10 kA', '10 to 15 kA'],
     correctAnswer: 0,
     explanation:
       'MCCBs typically have breaking capacities ranging from 25 kA to 70 kA, making them suitable for main distribution where fault levels are higher than at final circuit level.',
@@ -257,116 +268,55 @@ const faqs = [
 ];
 
 const MOETModule3Section1_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.1.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Substation Layout and Design
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.1 · Subsection 6"
+        title="Protection Coordination"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Protection coordination, discrimination, selectivity, cascading and fault level
-            considerations
+            considerations.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Discrimination:</strong> Only nearest device trips on fault
-              </li>
-              <li className="pl-1">
-                <strong>Time grading:</strong> 0.1-0.3 s intervals between devices
-              </li>
-              <li className="pl-1">
-                <strong>Cascading:</strong> Upstream device assists downstream for high faults
-              </li>
-              <li className="pl-1">
-                <strong>Breaking capacity:</strong> Must exceed Ipf at point of installation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault diagnosis:</strong> Understanding why multiple devices trip
-              </li>
-              <li className="pl-1">
-                <strong>Device replacement:</strong> Never change type without approval
-              </li>
-              <li className="pl-1">
-                <strong>Fault levels:</strong> Can change with supply modifications
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to fault diagnosis and system awareness KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Discrimination: Only nearest device trips on fault.',
+              'Time grading: 0.1-0.3 s intervals between devices.',
+              'Cascading: Upstream device assists downstream for high faults.',
+              'Breaking capacity: Must exceed Ipf at point of installation.',
+              'Fault diagnosis: Understanding why multiple devices trip.',
+              'Device replacement: Never change type without approval.',
+              'Fault levels: Can change with supply modifications.',
+              'ST1426: Maps to fault diagnosis and system awareness KSBs.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Define discrimination (selectivity) and explain its importance in electrical systems',
               'Describe time grading and current grading techniques for achieving discrimination',
               'Explain the concepts of cascading and back-up protection',
               'Interpret time-current characteristic curves for protective devices',
               'Understand fault level considerations and their effect on protection coordination',
               'Recognise the maintenance implications of protection coordination',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>What is discrimination (selectivity)?</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is Discrimination (Selectivity)?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Discrimination limits an outage to the smallest possible section"
+            onSite="During fault investigation, if multiple devices have tripped, it may indicate a discrimination failure rather than a fault on multiple circuits. Understanding protection coordination helps you diagnose the root cause and identify the actual faulted circuit."
+          >
             <p>
               Discrimination (also called selectivity) is the coordination of protective devices so
               that, in the event of a fault, only the device nearest to the fault operates, while
@@ -381,6 +331,9 @@ const MOETModule3Section1_6 = () => {
               trip, causing a much larger outage affecting many circuits and potentially endangering
               life safety systems.
             </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="BS 7671 and when discrimination is required">
             <p>
               BS 7671 Regulation 536.4 requires that where discrimination between protective devices
               is necessary for safety, the characteristics of the devices shall be chosen
@@ -388,125 +341,94 @@ const MOETModule3Section1_6 = () => {
               essential for safety-critical systems such as hospitals, data centres and life safety
               circuits.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Full vs Partial Discrimination
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Full Discrimination:</strong> The downstream device operates for ALL fault
-                  levels up to the maximum prospective fault current (Ipf). The upstream device
-                  never trips before the downstream device, regardless of fault current magnitude
-                </li>
-                <li className="pl-1">
-                  <strong>Partial Discrimination:</strong> The downstream device operates correctly
-                  up to a certain fault level (the discrimination limit), above which both devices
-                  may trip simultaneously. Partial discrimination is common and often acceptable,
-                  provided the discrimination limit exceeds the likely fault current at that point
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Full vs partial discrimination">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Full discrimination:</strong> The downstream device operates for ALL fault
+                levels up to the maximum prospective fault current (Ipf). The upstream device never
+                trips before the downstream device, regardless of fault current magnitude.
+              </li>
+              <li>
+                <strong>Partial discrimination:</strong> The downstream device operates correctly up
+                to a certain fault level (the discrimination limit), above which both devices may
+                trip simultaneously. Partial discrimination is common and often acceptable, provided
+                the discrimination limit exceeds the likely fault current at that point.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> During fault investigation, if multiple devices have
-              tripped, it may indicate a discrimination failure rather than a fault on multiple
-              circuits. Understanding protection coordination helps you diagnose the root cause and
-              identify the actual faulted circuit.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Methods of Achieving Discrimination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Methods of achieving discrimination</ContentEyebrow>
+
+          <ConceptBlock title="Time grading and current grading">
             <p>
               There are two primary methods of achieving discrimination between protective devices:
               time grading and current grading. In practice, most protection schemes use a
               combination of both methods to achieve the best coordination across the full range of
               fault currents.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Time Grading</h3>
-              <p className="text-sm text-white mb-3">
-                Time grading achieves discrimination by introducing intentional time delays in
-                upstream devices. The device nearest the fault has the shortest operating time,
-                while each successive upstream device has a progressively longer time delay. The
-                time grading interval is typically 0.1 to 0.3 seconds.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">Final circuit MCB trips instantaneously (within 10 ms)</li>
-                <li className="pl-1">Sub-distribution MCCB has a 0.2 second short-time delay</li>
-                <li className="pl-1">Main ACB has a 0.5 second short-time delay</li>
-                <li className="pl-1">
-                  Each level has progressively longer delay to ensure downstream clears first
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Current Grading</h3>
-              <p className="text-sm text-white mb-3">
-                Current grading uses the difference in current ratings between upstream and
-                downstream devices. A fault on a final circuit produces a current within the
-                tripping range of the downstream MCB but below the instantaneous trip threshold of
-                the larger upstream MCCB.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Requires a significant ratio between successive device ratings (minimum 2:1)
-                </li>
-                <li className="pl-1">
-                  Works best at lower fault levels where current is within the overload region
-                </li>
-                <li className="pl-1">
-                  At very high fault currents, both devices may enter instantaneous trip region
-                </li>
-                <li className="pl-1">
-                  Often combined with time grading for comprehensive coordination
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Using Time-Current Curves
-              </h3>
-              <p className="text-sm text-white">
-                Time-current characteristic curves are the primary tool for verifying
-                discrimination. Each protective device has a characteristic curve showing the
-                relationship between fault current and operating time. For discrimination, the
-                curves of upstream and downstream devices must not cross within the expected fault
-                current range. Manufacturers publish discrimination tables showing tested
-                combinations that achieve full or partial discrimination — these should be used in
-                preference to manual curve comparison where available.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Manufacturers' discrimination tables are the most reliable
-              way to verify coordination between devices from the same manufacturer. When mixing
-              manufacturers, more detailed analysis using time-current curves is required.
+          <ConceptBlock title="Time grading">
+            <p>
+              Time grading achieves discrimination by introducing intentional time delays in
+              upstream devices. The device nearest the fault has the shortest operating time, while
+              each successive upstream device has a progressively longer time delay. The time
+              grading interval is typically 0.1 to 0.3 seconds.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Final circuit MCB trips instantaneously (within 10 ms)</li>
+              <li>Sub-distribution MCCB has a 0.2 second short-time delay</li>
+              <li>Main ACB has a 0.5 second short-time delay</li>
+              <li>Each level has progressively longer delay to ensure downstream clears first</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Current grading">
+            <p>
+              Current grading uses the difference in current ratings between upstream and downstream
+              devices. A fault on a final circuit produces a current within the tripping range of
+              the downstream MCB but below the instantaneous trip threshold of the larger upstream
+              MCCB.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Requires a significant ratio between successive device ratings (minimum 2:1)</li>
+              <li>Works best at lower fault levels where current is within the overload region</li>
+              <li>At very high fault currents, both devices may enter instantaneous trip region</li>
+              <li>Often combined with time grading for comprehensive coordination</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cascading (Back-Up Protection)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Using time-current curves"
+            onSite="Manufacturers' discrimination tables are the most reliable way to verify coordination between devices from the same manufacturer. When mixing manufacturers, more detailed analysis using time-current curves is required."
+          >
+            <p>
+              Time-current characteristic curves are the primary tool for verifying discrimination.
+              Each protective device has a characteristic curve showing the relationship between
+              fault current and operating time. For discrimination, the curves of upstream and
+              downstream devices must not cross within the expected fault current range.
+              Manufacturers publish discrimination tables showing tested combinations that achieve
+              full or partial discrimination — these should be used in preference to manual curve
+              comparison where available.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cascading (back-up protection)</ContentEyebrow>
+
+          <ConceptBlock
+            title="A lower-rated downstream device, assisted by the device above it"
+            onSite="In practice, many installations use a combination of discrimination (for lower fault levels) and cascading (for the highest fault levels). Manufacturers provide cascading tables showing tested combinations and the enhanced breaking capacity achieved."
+          >
             <p>
               Cascading (also called back-up protection) is a technique where a downstream device
               with a lower breaking capacity is used in conjunction with a higher-rated upstream
@@ -514,87 +436,80 @@ const MOETModule3Section1_6 = () => {
               the upstream device assists by interrupting the fault current. This allows the use of
               smaller, less expensive downstream devices.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cascading vs Discrimination Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Discrimination</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Cascading</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Which devices trip</td>
-                      <td className="border border-white/10 px-3 py-2">Only downstream</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Both may trip for high faults
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">System availability</td>
-                      <td className="border border-white/10 px-3 py-2">Maximised</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reduced for high-level faults
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cost</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher (larger downstream devices)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower (smaller downstream devices)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Best for</td>
-                      <td className="border border-white/10 px-3 py-2">Critical installations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cost-sensitive installations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Cascading vs discrimination">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Feature</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Discrimination</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Cascading</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Which devices trip</td>
+                    <td className="border border-white/10 px-3 py-2">Only downstream</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Both may trip for high faults
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">System availability</td>
+                    <td className="border border-white/10 px-3 py-2">Maximised</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Reduced for high-level faults
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Cost</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher (larger downstream devices)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Lower (smaller downstream devices)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Best for</td>
+                    <td className="border border-white/10 px-3 py-2">Critical installations</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cost-sensitive installations
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Maintenance Implications of Cascading
-              </p>
-              <p className="text-sm text-white">
-                When maintaining an installation with cascading protection, never replace a device
-                with one from a different manufacturer or with different characteristics without
-                verifying the cascading compatibility. The tested cascading combination may only be
-                valid for specific device models and ratings. Changing one device can invalidate the
-                entire protection coordination scheme and create a serious safety hazard.
-              </p>
-            </div>
+          <CommonMistake
+            title="Replacing a cascade-protected device without checking compatibility"
+            whatHappens={
+              <>
+                When maintaining an installation with cascading protection, replacing a device with
+                one from a different manufacturer or with different characteristics without
+                verifying the cascading compatibility can invalidate the entire protection
+                coordination scheme and create a serious safety hazard. The tested cascading
+                combination may only be valid for specific device models and ratings.
+              </>
+            }
+            doInstead={
+              <>
+                Never replace a device with one from a different manufacturer or with different
+                characteristics without verifying the cascading compatibility first.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> In practice, many installations use a combination of
-              discrimination (for lower fault levels) and cascading (for the highest fault levels).
-              Manufacturers provide cascading tables showing tested combinations and the enhanced
-              breaking capacity achieved.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Fault Level Considerations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Fault level considerations</ContentEyebrow>
+
+          <ConceptBlock title="What sets the prospective fault current">
             <p>
               The prospective fault current (Ipf) at any point in an installation depends on the
               supply impedance (transformer rating and impedance), the cable impedance between the
@@ -602,223 +517,174 @@ const MOETModule3Section1_6 = () => {
               phase-to-earth). Understanding fault levels is essential for ensuring that protective
               devices are correctly rated.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Breaking Capacity Requirements
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Every protective device has a rated breaking capacity (Icn for MCBs, Icu or Ics for
-                MCCBs). This is the maximum fault current the device can safely interrupt. If the
-                prospective fault current exceeds the device's rated breaking capacity, the device
-                may fail to interrupt the fault, resulting in an arc, fire or explosion.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Breaking Capacity
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Domestic MCBs</td>
-                      <td className="border border-white/10 px-3 py-2">6 kA or 10 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Commercial MCBs</td>
-                      <td className="border border-white/10 px-3 py-2">10 kA or 15 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCBs</td>
-                      <td className="border border-white/10 px-3 py-2">25 kA to 70 kA</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ACBs</td>
-                      <td className="border border-white/10 px-3 py-2">50 kA to 100 kA or more</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Breaking capacity requirements">
+            <p>
+              Every protective device has a rated breaking capacity (Icn for MCBs, Icu or Ics for
+              MCCBs). This is the maximum fault current the device can safely interrupt. If the
+              prospective fault current exceeds the device&apos;s rated breaking capacity, the
+              device may fail to interrupt the fault, resulting in an arc, fire or explosion.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Device type</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">
+                      Typical breaking capacity
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Domestic MCBs</td>
+                    <td className="border border-white/10 px-3 py-2">6 kA or 10 kA</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Commercial MCBs</td>
+                    <td className="border border-white/10 px-3 py-2">10 kA or 15 kA</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCCBs</td>
+                    <td className="border border-white/10 px-3 py-2">25 kA to 70 kA</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">ACBs</td>
+                    <td className="border border-white/10 px-3 py-2">50 kA to 100 kA or more</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Fault Level Changes</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Assuming fault levels never change"
+            whatHappens={
+              <>
                 Fault levels are not fixed. They can change due to transformer upgrades (a larger
                 transformer has lower source impedance, increasing fault levels), changes in supply
                 arrangements (parallel transformer operation), addition of on-site generation, and
-                network changes by the DNO. During maintenance, if you become aware of changes to
-                the supply arrangements, the protection coordination should be reviewed by a
-                competent engineer.
-              </p>
-            </div>
+                network changes by the DNO.
+              </>
+            }
+            doInstead={
+              <>
+                During maintenance, if you become aware of changes to the supply arrangements, the
+                protection coordination should be reviewed by a competent engineer.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Regulation 434.5.1:</strong> BS 7671 requires that every protective device
-              shall have a rated short-circuit breaking capacity not less than the prospective fault
-              current at its point of installation. The only exception is where a back-up device
-              (cascading arrangement) with adequate breaking capacity is installed upstream.
+          <ConceptBlock title="Regulation 434.5.1">
+            <p>
+              BS 7671 requires that every protective device shall have a rated short-circuit
+              breaking capacity not less than the prospective fault current at its point of
+              installation. The only exception is where a back-up device (cascading arrangement)
+              with adequate breaking capacity is installed upstream.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Coordination Studies and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Coordination studies and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="What a coordination study checks">
             <p>
               A protection coordination study is a detailed analysis of the entire protection system
               to verify that discrimination is achieved throughout the installation. It involves
               plotting the time-current characteristics of all protective devices on a common graph
               and checking that the curves do not cross at any expected fault level.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When a Coordination Study is Needed
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">New installations or major extensions</li>
-                <li className="pl-1">
-                  Changes to supply arrangements (transformer upgrades, paralleling)
-                </li>
-                <li className="pl-1">Addition of on-site generation or energy storage</li>
-                <li className="pl-1">
-                  After a major fault event where unexplained tripping occurred
-                </li>
-                <li className="pl-1">
-                  When protective devices are replaced with different types or makes
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="When a coordination study is needed">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>New installations or major extensions</li>
+              <li>Changes to supply arrangements (transformer upgrades, paralleling)</li>
+              <li>Addition of on-site generation or energy storage</li>
+              <li>After a major fault event where unexplained tripping occurred</li>
+              <li>When protective devices are replaced with different types or makes</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Maintenance Technician Responsibilities
-              </h3>
-              <p className="text-sm text-white mb-3">
-                As a maintenance technician, your role in protection coordination includes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Never replace a protective device with one of a different type, rating or make
-                  without engineering approval
-                </li>
-                <li className="pl-1">
-                  Report any unexplained tripping that may indicate discrimination failure
-                </li>
-                <li className="pl-1">
-                  Record the details of any fault events including which devices operated
-                </li>
-                <li className="pl-1">
-                  Ensure trip settings on adjustable devices (MCCBs, ACBs) are not altered without
-                  authorisation
-                </li>
-                <li className="pl-1">
-                  Be aware that the protection coordination scheme is a designed system — changing
-                  one component affects the entire scheme
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand protection principles and recognise when coordination may have been
-              compromised. If you observe unexplained multiple device tripping or are asked to
-              replace a device with a different type, always consult with a design engineer before
-              proceeding.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Protection Coordination Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Discrimination — only nearest device trips</li>
-                  <li>Time grading — 0.1-0.3 s between levels</li>
-                  <li>Current grading — minimum 2:1 ratio</li>
-                  <li>Cascading — back-up for high fault levels</li>
-                  <li>Breaking capacity must exceed Ipf</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Reg 434.5.1 — Breaking capacity</li>
-                  <li>BS 7671 Reg 536.4 — Discrimination</li>
-                  <li>IEC 61439 — Switchgear assemblies</li>
-                  <li>Manufacturer discrimination tables</li>
-                  <li>ST1426 — Fault diagnosis KSBs</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+          <ConceptBlock
+            title="Maintenance technician responsibilities"
+            onSite="Under ST1426, maintenance technicians are expected to understand protection principles and recognise when coordination may have been compromised. If you observe unexplained multiple device tripping or are asked to replace a device with a different type, always consult with a design engineer before proceeding."
           >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Prev: Cable Management
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section1">
-              Back to Section Hub
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            <p>As a maintenance technician, your role in protection coordination includes:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Never replace a protective device with one of a different type, rating or make
+                without engineering approval
+              </li>
+              <li>Report any unexplained tripping that may indicate discrimination failure</li>
+              <li>Record the details of any fault events including which devices operated</li>
+              <li>
+                Ensure trip settings on adjustable devices (MCCBs, ACBs) are not altered without
+                authorisation
+              </li>
+              <li>
+                Be aware that the protection coordination scheme is a designed system — changing one
+                component affects the entire scheme
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Discrimination — only the device nearest the fault trips; upstream devices remain closed.',
+              'Time grading uses a 0.1-0.3 s interval between successive devices; current grading needs a ratio of 2:1 or greater.',
+              'Cascading lets a lower-rated downstream device rely on the upstream device for high-level faults, at the cost of a wider outage on those faults.',
+              'Breaking capacity must not be less than the prospective fault current at the point of installation (Regulation 434.5.1), unless a cascading arrangement provides back-up.',
+              'BS 7671 Regulation 536.4 requires discrimination where it is necessary for safety.',
+              'Fault levels change with transformer upgrades, parallel operation, on-site generation and DNO network changes — review coordination when supply arrangements change.',
+              'Never replace a protective device with a different type or make without engineering approval — it can invalidate the whole coordination scheme.',
+              'Key references: BS 7671 Regulations 434.5.1 and 536.4, IEC 61439 for switchgear assemblies, and the manufacturer discrimination tables for the specific devices installed.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section1-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Isolation and Switching Devices
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Motor Construction and Operation
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

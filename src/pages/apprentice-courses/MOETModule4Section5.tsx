@@ -4,55 +4,54 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '4.5.1',
-      title: 'Visual inspections',
-      description: 'Systematic visual inspection procedures and safety checks',
-      icon: Eye,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-1',
-    },
-    {
-      number: '4.5.2',
-      title: 'Continuity and polarity testing',
-      description: 'Testing electrical continuity and verifying correct polarity',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-2',
-    },
-    {
-      number: '4.5.3',
-      title: 'Insulation resistance',
-      description: 'Measuring and evaluating insulation resistance values',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-3',
-    },
-    {
-      number: '4.5.4',
-      title: 'Earth fault loop impedance',
-      description: 'Testing earth fault loop impedance and protective conductor integrity',
-      icon: RotateCcw,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-4',
-    },
-    {
-      number: '4.5.5',
-      title: 'RCD testing',
-      description: 'Testing residual current devices and protective systems',
-      icon: TestTube,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-5',
-    },
-    {
-      number: '4.5.6',
-      title: 'Functional testing of equipment',
-      description: 'Operational testing and performance verification procedures',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-6',
-    },
-  ];
-
+  {
+    number: '4.5.1',
+    title: 'Insulation resistance testing',
+    description: 'Test voltages, minimum values and interpreting insulation resistance results',
+    icon: Shield,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-1',
+  },
+  {
+    number: '4.5.2',
+    title: 'Continuity testing',
+    description: 'Protective conductor and ring final continuity, and what the readings tell you',
+    icon: Zap,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-2',
+  },
+  {
+    number: '4.5.3',
+    title: 'Earth fault loop impedance testing',
+    description: 'Measuring Zs, comparing against limits and confirming disconnection times',
+    icon: RotateCcw,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-3',
+  },
+  {
+    number: '4.5.4',
+    title: 'Functional testing',
+    description: 'Proving equipment and protective devices operate correctly in service',
+    icon: Settings,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-4',
+  },
+  {
+    number: '4.5.5',
+    title: 'Test documentation and certification',
+    description: 'Recording results and issuing the correct certificate or report',
+    icon: TestTube,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-5',
+  },
+  {
+    number: '4.5.6',
+    title: 'Commissioning procedures',
+    description: 'Bringing plant into service safely and handing it over with evidence',
+    icon: Eye,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section5-6',
+  },
+];
 
 const MOETModule4Section5 = () => {
   useSEO(
     'Section 4.5: Testing and Inspection - MOET Module 4',
-    'Visual inspections, continuity, insulation resistance, earth fault testing and functional testing'
+    'Insulation resistance, continuity, earth fault loop impedance, functional testing, certification and commissioning'
   );
 
   return (
@@ -62,7 +61,7 @@ const MOETModule4Section5 = () => {
       moduleNumber={4}
       sectionNumber={5}
       title="Testing and inspection"
-      description="Visual inspections, continuity, insulation resistance, earth fault testing and functional testing."
+      description="Insulation resistance, continuity, earth fault loop impedance, functional testing, certification and commissioning."
       tone="orange"
       subsectionsCount={subsections.length}
     >

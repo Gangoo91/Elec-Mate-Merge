@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.3 · Subsection 5 — Motor Starting Methods
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ *
+ * Note: motor starting-current and starting-torque multiples vary between
+ * sources. The numbers below are exactly as the original page stated them —
+ * they have not been altered.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Motor Starting Methods - MOET Module 2.3.5';
@@ -14,12 +54,7 @@ const quickCheckQuestions = [
     id: 'dol-starting-current',
     question:
       'A 15 kW three-phase induction motor has a full-load current of 28 A. When started direct-on-line (DOL), the typical starting current is approximately:',
-    options: [
-      '28 A',
-      '56 A',
-      '500 A',
-      '168–224 A',
-    ],
+    options: ['28 A', '56 A', '500 A', '168–224 A'],
     correctIndex: 3,
     explanation:
       'DOL starting draws 6 to 8 times the full-load current. For a 28 A motor: 28 × 6 = 168 A to 28 × 8 = 224 A. This high inrush current lasts for several seconds until the motor reaches speed. While the motor can withstand this, the supply system, cables and protective devices must be rated to handle it. On weak supplies, the voltage dip caused by this inrush can affect other equipment — which is why reduced-voltage starting methods are often required.',
@@ -264,120 +299,67 @@ const faqs = [
 ];
 
 const MOETModule2Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Motor Starting Methods
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.3 · Subsection 5"
+        title="Motor Starting Methods"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Starting techniques, current limiting, torque characteristics and protection
-            coordination
+            coordination.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>DOL:</strong> Full voltage, 6-8× FLC starting current, simplest method
+          <TLDR
+            points={[
+              'DOL: full voltage, 6-8x FLC starting current, simplest method.',
+              'Star-delta: 1/3 current and torque, needs 6-terminal motor.',
+              'Soft starter: thyristor voltage ramp, smooth start, no speed control.',
+              'VSD: V/f control, full torque from zero speed, lowest starting current.',
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Selection:</strong> based on load torque, supply capacity and voltage dip
+                limits.
               </li>
-              <li className="pl-1">
-                <strong>Star-delta:</strong> 1/3 current and torque, needs 6-terminal motor
+              <li>
+                <strong>Protection:</strong> overload + short-circuit per BS 7671 Section 552.
               </li>
-              <li className="pl-1">
-                <strong>Soft starter:</strong> Thyristor voltage ramp, smooth start, no speed
-                control
+              <li>
+                <strong>Fault-finding:</strong> timer settings, contactor sequencing, drive
+                parameters.
               </li>
-              <li className="pl-1">
-                <strong>VSD:</strong> V/f control, full torque from zero speed, lowest starting
-                current
+              <li>
+                <strong>ST1426:</strong> understand and maintain motor starting equipment.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Selection:</strong> Based on load torque, supply capacity and voltage dip
-                limits
-              </li>
-              <li className="pl-1">
-                <strong>Protection:</strong> Overload + short-circuit per BS 7671 Section 552
-              </li>
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Timer settings, contactor sequencing, drive
-                parameters
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Understand and maintain motor starting equipment
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principle and operation of DOL, star-delta, soft start and VSD starting methods',
               'Compare starting current and starting torque characteristics of each method',
               'Select an appropriate starting method based on load requirements and supply constraints',
               'Describe the components and operation of each type of motor starter',
               'Identify common faults and maintenance requirements for motor starting equipment',
               'Apply BS 7671 Section 552 requirements for motor circuit protection',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Why motor starting matters</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Motor Starting Matters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="A short-circuited transformer, for a few seconds">
             <p>
               When an induction motor is started, the rotor is stationary and the slip is 100%. At
               this moment, the motor behaves almost like a short-circuited transformer — the
@@ -395,224 +377,201 @@ const MOETModule2Section3_5 = () => {
               gearboxes and driven equipment. For these reasons, various starting methods have been
               developed to reduce the starting current and/or control the starting torque.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Relationships for Motor Starting
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Starting current ∝ applied voltage:</strong> Reducing the voltage
-                  proportionally reduces the current
-                </li>
-                <li className="pl-1">
-                  <strong>Starting torque ∝ (applied voltage)²:</strong> Reducing voltage to 58%
-                  (1/√3, as in star) reduces torque to 33% (1/3)
-                </li>
-                <li className="pl-1">
-                  <strong>Supply current reduction:</strong> For auto-transformer starting, the
-                  supply current is reduced by the square of the tap ratio
-                </li>
-                <li className="pl-1">
-                  <strong>VSD starting:</strong> Maintains V/f ratio, so full torque is available
-                  even at reduced frequency/speed
-                </li>
-              </ul>
+          <ConceptBlock
+            title="Key relationships and method comparison"
+            onSite="The choice of starting method is always a compromise between starting current (what the supply can tolerate), starting torque (what the load requires), cost, complexity, and the need for speed control during running. There is no single best method — each has its place."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Starting current proportional to applied voltage:</strong> reducing the
+                voltage proportionally reduces the current
+              </li>
+              <li>
+                <strong>Starting torque proportional to (applied voltage) squared:</strong> reducing
+                voltage to 58% (1/√3, as in star) reduces torque to 33% (1/3)
+              </li>
+              <li>
+                <strong>Supply current reduction:</strong> for auto-transformer starting, the supply
+                current is reduced by the square of the tap ratio
+              </li>
+              <li>
+                <strong>VSD starting:</strong> maintains V/f ratio, so full torque is available even
+                at reduced frequency/speed
+              </li>
+            </ul>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Method</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Starting Current (x FLC)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Starting Torque (% DOL)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical Motor Size
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">DOL</td>
+                    <td className="border border-white/10 px-3 py-2">6-8x</td>
+                    <td className="border border-white/10 px-3 py-2">100%</td>
+                    <td className="border border-white/10 px-3 py-2">Up to 7.5 kW</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Star-delta</td>
+                    <td className="border border-white/10 px-3 py-2">2-2.7x</td>
+                    <td className="border border-white/10 px-3 py-2">33%</td>
+                    <td className="border border-white/10 px-3 py-2">7.5-75 kW</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Auto-transformer (65%)</td>
+                    <td className="border border-white/10 px-3 py-2">2.5-3.5x</td>
+                    <td className="border border-white/10 px-3 py-2">42%</td>
+                    <td className="border border-white/10 px-3 py-2">15-200 kW</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Soft starter</td>
+                    <td className="border border-white/10 px-3 py-2">2-4x</td>
+                    <td className="border border-white/10 px-3 py-2">Variable (adjustable)</td>
+                    <td className="border border-white/10 px-3 py-2">5-500+ kW</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">VSD</td>
+                    <td className="border border-white/10 px-3 py-2">1-1.5x</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      100% (full torque available)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">0.37-1000+ kW</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Rotor resistance</td>
+                    <td className="border border-white/10 px-3 py-2">2-3x</td>
+                    <td className="border border-white/10 px-3 py-2">Up to 200%</td>
+                    <td className="border border-white/10 px-3 py-2">Wound-rotor motors</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Starting Method Comparison
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Method</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Current (× FLC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Starting Torque (% DOL)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Motor Size
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DOL</td>
-                      <td className="border border-white/10 px-3 py-2">6-8×</td>
-                      <td className="border border-white/10 px-3 py-2">100%</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 7.5 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Star-delta</td>
-                      <td className="border border-white/10 px-3 py-2">2-2.7×</td>
-                      <td className="border border-white/10 px-3 py-2">33%</td>
-                      <td className="border border-white/10 px-3 py-2">7.5-75 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Auto-transformer (65%)</td>
-                      <td className="border border-white/10 px-3 py-2">2.5-3.5×</td>
-                      <td className="border border-white/10 px-3 py-2">42%</td>
-                      <td className="border border-white/10 px-3 py-2">15-200 kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft starter</td>
-                      <td className="border border-white/10 px-3 py-2">2-4×</td>
-                      <td className="border border-white/10 px-3 py-2">Variable (adjustable)</td>
-                      <td className="border border-white/10 px-3 py-2">5-500+ kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">VSD</td>
-                      <td className="border border-white/10 px-3 py-2">1-1.5×</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        100% (full torque available)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.37-1000+ kW</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Rotor resistance</td>
-                      <td className="border border-white/10 px-3 py-2">2-3×</td>
-                      <td className="border border-white/10 px-3 py-2">Up to 200%</td>
-                      <td className="border border-white/10 px-3 py-2">Wound-rotor motors</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The choice of starting method is always a compromise
-              between starting current (what the supply can tolerate), starting torque (what the
-              load requires), cost, complexity, and the need for speed control during running. There
-              is no single best method — each has its place.
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ContentEyebrow>DOL and star-delta starting</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            DOL and Star-Delta Starting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The two most common electromechanical starting methods">
             <p>
               Direct-on-line (DOL) and star-delta are the two most common electromechanical starting
               methods found in industrial and commercial installations. DOL is the simplest and most
               cost-effective; star-delta is the traditional method for reducing starting current on
               larger motors. Both use contactors and are well-understood by maintenance technicians.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Direct-On-Line (DOL) Starting
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  DOL is the simplest starting method. The motor is connected directly to the full
-                  supply voltage by closing a single contactor. The starting current is high (6-8×
-                  FLC) but the starting torque is also high (100% of the motor's locked-rotor
-                  torque), making it suitable for loads that require high breakaway torque.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Components:</strong> Main contactor (K1), thermal/electronic overload
-                    relay (F1), control circuit with start/stop buttons and holding contact
-                  </li>
-                  <li className="pl-1">
-                    <strong>Advantages:</strong> Simple, cheap, reliable, high starting torque, easy
-                    to maintain
-                  </li>
-                  <li className="pl-1">
-                    <strong>Disadvantages:</strong> Very high starting current, voltage dip on
-                    supply, mechanical shock to driven equipment
-                  </li>
-                  <li className="pl-1">
-                    <strong>Maintenance:</strong> Check contactor contacts for pitting/erosion,
-                    verify overload relay setting matches motor FLC, test control circuit operation,
-                    check tightness of all terminations
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Direct-on-line (DOL) starting">
+            <p>
+              DOL is the simplest starting method. The motor is connected directly to the full
+              supply voltage by closing a single contactor. The starting current is high (6-8x FLC)
+              but the starting torque is also high (100% of the motor's locked-rotor torque), making
+              it suitable for loads that require high breakaway torque.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Components:</strong> main contactor (K1), thermal/electronic overload relay
+                (F1), control circuit with start/stop buttons and holding contact
+              </li>
+              <li>
+                <strong>Advantages:</strong> simple, cheap, reliable, high starting torque, easy to
+                maintain
+              </li>
+              <li>
+                <strong>Disadvantages:</strong> very high starting current, voltage dip on supply,
+                mechanical shock to driven equipment
+              </li>
+              <li>
+                <strong>Maintenance:</strong> check contactor contacts for pitting/erosion, verify
+                overload relay setting matches motor FLC, test control circuit operation, check
+                tightness of all terminations
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Star-Delta Starting
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Star-delta starting uses three contactors and a timer. During starting, the
-                  windings are connected in star (each winding receives line voltage / √3). After a
-                  timed period (typically 5-15 seconds), the star contactor opens and the delta
-                  contactor closes, connecting the windings in delta for normal full-voltage
-                  running.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Components:</strong> Main contactor (K1), star contactor (K2), delta
-                    contactor (K3), changeover timer, overload relay
-                  </li>
-                  <li className="pl-1">
-                    <strong>Interlocking:</strong> K2 (star) and K3 (delta) must be electrically and
-                    mechanically interlocked to prevent both closing simultaneously (dead short
-                    circuit across windings)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Timer setting:</strong> Must allow the motor to accelerate close to full
-                    speed in star before changeover. Too short = motor stalls at changeover; too
-                    long = motor runs in star longer than necessary (reduced torque, higher winding
-                    current)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Closed transition:</strong> Advanced star-delta starters insert
-                    resistors during changeover to maintain a current path, reducing the current
-                    transient at the star-to-delta switch point
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Star-delta starting">
+            <p>
+              Star-delta starting uses three contactors and a timer. During starting, the windings
+              are connected in star (each winding receives line voltage / √3). After a timed period
+              (typically 5-15 seconds), the star contactor opens and the delta contactor closes,
+              connecting the windings in delta for normal full-voltage running.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Components:</strong> main contactor (K1), star contactor (K2), delta
+                contactor (K3), changeover timer, overload relay
+              </li>
+              <li>
+                <strong>Interlocking:</strong> K2 (star) and K3 (delta) must be electrically and
+                mechanically interlocked to prevent both closing simultaneously (dead short circuit
+                across windings)
+              </li>
+              <li>
+                <strong>Timer setting:</strong> must allow the motor to accelerate close to full
+                speed in star before changeover. Too short = motor stalls at changeover; too long =
+                motor runs in star longer than necessary (reduced torque, higher winding current)
+              </li>
+              <li>
+                <strong>Closed transition:</strong> advanced star-delta starters insert resistors
+                during changeover to maintain a current path, reducing the current transient at the
+                star-to-delta switch point
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Star-Delta Fault: Contactor Interlock Failure
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Star-delta contactor interlock failure"
+            whatHappens={
+              <>
                 If the electrical interlock between the star and delta contactors fails and both
                 close simultaneously, the motor windings are short-circuited. This draws an
                 extremely high fault current and will blow the fuses or trip the circuit breaker
-                immediately. During maintenance, always verify both the electrical interlock
-                (auxiliary NC contacts wired in series with the opposing contactor coil) and the
-                mechanical interlock (physical bar preventing both contactors from pulling in).
-                Replace interlocked contactor pairs as a set to ensure the mechanical interlock is
-                correctly aligned.
-              </p>
-            </div>
+                immediately.
+              </>
+            }
+            doInstead={
+              <>
+                During maintenance, always verify both the electrical interlock (auxiliary NC
+                contacts wired in series with the opposing contactor coil) and the mechanical
+                interlock (physical bar preventing both contactors from pulling in). Replace
+                interlocked contactor pairs as a set to ensure the mechanical interlock is correctly
+                aligned.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> When a star-delta starter is reported as tripping
-              during starting, check the changeover timer setting first. If the motor has not
-              reached sufficient speed in star before the timer switches to delta, the high
-              transient current at changeover can trip the overload or supply fuse. Increasing the
-              star time by 2-3 seconds may resolve the issue — but investigate why the motor is
-              accelerating slowly (bearing failure, increased load, low voltage).
+          <ConceptBlock
+            title="Fault-finding a slow star-delta start"
+            onSite="When a star-delta starter is reported as tripping during starting, check the changeover timer setting first. If the motor has not reached sufficient speed in star before the timer switches to delta, the high transient current at changeover can trip the overload or supply fuse. Increasing the star time by 2-3 seconds may resolve the issue — but investigate why the motor is accelerating slowly (bearing failure, increased load, low voltage)."
+          >
+            <p>
+              Interlock discipline and correct timer settings are the two checks that catch the
+              majority of star-delta faults before they become a repeated nuisance trip.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Soft Starters and Electronic Starting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Soft starters and electronic starting</ContentEyebrow>
+
+          <ConceptBlock title="From electromechanical to electronic starting">
             <p>
               Soft starters represent the transition from electromechanical to electronic motor
               starting. They use power semiconductors (thyristors) to control the voltage applied to
@@ -620,155 +579,134 @@ const MOETModule2Section3_5 = () => {
               eliminates the mechanical contactors used in star-delta starting and removes the
               problematic changeover transient.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                How a Soft Starter Works
-              </h3>
-              <p className="text-sm text-white mb-3">
-                A soft starter has two back-to-back thyristors (or a triac) in each phase, forming a
-                three-phase AC voltage controller. By varying the firing angle of the thyristors,
-                the effective voltage applied to the motor is controlled.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Initial voltage:</strong> Set between 30-70% of line voltage depending on
-                  the load torque requirement
-                </li>
-                <li className="pl-1">
-                  <strong>Ramp time:</strong> Programmable from 1 to 60+ seconds — the time for the
-                  voltage to increase from initial to full
-                </li>
-                <li className="pl-1">
-                  <strong>Current limit:</strong> Many soft starters can limit the starting current
-                  to a set maximum (e.g., 350% FLC)
-                </li>
-                <li className="pl-1">
-                  <strong>Soft stop:</strong> The voltage can also be ramped down for a controlled
-                  deceleration — useful for pumps (prevents water hammer)
-                </li>
-                <li className="pl-1">
-                  <strong>Bypass contactor:</strong> Once the motor is at full speed, a bypass
-                  contactor closes to conduct the running current, and the thyristors are turned
-                  off. This reduces losses and heat generation during running
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Soft Starter vs Star-Delta — Key Differences
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Star-Delta</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Soft Starter</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Starting current profile</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Step change at changeover
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smooth ramp, no transient
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Motor requirement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        6-terminal motor required
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Any 3-phase motor</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cables to motor</td>
-                      <td className="border border-white/10 px-3 py-2">6 cores required</td>
-                      <td className="border border-white/10 px-3 py-2">3 cores sufficient</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Starting torque control</td>
-                      <td className="border border-white/10 px-3 py-2">Fixed at 1/3 DOL in star</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Adjustable via initial voltage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Soft stop capability</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">Yes — voltage ramp-down</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Speed control during run</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                      <td className="border border-white/10 px-3 py-2">No</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contactors, timer, interlocks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Bypass contactor, cooling fans, electronics
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Soft Starter Maintenance
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cooling:</strong> Clean heat sinks quarterly; replace cooling fans every
-                  3-5 years or when noisy/vibrating
-                </li>
-                <li className="pl-1">
-                  <strong>Bypass contactor:</strong> Inspect contacts annually; replace on signs of
-                  pitting or erosion. The bypass contactor carries the full running current
-                  continuously
-                </li>
-                <li className="pl-1">
-                  <strong>Thyristors:</strong> Check for signs of overheating (discolouration of
-                  heat sink compound). Thyristor failure usually presents as a short circuit or open
-                  circuit on one phase
-                </li>
-                <li className="pl-1">
-                  <strong>Settings verification:</strong> Check initial voltage, ramp time and
-                  current limit settings match the application requirements — settings may need
-                  adjustment if the load changes
-                </li>
-                <li className="pl-1">
-                  <strong>Fault log:</strong> Review the soft starter's fault log for recurring
-                  trips or warnings — patterns may indicate developing faults
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A soft starter does not provide speed control during
-              running. Once the motor reaches full speed, it runs at mains frequency. If variable
-              speed operation is required, a variable speed drive (VSD) must be used instead.
+          <ConceptBlock title="How a soft starter works">
+            <p>
+              A soft starter has two back-to-back thyristors (or a triac) in each phase, forming a
+              three-phase AC voltage controller. By varying the firing angle of the thyristors, the
+              effective voltage applied to the motor is controlled.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Initial voltage:</strong> set between 30-70% of line voltage depending on
+                the load torque requirement
+              </li>
+              <li>
+                <strong>Ramp time:</strong> programmable from 1 to 60+ seconds — the time for the
+                voltage to increase from initial to full
+              </li>
+              <li>
+                <strong>Current limit:</strong> many soft starters can limit the starting current to
+                a set maximum (e.g., 350% FLC)
+              </li>
+              <li>
+                <strong>Soft stop:</strong> the voltage can also be ramped down for a controlled
+                deceleration — useful for pumps (prevents water hammer)
+              </li>
+              <li>
+                <strong>Bypass contactor:</strong> once the motor is at full speed, a bypass
+                contactor closes to conduct the running current, and the thyristors are turned off.
+                This reduces losses and heat generation during running
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Soft starter vs star-delta — key differences">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Feature</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Star-Delta</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Soft Starter</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Starting current profile</td>
+                    <td className="border border-white/10 px-3 py-2">Step change at changeover</td>
+                    <td className="border border-white/10 px-3 py-2">Smooth ramp, no transient</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Motor requirement</td>
+                    <td className="border border-white/10 px-3 py-2">6-terminal motor required</td>
+                    <td className="border border-white/10 px-3 py-2">Any 3-phase motor</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Cables to motor</td>
+                    <td className="border border-white/10 px-3 py-2">6 cores required</td>
+                    <td className="border border-white/10 px-3 py-2">3 cores sufficient</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Starting torque control</td>
+                    <td className="border border-white/10 px-3 py-2">Fixed at 1/3 DOL in star</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Adjustable via initial voltage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Soft stop capability</td>
+                    <td className="border border-white/10 px-3 py-2">No</td>
+                    <td className="border border-white/10 px-3 py-2">Yes — voltage ramp-down</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Speed control during run</td>
+                    <td className="border border-white/10 px-3 py-2">No</td>
+                    <td className="border border-white/10 px-3 py-2">No</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Maintenance</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Contactors, timer, interlocks
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Bypass contactor, cooling fans, electronics
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Variable Speed Drives for Motor Starting and Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Soft starter maintenance"
+            onSite="A soft starter does not provide speed control during running. Once the motor reaches full speed, it runs at mains frequency. If variable speed operation is required, a variable speed drive (VSD) must be used instead."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cooling:</strong> clean heat sinks quarterly; replace cooling fans every 3-5
+                years or when noisy/vibrating
+              </li>
+              <li>
+                <strong>Bypass contactor:</strong> inspect contacts annually; replace on signs of
+                pitting or erosion. The bypass contactor carries the full running current
+                continuously
+              </li>
+              <li>
+                <strong>Thyristors:</strong> check for signs of overheating (discolouration of heat
+                sink compound). Thyristor failure usually presents as a short circuit or open
+                circuit on one phase
+              </li>
+              <li>
+                <strong>Settings verification:</strong> check initial voltage, ramp time and current
+                limit settings match the application requirements — settings may need adjustment if
+                the load changes
+              </li>
+              <li>
+                <strong>Fault log:</strong> review the soft starter's fault log for recurring trips
+                or warnings — patterns may indicate developing faults
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Variable speed drives for motor starting and control</ContentEyebrow>
+
+          <ConceptBlock title="The most technically advanced starting method">
             <p>
               Variable speed drives (VSDs), also called variable frequency drives (VFDs) or inverter
               drives, represent the most technically advanced method of motor starting and control.
@@ -783,118 +721,99 @@ const MOETModule2Section3_5 = () => {
               programmable. After starting, the VSD continues to provide speed control during
               running, energy savings on variable-torque loads, and controlled deceleration.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                VSD Starting Principle
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>V/f ratio:</strong> The VSD maintains a constant ratio of voltage to
-                  frequency. At 50% speed (25 Hz), it applies 50% voltage (200 V for a 400 V motor).
-                  This maintains constant motor flux and therefore constant torque capability
-                </li>
-                <li className="pl-1">
-                  <strong>Ramp time:</strong> The acceleration ramp is programmable — typically 5-30
-                  seconds for a smooth start. The VSD's current-limiting function prevents the motor
-                  from drawing more than the set current limit during acceleration
-                </li>
-                <li className="pl-1">
-                  <strong>S-curve ramp:</strong> Advanced VSDs offer S-curve acceleration profiles
-                  that reduce the initial and final jerk, providing even smoother mechanical
-                  starting
-                </li>
-                <li className="pl-1">
-                  <strong>Flying start:</strong> If a motor is still spinning when the VSD is
-                  restarted (e.g., after a brief supply interruption), the VSD can detect the motor
-                  speed and synchronise its output frequency to match before ramping up — preventing
-                  a dangerous out-of-phase reconnection
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="VSD starting principle">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>V/f ratio:</strong> the VSD maintains a constant ratio of voltage to
+                frequency. At 50% speed (25 Hz), it applies 50% voltage (200 V for a 400 V motor).
+                This maintains constant motor flux and therefore constant torque capability
+              </li>
+              <li>
+                <strong>Ramp time:</strong> the acceleration ramp is programmable — typically 5-30
+                seconds for a smooth start. The VSD's current-limiting function prevents the motor
+                from drawing more than the set current limit during acceleration
+              </li>
+              <li>
+                <strong>S-curve ramp:</strong> advanced VSDs offer S-curve acceleration profiles
+                that reduce the initial and final jerk, providing even smoother mechanical starting
+              </li>
+              <li>
+                <strong>Flying start:</strong> if a motor is still spinning when the VSD is
+                restarted (e.g., after a brief supply interruption), the VSD can detect the motor
+                speed and synchronise its output frequency to match before ramping up — preventing a
+                dangerous out-of-phase reconnection
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                VSD Installation Considerations (BS 7671)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Cable type:</strong> Shielded (SY/CY or SWA) cable is recommended between
-                  the VSD and motor to contain electromagnetic emissions and prevent interference
-                  with adjacent circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Cable length:</strong> Long cable runs between the VSD and motor increase
-                  the dV/dt stress on the motor insulation and may require output chokes or dV/dt
-                  filters
-                </li>
-                <li className="pl-1">
-                  <strong>Earthing:</strong> The cable screen/armour must be earthed at both ends
-                  with 360° terminations for effective EMC screening
-                </li>
-                <li className="pl-1">
-                  <strong>Motor insulation:</strong> Older motors (pre-2000) may not have insulation
-                  rated for the voltage spikes from a VSD output. Verify the motor insulation is
-                  rated for VSD duty, or fit an output filter
-                </li>
-                <li className="pl-1">
-                  <strong>RCD compatibility:</strong> VSDs produce DC and high-frequency leakage
-                  currents that can trip standard Type A RCDs. Type B RCDs are required on circuits
-                  supplying VSDs
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="VSD installation considerations (BS 7671)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable type:</strong> shielded (SY/CY or SWA) cable is recommended between
+                the VSD and motor to contain electromagnetic emissions and prevent interference with
+                adjacent circuits
+              </li>
+              <li>
+                <strong>Cable length:</strong> long cable runs between the VSD and motor increase
+                the dV/dt stress on the motor insulation and may require output chokes or dV/dt
+                filters
+              </li>
+              <li>
+                <strong>Earthing:</strong> the cable screen/armour must be earthed at both ends with
+                360 degree terminations for effective EMC screening
+              </li>
+              <li>
+                <strong>Motor insulation:</strong> older motors (pre-2000) may not have insulation
+                rated for the voltage spikes from a VSD output. Verify the motor insulation is rated
+                for VSD duty, or fit an output filter
+              </li>
+              <li>
+                <strong>RCD compatibility:</strong> VSDs produce DC and high-frequency leakage
+                currents that can trip standard Type A RCDs. Type B RCDs are required on circuits
+                supplying VSDs
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  VSD Advantages for Starting
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Lowest starting current of any method</li>
-                  <li className="pl-1">Full torque available from zero speed</li>
-                  <li className="pl-1">Fully programmable acceleration profile</li>
-                  <li className="pl-1">No mechanical contactors to wear out</li>
-                  <li className="pl-1">Continuous speed control during running</li>
-                  <li className="pl-1">Energy savings on fans/pumps (up to 50-70%)</li>
+          <ConceptBlock
+            title="VSD advantages and maintenance requirements"
+            onSite="A VSD is not just a starting device — it is a comprehensive motor control system. The initial cost is higher than a simple contactor starter, but the benefits in terms of energy savings, reduced mechanical stress, lower maintenance costs and precise process control often provide a payback period of 1-3 years on applications such as fans, pumps and compressors."
+          >
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <p className="mb-2 text-sm font-medium text-white">VSD advantages for starting</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Lowest starting current of any method</li>
+                  <li>Full torque available from zero speed</li>
+                  <li>Fully programmable acceleration profile</li>
+                  <li>No mechanical contactors to wear out</li>
+                  <li>Continuous speed control during running</li>
+                  <li>Energy savings on fans/pumps (up to 50-70%)</li>
                 </ul>
               </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  VSD Maintenance Requirements
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Clean cooling fans and heat sinks regularly</li>
-                  <li className="pl-1">
-                    DC bus capacitors degrade over time (replace every 5-7 years)
-                  </li>
-                  <li className="pl-1">Check for harmonic distortion on the supply side</li>
-                  <li className="pl-1">Verify parameter settings after firmware updates</li>
-                  <li className="pl-1">Monitor fault logs for recurring alarms</li>
-                  <li className="pl-1">Allow full discharge time before internal work</li>
+              <div>
+                <p className="mb-2 text-sm font-medium text-white">VSD maintenance requirements</p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                  <li>Clean cooling fans and heat sinks regularly</li>
+                  <li>DC bus capacitors degrade over time (replace every 5-7 years)</li>
+                  <li>Check for harmonic distortion on the supply side</li>
+                  <li>Verify parameter settings after firmware updates</li>
+                  <li>Monitor fault logs for recurring alarms</li>
+                  <li>Allow full discharge time before internal work</li>
                 </ul>
               </div>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A VSD is not just a starting device — it is a
-              comprehensive motor control system. The initial cost is higher than a simple contactor
-              starter, but the benefits in terms of energy savings, reduced mechanical stress, lower
-              maintenance costs and precise process control often provide a payback period of 1-3
-              years on applications such as fans, pumps and compressors.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Motor Circuit Protection and BS 7671 Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Motor circuit protection and BS 7671 requirements</ContentEyebrow>
+
+          <ConceptBlock title="Allowing the start, protecting against the fault">
             <p>
               BS 7671 Section 552 sets out the requirements for motor circuits. The fundamental
               challenge is that motor protective devices must allow the high starting current to
@@ -902,201 +821,187 @@ const MOETModule2Section3_5 = () => {
               providing protection against sustained overloads during running and rapid
               disconnection in the event of a short circuit.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Circuit Protection Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Overload protection:</strong> Protects the motor from sustained
-                  overcurrent (e.g., mechanical overload, seized bearing, loss of phase). The
-                  overload device (thermal or electronic relay) is set to the motor's full-load
-                  current. It has a time-delay characteristic that allows the starting current to
-                  flow for the expected starting time without tripping
-                </li>
-                <li className="pl-1">
-                  <strong>Short-circuit protection:</strong> Protects against high-level fault
-                  currents (e.g., insulation failure, terminal fault). Typically provided by fuses
-                  (gG or aM type) or an MCCB upstream of the contactor. Must operate fast enough to
-                  protect the contactor and overload relay from damage
-                </li>
-                <li className="pl-1">
-                  <strong>Coordination:</strong> The overload device and short-circuit device must
-                  be coordinated to ensure correct operation under all fault conditions. Type 1
-                  coordination allows the contactor and overload to be damaged but safe; Type 2
-                  coordination requires no damage to any component
-                </li>
-              </ul>
+          <ConceptBlock title="Motor circuit protection requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Overload protection:</strong> protects the motor from sustained overcurrent
+                (e.g., mechanical overload, seized bearing, loss of phase). The overload device
+                (thermal or electronic relay) is set to the motor's full-load current. It has a
+                time-delay characteristic that allows the starting current to flow for the expected
+                starting time without tripping
+              </li>
+              <li>
+                <strong>Short-circuit protection:</strong> protects against high-level fault
+                currents (e.g., insulation failure, terminal fault). Typically provided by fuses (gG
+                or aM type) or an MCCB upstream of the contactor. Must operate fast enough to
+                protect the contactor and overload relay from damage
+              </li>
+              <li>
+                <strong>Coordination:</strong> the overload device and short-circuit device must be
+                coordinated to ensure correct operation under all fault conditions. Type 1
+                coordination allows the contactor and overload to be damaged but safe; Type 2
+                coordination requires no damage to any component
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Motor-rated fuses">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Fuse Type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Application</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">gG</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      General purpose — full-range breaking
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Cable and general circuit protection; can be used for motors if rated to
+                      withstand starting current
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">aM</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Motor-rated — back-up protection only
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Specifically designed for motor circuits. Higher starting current withstand.
+                      Must be used with a separate overload device
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motor-Rated Fuses</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fuse Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Characteristic</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">gG</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General purpose — full-range breaking
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable and general circuit protection; can be used for motors if rated to
-                        withstand starting current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">aM</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Motor-rated — back-up protection only
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specifically designed for motor circuits. Higher starting current withstand.
-                        Must be used with a separate overload device
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <ConceptBlock title="Overload relay types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal (bimetallic):</strong> the traditional type. Bimetallic strips heat
+                up with motor current and trip when they bend beyond a set point. Ambient
+                temperature compensated versions are available. Simple and reliable but less
+                accurate than electronic types
+              </li>
+              <li>
+                <strong>Electronic (solid-state):</strong> uses current transformers to measure the
+                motor current and a microprocessor to calculate the thermal model of the motor. More
+                accurate, adjustable trip class (10, 20, 30), phase loss detection, ground fault
+                detection and communication capabilities
+              </li>
+              <li>
+                <strong>Thermistor (PTC):</strong> PTC thermistors embedded in the motor windings
+                measure the actual winding temperature. Provides direct motor protection regardless
+                of the cause of overheating (overload, blocked ventilation, high ambient, frequent
+                starting)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Overload Relay Types</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Thermal (bimetallic):</strong> The traditional type. Bimetallic strips
-                  heat up with motor current and trip when they bend beyond a set point. Ambient
-                  temperature compensated versions are available. Simple and reliable but less
-                  accurate than electronic types
-                </li>
-                <li className="pl-1">
-                  <strong>Electronic (solid-state):</strong> Uses current transformers to measure
-                  the motor current and a microprocessor to calculate the thermal model of the
-                  motor. More accurate, adjustable trip class (10, 20, 30), phase loss detection,
-                  ground fault detection and communication capabilities
-                </li>
-                <li className="pl-1">
-                  <strong>Thermistor (PTC):</strong> PTC thermistors embedded in the motor windings
-                  measure the actual winding temperature. Provides direct motor protection
-                  regardless of the cause of overheating (overload, blocked ventilation, high
-                  ambient, frequent starting)
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Single Phasing — A Common and Dangerous Fault
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Single phasing — a common and dangerous fault"
+            whatHappens={
+              <>
                 If one phase of a three-phase motor supply is lost (single phasing), the motor
                 continues to run but draws approximately 1.73 times normal current in the remaining
                 two phases. The motor overheats rapidly and can fail within minutes. Modern
                 electronic overload relays detect single phasing and trip immediately. Older thermal
                 overload relays may not detect single phasing quickly enough, especially on lightly
-                loaded motors. If you encounter repeated motor winding failures, check for evidence
-                of single phasing — burnt windings on two phases with the third relatively undamaged
-                is a classic indicator.
-              </p>
-            </div>
+                loaded motors.
+              </>
+            }
+            doInstead={
+              <>
+                If you encounter repeated motor winding failures, check for evidence of single
+                phasing — burnt windings on two phases with the third relatively undamaged is a
+                classic indicator.
+              </>
+            }
+          />
 
-            <p className="text-sm text-white italic">
-              <strong>ST1426 requirement:</strong> The Maintenance and Operations Engineering
-              Technician standard requires you to understand motor starting equipment, set overload
-              relays to the correct motor rating, verify contactor operation, interpret starter
-              fault codes, and replace components as part of planned and reactive maintenance. You
-              must also understand the protection coordination requirements of BS 7671 Section 552.
+          <ConceptBlock title="ST1426 requirement">
+            <p>
+              The Maintenance and Operations Engineering Technician standard requires you to
+              understand motor starting equipment, set overload relays to the correct motor rating,
+              verify contactor operation, interpret starter fault codes, and replace components as
+              part of planned and reactive maintenance. You must also understand the protection
+              coordination requirements of BS 7671 Section 552.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=h89TTwlNnpY"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Star Delta Starter Explained"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Starting Method Summary</p>
-                <ul className="space-y-0.5">
-                  <li>DOL — 6-8× FLC, 100% torque, simplest</li>
-                  <li>Star-delta — 1/3 current and torque, changeover transient</li>
-                  <li>Auto-transformer — adjustable voltage taps</li>
-                  <li>Soft starter — thyristor voltage ramp, smooth start</li>
-                  <li>VSD — V/f control, 100-150% FLC, full torque</li>
-                  <li>Rotor resistance — wound-rotor motors only</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>BS 7671 Section 552 — Motor circuits</li>
-                  <li>BS EN 60947-4-1 — Contactor starters</li>
-                  <li>BS EN 60947-4-2 — Soft starters</li>
-                  <li>BS EN 61800-5-1 — VSD safety</li>
-                  <li>IET Guidance Note 1 — Selection and erection</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="11:08"
+
+            topic="The contactor and timer sequence that cuts starting current to a third"
+
+            caption="Walks the power and control circuits through the changeover — useful before you meet one in a panel."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'DOL — 6-8x FLC, 100% torque, simplest method.',
+              'Star-delta — 1/3 current and torque, needs a 6-terminal motor, and a changeover transient.',
+              'Auto-transformer — adjustable voltage taps reduce supply current by the square of the tap ratio.',
+              'Soft starter — thyristor voltage ramp, smooth start, no speed control during running.',
+              'VSD — V/f control, 100-150% FLC, full torque available from zero speed.',
+              'Rotor resistance starting — wound-rotor motors only, largely superseded by VSDs.',
+              'Key references: BS 7671 Section 552 (motor circuits); BS EN 60947-4-1 (contactor starters); BS EN 60947-4-2 (soft starters); BS EN 61800-5-1 (VSD safety); IET Guidance Note 1 (selection and erection).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section3-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">DC Motors</div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section4-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next section <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Fuses and Circuit Breakers
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: DC Motors
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

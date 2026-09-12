@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 2 — Fault Diagnosis Exercises
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * Quiz question 12's explanation says GS38 probe tips need "no more than
+ * 2-4 mm exposed" — checked against the primary source
+ * (~/Desktop/hav/HSE-GS38-Electrical-test-equipment.pdf, para 9): the actual
+ * limit is 4 mm, with a "where practicable" recommendation to reduce this to
+ * 2 mm or less. The quiz wording is loose but not factually wrong, and quiz
+ * data is preserved byte-identical per the conversion brief regardless.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Fault Diagnosis Exercises - MOET Module 7 Section 2.2';
@@ -259,241 +295,176 @@ const faqs = [
 ];
 
 const MOETModule7Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Fault Diagnosis Exercises
-          </h1>
-          <p className="text-white">
-            Systematic fault finding under observation with clear communication and documentation
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 2"
+        title="Fault Diagnosis Exercises"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Systematic fault finding under observation with clear communication and documentation.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Method:</strong> Gather, analyse, test, identify, rectify, verify
-              </li>
-              <li className="pl-1">
-                <strong>Think aloud:</strong> Explain reasoning as you work
-              </li>
-              <li className="pl-1">
-                <strong>Instruments:</strong> Correct selection, safe use, accurate readings
-              </li>
-              <li className="pl-1">
-                <strong>Document:</strong> Record symptoms, tests, findings, repair
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Techniques:</strong> Half-split, input-to-output, unit substitution
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Safe isolation before testing dead circuits
-              </li>
-              <li className="pl-1">
-                <strong>Instruments:</strong> Multimeter, insulation tester, clamp meter
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Fault diagnosis is a core EPA competence
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Method: gather, analyse, test, identify, rectify, verify.',
+              'Think aloud: explain reasoning as you work.',
+              'Instruments: correct selection, safe use, accurate readings.',
+              'Document: record symptoms, tests, findings, repair.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply the six-step systematic fault diagnosis method under observation',
               'Use the thinking-aloud technique to demonstrate reasoning to the assessor',
               'Select and use appropriate test instruments safely and correctly',
               'Apply the half-split technique to efficiently locate fault positions',
               'Document all findings clearly for evidence and reporting purposes',
               'Manage time effectively during fault diagnosis within EPA time limits',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Techniques:</strong> half-split, input-to-output, unit substitution.
+              </li>
+              <li>
+                <strong>Safety:</strong> safe isolation before testing dead circuits.
+              </li>
+              <li>
+                <strong>Instruments:</strong> multimeter, insulation tester, clamp meter.
+              </li>
+              <li>
+                <strong>ST1426:</strong> fault diagnosis is a core EPA competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Systematic Fault Diagnosis Method
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The systematic fault diagnosis method</ContentEyebrow>
+
+          <ConceptBlock title="The systematic fault diagnosis method">
             <p>
               Fault diagnosis is not guesswork — it is a structured, logical process that applies to
               any electrical system. The six-step method provides a framework that ensures thorough,
-              efficient diagnosis regardless of the system's complexity. During the EPA, the
+              efficient diagnosis regardless of the system&apos;s complexity. During the EPA, the
               assessor wants to see this structured approach in action, not lucky guesses or random
               component swapping.
             </p>
-
             <p>
               The importance of systematic fault finding cannot be overstated. In industry, a
               technician who can methodically diagnose any fault — even on equipment they have never
               seen before — is far more valuable than one who can only fix familiar problems. The
               EPA is designed to assess this transferable competence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Six-Step Method</p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Gather information:</strong> Symptoms reported, when did it start, what
-                  changed, any previous faults, review documentation and circuit diagrams
-                </li>
-                <li className="pl-1">
-                  <strong>Analyse:</strong> Based on the information, develop a list of possible
-                  causes ranked by likelihood
-                </li>
-                <li className="pl-1">
-                  <strong>Test:</strong> Use appropriate instruments to test the most likely cause
-                  first, working systematically through your list
-                </li>
-                <li className="pl-1">
-                  <strong>Identify:</strong> Confirm the specific fault based on your test results
-                </li>
-                <li className="pl-1">
-                  <strong>Rectify:</strong> Repair, replace, or adjust to correct the fault
-                </li>
-                <li className="pl-1">
-                  <strong>Verify:</strong> Test the system to confirm it is working correctly after
-                  the repair
-                </li>
-              </ol>
+          <ConceptBlock title="The six-step method">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gather information:</strong> symptoms reported, when did it start, what
+                changed, any previous faults, review documentation and circuit diagrams.
+              </li>
+              <li>
+                <strong>Analyse:</strong> based on the information, develop a list of possible
+                causes ranked by likelihood.
+              </li>
+              <li>
+                <strong>Test:</strong> use appropriate instruments to test the most likely cause
+                first, working systematically through your list.
+              </li>
+              <li>
+                <strong>Identify:</strong> confirm the specific fault based on your test results.
+              </li>
+              <li>
+                <strong>Rectify:</strong> repair, replace, or adjust to correct the fault.
+              </li>
+              <li>
+                <strong>Verify:</strong> test the system to confirm it is working correctly after
+                the repair.
+              </li>
+            </ol>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common fault types in electrical maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Fault type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Symptoms</th>
+                    <th className="py-2 font-medium text-white">Key test</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Open circuit</td>
+                    <td className="py-2 pr-4">No power, partial operation</td>
+                    <td className="py-2">Continuity test</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Short circuit</td>
+                    <td className="py-2 pr-4">Blown fuse, tripped MCB</td>
+                    <td className="py-2">Insulation resistance</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Earth fault</td>
+                    <td className="py-2 pr-4">RCD tripping</td>
+                    <td className="py-2">Insulation resistance L-E, N-E</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">High resistance joint</td>
+                    <td className="py-2 pr-4">Overheating, intermittent</td>
+                    <td className="py-2">Thermal imaging, resistance test</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Component failure</td>
+                    <td className="py-2 pr-4">System not operating correctly</td>
+                    <td className="py-2">Functional test, coil resistance</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Fault Types in Electrical Maintenance
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Fault Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Symptoms</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Test</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Open circuit</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No power, partial operation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Continuity test</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Short circuit</td>
-                      <td className="border border-white/10 px-3 py-2">Blown fuse, tripped MCB</td>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth fault</td>
-                      <td className="border border-white/10 px-3 py-2">RCD tripping</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance L-E, N-E
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">High resistance joint</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overheating, intermittent
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Thermal imaging, resistance test
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Component failure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        System not operating correctly
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Functional test, coil resistance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Never Skip the Verify Step</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Never skip the verify step"
+            whatHappens={
+              <>
                 A common mistake is declaring the fault fixed after the repair without verification
-                testing. Always test the system after repair to confirm correct operation. This
-                includes functional testing under normal operating conditions. In the EPA, skipping
-                verification is a significant mark deduction.
-              </p>
-            </div>
+                testing. In the EPA, skipping verification is a significant mark deduction.
+              </>
+            }
+            doInstead={
+              <>
+                Always test the system after repair to confirm correct operation. This includes
+                functional testing under normal operating conditions.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The assessor is not expecting you to find the fault
-              instantly. They are looking for a methodical approach, safe working, and clear
-              communication throughout the process.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> the assessor is not expecting you to find the fault
+            instantly. They are looking for a methodical approach, safe working, and clear
+            communication throughout the process.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Thinking Aloud and Communication
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Thinking aloud and communication</ContentEyebrow>
+
+          <ConceptBlock title="Thinking aloud and communication">
             <p>
               During the EPA practical observation, the assessor cannot read your mind. Without
               verbal communication, they can only see what you do — not why you are doing it.
@@ -501,116 +472,100 @@ const MOETModule7Section2_2 = () => {
               your diagnostic competence. Candidates who think aloud consistently score higher than
               those who work in silence.
             </p>
-
             <p>
               This does not mean providing a running commentary on every tiny action. The key is to
               communicate at decision points — when you are reasoning about what to test next,
               interpreting a reading, or ruling out a possible cause. This shows the assessor your
               analytical process.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Effective Thinking-Aloud Phrases
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  "Based on the symptoms, I suspect the fault could be... because..."
-                </li>
-                <li className="pl-1">
-                  "I'm going to test at this point first because it will tell me which half of the
-                  circuit the fault is in"
-                </li>
-                <li className="pl-1">
-                  "This reading of [value] tells me that... which rules out..."
-                </li>
-                <li className="pl-1">
-                  "I've eliminated [cause] so I'm now going to check [next likely cause]"
-                </li>
-                <li className="pl-1">
-                  "The fault is located at... and is caused by... I will now rectify by..."
-                </li>
-                <li className="pl-1">
-                  "Before energising, I need to check... to ensure it is safe to proceed"
-                </li>
-              </ul>
+          <ConceptBlock title="Effective thinking-aloud phrases">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>&quot;Based on the symptoms, I suspect the fault could be... because...&quot;</li>
+              <li>
+                &quot;I&apos;m going to test at this point first because it will tell me which half
+                of the circuit the fault is in.&quot;
+              </li>
+              <li>&quot;This reading of [value] tells me that... which rules out...&quot;</li>
+              <li>
+                &quot;I&apos;ve eliminated [cause] so I&apos;m now going to check [next likely
+                cause].&quot;
+              </li>
+              <li>
+                &quot;The fault is located at... and is caused by... I will now rectify by...&quot;
+              </li>
+              <li>
+                &quot;Before energising, I need to check... to ensure it is safe to proceed.&quot;
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Communication quality: pass vs distinction">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Aspect</th>
+                    <th className="py-2 pr-4 font-medium text-white">Pass level</th>
+                    <th className="py-2 font-medium text-white">Distinction level</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Reasoning</td>
+                    <td className="py-2 pr-4">States what they are testing</td>
+                    <td className="py-2">
+                      Explains why they chose this test and what it will confirm or eliminate
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Readings</td>
+                    <td className="py-2 pr-4">Reports the reading obtained</td>
+                    <td className="py-2">
+                      Interprets the reading, compares to expected values, draws conclusions
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Progress</td>
+                    <td className="py-2 pr-4">Moves to next test without comment</td>
+                    <td className="py-2">Summarises what has been ruled out and what remains</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communication Quality: Pass vs Distinction
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Aspect</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pass Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Distinction Level
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Reasoning</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        States what they are testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Explains why they chose this test and what it will confirm or eliminate
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Readings</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Reports the reading obtained
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interprets the reading, compares to expected values, draws conclusions
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Progress</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Moves to next test without comment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Summarises what has been ruled out and what remains
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Balance is Key</p>
-              <p className="text-sm text-white">
-                Think aloud at key decision points — do not narrate every tiny action ("Now I'm
-                picking up my screwdriver"). Focus on explaining your reasoning at diagnostic
+          <CommonMistake
+            title="Balance is key"
+            whatHappens={
+              <>
+                Narrating every tiny action (&quot;Now I&apos;m picking up my screwdriver&quot;)
+                buries the reasoning the assessor actually needs to hear under noise.
+              </>
+            }
+            doInstead={
+              <>
+                Think aloud at key decision points. Focus on explaining your reasoning at diagnostic
                 decision points: why you are testing here, what the reading means, and what it tells
                 you about the fault location.
-              </p>
-            </div>
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A candidate who thinks aloud and demonstrates clear
-              reasoning will score higher than one who silently finds the fault. The method matters
-              as much as the result.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> a candidate who thinks aloud and demonstrates clear
+            reasoning will score higher than one who silently finds the fault. The method matters as
+            much as the result.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Using Test Instruments Correctly
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Using test instruments correctly</ContentEyebrow>
+
+          <ConceptBlock title="Using test instruments correctly">
             <p>
               Correct instrument selection and use is fundamental to fault diagnosis. The assessor
               will observe whether you choose the right instrument, set it correctly, use it safely,
@@ -618,118 +573,106 @@ const MOETModule7Section2_2 = () => {
               a number — it is about understanding what that number means in the context of your
               diagnosis.
             </p>
-
             <p>
               Before the EPA, ensure you are confident with every instrument you might need.
               Practise not just taking readings, but explaining to someone else what the reading
               means and how it informs your next step. This is exactly what the assessor wants to
               hear.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Instrument Selection Guide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test Required</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Instrument</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit State</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage presence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Voltage indicator / multimeter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Live (with care)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuity</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low-resistance ohmmeter / multimeter
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Dead and isolated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation resistance tester
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Dead and isolated</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Current flow</td>
-                      <td className="border border-white/10 px-3 py-2">Clamp meter</td>
-                      <td className="border border-white/10 px-3 py-2">Live (non-contact)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earth fault loop</td>
-                      <td className="border border-white/10 px-3 py-2">Loop impedance tester</td>
-                      <td className="border border-white/10 px-3 py-2">Live</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Instrument selection guide">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Test required</th>
+                    <th className="py-2 pr-4 font-medium text-white">Instrument</th>
+                    <th className="py-2 font-medium text-white">Circuit state</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Voltage presence</td>
+                    <td className="py-2 pr-4">Voltage indicator / multimeter</td>
+                    <td className="py-2">Live (with care)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Continuity</td>
+                    <td className="py-2 pr-4">Low-resistance ohmmeter / multimeter</td>
+                    <td className="py-2">Dead and isolated</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Insulation resistance</td>
+                    <td className="py-2 pr-4">Insulation resistance tester</td>
+                    <td className="py-2">Dead and isolated</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Current flow</td>
+                    <td className="py-2 pr-4">Clamp meter</td>
+                    <td className="py-2">Live (non-contact)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Earth fault loop</td>
+                    <td className="py-2 pr-4">Loop impedance tester</td>
+                    <td className="py-2">Live</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Prove-Test-Prove Procedure
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Before using a voltage indicator to confirm a circuit is dead, you must follow the
-                prove-test-prove sequence. This is a safety-critical procedure that the assessor
-                will specifically look for.
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prove:</strong> Test the voltage indicator on a known live source to
-                  confirm it is working correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Test:</strong> Use the proven instrument to test the isolated circuit —
-                  confirm no voltage is present on all conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Prove:</strong> Test the instrument again on the known source to confirm
-                  it is still working — this rules out instrument failure during the test
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="The prove-test-prove procedure">
+            <p>
+              Before using a voltage indicator to confirm a circuit is dead, you must follow the
+              prove-test-prove sequence. This is a safety-critical procedure that the assessor will
+              specifically look for.
+            </p>
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prove:</strong> test the voltage indicator on a known live source to confirm
+                it is working correctly.
+              </li>
+              <li>
+                <strong>Test:</strong> use the proven instrument to test the isolated circuit —
+                confirm no voltage is present on all conductors.
+              </li>
+              <li>
+                <strong>Prove:</strong> test the instrument again on the known source to confirm it
+                is still working — this rules out instrument failure during the test.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                GS38 Compliance is Non-Negotiable
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="GS38 compliance is non-negotiable"
+            whatHappens={
+              <>
+                Using non-compliant instruments is a safety failure that can result in a fail grade.
+              </>
+            }
+            doInstead={
+              <>
                 All test instruments used in the EPA must comply with GS38 guidance. This includes:
                 fused test leads, finger guards on probes, protected probe tips with maximum 4 mm
-                exposed, and Category III or IV rating for LV work. Using non-compliant instruments
-                is a safety failure that can result in a fail grade.
-              </p>
-            </div>
+                exposed, and Category III or IV rating for LV work.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Always check your instrument is suitable for the
-              measurement, set to the correct function and range, and in good condition before use.
-              Explain your instrument selection to the assessor.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> always check your instrument is suitable for the
+            measurement, set to the correct function and range, and in good condition before use.
+            Explain your instrument selection to the assessor.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Documentation and Reporting
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Documentation and reporting</ContentEyebrow>
+
+          <ConceptBlock title="Documentation and reporting">
             <p>
               Professional documentation of your fault diagnosis process and findings is an
               important part of the EPA assessment. It demonstrates that you can communicate
@@ -738,276 +681,237 @@ const MOETModule7Section2_2 = () => {
               context of maintenance work — records enable future technicians to learn from your
               diagnosis.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">What to Record</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Date, time, location:</strong> Basic identification of the job
-                </li>
-                <li className="pl-1">
-                  <strong>Reported symptoms:</strong> What was the problem as described?
-                </li>
-                <li className="pl-1">
-                  <strong>Tests performed:</strong> What did you test, with what instrument, and
-                  what readings did you get?
-                </li>
-                <li className="pl-1">
-                  <strong>Fault identified:</strong> What was the root cause?
-                </li>
-                <li className="pl-1">
-                  <strong>Repair carried out:</strong> What did you do to fix it?
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> How did you confirm the repair was successful?
-                </li>
-                <li className="pl-1">
-                  <strong>Recommendations:</strong> Any follow-up actions or preventive measures
-                  suggested
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="What to record">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Date, time, location:</strong> basic identification of the job.
+              </li>
+              <li>
+                <strong>Reported symptoms:</strong> what was the problem as described?
+              </li>
+              <li>
+                <strong>Tests performed:</strong> what did you test, with what instrument, and what
+                readings did you get?
+              </li>
+              <li>
+                <strong>Fault identified:</strong> what was the root cause?
+              </li>
+              <li>
+                <strong>Repair carried out:</strong> what did you do to fix it?
+              </li>
+              <li>
+                <strong>Verification:</strong> how did you confirm the repair was successful?
+              </li>
+              <li>
+                <strong>Recommendations:</strong> any follow-up actions or preventive measures
+                suggested.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Worked Example: Fault Report Entry
-              </h3>
-              <div className="text-sm text-white space-y-2 bg-white/5 p-3 rounded-lg">
+          <Scenario
+            title="Worked example: fault report entry"
+            situation={
+              <>
+                <strong>Date/Time:</strong> 15/01/2026, 09:30. <strong>Location:</strong> Workshop
+                3, Motor Control Panel MCC-04. <strong>Reported fault:</strong> conveyor belt motor
+                will not start from push-button station. <strong>Initial checks:</strong> control
+                supply present (24 V DC confirmed at panel). Emergency stop released. Guard
+                interlock closed (confirmed by LED indicator).
+              </>
+            }
+            whatToDo={
+              <>
                 <p>
-                  <strong>Date/Time:</strong> 15/01/2026, 09:30
-                </p>
-                <p>
-                  <strong>Location:</strong> Workshop 3, Motor Control Panel MCC-04
-                </p>
-                <p>
-                  <strong>Reported fault:</strong> Conveyor belt motor will not start from
-                  push-button station
-                </p>
-                <p>
-                  <strong>Initial checks:</strong> Control supply present (24 V DC confirmed at
-                  panel). Emergency stop released. Guard interlock closed (confirmed by LED
-                  indicator).
-                </p>
-                <p>
-                  <strong>Tests:</strong> Checked voltage at start button — 24 V present. Pressed
+                  <strong>Tests:</strong> checked voltage at start button — 24 V present. Pressed
                   start — no voltage at contactor coil terminal A1. Continuity tested start button
                   contacts — OL (open circuit). Push-button mechanism found seized.
                 </p>
                 <p>
-                  <strong>Fault:</strong> Start push-button NO contact failed open (mechanical
-                  seizure)
+                  <strong>Fault:</strong> start push-button NO contact failed open (mechanical
+                  seizure).
                 </p>
                 <p>
-                  <strong>Repair:</strong> Replaced start push-button unit. Like-for-like
+                  <strong>Repair:</strong> replaced start push-button unit. Like-for-like
                   replacement (Schneider XB5AA31).
                 </p>
                 <p>
-                  <strong>Verification:</strong> Start/stop function tested — motor starts and stops
+                  <strong>Verification:</strong> start/stop function tested — motor starts and stops
                   correctly. Overload trip tested — resets correctly.
                 </p>
                 <p>
-                  <strong>Recommendation:</strong> Add push-button inspection to quarterly PPM
+                  <strong>Recommendation:</strong> add push-button inspection to quarterly PPM
                   schedule.
                 </p>
-              </div>
-            </div>
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Clear technical reporting is a key skill assessed across
-              multiple KSBs in the maintenance technician standard. Good documentation during the
-              EPA demonstrates professionalism and communication competence.
+          <ConceptBlock
+            title="Reporting and ST1426"
+            onSite="Clear technical reporting is a key skill assessed across multiple KSBs in the maintenance technician standard. Good documentation during the EPA demonstrates professionalism and communication competence."
+          >
+            <p>
+              A worked report like the one above is what a completed CMMS or job-card entry should
+              look like: specific values, specific part numbers, and a clear line from symptom to
+              root cause to verified fix.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Time Management and Practical Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Time management and practical strategies</ContentEyebrow>
+
+          <ConceptBlock title="Time management and practical strategies">
             <p>
               The EPA fault diagnosis exercise is time-limited, typically 20-40 minutes depending on
-              the complexity of the fault and the EPAO's specification. Managing your time
+              the complexity of the fault and the EPAO&apos;s specification. Managing your time
               effectively within this window is a skill in itself. Candidates who run out of time
               often do so because they did not structure their approach from the outset.
             </p>
-
             <p>
               Effective time management does not mean rushing. It means working efficiently —
               spending your time on the most productive diagnostic steps first. A well-structured
               approach naturally leads to efficient use of time because you are not wasting effort
               on unnecessary tests.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Time Allocation Guide (30-minute exercise)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Minutes 1-3:</strong> Read the brief, review drawings, gather information
-                  from the task description
-                </li>
-                <li className="pl-1">
-                  <strong>Minutes 3-5:</strong> Analyse the information, form a list of likely
-                  causes, plan your first tests
-                </li>
-                <li className="pl-1">
-                  <strong>Minutes 5-20:</strong> Systematic testing — work through your diagnostic
-                  plan, thinking aloud
-                </li>
-                <li className="pl-1">
-                  <strong>Minutes 20-25:</strong> Rectify the fault and carry out verification
-                  testing
-                </li>
-                <li className="pl-1">
-                  <strong>Minutes 25-30:</strong> Complete documentation and tidy the work area
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Time allocation guide (30-minute exercise)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Minutes 1-3:</strong> read the brief, review drawings, gather information
+                from the task description.
+              </li>
+              <li>
+                <strong>Minutes 3-5:</strong> analyse the information, form a list of likely causes,
+                plan your first tests.
+              </li>
+              <li>
+                <strong>Minutes 5-20:</strong> systematic testing — work through your diagnostic
+                plan, thinking aloud.
+              </li>
+              <li>
+                <strong>Minutes 20-25:</strong> rectify the fault and carry out verification
+                testing.
+              </li>
+              <li>
+                <strong>Minutes 25-30:</strong> complete documentation and tidy the work area.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Strategies for EPA Day
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Prepare your tools:</strong> Lay out your instruments and tools neatly
-                  before starting — this saves time searching later
-                </li>
-                <li className="pl-1">
-                  <strong>Test the most likely cause first:</strong> Do not start with the least
-                  likely — base your test order on experience and analysis
-                </li>
-                <li className="pl-1">
-                  <strong>Use the half-split technique:</strong> When the fault could be in a long
-                  circuit, test the midpoint first to halve the search area
-                </li>
-                <li className="pl-1">
-                  <strong>Do not get fixated:</strong> If a test rules out your primary theory,
-                  accept it and move on to the next possibility
-                </li>
-                <li className="pl-1">
-                  <strong>Keep notes as you go:</strong> Brief notes prevent you from repeating
-                  tests and help with your final report
-                </li>
-                <li className="pl-1">
-                  <strong>Leave time for verification:</strong> Do not spend all your time
-                  diagnosing and have no time to test the repair
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Practical strategies for EPA day">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Prepare your tools:</strong> lay out your instruments and tools neatly
+                before starting — this saves time searching later.
+              </li>
+              <li>
+                <strong>Test the most likely cause first:</strong> do not start with the least
+                likely — base your test order on experience and analysis.
+              </li>
+              <li>
+                <strong>Use the half-split technique:</strong> when the fault could be in a long
+                circuit, test the midpoint first to halve the search area.
+              </li>
+              <li>
+                <strong>Do not get fixated:</strong> if a test rules out your primary theory, accept
+                it and move on to the next possibility.
+              </li>
+              <li>
+                <strong>Keep notes as you go:</strong> brief notes prevent you from repeating tests
+                and help with your final report.
+              </li>
+              <li>
+                <strong>Leave time for verification:</strong> do not spend all your time diagnosing
+                and have no time to test the repair.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">If Time Runs Out</p>
-              <p className="text-sm text-white">
-                If you have not completed the diagnosis within the time limit, do not panic. Calmly
-                explain to the assessor: what you have done so far, what you have ruled out, what
-                your current working theory is, and what your next steps would be. A clear, logical
-                summary demonstrates competence even without a completed diagnosis. The assessor
-                assesses your method, not just the outcome.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Practise fault diagnosis exercises under timed conditions
+          <ConceptBlock title="If time runs out">
+            <p>
+              If you have not completed the diagnosis within the time limit, do not panic. Calmly
+              explain to the assessor: what you have done so far, what you have ruled out, what your
+              current working theory is, and what your next steps would be. A clear, logical summary
+              demonstrates competence even without a completed diagnosis. The assessor assesses your
+              method, not just the outcome.
+            </p>
+            <p>
+              <strong>Key point:</strong> practise fault diagnosis exercises under timed conditions
               before the EPA. The more you practise working within time limits, the more natural
               your time management becomes. Ask your training provider to set up realistic fault
               scenarios with a timer.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Quick reference — fault diagnosis essentials">
+            <p>
+              <strong>Six-step method:</strong> gather information, analyse and prioritise causes,
+              test systematically, identify the root cause, rectify the fault, verify correct
+              operation.
+            </p>
+            <p>
+              <strong>Key instruments:</strong> voltage indicator (GS38-compliant), digital
+              multimeter, insulation resistance tester, clamp meter, proving unit. Always:
+              prove-test-prove.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <KeyTakeaways
+            points={[
+              'Six-step method: gather, analyse, test, identify, rectify, verify — in that order, every time.',
+              'Think aloud at decision points, not on every micro-action. The assessor grades reasoning, not narration.',
+              'Never skip the verify step, and never skip re-proving your voltage indicator.',
+              'Document symptoms, tests, fault, repair, verification and recommendations — specific values, not vague notes.',
+              'Time management means testing the most likely cause first and leaving time for verification, never rushing safety.',
+            ]}
+          />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-4 rounded-lg bg-white/5">
-            <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-              Quick Reference — Fault Diagnosis Essentials
-            </h3>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Six-Step Method</p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Gather information</li>
-                  <li className="pl-1">Analyse and prioritise causes</li>
-                  <li className="pl-1">Test systematically</li>
-                  <li className="pl-1">Identify the root cause</li>
-                  <li className="pl-1">Rectify the fault</li>
-                  <li className="pl-1">Verify correct operation</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white mb-2">Key Instruments</p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Voltage indicator (GS38-compliant)</li>
-                  <li className="pl-1">Digital multimeter</li>
-                  <li className="pl-1">Insulation resistance tester</li>
-                  <li className="pl-1">Clamp meter</li>
-                  <li className="pl-1">Proving unit</li>
-                  <li className="pl-1">Always: prove-test-prove</li>
-                </ul>
-              </div>
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Fault Diagnosis" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safe Isolation and Testing Routines
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Component Replacement and Repair
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Fault Diagnosis" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Safe Isolation
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-3">
-              Next: Component Replacement
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

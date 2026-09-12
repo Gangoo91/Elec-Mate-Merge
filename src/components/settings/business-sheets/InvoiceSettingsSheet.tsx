@@ -11,6 +11,7 @@ import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
 import { DocumentNumberingFields } from './DocumentNumberingFields';
+import { hintCn, inputCn, labelCn } from '@/components/settings/formStyles';
 
 interface CustomTerm {
   id: string;
@@ -177,8 +178,8 @@ const InvoiceSettingsSheet = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Invoice settings">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -194,21 +195,21 @@ const InvoiceSettingsSheet = ({
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Late payment interest</Label>
+                <Label className={labelCn}>Late payment interest</Label>
                 <Input
                   value={latePaymentInterestRate}
                   onChange={(e) => setLatePaymentInterestRate(e.target.value)}
                   placeholder="8% p.a."
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
               <div className="space-y-1.5">
-                <Label className="text-white font-medium text-[13px]">Preferred payment</Label>
+                <Label className={labelCn}>Preferred payment</Label>
                 <Input
                   value={preferredPaymentMethod}
                   onChange={(e) => setPreferredPaymentMethod(e.target.value)}
                   placeholder="Bank Transfer"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
               </div>
             </div>
@@ -228,7 +229,7 @@ const InvoiceSettingsSheet = ({
             {/* ELE-1083 — Defaults for new invoices */}
             <div className="space-y-3">
               <Eyebrow>Defaults for new invoices</Eyebrow>
-              <p className="text-[12px] text-white/55 -mt-1">
+              <p className="text-[12px] text-white -mt-1">
                 These set how each new invoice starts — you can still change them per invoice.
               </p>
               {(
@@ -256,11 +257,11 @@ const InvoiceSettingsSheet = ({
               ).map(([label, hint, val, set]) => (
                 <div
                   key={label}
-                  className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                  className="flex min-h-[44px] items-center justify-between gap-3 py-2 touch-manipulation"
                 >
                   <div className="min-w-0">
                     <p className="text-[13px] font-medium text-white">{label}</p>
-                    <p className="text-[11.5px] text-white/55 mt-0.5">{hint}</p>
+                    <p className="text-[11.5px] text-white mt-0.5">{hint}</p>
                   </div>
                   <Switch checked={val} onCheckedChange={set} className="flex-shrink-0" />
                 </div>
@@ -268,17 +269,15 @@ const InvoiceSettingsSheet = ({
 
               {/* ELE-1373 — UTR, auto-shown on invoices when CIS applies. */}
               <div className="space-y-1.5 pt-1">
-                <Label className="text-white font-medium text-[13px]">
-                  UTR (Unique Taxpayer Reference)
-                </Label>
+                <Label className={labelCn}>UTR (Unique Taxpayer Reference)</Label>
                 <Input
                   value={utr}
                   onChange={(e) => setUtr(e.target.value)}
                   placeholder="e.g. 1234567890"
                   inputMode="numeric"
-                  className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={inputCn}
                 />
-                <p className="text-[11.5px] text-white/55">
+                <p className={hintCn}>
                   Shown on invoices automatically when CIS deductions apply. Your National Insurance
                   number is never stored or shown.
                 </p>
@@ -308,7 +307,7 @@ const InvoiceSettingsSheet = ({
                     }
                   >
                     <CollapsibleTrigger className="w-full">
-                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation">
+                      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-white/[0.05] border border-elec-yellow/35 hover:bg-white/[0.06] transition-colors touch-manipulation">
                         <div className="flex items-center gap-2.5">
                           <span className="text-[13px] font-medium text-white">{group.label}</span>
                           <span className="text-[11px] text-white">
@@ -333,7 +332,7 @@ const InvoiceSettingsSheet = ({
                           return (
                             <label
                               key={term.id}
-                              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.04] cursor-pointer touch-manipulation"
+                              className="flex min-h-[44px] items-start gap-3 p-2.5 rounded-xl hover:bg-white/[0.04] cursor-pointer touch-manipulation"
                             >
                               <Checkbox
                                 checked={isSelected}
@@ -364,7 +363,7 @@ const InvoiceSettingsSheet = ({
                   {customInvoiceTerms.map((term) => (
                     <div
                       key={term.id}
-                      className="flex items-start gap-3 p-2.5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                      className="flex min-h-[44px] items-start gap-3 p-2.5 rounded-xl touch-manipulation"
                     >
                       <Checkbox
                         checked={selectedInvoiceTerms.includes(term.id)}
@@ -397,7 +396,7 @@ const InvoiceSettingsSheet = ({
                   value={newCustomInvoiceTerm}
                   onChange={(e) => setNewCustomInvoiceTerm(e.target.value)}
                   placeholder="Add custom invoice term…"
-                  className="flex-1 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  className={cn(inputCn, 'flex-1')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && newCustomInvoiceTerm.trim()) {
                       e.preventDefault();
@@ -425,7 +424,7 @@ const InvoiceSettingsSheet = ({
                       setNewCustomInvoiceTerm('');
                     }
                   }}
-                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+                  className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
                 >
                   Add
                 </button>
@@ -438,7 +437,7 @@ const InvoiceSettingsSheet = ({
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

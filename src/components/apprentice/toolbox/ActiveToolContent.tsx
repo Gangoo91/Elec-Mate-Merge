@@ -19,7 +19,9 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
     switch (activeTool) {
       case 'powerCalculator':
         return (
-          <CalcReportProvider>
+          // Slug matches the registry so a report saved here is attributable to the
+          // calculator, not stored with a null slug.
+          <CalcReportProvider calculatorSlug="power-factor">
             <div className="mb-3 flex justify-end">
               <CalculatorReportAction />
             </div>
@@ -28,7 +30,7 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
         );
       case 'cableSizing':
         return (
-          <CalcReportProvider>
+          <CalcReportProvider calculatorSlug="cable-size">
             <div className="mb-3 flex justify-end">
               <CalculatorReportAction />
             </div>

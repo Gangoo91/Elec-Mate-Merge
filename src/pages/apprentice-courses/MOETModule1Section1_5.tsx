@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.1 · Subsection 5 — Working in Confined Spaces
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Safe systems of work."
+ *              · "Work environment hazards and risks. Risk assessments."
+ *              · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Working in Confined Spaces - MOET Module 1.1.5';
@@ -155,13 +195,13 @@ const quizQuestions = [
       'What is the maximum recommended concentration of carbon monoxide (CO) for confined space entry?',
     options: [
       '500 ppm, the level at which symptoms first appear',
-      '200 ppm, matching the 15-minute short-term exposure limit',
+      '100 ppm, matching the 15-minute short-term exposure limit',
       '100 ppm, with no alarm required below this level',
-      '30 ppm (the 8-hour WEL), with an alarm at 20 ppm for confined space work',
+      '20 ppm (the 8-hour WEL), with detectors typically alarming at or below it',
     ],
     correctAnswer: 3,
     explanation:
-      'The workplace exposure limit (WEL) for carbon monoxide is 30 ppm (8-hour TWA) and 200 ppm (15-minute STEL). However, for confined space work, detectors are typically set to alarm at 20-25 ppm to provide an early warning margin. CO is particularly dangerous because it is odourless and colourless — it binds to haemoglobin 200 times more strongly than oxygen, causing rapid suffocation at the cellular level.',
+      'Under the current HSE EH40 Workplace Exposure Limits, carbon monoxide is 20 ppm as an 8-hour TWA and 100 ppm as a 15-minute STEL. (The older 30 ppm / 200 ppm figures were transitional limits that applied to underground mining and tunnelling only, and lapsed on 21 August 2023 — they are still widely misquoted.) For confined space work, detectors are set to alarm at or below the 8-hour limit to give an early warning margin. CO is particularly dangerous because it is odourless and colourless — it binds to haemoglobin 200 times more strongly than oxygen, causing rapid suffocation at the cellular level.',
   },
   {
     id: 8,
@@ -264,119 +304,65 @@ const faqs = [
 ];
 
 const MOETModule1Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Working in Confined Spaces
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.1 · Subsection 5"
+        title="Working in Confined Spaces"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Safe entry, atmospheric monitoring, and rescue planning for electrical maintenance in
             enclosed environments
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Law:</strong> Confined Spaces Regulations 1997 — avoid entry where possible
-              </li>
-              <li className="pl-1">
-                <strong>Hazards:</strong> Toxic atmosphere, O2 depletion, flooding, entrapment,
-                fire/explosion
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> Risk assessment, entry permit, monitoring, ventilation,
-                rescue plan
-              </li>
-              <li className="pl-1">
-                <strong>Rule:</strong> Never enter without atmospheric monitoring and rescue
-                arrangements
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Cable tunnels:</strong> O2 depletion, heat, arc flash containment
-              </li>
-              <li className="pl-1">
-                <strong>Manholes:</strong> Water ingress, gas accumulation, cramped access
-              </li>
-              <li className="pl-1">
-                <strong>Switchrooms:</strong> SF6 gas, battery fumes, limited ventilation
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Confined space awareness is a core safety competency
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Law: Confined Spaces Regulations 1997 — avoid entry where possible',
+              'Hazards: Toxic atmosphere, O2 depletion, flooding, entrapment, fire/explosion',
+              'Controls: Risk assessment, entry permit, monitoring, ventilation, rescue plan',
+              'Rule: Never enter without atmospheric monitoring and rescue arrangements',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Define a confined space under the Confined Spaces Regulations 1997',
               'Identify the principal hazards associated with confined space entry',
               'Describe the safe system of work required for confined space entry',
               'Explain atmospheric monitoring requirements and alarm thresholds',
               'State the requirements for entry permits and rescue arrangements',
               'Apply confined space procedures to electrical maintenance scenarios',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>What is a confined space?</ContentEyebrow>
 
-        {/* Section 01: What Is a Confined Space? */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is a Confined Space?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable tunnels:</strong> O2 depletion, heat, arc flash containment
+              </li>
+              <li>
+                <strong>Manholes:</strong> Water ingress, gas accumulation, cramped access
+              </li>
+              <li>
+                <strong>Switchrooms:</strong> SF6 gas, battery fumes, limited ventilation
+              </li>
+              <li>
+                <strong>ST1426:</strong> Confined space awareness is a core safety competency
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Two conditions, both must be met">
             <p>
               The Confined Spaces Regulations 1997 define a confined space by two characteristics
               that must both be present: the space is substantially (but not necessarily entirely)
@@ -391,168 +377,128 @@ const MOETModule1Section1_5 = () => {
               there is a foreseeable risk of oxygen depletion, toxic gas accumulation, or flooding.
               The key is always the combination of enclosure and hazard.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">The Statistics</p>
-              <p className="text-sm text-white">
-                HSE data shows that approximately 15 workers are killed in confined space incidents
-                in the UK each year, with a further significant number suffering serious injuries. A
-                critical finding is that over 60% of deaths in confined spaces are of people
-                attempting to rescue the first victim — would-be rescuers who enter without
-                protection and are overcome by the same hazard. Planned, equipped, and trained
-                rescue arrangements are the single most important control measure.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common Confined Spaces in Electrical Maintenance
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Space</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Work</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Specific Hazards
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable tunnels</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable installation, jointing, fault repair
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        O2 depletion, heat from cables, flooding, limited egress, arc flash
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Manholes and cable pits</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Cable pulling, jointing, testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Gas accumulation (methane, CO, H2S), water ingress, cramped access
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer chambers</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Transformer maintenance, oil sampling
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Oil fumes, heat, SF6 (if gas-insulated), restricted egress
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Battery rooms</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        UPS battery replacement, testing
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hydrogen gas from charging, sulphuric acid, poor ventilation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Underground substations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV switchgear maintenance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SF6 gas, O2 depletion, flooding, limited access/egress
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Risers and ducts</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vertical cable runs, containment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fall hazard, restricted movement, poor ventilation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">Legal Framework</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Legislation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Relevance to Confined Spaces
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Confined Spaces Regulations 1997
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Primary legislation — avoid entry, safe system of work, rescue
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HSWA 1974, s.2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General duty to provide safe systems of work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MHSWR 1999, Reg 3</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk assessment for all work activities
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EAWR 1989</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical safety requirements for work in confined electrical spaces
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DSEAR 2002</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        ATEX zoning for flammable atmospheres
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ACoP L101</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HSE Approved Code of Practice for the Confined Spaces Regulations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key principle:</strong> Regulation 4(1) is absolute — you must not enter a
-              confined space if the work can be done without entry. Always explore alternatives
-              first: remote monitoring, CCTV inspection, mechanical handling, or redesigning the
-              task.
+          <ConceptBlock title="The statistics">
+            <p>
+              HSE data shows that approximately 15 workers are killed in confined space incidents in
+              the UK each year, with a further significant number suffering serious injuries. A
+              critical finding is that over 60% of deaths in confined spaces are of people
+              attempting to rescue the first victim — would-be rescuers who enter without protection
+              and are overcome by the same hazard. Planned, equipped, and trained rescue
+              arrangements are the single most important control measure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Common confined spaces in electrical maintenance">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Space</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical work</th>
+                    <th className="py-2 font-medium text-white">Specific hazards</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Cable tunnels</td>
+                    <td className="py-2 pr-4">Cable installation, jointing, fault repair</td>
+                    <td className="py-2">
+                      O2 depletion, heat from cables, flooding, limited egress, arc flash
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Manholes and cable pits</td>
+                    <td className="py-2 pr-4">Cable pulling, jointing, testing</td>
+                    <td className="py-2">
+                      Gas accumulation (methane, CO, H2S), water ingress, cramped access
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Transformer chambers</td>
+                    <td className="py-2 pr-4">Transformer maintenance, oil sampling</td>
+                    <td className="py-2">
+                      Oil fumes, heat, SF6 (if gas-insulated), restricted egress
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Battery rooms</td>
+                    <td className="py-2 pr-4">UPS battery replacement, testing</td>
+                    <td className="py-2">
+                      Hydrogen gas from charging, sulphuric acid, poor ventilation
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Underground substations</td>
+                    <td className="py-2 pr-4">HV switchgear maintenance</td>
+                    <td className="py-2">SF6 gas, O2 depletion, flooding, limited access/egress</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Risers and ducts</td>
+                    <td className="py-2 pr-4">Vertical cable runs, containment</td>
+                    <td className="py-2">Fall hazard, restricted movement, poor ventilation</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 02: Confined Space Hazards */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Confined Space Hazards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Legal framework"
+            onSite="Key principle: Regulation 4(1) is absolute — you must not enter a confined space if the work can be done without entry. Always explore alternatives first: remote monitoring, CCTV inspection, mechanical handling, or redesigning the task."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Legislation</th>
+                    <th className="py-2 font-medium text-white">Relevance to confined spaces</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Confined Spaces Regulations 1997</td>
+                    <td className="py-2">
+                      Primary legislation — avoid entry, safe system of work, rescue
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">HSWA 1974, s.2</td>
+                    <td className="py-2">General duty to provide safe systems of work</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">MHSWR 1999, Reg 3</td>
+                    <td className="py-2">Risk assessment for all work activities</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">EAWR 1989</td>
+                    <td className="py-2">
+                      Electrical safety requirements for work in confined electrical spaces
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">DSEAR 2002</td>
+                    <td className="py-2">ATEX zoning for flammable atmospheres</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">ACoP L101</td>
+                    <td className="py-2">
+                      HSE Approved Code of Practice for the Confined Spaces Regulations
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Confined space hazards</ContentEyebrow>
+
+          <ConceptBlock title="Hazards amplified by enclosure and restricted escape">
             <p>
               Confined space hazards are particularly dangerous because they are often invisible,
               the enclosed environment amplifies their effects, and escape routes are typically
@@ -560,176 +506,120 @@ const MOETModule1Section1_5 = () => {
               immediately lethal in a confined space. Understanding each hazard type and its
               mechanisms is essential for risk assessment and control.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                <h3 className="text-sm font-medium text-red-400 mb-3">1. Toxic Atmosphere</h3>
-                <p className="text-sm text-white mb-3">
-                  Toxic gases and vapours can accumulate in confined spaces from multiple sources:
-                  decomposing organic matter (produces methane, hydrogen sulphide, carbon dioxide),
-                  chemical reactions, industrial processes, vehicle exhausts, and work activities
-                  (soldering fumes, adhesive vapours).
-                </p>
-                <div className="overflow-x-auto">
-                  <table className="text-xs text-white w-full border-collapse">
-                    <thead>
-                      <tr className="bg-black/30">
-                        <th className="border border-white/10 px-2 py-1.5 text-left">Gas</th>
-                        <th className="border border-white/10 px-2 py-1.5 text-left">Source</th>
-                        <th className="border border-white/10 px-2 py-1.5 text-left">
-                          WEL (8-hr TWA)
-                        </th>
-                        <th className="border border-white/10 px-2 py-1.5 text-left">
-                          Danger Level
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="border border-white/10 px-2 py-1.5">Carbon monoxide (CO)</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Combustion, engines, welding
-                        </td>
-                        <td className="border border-white/10 px-2 py-1.5">30 ppm</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          400 ppm dangerous; 1,200+ ppm fatal
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Hydrogen sulphide (H2S)
-                        </td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Decomposition, sewers, drains
-                        </td>
-                        <td className="border border-white/10 px-2 py-1.5">5 ppm</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          100 ppm paralyses smell; 500+ ppm fatal
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-2 py-1.5">Methane (CH4)</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Decomposition, natural gas leaks
-                        </td>
-                        <td className="border border-white/10 px-2 py-1.5">n/a (asphyxiant)</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          5-15% LEL explosive range
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Sulphur hexafluoride (SF6)
-                        </td>
-                        <td className="border border-white/10 px-2 py-1.5">HV switchgear</td>
-                        <td className="border border-white/10 px-2 py-1.5">1,000 ppm</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          Displaces O2; decomposition products toxic
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border border-white/10 px-2 py-1.5">Hydrogen (H2)</td>
-                        <td className="border border-white/10 px-2 py-1.5">Battery charging</td>
-                        <td className="border border-white/10 px-2 py-1.5">n/a</td>
-                        <td className="border border-white/10 px-2 py-1.5">
-                          4-75% explosive range; ignites easily
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <h3 className="text-sm font-medium text-blue-400 mb-3">
-                  2. Oxygen Depletion and Enrichment
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Oxygen depletion occurs when oxygen is consumed by chemical reactions (rusting,
-                  fermentation), displaced by other gases, or absorbed by materials. Oxygen
-                  enrichment occurs from leaking oxygen cylinders or oxygen-using processes.
-                </p>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-xs font-medium text-blue-400 mb-1">
-                      Oxygen Depletion Effects
-                    </p>
-                    <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                      <li>20.9% — Normal atmosphere</li>
-                      <li>19.5% — Minimum safe level for entry</li>
-                      <li>16% — Impaired judgement, rapid breathing</li>
-                      <li>12% — Loss of consciousness in seconds</li>
-                      <li>6% — Death within minutes</li>
-                    </ul>
-                  </div>
-                  <div className="bg-black/30 p-3 rounded">
-                    <p className="text-xs font-medium text-red-400 mb-1">Oxygen Enrichment Risks</p>
-                    <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                      <li>23.5% — Maximum safe level for entry</li>
-                      <li>Above 23.5% — Greatly increased fire risk</li>
-                      <li>Materials that do not normally burn will ignite</li>
-                      <li>Clothing becomes highly flammable</li>
-                      <li>Even a small spark can cause fierce fire</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/20">
-                <h3 className="text-sm font-medium text-cyan-400 mb-3">3. Flooding and Ingress</h3>
-                <p className="text-sm text-white">
-                  Underground confined spaces — cable tunnels, manholes, pits — are at risk of water
-                  ingress from groundwater, broken pipes, surface drainage, and tidal flooding.
-                  Water levels can rise rapidly and without warning. Electrical work in a flooded or
-                  wet confined space creates an additional electrocution risk, even at low voltages.
-                  Pumping arrangements and water level monitoring must be established before entry.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <h3 className="text-sm font-medium text-amber-400 mb-3">
-                  4. Entrapment and Limited Egress
-                </h3>
-                <p className="text-sm text-white">
-                  Confined spaces often have narrow access points — manholes, hatches, ducts — that
-                  restrict rapid exit in an emergency. If a worker is injured or overcome by fumes,
-                  rescue through a narrow opening is extremely difficult. Free-flowing materials
-                  (sand, grain, water) can engulf a worker, and converging walls or machinery can
-                  trap them. Access and egress routes must be assessed and kept clear at all times.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                <h3 className="text-sm font-medium text-orange-400 mb-3">5. Fire and Explosion</h3>
-                <p className="text-sm text-white">
-                  Flammable gases (methane, hydrogen, solvents) can accumulate in confined spaces to
-                  reach explosive concentrations. In a confined space, an explosion is magnified by
-                  the containment effect — the blast pressure has nowhere to escape and is amplified
-                  dramatically. Electrical sparks, hot work, and non-ATEX-rated equipment can
-                  provide the ignition source. All electrical equipment used in potentially
-                  explosive confined spaces must be certified to the appropriate ATEX category.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Critical warning:</strong> Many confined space hazards are invisible and
-              odourless. You cannot smell oxygen depletion. Carbon monoxide is odourless. Hydrogen
-              sulphide paralyses the sense of smell at dangerous concentrations. Never rely on your
-              senses — always use calibrated instruments.
+          <ConceptBlock title="1. Toxic atmosphere">
+            <p>
+              Toxic gases and vapours can accumulate in confined spaces from multiple sources:
+              decomposing organic matter (produces methane, hydrogen sulphide, carbon dioxide),
+              chemical reactions, industrial processes, vehicle exhausts, and work activities
+              (soldering fumes, adhesive vapours).
             </p>
-          </div>
-        </section>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Gas</th>
+                    <th className="py-2 pr-4 font-medium text-white">Source</th>
+                    <th className="py-2 pr-4 font-medium text-white">WEL (8-hr TWA)</th>
+                    <th className="py-2 font-medium text-white">Danger level</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Carbon monoxide (CO)</td>
+                    <td className="py-2 pr-4">Combustion, engines, welding</td>
+                    <td className="py-2 pr-4">20 ppm</td>
+                    <td className="py-2">400 ppm dangerous; 1,200+ ppm fatal</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Hydrogen sulphide (H2S)</td>
+                    <td className="py-2 pr-4">Decomposition, sewers, drains</td>
+                    <td className="py-2 pr-4">5 ppm</td>
+                    <td className="py-2">100 ppm paralyses smell; 500+ ppm fatal</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Methane (CH4)</td>
+                    <td className="py-2 pr-4">Decomposition, natural gas leaks</td>
+                    <td className="py-2 pr-4">n/a (asphyxiant)</td>
+                    <td className="py-2">5-15% LEL explosive range</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Sulphur hexafluoride (SF6)</td>
+                    <td className="py-2 pr-4">HV switchgear</td>
+                    <td className="py-2 pr-4">1,000 ppm</td>
+                    <td className="py-2">Displaces O2; decomposition products toxic</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Hydrogen (H2)</td>
+                    <td className="py-2 pr-4">Battery charging</td>
+                    <td className="py-2 pr-4">n/a</td>
+                    <td className="py-2">4-75% explosive range; ignites easily</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="2. Oxygen depletion and enrichment">
+            <p>
+              Oxygen depletion occurs when oxygen is consumed by chemical reactions (rusting,
+              fermentation), displaced by other gases, or absorbed by materials. Oxygen enrichment
+              occurs from leaking oxygen cylinders or oxygen-using processes.
+            </p>
+            <p>
+              <strong>Oxygen depletion effects:</strong> 20.9% — normal atmosphere; 19.5% — minimum
+              safe level for entry; 16% — impaired judgement, rapid breathing; 12% — loss of
+              consciousness in seconds; 6% — death within minutes.
+            </p>
+            <p>
+              <strong>Oxygen enrichment risks:</strong> 23.5% — maximum safe level for entry; above
+              23.5% — greatly increased fire risk; materials that do not normally burn will ignite;
+              clothing becomes highly flammable; even a small spark can cause fierce fire.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03: Safe System of Work and Entry Permits */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Safe System of Work and Entry Permits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="3. Flooding and ingress">
+            <p>
+              Underground confined spaces — cable tunnels, manholes, pits — are at risk of water
+              ingress from groundwater, broken pipes, surface drainage, and tidal flooding. Water
+              levels can rise rapidly and without warning. Electrical work in a flooded or wet
+              confined space creates an additional electrocution risk, even at low voltages. Pumping
+              arrangements and water level monitoring must be established before entry.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="4. Entrapment and limited egress">
+            <p>
+              Confined spaces often have narrow access points — manholes, hatches, ducts — that
+              restrict rapid exit in an emergency. If a worker is injured or overcome by fumes,
+              rescue through a narrow opening is extremely difficult. Free-flowing materials (sand,
+              grain, water) can engulf a worker, and converging walls or machinery can trap them.
+              Access and egress routes must be assessed and kept clear at all times.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="5. Fire and explosion"
+            onSite="Critical warning: many confined space hazards are invisible and odourless. You cannot smell oxygen depletion. Carbon monoxide is odourless. Hydrogen sulphide paralyses the sense of smell at dangerous concentrations. Never rely on your senses — always use calibrated instruments."
+          >
+            <p>
+              Flammable gases (methane, hydrogen, solvents) can accumulate in confined spaces to
+              reach explosive concentrations. In a confined space, an explosion is magnified by the
+              containment effect — the blast pressure has nowhere to escape and is amplified
+              dramatically. Electrical sparks, hot work, and non-ATEX-rated equipment can provide
+              the ignition source. All electrical equipment used in potentially explosive confined
+              spaces must be certified to the appropriate ATEX category.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Safe system of work and entry permits</ContentEyebrow>
+
+          <ConceptBlock title="A comprehensive, documented procedure">
             <p>
               When entry to a confined space cannot be avoided, Regulation 4(2) of the Confined
               Spaces Regulations requires that a safe system of work is established. This is a
@@ -738,167 +628,122 @@ const MOETModule1Section1_5 = () => {
               a confined space entry permit — a formal authorisation document similar in principle
               to the permit to work systems covered in Module 1.1.1.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Elements of a Safe System of Work
-              </h3>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">1. Risk Assessment</p>
-                  <p className="text-xs text-white">
-                    A specific risk assessment for the particular confined space and task. This must
-                    identify all foreseeable hazards, the persons at risk, and the control measures
-                    required. A generic 'confined space risk assessment' is not sufficient — each
-                    entry must be individually assessed.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">2. Atmospheric Monitoring</p>
-                  <p className="text-xs text-white">
-                    Pre-entry testing using a calibrated multi-gas detector (minimum: O2, LEL, CO,
-                    H2S). The detector must be lowered into the space before anyone enters —
-                    conditions at the top of a space may differ from the bottom. Continuous
-                    monitoring throughout the work with audible and visual alarms set at action
-                    levels.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">3. Ventilation</p>
-                  <p className="text-xs text-white">
-                    Forced mechanical ventilation to provide a continuous supply of clean air. The
-                    ventilation rate must be sufficient to maintain safe atmospheric conditions
-                    throughout the work. Air intakes must be positioned away from contamination
-                    sources (exhausts, process vents, road traffic). Explosion-proof (ATEX) fans
-                    where flammable atmospheres are possible.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">4. Isolation of Hazards</p>
-                  <p className="text-xs text-white">
-                    Pipework blanked or disconnected (not just valved off). Electrical supplies
-                    isolated and locked out. Mechanical equipment secured. Chemical feeds
-                    disconnected. This goes beyond the standard LOTO procedure — in confined spaces,
-                    valves alone are not acceptable isolation because they can leak or be opened
-                    inadvertently.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">5. Communication</p>
-                  <p className="text-xs text-white">
-                    Constant communication between the entrant(s) and the top man. Methods include:
-                    visual contact, voice communication, radio, rope signals, or closed-circuit TV.
-                    The communication method must work reliably in the specific space — radio may
-                    not work in some metallic enclosures.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-1">
-                    6. Personal Protective Equipment
-                  </p>
-                  <p className="text-xs text-white">
-                    Appropriate PPE and RPE as identified by the risk assessment. This may include:
-                    breathing apparatus (self-contained or airline), harness for rescue, head
-                    protection, eye protection, knee pads, and appropriate clothing. RPE must be
-                    face-fit tested for the individual wearer.
-                  </p>
-                </div>
-              </div>
+          <ConceptBlock title="Elements of a safe system of work">
+            <ul className="list-disc space-y-2 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Risk assessment.</strong> A specific risk assessment for the particular
+                confined space and task. This must identify all foreseeable hazards, the persons at
+                risk, and the control measures required. A generic &apos;confined space risk
+                assessment&apos; is not sufficient — each entry must be individually assessed.
+              </li>
+              <li>
+                <strong>2. Atmospheric monitoring.</strong> Pre-entry testing using a calibrated
+                multi-gas detector (minimum: O2, LEL, CO, H2S). The detector must be lowered into
+                the space before anyone enters — conditions at the top of a space may differ from
+                the bottom. Continuous monitoring throughout the work with audible and visual alarms
+                set at action levels.
+              </li>
+              <li>
+                <strong>3. Ventilation.</strong> Forced mechanical ventilation to provide a
+                continuous supply of clean air. The ventilation rate must be sufficient to maintain
+                safe atmospheric conditions throughout the work. Air intakes must be positioned away
+                from contamination sources (exhausts, process vents, road traffic). Explosion-proof
+                (ATEX) fans where flammable atmospheres are possible.
+              </li>
+              <li>
+                <strong>4. Isolation of hazards.</strong> Pipework blanked or disconnected (not just
+                valved off). Electrical supplies isolated and locked out. Mechanical equipment
+                secured. Chemical feeds disconnected. This goes beyond the standard LOTO procedure —
+                in confined spaces, valves alone are not acceptable isolation because they can leak
+                or be opened inadvertently.
+              </li>
+              <li>
+                <strong>5. Communication.</strong> Constant communication between the entrant(s) and
+                the top man. Methods include: visual contact, voice communication, radio, rope
+                signals, or closed-circuit TV. The communication method must work reliably in the
+                specific space — radio may not work in some metallic enclosures.
+              </li>
+              <li>
+                <strong>6. Personal protective equipment.</strong> Appropriate PPE and RPE as
+                identified by the risk assessment. This may include: breathing apparatus
+                (self-contained or airline), harness for rescue, head protection, eye protection,
+                knee pads, and appropriate clothing. RPE must be face-fit tested for the individual
+                wearer.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Confined space entry permit — key contents">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Precise identification of the confined space</li>
+              <li>Description of the work to be carried out</li>
+              <li>Hazards identified and controls in place</li>
+              <li>Atmospheric monitoring readings (pre-entry)</li>
+              <li>Ventilation arrangements</li>
+              <li>Isolation details (electrical, mechanical, chemical)</li>
+              <li>Names of all entrants and the top man</li>
+              <li>PPE/RPE requirements</li>
+              <li>Communication method</li>
+              <li>Rescue arrangements and equipment</li>
+              <li>Time limits and review intervals</li>
+              <li>Authorisation signature and cancellation section</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Roles and responsibilities"
+            onSite="Remember: the top man's most critical duty is to NOT enter the space. The natural human instinct to help a fallen colleague is what causes multiple-casualty incidents. The top man must raise the alarm and initiate the planned rescue — never attempt an unplanned, unequipped entry."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Role</th>
+                    <th className="py-2 font-medium text-white">Responsibilities</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Authorising Person</td>
+                    <td className="py-2">
+                      Assesses hazards, verifies controls, issues and cancels the entry permit
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Entrant</td>
+                    <td className="py-2">
+                      Enters the space, carries out the work, monitors their own gas detector,
+                      evacuates immediately on alarm
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Top Man (Attendant)</td>
+                    <td className="py-2">
+                      Remains at entry point, maintains communication, logs entrants, controls
+                      access, raises alarm, initiates rescue — must NEVER enter the space
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Rescue Team</td>
+                    <td className="py-2">
+                      Trained and equipped to perform rescue, on standby throughout the entry,
+                      practised in the specific rescue method
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <h3 className="text-sm font-medium text-elec-yellow mb-3">
-                Confined Space Entry Permit — Key Contents
-              </h3>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Precise identification of the confined space</li>
-                  <li className="pl-1">Description of the work to be carried out</li>
-                  <li className="pl-1">Hazards identified and controls in place</li>
-                  <li className="pl-1">Atmospheric monitoring readings (pre-entry)</li>
-                  <li className="pl-1">Ventilation arrangements</li>
-                  <li className="pl-1">Isolation details (electrical, mechanical, chemical)</li>
-                </ul>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Names of all entrants and the top man</li>
-                  <li className="pl-1">PPE/RPE requirements</li>
-                  <li className="pl-1">Communication method</li>
-                  <li className="pl-1">Rescue arrangements and equipment</li>
-                  <li className="pl-1">Time limits and review intervals</li>
-                  <li className="pl-1">Authorisation signature and cancellation section</li>
-                </ul>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Roles and Responsibilities
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Role</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Responsibilities
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Authorising Person
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Assesses hazards, verifies controls, issues and cancels the entry permit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Entrant</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Enters the space, carries out the work, monitors their own gas detector,
-                        evacuates immediately on alarm
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Top Man (Attendant)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Remains at entry point, maintains communication, logs entrants, controls
-                        access, raises alarm, initiates rescue — must NEVER enter the space
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Rescue Team</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trained and equipped to perform rescue, on standby throughout the entry,
-                        practised in the specific rescue method
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <SectionRule />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> The top man's most critical duty is to NOT enter the space.
-              The natural human instinct to help a fallen colleague is what causes multiple-casualty
-              incidents. The top man must raise the alarm and initiate the planned rescue — never
-              attempt an unplanned, unequipped entry.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>Atmospheric monitoring and rescue arrangements</ContentEyebrow>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 04: Atmospheric Monitoring and Rescue Arrangements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Atmospheric Monitoring and Rescue Arrangements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The two most critical controls">
             <p>
               Atmospheric monitoring and rescue arrangements are the two most critical control
               measures for confined space entry. Monitoring provides early warning of deteriorating
@@ -906,467 +751,362 @@ const MOETModule1Section1_5 = () => {
               if someone is incapacitated, they can be recovered rapidly — within minutes, not
               hours.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Multi-Gas Detector Requirements
-              </h3>
-              <p className="text-sm text-white mb-3">
-                A 4-gas (or more) portable detector is the standard instrument for confined space
-                atmospheric monitoring. The detector must be calibrated, bump-tested, and maintained
-                in accordance with the manufacturer's instructions.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Parameter</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Safe Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Low Alarm</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">High Alarm</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Oxygen (O2)</td>
-                      <td className="border border-white/10 px-3 py-2">19.5% - 23.5%</td>
-                      <td className="border border-white/10 px-3 py-2">19.5%</td>
-                      <td className="border border-white/10 px-3 py-2">23.5%</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flammable Gas (LEL)</td>
-                      <td className="border border-white/10 px-3 py-2">0% LEL</td>
-                      <td className="border border-white/10 px-3 py-2">10% LEL</td>
-                      <td className="border border-white/10 px-3 py-2">20% LEL</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Carbon Monoxide (CO)</td>
-                      <td className="border border-white/10 px-3 py-2">0 ppm</td>
-                      <td className="border border-white/10 px-3 py-2">20 ppm</td>
-                      <td className="border border-white/10 px-3 py-2">100 ppm</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hydrogen Sulphide (H2S)</td>
-                      <td className="border border-white/10 px-3 py-2">0 ppm</td>
-                      <td className="border border-white/10 px-3 py-2">5 ppm</td>
-                      <td className="border border-white/10 px-3 py-2">10 ppm</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-3">
-                Note: These are typical alarm settings. The actual settings must be determined by
-                the risk assessment and may be more stringent depending on the specific hazards
-                identified.
-              </p>
+          <ConceptBlock title="Multi-gas detector requirements">
+            <p>
+              A 4-gas (or more) portable detector is the standard instrument for confined space
+              atmospheric monitoring. The detector must be calibrated, bump-tested, and maintained
+              in accordance with the manufacturer&apos;s instructions.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Parameter</th>
+                    <th className="py-2 pr-4 font-medium text-white">Safe range</th>
+                    <th className="py-2 pr-4 font-medium text-white">Low alarm</th>
+                    <th className="py-2 font-medium text-white">High alarm</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Oxygen (O2)</td>
+                    <td className="py-2 pr-4">19.5% - 23.5%</td>
+                    <td className="py-2 pr-4">19.5%</td>
+                    <td className="py-2">23.5%</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Flammable Gas (LEL)</td>
+                    <td className="py-2 pr-4">0% LEL</td>
+                    <td className="py-2 pr-4">10% LEL</td>
+                    <td className="py-2">20% LEL</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Carbon Monoxide (CO)</td>
+                    <td className="py-2 pr-4">0 ppm</td>
+                    <td className="py-2 pr-4">20 ppm</td>
+                    <td className="py-2">100 ppm</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Hydrogen Sulphide (H2S)</td>
+                    <td className="py-2 pr-4">0 ppm</td>
+                    <td className="py-2 pr-4">5 ppm</td>
+                    <td className="py-2">10 ppm</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p>
+              Note: These are typical alarm settings. The actual settings must be determined by the
+              risk assessment and may be more stringent depending on the specific hazards
+              identified.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Monitoring Procedure</h3>
-              <div className="bg-black/30 p-3 rounded text-sm text-white">
-                <p className="font-medium mb-2">Step-by-Step Atmospheric Monitoring:</p>
-                <p>
-                  1. <strong>Calibration check</strong> — verify detector is within calibration date
-                  and bump test passes
-                </p>
-                <p>
-                  2. <strong>Pre-entry monitoring</strong> — lower detector into the space (top,
-                  middle, bottom) without anyone entering
-                </p>
-                <p>
-                  3. <strong>Record readings</strong> — document all readings on the entry permit
-                  before authorising entry
-                </p>
-                <p>
-                  4. <strong>Ventilate</strong> — if readings are outside safe range, ventilate and
-                  re-test. Do NOT enter until safe
-                </p>
-                <p>
-                  5. <strong>Continuous monitoring</strong> — each entrant wears a personal gas
-                  detector throughout the entry
-                </p>
-                <p>
-                  6. <strong>Alarm response</strong> — on ANY alarm, all entrants evacuate
-                  immediately. Do not investigate
-                </p>
-                <p>
-                  7. <strong>Re-test after breaks</strong> — if the space is left unattended (e.g.,
-                  during a break), re-test before re-entry
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Monitoring procedure — step by step">
+            <ul className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Calibration check</strong> — verify detector is within calibration date and
+                bump test passes
+              </li>
+              <li>
+                <strong>Pre-entry monitoring</strong> — lower detector into the space (top, middle,
+                bottom) without anyone entering
+              </li>
+              <li>
+                <strong>Record readings</strong> — document all readings on the entry permit before
+                authorising entry
+              </li>
+              <li>
+                <strong>Ventilate</strong> — if readings are outside safe range, ventilate and
+                re-test. Do NOT enter until safe
+              </li>
+              <li>
+                <strong>Continuous monitoring</strong> — each entrant wears a personal gas detector
+                throughout the entry
+              </li>
+              <li>
+                <strong>Alarm response</strong> — on ANY alarm, all entrants evacuate immediately.
+                Do not investigate
+              </li>
+              <li>
+                <strong>Re-test after breaks</strong> — if the space is left unattended (e.g.,
+                during a break), re-test before re-entry
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <h3 className="text-sm font-medium text-red-400 mb-3">
-                Rescue Arrangements — The Most Critical Control
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Regulation 5 of the Confined Spaces Regulations requires suitable and sufficient
-                arrangements for rescue before any person enters a confined space. The rescue plan
-                must be specific to the space, practised, and immediately available — not a
-                theoretical document filed in the office.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Self-rescue:</strong> The entrant evacuates under their own power on alarm
-                  — the simplest and fastest rescue method
-                </li>
-                <li className="pl-1">
-                  <strong>Non-entry rescue:</strong> Entrant is attached to a rescue line and can be
-                  pulled out by the top man without anyone entering the space — e.g., using a tripod
-                  and winch over a manhole
-                </li>
-                <li className="pl-1">
-                  <strong>Entry rescue:</strong> A trained rescue team enters the space with
-                  breathing apparatus to recover the casualty — the most complex and slowest method
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency services:</strong> Fire and rescue service notified in advance
-                  that confined space work is taking place — but NOT relied upon as the primary
-                  rescue method (response times are too long)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Rescue arrangements — the most critical control">
+            <p>
+              Regulation 5 of the Confined Spaces Regulations requires suitable and sufficient
+              arrangements for rescue before any person enters a confined space. The rescue plan
+              must be specific to the space, practised, and immediately available — not a
+              theoretical document filed in the office.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Self-rescue:</strong> The entrant evacuates under their own power on alarm —
+                the simplest and fastest rescue method
+              </li>
+              <li>
+                <strong>Non-entry rescue:</strong> Entrant is attached to a rescue line and can be
+                pulled out by the top man without anyone entering the space — e.g., using a tripod
+                and winch over a manhole
+              </li>
+              <li>
+                <strong>Entry rescue:</strong> A trained rescue team enters the space with breathing
+                apparatus to recover the casualty — the most complex and slowest method
+              </li>
+              <li>
+                <strong>Emergency services:</strong> Fire and rescue service notified in advance
+                that confined space work is taking place — but NOT relied upon as the primary rescue
+                method (response times are too long)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Rescue Equipment</h3>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Standard Equipment</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Tripod and winch for vertical entry points</li>
-                    <li>Rescue harness with attachment point for lifting</li>
-                    <li>Self-contained breathing apparatus (SCBA)</li>
-                    <li>Airline breathing apparatus (for extended duration)</li>
-                    <li>Escape sets (short-duration emergency breathing)</li>
-                    <li>Stretcher suitable for confined space extraction</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">
-                    Communication &amp; First Aid
-                  </p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Two-way radio (intrinsically safe if ATEX zone)</li>
-                    <li>Emergency whistle or audible alarm</li>
-                    <li>First aid kit including oxygen therapy</li>
-                    <li>AED (defibrillator) on standby</li>
-                    <li>Trauma blankets</li>
-                    <li>Emergency lighting (intrinsically safe)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="Rescue equipment">
+            <p>
+              <strong>Standard equipment:</strong> tripod and winch for vertical entry points;
+              rescue harness with attachment point for lifting; self-contained breathing apparatus
+              (SCBA); airline breathing apparatus (for extended duration); escape sets
+              (short-duration emergency breathing); stretcher suitable for confined space
+              extraction.
+            </p>
+            <p>
+              <strong>Communication &amp; first aid:</strong> two-way radio (intrinsically safe if
+              ATEX zone); emergency whistle or audible alarm; first aid kit including oxygen
+              therapy; AED (defibrillator) on standby; trauma blankets; emergency lighting
+              (intrinsically safe).
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Warning: Untrained Rescue Kills
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Warning: untrained rescue kills"
+            whatHappens={
+              <>
                 More than 60% of confined space fatalities are would-be rescuers. When a colleague
                 collapses in a confined space, the natural instinct is to rush in and help. But the
                 atmosphere that incapacitated the first person will incapacitate the rescuer too —
-                often within seconds. This is why the top man must NEVER enter, why rescue teams
-                must have breathing apparatus, and why the rescue plan must be established and
-                practised BEFORE any entry begins.
-              </p>
-            </div>
-          </div>
-        </section>
+                often within seconds.
+              </>
+            }
+            doInstead={
+              <>
+                This is why the top man must NEVER enter, why rescue teams must have breathing
+                apparatus, and why the rescue plan must be established and practised BEFORE any
+                entry begins.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Electrical Work in Confined Spaces */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Electrical Work in Confined Spaces
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Electrical work in confined spaces</ContentEyebrow>
+
+          <ConceptBlock title="Two sets of hazards, one compounded risk">
             <p>
               Electrical maintenance in confined spaces presents a unique combination of hazards:
               the standard confined space risks (atmosphere, flooding, entrapment) are compounded by
               electrical hazards (electrocution, arc flash, burns). Furthermore, the confined
               environment amplifies the effects of electrical incidents — arc flash blast pressure
               in a cable tunnel is far more devastating than in an open switchroom, and the
-              restricted space limits the worker's ability to escape.
+              restricted space limits the worker&apos;s ability to escape.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-blue-400 mb-3">Cable Tunnels and Ducts</h3>
-                <p className="text-sm text-white mb-3">
-                  Cable tunnels are one of the most common confined spaces encountered by electrical
-                  maintenance technicians. They present a complex combination of hazards:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Oxygen depletion:</strong> Heat from loaded cables promotes oxidation of
-                    materials, consuming oxygen. Poor ventilation means depleted air is not
-                    replaced.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Heat stress:</strong> Heavily loaded cables radiate heat, raising
-                    ambient temperatures to 40-50+°C in poorly ventilated tunnels. This causes
-                    fatigue, confusion, and collapse.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Arc flash containment:</strong> An arc flash in a cable tunnel creates a
-                    blast wave confined by the tunnel walls. The pressure and thermal effects are
-                    greatly amplified compared to an open environment.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Egress:</strong> Cable tunnels may have access points hundreds of metres
-                    apart. In an emergency, the distance to the nearest exit may be significant.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Flooding:</strong> Underground cable tunnels are prone to water ingress,
-                    creating electrocution risk even from low-voltage cables.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-purple-400 mb-3">
-                  Manholes and Cable Pits
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Manholes and cable pits are typically vertical-entry confined spaces with
-                  restricted openings. The vertical orientation means that heavy gases accumulate at
-                  the bottom and oxygen-depleted air cannot easily escape.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Gas accumulation:</strong> Methane and CO2 from surrounding soil; H2S
-                    from drainage; CO from traffic above
-                  </li>
-                  <li className="pl-1">
-                    <strong>Water:</strong> Groundwater and surface water collect in pits — must be
-                    pumped before entry
-                  </li>
-                  <li className="pl-1">
-                    <strong>Access:</strong> Narrow openings restrict rescue — tripod and winch
-                    essential for vertical entry points
-                  </li>
-                  <li className="pl-1">
-                    <strong>Cable jointing:</strong> Heat sources from jointing (gas torches, heat
-                    shrink) can alter the atmosphere and increase fire risk
-                  </li>
-                  <li className="pl-1">
-                    <strong>Reduced voltage:</strong> Use 110V CTE (centre-tapped earth) or
-                    battery-powered tools to reduce electrocution risk in wet conditions
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-green-400 mb-3">
-                  Switchrooms and Transformer Chambers
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Some switchrooms and transformer chambers meet the definition of confined spaces,
-                  particularly underground or basement installations with limited access and
-                  ventilation:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>SF6 gas:</strong> HV switchgear containing SF6 can leak — the gas is
-                    five times heavier than air and accumulates at low levels, displacing oxygen
-                  </li>
-                  <li className="pl-1">
-                    <strong>SF6 decomposition:</strong> When SF6 passes through an arc, it produces
-                    toxic byproducts (SO2, HF) that are acutely dangerous
-                  </li>
-                  <li className="pl-1">
-                    <strong>Battery fumes:</strong> Lead-acid batteries produce hydrogen gas during
-                    charging — explosive at 4% concentration
-                  </li>
-                  <li className="pl-1">
-                    <strong>Oil mist:</strong> Oil-filled transformers and switchgear can produce
-                    oil mist or vapour, particularly if overheated
-                  </li>
-                  <li className="pl-1">
-                    <strong>Arc flash:</strong> The containment effect of an enclosed switchroom
-                    amplifies arc flash blast pressure and thermal hazard
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <h3 className="text-sm font-medium text-elec-yellow mb-3">
-                Electrical Controls for Confined Space Work
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reduced voltage:</strong> Use 110V CTE supplies or battery-powered tools
-                  in wet or damp confined spaces
-                </li>
-                <li className="pl-1">
-                  <strong>RCD protection:</strong> 30mA RCD on all portable equipment — no
-                  exceptions in confined spaces
-                </li>
-                <li className="pl-1">
-                  <strong>ATEX equipment:</strong> All electrical equipment in spaces with flammable
-                  atmospheres must be ATEX-rated (intrinsically safe)
-                </li>
-                <li className="pl-1">
-                  <strong>Task lighting:</strong> Low-voltage (12V or 25V) task lighting, or
-                  intrinsically safe rechargeable lighting
-                </li>
-                <li className="pl-1">
-                  <strong>Full isolation:</strong> Isolate and prove dead ALL electrical circuits in
-                  the confined space before entry, using the full Prove-Test-Prove procedure
-                </li>
-                <li className="pl-1">
-                  <strong>Arc flash assessment:</strong> Where circuits cannot be isolated (e.g.,
-                  the supply cables you are working on are energised from both ends), conduct an arc
-                  flash risk assessment that accounts for the containment effect
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Competence Requirements
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Electrical work in confined spaces requires a combination of competencies that goes
-                beyond either confined space entry training or electrical competence alone:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Confined Space Competence</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Hazard recognition and risk assessment</li>
-                    <li>Atmospheric monitoring equipment use</li>
-                    <li>Emergency escape procedures</li>
-                    <li>Communication protocols</li>
-                    <li>RPE use and face-fit testing</li>
-                  </ul>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-white mb-2">Electrical Competence</p>
-                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
-                    <li>Safe isolation procedures (Module 1.1.2)</li>
-                    <li>LOTO procedures (Module 1.1.3)</li>
-                    <li>Arc flash awareness and PPE selection</li>
-                    <li>Reduced voltage system use</li>
-                    <li>ATEX equipment selection</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The Maintenance and Operations Engineering Technician
-              standard requires awareness of confined space hazards, the ability to recognise when
-              work constitutes confined space entry, and knowledge of the controls required. While
-              not all technicians will be qualified confined space entrants, all must understand
-              when the Confined Spaces Regulations apply and ensure that appropriate procedures are
-              followed before any entry takes place.
+          <ConceptBlock title="Cable tunnels and ducts">
+            <p>
+              Cable tunnels are one of the most common confined spaces encountered by electrical
+              maintenance technicians. They present a complex combination of hazards:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Oxygen depletion:</strong> Heat from loaded cables promotes oxidation of
+                materials, consuming oxygen. Poor ventilation means depleted air is not replaced.
+              </li>
+              <li>
+                <strong>Heat stress:</strong> Heavily loaded cables radiate heat, raising ambient
+                temperatures to 40-50+°C in poorly ventilated tunnels. This causes fatigue,
+                confusion, and collapse.
+              </li>
+              <li>
+                <strong>Arc flash containment:</strong> An arc flash in a cable tunnel creates a
+                blast wave confined by the tunnel walls. The pressure and thermal effects are
+                greatly amplified compared to an open environment.
+              </li>
+              <li>
+                <strong>Egress:</strong> Cable tunnels may have access points hundreds of metres
+                apart. In an emergency, the distance to the nearest exit may be significant.
+              </li>
+              <li>
+                <strong>Flooding:</strong> Underground cable tunnels are prone to water ingress,
+                creating electrocution risk even from low-voltage cables.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Manholes and cable pits">
+            <p>
+              Manholes and cable pits are typically vertical-entry confined spaces with restricted
+              openings. The vertical orientation means that heavy gases accumulate at the bottom and
+              oxygen-depleted air cannot easily escape.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Gas accumulation:</strong> Methane and CO2 from surrounding soil; H2S from
+                drainage; CO from traffic above
+              </li>
+              <li>
+                <strong>Water:</strong> Groundwater and surface water collect in pits — must be
+                pumped before entry
+              </li>
+              <li>
+                <strong>Access:</strong> Narrow openings restrict rescue — tripod and winch
+                essential for vertical entry points
+              </li>
+              <li>
+                <strong>Cable jointing:</strong> Heat sources from jointing (gas torches, heat
+                shrink) can alter the atmosphere and increase fire risk
+              </li>
+              <li>
+                <strong>Reduced voltage:</strong> Use 110V CTE (centre-tapped earth) or
+                battery-powered tools to reduce electrocution risk in wet conditions
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Confined Space Definition</p>
-                <ul className="space-y-0.5">
-                  <li>Substantially enclosed AND</li>
-                  <li>Foreseeable risk of serious injury from</li>
-                  <li>hazardous conditions within/nearby</li>
-                  <li>Both conditions must be met</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Atmospheric Limits</p>
-                <ul className="space-y-0.5">
-                  <li>O2: 19.5% - 23.5% (normal 20.9%)</li>
-                  <li>LEL: alarm at 10%, evacuate at 20%</li>
-                  <li>CO: alarm at 20 ppm, evacuate at 100 ppm</li>
-                  <li>H2S: alarm at 5 ppm, evacuate at 10 ppm</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Safe System of Work</p>
-                <ul className="space-y-0.5">
-                  <li>1. Risk assessment (space-specific)</li>
-                  <li>2. Atmospheric monitoring (pre + continuous)</li>
-                  <li>3. Ventilation (forced, mechanical)</li>
-                  <li>4. Entry permit (formal authorisation)</li>
-                  <li>5. Communication (constant contact)</li>
-                  <li>6. Rescue arrangements (before entry)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Legislation</p>
-                <ul className="space-y-0.5">
-                  <li>Confined Spaces Regulations 1997</li>
-                  <li>ACoP L101 — Approved Code of Practice</li>
-                  <li>HSWA 1974 — General safety duties</li>
-                  <li>EAWR 1989 — Electrical safety</li>
-                  <li>DSEAR 2002 — Explosive atmospheres</li>
-                </ul>
-              </div>
+          <ConceptBlock title="Switchrooms and transformer chambers">
+            <p>
+              Some switchrooms and transformer chambers meet the definition of confined spaces,
+              particularly underground or basement installations with limited access and
+              ventilation:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>SF6 gas:</strong> HV switchgear containing SF6 can leak — the gas is five
+                times heavier than air and accumulates at low levels, displacing oxygen
+              </li>
+              <li>
+                <strong>SF6 decomposition:</strong> When SF6 passes through an arc, it produces
+                toxic byproducts (SO2, HF) that are acutely dangerous
+              </li>
+              <li>
+                <strong>Battery fumes:</strong> Lead-acid batteries produce hydrogen gas during
+                charging — explosive at 4% concentration
+              </li>
+              <li>
+                <strong>Oil mist:</strong> Oil-filled transformers and switchgear can produce oil
+                mist or vapour, particularly if overheated
+              </li>
+              <li>
+                <strong>Arc flash:</strong> The containment effect of an enclosed switchroom
+                amplifies arc flash blast pressure and thermal hazard
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Electrical controls for confined space work">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reduced voltage:</strong> Use 110V CTE supplies or battery-powered tools in
+                wet or damp confined spaces
+              </li>
+              <li>
+                <strong>RCD protection:</strong> 30mA RCD on all portable equipment — no exceptions
+                in confined spaces
+              </li>
+              <li>
+                <strong>ATEX equipment:</strong> All electrical equipment in spaces with flammable
+                atmospheres must be ATEX-rated (intrinsically safe)
+              </li>
+              <li>
+                <strong>Task lighting:</strong> Low-voltage (12V or 25V) task lighting, or
+                intrinsically safe rechargeable lighting
+              </li>
+              <li>
+                <strong>Full isolation:</strong> Isolate and prove dead ALL electrical circuits in
+                the confined space before entry, using the full Prove-Test-Prove procedure
+              </li>
+              <li>
+                <strong>Arc flash assessment:</strong> Where circuits cannot be isolated (e.g., the
+                supply cables you are working on are energised from both ends), conduct an arc flash
+                risk assessment that accounts for the containment effect
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Competence requirements"
+            onSite="ST1426 link: the Maintenance and Operations Engineering Technician standard requires awareness of confined space hazards, the ability to recognise when work constitutes confined space entry, and knowledge of the controls required. While not all technicians will be qualified confined space entrants, all must understand when the Confined Spaces Regulations apply and ensure that appropriate procedures are followed before any entry takes place."
+          >
+            <p>
+              Electrical work in confined spaces requires a combination of competencies that goes
+              beyond either confined space entry training or electrical competence alone:
+            </p>
+            <p>
+              <strong>Confined space competence:</strong> hazard recognition and risk assessment;
+              atmospheric monitoring equipment use; emergency escape procedures; communication
+              protocols; RPE use and face-fit testing.
+            </p>
+            <p>
+              <strong>Electrical competence:</strong> safe isolation procedures (Module 1.1.2); LOTO
+              procedures (Module 1.1.3); arc flash awareness and PPE selection; reduced voltage
+              system use; ATEX equipment selection.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Confined space definition: substantially enclosed AND foreseeable risk of serious injury from hazardous conditions within/nearby — both conditions must be met.',
+              'Atmospheric limits: O2 19.5%-23.5% (normal 20.9%); LEL — alarm at 10%, evacuate at 20%; CO — alarm at 20 ppm, evacuate at 100 ppm; H2S — alarm at 5 ppm, evacuate at 10 ppm.',
+              'Safe system of work — 6 elements: risk assessment (space-specific), atmospheric monitoring (pre + continuous), ventilation (forced, mechanical), entry permit (formal authorisation), communication (constant contact), rescue arrangements (before entry).',
+              'Key legislation: Confined Spaces Regulations 1997; ACoP L101 — Approved Code of Practice; HSWA 1974 — general safety duties; EAWR 1989 — electrical safety; DSEAR 2002 — explosive atmospheres.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safe Access and Work at Height
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Dangers of Electricity
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Work at Height
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -241,6 +241,9 @@ const UnitConverterCalculator = () => {
     const equivalents = getEquivalentUnits(
       parseFloat(inputValue) * conversionCategories[category].units[fromUnit].factor
     );
+    const fromFactor = conversionCategories[category].units[fromUnit].factor;
+    const toFactor = conversionCategories[category].units[toUnit].factor;
+    const conversionFactor = fromFactor / toFactor;
 
     return {
       meta: {
@@ -264,12 +267,14 @@ const UnitConverterCalculator = () => {
           ],
         },
         {
-          heading: 'Result',
+          heading: 'How it was calculated',
           rows: [
+            { label: 'Conversion factor', value: formatValue(conversionFactor) },
             {
-              label: conversionCategories[category].units[toUnit].name,
-              value: `${formatValue(result)} ${toUnit}`,
-              note: equation || undefined,
+              label: 'Working',
+              value:
+                equation ||
+                `${formatValue(parseFloat(inputValue))} ${fromUnit} × ${formatValue(conversionFactor)} = ${formatValue(result)} ${toUnit}`,
             },
           ],
         },

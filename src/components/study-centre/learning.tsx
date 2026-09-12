@@ -12,7 +12,7 @@
  *   - Existing Quiz/InlineCheck preserved; they wire into stats + streaks.
  */
 
-import { type ReactNode, useState } from 'react';
+import { type CSSProperties, type ReactNode, useEffect, useState } from 'react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -73,7 +73,15 @@ export function TLDR({ points, className }: TLDRProps) {
           In 30 seconds
         </span>
       </div>
-      <ul className="space-y-2">
+      {/* Two columns from lg: these are scannable points, not prose, so they
+          use the width a desktop actually has instead of running one per row. */}
+      <ul
+        className={cn(
+          'space-y-2',
+          // Two columns only once there are enough points to fill them.
+          points.length >= 4 && 'lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-2 lg:space-y-0'
+        )}
+      >
         {points.map((point, i) => (
           <li key={i} className="flex items-start gap-2.5 text-[14px] text-white leading-relaxed">
             <span className="mt-2 h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0" />
@@ -111,16 +119,21 @@ export function ConceptBlock({
       <h3 className="text-[18px] sm:text-[20px] font-semibold text-white tracking-tight leading-snug">
         {title}
       </h3>
-      <div className="text-[14.5px] text-white leading-relaxed space-y-3">{children}</div>
+      {/* The column is wider on a desktop, so the type scales with it. At
+          14.5px a 64rem column runs ~131 characters per line; at 16px it is
+          closer to 95, which is where prose actually reads comfortably. */}
+      <div className="space-y-3 text-[14.5px] leading-relaxed text-white lg:text-[16px]">
+        {children}
+      </div>
 
       {plainEnglish && (
-        <p className="text-[13.5px] text-white leading-relaxed border-l-2 border-blue-400/70 pl-4 italic">
+        <p className="border-l-2 border-blue-400/70 pl-4 text-[13.5px] italic leading-relaxed text-white lg:text-[15px]">
           <span className="not-italic font-semibold text-blue-300 mr-1.5">In plain English:</span>
           {plainEnglish}
         </p>
       )}
       {onSite && (
-        <p className="text-[13.5px] text-white leading-relaxed border-l-2 border-elec-yellow/80 pl-4 italic">
+        <p className="border-l-2 border-elec-yellow/80 pl-4 text-[13.5px] italic leading-relaxed text-white lg:text-[15px]">
           <span className="not-italic font-semibold text-elec-yellow mr-1.5">On site:</span>
           {onSite}
         </p>
@@ -208,15 +221,19 @@ export function CommonMistake({ title, whatHappens, doInstead, className }: Comm
             Common mistake
           </div>
           <h4 className="mt-1 text-[15px] font-semibold text-white tracking-tight">{title}</h4>
+          {/* `div`, not `p` — same reason as <Scenario>: a failure mode is often
+              a list or several paragraphs, and block content inside a <p> is
+              invalid HTML. The browser auto-closes the paragraph and the list
+              renders unstyled and unspaced. Inline content is unaffected. */}
           <div className="mt-3 space-y-2.5 text-[13.5px] leading-relaxed">
-            <p className="text-white">
+            <div className="space-y-2 text-white">
               <span className="font-semibold text-orange-300">What goes wrong: </span>
               {whatHappens}
-            </p>
-            <p className="text-white">
+            </div>
+            <div className="space-y-2 text-white">
               <span className="font-semibold text-emerald-300">Do this instead: </span>
               {doInstead}
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -245,20 +262,25 @@ export function Scenario({ title, situation, whatToDo, whyItMatters, className }
       <h4 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-tight leading-snug">
         {title}
       </h4>
-      <div className="text-[14px] text-white leading-relaxed space-y-2.5">
-        <p>
+      {/* `div`, not `p`. A worked scenario is often several paragraphs — a
+          step-by-step walk through a job — and nesting those inside a <p> is
+          invalid HTML: the browser silently auto-closes the outer paragraph
+          and the steps render as one unspaced slab. `space-y` handles the
+          block case; inline content is unaffected. */}
+      <div className="space-y-2.5 text-[14px] leading-relaxed text-white">
+        <div>
           <span className="font-semibold text-white">The situation: </span>
           {situation}
-        </p>
-        <p>
+        </div>
+        <div className="space-y-2.5">
           <span className="font-semibold text-emerald-300">What to do: </span>
           {whatToDo}
-        </p>
+        </div>
         {whyItMatters && (
-          <p className="text-[13px] text-white italic">
+          <div className="text-[13px] italic text-white">
             <span className="not-italic font-semibold text-white">Why it matters: </span>
             {whyItMatters}
-          </p>
+          </div>
         )}
       </div>
     </section>
@@ -285,7 +307,12 @@ export function KeyTakeaways({
           {title}
         </span>
       </div>
-      <ul className="space-y-2.5">
+      <ul
+        className={cn(
+          'space-y-2.5',
+          points.length >= 4 && 'lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-2.5 lg:space-y-0'
+        )}
+      >
         {points.map((point, i) => (
           <li key={i} className="flex items-start gap-2.5">
             <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -361,11 +388,180 @@ export function FAQ({ items, title = 'Common questions', className }: FAQProps) 
   );
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+ * StudyPage — the reading column.
+ *
+ * The problem this fixes: `HubBody` is `max-w-[1600px]`, which is right for
+ * a tool grid and wrong for prose. Measured on Level 2 Module 1.1.1 at a
+ * 1633px viewport, body paragraphs ran 1234px wide.
+ *
+ * So: a three-track grid. Prose sits in a capped `content` track, and
+ * anything that genuinely needs the width — a diagram, a wide table, the
+ * quiz — escapes into `wide` or `full` via <Bleed>.
+ *
+ * No contents rail. A sticky "on this page" list was tried here and removed:
+ * it spent the widest part of the screen on navigation for a page that is
+ * read top to bottom. Do not reintroduce one.
+ *
+ * Named grid lines rather than per-child wrappers: children stay flat, so
+ * the codemod converting the remaining subsection pages only has to wrap the
+ * page body once.
+ * ──────────────────────────────────────────────────────────────────── */
+
+const READING_GRID: CSSProperties = {
+  display: 'grid',
+  // `minmax(0, …)` on the gutters, not `1fr` — a bare 1fr refuses to shrink
+  // below its content and reintroduces horizontal scroll on a phone.
+  gridTemplateColumns: [
+    '[full-start] minmax(0, 1fr)',
+    '[wide-start] minmax(0, calc((var(--reading-wide) - var(--reading-measure)) / 2))',
+    '[content-start] min(var(--reading-measure), 100%) [content-end]',
+    'minmax(0, calc((var(--reading-wide) - var(--reading-measure)) / 2)) [wide-end]',
+    'minmax(0, 1fr) [full-end]',
+  ].join(' '),
+};
+
+interface StudyPageProps {
+  children: ReactNode;
+  /**
+   * Reading measure — the width of the prose column.
+   *
+   * Deliberately NOT in `ch`: `ch` resolves against the grid container's own
+   * font (16px), not the 14.5px body copy inside it, so it lies about the
+   * thing it looks like it is measuring — 68ch metered out 90 characters a
+   * line, not 68.
+   *
+   * 56rem (896px) is a deliberate, Andrew-set width: wider than the ~65-75
+   * characters typography would pick, because these are technical study pages
+   * read at a desk, and a narrow column made them feel cramped and endless.
+   * Measure any change with Range.getClientRects() on real line boxes rather
+   * than estimating from font size.
+   */
+  measure?: string;
+  /** How far a <Bleed> may escape. Diagrams, video rows and the quiz live here. */
+  wide?: string;
+  className?: string;
+}
+
+/**
+ * The reading column.
+ *
+ * `HubBody` is `max-w-[1600px]`, which is right for a tool grid and wrong for
+ * prose — Level 2 measured 1234px, roughly 170 characters a line. This caps
+ * the prose and lets diagrams, wide tables and the quiz escape into a wider
+ * track via <Bleed>.
+ *
+ * Named grid lines rather than per-child wrappers: children stay flat, so the
+ * codemod converting the remaining subsection pages only has to wrap the page
+ * body once.
+ */
+export function StudyPage({
+  children,
+  // 64rem, not 56: the column was visibly narrow on a desktop. Prose still
+  // sits centred — a left-aligned column left a dead half-screen to the right.
+  measure = '64rem',
+  // 84rem gives <Bleed> content (quizzes, prev/next) room beyond the measure.
+  wide = '84rem',
+  className,
+}: StudyPageProps) {
+  return (
+    <div
+      // Every direct child lands in the `content` track by default — without
+      // this the grid auto-places them one per column and the page renders as
+      // five vertical ribbons. <Bleed> overrides it with an inline style,
+      // which beats the class.
+      className={cn('mx-auto w-full gap-y-6 [&>*]:[grid-column:content] sm:gap-y-7', className)}
+      style={
+        {
+          ...READING_GRID,
+          '--reading-measure': measure,
+          '--reading-wide': wide,
+        } as CSSProperties
+      }
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ── Bleed — escape the reading measure for something that needs width ── */
+
+export function Bleed({
+  children,
+  width = 'wide',
+  className,
+}: {
+  children: ReactNode;
+  /** `wide` reaches the diagram track; `full` spans the whole body. */
+  width?: 'wide' | 'full';
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn('min-w-0', className)}
+      style={{ gridColumn: width === 'full' ? 'full' : 'wide' }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ── ReadingProgress — a 2px rule under the masthead. ──────────────────
+ * These pages are long: the old MOET 1.1.1 measured 13,199px, which is
+ * ~35 screens on a phone. Without this there is no signal whether you are
+ * two minutes or twenty from the quiz.
+ * ─────────────────────────────────────────────────────────────────── */
+
+export function ReadingProgress() {
+  const [pct, setPct] = useState(0);
+
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setPct(max > 0 ? Math.min(100, Math.max(0, (window.scrollY / max) * 100)) : 0);
+    };
+    const onScroll = () => {
+      // rAF-coalesced: this fires on every scroll tick on a long page.
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  return (
+    <div
+      className="sticky top-12 z-40 -mt-px h-0.5 bg-transparent"
+      role="progressbar"
+      aria-label="Reading progress"
+      aria-valuenow={Math.round(pct)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+    >
+      <div
+        className="h-full bg-elec-yellow transition-[width] duration-100 ease-out"
+        style={{ width: `${pct}%` }}
+      />
+    </div>
+  );
+}
+
 /* ── ContentEyebrow — small section break. Just a label, no card. ── */
 
-export function ContentEyebrow({ children }: { children: ReactNode }) {
+export function ContentEyebrow({ id, children }: { id?: string; children: ReactNode }) {
   return (
-    <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85 pt-2">
+    // `scroll-mt` clears the sticky masthead when something links to a section.
+    <div
+      id={id}
+      className="scroll-mt-20 pt-2 text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85"
+    >
       {children}
     </div>
   );
@@ -418,6 +614,64 @@ export function DiagramPlaceholder({ caption, filename, className }: DiagramPlac
       <figcaption className="text-[13.5px] text-white leading-relaxed">{caption}</figcaption>
       <div className="text-[11px] text-white font-mono">{filename}</div>
     </figure>
+  );
+}
+
+/* ── Prerequisites — what this page assumes you already know ────────
+ *
+ * Course pages do not always run in dependency order. MOET 1.1.1 opens the
+ * whole course on permits to work, and leans on risk assessment (taught in
+ * 1.3), safe isolation (1.1.2), lock-out/tag-out (1.1.3) and the legal duties
+ * (1.4) — four sections the learner has not reached yet.
+ *
+ * Re-sequencing 198 pages would be worse than the problem. This instead makes
+ * a page stand on its own: name the assumed idea, give the one line that
+ * carries the reader through THIS page, and say where it is taught properly.
+ * ────────────────────────────────────────────────────────────────── */
+
+interface PrerequisiteItem {
+  /** The assumed concept, e.g. "Safe isolation". */
+  term: string;
+  /** One line — just enough to follow this page without leaving it. */
+  gist: ReactNode;
+  /** Where it is taught in full, e.g. "1.1.2". */
+  where?: string;
+}
+
+export function Prerequisites({
+  items,
+  title = 'Before you start',
+  className,
+}: {
+  items: PrerequisiteItem[];
+  title?: string;
+  className?: string;
+}) {
+  return (
+    <section
+      className={cn('border-l-2 border-blue-400/70 pl-4 sm:pl-5 space-y-3', className)}
+      aria-label={title}
+    >
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-blue-300">
+        {title}
+      </div>
+      <dl className="space-y-2 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:gap-y-2 lg:space-y-0">
+        {items.map((item) => (
+          <div key={item.term} className="text-[13.5px] leading-relaxed text-white">
+            <dt className="inline font-semibold">{item.term}. </dt>
+            <dd className="inline">
+              {item.gist}
+              {item.where && (
+                // text-white, never a low-opacity white: on this ground that
+                // reads as grey, which is banned outright. Italic carries the
+                // hierarchy instead.
+                <span className="italic text-white"> Covered in full in {item.where}.</span>
+              )}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
   );
 }
 
@@ -509,7 +763,7 @@ export function VideoCard({
       </div>
 
       {/* Player area — thumbnail with tap-to-play, swaps to inline iframe */}
-      <div className="relative mt-3 aspect-video w-full bg-[hsl(0_0%_8%)] overflow-hidden">
+      <div className="relative mt-3 aspect-video w-full bg-[hsl(0_0%_11%)] overflow-hidden">
         {isPlaying && videoId ? (
           <iframe
             src={buildEmbedSrc(videoId)}
@@ -666,7 +920,7 @@ function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
       )}
     >
       {/* Thumbnail — fixed aspect, smaller than the primary card */}
-      <div className="relative shrink-0 w-32 sm:w-36 aspect-video rounded-lg overflow-hidden bg-[hsl(0_0%_8%)]">
+      <div className="relative shrink-0 w-32 sm:w-36 aspect-video rounded-lg overflow-hidden bg-[hsl(0_0%_11%)]">
         {maxThumb && (
           <img
             src={maxThumb}
@@ -768,7 +1022,7 @@ export function AmendmentBadge({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_13%)] border-elec-yellow/20"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_16%)] border-elec-yellow/20"
         >
           <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
             <div className="flex items-center gap-2 mb-2">
@@ -978,7 +1232,7 @@ export function RegBadge({ children, editionId = A4_2026_EDITION_ID, className }
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_13%)] border-purple-500/25"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_16%)] border-purple-500/25"
         >
           <SheetHeader className="border-b border-white/[0.12] px-5 pb-3 pt-5">
             <div className="flex items-center gap-2 mb-2">
@@ -1063,17 +1317,21 @@ export function AppendixTable({
   className,
 }: AppendixTableProps) {
   return (
-    // ⚠️ This is the one card in the file still on a flat `bg-[hsl(0_0%_13%)]`
+    // ⚠️ This is the one card in the file still on a flat `bg-[hsl(0_0%_16%)]`
     // rather than CARD_SURFACE, and it has to stay that way. The first column is
     // `sticky left-0` and has to opaquely mask the cells scrolling underneath
     // it, so the cell fill must match the card fill EXACTLY — see the two
-    // `sticky left-0 bg-[hsl(0_0%_13%)]` cells below. CARD_SURFACE is a
+    // `sticky left-0 bg-[hsl(0_0%_16%)]` cells below. CARD_SURFACE is a
     // gradient, and a flat colour cannot match a gradient at every row, so
     // swapping this one leaves the sticky column translucent over moving text.
     // The grey outline is gone; only the fill is held back.
     <figure
       className={cn(
-        'relative overflow-hidden rounded-2xl border border-elec-yellow/35 bg-[hsl(0_0%_13%)]',
+        // `min-w-0` is load-bearing: the figure is a grid item, so its
+        // min-width defaults to auto and the 480px min-width table inside
+        // sizes it past the reading column on a narrow phone. With this,
+        // the figure shrinks and the inner overflow-x-auto scrolls instead.
+        'relative min-w-0 overflow-hidden rounded-2xl border border-elec-yellow/35 bg-[hsl(0_0%_16%)]',
         className
       )}
     >
@@ -1099,7 +1357,7 @@ export function AppendixTable({
                   scope="col"
                   className={cn(
                     'px-3 py-2.5 font-semibold text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] text-elec-yellow/85 align-bottom',
-                    i === 0 && 'sticky left-0 z-10 bg-[hsl(0_0%_13%)] sm:static sm:bg-transparent',
+                    i === 0 && 'sticky left-0 z-10 bg-[hsl(0_0%_16%)] sm:static sm:bg-transparent',
                     i === 0 ? 'min-w-[140px]' : 'min-w-[88px]'
                   )}
                 >
@@ -1117,7 +1375,7 @@ export function AppendixTable({
                     className={cn(
                       'px-3 py-2.5 align-top leading-relaxed',
                       ci === 0 &&
-                        'sticky left-0 z-10 bg-[hsl(0_0%_13%)] sm:static sm:bg-transparent font-medium text-white'
+                        'sticky left-0 z-10 bg-[hsl(0_0%_16%)] sm:static sm:bg-transparent font-medium text-white'
                     )}
                   >
                     {cell}

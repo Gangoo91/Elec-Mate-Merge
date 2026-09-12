@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.2 · Subsection 2 — Alternating Current Principles
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical engineering principles: circuit terminology,
+ *     Ohm’s Law, transformer theory, and power calculations."
+ *   · "Electrical. Principles of single phase and three-phase equipment,
+ *     plant, and systems, the operation of motors and generators, and the
+ *     use…"
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { SineWave } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Alternating Current Principles - MOET Module 2.2.2';
@@ -26,12 +64,7 @@ const quickCheckQuestions = [
   {
     id: 'frequency-period',
     question: 'What is the time period of one complete cycle of the UK 50 Hz mains supply?',
-    options: [
-      '50 seconds',
-      '0.02 seconds (20 ms)',
-      '0.01 seconds (10 ms)',
-      '0.5 seconds',
-    ],
+    options: ['50 seconds', '0.02 seconds (20 ms)', '0.01 seconds (10 ms)', '0.5 seconds'],
     correctIndex: 1,
     explanation:
       'The time period T is the reciprocal of frequency: T = 1/f = 1/50 = 0.02 seconds = 20 milliseconds. This means the UK mains completes 50 full cycles every second, with each complete cycle (one positive and one negative half-cycle) taking 20 ms.',
@@ -69,12 +102,7 @@ const quizQuestions = [
     id: 1,
     question:
       'The UK mains supply has a nominal voltage of 230 V and a frequency of 50 Hz. What is the peak voltage?',
-    options: [
-      '115 V',
-      '325.3 V',
-      '230 V',
-      '460 V',
-    ],
+    options: ['115 V', '325.3 V', '230 V', '460 V'],
     correctAnswer: 1,
     explanation:
       'The peak voltage Vpeak = VRMS x √2 = 230 x 1.414 = 325.3 V. The stated 230 V is the RMS value. The voltage actually swings between +325.3 V and -325.3 V, giving a peak-to-peak voltage of 650.6 V. This is important when selecting component voltage ratings — they must withstand the peak, not just the RMS value.',
@@ -96,12 +124,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'An AC voltage completes one full cycle in 20 milliseconds. What is its frequency?',
-    options: [
-      '100 Hz',
-      '20 Hz',
-      '200 Hz',
-      '50 Hz',
-    ],
+    options: ['100 Hz', '20 Hz', '200 Hz', '50 Hz'],
     correctAnswer: 3,
     explanation:
       'Frequency = 1 / period. If the period T = 20 ms = 0.02 s, then f = 1/0.02 = 50 Hz. This is the standard UK mains frequency. The supply completes 50 full cycles every second.',
@@ -149,12 +172,7 @@ const quizQuestions = [
     id: 7,
     question:
       "If a voltage and current are 'in phase' in an AC circuit, this means the circuit is:",
-    options: [
-      'Purely inductive',
-      'Purely capacitive',
-      'An open circuit',
-      'Purely resistive',
-    ],
+    options: ['Purely inductive', 'Purely capacitive', 'An open circuit', 'Purely resistive'],
     correctAnswer: 3,
     explanation:
       'In a purely resistive circuit, voltage and current are in phase — they rise and fall together, reaching their peak values at the same instant. In an inductive circuit, current lags voltage by up to 90 degrees. In a capacitive circuit, current leads voltage by up to 90 degrees. Most practical circuits are a combination, with the phase angle depending on the relative proportions of R, L and C.',
@@ -257,117 +275,75 @@ const faqs = [
 ];
 
 const MOETModule2Section2_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.2.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Alternating Current Principles
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.2 · Subsection 2"
+        title="Alternating Current Principles"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Understanding AC generation, waveform characteristics, RMS values and measurement for
-            electrical maintenance
+            electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>AC reverses direction</strong> — 50 times per second in the UK (50 Hz)
+          <TLDR
+            points={[
+              'AC reverses direction — 50 times per second in the UK (50 Hz).',
+              '230 V is RMS — peak voltage is 325.3 V.',
+              'Sine wave — the fundamental AC waveform, described by v = Vpeak sin(ωt).',
+              'Phase angle — voltage and current may not peak at the same time.',
+            ]}
+          />
+
+          <ConceptBlock title="Key values">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>VRMS = 0.707 x Vpeak</strong> — equivalent DC heating effect.
               </li>
-              <li className="pl-1">
-                <strong>230 V is RMS</strong> — peak voltage is 325.3 V
+              <li>
+                <strong>Vavg = 0.637 x Vpeak</strong> — mean of one half-cycle.
               </li>
-              <li className="pl-1">
-                <strong>Sine wave</strong> — the fundamental AC waveform, described by v = Vpeak
-                sin(ωt)
+              <li>
+                <strong>Form factor = 1.11</strong> — RMS/average for pure sine wave.
               </li>
-              <li className="pl-1">
-                <strong>Phase angle</strong> — voltage and current may not peak at the same time
+              <li>
+                <strong>Crest factor = 1.414</strong> — peak/RMS for pure sine wave.
               </li>
             </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Key Values
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>VRMS = 0.707 x Vpeak</strong> — equivalent DC heating effect
-              </li>
-              <li className="pl-1">
-                <strong>Vavg = 0.637 x Vpeak</strong> — mean of one half-cycle
-              </li>
-              <li className="pl-1">
-                <strong>Form factor = 1.11</strong> — RMS/average for pure sine wave
-              </li>
-              <li className="pl-1">
-                <strong>Crest factor = 1.414</strong> — peak/RMS for pure sine wave
-              </li>
-            </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Electromagnetic induction',
+                gist: 'A changing magnetic field induces an EMF in a conductor — the principle behind every alternator. This page uses the result without deriving it.',
+                where: '2.3.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain how alternating current is generated using electromagnetic induction',
               'Describe the sine wave and identify peak, RMS, average and peak-to-peak values',
               'Calculate the relationship between frequency, period and angular frequency',
               'Explain phase angle and interpret phasor diagrams',
               'Compare AC and DC characteristics for different applications',
               'Select appropriate instruments for AC measurement including true-RMS meters',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>AC generation and the sine wave</ContentEyebrow>
 
-        {/* Section 01: AC Generation */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            AC Generation and the Sine Wave
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="AC is generated by electromagnetic induction">
             <p>
               Alternating current is generated by electromagnetic induction — the fundamental
               principle discovered by Michael Faraday in 1831. When a conductor moves through a
@@ -383,216 +359,197 @@ const MOETModule2Section2_2 = () => {
               and returning to zero at 360 degrees. This completes one cycle. In the UK, this cycle
               repeats 50 times per second — giving a frequency of 50 Hz.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Instantaneous Voltage Equation
-              </p>
-              <p className="text-sm text-white mb-3">
-                At any instant in time, the voltage of a sinusoidal AC supply can be calculated
-                from:
-              </p>
-              <div className="p-3 rounded bg-white/5 font-mono text-sm text-center mb-3">
-                v = V<sub>peak</sub> x sin(2πft) = V<sub>peak</sub> x sin(ωt)
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>v</strong> = instantaneous voltage at time t
-                </li>
-                <li className="pl-1">
-                  <strong>
-                    V<sub>peak</sub>
-                  </strong>{' '}
-                  = maximum (peak) voltage
-                </li>
-                <li className="pl-1">
-                  <strong>f</strong> = frequency in hertz (Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>t</strong> = time in seconds
-                </li>
-                <li className="pl-1">
-                  <strong>ω</strong> = angular frequency = 2πf (radians per second)
-                </li>
-              </ul>
+          <ConceptBlock title="The instantaneous voltage equation">
+            <p>
+              At any instant in time, the voltage of a sinusoidal AC supply can be calculated from:
+            </p>
+            <div className="rounded bg-white/5 p-3 text-center font-mono text-sm">
+              v = V<sub>peak</sub> x sin(2πft) = V<sub>peak</sub> x sin(ωt)
             </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>v</strong> = instantaneous voltage at time t
+              </li>
+              <li>
+                <strong>
+                  V<sub>peak</sub>
+                </strong>{' '}
+                = maximum (peak) voltage
+              </li>
+              <li>
+                <strong>f</strong> = frequency in hertz (Hz)
+              </li>
+              <li>
+                <strong>t</strong> = time in seconds
+              </li>
+              <li>
+                <strong>ω</strong> = angular frequency = 2πf (radians per second)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Alternator Frequency</p>
-              <p className="text-sm text-white mb-3">
-                The frequency of the generated AC depends on the rotational speed and the number of
-                magnetic pole pairs:
-              </p>
-              <div className="p-3 rounded bg-white/5 font-mono text-sm text-center mb-3">
-                f = (n x p) / 60
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>f</strong> = frequency (Hz)
-                </li>
-                <li className="pl-1">
-                  <strong>n</strong> = rotational speed (RPM)
-                </li>
-                <li className="pl-1">
-                  <strong>p</strong> = number of pole pairs
-                </li>
-                <li className="pl-1">
-                  <strong>Example:</strong> A 2-pole generator (1 pole pair) at 3,000 RPM: f = (3000
-                  x 1)/60 = 50 Hz
-                </li>
-                <li className="pl-1">
-                  <strong>Example:</strong> A 4-pole generator (2 pole pairs) at 1,500 RPM: f =
-                  (1500 x 2)/60 = 50 Hz
-                </li>
-              </ul>
+          <SineWave />
+
+          <ConceptBlock title="Alternator frequency">
+            <p>
+              The frequency of the generated AC depends on the rotational speed and the number of
+              magnetic pole pairs:
+            </p>
+            <div className="rounded bg-white/5 p-3 text-center font-mono text-sm">
+              f = (n x p) / 60
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>f</strong> = frequency (Hz)
+              </li>
+              <li>
+                <strong>n</strong> = rotational speed (RPM)
+              </li>
+              <li>
+                <strong>p</strong> = number of pole pairs
+              </li>
+              <li>
+                <strong>Example:</strong> A 2-pole generator (1 pole pair) at 3,000 RPM: f = (3000 x
+                1)/60 = 50 Hz.
+              </li>
+              <li>
+                <strong>Example:</strong> A 4-pole generator (2 pole pairs) at 1,500 RPM: f = (1500
+                x 2)/60 = 50 Hz.
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> In the UK, all public supply generators are synchronised
               to exactly 50 Hz by National Grid. The frequency is a direct indicator of the balance
               between electrical generation and demand on the power system. If demand exceeds
               generation, frequency drops; if generation exceeds demand, frequency rises.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 02: Peak, RMS and Average Values */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Peak, RMS and Average Values
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Peak, RMS and average values</ContentEyebrow>
+
+          <ConceptBlock title="Three ways to express a changing quantity">
             <p>
               Because AC voltage and current are constantly changing, we need standardised ways to
               express their magnitude. Three key values are used: peak (maximum), RMS (root mean
               square) and average. Each serves a different purpose, and understanding their
               relationships is fundamental to AC circuit analysis and measurement.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                AC Voltage Values for 230 V UK Mains
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Value</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Result</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Significance</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">RMS</td>
-                      <td className="border border-white/10 px-3 py-2">Stated value</td>
-                      <td className="border border-white/10 px-3 py-2">230 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Equivalent DC heating effect — used for all ratings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Peak (Vpk)</td>
-                      <td className="border border-white/10 px-3 py-2">VRMS x √2</td>
-                      <td className="border border-white/10 px-3 py-2">325.3 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maximum instantaneous voltage — determines insulation requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Peak-to-peak</td>
-                      <td className="border border-white/10 px-3 py-2">2 x Vpeak</td>
-                      <td className="border border-white/10 px-3 py-2">650.6 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Total voltage swing — relevant for oscilloscope measurements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Average</td>
-                      <td className="border border-white/10 px-3 py-2">0.637 x Vpeak</td>
-                      <td className="border border-white/10 px-3 py-2">207.2 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mean of one half-cycle — used in rectifier output calculations
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="AC voltage values for 230 V UK mains">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Value</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Formula</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Result</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Significance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">RMS</td>
+                    <td className="border border-white/10 px-3 py-2">Stated value</td>
+                    <td className="border border-white/10 px-3 py-2">230 V</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Equivalent DC heating effect — used for all ratings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Peak (Vpk)</td>
+                    <td className="border border-white/10 px-3 py-2">VRMS x √2</td>
+                    <td className="border border-white/10 px-3 py-2">325.3 V</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Maximum instantaneous voltage — determines insulation requirements
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Peak-to-peak</td>
+                    <td className="border border-white/10 px-3 py-2">2 x Vpeak</td>
+                    <td className="border border-white/10 px-3 py-2">650.6 V</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Total voltage swing — relevant for oscilloscope measurements
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Average</td>
+                    <td className="border border-white/10 px-3 py-2">0.637 x Vpeak</td>
+                    <td className="border border-white/10 px-3 py-2">207.2 V</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Mean of one half-cycle — used in rectifier output calculations
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why RMS Matters</p>
-              <p className="text-sm text-white mb-3">
-                The RMS value is the most important AC quantity because it represents the{' '}
-                <strong>equivalent DC value</strong> that would produce the same heating effect in a
-                purely resistive load:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  A 230 V RMS AC supply delivers exactly the same power to a heater as a 230 V DC
-                  supply
-                </li>
-                <li className="pl-1">
-                  All standard voltage and current ratings use RMS values (equipment nameplates, BS
-                  7671 requirements, supply agreements)
-                </li>
-                <li className="pl-1">All standard AC measuring instruments display RMS values</li>
-                <li className="pl-1">Power calculations use RMS values: P = VRMS x IRMS x cos φ</li>
-                <li className="pl-1">
-                  Mathematically: VRMS = √(mean of v² over one cycle) — hence "root mean square"
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Why RMS matters">
+            <p>
+              The RMS value is the most important AC quantity because it represents the{' '}
+              <strong>equivalent DC value</strong> that would produce the same heating effect in a
+              purely resistive load:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                A 230 V RMS AC supply delivers exactly the same power to a heater as a 230 V DC
+                supply.
+              </li>
+              <li>
+                All standard voltage and current ratings use RMS values (equipment nameplates, BS
+                7671 requirements, supply agreements).
+              </li>
+              <li>All standard AC measuring instruments display RMS values.</li>
+              <li>Power calculations use RMS values: P = VRMS x IRMS x cos φ.</li>
+              <li>
+                Mathematically: VRMS = √(mean of v² over one cycle) — hence &quot;root mean
+                square&quot;.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Form Factor and Crest Factor
-              </p>
-              <p className="text-sm text-white mb-3">
-                Two important ratios describe the shape of an AC waveform:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Form factor</strong> = RMS / Average = 0.707/0.637 = <strong>1.11</strong>{' '}
-                  (for a pure sine wave)
-                </li>
-                <li className="pl-1">
-                  <strong>Crest factor</strong> = Peak / RMS = 1.414/1.0 ={' '}
-                  <strong>√2 ≈ 1.414</strong> (for a pure sine wave)
-                </li>
-                <li className="pl-1">
-                  Average-responding meters assume a form factor of 1.11 — they give incorrect
-                  readings on distorted waveforms
-                </li>
-                <li className="pl-1">
-                  High crest factor loads (e.g., switch-mode power supplies, VSD inputs) draw
-                  current in sharp peaks, stressing supply conductors and transformers
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Form factor and crest factor">
+            <p>Two important ratios describe the shape of an AC waveform:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Form factor</strong> = RMS / Average = 0.707/0.637 = <strong>1.11</strong>{' '}
+                (for a pure sine wave).
+              </li>
+              <li>
+                <strong>Crest factor</strong> = Peak / RMS = 1.414/1.0 = <strong>√2 ≈ 1.414</strong>{' '}
+                (for a pure sine wave).
+              </li>
+              <li>
+                Average-responding meters assume a form factor of 1.11 — they give incorrect
+                readings on distorted waveforms.
+              </li>
+              <li>
+                High crest factor loads (e.g., switch-mode power supplies, VSD inputs) draw current
+                in sharp peaks, stressing supply conductors and transformers.
+              </li>
+            </ul>
+            <p>
               <strong>Maintenance tip:</strong> When measuring AC voltages on circuits supplying
               non-linear loads (LED drivers, IT equipment, variable speed drives), always use a
               true-RMS instrument. Average-responding meters can read 10-40% low on distorted
               waveforms, potentially masking dangerous overvoltage conditions.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 03: Frequency and Period */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Frequency, Period and Angular Frequency
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Frequency, period and angular frequency</ContentEyebrow>
+
+          <ConceptBlock title="Three interrelated ways to describe oscillation">
             <p>
               Frequency, period and angular frequency are three interrelated ways of describing how
               rapidly an AC waveform oscillates. The UK public supply frequency is standardised at
@@ -600,122 +557,107 @@ const MOETModule2Section2_2 = () => {
               Understanding frequency-related concepts is essential for calculating reactance,
               impedance and resonant frequencies in AC circuits.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Frequency Relationships
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Frequency (f):</strong> The number of complete cycles per second, measured
-                  in hertz (Hz). UK mains: 50 Hz. US/Japan: 60 Hz
-                </li>
-                <li className="pl-1">
-                  <strong>Period (T):</strong> The time for one complete cycle. T = 1/f. At 50 Hz: T
-                  = 1/50 = 0.02 s = 20 ms
-                </li>
-                <li className="pl-1">
-                  <strong>Angular frequency (ω):</strong> The rate of rotation in radians per
-                  second. ω = 2πf. At 50 Hz: ω = 2π x 50 = 100π ≈ 314 rad/s
-                </li>
-                <li className="pl-1">
-                  <strong>Wavelength:</strong> For electromagnetic waves: λ = c/f. At 50 Hz: λ =
-                  3x10⁸/50 = 6,000 km — this is why power-frequency radiation is non-ionising
-                </li>
-              </ul>
+          <ConceptBlock title="Key frequency relationships">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Frequency (f):</strong> The number of complete cycles per second, measured
+                in hertz (Hz). UK mains: 50 Hz. US/Japan: 60 Hz.
+              </li>
+              <li>
+                <strong>Period (T):</strong> The time for one complete cycle. T = 1/f. At 50 Hz: T =
+                1/50 = 0.02 s = 20 ms.
+              </li>
+              <li>
+                <strong>Angular frequency (ω):</strong> The rate of rotation in radians per second.
+                ω = 2πf. At 50 Hz: ω = 2π x 50 = 100π ≈ 314 rad/s.
+              </li>
+              <li>
+                <strong>Wavelength:</strong> For electromagnetic waves: λ = c/f. At 50 Hz: λ =
+                3x10⁸/50 = 6,000 km — this is why power-frequency radiation is non-ionising.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Frequency standards worldwide">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Region</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Nominal Voltage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      UK, Europe, most of Asia, Africa, Australia
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">50 Hz</td>
+                    <td className="border border-white/10 px-3 py-2">230 V (single-phase)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      USA, Canada, parts of South America
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">60 Hz</td>
+                    <td className="border border-white/10 px-3 py-2">120 V (single-phase)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Japan (eastern)</td>
+                    <td className="border border-white/10 px-3 py-2">50 Hz</td>
+                    <td className="border border-white/10 px-3 py-2">100 V (single-phase)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Japan (western)</td>
+                    <td className="border border-white/10 px-3 py-2">60 Hz</td>
+                    <td className="border border-white/10 px-3 py-2">100 V (single-phase)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Frequency Standards Worldwide
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Region</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Frequency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Nominal Voltage
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        UK, Europe, most of Asia, Africa, Australia
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">50 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">230 V (single-phase)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        USA, Canada, parts of South America
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">60 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">120 V (single-phase)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Japan (eastern)</td>
-                      <td className="border border-white/10 px-3 py-2">50 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">100 V (single-phase)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Japan (western)</td>
-                      <td className="border border-white/10 px-3 py-2">60 Hz</td>
-                      <td className="border border-white/10 px-3 py-2">100 V (single-phase)</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Why Frequency Matters for Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor speed:</strong> AC induction motor synchronous speed = (120 x f) /
-                  poles. At 50 Hz, a 4-pole motor runs at 1,500 RPM synchronous (approximately 1,440
-                  RPM actual with slip)
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer rating:</strong> A transformer designed for 50 Hz will
-                  overheat if operated at a lower frequency (increased magnetising current). It will
-                  work safely at a higher frequency but with reduced output voltage
-                </li>
-                <li className="pl-1">
-                  <strong>Reactance values:</strong> Both inductive reactance (XL = 2πfL) and
-                  capacitive reactance (XC = 1/2πfC) are directly dependent on frequency. Changing
-                  frequency changes impedance and circuit behaviour
-                </li>
-                <li className="pl-1">
-                  <strong>Protection timing:</strong> Overcurrent device operating times and RCD
-                  trip times are tested and specified at rated frequency
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Why frequency matters for maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor speed:</strong> AC induction motor synchronous speed = (120 x f) /
+                poles. At 50 Hz, a 4-pole motor runs at 1,500 RPM synchronous (approximately 1,440
+                RPM actual with slip).
+              </li>
+              <li>
+                <strong>Transformer rating:</strong> A transformer designed for 50 Hz will overheat
+                if operated at a lower frequency (increased magnetising current). It will work
+                safely at a higher frequency but with reduced output voltage.
+              </li>
+              <li>
+                <strong>Reactance values:</strong> Both inductive reactance (XL = 2πfL) and
+                capacitive reactance (XC = 1/2πfC) are directly dependent on frequency. Changing
+                frequency changes impedance and circuit behaviour.
+              </li>
+              <li>
+                <strong>Protection timing:</strong> Overcurrent device operating times and RCD trip
+                times are tested and specified at rated frequency.
+              </li>
+            </ul>
+            <p>
               <strong>Key point:</strong> UK supply frequency is maintained within ±1% of 50 Hz
               under normal conditions (49.5-50.5 Hz). During system stress events, frequency may
               deviate further, triggering automatic load shedding to protect the grid. Standby
               generators must be synchronised to 50 Hz before being connected to the supply in
               parallel operations.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 04: Phase Angle and Phasors */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Phase Angle and Phasor Representation
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Phase angle and phasor representation</ContentEyebrow>
+
+          <ConceptBlock title="Voltage and current do not always peak together">
             <p>
               In AC circuits containing inductance or capacitance, the voltage and current do not
               reach their peak values at the same instant. This time difference is expressed as a
@@ -730,182 +672,183 @@ const MOETModule2Section2_2 = () => {
               calculated graphically. They are essential tools for analysing circuits with
               resistance (R), inductance (L) and capacitance (C).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phase Relationships in R, L and C Circuits
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Purely resistive (R):</strong> Voltage and current are in phase (φ = 0°).
-                  Power is maximised. The voltage and current waveforms rise and fall together
-                </li>
-                <li className="pl-1">
-                  <strong>Purely inductive (L):</strong> Current lags voltage by 90° (φ = 90°
-                  lagging). No real power is consumed — energy is stored and returned to the supply
-                  each half-cycle. Remember: "ELI" — voltage (E) leads current (I) in an inductor
-                  (L)
-                </li>
-                <li className="pl-1">
-                  <strong>Purely capacitive (C):</strong> Current leads voltage by 90° (φ = 90°
-                  leading). No real power is consumed — energy is stored and returned each
-                  half-cycle. Remember: "ICE" — current (I) leads voltage (E) in a capacitor (C)
-                </li>
-                <li className="pl-1">
-                  <strong>Practical circuits:</strong> Most real circuits contain combinations of R,
-                  L and C. The phase angle falls between 0° and 90° and depends on the relative
-                  magnitudes of resistance and reactance
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Phase relationships in R, L and C circuits">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Purely resistive (R):</strong> Voltage and current are in phase (φ = 0°).
+                Power is maximised. The voltage and current waveforms rise and fall together.
+              </li>
+              <li>
+                <strong>Purely inductive (L):</strong> Current lags voltage by 90° (φ = 90°
+                lagging). No real power is consumed — energy is stored and returned to the supply
+                each half-cycle. Remember: &quot;ELI&quot; — voltage (E) leads current (I) in an
+                inductor (L).
+              </li>
+              <li>
+                <strong>Purely capacitive (C):</strong> Current leads voltage by 90° (φ = 90°
+                leading). No real power is consumed — energy is stored and returned each half-cycle.
+                Remember: &quot;ICE&quot; — current (I) leads voltage (E) in a capacitor (C).
+              </li>
+              <li>
+                <strong>Practical circuits:</strong> Most real circuits contain combinations of R, L
+                and C. The phase angle falls between 0° and 90° and depends on the relative
+                magnitudes of resistance and reactance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Phasor Diagram Conventions
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Reference phasor:</strong> Usually the voltage (for parallel circuits) or
-                  current (for series circuits), drawn horizontally to the right
-                </li>
-                <li className="pl-1">
-                  <strong>Leading quantities:</strong> Drawn anticlockwise from the reference phasor
-                </li>
-                <li className="pl-1">
-                  <strong>Lagging quantities:</strong> Drawn clockwise from the reference phasor
-                </li>
-                <li className="pl-1">
-                  <strong>Length:</strong> Proportional to the magnitude (RMS value) of the quantity
-                </li>
-                <li className="pl-1">
-                  <strong>Addition:</strong> Phasors are added tip-to-tail (vector addition), not
-                  arithmetically. Two 100 V supplies 90° apart do NOT give 200 V — they give √(100²
-                  + 100²) = 141.4 V
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Phasor diagram conventions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Reference phasor:</strong> Usually the voltage (for parallel circuits) or
+                current (for series circuits), drawn horizontally to the right.
+              </li>
+              <li>
+                <strong>Leading quantities:</strong> Drawn anticlockwise from the reference phasor.
+              </li>
+              <li>
+                <strong>Lagging quantities:</strong> Drawn clockwise from the reference phasor.
+              </li>
+              <li>
+                <strong>Length:</strong> Proportional to the magnitude (RMS value) of the quantity.
+              </li>
+              <li>
+                <strong>Addition:</strong> Phasors are added tip-to-tail (vector addition), not
+                arithmetically. Two 100 V supplies 90° apart do NOT give 200 V — they give √(100² +
+                100²) = 141.4 V.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The ELI the ICE Man Memory Aid
-              </p>
-              <p className="text-sm text-white mb-3">
-                A widely used mnemonic for remembering phase relationships:
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-elec-yellow mb-1">ELI</p>
-                  <p className="text-xs text-white">
-                    In an <strong>L</strong> (inductor): <strong>E</strong> (voltage) leads{' '}
-                    <strong>I</strong> (current)
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    Current lags voltage — lagging power factor
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5">
-                  <p className="text-sm font-medium text-elec-yellow mb-1">ICE</p>
-                  <p className="text-xs text-white">
-                    In a <strong>C</strong> (capacitor): <strong>I</strong> (current) leads{' '}
-                    <strong>E</strong> (voltage)
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    Current leads voltage — leading power factor
-                  </p>
-                </div>
+          <ConceptBlock title="The ELI the ICE man memory aid">
+            <p>A widely used mnemonic for remembering phase relationships:</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded bg-white/5 p-3">
+                <p className="mb-1 text-sm font-medium text-elec-yellow">ELI</p>
+                <p className="text-xs text-white">
+                  In an <strong>L</strong> (inductor): <strong>E</strong> (voltage) leads{' '}
+                  <strong>I</strong> (current).
+                </p>
+                <p className="mt-1 text-xs text-white">
+                  Current lags voltage — lagging power factor.
+                </p>
+              </div>
+              <div className="rounded bg-white/5 p-3">
+                <p className="mb-1 text-sm font-medium text-elec-yellow">ICE</p>
+                <p className="text-xs text-white">
+                  In a <strong>C</strong> (capacitor): <strong>I</strong> (current) leads{' '}
+                  <strong>E</strong> (voltage).
+                </p>
+                <p className="mt-1 text-xs text-white">
+                  Current leads voltage — leading power factor.
+                </p>
               </div>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">AC Measurement Instruments</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>True-RMS multimeter:</strong> Essential for accurate measurement on
-                  distorted waveforms. Must be CAT III or CAT IV rated for distribution work
-                </li>
-                <li className="pl-1">
-                  <strong>Clamp meter:</strong> Measures current without breaking the circuit. AC
-                  clamp meters use a current transformer; DC/AC types use a Hall effect sensor
-                </li>
-                <li className="pl-1">
-                  <strong>Oscilloscope:</strong> Displays the actual waveform — shows peak values,
-                  frequency, phase relationships and distortion. Portable models are available for
-                  field use
-                </li>
-                <li className="pl-1">
-                  <strong>Power quality analyser:</strong> Measures voltage, current, power, power
-                  factor, harmonics and other parameters simultaneously. Used for detailed supply
-                  quality assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Phase rotation meter:</strong> Confirms the correct phase sequence
-                  (L1-L2-L3) on three-phase supplies — essential before connecting three-phase
-                  motors
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="AC measurement instruments">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>True-RMS multimeter:</strong> Essential for accurate measurement on
+                distorted waveforms. Must be CAT III or CAT IV rated for distribution work.
+              </li>
+              <li>
+                <strong>Clamp meter:</strong> Measures current without breaking the circuit. AC
+                clamp meters use a current transformer; DC/AC types use a Hall effect sensor.
+              </li>
+              <li>
+                <strong>Oscilloscope:</strong> Displays the actual waveform — shows peak values,
+                frequency, phase relationships and distortion. Portable models are available for
+                field use.
+              </li>
+              <li>
+                <strong>Power quality analyser:</strong> Measures voltage, current, power, power
+                factor, harmonics and other parameters simultaneously. Used for detailed supply
+                quality assessment.
+              </li>
+              <li>
+                <strong>Phase rotation meter:</strong> Confirms the correct phase sequence
+                (L1-L2-L3) on three-phase supplies — essential before connecting three-phase motors.
+              </li>
+            </ul>
+            <p>
               <strong>ST1426 link:</strong> The maintenance technician standard requires you to
               understand AC fundamentals including generation, waveform characteristics, RMS values
               and phase relationships. These principles underpin all AC circuit analysis,
               fault-finding and measurement.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=OUcKJuMSSW4"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="AC Basics — All About Alternating Current"
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — AC Principles" questions={quizQuestions} />
-        </section>
+            channel="The Engineering Mindset"
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section2-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: DC Principles
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section2-3">
-              Next: Single-Phase vs Three-Phase
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            duration="4:17"
+
+            topic="Why the supply alternates, and what that means for everything downstream"
+
+            caption="Four minutes, and it makes the sine wave above make sense before you meet RMS."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'In the UK, all public supply generators are synchronised to exactly 50 Hz by National Grid — frequency is a direct indicator of the balance between generation and demand.',
+              'The 230 V UK mains figure IS the RMS value: peak voltage is 230 x √2 = 325.3 V.',
+              'When measuring AC voltages on circuits supplying non-linear loads, always use a true-RMS instrument — average-responding meters can read 10-40% low on distorted waveforms.',
+              'UK supply frequency is maintained within ±1% of 50 Hz under normal conditions — standby generators must be synchronised to 50 Hz before paralleling with the supply.',
+              'ELI the ICE man: voltage leads current in an inductor (L); current leads voltage in a capacitor (C).',
+              'These AC fundamentals — generation, waveform characteristics, RMS values and phase relationships — underpin all AC circuit analysis, fault-finding and measurement.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — AC Principles" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section2-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Direct Current Principles
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section2-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Single-Phase vs Three-Phase Systems
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

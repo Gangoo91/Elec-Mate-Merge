@@ -1,4 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
+import type { CalcReport, CalcRow, CalcVerdict } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Copy, Check, ChevronDown, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -226,6 +228,154 @@ const InstrumentationCalculator = () => {
 
   const hasLoopData =
     result && (result.shuntVoltage !== undefined || result.supplyMargin !== undefined);
+
+  // ── Client PDF ───────────────────────────────────────────────────────────
+  // The loop can be driven from three different directions, and whichever one
+  // the electrician used is an input, not a result. Selecting a target current
+  // makes the current the input and the process value the answer; entering an
+  // engineering value or a percentage makes the current the answer.
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const min = parseFloat(minScale);
+    const max = parseFloat(maxScale);
+    const span = max - min;
+    const drivenBy: 'engineering' | 'percentage' | 'current' = inputValue ? inputType : 'current';
+
+    const verdict: CalcVerdict = result.status === 'warning' ? 'warn' : result.status;
+    const unitLabel = unitOptions.find((o) => o.value === unit)?.label ?? unit;
+    const currentLabel =
+      currentOptions.find((o) => o.value === targetCurrent)?.label ?? `${targetCurrent} mA`;
+
+    const currentHeadline = {
+      label: 'Loop current',
+      value: formatNum(result.current, 2),
+      unit: 'mA',
+      verdict,
+    };
+    const processHeadline = {
+      label: 'Process value',
+      value: formatNum(result.engineeringValue, 2),
+      unit,
+    };
+    const percentHeadline = {
+      label: 'Percentage of span',
+      value: formatNum(result.percentage, 1),
+      unit: '%',
+    };
+
+    const headline: CalcReport['headline'] =
+      drivenBy === 'engineering'
+        ? [currentHeadline, percentHeadline]
+        : drivenBy === 'percentage'
+          ? [currentHeadline, processHeadline]
+          : // The current was selected from the list, so only the values it
+            // converts to are calculated.
+            [processHeadline, percentHeadline];
+
+    const inputRows: CalcRow[] = [
+      { label: 'Lower range value (LRV)', value: `${minScale} ${unit}` },
+      { label: 'Upper range value (URV)', value: `${maxScale} ${unit}` },
+      { label: 'Engineering units', value: unitLabel },
+    ];
+    if (drivenBy === 'engineering') {
+      inputRows.push({ label: 'Trip setpoint', value: `${inputValue} ${unit}` });
+    } else if (drivenBy === 'percentage') {
+      inputRows.push({ label: 'Percentage', value: `${inputValue} %` });
+    } else {
+      inputRows.push({ label: 'Target current', value: currentLabel });
+    }
+    // Only list the loop values that actually fed a figure below — the shunt is
+    // ignored if it is blank, and the supply only matters once it has.
+    if (result.supplyMargin !== undefined) {
+      inputRows.push({ label: 'Supply voltage', value: `${supplyVoltage} V` });
+    }
+    if (result.shuntVoltage !== undefined) {
+      inputRows.push({ label: 'Shunt resistor', value: `${shuntResistor} Ω` });
+    }
+    if (result.cableDrop !== undefined) {
+      inputRows.push({ label: 'Cable length', value: `${cableLength} m` });
+      inputRows.push({ label: 'Cable resistance', value: `${cableResistance} Ω/m` });
+    }
+
+    const resultRows: CalcRow[] = [
+      { label: 'Span', value: `${formatNum(span, 2)} ${unit}`, note: 'URV − LRV' },
+      {
+        label: 'Low alarm trip (10% of span)',
+        value: `${formatNum(result.tripPoints.low, 1)} mA`,
+        note: `${formatNum(min + span * 0.1, 2)} ${unit}`,
+      },
+      {
+        label: 'High alarm trip (90% of span)',
+        value: `${formatNum(result.tripPoints.high, 1)} mA`,
+        note: `${formatNum(min + span * 0.9, 2)} ${unit}`,
+      },
+      {
+        label: 'Loop status',
+        value: getStatusLabel(),
+        note:
+          result.status === 'pass'
+            ? 'Signal sits comfortably inside the 4–20 mA working range'
+            : result.status === 'warning'
+              ? 'Signal is close to the limits of the 4–20 mA range or the supply headroom is tight'
+              : 'Signal or supply headroom falls outside the usable 4–20 mA range',
+      },
+    ];
+
+    const loopRows: CalcRow[] = [];
+    if (result.shuntVoltage !== undefined) {
+      loopRows.push({
+        label: 'Voltage across the shunt',
+        value: `${formatNum(result.shuntVoltage * 1000, 0)} mV`,
+        note: `${formatNum(result.current, 2)} mA through ${shuntResistor} Ω`,
+      });
+    }
+    if (result.powerInShunt !== undefined) {
+      loopRows.push({
+        label: 'Power in the shunt',
+        value: `${formatNum(result.powerInShunt, 1)} mW`,
+      });
+    }
+    if (result.cableDrop !== undefined) {
+      loopRows.push({
+        label: 'Cable volt drop',
+        value: `${formatNum(result.cableDrop, 2)} V`,
+        note: `${cableLength} m out and back at ${cableResistance} Ω/m`,
+      });
+    }
+    if (result.supplyMargin !== undefined) {
+      loopRows.push({
+        label: 'Supply margin',
+        value: `${formatNum(result.supplyMargin, 1)} V`,
+        note: 'Voltage left for the transmitter after the shunt and the cable',
+      });
+    }
+
+    const notes = [
+      'A 4–20 mA signal is linear across the range: 4 mA is 0% of span and 20 mA is 100%.',
+      'The 4 mA live zero means a broken wire reads as 0 mA and can be told apart from a genuine zero reading.',
+      result.supplyMargin !== undefined
+        ? 'A supply margin under 5 V leaves little headroom for the transmitter; under 2 V the loop is unlikely to work reliably.'
+        : '',
+      'BS 7671: instrumentation circuits should use screened cables with proper earthing.',
+    ].filter((t) => t.trim());
+
+    return {
+      meta: {
+        title: '4-20 mA Loop Signal',
+        subtitle: `Loop signal check for a ${minScale}–${maxScale} ${unit} transmitter`,
+      },
+      headline,
+      sections: [
+        { heading: 'Inputs', rows: inputRows },
+        { heading: 'Result', rows: resultRows },
+        ...(loopRows.length ? [{ heading: 'Loop analysis', rows: loopRows }] : []),
+      ],
+      notes,
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

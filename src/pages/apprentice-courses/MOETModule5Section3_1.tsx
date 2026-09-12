@@ -1,8 +1,53 @@
-import { ArrowLeft, Square, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 3 · Subsection 1 — Emergency Stop Circuits
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. This page is safety-focused (E-stop circuits), so the
+ * statements below are taken verbatim from the brief's Module 1 health-and-
+ * safety list rather than the electrical-theory lists used elsewhere in
+ * Module 5.
+ *   Knowledge  · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices.."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * first subsection of Section 5.3, so the masthead and left nav button both
+ * point back to the section overview, matching the original page.
+ *
+ * Accuracy note: BS EN ISO 13850, IEC 60204-1 (stop categories 0/1/2), PUWER
+ * 1998, HASAWA 1974 and the Machinery Directive 2006/42/EC citations are
+ * standard, uncontested machinery-safety references and are kept exactly as
+ * written. No GS38, thermography, test-interval or C&G-qualification claims
+ * appear on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Emergency Stop Circuits - MOET Module 5 Section 3.1';
@@ -252,121 +297,68 @@ const faqs = [
 ];
 
 const MOETModule5Section3_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Square className="h-4 w-4" />
-            <span>Module 5.3.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Emergency Stop Circuits
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.3 · Subsection 1"
+        title="Emergency Stop Circuits"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             E-stop requirements, wiring methods and testing procedures for safety-critical
-            installations
+            installations — the last line of defence when everything else has failed.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Colour:</strong> Red mushroom-head on yellow background (BS EN ISO 13850)
-              </li>
-              <li className="pl-1">
-                <strong>Contacts:</strong> Normally closed (NC) for fail-safe operation — wire break
-                stops the machine
-              </li>
-              <li className="pl-1">
-                <strong>Self-latching:</strong> Stays engaged until manually reset; reset does not
-                restart
-              </li>
-              <li className="pl-1">
-                <strong>Stop categories:</strong> Cat 0 (immediate), Cat 1 (controlled), Cat 2
-                (maintained)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Testing:</strong> Regular verification of stop function and restart
-                prevention
-              </li>
-              <li className="pl-1">
-                <strong>Dual-channel:</strong> Redundant monitoring via safety relay with feedback
-                loop
-              </li>
-              <li className="pl-1">
-                <strong>Documentation:</strong> Record all test results with date, name and findings
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Test, maintain and verify safety circuit operation
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Colour: Red mushroom-head on yellow background (BS EN ISO 13850).',
+              'Contacts: Normally closed (NC) for fail-safe operation — wire break stops the machine.',
+              'Self-latching: Stays engaged until manually reset; reset does not restart.',
+              'Stop categories: Cat 0 (immediate), Cat 1 (controlled), Cat 2 (maintained).',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify E-stop requirements under BS EN ISO 13850 and IEC 60204-1',
               'Explain the purpose of NC contacts and fail-safe wiring principles',
               'Describe Category 0, 1 and 2 stop functions and their applications',
               'Design and verify dual-channel E-stop circuits with safety relays',
               'Perform E-stop testing and document results to ST1426 standards',
               'Apply E-stop principles to maintenance activities on industrial machinery',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Testing:</strong> Regular verification of stop function and restart
+                prevention.
+              </li>
+              <li>
+                <strong>Dual-channel:</strong> Redundant monitoring via safety relay with feedback
+                loop.
+              </li>
+              <li>
+                <strong>Documentation:</strong> Record all test results with date, name and
+                findings.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Test, maintain and verify safety circuit operation.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            E-Stop Standards and Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>E-stop standards and requirements</ContentEyebrow>
+
+          <ConceptBlock title="The last line of defence, not a substitute for guarding">
             <p>
               Emergency stop devices are the last line of defence when all other safety measures
               have failed. They are not a substitute for proper guarding, interlocking or
@@ -375,522 +367,514 @@ const MOETModule5Section3_1 = () => {
               design principles and IEC 60204-1 specifies the electrical implementation for
               machinery.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Requirements (BS EN ISO 13850)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Appearance:</strong> Red mushroom-head actuator on a yellow background —
-                  universally recognised
-                </li>
-                <li className="pl-1">
-                  <strong>Override:</strong> Must override all other functions and operating modes
-                  without exception
-                </li>
-                <li className="pl-1">
-                  <strong>Self-latching:</strong> Must remain engaged until a deliberate manual
-                  reset action
-                </li>
-                <li className="pl-1">
-                  <strong>No restart on reset:</strong> Reset must only re-enable the safety
-                  circuit, not restart the machine
-                </li>
-                <li className="pl-1">
-                  <strong>Accessible:</strong> Positioned at every operator position and at all
-                  danger zone access/egress points
-                </li>
-                <li className="pl-1">
-                  <strong>Hardwired:</strong> Must function independently of the PLC, SCADA or any
-                  software-based control
-                </li>
-              </ul>
+          <ConceptBlock title="Key requirements (BS EN ISO 13850)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Appearance:</strong> Red mushroom-head actuator on a yellow background —
+                universally recognised.
+              </li>
+              <li>
+                <strong>Override:</strong> Must override all other functions and operating modes
+                without exception.
+              </li>
+              <li>
+                <strong>Self-latching:</strong> Must remain engaged until a deliberate manual reset
+                action.
+              </li>
+              <li>
+                <strong>No restart on reset:</strong> Reset must only re-enable the safety circuit,
+                not restart the machine.
+              </li>
+              <li>
+                <strong>Accessible:</strong> Positioned at every operator position and at all danger
+                zone access/egress points.
+              </li>
+              <li>
+                <strong>Hardwired:</strong> Must function independently of the PLC, SCADA or any
+                software-based control.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Stop categories (IEC 60204-1)">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Category</th>
+                    <th className="py-2 pr-4 font-medium text-white">Description</th>
+                    <th className="py-2 font-medium text-white">Application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Category 0</td>
+                    <td className="py-2 pr-4">Immediate power removal — uncontrolled stop</td>
+                    <td className="py-2">Most common E-stop type for general machinery</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Category 1</td>
+                    <td className="py-2 pr-4">Controlled deceleration then power removal</td>
+                    <td className="py-2">High-inertia machines, robots, servo drives</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Category 2</td>
+                    <td className="py-2 pr-4">Controlled stop with power maintained</td>
+                    <td className="py-2">Vertical axes, hoists (prevent dropping loads)</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Stop Categories (IEC 60204-1)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Category 0</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Immediate power removal — uncontrolled stop
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most common E-stop type for general machinery
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Category 1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Controlled deceleration then power removal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        High-inertia machines, robots, servo drives
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Category 2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Controlled stop with power maintained
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Vertical axes, hoists (prevent dropping loads)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Maintenance tip:</strong> The risk assessment determines which stop category
               is required. Most E-stops are Category 0, but always check the machine documentation.
               A Category 1 stop requires a controlled drive to manage deceleration before power
               removal, adding complexity to the circuit.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Fail-Safe Wiring Principles
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Fail-safe wiring principles</ContentEyebrow>
+
+          <ConceptBlock title="Any single fault must lead to a safe state">
             <p>
               E-stop circuits must be designed so that any single fault leads to a safe state — the
               machine stops. This fundamental principle is achieved by using normally closed (NC)
               contacts, series wiring, and monitoring by safety-rated devices. A properly designed
               E-stop circuit fails safe under every foreseeable fault condition.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core Wiring Principles</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>NC contacts:</strong> The E-stop contact is closed during normal operation
-                  and opens when pressed. A broken wire, loose terminal or contact failure also
-                  opens the circuit — fail-safe
-                </li>
-                <li className="pl-1">
-                  <strong>Series chain:</strong> Multiple E-stops are wired in series on each
-                  channel. Any single button press opens the circuit and stops the machine
-                </li>
-                <li className="pl-1">
-                  <strong>Dual-channel redundancy:</strong> Two independent wiring paths from each
-                  E-stop to the safety relay. A fault in one channel is detected
-                </li>
-                <li className="pl-1">
-                  <strong>Cross-monitoring:</strong> The safety relay checks that both channels
-                  switch within a defined time window (typically 0.5 to 4 seconds)
-                </li>
-                <li className="pl-1">
-                  <strong>Force-guided contacts:</strong> Mechanically linked NO and NC contacts in
-                  the safety relay ensure a welded contact is always detected
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Core wiring principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>NC contacts:</strong> The E-stop contact is closed during normal operation
+                and opens when pressed. A broken wire, loose terminal or contact failure also opens
+                the circuit — fail-safe.
+              </li>
+              <li>
+                <strong>Series chain:</strong> Multiple E-stops are wired in series on each channel.
+                Any single button press opens the circuit and stops the machine.
+              </li>
+              <li>
+                <strong>Dual-channel redundancy:</strong> Two independent wiring paths from each
+                E-stop to the safety relay. A fault in one channel is detected.
+              </li>
+              <li>
+                <strong>Cross-monitoring:</strong> The safety relay checks that both channels switch
+                within a defined time window (typically 0.5 to 4 seconds).
+              </li>
+              <li>
+                <strong>Force-guided contacts:</strong> Mechanically linked NO and NC contacts in
+                the safety relay ensure a welded contact is always detected.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wire Break Detection</p>
-              <p className="text-sm text-white mb-3">
-                The use of NC contacts provides inherent wire break detection. Consider the failure
-                modes:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wire break:</strong> Circuit opens — machine stops (safe)
-                </li>
-                <li className="pl-1">
-                  <strong>Contact failure (spring broken):</strong> Contact opens — machine stops
-                  (safe)
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal loose:</strong> Connection lost — circuit opens — machine stops
-                  (safe)
-                </li>
-                <li className="pl-1">
-                  <strong>Contact weld:</strong> Detected by the dual-channel safety relay at next
-                  demand — prevents restart
-                </li>
-                <li className="pl-1">
-                  <strong>Short circuit between channels:</strong> Detected by cross-fault
-                  monitoring — relay locks out
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Wire break detection">
+            <p>
+              The use of NC contacts provides inherent wire break detection. Consider the failure
+              modes:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Wire break:</strong> Circuit opens — machine stops (safe).
+              </li>
+              <li>
+                <strong>Contact failure (spring broken):</strong> Contact opens — machine stops
+                (safe).
+              </li>
+              <li>
+                <strong>Terminal loose:</strong> Connection lost — circuit opens — machine stops
+                (safe).
+              </li>
+              <li>
+                <strong>Contact weld:</strong> Detected by the dual-channel safety relay at next
+                demand — prevents restart.
+              </li>
+              <li>
+                <strong>Short circuit between channels:</strong> Detected by cross-fault monitoring
+                — relay locks out.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Never Bypass an E-Stop</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Bypassing an E-stop to stop a nuisance trip"
+            whatHappens={
+              <>
                 Bridging, bypassing or defeating an E-stop circuit is a criminal offence under the
                 Health and Safety at Work Act 1974, the Provision and Use of Work Equipment
-                Regulations (PUWER) 1998, and the Electricity at Work Regulations 1989. If an E-stop
-                is causing nuisance trips, investigate and fix the root cause — do not bypass it.
-                Report any bypassed safety circuits immediately to the responsible person.
-              </p>
-            </div>
-          </div>
-        </section>
+                Regulations (PUWER) 1998, and the Electricity at Work Regulations 1989.
+              </>
+            }
+            doInstead={
+              <>
+                If an E-stop is causing nuisance trips, investigate and fix the root cause — do not
+                bypass it. Report any bypassed safety circuits immediately to the responsible
+                person.
+              </>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Safety Relays and Dual-Channel Circuits
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Safety relays and dual-channel circuits</ContentEyebrow>
+
+          <ConceptBlock title="What a standard relay cannot do">
             <p>
               Safety relays are the monitoring devices at the heart of E-stop circuits. They provide
               redundant switching, cross-fault detection and restart prevention — functions that
               standard control relays cannot achieve. A standard relay has no mechanism to detect
               its own contact failure; a safety relay does.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Safety Relay Functions</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Dual-channel input monitoring:</strong> Both channels must open within a
-                  detection window for a valid stop signal
-                </li>
-                <li className="pl-1">
-                  <strong>Cross-fault detection:</strong> Detects short circuits between the two
-                  input channels that could mask faults
-                </li>
-                <li className="pl-1">
-                  <strong>Force-guided contacts:</strong> NO safety outputs and NC monitoring
-                  contacts are mechanically linked
-                </li>
-                <li className="pl-1">
-                  <strong>Monitored manual reset:</strong> Requires a deliberate rising-edge reset
-                  signal — detects stuck buttons
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback monitoring (EDM):</strong> Checks that external contactors have
-                  opened before allowing reset
-                </li>
-                <li className="pl-1">
-                  <strong>LED diagnostics:</strong> Indicate channel status, output state and fault
-                  conditions
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Safety relay functions">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dual-channel input monitoring:</strong> Both channels must open within a
+                detection window for a valid stop signal.
+              </li>
+              <li>
+                <strong>Cross-fault detection:</strong> Detects short circuits between the two input
+                channels that could mask faults.
+              </li>
+              <li>
+                <strong>Force-guided contacts:</strong> NO safety outputs and NC monitoring contacts
+                are mechanically linked.
+              </li>
+              <li>
+                <strong>Monitored manual reset:</strong> Requires a deliberate rising-edge reset
+                signal — detects stuck buttons.
+              </li>
+              <li>
+                <strong>Feedback monitoring (EDM):</strong> Checks that external contactors have
+                opened before allowing reset.
+              </li>
+              <li>
+                <strong>LED diagnostics:</strong> Indicate channel status, output state and fault
+                conditions.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Safety Relay Manufacturers
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Pilz:</strong> PNOZ series — widely used in UK manufacturing
-                  </li>
-                  <li className="pl-1">
-                    <strong>Allen-Bradley:</strong> MSR series (Guardmaster)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Siemens:</strong> 3SK1 series (SIRIUS)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Schneider:</strong> Preventa XPSA series
-                  </li>
-                  <li className="pl-1">
-                    <strong>SICK:</strong> UE400 series
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Typical Circuit Operation
-                </h3>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">E-stop released: Both channels closed</li>
-                  <li className="pl-1">Safety relay energised: Safety outputs closed</li>
-                  <li className="pl-1">Contactors energised: Machine can run</li>
-                  <li className="pl-1">E-stop pressed: Channels open</li>
-                  <li className="pl-1">Safety relay de-energises: Outputs open</li>
-                  <li className="pl-1">Contactors drop out: Machine stops</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Common safety relay manufacturers">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pilz:</strong> PNOZ series — widely used in UK manufacturing.
+              </li>
+              <li>
+                <strong>Allen-Bradley:</strong> MSR series (Guardmaster).
+              </li>
+              <li>
+                <strong>Siemens:</strong> 3SK1 series (SIRIUS).
+              </li>
+              <li>
+                <strong>Schneider:</strong> Preventa XPSA series.
+              </li>
+              <li>
+                <strong>SICK:</strong> UE400 series.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Typical circuit operation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>E-stop released: Both channels closed.</li>
+              <li>Safety relay energised: Safety outputs closed.</li>
+              <li>Contactors energised: Machine can run.</li>
+              <li>E-stop pressed: Channels open.</li>
+              <li>Safety relay de-energises: Outputs open.</li>
+              <li>Contactors drop out: Machine stops.</li>
+            </ul>
+            <p>
               <strong>Key point:</strong> The feedback (EDM) loop is critical. Without it, a welded
               contactor would not be detected, and the machine could restart even though the main
               contactor has failed to open. Always verify that the feedback loop is correctly wired
               during commissioning and maintenance.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Testing and Maintenance Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Testing and maintenance procedures</ContentEyebrow>
+
+          <ConceptBlock title="A legal requirement, not a discretionary check">
             <p>
               Regular testing of E-stop circuits is a legal requirement under PUWER 1998 Regulation
               5 (maintenance) and Regulation 11 (dangerous parts of machinery). It is also a core
               maintenance competency under the ST1426 apprenticeship standard. Testing must verify
               both the stop function and the restart prevention sequence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">E-Stop Test Procedure</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Verify the machine is in a safe test condition with no
-                  personnel in the danger zone
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Start the machine and confirm normal operation
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Press the E-stop — confirm the machine stops immediately
-                  (or within the Category 1 deceleration time)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Attempt to restart without resetting the E-stop — confirm
-                  restart is prevented
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Reset the E-stop button — confirm the circuit is
-                  re-enabled but the machine does not restart
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Press the start button — confirm normal restart occurs
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Repeat for every E-stop on the machine, testing each
-                  individually
-                </li>
-                <li className="pl-1">
-                  <strong>Step 8:</strong> Record results including date, tester name, machine ID,
-                  and any faults found
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="E-stop test procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Step 1:</strong> Verify the machine is in a safe test condition with no
+                personnel in the danger zone.
+              </li>
+              <li>
+                <strong>Step 2:</strong> Start the machine and confirm normal operation.
+              </li>
+              <li>
+                <strong>Step 3:</strong> Press the E-stop — confirm the machine stops immediately
+                (or within the Category 1 deceleration time).
+              </li>
+              <li>
+                <strong>Step 4:</strong> Attempt to restart without resetting the E-stop — confirm
+                restart is prevented.
+              </li>
+              <li>
+                <strong>Step 5:</strong> Reset the E-stop button — confirm the circuit is re-enabled
+                but the machine does not restart.
+              </li>
+              <li>
+                <strong>Step 6:</strong> Press the start button — confirm normal restart occurs.
+              </li>
+              <li>
+                <strong>Step 7:</strong> Repeat for every E-stop on the machine, testing each
+                individually.
+              </li>
+              <li>
+                <strong>Step 8:</strong> Record results including date, tester name, machine ID, and
+                any faults found.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Cable-Pull (Rope-Pull) E-Stops
-              </p>
-              <p className="text-sm text-white mb-3">
-                Cable-pull emergency stops are used along extended machinery such as conveyor lines,
-                production lines and long processing machines. They provide continuous E-stop access
-                along the entire length of the machine.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  A tensioned wire rope runs along the machine, supported by guide pulleys
-                </li>
-                <li className="pl-1">
-                  Pulling or deflecting the rope at any point activates the switch unit
-                </li>
-                <li className="pl-1">
-                  The switch detects both pull and slack (broken rope) — fail-safe design
-                </li>
-                <li className="pl-1">
-                  Testing must verify operation from multiple points along the rope
-                </li>
-                <li className="pl-1">
-                  Rope tension and guide pulleys require periodic inspection and adjustment
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Cable-pull (rope-pull) E-stops">
+            <p>
+              Cable-pull emergency stops are used along extended machinery such as conveyor lines,
+              production lines and long processing machines. They provide continuous E-stop access
+              along the entire length of the machine.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>A tensioned wire rope runs along the machine, supported by guide pulleys.</li>
+              <li>Pulling or deflecting the rope at any point activates the switch unit.</li>
+              <li>The switch detects both pull and slack (broken rope) — fail-safe design.</li>
+              <li>Testing must verify operation from multiple points along the rope.</li>
+              <li>Rope tension and guide pulleys require periodic inspection and adjustment.</li>
+            </ul>
+            <p>
               <strong>ST1426:</strong> Testing and documenting safety circuit function is a core
               maintenance competency. Always use the correct test procedure, work to a
               permit-to-work where required, and record your findings in the maintenance management
               system. Never sign off a test that you have not personally witnessed.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Legal Framework and Key Standards
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Legal framework and key standards</ContentEyebrow>
+
+          <ConceptBlock title="A framework you must understand, even if you do not design it">
             <p>
               E-stop requirements sit within a comprehensive legal and standards framework. As a
               maintenance technician, you do not need to design E-stop systems from scratch, but you
               must understand the standards that govern their installation, testing and maintenance
               so that you can verify compliance and identify deficiencies.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standards and Regulations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Standard / Regulation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Scope</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS EN ISO 13850</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        E-stop design principles — appearance, function, reset
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        IEC 60204-1 / BS EN 60204-1
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical safety of machinery — stop categories, wiring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">ISO 13849-1</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety-related control systems — Performance Levels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Machinery Directive 2006/42/EC
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Essential requirements — E-stop mandatory (with exceptions)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PUWER 1998</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintenance, inspection and testing requirements
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HASAWA 1974</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        General duty of care — bypassing safety is an offence
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Standards and regulations">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Standard / Regulation</th>
+                    <th className="py-2 font-medium text-white">Scope</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BS EN ISO 13850</td>
+                    <td className="py-2">E-stop design principles — appearance, function, reset</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">IEC 60204-1 / BS EN 60204-1</td>
+                    <td className="py-2">
+                      Electrical safety of machinery — stop categories, wiring
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">ISO 13849-1</td>
+                    <td className="py-2">Safety-related control systems — Performance Levels</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Machinery Directive 2006/42/EC</td>
+                    <td className="py-2">
+                      Essential requirements — E-stop mandatory (with exceptions)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PUWER 1998</td>
+                    <td className="py-2">Maintenance, inspection and testing requirements</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">HASAWA 1974</td>
+                    <td className="py-2">General duty of care — bypassing safety is an offence</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                E-Stop and PLC Integration
-              </p>
-              <p className="text-sm text-white mb-3">
-                A common question is whether E-stop circuits can be connected to the PLC. The answer
-                is nuanced:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Primary circuit:</strong> Must be hardwired through safety-rated devices
-                  (safety relay or safety PLC). The standard PLC must not be the sole means of
-                  achieving the E-stop function
-                </li>
-                <li className="pl-1">
-                  <strong>Monitoring:</strong> The E-stop status can be fed to the standard PLC via
-                  additional auxiliary contacts for HMI display, alarm logging and interlocking
-                </li>
-                <li className="pl-1">
-                  <strong>Safety PLC:</strong> A certified safety PLC (e.g., Siemens F-CPU,
-                  Allen-Bradley GuardLogix) can replace hardwired safety relays for complex
-                  applications, but it must meet ISO 13849 / IEC 62061 requirements
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
-              understand the legal and regulatory framework for machine safety, test and maintain
-              safety systems, and document all findings. You must be able to recognise non-compliant
-              installations and report them through the correct channels.
+          <ConceptBlock title="E-stop and PLC integration">
+            <p>
+              A common question is whether E-stop circuits can be connected to the PLC. The answer
+              is nuanced:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Primary circuit:</strong> Must be hardwired through safety-rated devices
+                (safety relay or safety PLC). The standard PLC must not be the sole means of
+                achieving the E-stop function.
+              </li>
+              <li>
+                <strong>Monitoring:</strong> The E-stop status can be fed to the standard PLC via
+                additional auxiliary contacts for HMI display, alarm logging and interlocking.
+              </li>
+              <li>
+                <strong>Safety PLC:</strong> A certified safety PLC (e.g. Siemens F-CPU,
+                Allen-Bradley GuardLogix) can replace hardwired safety relays for complex
+                applications, but it must meet ISO 13849 / IEC 62061 requirements.
+              </li>
+            </ul>
+            <p className="italic">
+              Under ST1426, maintenance technicians are expected to understand the legal and
+              regulatory framework for machine safety, test and maintain safety systems, and
+              document all findings. You must be able to recognise non-compliant installations and
+              report them through the correct channels.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <Scenario
+            title="An E-stop that stops the machine but leaves the drive live"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            situation={
+              <>
+                <p>
+                  During a routine check you press the E-stop on a mixer. The motor coasts to a halt
+                  and the HMI shows the machine stopped. The main contactor, though, stays closed
+                  and the VFD output stage remains enabled.
+                </p>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+                <p>
+                  The machine has been in service for three years and nobody has reported a problem.
+                </p>
+              </>
+            }
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section3-2">
-              Next: Guarding and Interlocking Devices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            whatToDo={
+              <>
+                <p>
+                  Establish which stop category the machine is supposed to achieve, because the
+                  behaviour you are looking at is correct for one and dangerous for the other. A
+                  Category 0 stop removes power immediately. A Category 1 stop brings the drive to a
+                  controlled halt and then removes power. Coasting to a stop with power still
+                  applied is neither.
+                </p>
+
+                <p>
+                  Trace the E-stop circuit to the contactor coil. A common cause is an E-stop wired
+                  only into the drive’s own enable input, with the contactor left permanently
+                  energised — the drive stops the motor, but nothing removes the supply.
+                </p>
+
+                <p>
+                  Check the safety relay if one is fitted: whether the E-stop contacts are actually
+                  in its input circuit, whether both channels are monitored, and whether the relay’s
+                  output contacts are in the contactor coil circuit rather than in a signalling
+                  circuit only.
+                </p>
+
+                <p>
+                  Treat this as a defect and report it before the machine runs again. Do not adjust
+                  it on the spot — a safety function change needs verifying against the risk
+                  assessment and the machine’s original conformity, not a field fix.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                An E-stop that appears to work is more dangerous than one that plainly does not,
+                because people trust it. Someone reaching into a coasting mixer after pressing
+                E-stop has every reason to believe the machine is safe, and the contactor is still
+                closed behind them. This is exactly why functional testing of a safety circuit means
+                proving what it actually removes, not just observing that the machine stopped.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'An E-stop is red mushroom-head on yellow (BS EN ISO 13850), self-latching, and must override every other function without exception.',
+              'NC contacts, series wiring and dual-channel redundancy make an E-stop circuit fail safe: a broken wire, loose terminal or single contact failure stops the machine rather than hiding the fault.',
+              'A safety relay adds cross-fault detection, force-guided contacts and monitored reset — capabilities a standard control relay does not have.',
+              'Category 0 (IEC 60204-1) is an immediate, uncontrolled power removal; Category 1 decelerates under control before removing power; Category 2 maintains power in a controlled stop.',
+              'Reset only re-enables the safety circuit — a separate, deliberate start command is always required to restart the machine.',
+              'Bridging or bypassing an E-stop circuit is a criminal offence under HASAWA 1974, PUWER 1998 and EAWR 1989 — fix the root cause of a nuisance trip, never defeat the circuit.',
+              'The feedback (EDM) loop confirms the contactors actually opened before allowing reset — without it a welded contactor goes undetected and the machine can restart unsafely.',
+              'Test both halves of the function every time: that the E-stop stops the machine, and that reset alone never restarts it — record every test with date, tester and findings.',
+              'The E-stop circuit itself must be hardwired through safety-rated devices; the standard PLC may only monitor its status, never be the sole means of achieving the stop.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section 5.3 overview
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section3-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Guarding and Interlocking Devices
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

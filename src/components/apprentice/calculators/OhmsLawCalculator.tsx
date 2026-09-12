@@ -276,31 +276,59 @@ const OhmsLawCalculator = () => {
 
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
-    const rows: { label: string; value: string }[] = [];
-    if (result.voltage !== undefined) rows.push({ label: 'Voltage', value: `${result.voltage} V` });
-    if (result.current !== undefined) rows.push({ label: 'Current', value: `${result.current} A` });
-    if (result.resistance !== undefined) rows.push({ label: 'Resistance', value: `${result.resistance} Ω` });
-    if (result.power !== undefined) rows.push({ label: 'Power', value: `${result.power} W` });
 
-    const headlineKey =
-      result.voltage !== undefined && result.current === undefined
-        ? { label: 'Voltage', value: String(result.voltage), unit: 'V' }
-        : result.current !== undefined
-          ? { label: 'Current', value: String(result.current), unit: 'A' }
-          : result.resistance !== undefined
-            ? { label: 'Resistance', value: String(result.resistance), unit: 'Ω' }
-            : { label: 'Power', value: String(result.power ?? ''), unit: 'W' };
+    // The raw result carries full float precision — 230 ÷ 67 printed as
+    // "3.4328358208955225 Ω" on a customer's document. The on-screen calculator
+    // already rounds to 4 dp, so the report matches it and drops trailing zeros.
+    const fmt = (n: number) => String(Number(n.toFixed(4)));
+
+    // `inputValues` records what the electrician actually typed, so the report
+    // can separate what was measured from what was derived — and the headline
+    // can show the ANSWER rather than one of the inputs, which is what the first
+    // version did (it led on "Current 67 A" when current was an entered value).
+    const entered = result.inputValues ?? {};
+    const isInput = { V: entered.V !== undefined, I: entered.I !== undefined,
+                      R: entered.R !== undefined, P: entered.P !== undefined };
+
+    const all = [
+      { key: 'V' as const, label: 'Voltage', unit: 'V', value: result.voltage },
+      { key: 'I' as const, label: 'Current', unit: 'A', value: result.current },
+      { key: 'R' as const, label: 'Resistance', unit: 'Ω', value: result.resistance },
+      { key: 'P' as const, label: 'Power', unit: 'W', value: result.power },
+    ].filter((x) => x.value !== undefined) as {
+      key: 'V' | 'I' | 'R' | 'P'; label: string; unit: string; value: number;
+    }[];
+
+    const inputs = all.filter((x) => isInput[x.key]);
+    const derived = all.filter((x) => !isInput[x.key]);
 
     return {
       meta: {
-        title: 'Ohm\'s Law',
-        subtitle: result.formula ? `Calculated using ${result.formula}` : undefined,
+        title: "Ohm's Law",
+        // `formula` already reads "Using V and I: …", so prefixing it produced
+        // "Calculated using Using V and I".
+        subtitle: result.formula || undefined,
       },
-      headline: [headlineKey],
+      headline: (derived.length ? derived : all)
+        .slice(0, 3)
+        .map((x) => ({ label: x.label, value: fmt(x.value), unit: x.unit })),
       sections: [
-        { heading: 'Values', rows },
-        ...(result.calculationSteps?.length
-          ? [{ heading: 'Working', items: result.calculationSteps }]
+        ...(inputs.length
+          ? [{
+              heading: 'Measured values',
+              rows: inputs.map((x) => ({ label: x.label, value: `${fmt(x.value)} ${x.unit}` })),
+            }]
+          : []),
+        ...(derived.length
+          ? [{
+              heading: 'Calculated',
+              rows: derived.map((x) => ({ label: x.label, value: `${fmt(x.value)} ${x.unit}` })),
+            }]
+          : []),
+        // The steps array carries a blank entry between the two workings, which
+        // rendered as an empty bullet.
+        ...(result.calculationSteps?.some((t) => t.trim())
+          ? [{ heading: 'Working', items: result.calculationSteps.filter((t) => t.trim()) }]
           : []),
       ],
       notes: result.protectionGuidance ? [result.protectionGuidance] : undefined,

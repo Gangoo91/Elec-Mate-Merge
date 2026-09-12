@@ -17,7 +17,8 @@ const primaryNavItems: NavItem[] = [
   { name: 'Dashboard', path: '/admin' },
   { name: 'Users', path: '/admin/users' },
   { name: 'Bulk Create', path: '/admin/bulk-create' },
-  { name: 'Mate', path: '/admin/mate' },
+  { name: 'Colleges', path: '/admin/colleges' },
+  { name: 'Employers', path: '/admin/employers' },
   { name: 'Trials', path: '/admin/trials' },
   { name: 'Revenue', path: '/admin/revenue' },
   { name: 'Messages', path: '/admin/user-messages' },
@@ -202,6 +203,7 @@ export default function AdminPanel() {
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
           'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+          'outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
           active ? 'bg-elec-yellow text-black' : 'text-white hover:text-white hover:bg-white/[0.05]'
         )}
       >
@@ -238,9 +240,7 @@ export default function AdminPanel() {
         (the reason it was raised in the first place, see above), but now below
         the app header at 60 so the two can never fight over the same band.
       */}
-      <header
-        className="sticky top-[calc(var(--safe-area-top,0px)_+_3rem)] z-[55] border-b border-white/[0.06] bg-background/95 backdrop-blur lg:top-[calc(var(--safe-area-top,0px)_+_4rem)]"
-      >
+      <header className="sticky top-[calc(var(--safe-area-top,0px)_+_3rem)] z-[55] border-b border-white/[0.06] bg-background/95 backdrop-blur lg:top-[calc(var(--safe-area-top,0px)_+_4rem)]">
         <div className="px-4 sm:px-6 lg:px-8">
           {/* Title row */}
           <div className="flex items-center h-14 gap-3">
@@ -270,14 +270,55 @@ export default function AdminPanel() {
 
           {/* Navigation rail.
 
-              Twelve destinations never fit, so it scrolls — but with nothing
-              at the edge the last tab looked truncated rather than scrollable.
-              The fade is the affordance; it is pointer-events-none so it can
-              never swallow a tap on the tab beneath it. */}
+              🔴 It WRAPS on desktop and only scrolls on a phone.
+
+              It used to be `overflow-x-auto hide-scrollbar` at every width.
+              That is fine on a touch screen and broken on a desktop: the
+              scrollbar is deliberately hidden, and a mouse has no horizontal
+              scroll axis, so the tabs past the fold were unreachable unless you
+              happened to own a trackpad. Twelve pills and two menus do not fit
+              a 1716px window — "Billing" was cut in half and nothing would move
+              it. Wrapping shows every destination at once and needs no gesture
+              at all.
+
+              🔴 Wrap from `xl`, and measure before changing it. Wrapping the
+              fourteen pills into a STICKY header costs real height, and the
+              app sidebar takes ~256px of the width they get to wrap in:
+
+                  768px  → 1 row, 52px  (scrolls — correct, touch territory)
+                  1024px → 3 rows, 156px
+                  1280px → 2 rows, 104px
+                  1716px → 2 rows, 104px
+
+              At 1024 it is three rows and 156px of permanently-stuck chrome,
+              a fifth of a tablet's viewport — a worse bug than the one being
+              fixed. 1280 is the first width where two rows are guaranteed, so
+              `xl` it is. Below that the rail keeps its single scrollable line
+              and the fade, which is right for the touch devices that live
+              there. Real viewport widths only: the `lg:`/`xl:` gating is a
+              media query, so resizing a container proves nothing. */}
           <div className="relative">
             <nav
               ref={dropdownRef}
-              className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar"
+              className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar xl:flex-wrap xl:gap-y-2 xl:overflow-x-visible"
+              /*
+                A mouse wheel scrolls the rail sideways.
+
+                Between 1024 and 1279 the rail still scrolls rather than wraps,
+                and that is the band where the original complaint lives: the
+                scrollbar is hidden by `hide-scrollbar`, and a plain mouse has
+                no horizontal axis, so the tabs past the edge were unreachable
+                unless you owned a trackpad. Translating vertical wheel into
+                horizontal scroll makes the obvious gesture do the obvious
+                thing. A trackpad's real horizontal swipe (deltaX) is left
+                alone, and above `xl` nothing overflows so this never fires.
+              */
+              onWheel={(e) => {
+                const el = e.currentTarget;
+                if (el.scrollWidth <= el.clientWidth) return;
+                if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+                el.scrollLeft += e.deltaY;
+              }}
             >
               {primaryNavItems.map((item) => (
                 <NavPill key={item.path} item={item} />
@@ -294,8 +335,12 @@ export default function AdminPanel() {
                       onClick={() => setOpenGroup(isOpen ? null : g.key)}
                       className={cn(
                         'shrink-0 h-11 px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
+                        // No default focus ring — the blue halo Chrome draws
+                        // round an open menu button is the one thing on this
+                        // bar that is not our own palette.
+                        'outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
                         isOpen || isActive
-                          ? 'bg-white/[0.08] text-white'
+                          ? 'bg-white/[0.1] text-white'
                           : 'text-white hover:text-white hover:bg-white/[0.05]'
                       )}
                     >
@@ -308,9 +353,12 @@ export default function AdminPanel() {
                 );
               })}
             </nav>
+            {/* Scroll affordance — only where the rail actually scrolls.
+                Left on at every width it was a smear across the end of the
+                wrapped rows. */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent"
+              className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent xl:hidden"
             />
           </div>
 
@@ -328,8 +376,14 @@ export default function AdminPanel() {
                   let high-contrast text beneath bleed through a dropdown that
                   overlaps the page heading — a menu you cannot read is worse
                   than no menu.
+
+                  And LIGHTER than the header it hangs off, not darker. At
+                  `hsl(0 0% 7%)` it sat below the bar's own surface, so an open
+                  menu read as a hole punched in the chrome rather than a panel
+                  in front of it — the same inversion as the black tiles on
+                  Revenue. Elevation runs lighter; the shadow does the lifting.
                 */
-                className="absolute left-0 right-0 top-full z-[60] border-b border-white/[0.08] bg-[hsl(0_0%_7%)] shadow-2xl"
+                className="absolute left-0 right-0 top-full z-[60] border-b border-white/[0.1] bg-[hsl(0_0%_13%)] shadow-[0_18px_40px_-12px_rgba(0,0,0,0.85)]"
               >
                 <div className="px-4 sm:px-6 lg:px-8 py-3">
                   <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
@@ -348,10 +402,11 @@ export default function AdminPanel() {
                           onMouseEnter={() => onPrefetch(item.path)}
                           onTouchStart={() => onPrefetch(item.path)}
                           className={cn(
-                            'h-9 px-3.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                            'h-11 px-3.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation sm:h-9',
+                            'outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
                             active
                               ? 'bg-elec-yellow text-black'
-                              : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
+                              : 'bg-white/[0.07] text-white border border-white/[0.12] hover:bg-white/[0.12] hover:text-white'
                           )}
                         >
                           {item.name}

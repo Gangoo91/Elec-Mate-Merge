@@ -1,8 +1,53 @@
-import { ArrowLeft, Cpu, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 2 · Subsection 1 — PLC Hardware and Architecture
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course did not enumerate a
+ * Module 5 KSB list, so the statements below are reused verbatim from the
+ * Module 1/3/4 lists it did supply, matched by topic.
+ *   Knowledge  · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *              · "Electrical. Functions and applications of electrical
+ *                 circuits."
+ *   Skills     · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt. This is the
+ * first subsection of Section 5.2, so the masthead and left nav button both
+ * point back to the section overview rather than a previous subsection,
+ * matching the original page.
+ *
+ * No GS38, thermography ΔT, test-interval or C&G-qualification claims appear
+ * on this page.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'PLC Hardware and Architecture - MOET Module 5 Section 2.1';
@@ -209,108 +254,65 @@ const faqs = [
 ];
 
 const MOETModule5Section2_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Cpu className="h-4 w-4" />
-            <span>Module 5.2.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            PLC Hardware and Architecture
-          </h1>
-          <p className="text-white">
-            CPU modules, memory types, power supplies and system architecture
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.2 · Subsection 1"
+        title="PLC Hardware and Architecture"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            CPU modules, memory types, power supplies and system architecture — the hardware behind
+            every PLC-controlled plant you will maintain.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>PLC:</strong> Ruggedised industrial computer for machine/process control
-              </li>
-              <li className="pl-1">
-                <strong>Scan cycle:</strong> Read inputs, execute program, update outputs (repeat)
-              </li>
-              <li className="pl-1">
-                <strong>Architecture:</strong> CPU, PSU, I/O modules on a backplane/rack
-              </li>
-              <li className="pl-1">
-                <strong>Memory:</strong> Non-volatile (program storage) + RAM (working data)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault LEDs:</strong> CPU status, module faults, communication errors
-              </li>
-              <li className="pl-1">
-                <strong>Battery:</strong> Replace every 2-3 years to protect retentive data
-              </li>
-              <li className="pl-1">
-                <strong>Program backup:</strong> Always maintain current backup before maintenance
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to control systems and automation KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'PLC: Ruggedised industrial computer for machine/process control.',
+              'Scan cycle: Read inputs, execute program, update outputs (repeat).',
+              'Architecture: CPU, PSU, I/O modules on a backplane/rack.',
+              'Memory: Non-volatile (program storage) + RAM (working data).',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the main hardware components of a PLC system',
               'Explain the function of the CPU, PSU and backplane',
               'Describe the PLC scan cycle and its significance for maintenance',
               'Distinguish between volatile and non-volatile memory in PLCs',
               'Compare compact and modular PLC architectures',
               'Apply safe maintenance procedures when working on PLC hardware',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault LEDs:</strong> CPU status, module faults, communication errors.
+              </li>
+              <li>
+                <strong>Battery:</strong> Replace every 2-3 years to protect retentive data.
+              </li>
+              <li>
+                <strong>Program backup:</strong> Always maintain current backup before maintenance.
+              </li>
+              <li>
+                <strong>ST1426:</strong> Maps to control systems and automation KSBs.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is a PLC?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What is a PLC?</ContentEyebrow>
+
+          <ConceptBlock title="A ruggedised computer that replaced the relay panel">
             <p>
               A Programmable Logic Controller (PLC) is a purpose-built industrial computer designed
               to control manufacturing processes, machines and other automated systems. Developed in
@@ -324,330 +326,303 @@ const MOETModule5Section2_1 = () => {
               specialised input/output (I/O) modules to interface directly with field devices such
               as sensors, switches, motors, valves and indicator lights.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key PLC Characteristics
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Deterministic operation:</strong> The scan cycle executes in a
-                  predictable, repeatable time
-                </li>
-                <li className="pl-1">
-                  <strong>Real-time control:</strong> Outputs respond to input changes within the
-                  scan time (typically milliseconds)
-                </li>
-                <li className="pl-1">
-                  <strong>Rugged construction:</strong> Designed for industrial environments with
-                  wide temperature ranges and high vibration
-                </li>
-                <li className="pl-1">
-                  <strong>Modular design:</strong> I/O capacity can be expanded by adding modules to
-                  the rack
-                </li>
-                <li className="pl-1">
-                  <strong>Multiple programming languages:</strong> Ladder logic, function block,
-                  structured text, instruction list, sequential function chart (IEC 61131-3)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key PLC characteristics">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Deterministic operation:</strong> The scan cycle executes in a predictable,
+                repeatable time.
+              </li>
+              <li>
+                <strong>Real-time control:</strong> Outputs respond to input changes within the scan
+                time (typically milliseconds).
+              </li>
+              <li>
+                <strong>Rugged construction:</strong> Designed for industrial environments with wide
+                temperature ranges and high vibration.
+              </li>
+              <li>
+                <strong>Modular design:</strong> I/O capacity can be expanded by adding modules to
+                the rack.
+              </li>
+              <li>
+                <strong>Multiple programming languages:</strong> Ladder logic, function block,
+                structured text, instruction list, sequential function chart (IEC 61131-3).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            PLC System Architecture
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>PLC system architecture</ContentEyebrow>
+
+          <ConceptBlock title="Several components, one rack">
             <p>
               A typical modular PLC system consists of several key components mounted on a rack or
               baseplate. Understanding the function of each component is essential for effective
               maintenance and fault diagnosis.
             </p>
-            <div className="my-6">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Function</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Notes
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Rack / Backplane
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Physical mounting and electrical interconnection of all modules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check for corrosion on bus connectors; ensure modules are fully seated
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Power Supply (PSU)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Converts mains supply to regulated DC for all modules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check output voltage, verify current capacity for installed modules
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">CPU Module</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Executes the stored program, manages communications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Monitor LED indicators, check battery status, maintain program backups
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">I/O Modules</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Interface between field devices and the CPU
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check LED status indicators, verify terminal connections, test with known
-                        inputs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Communication Modules
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Provide network connectivity (Ethernet/IP, Profinet, Modbus)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check link LEDs, verify IP addresses, monitor error counters
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Component functions and maintenance notes">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Component</th>
+                    <th className="py-2 pr-4 font-medium text-white">Function</th>
+                    <th className="py-2 font-medium text-white">Maintenance notes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Rack / Backplane</td>
+                    <td className="py-2 pr-4">
+                      Physical mounting and electrical interconnection of all modules
+                    </td>
+                    <td className="py-2">
+                      Check for corrosion on bus connectors; ensure modules are fully seated
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">Power Supply (PSU)</td>
+                    <td className="py-2 pr-4">
+                      Converts mains supply to regulated DC for all modules
+                    </td>
+                    <td className="py-2">
+                      Check output voltage, verify current capacity for installed modules
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">CPU Module</td>
+                    <td className="py-2 pr-4">
+                      Executes the stored program, manages communications
+                    </td>
+                    <td className="py-2">
+                      Monitor LED indicators, check battery status, maintain program backups
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium">I/O Modules</td>
+                    <td className="py-2 pr-4">Interface between field devices and the CPU</td>
+                    <td className="py-2">
+                      Check LED status indicators, verify terminal connections, test with known
+                      inputs
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium">Communication Modules</td>
+                    <td className="py-2 pr-4">
+                      Provide network connectivity (Ethernet/IP, Profinet, Modbus)
+                    </td>
+                    <td className="py-2">
+                      Check link LEDs, verify IP addresses, monitor error counters
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Compact PLCs</h3>
-                <p className="text-sm text-white">
-                  All-in-one units with CPU, PSU and a fixed number of I/O points in a single
-                  housing. Ideal for small applications (typically 10-40 I/O points). Lower cost but
-                  limited expandability. Examples include the Siemens S7-1200 and Allen-Bradley
-                  Micro800 series.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Modular PLCs</h3>
-                <p className="text-sm text-white">
-                  Separate modules for CPU, PSU and I/O mounted on a rack. Highly flexible and
-                  expandable — modules can be added, removed or changed to suit the application.
-                  Used for medium to large systems (hundreds to thousands of I/O points). Examples
-                  include Siemens S7-1500 and Allen-Bradley ControlLogix.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Compact PLCs">
+            <p>
+              All-in-one units with CPU, PSU and a fixed number of I/O points in a single housing.
+              Ideal for small applications (typically 10-40 I/O points). Lower cost but limited
+              expandability. Examples include the Siemens S7-1200 and Allen-Bradley Micro800 series.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Modular PLCs">
+            <p>
+              Separate modules for CPU, PSU and I/O mounted on a rack. Highly flexible and
+              expandable — modules can be added, removed or changed to suit the application. Used
+              for medium to large systems (hundreds to thousands of I/O points). Examples include
+              Siemens S7-1500 and Allen-Bradley ControlLogix.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            The PLC Scan Cycle
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The PLC scan cycle</ContentEyebrow>
+
+          <ConceptBlock title="The fundamental operating principle of every PLC">
             <p>
               The scan cycle is the fundamental operating principle of every PLC. Understanding it
               is critical for both programming and maintenance, as it determines how quickly the PLC
               responds to input changes and how program logic is executed.
             </p>
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">The Three Phases</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Phase 1 — Input scan:</strong> The CPU reads the state of all physical
-                    inputs and stores them in the input image table (a block of memory). All program
-                    decisions during this scan are based on this snapshot.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phase 2 — Program execution:</strong> The CPU executes the program from
-                    the first instruction to the last, using the input image table for input data
-                    and writing results to the output image table.
-                  </li>
-                  <li className="pl-1">
-                    <strong>Phase 3 — Output update:</strong> The CPU writes the entire output image
-                    table to the physical outputs simultaneously. All outputs change at the same
-                    moment.
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                <p className="text-sm font-medium text-orange-400 mb-2">Scan Time and Response</p>
-                <p className="text-sm text-white">
-                  A very short input pulse (shorter than one scan cycle) could be missed entirely
-                  because the input might be ON between scans. For critical fast inputs, PLCs offer
-                  high-speed counter inputs and interrupt-driven routines that operate outside the
-                  normal scan cycle. When fault-finding, remember that the PLC only 'sees' what was
-                  present during the input scan phase.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="The three phases">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase 1 — Input scan:</strong> The CPU reads the state of all physical
+                inputs and stores them in the input image table (a block of memory). All program
+                decisions during this scan are based on this snapshot.
+              </li>
+              <li>
+                <strong>Phase 2 — Program execution:</strong> The CPU executes the program from the
+                first instruction to the last, using the input image table for input data and
+                writing results to the output image table.
+              </li>
+              <li>
+                <strong>Phase 3 — Output update:</strong> The CPU writes the entire output image
+                table to the physical outputs simultaneously. All outputs change at the same moment.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Memory Types and Program Storage
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="Scan time and response"
+            whatHappens={
+              <>
+                A very short input pulse (shorter than one scan cycle) could be missed entirely
+                because the input might be ON between scans. When fault-finding, remember that the
+                PLC only &apos;sees&apos; what was present during the input scan phase.
+              </>
+            }
+            doInstead={
+              <>
+                For critical fast inputs, use the PLC&apos;s high-speed counter inputs and
+                interrupt-driven routines, which operate outside the normal scan cycle rather than
+                relying on it to catch a fast pulse.
+              </>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Memory types and program storage</ContentEyebrow>
+
+          <ConceptBlock title="Several memory areas, each with a different job">
             <p>
               PLC memory is divided into several areas, each serving a different purpose.
               Understanding memory architecture is important for maintenance, particularly when
               backing up programs, replacing CPUs or diagnosing data-related faults.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Memory Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Volatile?</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Contents</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flash / EEPROM</td>
-                      <td className="border border-white/10 px-3 py-2">Non-volatile</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Program storage, firmware, configuration
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RAM (battery-backed)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Volatile (battery protected)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Working program, retentive data registers, timer/counter values
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RAM (non-backed)</td>
-                      <td className="border border-white/10 px-3 py-2">Volatile</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Input/output image tables, temporary data, system overhead
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Memory card slot</td>
-                      <td className="border border-white/10 px-3 py-2">Non-volatile (removable)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Program backup, data logging, recipe storage
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          </ConceptBlock>
+
+          <ConceptBlock title="Memory types">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Memory type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Volatile?</th>
+                    <th className="py-2 font-medium text-white">Contents</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Flash / EEPROM</td>
+                    <td className="py-2 pr-4">Non-volatile</td>
+                    <td className="py-2">Program storage, firmware, configuration</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">RAM (battery-backed)</td>
+                    <td className="py-2 pr-4">Volatile (battery protected)</td>
+                    <td className="py-2">
+                      Working program, retentive data registers, timer/counter values
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">RAM (non-backed)</td>
+                    <td className="py-2 pr-4">Volatile</td>
+                    <td className="py-2">
+                      Input/output image tables, temporary data, system overhead
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Memory card slot</td>
+                    <td className="py-2 pr-4">Non-volatile (removable)</td>
+                    <td className="py-2">Program backup, data logging, recipe storage</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <p className="text-sm text-elec-yellow/70">
+            <p>
               <strong>Maintenance tip:</strong> Always maintain a current backup of the PLC program
               on a memory card and/or on a secure network location. Before performing any
               maintenance that involves powering down the PLC or replacing hardware, verify that the
               backup is current and can be restored.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=uOtdWHMKhnw"
 
-        <hr className="border-white/5 my-12" />
+            title="PLC Basics — Programmable Logic Controllers Explained"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">PLC Scan Cycle</p>
-                <ul className="space-y-0.5">
-                  <li>1. Read all inputs to image table</li>
-                  <li>2. Execute program logic</li>
-                  <li>3. Update all outputs from image table</li>
-                  <li>4. Housekeeping and communications</li>
-                  <li>5. Repeat continuously</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">CPU Status LEDs</p>
-                <ul className="space-y-0.5">
-                  <li>RUN (green) — Program executing normally</li>
-                  <li>STOP (amber) — Program halted</li>
-                  <li>FAULT (red) — Fatal error detected</li>
-                  <li>COMM (flashing) — Communication active</li>
-                  <li>BAT (amber) — Low battery warning</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="15:11"
+
+            topic="Scan cycle, I/O and where the program actually lives"
+
+            caption="Builds the PLC up from the scan cycle, so the timing behaviour you meet later in ladder logic has somewhere to attach."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Scan cycle: read all inputs to the image table, execute the program logic, update all outputs from the image table, then housekeeping/communications, repeating continuously.',
+              'CPU status LEDs: RUN (green) programme executing normally, STOP (amber) programme halted, FAULT (red) fatal error, COMM (flashing) communication active, BAT (amber) low battery warning.',
+              'The CPU only ever "sees" the input states captured at the start of the scan — a pulse shorter than the scan time can be missed unless high-speed counter or interrupt inputs are used.',
+              'Flash/EEPROM holds the program non-volatilely; battery-backed RAM holds retentive data and survives short outages; non-backed RAM (image tables) is lost on power-down.',
+              'Compact PLCs integrate CPU, PSU and fixed I/O in one housing for small systems; modular PLCs use separate rack-mounted modules for medium to large, expandable systems.',
+              'A watchdog timer trips the CPU into FAULT mode — de-energising all outputs — if a scan takes longer than its configured maximum, which is a safety feature, not a nuisance trip.',
+              'Replacing a CPU means: isolate, record firmware version and configuration, download the correct program to the new unit, verify configuration, then test fully before returning to service.',
+              'Always keep a current, restorable backup of the PLC program before any maintenance that powers down the PLC or replaces hardware.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Section 5.2 overview
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section2-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Input/Output Devices
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section2-2">
-              Next: Input/Output Devices
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

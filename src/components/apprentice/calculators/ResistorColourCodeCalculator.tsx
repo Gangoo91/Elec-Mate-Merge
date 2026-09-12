@@ -249,7 +249,7 @@ const ResistorColourCodeCalculator = () => {
           rows: [
             { label: 'Exact value', value: `${result.resistance.toLocaleString()} Ω` },
             { label: 'Nominal value', value: result.formattedValue },
-            { label: 'Tolerance', value: result.tolerance },
+            { label: 'Tolerance', value: result.tolerance, note: `Decoded from band 4 (${band4})` },
             {
               label: 'Actual value range',
               value: `${formatResistance(range.min)} to ${formatResistance(range.max)}`,

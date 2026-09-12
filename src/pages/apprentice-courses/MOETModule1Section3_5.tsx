@@ -1,8 +1,48 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.3 · Subsection 5 — Dynamic Risk Assessments
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Safe systems of work."
+ *              · "Individual maintenance technician's roles and
+ *                 responsibilities. Escalation procedures."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Dynamic Risk Assessments - MOET Module 1 Section 3.5';
@@ -44,7 +84,7 @@ const quickCheckQuestions = [
       'When a circuit confirmed dead is found live, or an unexpected hazard outside the risk assessment appears',
       'When the work is running slightly over the time allowed for it on the job sheet',
       'When a colleague on an unrelated task asks a question about a completely different job',
-      'When the method statement names a tool that is not part of the technician’s usual kit',
+      "When the method statement names a tool that is not part of the technician's usual kit",
     ],
     correctIndex: 0,
     explanation:
@@ -55,7 +95,7 @@ const quickCheckQuestions = [
     question: 'Should the findings of a dynamic risk assessment be documented?',
     options: [
       'No — it is a purely mental process and should never be written down anywhere',
-      'Only the technician’s personal opinion of how the job went needs to be recorded',
+      "Only the technician's personal opinion of how the job went needs to be recorded",
       'Yes — significant findings should be recorded, especially where work was stopped, modified or a hazard found',
       'Only if an injury actually occurred during the task and a report has to be filed',
     ],
@@ -111,7 +151,7 @@ const quizQuestions = [
     question: "A 'point-of-work risk assessment' is:",
     options: [
       'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
-      'A generic assessment written in the office covering all the company’s typical jobs',
+      "A generic assessment written in the office covering all the company's typical jobs",
       'A summary of accident statistics produced for the annual safety report',
       'A checklist completed only after the work has been finished and signed off',
     ],
@@ -260,117 +300,51 @@ const faqs = [
 ];
 
 const MOETModule1Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Dynamic Risk Assessments
-          </h1>
-          <p className="text-white">
-            Real-time hazard assessment and response when conditions change
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.3 · Subsection 5"
+        title="Dynamic Risk Assessments"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Real-time hazard assessment and response when conditions change.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Dynamic RA:</strong> Continuous, real-time assessment at the point of work
-              </li>
-              <li className="pl-1">
-                <strong>SLAM:</strong> Stop, Look, Assess, Manage
-              </li>
-              <li className="pl-1">
-                <strong>Purpose:</strong> Respond to conditions the formal RA did not anticipate
-              </li>
-              <li className="pl-1">
-                <strong>Authority:</strong> Every worker can stop work for safety
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Triggers:</strong> Unexpected live conductors, water ingress, asbestos
-                discovery
-              </li>
-              <li className="pl-1">
-                <strong>Response:</strong> Stop, secure, withdraw, report, reassess
-              </li>
-              <li className="pl-1">
-                <strong>Escalation:</strong> Report beyond your competence to supervisor/safety
-                manager
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Personal responsibility for safety in changing conditions
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Dynamic RA: continuous, real-time assessment at the point of work.',
+              'SLAM: Stop, Look, Assess, Manage.',
+              'Purpose: respond to conditions the formal RA did not anticipate.',
+              'Authority: every worker can stop work for safety.',
+              'Triggers: unexpected live conductors, water ingress, asbestos discovery.',
+              'Response: stop, secure, withdraw, report, reassess.',
+              'Escalation: report beyond your competence to supervisor/safety manager.',
+              'ST1426: personal responsibility for safety in changing conditions.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain when and why dynamic risk assessment is needed alongside formal assessment',
               'Apply the SLAM technique at the point of work',
               'Carry out a point-of-work risk assessment before starting a task',
               'Recognise conditions that require you to stop work immediately',
               'Understand the escalation process for hazards beyond your competence',
               'Document dynamic risk assessment findings to feed back into formal assessment',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Why dynamic risk assessment is needed</ContentEyebrow>
 
-        {/* Section 01: Why Dynamic Risk Assessment Is Needed */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Dynamic Risk Assessment Is Needed
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The written risk assessment has inherent limitations">
             <p>
               A formal, written risk assessment is essential — but it has inherent limitations. It
               is prepared before the work begins, often by someone who may not be at the point of
@@ -379,7 +353,6 @@ const MOETModule1Section3_5 = () => {
               workers arrive, equipment fails, hidden hazards are revealed, and situations evolve in
               ways that no document could fully predict.
             </p>
-
             <p>
               Dynamic risk assessment bridges this gap. It is the continuous, real-time process of
               observing conditions at the point of work, identifying new or changed hazards,
@@ -387,188 +360,166 @@ const MOETModule1Section3_5 = () => {
               appropriate response. It is not an alternative to formal risk assessment — it is the
               essential companion to it, running in parallel throughout the task.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Limitations of Formal Risk Assessment That Dynamic RA Addresses
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Time lag:</strong> The formal RA may have been written days, weeks or even
-                  months before the work. Conditions on site may have changed significantly
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete information:</strong> The formal RA is based on the information
-                  available at the time of writing. Hidden hazards — concealed cables, asbestos,
-                  structural defects — only become apparent during the work
-                </li>
-                <li className="pl-1">
-                  <strong>Changing environment:</strong> Weather, temperature, lighting, noise
-                  levels, and the activities of other workers can all change during the task
-                </li>
-                <li className="pl-1">
-                  <strong>Unforeseen events:</strong> Equipment failure, spillages, power outages,
-                  emergencies on adjacent areas, unexpected personnel entering the work zone
-                </li>
-                <li className="pl-1">
-                  <strong>Human factors:</strong> Fatigue, distraction, stress, illness and changes
-                  in crew composition can all affect risk levels during the work
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Limitations of formal risk assessment that dynamic RA addresses">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Time lag:</strong> The formal RA may have been written days, weeks or even
+                months before the work. Conditions on site may have changed significantly
+              </li>
+              <li>
+                <strong>Incomplete information:</strong> The formal RA is based on the information
+                available at the time of writing. Hidden hazards — concealed cables, asbestos,
+                structural defects — only become apparent during the work
+              </li>
+              <li>
+                <strong>Changing environment:</strong> Weather, temperature, lighting, noise levels,
+                and the activities of other workers can all change during the task
+              </li>
+              <li>
+                <strong>Unforeseen events:</strong> Equipment failure, spillages, power outages,
+                emergencies on adjacent areas, unexpected personnel entering the work zone
+              </li>
+              <li>
+                <strong>Human factors:</strong> Fatigue, distraction, stress, illness and changes in
+                crew composition can all affect risk levels during the work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Danger of "It's in the Risk Assessment"
-              </p>
-              <p className="text-sm text-white">
-                One of the most dangerous phrases in safety management is "it's in the risk
-                assessment" — used to justify proceeding with work when conditions have changed. A
-                risk assessment is only valid for the conditions it was written for. If those
-                conditions have changed, the assessment may be dangerously inadequate. Never assume
-                the written document is still correct — always verify conditions at the point of
-                work. If reality does not match the paperwork, stop and reassess.
-              </p>
-            </div>
+          <CommonMistake
+            title='The danger of "it&apos;s in the risk assessment"'
+            whatHappens={
+              <>
+                One of the most dangerous phrases in safety management is &quot;it&apos;s in the
+                risk assessment&quot; — used to justify proceeding with work when conditions have
+                changed. A risk assessment is only valid for the conditions it was written for. If
+                those conditions have changed, the assessment may be dangerously inadequate.
+              </>
+            }
+            doInstead={
+              <>
+                Never assume the written document is still correct — always verify conditions at the
+                point of work. If reality does not match the paperwork, stop and reassess.
+              </>
+            }
+          />
 
+          <ConceptBlock title="A safety net, not a replacement">
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> Dynamic risk assessment is not a replacement for formal
               planning. It is the safety net that catches the hazards that formal assessment missed.
               The better the formal assessment, the fewer surprises the dynamic assessment will find
               — but some level of dynamic assessment is always necessary because no plan is perfect.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: The SLAM Technique */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The SLAM Technique
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The SLAM technique</ContentEyebrow>
+
+          <ConceptBlock title="A mental framework you can apply in seconds">
             <p>
               SLAM is a simple, structured technique for carrying out dynamic risk assessment at the
               point of work. The acronym stands for Stop, Look, Assess, Manage. It provides a mental
               framework that can be applied quickly — in seconds — at any point during the work.
               With practice, it becomes a habitual part of your working routine.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                <h3 className="text-base font-bold text-elec-yellow mb-2">S — Stop</h3>
-                <p className="text-sm text-white mb-2">
-                  Pause what you are doing. Take a moment to step back mentally from the task. This
-                  is not a long pause — even a few seconds of deliberate attention makes a
-                  difference. The purpose is to break the automatic flow of work and engage your
-                  conscious awareness of the environment.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Before starting each new step of the method statement</li>
-                  <li className="pl-1">Whenever you notice something has changed</li>
-                  <li className="pl-1">When transitioning between different activities</li>
-                  <li className="pl-1">When you feel rushed, tired or uncertain</li>
-                  <li className="pl-1">When your instinct tells you something is not right</li>
-                </ul>
-              </div>
+          <ConceptBlock title="S — Stop">
+            <p>
+              Pause what you are doing. Take a moment to step back mentally from the task. This is
+              not a long pause — even a few seconds of deliberate attention makes a difference. The
+              purpose is to break the automatic flow of work and engage your conscious awareness of
+              the environment.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Before starting each new step of the method statement</li>
+              <li>Whenever you notice something has changed</li>
+              <li>When transitioning between different activities</li>
+              <li>When you feel rushed, tired or uncertain</li>
+              <li>When your instinct tells you something is not right</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                <h3 className="text-base font-bold text-elec-yellow mb-2">L — Look</h3>
-                <p className="text-sm text-white mb-2">
-                  Actively observe your surroundings. Look at the task itself, the immediate work
-                  area, and the wider environment. Use all your senses — sight, hearing, smell and
-                  touch can all provide information about hazards.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Look at the specific equipment or area you are about to work on
-                  </li>
-                  <li className="pl-1">
-                    Check for changes since you last assessed — new obstructions, different
-                    lighting, additional people
-                  </li>
-                  <li className="pl-1">
-                    Listen for unusual sounds — buzzing, arcing, machinery starting nearby
-                  </li>
-                  <li className="pl-1">Smell for burning, chemicals, or unfamiliar odours</li>
-                  <li className="pl-1">
-                    Look up, down and behind you — hazards can be in any direction
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="L — Look">
+            <p>
+              Actively observe your surroundings. Look at the task itself, the immediate work area,
+              and the wider environment. Use all your senses — sight, hearing, smell and touch can
+              all provide information about hazards.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Look at the specific equipment or area you are about to work on</li>
+              <li>
+                Check for changes since you last assessed — new obstructions, different lighting,
+                additional people
+              </li>
+              <li>Listen for unusual sounds — buzzing, arcing, machinery starting nearby</li>
+              <li>Smell for burning, chemicals, or unfamiliar odours</li>
+              <li>Look up, down and behind you — hazards can be in any direction</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                <h3 className="text-base font-bold text-elec-yellow mb-2">A — Assess</h3>
-                <p className="text-sm text-white mb-2">
-                  Evaluate what you have observed. Are the conditions as expected? Are the controls
-                  still in place and effective? Has anything changed since the risk assessment was
-                  written? Is the risk level still acceptable?
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Do the conditions match the risk assessment and method statement?
-                  </li>
-                  <li className="pl-1">
-                    Are all the planned controls still in place? (locks, signs, barriers, PPE)
-                  </li>
-                  <li className="pl-1">Has a new hazard appeared that was not anticipated?</li>
-                  <li className="pl-1">
-                    Has the risk level changed? (e.g., water ingress, additional people, equipment
-                    failure)
-                  </li>
-                  <li className="pl-1">
-                    Am I competent to manage this situation, or do I need to escalate?
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="A — Assess">
+            <p>
+              Evaluate what you have observed. Are the conditions as expected? Are the controls
+              still in place and effective? Has anything changed since the risk assessment was
+              written? Is the risk level still acceptable?
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Do the conditions match the risk assessment and method statement?</li>
+              <li>Are all the planned controls still in place? (locks, signs, barriers, PPE)</li>
+              <li>Has a new hazard appeared that was not anticipated?</li>
+              <li>
+                Has the risk level changed? (e.g., water ingress, additional people, equipment
+                failure)
+              </li>
+              <li>Am I competent to manage this situation, or do I need to escalate?</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-                <h3 className="text-base font-bold text-elec-yellow mb-2">M — Manage</h3>
-                <p className="text-sm text-white mb-2">
-                  Take action based on your assessment. There are four possible responses, in order
-                  of escalation:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Proceed:</strong> Conditions are as expected, controls are in place —
-                    continue with the task
-                  </li>
-                  <li className="pl-1">
-                    <strong>Adapt:</strong> Minor changes needed — add an additional control, adjust
-                    your approach, take extra care
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stop and seek advice:</strong> Conditions have changed significantly —
-                    stop work and consult your supervisor before proceeding
-                  </li>
-                  <li className="pl-1">
-                    <strong>Stop and withdraw:</strong> Immediate danger — stop all work, withdraw
-                    to a safe area, and report. Do not resume until the hazard is resolved
-                  </li>
-                </ul>
-              </div>
-            </div>
-
+          <ConceptBlock title="M — Manage">
+            <p>
+              Take action based on your assessment. There are four possible responses, in order of
+              escalation:
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Proceed:</strong> Conditions are as expected, controls are in place —
+                continue with the task
+              </li>
+              <li>
+                <strong>Adapt:</strong> Minor changes needed — add an additional control, adjust
+                your approach, take extra care
+              </li>
+              <li>
+                <strong>Stop and seek advice:</strong> Conditions have changed significantly — stop
+                work and consult your supervisor before proceeding
+              </li>
+              <li>
+                <strong>Stop and withdraw:</strong> Immediate danger — stop all work, withdraw to a
+                safe area, and report. Do not resume until the hazard is resolved
+              </li>
+            </ul>
             <p className="text-sm text-elec-yellow/70">
               <strong>Key point:</strong> SLAM is not bureaucracy — it is a mental habit that takes
               seconds. The best maintenance technicians apply it automatically, almost
               unconsciously, throughout their work. It is the difference between working safely and
               working complacently.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Point-of-Work Risk Assessment */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Point-of-Work Risk Assessment
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Point-of-work risk assessment</ContentEyebrow>
+
+          <ConceptBlock title="More formal than SLAM, less formal than a written RA">
             <p>
               A point-of-work risk assessment is a structured check carried out at the actual work
               location, typically just before work begins. It is more formal than the continuous
@@ -576,100 +527,83 @@ const MOETModule1Section3_5 = () => {
               verify that the conditions on site match those described in the formal risk assessment
               and that the planned controls are appropriate and in place.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Point-of-Work Check Process
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Arrive at the work area:</strong> Before unpacking tools or starting work,
-                  walk the area and observe
-                </li>
-                <li className="pl-1">
-                  <strong>Compare with the RA/MS:</strong> Does the work area match what was
-                  described in the risk assessment and method statement? Are the expected conditions
-                  present?
-                </li>
-                <li className="pl-1">
-                  <strong>Check access routes:</strong> Are they clear and safe? Can you get out
-                  quickly in an emergency?
-                </li>
-                <li className="pl-1">
-                  <strong>Verify isolation:</strong> If the work requires safe isolation, verify
-                  that it is in place and effective before touching any equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Check for new hazards:</strong> Are there any hazards that were not in the
-                  formal assessment? Other work activities? Changed environmental conditions?
-                </li>
-                <li className="pl-1">
-                  <strong>Confirm emergency arrangements:</strong> Where is the nearest first aid
-                  kit? Fire extinguisher? Emergency exit? How would you call for help?
-                </li>
-                <li className="pl-1">
-                  <strong>Brief the team:</strong> Share your findings with the work team before
-                  starting. If you have identified any differences from the planned conditions,
-                  discuss them and agree on how to proceed
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The point-of-work check process">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Arrive at the work area:</strong> Before unpacking tools or starting work,
+                walk the area and observe
+              </li>
+              <li>
+                <strong>Compare with the RA/MS:</strong> Does the work area match what was described
+                in the risk assessment and method statement? Are the expected conditions present?
+              </li>
+              <li>
+                <strong>Check access routes:</strong> Are they clear and safe? Can you get out
+                quickly in an emergency?
+              </li>
+              <li>
+                <strong>Verify isolation:</strong> If the work requires safe isolation, verify that
+                it is in place and effective before touching any equipment
+              </li>
+              <li>
+                <strong>Check for new hazards:</strong> Are there any hazards that were not in the
+                formal assessment? Other work activities? Changed environmental conditions?
+              </li>
+              <li>
+                <strong>Confirm emergency arrangements:</strong> Where is the nearest first aid kit?
+                Fire extinguisher? Emergency exit? How would you call for help?
+              </li>
+              <li>
+                <strong>Brief the team:</strong> Share your findings with the work team before
+                starting. If you have identified any differences from the planned conditions,
+                discuss them and agree on how to proceed
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 grid sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When the Check Is Clear
-                </h3>
-                <p className="text-sm text-white">
-                  If the point-of-work check confirms that conditions match the risk assessment and
-                  all controls are in place, proceed with the task as planned. Continue to apply
-                  SLAM throughout the work to monitor for changes.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  When the Check Reveals Differences
-                </h3>
-                <p className="text-sm text-white">
-                  If conditions differ from the risk assessment, do not proceed with the original
-                  plan. Assess whether the differences can be managed with additional controls on
-                  site, or whether the risk assessment and method statement need formal revision.
-                  For significant differences — unexpected hazards, missing controls, changed
-                  conditions — stop and escalate before proceeding.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="When the check is clear">
+            <p>
+              If the point-of-work check confirms that conditions match the risk assessment and all
+              controls are in place, proceed with the task as planned. Continue to apply SLAM
+              throughout the work to monitor for changes.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                The Mental Model for Dynamic Assessment
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Experienced technicians develop an internal mental model — a picture of what
-                "normal" and "safe" looks like for their work. This model is built through training,
-                experience and reflection. When conditions match the mental model, work proceeds
-                smoothly. When something deviates from the model — an unusual sight, sound, smell or
-                feeling — the technician's awareness is triggered, and they instinctively apply
-                SLAM.
-              </p>
-              <p className="text-sm text-white">
-                Building this mental model takes time and deliberate practice. As an apprentice or
-                early-career technician, you can accelerate the process by: paying close attention
-                during work, asking experienced colleagues why they do things a certain way,
-                reviewing incidents and near-misses to understand what went wrong, and mentally
-                rehearsing "what if" scenarios before starting work.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="When the check reveals differences">
+            <p>
+              If conditions differ from the risk assessment, do not proceed with the original plan.
+              Assess whether the differences can be managed with additional controls on site, or
+              whether the risk assessment and method statement need formal revision. For significant
+              differences — unexpected hazards, missing controls, changed conditions — stop and
+              escalate before proceeding.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04: When to Stop Work and Escalation */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            When to Stop Work and the Escalation Process
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The mental model for dynamic assessment">
+            <p>
+              Experienced technicians develop an internal mental model — a picture of what
+              &quot;normal&quot; and &quot;safe&quot; looks like for their work. This model is built
+              through training, experience and reflection. When conditions match the mental model,
+              work proceeds smoothly. When something deviates from the model — an unusual sight,
+              sound, smell or feeling — the technician&apos;s awareness is triggered, and they
+              instinctively apply SLAM.
+            </p>
+            <p>
+              Building this mental model takes time and deliberate practice. As an apprentice or
+              early-career technician, you can accelerate the process by: paying close attention
+              during work, asking experienced colleagues why they do things a certain way, reviewing
+              incidents and near-misses to understand what went wrong, and mentally rehearsing
+              &quot;what if&quot; scenarios before starting work.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>When to stop work and the escalation process</ContentEyebrow>
+
+          <ConceptBlock title="Both a right and a duty">
             <p>
               Knowing when to stop work is arguably the most important safety skill a maintenance
               technician can have. It requires both technical knowledge (to recognise danger) and
@@ -678,112 +612,98 @@ const MOETModule1Section3_5 = () => {
               worker has the right — and the duty — to stop work when they believe there is serious
               and imminent danger.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Stop-Work Triggers in Electrical Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Unexpected live conductors:</strong> A circuit that should be dead is
-                  found to be live — immediate withdrawal, re-verification of isolation,
-                  investigation
-                </li>
-                <li className="pl-1">
-                  <strong>Water ingress:</strong> Water entering an electrical enclosure or the work
-                  area — stop work, de-energise if safe, report the water source
-                </li>
-                <li className="pl-1">
-                  <strong>Suspected asbestos:</strong> Discovery of materials that may contain
-                  asbestos — stop work, do not disturb, withdraw, secure the area, report
-                </li>
-                <li className="pl-1">
-                  <strong>Structural concern:</strong> Crumbling walls, unstable floors or ceilings,
-                  particularly in old buildings where you are fixing equipment
-                </li>
-                <li className="pl-1">
-                  <strong>Gas smell:</strong> Any smell of gas requires immediate evacuation and
-                  emergency response — do not switch electrical equipment on or off (arc risk)
-                </li>
-                <li className="pl-1">
-                  <strong>Arc flash indicators:</strong> Scorching, melting, loud buzzing from
-                  switchgear — suggests an incipient arc fault; withdraw immediately
-                </li>
-                <li className="pl-1">
-                  <strong>Compromised isolation:</strong> Lock removed, isolation point found open,
-                  permit conditions breached
-                </li>
-                <li className="pl-1">
-                  <strong>Changed site conditions:</strong> New excavation near your cable route,
-                  scaffolding erected around your work area, other high-risk work starting nearby
-                </li>
-                <li className="pl-1">
-                  <strong>Personal incapacity:</strong> Feeling unwell, severely fatigued, or unable
-                  to concentrate safely
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Stop-work triggers in electrical maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-red-400/70">
+              <li>
+                <strong>Unexpected live conductors:</strong> A circuit that should be dead is found
+                to be live — immediate withdrawal, re-verification of isolation, investigation
+              </li>
+              <li>
+                <strong>Water ingress:</strong> Water entering an electrical enclosure or the work
+                area — stop work, de-energise if safe, report the water source
+              </li>
+              <li>
+                <strong>Suspected asbestos:</strong> Discovery of materials that may contain
+                asbestos — stop work, do not disturb, withdraw, secure the area, report
+              </li>
+              <li>
+                <strong>Structural concern:</strong> Crumbling walls, unstable floors or ceilings,
+                particularly in old buildings where you are fixing equipment
+              </li>
+              <li>
+                <strong>Gas smell:</strong> Any smell of gas requires immediate evacuation and
+                emergency response — do not switch electrical equipment on or off (arc risk)
+              </li>
+              <li>
+                <strong>Arc flash indicators:</strong> Scorching, melting, loud buzzing from
+                switchgear — suggests an incipient arc fault; withdraw immediately
+              </li>
+              <li>
+                <strong>Compromised isolation:</strong> Lock removed, isolation point found open,
+                permit conditions breached
+              </li>
+              <li>
+                <strong>Changed site conditions:</strong> New excavation near your cable route,
+                scaffolding erected around your work area, other high-risk work starting nearby
+              </li>
+              <li>
+                <strong>Personal incapacity:</strong> Feeling unwell, severely fatigued, or unable
+                to concentrate safely
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Escalation Process
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When you identify a hazard that is beyond your authority or competence to manage,
-                you must escalate it to someone who can deal with it. The escalation process should
-                be:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Immediate:</strong> For imminent danger — verbal alert to those in the
-                  vicinity, then immediate report to supervisor/site manager. If no supervisor
-                  available, call emergency services for life-threatening situations
-                </li>
-                <li className="pl-1">
-                  <strong>Urgent:</strong> For serious but not immediately life-threatening hazards
-                  — verbal report to supervisor as soon as practicable, followed by a written hazard
-                  report
-                </li>
-                <li className="pl-1">
-                  <strong>Routine:</strong> For hazards that need attention but do not require
-                  immediate action — written hazard report through the organisation's reporting
-                  system
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                Always confirm that your escalation has been received and actioned. If the person
-                you escalate to does not take appropriate action, escalate further up the management
-                chain, or to the site safety officer or your safety representative.
-              </p>
-            </div>
+          <ConceptBlock title="The escalation process">
+            <p>
+              When you identify a hazard that is beyond your authority or competence to manage, you
+              must escalate it to someone who can deal with it. The escalation process should be:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Immediate:</strong> For imminent danger — verbal alert to those in the
+                vicinity, then immediate report to supervisor/site manager. If no supervisor
+                available, call emergency services for life-threatening situations
+              </li>
+              <li>
+                <strong>Urgent:</strong> For serious but not immediately life-threatening hazards —
+                verbal report to supervisor as soon as practicable, followed by a written hazard
+                report
+              </li>
+              <li>
+                <strong>Routine:</strong> For hazards that need attention but do not require
+                immediate action — written hazard report through the organisation&apos;s reporting
+                system
+              </li>
+            </ul>
+            <p>
+              Always confirm that your escalation has been received and actioned. If the person you
+              escalate to does not take appropriate action, escalate further up the management
+              chain, or to the site safety officer or your safety representative.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Overcoming Pressure to Continue
-              </p>
-              <p className="text-sm text-white">
-                In practice, there can be significant pressure to continue working — from clients
-                wanting to meet deadlines, from supervisors focused on productivity, and from your
-                own desire to complete the job. This pressure is one of the biggest challenges to
-                effective dynamic risk assessment. Remember: no job is worth risking a life. The
-                Employment Rights Act 1996 protects you from dismissal or detriment for refusing to
-                work in dangerous conditions. Any employer that penalises a worker for a genuine
-                stop-work decision is acting unlawfully and unethically. If you encounter this,
-                report it through your safety representative, trade union, or directly to the HSE.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Overcoming pressure to continue">
+            <p>
+              In practice, there can be significant pressure to continue working — from clients
+              wanting to meet deadlines, from supervisors focused on productivity, and from your own
+              desire to complete the job. This pressure is one of the biggest challenges to
+              effective dynamic risk assessment. Remember: no job is worth risking a life. The
+              Employment Rights Act 1996 protects you from dismissal or detriment for refusing to
+              work in dangerous conditions. Any employer that penalises a worker for a genuine
+              stop-work decision is acting unlawfully and unethically. If you encounter this, report
+              it through your safety representative, trade union, or directly to the HSE.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 05: Documenting and Training */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Documenting Findings and Training Requirements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Documenting findings and training requirements</ContentEyebrow>
+
+          <ConceptBlock title="Three purposes for a mental process">
             <p>
               While dynamic risk assessment is primarily a real-time mental process, significant
               findings should be documented. Documentation serves three purposes: it creates an
@@ -791,213 +711,215 @@ const MOETModule1Section3_5 = () => {
               risk assessment system, and it captures lessons learned that can prevent future
               incidents.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">What to Document</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stop-work decisions:</strong> Why work was stopped, what hazard was
-                  identified, what action was taken, who was notified
-                </li>
-                <li className="pl-1">
-                  <strong>Work method changes:</strong> Any deviation from the method statement —
-                  what was changed, why, and what additional controls were applied
-                </li>
-                <li className="pl-1">
-                  <strong>New hazards discovered:</strong> Hazards not covered by the formal risk
-                  assessment — description, location, immediate action taken, recommendation for
-                  formal RA update
-                </li>
-                <li className="pl-1">
-                  <strong>Near-misses:</strong> Situations where harm was narrowly avoided — the
-                  near-miss report feeds into the organisation's safety learning system
-                </li>
-                <li className="pl-1">
-                  <strong>Conditions different from RA:</strong> Where site conditions did not match
-                  the written risk assessment — what the difference was and how it was managed
-                </li>
-              </ul>
+          <ConceptBlock title="What to document">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stop-work decisions:</strong> Why work was stopped, what hazard was
+                identified, what action was taken, who was notified
+              </li>
+              <li>
+                <strong>Work method changes:</strong> Any deviation from the method statement — what
+                was changed, why, and what additional controls were applied
+              </li>
+              <li>
+                <strong>New hazards discovered:</strong> Hazards not covered by the formal risk
+                assessment — description, location, immediate action taken, recommendation for
+                formal RA update
+              </li>
+              <li>
+                <strong>Near-misses:</strong> Situations where harm was narrowly avoided — the
+                near-miss report feeds into the organisation&apos;s safety learning system
+              </li>
+              <li>
+                <strong>Conditions different from RA:</strong> Where site conditions did not match
+                the written risk assessment — what the difference was and how it was managed
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Feeding back into formal assessment">
+            <p>
+              The findings from dynamic risk assessment should trigger a review of the formal risk
+              assessment. This creates a continuous improvement cycle:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Formal RA written</strong> — identifies anticipated hazards and controls
+              </li>
+              <li>
+                <strong>Work begins</strong> — dynamic RA monitors actual conditions
+              </li>
+              <li>
+                <strong>New hazards found</strong> — documented and reported
+              </li>
+              <li>
+                <strong>Formal RA updated</strong> — incorporates new information
+              </li>
+              <li>
+                <strong>Future work benefits</strong> — the next team has a better, more
+                comprehensive formal RA
+              </li>
+            </ul>
+            <p>
+              This feedback loop is a key element of continuous improvement in safety management and
+              is a behaviour that ST1426 expects maintenance technicians to demonstrate.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Training requirements for dynamic risk assessment">
+            <p>
+              Effective dynamic risk assessment requires a combination of knowledge, skills and
+              behaviours that must be developed through formal training and practical experience:
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Training area</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Content</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Hazard recognition
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Knowing what to look for — visual indicators, sounds, smells that signal
+                      danger in electrical maintenance
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">SLAM technique</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Structured approach to continuous assessment — Stop, Look, Assess, Manage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Decision-making
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Knowing when to proceed, adapt, seek advice or stop work — and having the
+                      confidence to act
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Stop-work authority
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Understanding your legal right and duty to stop work; the escalation process;
+                      protection from reprisal
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">
+                      Scenario practice
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Practising dynamic RA through scenario exercises, toolbox talks, and post-task
+                      debriefs
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-medium">Human factors</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Understanding how fatigue, stress, complacency and confirmation bias affect
+                      your ability to recognise hazards
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Feeding Back Into Formal Assessment
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The findings from dynamic risk assessment should trigger a review of the formal risk
-                assessment. This creates a continuous improvement cycle:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Formal RA written</strong> — identifies anticipated hazards and controls
-                </li>
-                <li className="pl-1">
-                  <strong>Work begins</strong> — dynamic RA monitors actual conditions
-                </li>
-                <li className="pl-1">
-                  <strong>New hazards found</strong> — documented and reported
-                </li>
-                <li className="pl-1">
-                  <strong>Formal RA updated</strong> — incorporates new information
-                </li>
-                <li className="pl-1">
-                  <strong>Future work benefits</strong> — the next team has a better, more
-                  comprehensive formal RA
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-3">
-                This feedback loop is a key element of continuous improvement in safety management
-                and is a behaviour that ST1426 expects maintenance technicians to demonstrate.
-              </p>
-            </div>
+          <ConceptBlock title="Real-world electrical maintenance scenarios">
+            <p>
+              The following scenarios illustrate how dynamic risk assessment works in practice for
+              electrical maintenance technicians:
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Training Requirements for Dynamic Risk Assessment
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Effective dynamic risk assessment requires a combination of knowledge, skills and
-                behaviours that must be developed through formal training and practical experience:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Training Area</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Hazard recognition
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Knowing what to look for — visual indicators, sounds, smells that signal
-                        danger in electrical maintenance
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        SLAM technique
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Structured approach to continuous assessment — Stop, Look, Assess, Manage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Decision-making
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Knowing when to proceed, adapt, seek advice or stop work — and having the
-                        confidence to act
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Stop-work authority
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding your legal right and duty to stop work; the escalation
-                        process; protection from reprisal
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Scenario practice
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Practising dynamic RA through scenario exercises, toolbox talks, and
-                        post-task debriefs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Human factors
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Understanding how fatigue, stress, complacency and confirmation bias affect
-                        your ability to recognise hazards
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <Scenario
+            title="Scenario 1: Unexpected live conductor"
+            situation={
+              <>
+                While tracing a fault in a ceiling void, you discover a junction box that is not on
+                any drawing. You suspect it may be live but connected to a different circuit from
+                the one you have isolated.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop work immediately. Do not touch the junction box. Prove dead using your voltage
+                indicator before any contact. If live, withdraw and investigate which circuit feeds
+                it. Update the risk assessment to include this additional hazard. Do not resume
+                until all circuits in the area are identified and appropriately isolated.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Real-World Electrical Maintenance Scenarios
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The following scenarios illustrate how dynamic risk assessment works in practice for
-                electrical maintenance technicians:
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Scenario 1: Unexpected Live Conductor
-                  </p>
-                  <p className="text-xs text-white">
-                    While tracing a fault in a ceiling void, you discover a junction box that is not
-                    on any drawing. You suspect it may be live but connected to a different circuit
-                    from the one you have isolated.
-                    <strong> Response:</strong> Stop work immediately. Do not touch the junction
-                    box. Prove dead using your voltage indicator before any contact. If live,
-                    withdraw and investigate which circuit feeds it. Update the risk assessment to
-                    include this additional hazard. Do not resume until all circuits in the area are
-                    identified and appropriately isolated.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Scenario 2: Water Ingress During Work
-                  </p>
-                  <p className="text-xs text-white">
-                    Midway through replacing components in a ground-floor distribution board, you
-                    notice water seeping under the switchroom door from a burst pipe in the
-                    corridor.
-                    <strong> Response:</strong> Stop work immediately. If the board is de-energised,
-                    secure your work and withdraw. If any part of the board is live, do not touch it
-                    with wet hands or while standing in water. Alert building management to the
-                    water leak. Do not resume electrical work until the water is cleared and the
-                    area is dry.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Scenario 3: Asbestos Discovery
-                  </p>
-                  <p className="text-xs text-white">
-                    While removing an old trunking run, you disturb what appears to be textured
-                    coating (Artex) on the wall behind. You know this building was constructed in
-                    the 1970s and may contain asbestos-containing materials.
-                    <strong> Response:</strong> Stop work immediately. Do not disturb the material
-                    further. Do not attempt to clean up any debris. Withdraw from the area. Seal the
-                    area if possible to prevent others entering. Report to the site manager and
-                    request the asbestos register. Work must not resume until a competent asbestos
-                    surveyor has assessed the material.
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-white mb-1">
-                    Scenario 4: Changed Site Conditions
-                  </p>
-                  <p className="text-xs text-white">
-                    You arrive for the second day of a cable installation to find that scaffolding
-                    has been erected overnight directly over your cable route. Scaffolders are
-                    working above, and there is a risk of dropped objects into your work area.
-                    <strong> Response:</strong> Do not start work. The conditions have changed
-                    significantly from the risk assessment. Speak to the scaffolding foreman and the
-                    site manager to coordinate safe working. You may need to reschedule your work,
-                    install additional protection (debris netting, exclusion zone), or find an
-                    alternative cable route. Update the method statement before proceeding.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <Scenario
+            title="Scenario 2: Water ingress during work"
+            situation={
+              <>
+                Midway through replacing components in a ground-floor distribution board, you notice
+                water seeping under the switchroom door from a burst pipe in the corridor.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop work immediately. If the board is de-energised, secure your work and withdraw.
+                If any part of the board is live, do not touch it with wet hands or while standing
+                in water. Alert building management to the water leak. Do not resume electrical work
+                until the water is cleared and the area is dry.
+              </>
+            }
+          />
 
+          <Scenario
+            title="Scenario 3: Asbestos discovery"
+            situation={
+              <>
+                While removing an old trunking run, you disturb what appears to be textured coating
+                (Artex) on the wall behind. You know this building was constructed in the 1970s and
+                may contain asbestos-containing materials.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop work immediately. Do not disturb the material further. Do not attempt to clean
+                up any debris. Withdraw from the area. Seal the area if possible to prevent others
+                entering. Report to the site manager and request the asbestos register. Work must
+                not resume until a competent asbestos surveyor has assessed the material.
+              </>
+            }
+          />
+
+          <Scenario
+            title="Scenario 4: Changed site conditions"
+            situation={
+              <>
+                You arrive for the second day of a cable installation to find that scaffolding has
+                been erected overnight directly over your cable route. Scaffolders are working
+                above, and there is a risk of dropped objects into your work area.
+              </>
+            }
+            whatToDo={
+              <>
+                Do not start work. The conditions have changed significantly from the risk
+                assessment. Speak to the scaffolding foreman and the site manager to coordinate safe
+                working. You may need to reschedule your work, install additional protection (debris
+                netting, exclusion zone), or find an alternative cable route. Update the method
+                statement before proceeding.
+              </>
+            }
+          />
+
+          <ConceptBlock title="Building your portfolio evidence">
             <p className="text-sm text-elec-yellow/70">
               <strong>ST1426 link:</strong> The maintenance technician standard expects you to
               demonstrate personal responsibility for health and safety, including the ability to
@@ -1007,61 +929,59 @@ const MOETModule1Section3_5 = () => {
               examples — including situations where you stopped work, adapted your approach or
               escalated a concern — provides strong evidence of competence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Dynamic risk assessment is not a replacement for formal planning. It is the safety net that catches the hazards that formal assessment missed.',
+              'SLAM is not bureaucracy — it is a mental habit that takes seconds. The best maintenance technicians apply it automatically, almost unconsciously, throughout their work.',
+              'Any employer that penalises a worker for a genuine stop-work decision is acting unlawfully and unethically.',
+              'This feedback loop is a key element of continuous improvement in safety management and is a behaviour that ST1426 expects maintenance technicians to demonstrate.',
+              'The maintenance technician standard expects you to demonstrate personal responsibility for health and safety, including the ability to assess risk dynamically, make appropriate decisions, and take action to protect yourself and others.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <SectionRule />
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Method Statements
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <Bleed>
+            <Quiz title="Dynamic risk assessment knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section3-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Writing and Following Method Statements
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section4-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Module 1, Section 4.1
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

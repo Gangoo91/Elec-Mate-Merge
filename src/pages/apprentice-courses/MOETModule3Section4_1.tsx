@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.4 · Subsection 1 — General Lighting Circuits
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Functions and applications of electrical circuits."
+ *   · "Electrical. Different types of cables; their specifications and
+ *      application."
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *      requirements: removing and replacing parts, inspecting, testing,
+ *      setting up, adjusting, cleaning, and functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'General Lighting Circuits - MOET Module 3.4.1';
@@ -28,12 +65,7 @@ const quickCheckQuestions = [
     id: 'two-way-switching',
     question:
       'How many conductors (excluding earth) are required between the two switches in a two-way switching arrangement?',
-    options: [
-      'Three conductors',
-      'Two conductors',
-      'Four conductors',
-      'Five conductors',
-    ],
+    options: ['Three conductors', 'Two conductors', 'Four conductors', 'Five conductors'],
     correctIndex: 0,
     explanation:
       'A two-way switching arrangement requires three conductors between the two switches: one common terminal wire and two strappers (travellers). The common terminal on one switch receives the supply, and the common terminal on the other connects to the luminaire. The two strappers connect L1 to L1 and L2 to L2 between the switches.',
@@ -55,12 +87,7 @@ const quickCheckQuestions = [
     id: 'lux-levels',
     question:
       'According to CIBSE guidelines, what is the recommended maintained illuminance for a general office area?',
-    options: [
-      '100 lux',
-      '200 lux',
-      '300 lux',
-      '500 lux',
-    ],
+    options: ['100 lux', '200 lux', '300 lux', '500 lux'],
     correctIndex: 3,
     explanation:
       'CIBSE (Chartered Institution of Building Services Engineers) recommends a maintained illuminance of 500 lux for general office areas. This is the minimum illuminance on the working plane that should be maintained throughout the life of the installation, accounting for lamp depreciation and luminaire dirt accumulation.',
@@ -86,12 +113,7 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the maximum number of points typically recommended on a single domestic lighting circuit protected by a 6 A MCB?',
-    options: [
-      '12 points',
-      '6 points',
-      '10 points',
-      '8 points',
-    ],
+    options: ['12 points', '6 points', '10 points', '8 points'],
     correctAnswer: 2,
     explanation:
       'BS 7671 Guidance Note 1 and the IET On-Site Guide recommend a maximum of approximately 10-12 lighting points per circuit, assuming each point draws around 100 W. However, with modern LED luminaires drawing much less power, the limitation is more often the cable volt drop or the number of connections rather than the total load.',
@@ -101,9 +123,9 @@ const quizQuestions = [
     question:
       'In a three-plate ceiling rose using loop-in wiring, what is connected to the middle terminal block?',
     options: [
-      'That the circuit is isolated and confirmed dead',
-      'Digital Addressable Lighting Interface',
-      'To maintain the designed lux levels on the working plane',
+      'The switched live conductor returning from the light switch',
+      'The circuit protective conductors from each of the cables',
+      'The neutral conductors of the incoming and outgoing cables',
       'The permanent live conductors (loop terminals)',
     ],
     correctAnswer: 3,
@@ -153,12 +175,7 @@ const quizQuestions = [
     id: 7,
     question:
       'According to CIBSE SLL Code for Lighting, what is the recommended maintained illuminance for a corridor or circulation area?',
-    options: [
-      '50 lux',
-      '300 lux',
-      '200 lux',
-      '100 lux',
-    ],
+    options: ['50 lux', '300 lux', '200 lux', '100 lux'],
     correctAnswer: 3,
     explanation:
       'CIBSE recommends 100 lux as the maintained illuminance for corridors and circulation areas. This provides adequate light for safe movement without the higher levels required for detailed task work. Stairwells and escape routes may require different levels, and emergency lighting must provide a minimum of 1 lux on the centre line of escape routes.',
@@ -180,12 +197,7 @@ const quizQuestions = [
   {
     id: 9,
     question: 'A daylight-linked lighting control system uses which type of sensor?',
-    options: [
-      'PIR sensor',
-      'Photocell (lux sensor)',
-      'Microwave sensor',
-      'Ultrasonic sensor',
-    ],
+    options: ['PIR sensor', 'Photocell (lux sensor)', 'Microwave sensor', 'Ultrasonic sensor'],
     correctAnswer: 1,
     explanation:
       'Daylight-linked systems use a photocell (lux sensor) to measure the ambient light level and adjust the artificial lighting output accordingly. As natural daylight increases, the artificial lighting dims or switches off; as daylight decreases, the lighting increases. This can reduce lighting energy consumption by 30-60% in areas with good daylight.',
@@ -262,118 +274,65 @@ const faqs = [
 ];
 
 const MOETModule3Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            General Lighting Circuits
-          </h1>
-          <p className="text-white">
-            Lighting circuit types, switching arrangements, control systems and maintenance
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.4 · Subsection 1"
+        title="General Lighting Circuits"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Lighting circuit types, switching arrangements, control systems and maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Radial circuits:</strong> Supply loops from point to point, terminating at
-                the last
+          <TLDR
+            points={[
+              'Radial circuits: supply loops from point to point, terminating at the last.',
+              'Loop-in wiring: connections made at each ceiling rose — no junction boxes.',
+              'Switching: one-way, two-way, intermediate and dimmer arrangements.',
+              'Controls: PIR, photocell, DALI and smart lighting systems.',
+            ]}
+          />
+
+          <ConceptBlock title="Regulatory context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671:2018+A4:2026:</strong> Part 5 — selection and erection of equipment.
               </li>
-              <li className="pl-1">
-                <strong>Loop-in wiring:</strong> Connections made at each ceiling rose — no junction
-                boxes
+              <li>
+                <strong>CIBSE SLL:</strong> Code for Lighting — maintained illuminance levels.
               </li>
-              <li className="pl-1">
-                <strong>Switching:</strong> One-way, two-way, intermediate and dimmer arrangements
-              </li>
-              <li className="pl-1">
-                <strong>Controls:</strong> PIR, photocell, DALI and smart lighting systems
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Regulatory Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671:2018+A4:2026:</strong> Part 5 — selection and erection of equipment
-              </li>
-              <li className="pl-1">
-                <strong>CIBSE SLL:</strong> Code for Lighting — maintained illuminance levels
-              </li>
-              <li className="pl-1">
+              <li>
                 <strong>Building Regs Part L:</strong> Conservation of fuel and power — lighting
-                efficacy
+                efficacy.
               </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Install, maintain and fault-find lighting systems
+              <li>
+                <strong>ST1426:</strong> Install, maintain and fault-find lighting systems.
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Describe radial and loop-in lighting circuit wiring arrangements',
               'Explain one-way, two-way and intermediate switching configurations',
               'Identify dimmer types and their compatibility with different lamp technologies',
               'Describe lighting control systems including PIR, photocell and DALI',
               'State recommended lux levels for common workplace areas',
               'Outline luminaire maintenance procedures including lamp replacement and cleaning',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Lighting circuit types and wiring methods</ContentEyebrow>
 
-        {/* Section 01: Lighting Circuit Types */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Lighting Circuit Types and Wiring Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Lighting circuit types and wiring methods">
             <p>
               Lighting circuits in the UK are predominantly radial circuits, meaning the cable runs
               from the consumer unit or distribution board through each lighting point in sequence,
@@ -389,388 +348,342 @@ const MOETModule3Section4_1 = () => {
               W. With modern LED luminaires drawing significantly less power, the practical
               limitation is often the cable volt drop over long runs rather than the total load.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Loop-In Wiring</p>
-              <p className="text-sm text-white mb-3">
-                Loop-in wiring is the standard method for domestic and small commercial lighting
-                circuits. All connections are made at the ceiling rose or luminaire terminal,
-                eliminating the need for separate junction boxes. The supply cable loops through
-                each ceiling rose in sequence.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Three-plate ceiling rose:</strong> Three terminal blocks — live (loop),
-                  neutral, and switched live
-                </li>
-                <li className="pl-1">
-                  <strong>Supply in/out:</strong> The supply cable enters and exits through the loop
-                  terminals
-                </li>
-                <li className="pl-1">
-                  <strong>Switch wire:</strong> A twin and earth cable runs down to the switch —
-                  live goes to common, switched live returns on the neutral conductor (sleeved
-                  brown)
-                </li>
-                <li className="pl-1">
-                  <strong>Pendant flex:</strong> Connects from the switched live and neutral
-                  terminals to the lamp holder
-                </li>
-                <li className="pl-1">
-                  <strong>Advantage:</strong> All joints accessible at the ceiling rose for
-                  maintenance and fault-finding
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Junction Box Wiring</p>
-              <p className="text-sm text-white mb-3">
-                In junction box wiring, a four-terminal junction box is used at each lighting point
-                to make the connections between the supply cable, switch drop and luminaire drop.
-                This method is often used in existing installations and where ceiling access is
-                limited.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Four terminals:</strong> Permanent live, neutral, switched live, earth
-                </li>
-                <li className="pl-1">
-                  <strong>Separate drops:</strong> Individual cables run from the junction box to
-                  the switch and to the luminaire
-                </li>
-                <li className="pl-1">
-                  <strong>Location:</strong> Junction boxes must remain accessible (typically above
-                  the ceiling)
-                </li>
-                <li className="pl-1">
-                  <strong>Disadvantage:</strong> Additional connection points that may be difficult
-                  to locate during fault-finding
-                </li>
-                <li className="pl-1">
-                  <strong>Use case:</strong> Often preferred for complex switching arrangements or
-                  where ceiling roses are not used
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Commercial and Industrial Circuits
-              </p>
-              <p className="text-sm text-white">
-                In larger commercial and industrial installations, lighting circuits are often wired
-                using single-core cables in trunking or conduit, or using SWA (Steel Wire Armoured)
-                or MICC (Mineral Insulated Copper Clad) cable. Circuits may be three-phase with
-                luminaires distributed across all three phases for balanced loading. Busbar trunking
-                systems are also used in warehouses and factories to provide flexible luminaire
-                positioning.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> When fault-finding on lighting circuits, always
-              start by identifying the wiring method (loop-in or junction box) as this determines
-              where connections are located. In loop-in systems, all joints are at the ceiling rose.
-              In junction box systems, you must locate the junction boxes — which may be hidden
-              above ceilings or in voids.
+          <ConceptBlock title="Loop-in wiring">
+            <p>
+              Loop-in wiring is the standard method for domestic and small commercial lighting
+              circuits. All connections are made at the ceiling rose or luminaire terminal,
+              eliminating the need for separate junction boxes. The supply cable loops through each
+              ceiling rose in sequence.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Three-plate ceiling rose:</strong> Three terminal blocks — live (loop),
+                neutral, and switched live.
+              </li>
+              <li>
+                <strong>Supply in/out:</strong> The supply cable enters and exits through the loop
+                terminals.
+              </li>
+              <li>
+                <strong>Switch wire:</strong> A twin and earth cable runs down to the switch — live
+                goes to common, switched live returns on the neutral conductor (sleeved brown).
+              </li>
+              <li>
+                <strong>Pendant flex:</strong> Connects from the switched live and neutral terminals
+                to the lamp holder.
+              </li>
+              <li>
+                <strong>Advantage:</strong> All joints accessible at the ceiling rose for
+                maintenance and fault-finding.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock
+            title="Junction box wiring"
+            onSite="Maintenance tip: when fault-finding on lighting circuits, always start by identifying the wiring method (loop-in or junction box) as this determines where connections are located. In loop-in systems, all joints are at the ceiling rose. In junction box systems, you must locate the junction boxes — which may be hidden above ceilings or in voids."
+          >
+            <p>
+              In junction box wiring, a four-terminal junction box is used at each lighting point to
+              make the connections between the supply cable, switch drop and luminaire drop. This
+              method is often used in existing installations and where ceiling access is limited.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Four terminals:</strong> Permanent live, neutral, switched live, earth.
+              </li>
+              <li>
+                <strong>Separate drops:</strong> Individual cables run from the junction box to the
+                switch and to the luminaire.
+              </li>
+              <li>
+                <strong>Location:</strong> Junction boxes must remain accessible (typically above
+                the ceiling).
+              </li>
+              <li>
+                <strong>Disadvantage:</strong> Additional connection points that may be difficult to
+                locate during fault-finding.
+              </li>
+              <li>
+                <strong>Use case:</strong> Often preferred for complex switching arrangements or
+                where ceiling roses are not used.
+              </li>
+            </ul>
+            <p>
+              In larger commercial and industrial installations, lighting circuits are often wired
+              using single-core cables in trunking or conduit, or using SWA (Steel Wire Armoured) or
+              MICC (Mineral Insulated Copper Clad) cable. Circuits may be three-phase with
+              luminaires distributed across all three phases for balanced loading. Busbar trunking
+              systems are also used in warehouses and factories to provide flexible luminaire
+              positioning.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02: Switching Arrangements */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Switching Arrangements
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Switching arrangements</ContentEyebrow>
+
+          <ConceptBlock title="Switching arrangements">
             <p>
               Switching arrangements determine how luminaires can be controlled from one or more
               locations. The correct switching configuration is essential for user convenience,
               energy efficiency and compliance with Building Regulations. Maintenance technicians
               must understand each type to diagnose faults and carry out replacements correctly.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">One-Way Switching</p>
-              <p className="text-sm text-white mb-3">
-                The simplest arrangement — a single switch controls a single luminaire or group of
-                luminaires from one location. The switch is a single-pole device that breaks the
-                line conductor only.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Terminals:</strong> Common (COM) and L1
-                </li>
-                <li className="pl-1">
-                  <strong>Cable:</strong> Twin and earth from ceiling rose to switch
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring:</strong> Permanent live to COM, switched live returns on L1
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Rooms with a single entrance, small spaces, utility
-                  areas
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Two-Way Switching</p>
-              <p className="text-sm text-white mb-3">
-                Allows a luminaire to be controlled from two locations — typically at each end of a
-                corridor, staircase or room with two entrances. Uses two two-way switches connected
-                by strappers.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Terminals:</strong> Common (COM), L1 and L2 on each switch
-                </li>
-                <li className="pl-1">
-                  <strong>Cable:</strong> Three-core and earth between the two switches (for
-                  strappers)
-                </li>
-                <li className="pl-1">
-                  <strong>Wiring:</strong> Supply to COM on switch 1; COM on switch 2 to luminaire;
-                  L1-L1 and L2-L2 connected (strappers)
-                </li>
-                <li className="pl-1">
-                  <strong>Operation:</strong> Either switch can change the state of the luminaire
-                  regardless of the other switch position
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Stairways, corridors, rooms with multiple entrances
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Intermediate Switching</p>
-              <p className="text-sm text-white mb-3">
-                When control from three or more locations is required, intermediate switches are
-                added between two two-way switches. Each intermediate switch has four terminals and
-                cross-connects the strappers.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Terminals:</strong> Four terminals — L1 in, L2 in, L1 out, L2 out
-                </li>
-                <li className="pl-1">
-                  <strong>Operation:</strong> Cross-connects or straight-connects the strappers
-                  depending on switch position
-                </li>
-                <li className="pl-1">
-                  <strong>Quantity:</strong> Any number of intermediate switches can be added
-                  between the two two-way end switches
-                </li>
-                <li className="pl-1">
-                  <strong>Application:</strong> Long corridors, open-plan offices, large retail
-                  spaces
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Switching Arrangement Summary
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Arrangement</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Control Points</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Switch Types</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Strappers Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">One-way</td>
-                      <td className="border border-white/10 px-3 py-2">1</td>
-                      <td className="border border-white/10 px-3 py-2">1 x one-way switch</td>
-                      <td className="border border-white/10 px-3 py-2">None</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Two-way</td>
-                      <td className="border border-white/10 px-3 py-2">2</td>
-                      <td className="border border-white/10 px-3 py-2">2 x two-way switches</td>
-                      <td className="border border-white/10 px-3 py-2">2 (three-core and earth)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Intermediate</td>
-                      <td className="border border-white/10 px-3 py-2">3+</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2 x two-way + N x intermediate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        2 (continuous through all switches)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Fault-finding tip:</strong> When a two-way or intermediate switching circuit
-              fails, the fault is most commonly at the strapper connections. Check continuity of
-              both strappers between all switches. A broken strapper will cause the light to work
-              from one switch position only.
+          <ConceptBlock title="One-way switching">
+            <p>
+              The simplest arrangement — a single switch controls a single luminaire or group of
+              luminaires from one location. The switch is a single-pole device that breaks the line
+              conductor only.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Terminals:</strong> Common (COM) and L1.
+              </li>
+              <li>
+                <strong>Cable:</strong> Twin and earth from ceiling rose to switch.
+              </li>
+              <li>
+                <strong>Wiring:</strong> Permanent live to COM, switched live returns on L1.
+              </li>
+              <li>
+                <strong>Application:</strong> Rooms with a single entrance, small spaces, utility
+                areas.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Two-way switching">
+            <p>
+              Allows a luminaire to be controlled from two locations — typically at each end of a
+              corridor, staircase or room with two entrances. Uses two two-way switches connected by
+              strappers.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Terminals:</strong> Common (COM), L1 and L2 on each switch.
+              </li>
+              <li>
+                <strong>Cable:</strong> Three-core and earth between the two switches (for
+                strappers).
+              </li>
+              <li>
+                <strong>Wiring:</strong> Supply to COM on switch 1; COM on switch 2 to luminaire;
+                L1-L1 and L2-L2 connected (strappers).
+              </li>
+              <li>
+                <strong>Operation:</strong> Either switch can change the state of the luminaire
+                regardless of the other switch position.
+              </li>
+              <li>
+                <strong>Application:</strong> Stairways, corridors, rooms with multiple entrances.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03: Dimming and Lighting Control Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Dimming and Lighting Control Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Intermediate switching">
+            <p>
+              When control from three or more locations is required, intermediate switches are added
+              between two two-way switches. Each intermediate switch has four terminals and
+              cross-connects the strappers.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Terminals:</strong> Four terminals — L1 in, L2 in, L1 out, L2 out.
+              </li>
+              <li>
+                <strong>Operation:</strong> Cross-connects or straight-connects the strappers
+                depending on switch position.
+              </li>
+              <li>
+                <strong>Quantity:</strong> Any number of intermediate switches can be added between
+                the two two-way end switches.
+              </li>
+              <li>
+                <strong>Application:</strong> Long corridors, open-plan offices, large retail
+                spaces.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Switching arrangement summary"
+            onSite="Fault-finding tip: when a two-way or intermediate switching circuit fails, the fault is most commonly at the strapper connections. Check continuity of both strappers between all switches. A broken strapper will cause the light to work from one switch position only."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Arrangement</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Control points</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Switch types</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">
+                      Strappers required
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">One-way</td>
+                    <td className="border border-white/10 px-3 py-2">1</td>
+                    <td className="border border-white/10 px-3 py-2">1 x one-way switch</td>
+                    <td className="border border-white/10 px-3 py-2">None</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Two-way</td>
+                    <td className="border border-white/10 px-3 py-2">2</td>
+                    <td className="border border-white/10 px-3 py-2">2 x two-way switches</td>
+                    <td className="border border-white/10 px-3 py-2">2 (three-core and earth)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Intermediate</td>
+                    <td className="border border-white/10 px-3 py-2">3+</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      2 x two-way + N x intermediate
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      2 (continuous through all switches)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Dimming and lighting control systems</ContentEyebrow>
+
+          <ConceptBlock title="Dimming and lighting control systems">
             <p>
               Modern lighting installations increasingly incorporate dimming and automated control
               systems to reduce energy consumption, improve occupant comfort and comply with
               Building Regulations Part L. Understanding these systems is essential for maintenance
               technicians who must install, commission, maintain and fault-find them.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Dimmer Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Leading-edge (triac):</strong> Cuts the leading edge of each AC
-                  half-cycle. Suitable for incandescent and halogen loads. Not recommended for most
-                  LED lamps due to flickering and compatibility issues
-                </li>
-                <li className="pl-1">
-                  <strong>Trailing-edge:</strong> Cuts the trailing edge of each AC half-cycle.
-                  Smoother, quieter operation. The preferred choice for LED and electronic
-                  transformer loads. More expensive than leading-edge
-                </li>
-                <li className="pl-1">
-                  <strong>1-10 V analogue:</strong> A separate pair of control wires carries a 1-10
-                  V DC signal to the ballast/driver. 1 V = minimum output, 10 V = full output.
-                  Simple and reliable but no individual addressing
-                </li>
-                <li className="pl-1">
-                  <strong>DALI (Digital Addressable Lighting Interface):</strong> Digital protocol
-                  (IEC 62386) using a two-wire bus. Up to 64 individual addresses per bus.
-                  Bi-directional communication, scene setting, grouping
-                </li>
-                <li className="pl-1">
-                  <strong>DSI (Digital Serial Interface):</strong> Predecessor to DALI.
-                  Unidirectional only. Being phased out in favour of DALI
-                </li>
-                <li className="pl-1">
-                  <strong>DMX512:</strong> Entertainment and architectural lighting protocol. 512
-                  channels per universe. High-speed control for colour-changing and dynamic lighting
-                  effects
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Dimmer types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Leading-edge (triac):</strong> Cuts the leading edge of each AC half-cycle.
+                Suitable for incandescent and halogen loads. Not recommended for most LED lamps due
+                to flickering and compatibility issues.
+              </li>
+              <li>
+                <strong>Trailing-edge:</strong> Cuts the trailing edge of each AC half-cycle.
+                Smoother, quieter operation. The preferred choice for LED and electronic transformer
+                loads. More expensive than leading-edge.
+              </li>
+              <li>
+                <strong>1-10 V analogue:</strong> A separate pair of control wires carries a 1-10 V
+                DC signal to the ballast/driver. 1 V = minimum output, 10 V = full output. Simple
+                and reliable but no individual addressing.
+              </li>
+              <li>
+                <strong>DALI (Digital Addressable Lighting Interface):</strong> Digital protocol
+                (IEC 62386) using a two-wire bus. Up to 64 individual addresses per bus.
+                Bi-directional communication, scene setting, grouping.
+              </li>
+              <li>
+                <strong>DSI (Digital Serial Interface):</strong> Predecessor to DALI. Unidirectional
+                only. Being phased out in favour of DALI.
+              </li>
+              <li>
+                <strong>DMX512:</strong> Entertainment and architectural lighting protocol. 512
+                channels per universe. High-speed control for colour-changing and dynamic lighting
+                effects.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Automated Lighting Controls
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>PIR (Passive Infrared) sensors:</strong> Detect movement of warm bodies
-                  via changes in infrared radiation. Ideal for intermittently occupied areas —
-                  toilets, corridors, storerooms. Typical range 6-12 m, detection angle 180-360
-                  degrees
-                </li>
-                <li className="pl-1">
-                  <strong>Microwave sensors:</strong> Emit microwave signals and detect the Doppler
-                  shift caused by movement. More sensitive than PIR, can detect through thin walls
-                  and partitions. Used in areas where PIR coverage is insufficient
-                </li>
-                <li className="pl-1">
-                  <strong>Ultrasonic sensors:</strong> Emit ultrasonic sound waves and detect
-                  changes caused by movement. Good for areas with obstructions or partitions. Less
-                  common than PIR and microwave
-                </li>
-                <li className="pl-1">
-                  <strong>Photocells (daylight sensors):</strong> Measure ambient light level in
-                  lux. Used for daylight-linked dimming — reducing artificial light output as
-                  natural daylight increases. Can reduce lighting energy by 30-60%
-                </li>
-                <li className="pl-1">
-                  <strong>Time switches and astronomical clocks:</strong> Control lighting based on
-                  time of day and calculated sunrise/sunset times. Used for external lighting and
-                  car park lighting
-                </li>
-                <li className="pl-1">
-                  <strong>BMS integration:</strong> Lighting control integrated into the Building
-                  Management System for centralised monitoring, scheduling and energy reporting
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Automated lighting controls">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>PIR (Passive Infrared) sensors:</strong> Detect movement of warm bodies via
+                changes in infrared radiation. Ideal for intermittently occupied areas — toilets,
+                corridors, storerooms. Typical range 6-12 m, detection angle 180-360 degrees.
+              </li>
+              <li>
+                <strong>Microwave sensors:</strong> Emit microwave signals and detect the Doppler
+                shift caused by movement. More sensitive than PIR, can detect through thin walls and
+                partitions. Used in areas where PIR coverage is insufficient.
+              </li>
+              <li>
+                <strong>Ultrasonic sensors:</strong> Emit ultrasonic sound waves and detect changes
+                caused by movement. Good for areas with obstructions or partitions. Less common than
+                PIR and microwave.
+              </li>
+              <li>
+                <strong>Photocells (daylight sensors):</strong> Measure ambient light level in lux.
+                Used for daylight-linked dimming — reducing artificial light output as natural
+                daylight increases. Can reduce lighting energy by 30-60%.
+              </li>
+              <li>
+                <strong>Time switches and astronomical clocks:</strong> Control lighting based on
+                time of day and calculated sunrise/sunset times. Used for external lighting and car
+                park lighting.
+              </li>
+              <li>
+                <strong>BMS integration:</strong> Lighting control integrated into the Building
+                Management System for centralised monitoring, scheduling and energy reporting.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                DALI System Architecture
-              </p>
-              <p className="text-sm text-white mb-3">
-                DALI is the most widely adopted digital lighting control protocol in commercial
-                buildings. Understanding its architecture is essential for maintenance and
-                fault-finding.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>DALI bus:</strong> Two-wire, polarity-independent control bus. Can run
-                  alongside mains cabling. Maximum bus length approximately 300 m (voltage drop
-                  limited)
-                </li>
-                <li className="pl-1">
-                  <strong>Addressing:</strong> Up to 64 individual DALI addresses per bus. Each
-                  luminaire (or DALI driver) has a unique address
-                </li>
-                <li className="pl-1">
-                  <strong>Grouping:</strong> Addresses can be assigned to up to 16 groups for
-                  simultaneous control
-                </li>
-                <li className="pl-1">
-                  <strong>Scenes:</strong> Up to 16 pre-set lighting scenes can be stored in each
-                  driver
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback:</strong> Bi-directional — drivers report lamp status, failure
-                  and operating hours back to the controller
-                </li>
-                <li className="pl-1">
-                  <strong>DALI-2:</strong> Updated standard with improved interoperability,
-                  push-button input devices, and sensor integration
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Building Regulations Part L requires that new non-domestic
-              buildings incorporate lighting controls that respond to daylight and occupancy.
-              Maintenance technicians must understand how to commission, adjust and fault-find these
-              systems to maintain energy performance throughout the building's life.
+          <ConceptBlock
+            title="DALI system architecture"
+            onSite="Key point: Building Regulations Part L requires that new non-domestic buildings incorporate lighting controls that respond to daylight and occupancy. Maintenance technicians must understand how to commission, adjust and fault-find these systems to maintain energy performance throughout the building's life."
+          >
+            <p>
+              DALI is the most widely adopted digital lighting control protocol in commercial
+              buildings. Understanding its architecture is essential for maintenance and
+              fault-finding.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>DALI bus:</strong> Two-wire, polarity-independent control bus. Can run
+                alongside mains cabling. Maximum bus length approximately 300 m (voltage drop
+                limited).
+              </li>
+              <li>
+                <strong>Addressing:</strong> Up to 64 individual DALI addresses per bus. Each
+                luminaire (or DALI driver) has a unique address.
+              </li>
+              <li>
+                <strong>Grouping:</strong> Addresses can be assigned to up to 16 groups for
+                simultaneous control.
+              </li>
+              <li>
+                <strong>Scenes:</strong> Up to 16 pre-set lighting scenes can be stored in each
+                driver.
+              </li>
+              <li>
+                <strong>Feedback:</strong> Bi-directional — drivers report lamp status, failure and
+                operating hours back to the controller.
+              </li>
+              <li>
+                <strong>DALI-2:</strong> Updated standard with improved interoperability,
+                push-button input devices, and sensor integration.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Lux Levels, Luminaires and Maintenance */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Lux Levels, Luminaire Types and Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Lux levels, luminaires and maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Lux levels, luminaire types and maintenance">
             <p>
               Maintaining adequate lighting levels is a legal requirement under the Workplace
               (Health, Safety and Welfare) Regulations 1992 and is essential for the safety, comfort
@@ -778,220 +691,222 @@ const MOETModule3Section4_1 = () => {
               Code for Lighting provides detailed recommendations for illuminance levels in
               different types of spaces.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Recommended Maintained Illuminance (CIBSE SLL)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Area Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintained Illuminance (lux)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Corridors and circulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">100</td>
-                      <td className="border border-white/10 px-3 py-2">Safe movement</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Stairways</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">On treads</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">General office</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">On working plane</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Technical drawing</td>
-                      <td className="border border-white/10 px-3 py-2">750</td>
-                      <td className="border border-white/10 px-3 py-2">Detail work</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Workshop (general)</td>
-                      <td className="border border-white/10 px-3 py-2">300</td>
-                      <td className="border border-white/10 px-3 py-2">General work</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Workshop (fine work)</td>
-                      <td className="border border-white/10 px-3 py-2">500</td>
-                      <td className="border border-white/10 px-3 py-2">Bench level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Warehouse (general)</td>
-                      <td className="border border-white/10 px-3 py-2">150</td>
-                      <td className="border border-white/10 px-3 py-2">At floor level</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Car park (covered)</td>
-                      <td className="border border-white/10 px-3 py-2">75</td>
-                      <td className="border border-white/10 px-3 py-2">At floor level</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Recommended maintained illuminance (CIBSE SLL)">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-white">Area type</th>
+                    <th className="border border-white/10 px-3 py-2 text-white">
+                      Maintained illuminance (lux)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-white">Notes</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Corridors and circulation</td>
+                    <td className="border border-white/10 px-3 py-2">100</td>
+                    <td className="border border-white/10 px-3 py-2">Safe movement</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Stairways</td>
+                    <td className="border border-white/10 px-3 py-2">150</td>
+                    <td className="border border-white/10 px-3 py-2">On treads</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">General office</td>
+                    <td className="border border-white/10 px-3 py-2">500</td>
+                    <td className="border border-white/10 px-3 py-2">On working plane</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Technical drawing</td>
+                    <td className="border border-white/10 px-3 py-2">750</td>
+                    <td className="border border-white/10 px-3 py-2">Detail work</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Workshop (general)</td>
+                    <td className="border border-white/10 px-3 py-2">300</td>
+                    <td className="border border-white/10 px-3 py-2">General work</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Workshop (fine work)</td>
+                    <td className="border border-white/10 px-3 py-2">500</td>
+                    <td className="border border-white/10 px-3 py-2">Bench level</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Warehouse (general)</td>
+                    <td className="border border-white/10 px-3 py-2">150</td>
+                    <td className="border border-white/10 px-3 py-2">At floor level</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Car park (covered)</td>
+                    <td className="border border-white/10 px-3 py-2">75</td>
+                    <td className="border border-white/10 px-3 py-2">At floor level</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Common Luminaire Types</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Recessed modular (600x600 mm):</strong> Standard suspended ceiling
-                  luminaire — LED panel or troffer. Clean appearance, good uniformity. Used in
-                  offices, healthcare, education
-                </li>
-                <li className="pl-1">
-                  <strong>Surface-mounted battens:</strong> Linear luminaires mounted directly to
-                  the ceiling. Used in workshops, warehouses, plant rooms. LED replacements for
-                  fluorescent battens
-                </li>
-                <li className="pl-1">
-                  <strong>High-bay luminaires:</strong> High-output luminaires for mounting heights
-                  above 6 m. Used in warehouses, factories, sports halls. LED high-bays now standard
-                </li>
-                <li className="pl-1">
-                  <strong>Downlights:</strong> Recessed or semi-recessed circular fittings. Used in
-                  retail, hospitality, residential. Fire-rated versions required where penetrating
-                  fire compartment boundaries
-                </li>
-                <li className="pl-1">
-                  <strong>Bulkhead fittings:</strong> Robust, often IP65-rated surface-mounted
-                  fittings. Used in plant rooms, stairwells, external areas. Available in emergency
-                  lighting variants
-                </li>
-                <li className="pl-1">
-                  <strong>Track lighting:</strong> Luminaires mounted on an electrified track. Used
-                  in retail and gallery spaces. Allows flexible repositioning without rewiring
-                </li>
-                <li className="pl-1">
-                  <strong>Floodlights:</strong> External area lighting. Used for car parks, sports
-                  facilities, building facades. LED floodlights offer significant energy savings
-                  over traditional SON and MH
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common luminaire types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Recessed modular (600x600 mm):</strong> Standard suspended ceiling luminaire
+                — LED panel or troffer. Clean appearance, good uniformity. Used in offices,
+                healthcare, education.
+              </li>
+              <li>
+                <strong>Surface-mounted battens:</strong> Linear luminaires mounted directly to the
+                ceiling. Used in workshops, warehouses, plant rooms. LED replacements for
+                fluorescent battens.
+              </li>
+              <li>
+                <strong>High-bay luminaires:</strong> High-output luminaires for mounting heights
+                above 6 m. Used in warehouses, factories, sports halls. LED high-bays now standard.
+              </li>
+              <li>
+                <strong>Downlights:</strong> Recessed or semi-recessed circular fittings. Used in
+                retail, hospitality, residential. Fire-rated versions required where penetrating
+                fire compartment boundaries.
+              </li>
+              <li>
+                <strong>Bulkhead fittings:</strong> Robust, often IP65-rated surface-mounted
+                fittings. Used in plant rooms, stairwells, external areas. Available in emergency
+                lighting variants.
+              </li>
+              <li>
+                <strong>Track lighting:</strong> Luminaires mounted on an electrified track. Used in
+                retail and gallery spaces. Allows flexible repositioning without rewiring.
+              </li>
+              <li>
+                <strong>Floodlights:</strong> External area lighting. Used for car parks, sports
+                facilities, building facades. LED floodlights offer significant energy savings over
+                traditional SON and MH.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Lighting Maintenance Procedures
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lamp replacement:</strong> Always isolate and prove dead first. Match
-                  wattage, cap type, colour temperature and CRI. Dispose of discharge lamps
-                  (fluorescent, HID) as hazardous waste — they contain mercury
-                </li>
-                <li className="pl-1">
-                  <strong>Luminaire cleaning:</strong> Clean reflectors, diffusers and louvres at
-                  intervals specified in the maintenance schedule. Dirt accumulation reduces light
-                  output — the Luminaire Maintenance Factor (LMF) accounts for this in design
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting testing:</strong> Monthly functional test (brief
-                  operation on battery), annual full-duration test (1 hr or 3 hr). Record all
-                  results in the log book (BS 5266)
-                </li>
-                <li className="pl-1">
-                  <strong>Control system checks:</strong> Verify PIR sensitivity and time-out
-                  settings, check photocell calibration, confirm DALI addressing and scene settings
-                  are correct
-                </li>
-                <li className="pl-1">
-                  <strong>Lux level surveys:</strong> Periodic measurement using a calibrated lux
-                  meter to verify maintained illuminance levels are being achieved. Compare with
-                  design values
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal imaging:</strong> Infrared survey of luminaire connections,
-                  control gear and switchgear to identify hot spots indicating loose connections or
-                  failing components
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Lighting maintenance procedures"
+            onSite="ST1426 link: the maintenance technician standard requires competence in maintaining lighting systems, including lamp replacement, cleaning, testing and recording. You must be able to identify when lux levels have fallen below acceptable limits and take corrective action."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lamp replacement:</strong> Always isolate and prove dead first. Match
+                wattage, cap type, colour temperature and CRI. Dispose of discharge lamps
+                (fluorescent, HID) as hazardous waste — they contain mercury.
+              </li>
+              <li>
+                <strong>Luminaire cleaning:</strong> Clean reflectors, diffusers and louvres at
+                intervals specified in the maintenance schedule. Dirt accumulation reduces light
+                output — the Luminaire Maintenance Factor (LMF) accounts for this in design.
+              </li>
+              <li>
+                <strong>Emergency lighting testing:</strong> Monthly functional test (brief
+                operation on battery), annual full-duration test (1 hr or 3 hr). Record all results
+                in the log book (BS 5266-1:2025).
+              </li>
+              <li>
+                <strong>Control system checks:</strong> Verify PIR sensitivity and time-out
+                settings, check photocell calibration, confirm DALI addressing and scene settings
+                are correct.
+              </li>
+              <li>
+                <strong>Lux level surveys:</strong> Periodic measurement using a calibrated lux
+                meter to verify maintained illuminance levels are being achieved. Compare with
+                design values.
+              </li>
+              <li>
+                <strong>Thermal imaging:</strong> Infrared survey of luminaire connections, control
+                gear and switchgear to identify hot spots indicating loose connections or failing
+                components.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Lamp Disposal Requirements</p>
-              <p className="text-sm text-white">
-                Discharge lamps (fluorescent tubes, compact fluorescent, metal halide, sodium)
-                contain mercury and must be disposed of as hazardous waste under the Waste
-                Electrical and Electronic Equipment (WEEE) Regulations. They must not be placed in
-                general waste. Broken lamps should be handled with care due to mercury vapour risk.
-                LED lamps contain electronic components and should also be recycled through
-                WEEE-compliant routes, although they do not contain mercury.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in maintaining lighting systems, including lamp replacement, cleaning, testing and
-              recording. You must be able to identify when lux levels have fallen below acceptable
-              limits and take corrective action.
+          <ConceptBlock title="Lamp disposal requirements">
+            <p>
+              Discharge lamps (fluorescent tubes, compact fluorescent, metal halide, sodium) contain
+              mercury and must be disposed of as hazardous waste under the Waste Electrical and
+              Electronic Equipment (WEEE) Regulations. They must not be placed in general waste.
+              Broken lamps should be handled with care due to mercury vapour risk. LED lamps contain
+              electronic components and should also be recycled through WEEE-compliant routes,
+              although they do not contain mercury.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=4csv_ofVcwA"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="The Most Common Lighting Circuit Mistake"
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+            channel="Toolbox Talk For Electricians"
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section4-2">
-              Next: Emergency Lighting Systems
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+            duration="23:43"
+
+            topic="Loop-in wiring, switch drops, and the mistake that keeps recurring"
+
+            caption="Long, but it is the fault you will be called out to most often on lighting circuits."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Lighting circuits are radial, not ring — the cable terminates at the last point on the circuit.',
+              'Loop-in wiring keeps every joint at the ceiling rose; junction box wiring uses a separate four-terminal box.',
+              'One-way needs no strappers, two-way needs two (three-core and earth), intermediate needs the same two strappers continued through every switch in between.',
+              'Trailing-edge dimmers are the safe choice for LED loads — leading-edge (triac) dimmers can flicker, buzz and shorten LED driver life.',
+              'DALI addresses up to 64 luminaires individually per bus, with grouping, scenes and bi-directional status feedback.',
+              'CIBSE SLL maintained illuminance: 100 lux corridors, 300-500 lux workshops, 500 lux general offices, 750 lux technical drawing.',
+              'Discharge lamps (fluorescent, HID) are hazardous waste under WEEE — they contain mercury. LED lamps are WEEE waste but mercury-free.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Labelling and Identification Standards
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section4-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Emergency Lighting Systems
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

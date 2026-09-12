@@ -446,7 +446,7 @@ export function WindPowerCalculator() {
     const preset = getSelectedTurbine();
     return {
       meta: {
-        title: 'Wind Power Calculator',
+        title: 'Wind Power',
         subtitle: 'Estimated annual energy production and financial return',
         standard: 'G98/G99',
       },
@@ -461,11 +461,20 @@ export function WindPowerCalculator() {
       ],
       sections: [
         {
+          // Every field that feeds the financial figures below has to be on
+          // the report — wind class, system losses, electricity price, export
+          // rate, annual consumption and self-consumption rate were all being
+          // used to calculate "Annual value" and "Payback" without the client
+          // ever seeing what was assumed.
           heading: 'Inputs',
           rows: [
             { label: 'Turbine', value: preset?.label ?? turbineModel },
             { label: 'Hub height', value: `${hubHeight} m` },
             { label: 'Wind speed (at 10 m)', value: `${averageWindSpeed} mph` },
+            {
+              label: 'Wind class',
+              value: windClasses.find((w) => w.value === windClass)?.label ?? windClass,
+            },
             {
               label: 'Terrain',
               value: terrainTypes.find((t) => t.value === terrain)?.label || terrain,
@@ -474,17 +483,47 @@ export function WindPowerCalculator() {
               label: 'Site altitude',
               value: altitudeBands.find((a) => a.value === altitude)?.label || `${altitude} m`,
             },
+            {
+              label: 'System losses',
+              value: lossesPresets.find((l) => l.value === losses)?.label ?? losses,
+            },
+            {
+              label: 'Electricity price',
+              value: electricityPrices.find((p) => p.value === electricityPrice)?.label ?? `£${electricityPrice}/kWh`,
+            },
+            {
+              label: 'Export rate (SEG)',
+              value: exportRates.find((r) => r.value === exportRate)?.label ?? `£${exportRate}/kWh`,
+            },
+            {
+              label: 'Annual consumption',
+              value: annualConsumptions.find((c) => c.value === annualConsumption)?.label ?? `${annualConsumption} kWh`,
+            },
+            {
+              label: 'Self-consumption rate',
+              value: selfConsumptionRates.find((s) => s.value === selfConsumptionRate)?.label ?? `${selfConsumptionRate}%`,
+            },
           ],
         },
         {
+          // Net annual energy, capacity factor and payback are already the
+          // headline — kept here is the gross-to-net working and everything
+          // the headline doesn't cover (payback isn't repeated).
           heading: 'Result',
           rows: [
             {
               label: 'Wind speed at hub',
               value: `${(result.windSpeedAtHub * 2.23694).toFixed(1)} mph`,
             },
-            { label: 'Gross annual energy', value: `${result.grossAEP.toFixed(0)} kWh` },
-            { label: 'Net annual energy', value: `${result.netAEP.toFixed(0)} kWh` },
+            {
+              label: 'Gross annual energy',
+              value: `${result.grossAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
+            },
+            {
+              label: 'Net annual energy',
+              value: `${result.netAEP.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
+              note: 'After system losses and turbulence derating — see below',
+            },
             { label: 'Average power', value: `${result.averagePower.toFixed(2)} kW` },
             { label: 'Annual value', value: `£${result.yearlyValue.toFixed(0)}` },
             {
@@ -495,8 +534,7 @@ export function WindPowerCalculator() {
               label: 'Grid export',
               value: `${result.gridExport.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
             },
-            { label: 'System cost', value: `£${result.costEstimate.totalCost.toLocaleString()}` },
-            { label: 'Simple payback', value: `${result.paybackPeriod.toFixed(1)} years` },
+            { label: 'System cost (indicative)', value: `£${result.costEstimate.totalCost.toLocaleString()}` },
             { label: 'CO₂ savings', value: `${result.co2Savings.toFixed(0)} kg/yr` },
             {
               label: 'Planning',

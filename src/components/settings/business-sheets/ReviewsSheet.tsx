@@ -9,6 +9,8 @@ import { Plus, X } from 'lucide-react';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { hintCn, inputCn, labelCn, textareaCn } from '@/components/settings/formStyles';
 
 const DEFAULT_REVIEW_MESSAGE =
   'Thanks for choosing us — it was a pleasure doing the work. If you were happy, a quick review really helps a small business like ours. It only takes a minute.';
@@ -94,8 +96,8 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Ask for reviews">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -105,7 +107,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Ask for reviews
             </h2>
-            <p className="mt-1 text-[13px] text-white/60">
+            <p className="mt-1 text-[13px] text-white">
               Add your review links once. We&apos;ll invite customers to leave a review in your
               invoice emails and when they pay — no extra sending on your part.
             </p>
@@ -113,10 +115,10 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             {/* Enable toggle */}
-            <div className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+            <div className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-white/[0.05] border border-elec-yellow/35">
               <div className="min-w-0">
                 <p className="text-[13px] font-medium text-white">Ask for reviews in emails</p>
-                <p className="text-[11.5px] text-white/55 mt-0.5">
+                <p className="text-[11.5px] text-white mt-0.5">
                   Adds a review request to invoice + payment-received emails.
                 </p>
               </div>
@@ -125,7 +127,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
             {enabled && !hasAnyUrl && (
               <div className="rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/25 px-3.5 py-2.5">
-                <p className="text-[12px] text-elec-yellow/90">
+                <p className="text-[12px] text-elec-yellow">
                   Add at least one review link below for the request to appear.
                 </p>
               </div>
@@ -142,13 +144,13 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
                     value={url}
                     onChange={(e) => updateLink(i, e.target.value)}
                     placeholder="Paste a review link (Google, Checkatrade…)"
-                    className="flex-1 min-w-0 h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={cn(inputCn, 'flex-1 min-w-0')}
                   />
                   <button
                     type="button"
                     aria-label="Remove link"
                     onClick={() => removeLink(i)}
-                    className="h-11 w-11 shrink-0 rounded-xl flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                    className="h-11 w-11 shrink-0 rounded-xl flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -161,7 +163,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
               >
                 <Plus className="h-4 w-4" /> Add another link
               </button>
-              <p className="text-[11.5px] text-white/45 leading-relaxed pt-1">
+              <p className={hintCn}>
                 Tip: for Google, use your &quot;Get more reviews&quot; short link so customers land
                 straight on the star-rating screen. We&apos;ll label each button automatically from
                 the link.
@@ -172,14 +174,15 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
 
             {/* Custom message */}
             <div className="space-y-1.5">
-              <Label className="text-white font-medium text-[13px]">Message to customers</Label>
+              <Label className={labelCn}>Message to customers</Label>
               <Textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder={DEFAULT_REVIEW_MESSAGE}
-                className="min-h-[96px] bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation text-[13px]"
+                rows={4}
+                className={textareaCn}
               />
-              <p className="text-[11.5px] text-white/45">Leave blank to use our default wording.</p>
+              <p className={hintCn}>Leave blank to use our default wording.</p>
             </div>
           </div>
 
@@ -188,7 +191,7 @@ const ReviewsSheet = ({ open, onOpenChange, profile, onSave }: ReviewsSheetProps
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

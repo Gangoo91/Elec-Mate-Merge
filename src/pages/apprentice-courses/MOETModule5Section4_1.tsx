@@ -1,8 +1,45 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 4 · Subsection 1 — Principles of Process Control
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only statements that already appear verbatim in the brief's
+ * verified lists for other modules — and that genuinely fit this page's
+ * content — are used here.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Principles of Process Control - MOET Module 5 Section 4.1';
@@ -83,12 +120,7 @@ const quizQuestions = [
     id: 2,
     question:
       'In a closed loop temperature control system, the sensor measures 48 degrees C and the setpoint is 50 degrees C. The error signal is:',
-    options: [
-      '48 degrees C',
-      '-2 degrees C',
-      '+2 degrees C',
-      '50 degrees C',
-    ],
+    options: ['48 degrees C', '-2 degrees C', '+2 degrees C', '50 degrees C'],
     correctAnswer: 2,
     explanation:
       'Error = Setpoint minus Process Variable = 50 - 48 = +2 degrees C. A positive error means the process is below setpoint, so the controller will increase its output to raise the temperature.',
@@ -137,12 +169,7 @@ const quizQuestions = [
     id: 6,
     question:
       'A 4-20 mA signal representing 0-100% of a process variable has a current reading of 12 mA. What percentage does this represent?',
-    options: [
-      '30%',
-      '60%',
-      '50%',
-      '75%',
-    ],
+    options: ['30%', '60%', '50%', '75%'],
     correctAnswer: 2,
     explanation:
       'The 4-20 mA range spans 16 mA (20 - 4 = 16). At 12 mA, the signal is 8 mA above the zero (12 - 4 = 8). Percentage = (8 / 16) x 100 = 50%. This standard signal range is used because a live zero of 4 mA allows detection of cable breaks (0 mA indicates a fault, not a zero reading).',
@@ -163,12 +190,7 @@ const quizQuestions = [
   {
     id: 8,
     question: 'Which control strategy measures a disturbance before it affects the process output?',
-    options: [
-      'Feedforward control',
-      'Manual control',
-      'Feedback control',
-      'On-off control',
-    ],
+    options: ['Feedforward control', 'Manual control', 'Feedback control', 'On-off control'],
     correctAnswer: 0,
     explanation:
       'Feedforward control measures the disturbance variable directly and takes corrective action before the disturbance reaches the process output. For example, in a heat exchanger, a feedforward system might measure the incoming fluid temperature and adjust the steam valve before the outlet temperature changes.',
@@ -263,115 +285,64 @@ const faqs = [
 ];
 
 const MOETModule5Section4_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 5.4.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Principles of Process Control
-          </h1>
-          <p className="text-white">
-            Open and closed loop control, feedback systems and control strategies
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.4 · Subsection 1"
+        title="Principles of Process Control"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Open and closed loop control, feedback systems and control strategies.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Open loop:</strong> No feedback — output not measured or corrected
-              </li>
-              <li className="pl-1">
-                <strong>Closed loop:</strong> Feedback from sensor adjusts controller output
-              </li>
-              <li className="pl-1">
-                <strong>Error signal:</strong> Setpoint minus process variable drives correction
-              </li>
-              <li className="pl-1">
-                <strong>Signal standard:</strong> 4-20 mA analogue with live zero
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault diagnosis:</strong> Understanding loops helps locate control faults
-              </li>
-              <li className="pl-1">
-                <strong>Calibration:</strong> Sensors and transmitters need regular calibration
-              </li>
-              <li className="pl-1">
-                <strong>Loop tuning:</strong> Poor tuning causes oscillation and energy waste
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Control system knowledge assessed in EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Open loop: no feedback — the output is not measured or corrected.',
+              'Closed loop: feedback from a sensor adjusts the controller output.',
+              'Error signal: setpoint minus process variable drives the correction.',
+              'Signal standard: 4-20 mA analogue, with a live zero.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Distinguish between open loop and closed loop control systems',
               'Identify the components of a standard control loop',
               'Explain the concepts of setpoint, process variable and error signal',
               'Describe feedback, feedforward and cascade control strategies',
               'Interpret 4-20 mA analogue signal conventions',
               'Relate process control principles to ST1426 maintenance requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fault diagnosis:</strong> understanding loops helps locate control faults.
+              </li>
+              <li>
+                <strong>Calibration:</strong> sensors and transmitters need regular calibration.
+              </li>
+              <li>
+                <strong>Loop tuning:</strong> poor tuning causes oscillation and energy waste.
+              </li>
+              <li>
+                <strong>ST1426:</strong> control system knowledge is assessed in the EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            What Is Process Control?
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>What process control is</ContentEyebrow>
+
+          <ConceptBlock title="What Is Process Control?">
             <p>
               Process control is the discipline of maintaining a process variable — such as
               temperature, pressure, flow rate or level — at a desired value by continuously
@@ -387,724 +358,569 @@ const MOETModule5Section4_1 = () => {
               controller, the wiring, or the final control element. Without a solid grasp of control
               principles, effective fault-finding is impossible.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Three Essential Functions of Control
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Measurement:</strong> A sensor detects the current value of the process
-                  variable and converts it into an electrical signal (e.g., 4-20 mA, 0-10 V, or a
-                  digital value)
-                </li>
-                <li className="pl-1">
-                  <strong>Comparison:</strong> The controller compares the measured value with the
-                  desired setpoint and calculates the error — the difference between actual and
-                  desired
-                </li>
-                <li className="pl-1">
-                  <strong>Correction:</strong> Based on the error, the controller sends a signal to
-                  the final control element (valve, drive, heater) to adjust the process and reduce
-                  the error towards zero
-                </li>
-              </ul>
-            </div>
-
+          <ConceptBlock title="The three essential functions of control">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Measurement:</strong> a sensor detects the current value of the process
+                variable and converts it into an electrical signal (e.g., 4-20 mA, 0-10 V, or a
+                digital value).
+              </li>
+              <li>
+                <strong>Comparison:</strong> the controller compares the measured value with the
+                desired setpoint and calculates the error — the difference between actual and
+                desired.
+              </li>
+              <li>
+                <strong>Correction:</strong> based on the error, the controller sends a signal to
+                the final control element (valve, drive, heater) to adjust the process and reduce
+                the error towards zero.
+              </li>
+            </ul>
             <p>
               These three functions — measure, compare, correct — form the basis of every control
               system, from a domestic room thermostat to a complex distributed control system
               managing an entire chemical plant. The sophistication of the control depends on the
               process requirements, but the fundamental principle remains the same.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Process Variables in Industrial Control
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Variable</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Sensor</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Final Control Element
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Temperature</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        RTD (Pt100), thermocouple
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating element, cooling valve, VSD fan
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Pressure</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure transmitter, bourdon tube
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control valve, compressor speed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Flow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electromagnetic, vortex, orifice plate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Control valve, pump VSD</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ultrasonic, radar, differential pressure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Inlet/outlet valve, pump control
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock
+            title="Common process variables in industrial control"
+            onSite="You will work with all of these process variables. Understanding the relationship between the sensor, controller and final control element in each loop is essential for effective fault diagnosis."
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Variable</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical sensor</th>
+                    <th className="py-2 font-medium text-white">Typical final control element</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Temperature</td>
+                    <td className="py-2 pr-4">RTD (Pt100), thermocouple</td>
+                    <td className="py-2">Heating element, cooling valve, VSD fan</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Pressure</td>
+                    <td className="py-2 pr-4">Pressure transmitter, bourdon tube</td>
+                    <td className="py-2">Control valve, compressor speed</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Flow</td>
+                    <td className="py-2 pr-4">Electromagnetic, vortex, orifice plate</td>
+                    <td className="py-2">Control valve, pump VSD</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Level</td>
+                    <td className="py-2 pr-4">Ultrasonic, radar, differential pressure</td>
+                    <td className="py-2">Inlet/outlet valve, pump control</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> As a maintenance technician, you will work with all of
-              these process variables. Understanding the relationship between the sensor, controller
-              and final control element in each loop is essential for effective fault diagnosis.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Open Loop vs Closed Loop Control
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Open loop vs closed loop control</ContentEyebrow>
+
+          <ConceptBlock
+            title="Open loop vs closed loop control"
+            onSite="When fault-finding a control loop, always start by checking whether the loop is actually 'closed'. A disconnected sensor cable, a failed transmitter, or a valve stuck in one position effectively converts a closed loop into an open loop — and the process will drift uncontrolled."
+          >
             <p>
               All control systems fall into one of two fundamental categories: open loop or closed
               loop. The distinction is simple but critically important — it determines whether the
               system can respond to disturbances and maintain the desired output under changing
               conditions.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Open Loop Control</h3>
-                <p className="text-sm text-white mb-3">
-                  In an open loop system, the controller output is determined solely by the input —
-                  there is no measurement of the actual output and no feedback path. The controller
-                  'assumes' that the desired output will result from the given input, with no
-                  verification.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">No feedback sensor — output not measured</li>
-                  <li className="pl-1">Cannot compensate for disturbances</li>
-                  <li className="pl-1">Simple and inexpensive to implement</li>
-                  <li className="pl-1">Suitable where precision is not critical</li>
-                  <li className="pl-1">
-                    Examples: basic timer, fixed-speed conveyor, traffic lights
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Closed Loop Control
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  In a closed loop system, the actual output is measured by a sensor and fed back to
-                  the controller. The controller continuously compares the measured value with the
-                  setpoint and adjusts its output to minimise the error.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Feedback sensor measures actual output</li>
-                  <li className="pl-1">Automatically compensates for disturbances</li>
-                  <li className="pl-1">More complex and costly than open loop</li>
-                  <li className="pl-1">Essential where precision and stability are required</li>
-                  <li className="pl-1">
-                    Examples: thermostat, cruise control, industrial PID loop
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Open loop control">
+            <p>
+              In an open loop system, the controller output is determined solely by the input —
+              there is no measurement of the actual output and no feedback path. The controller
+              &apos;assumes&apos; that the desired output will result from the given input, with no
+              verification.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>No feedback sensor — output not measured.</li>
+              <li>Cannot compensate for disturbances.</li>
+              <li>Simple and inexpensive to implement.</li>
+              <li>Suitable where precision is not critical.</li>
+              <li>Examples: basic timer, fixed-speed conveyor, traffic lights.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Feedback Loop — Block Diagram Elements
-              </p>
-              <p className="text-sm text-white mb-3">
-                A closed loop control system is best understood through its block diagram. Each
-                block represents a functional element, and the signal flows in a continuous path —
-                hence the term 'loop'.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Setpoint (SP):</strong> The desired value, set by the operator or a
-                  higher-level controller
-                </li>
-                <li className="pl-1">
-                  <strong>Summing junction:</strong> Where the setpoint and feedback signal are
-                  compared to produce the error
-                </li>
-                <li className="pl-1">
-                  <strong>Controller:</strong> Receives the error signal and calculates the
-                  appropriate output using its control algorithm (P, PI, PID etc.)
-                </li>
-                <li className="pl-1">
-                  <strong>Final control element:</strong> Receives the controller output and
-                  physically adjusts the process (valve, drive, heater)
-                </li>
-                <li className="pl-1">
-                  <strong>Process:</strong> The physical system being controlled (furnace, tank,
-                  pipe, motor)
-                </li>
-                <li className="pl-1">
-                  <strong>Sensor/transmitter:</strong> Measures the process variable and converts it
-                  to a standard signal (4-20 mA)
-                </li>
-                <li className="pl-1">
-                  <strong>Feedback path:</strong> Carries the measured signal back to the summing
-                  junction for comparison
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Closed loop control">
+            <p>
+              In a closed loop system, the actual output is measured by a sensor and fed back to the
+              controller. The controller continuously compares the measured value with the setpoint
+              and adjusts its output to minimise the error.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Feedback sensor measures actual output.</li>
+              <li>Automatically compensates for disturbances.</li>
+              <li>More complex and costly than open loop.</li>
+              <li>Essential where precision and stability are required.</li>
+              <li>Examples: thermostat, cruise control, industrial PID loop.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Why Feedback Can Cause Instability
-              </p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="The feedback loop — block diagram elements">
+            <p>
+              A closed loop control system is best understood through its block diagram. Each block
+              represents a functional element, and the signal flows in a continuous path — hence the
+              term &apos;loop&apos;.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Setpoint (SP):</strong> the desired value, set by the operator or a
+                higher-level controller.
+              </li>
+              <li>
+                <strong>Summing junction:</strong> where the setpoint and feedback signal are
+                compared to produce the error.
+              </li>
+              <li>
+                <strong>Controller:</strong> receives the error signal and calculates the
+                appropriate output using its control algorithm (P, PI, PID etc.).
+              </li>
+              <li>
+                <strong>Final control element:</strong> receives the controller output and
+                physically adjusts the process (valve, drive, heater).
+              </li>
+              <li>
+                <strong>Process:</strong> the physical system being controlled (furnace, tank, pipe,
+                motor).
+              </li>
+              <li>
+                <strong>Sensor/transmitter:</strong> measures the process variable and converts it
+                to a standard signal (4-20 mA).
+              </li>
+              <li>
+                <strong>Feedback path:</strong> carries the measured signal back to the summing
+                junction for comparison.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Why feedback can cause instability"
+            whatHappens={
+              <p>
                 While feedback is essential for accurate control, it can also cause problems. If the
                 controller gain is too high, or if there are significant time delays in the loop,
                 the system can become unstable — oscillating with increasing amplitude until the
                 process goes out of control. This is why loop tuning (adjusting controller
-                parameters) is so important. A maintenance technician who understands this concept
-                can recognise when a loop is oscillating and take appropriate action.
+                parameters) is so important.
               </p>
-            </div>
+            }
+            doInstead={
+              <p>
+                A maintenance technician who understands this concept can recognise when a loop is
+                oscillating and take appropriate action.
+              </p>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> When fault-finding a control loop, always start by
-              checking whether the loop is actually 'closed'. A disconnected sensor cable, a failed
-              transmitter, or a valve stuck in one position effectively converts a closed loop into
-              an open loop — and the process will drift uncontrolled.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Control Strategies: Feedback, Feedforward and Cascade
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Control strategies</ContentEyebrow>
+
+          <ConceptBlock
+            title="Control strategies: feedback, feedforward and cascade"
+            onSite="The maintenance technician standard requires you to understand different control strategies so you can interpret P&ID drawings, follow loop diagrams during fault-finding, and communicate effectively with process and instrumentation engineers."
+          >
             <p>
               Beyond the basic distinction between open and closed loop, industrial control systems
               employ a range of strategies to achieve the required performance. The three most
               important are feedback control, feedforward control and cascade control. Understanding
               these strategies is essential for maintaining and troubleshooting automated systems.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Feedback Control (Reactive)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Feedback control is the most common strategy. The controller reacts to deviations
-                  from setpoint by adjusting the output. Its limitation is that it can only correct
-                  errors after they have occurred — there is always some deviation before the
-                  correction takes effect.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Measures the process variable after the process</li>
-                  <li className="pl-1">Corrects errors after they occur (reactive)</li>
-                  <li className="pl-1">Simple to implement and works for most applications</li>
-                  <li className="pl-1">Performance limited by dead time and process dynamics</li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Feedforward Control (Anticipatory)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Feedforward control measures a disturbance before it affects the process and takes
-                  corrective action in advance. This requires knowledge of the relationship between
-                  the disturbance and the process, modelled mathematically. In practice, feedforward
-                  is almost always combined with feedback to handle unmeasured disturbances.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Measures disturbances before they affect the output</li>
-                  <li className="pl-1">
-                    Takes corrective action before the error occurs (proactive)
-                  </li>
-                  <li className="pl-1">Requires accurate process model</li>
-                  <li className="pl-1">
-                    Example: measuring incoming fluid temperature and adjusting heat input before
-                    the outlet temperature changes
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Cascade Control (Two Loops)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Cascade control uses two controllers in series. The primary (outer) controller
-                  monitors the main process variable, and its output becomes the setpoint for the
-                  secondary (inner) controller. The secondary controller manipulates the final
-                  control element. This improves response to disturbances that enter the secondary
-                  loop.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Primary controller sets the setpoint for the secondary controller
-                  </li>
-                  <li className="pl-1">Secondary loop responds faster to local disturbances</li>
-                  <li className="pl-1">
-                    Improves overall control quality for processes with multiple dynamics
-                  </li>
-                  <li className="pl-1">
-                    Example: furnace temperature (primary) controlling fuel flow (secondary)
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Other Common Control Strategies
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Strategy</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Description</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Ratio control</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintains a fixed ratio between two variables
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fuel-to-air ratio in combustion systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Split range</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        One controller output drives two or more final elements over different
-                        ranges
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating and cooling valves on a single temperature loop
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Override/selective</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple controllers compete; the one with the most urgent demand takes
-                        priority
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compressor anti-surge protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Batch/sequential</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Steps through a sequence of operations based on time or events
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Chemical batch reactor, CIP cleaning cycles
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires you to
-              understand different control strategies so you can interpret P&ID drawings, follow
-              loop diagrams during fault-finding, and communicate effectively with process and
-              instrumentation engineers.
+          <ConceptBlock title="Feedback control (reactive)">
+            <p>
+              Feedback control is the most common strategy. The controller reacts to deviations from
+              setpoint by adjusting the output. Its limitation is that it can only correct errors
+              after they have occurred — there is always some deviation before the correction takes
+              effect.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Measures the process variable after the process.</li>
+              <li>Corrects errors after they occur (reactive).</li>
+              <li>Simple to implement and works for most applications.</li>
+              <li>Performance limited by dead time and process dynamics.</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Feedforward control (anticipatory)">
+            <p>
+              Feedforward control measures a disturbance before it affects the process and takes
+              corrective action in advance. This requires knowledge of the relationship between the
+              disturbance and the process, modelled mathematically. In practice, feedforward is
+              almost always combined with feedback to handle unmeasured disturbances.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Measures disturbances before they affect the output.</li>
+              <li>Takes corrective action before the error occurs (proactive).</li>
+              <li>Requires accurate process model.</li>
+              <li>
+                Example: measuring incoming fluid temperature and adjusting heat input before the
+                outlet temperature changes.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Signal Standards and the 4-20 mA Convention
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Cascade control (two loops)">
+            <p>
+              Cascade control uses two controllers in series. The primary (outer) controller
+              monitors the main process variable, and its output becomes the setpoint for the
+              secondary (inner) controller. The secondary controller manipulates the final control
+              element. This improves response to disturbances that enter the secondary loop.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Primary controller sets the setpoint for the secondary controller.</li>
+              <li>Secondary loop responds faster to local disturbances.</li>
+              <li>Improves overall control quality for processes with multiple dynamics.</li>
+              <li>Example: furnace temperature (primary) controlling fuel flow (secondary).</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Other common control strategies">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Strategy</th>
+                    <th className="py-2 pr-4 font-medium text-white">Description</th>
+                    <th className="py-2 font-medium text-white">Typical application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Ratio control</td>
+                    <td className="py-2 pr-4">Maintains a fixed ratio between two variables</td>
+                    <td className="py-2">Fuel-to-air ratio in combustion systems</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Split range</td>
+                    <td className="py-2 pr-4">
+                      One controller output drives two or more final elements over different ranges
+                    </td>
+                    <td className="py-2">
+                      Heating and cooling valves on a single temperature loop
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Override/selective</td>
+                    <td className="py-2 pr-4">
+                      Multiple controllers compete; the one with the most urgent demand takes
+                      priority
+                    </td>
+                    <td className="py-2">Compressor anti-surge protection</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Batch/sequential</td>
+                    <td className="py-2 pr-4">
+                      Steps through a sequence of operations based on time or events
+                    </td>
+                    <td className="py-2">Chemical batch reactor, CIP cleaning cycles</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Signal standards</ContentEyebrow>
+
+          <ConceptBlock
+            title="Signal standards and the 4-20 mA convention"
+            onSite="A multimeter set to mA range in series with the loop is the most basic diagnostic tool for a 4-20 mA circuit. You can also use a loop calibrator to inject a known current and test the entire signal chain from transmitter input to controller display."
+          >
             <p>
               For the components of a control loop to communicate, they must use a common signal
               standard. In industrial process control, the most widely used analogue signal standard
               is 4-20 mA. Understanding this convention is fundamental for any electrical
               maintenance technician working with instrumentation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why 4-20 mA?</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Live zero:</strong> The 4 mA lower limit means a reading of 0 mA always
-                  indicates a fault (broken cable, failed transmitter) rather than a genuine zero
-                  process value
-                </li>
-                <li className="pl-1">
-                  <strong>Noise immunity:</strong> Current signals are less susceptible to
-                  electrical noise and voltage drops over long cable runs than voltage signals
-                </li>
-                <li className="pl-1">
-                  <strong>Two-wire operation:</strong> Many 4-20 mA transmitters can be powered from
-                  the same two wires that carry the signal, simplifying installation
-                </li>
-                <li className="pl-1">
-                  <strong>Standardisation:</strong> The 4-20 mA range is defined in IEC 60381-1 and
-                  is universally supported by instrumentation manufacturers
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Why 4-20 mA?">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Live zero:</strong> the 4 mA lower limit means a reading of 0 mA always
+                indicates a fault (broken cable, failed transmitter) rather than a genuine zero
+                process value.
+              </li>
+              <li>
+                <strong>Noise immunity:</strong> current signals are less susceptible to electrical
+                noise and voltage drops over long cable runs than voltage signals.
+              </li>
+              <li>
+                <strong>Two-wire operation:</strong> many 4-20 mA transmitters can be powered from
+                the same two wires that carry the signal, simplifying installation.
+              </li>
+              <li>
+                <strong>Standardisation:</strong> the 4-20 mA range is defined in IEC 60381-1 and is
+                universally supported by instrumentation manufacturers.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculating Signal Values
-              </p>
-              <p className="text-sm text-white mb-3">
-                The relationship between the process variable range and the 4-20 mA signal is
-                linear. The formula is:
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm font-mono mb-3">
-                mA = 4 + (PV - PV_min) / (PV_max - PV_min) x 16
-              </div>
-              <p className="text-sm text-white mb-2">
-                For example, a temperature transmitter ranged 0-200 degrees C:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">At 0 degrees C: 4 + (0/200) x 16 = 4.0 mA (0%)</li>
-                <li className="pl-1">At 50 degrees C: 4 + (50/200) x 16 = 8.0 mA (25%)</li>
-                <li className="pl-1">At 100 degrees C: 4 + (100/200) x 16 = 12.0 mA (50%)</li>
-                <li className="pl-1">At 200 degrees C: 4 + (200/200) x 16 = 20.0 mA (100%)</li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Other Signal Standards</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Signal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Range</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Common Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4-20 mA</td>
-                      <td className="border border-white/10 px-3 py-2">4 mA = 0%, 20 mA = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Process transmitters, valve positioners, controller I/O
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0-10 V DC</td>
-                      <td className="border border-white/10 px-3 py-2">0 V = 0%, 10 V = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HVAC controls, building management systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1-5 V DC</td>
-                      <td className="border border-white/10 px-3 py-2">1 V = 0%, 5 V = 100%</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Older pneumatic-to-electronic converters
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">3-15 psi</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        3 psi = 0%, 15 psi = 100%
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pneumatic instruments (legacy systems)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">HART digital</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Digital overlay on 4-20 mA
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Smart transmitters with diagnostics and configuration
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Fault Detection with Live Zero
-              </p>
-              <p className="text-sm text-white">
-                The live zero principle is a safety feature. If you measure 0 mA on a 4-20 mA loop,
-                you know immediately that there is a fault — a cable break, a blown fuse, a failed
-                transmitter, or a disconnected terminal. Without the live zero (i.e., using 0-20
-                mA), a reading of 0 mA could mean either zero process variable or a complete system
-                failure. Always check for 0 mA as a first step when troubleshooting instrumentation
-                faults.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> A multimeter set to mA range in series with the loop
-              is the most basic diagnostic tool for a 4-20 mA circuit. You can also use a loop
-              calibrator to inject a known current and test the entire signal chain from transmitter
-              input to controller display.
+          <ConceptBlock title="Calculating signal values">
+            <p>
+              The relationship between the process variable range and the 4-20 mA signal is linear.
+              The formula is:
             </p>
-          </div>
-        </section>
+            <p className="rounded bg-white/5 p-3 font-mono text-[13px]">
+              mA = 4 + (PV - PV_min) / (PV_max - PV_min) x 16
+            </p>
+            <p>For example, a temperature transmitter ranged 0-200 degrees C:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>At 0 degrees C: 4 + (0/200) x 16 = 4.0 mA (0%)</li>
+              <li>At 50 degrees C: 4 + (50/200) x 16 = 8.0 mA (25%)</li>
+              <li>At 100 degrees C: 4 + (100/200) x 16 = 12.0 mA (50%)</li>
+              <li>At 200 degrees C: 4 + (200/200) x 16 = 20.0 mA (100%)</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Other signal standards">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Signal type</th>
+                    <th className="py-2 pr-4 font-medium text-white">Range</th>
+                    <th className="py-2 font-medium text-white">Common application</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">4-20 mA</td>
+                    <td className="py-2 pr-4">4 mA = 0%, 20 mA = 100%</td>
+                    <td className="py-2">
+                      Process transmitters, valve positioners, controller I/O
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">0-10 V DC</td>
+                    <td className="py-2 pr-4">0 V = 0%, 10 V = 100%</td>
+                    <td className="py-2">HVAC controls, building management systems</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">1-5 V DC</td>
+                    <td className="py-2 pr-4">1 V = 0%, 5 V = 100%</td>
+                    <td className="py-2">Older pneumatic-to-electronic converters</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">3-15 psi</td>
+                    <td className="py-2 pr-4">3 psi = 0%, 15 psi = 100%</td>
+                    <td className="py-2">Pneumatic instruments (legacy systems)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">HART digital</td>
+                    <td className="py-2 pr-4">Digital overlay on 4-20 mA</td>
+                    <td className="py-2">Smart transmitters with diagnostics and configuration</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Process Dynamics and Control Performance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <CommonMistake
+            title="Fault detection with live zero"
+            whatHappens={
+              <p>
+                If you measure 0 mA on a 4-20 mA loop, you know immediately that there is a fault —
+                a cable break, a blown fuse, a failed transmitter, or a disconnected terminal.
+                Without the live zero (i.e., using 0-20 mA), a reading of 0 mA could mean either
+                zero process variable or a complete system failure.
+              </p>
+            }
+            doInstead={
+              <p>
+                Always check for 0 mA as a first step when troubleshooting instrumentation faults.
+              </p>
+            }
+          />
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Process dynamics</ContentEyebrow>
+
+          <ConceptBlock
+            title="Process dynamics and control performance"
+            onSite="Process control is a deep discipline, and the principles covered here provide the foundation you need as an electrical maintenance technician. The following sections in this module build on these concepts, covering PID tuning (5.4.2), pneumatic and hydraulic controls (5.4.3), control valves (5.4.4), DCS systems (5.4.5) and instrument calibration (5.4.6)."
+          >
             <p>
               Every real process has dynamic characteristics that determine how it responds to
               changes. Understanding these dynamics is essential for tuning controllers, diagnosing
               oscillation problems, and predicting how a process will behave when disturbances
               occur. The three key dynamic characteristics are gain, dead time and time constant.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Process Dynamic Characteristics
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Process gain:</strong> The ratio of the change in process variable to the
-                  change in controller output. A high-gain process is sensitive — a small change in
-                  controller output causes a large change in the process variable
-                </li>
-                <li className="pl-1">
-                  <strong>Dead time (transport delay):</strong> The time between a change at the
-                  final control element and the first detectable change at the sensor. Long dead
-                  times make control difficult because the controller is 'flying blind' during the
-                  delay
-                </li>
-                <li className="pl-1">
-                  <strong>Time constant:</strong> The time taken for the process to reach
-                  approximately 63% of its final value after a step change. It characterises how
-                  quickly the process responds — a large time constant means a slow, sluggish
-                  process
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key process dynamic characteristics">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Process gain:</strong> the ratio of the change in process variable to the
+                change in controller output. A high-gain process is sensitive — a small change in
+                controller output causes a large change in the process variable.
+              </li>
+              <li>
+                <strong>Dead time (transport delay):</strong> the time between a change at the final
+                control element and the first detectable change at the sensor. Long dead times make
+                control difficult because the controller is &apos;flying blind&apos; during the
+                delay.
+              </li>
+              <li>
+                <strong>Time constant:</strong> the time taken for the process to reach
+                approximately 63% of its final value after a step change. It characterises how
+                quickly the process responds — a large time constant means a slow, sluggish process.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Fast Processes</h3>
-                <p className="text-sm text-white">
-                  Processes with short time constants and minimal dead time respond quickly to
-                  controller output changes. Examples include flow control and pressure control in
-                  gas systems. These processes can be controlled tightly with high controller gains,
-                  but they are also prone to oscillation if the controller is over-tuned.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Slow Processes</h3>
-                <p className="text-sm text-white">
-                  Processes with long time constants and significant dead time respond slowly.
-                  Temperature control in large vessels and pH control in mixing tanks are typical
-                  examples. These require patient controller settings with lower gains, and they can
-                  be frustrating to tune because changes take a long time to show their effect.
-                </p>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Control Performance Measures
-              </h3>
-              <p className="text-sm text-white mb-3">
-                When assessing whether a control loop is performing well, maintenance technicians
-                should look at several key indicators:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Offset:</strong> A sustained difference between setpoint and process
-                  variable — indicates the controller lacks integral action or has a tuning problem
-                </li>
-                <li className="pl-1">
-                  <strong>Overshoot:</strong> The process variable exceeds the setpoint before
-                  settling — excessive overshoot may indicate too much proportional gain
-                </li>
-                <li className="pl-1">
-                  <strong>Oscillation:</strong> The process variable cycles continuously around
-                  setpoint — indicates the loop may be unstable or poorly tuned
-                </li>
-                <li className="pl-1">
-                  <strong>Settling time:</strong> The time taken for the process to stabilise at the
-                  new setpoint after a change — should be as short as possible without excessive
-                  overshoot
-                </li>
-                <li className="pl-1">
-                  <strong>Steady-state accuracy:</strong> How closely the process variable matches
-                  setpoint once the transient has died out
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Common Control Modes</h3>
-              <p className="text-sm text-white mb-3">
-                The control mode determines how the controller calculates its output from the error
-                signal. The most common modes, which will be covered in detail in Section 5.4.2,
-                are:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>On-off:</strong> Output is either fully on or fully off — simple but
-                  causes cycling around setpoint
-                </li>
-                <li className="pl-1">
-                  <strong>Proportional (P):</strong> Output is proportional to the error — provides
-                  fast response but always has offset
-                </li>
-                <li className="pl-1">
-                  <strong>Proportional + Integral (PI):</strong> Adds integral action to eliminate
-                  offset — the most common mode in process control
-                </li>
-                <li className="pl-1">
-                  <strong>Proportional + Integral + Derivative (PID):</strong> Adds derivative
-                  action for faster response to rapid changes — used where tight control is needed
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Process control is a deep discipline, and the principles
-              covered here provide the foundation you need as an electrical maintenance technician.
-              The following sections in this module will build on these concepts, covering PID
-              tuning (5.4.2), pneumatic and hydraulic controls (5.4.3), control valves (5.4.4), DCS
-              systems (5.4.5) and instrument calibration (5.4.6).
+          <ConceptBlock title="Fast processes">
+            <p>
+              Processes with short time constants and minimal dead time respond quickly to
+              controller output changes. Examples include flow control and pressure control in gas
+              systems. These processes can be controlled tightly with high controller gains, but
+              they are also prone to oscillation if the controller is over-tuned.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Slow processes">
+            <p>
+              Processes with long time constants and significant dead time respond slowly.
+              Temperature control in large vessels and pH control in mixing tanks are typical
+              examples. These require patient controller settings with lower gains, and they can be
+              frustrating to tune because changes take a long time to show their effect.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Control performance measures">
+            <p>
+              When assessing whether a control loop is performing well, maintenance technicians
+              should look at several key indicators:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Offset:</strong> a sustained difference between setpoint and process
+                variable — indicates the controller lacks integral action or has a tuning problem.
+              </li>
+              <li>
+                <strong>Overshoot:</strong> the process variable exceeds the setpoint before
+                settling — excessive overshoot may indicate too much proportional gain.
+              </li>
+              <li>
+                <strong>Oscillation:</strong> the process variable cycles continuously around
+                setpoint — indicates the loop may be unstable or poorly tuned.
+              </li>
+              <li>
+                <strong>Settling time:</strong> the time taken for the process to stabilise at the
+                new setpoint after a change — should be as short as possible without excessive
+                overshoot.
+              </li>
+              <li>
+                <strong>Steady-state accuracy:</strong> how closely the process variable matches
+                setpoint once the transient has died out.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Common control modes">
+            <p>
+              The control mode determines how the controller calculates its output from the error
+              signal. The most common modes, which will be covered in detail in Section 5.4.2, are:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>On-off:</strong> output is either fully on or fully off — simple but causes
+                cycling around setpoint.
+              </li>
+              <li>
+                <strong>Proportional (P):</strong> output is proportional to the error — provides
+                fast response but always has offset.
+              </li>
+              <li>
+                <strong>Proportional + Integral (PI):</strong> adds integral action to eliminate
+                offset — the most common mode in process control.
+              </li>
+              <li>
+                <strong>Proportional + Integral + Derivative (PID):</strong> adds derivative action
+                for faster response to rapid changes — used where tight control is needed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Control Loop Components</p>
-                <ul className="space-y-0.5">
-                  <li>1. Sensor/transmitter — measures the PV</li>
-                  <li>2. Controller — compares SP and PV, calculates output</li>
-                  <li>3. Final control element — adjusts the process</li>
-                  <li>4. Feedback path — returns measured PV to controller</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Signal Standards</p>
-                <ul className="space-y-0.5">
-                  <li>4-20 mA — standard process signal (live zero)</li>
-                  <li>0-10 V DC — HVAC and BMS systems</li>
-                  <li>3-15 psi — pneumatic instruments</li>
-                  <li>HART — digital overlay on 4-20 mA</li>
-                  <li>IEC 60381-1 — signal standard reference</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Control loop components: sensor/transmitter measures the PV; controller compares SP and PV and calculates output; final control element adjusts the process; feedback path returns measured PV to the controller.',
+              'Key signal standards: 4-20 mA is the standard process signal (live zero); 0-10 V DC serves HVAC and BMS systems; 3-15 psi serves pneumatic instruments; HART is a digital overlay on 4-20 mA; IEC 60381-1 is the signal standard reference.',
+              'Open loop has no feedback; closed loop measures the output and corrects it.',
+              'Feedback reacts after the fact; feedforward acts on a disturbance before it reaches the output; cascade nests a fast secondary loop inside a slower primary one.',
+              'The live zero at 4 mA turns 0 mA into a fault signal, never a valid reading.',
+              'Gain, dead time and time constant between them explain why a loop oscillates, drifts or responds sluggishly.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Process Control and Instrumentation
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  PID Control Loops
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-2">
-              Next: PID Control Loops
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

@@ -61,7 +61,12 @@ export const HubMasthead = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="sticky top-0 z-50 border-b border-white/[0.06] bg-elec-dark/95 backdrop-blur-sm">
+    <div
+      className="sticky top-0 z-50 border-b border-white/[0.06] backdrop-blur-sm"
+      // Inherits --hub-ground from <HubPage>; falls back to the standard
+      // ground so a masthead rendered outside one is unchanged.
+      style={{ backgroundColor: 'hsl(var(--hub-ground, 0 0% 10%) / 0.95)' }}
+    >
       <div className="mx-auto max-w-[1600px] px-4 lg:px-8">
         <div className="flex h-12 items-center gap-4 sm:gap-6">
           {/* -ml-2 + px-2 keeps the 44px target without visually indenting the
@@ -637,13 +642,41 @@ export const HubToolGrid = ({
  * `space-y-12/16`: that rhythm existed to give a full-screen hero room to
  * breathe, and with the hero gone it only pushed the tools further down.
  */
-export const HubPage = ({ children }: { children: React.ReactNode }) => (
+export const HubPage = ({
+  children,
+  ground = 'default',
+}: {
+  children: React.ReactNode;
+  /**
+   * `reading` lifts the page ground from 10% to 13% for long-form study
+   * pages. Andrew, on a full-length course page: "it needs to be slightly
+   * brighter, the background" — the same complaint that drove the 4→7→11
+   * raises in index.css, and the same fix: raise the GROUND, never dim the
+   * text, because low-opacity white reads as grey and is banned.
+   *
+   * Opt-in rather than global because every hub shares this component, and
+   * the app's ~3,100 hard-coded card surfaces at 8–13% would fall at or below
+   * a raised ground and collapse into it. The study-centre reading kit uses
+   * translucent white overlays, which re-brighten against the new ground on
+   * their own, so only this surface can take the lift safely today.
+   *
+   * Published as a CSS variable so it cascades to <HubMasthead> — a sticky
+   * bar one shade darker than the page reads as a seam.
+   */
+  ground?: 'default' | 'reading';
+}) => (
   // pb-24 plus the iOS home-indicator inset. A fixed 96px is right on a phone
   // with a hardware button and 34px short on one without, which leaves the
   // last row of cards sitting under the indicator.
   <div
-    className="-mt-3 min-h-screen bg-elec-dark pb-24 sm:-mt-4 md:-mt-6"
-    style={{ paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))' }}
+    className="-mt-3 min-h-screen pb-24 sm:-mt-4 md:-mt-6"
+    style={
+      {
+        '--hub-ground': ground === 'reading' ? '0 0% 13%' : '0 0% 10%',
+        backgroundColor: 'hsl(var(--hub-ground))',
+        paddingBottom: 'calc(6rem + env(safe-area-inset-bottom, 0px))',
+      } as React.CSSProperties
+    }
   >
     {children}
   </div>

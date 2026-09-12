@@ -1,8 +1,56 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.1 · Subsection 1 — Insulation Resistance Testing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *              · "Electrical. Inspect and test electrical aspects of plant.
+ *                 For example, visual checks, insulation and continuity
+ *                 checks, thermographic surveys, and voltage levels."
+ *
+ * Numeric values (insulation resistance test voltages, minimum acceptable
+ * resistances) are copied verbatim from the original page. The bs7671_facets
+ * RAG holds regulation rules, not numeric tables, so none of these can be
+ * checked against it — see the conversion report for what should be
+ * verified against BS 7671 Table 64 / GN3.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+  VideoCard,
+} from '@/components/study-centre/learning';
+import { InsulationResistanceTest } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Insulation Resistance Testing - MOET Module 4.5.1';
@@ -27,15 +75,10 @@ const quickCheckQuestions = [
     id: 'ir-test-voltage',
     question:
       'For a 230 V single-phase circuit, what test voltage should be applied when conducting an insulation resistance test in accordance with BS 7671?',
-    options: [
-      '230 V a.c.',
-      '250 V d.c.',
-      '500 V d.c.',
-      '1000 V d.c.',
-    ],
+    options: ['230 V a.c.', '250 V d.c.', '500 V d.c.', '1000 V d.c.'],
     correctIndex: 2,
     explanation:
-      'BS 7671 Table 6.3 specifies that for circuits with a nominal voltage above 50 V up to and including 500 V (which includes standard 230 V single-phase and 400 V three-phase circuits), the test voltage is 500 V d.c. and the minimum acceptable insulation resistance is 1 MΩ. The test uses d.c. rather than a.c. to avoid capacitive effects.',
+      'BS 7671 Table 64 specifies that for circuits with a nominal voltage above 50 V up to and including 500 V (which includes standard 230 V single-phase and 400 V three-phase circuits), the test voltage is 500 V d.c. and the minimum acceptable insulation resistance is 1 MΩ. The test uses d.c. rather than a.c. to avoid capacitive effects.',
   },
   {
     id: 'ir-test-disconnections',
@@ -71,12 +114,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Insulation resistance is measured in:',
-    options: [
-      'Ohms (Ω)',
-      'Megohms (MΩ)',
-      'Milliohms (mΩ)',
-      'Amps (A)',
-    ],
+    options: ['Ohms (Ω)', 'Megohms (MΩ)', 'Milliohms (mΩ)', 'Amps (A)'],
     correctAnswer: 1,
     explanation:
       'Insulation resistance is measured in megohms (MΩ) because healthy insulation has a very high resistance — typically tens or hundreds of megohms for new installations. The minimum acceptable value under BS 7671 for standard circuits is 1 MΩ, which is one million ohms.',
@@ -84,16 +122,11 @@ const quizQuestions = [
   {
     id: 2,
     question:
-      'According to BS 7671 Table 6.3, the minimum acceptable insulation resistance for a 230 V circuit tested at 500 V d.c. is:',
-    options: [
-      '2 MΩ',
-      '0.5 MΩ',
-      '1 MΩ',
-      '10 MΩ',
-    ],
+      'According to BS 7671 Table 64, the minimum acceptable insulation resistance for a 230 V circuit tested at 500 V d.c. is:',
+    options: ['2 MΩ', '0.5 MΩ', '1 MΩ', '10 MΩ'],
     correctAnswer: 2,
     explanation:
-      'BS 7671 Table 6.3 specifies a minimum insulation resistance of 1 MΩ for circuits with a nominal voltage exceeding 50 V up to and including 500 V when tested at 500 V d.c. While 1 MΩ is the minimum pass value, readings this low warrant further investigation as they indicate significant insulation degradation.',
+      'BS 7671 Table 64 specifies a minimum insulation resistance of 1 MΩ for circuits with a nominal voltage exceeding 50 V up to and including 500 V when tested at 500 V d.c. While 1 MΩ is the minimum pass value, readings this low warrant further investigation as they indicate significant insulation degradation.',
   },
   {
     id: 3,
@@ -216,7 +249,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      'BS 7671 Table 6.3 specifies that for SELV and PELV circuits (nominal voltage not exceeding 50 V), the test voltage is 250 V d.c. and the minimum acceptable insulation resistance is 0.5 MΩ. The lower test voltage protects the insulation of circuits designed for extra-low voltage operation.',
+      'BS 7671 Table 64 specifies that for SELV and PELV circuits (nominal voltage not exceeding 50 V), the test voltage is 250 V d.c. and the minimum acceptable insulation resistance is 0.5 MΩ. The lower test voltage protects the insulation of circuits designed for extra-low voltage operation.',
   },
   {
     id: 12,
@@ -226,7 +259,7 @@ const quizQuestions = [
       'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
       'Accept the reading as satisfactory, since the combined value of many circuits is always expected to be below 1 MΩ',
       'Re-test using a lower 250 V d.c. range so that the combined reading rises above the 1 MΩ minimum',
-      'Average the reading with the previous year\'s figure and record the mean value on the schedule',
+      "Average the reading with the previous year's figure and record the mean value on the schedule",
     ],
     correctAnswer: 0,
     explanation:
@@ -263,120 +296,70 @@ const faqs = [
 ];
 
 const MOETModule4Section5_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 4.5.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Insulation Resistance Testing
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 1"
+        title="Insulation Resistance Testing"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Principles, procedures, and interpretation of insulation resistance testing for
-            electrical maintenance
+            electrical maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Verify insulation integrity between conductors and earth
-              </li>
-              <li className="pl-1">
-                <strong>Test voltage:</strong> 250 V, 500 V, or 1000 V d.c. depending on circuit
-                voltage
-              </li>
-              <li className="pl-1">
-                <strong>Minimum value:</strong> 1 MΩ for standard 230/400 V circuits (BS 7671)
-              </li>
-              <li className="pl-1">
-                <strong>Trending:</strong> Track values over time to detect deterioration before
-                failure
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Purpose: Verify insulation integrity between conductors and earth',
+              'Test voltage: 250 V, 500 V, or 1000 V d.c. depending on circuit voltage',
+              'Minimum value: 1 MΩ for standard 230/400 V circuits (BS 7671)',
+              'Trending: Track values over time to detect deterioration before failure',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>When to test:</strong> After repairs, modifications, suspected faults, and
                 periodic inspections
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Precautions:</strong> Isolate, prove dead, disconnect sensitive electronics
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Common causes of low IR:</strong> Moisture, damaged insulation,
                 contamination, age
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to testing, inspection, and diagnostic competencies
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the principles of insulation resistance testing and why d.c. test voltages are used',
               'Select the correct test voltage and minimum acceptable value for different circuit types',
               'Describe the preparation steps required before conducting insulation resistance tests',
               'Conduct insulation resistance tests between the three standard configurations (L-N, L-E, N-E)',
               'Interpret test results and identify common causes of low insulation resistance',
               'Apply trending techniques to support condition-based maintenance strategies',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Principles of insulation resistance testing</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Principles of Insulation Resistance Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Principles of Insulation Resistance Testing"
+            onSite="Safety warning: Insulation resistance testing applies voltages of up to 1000 V d.c. to the circuit under test. The circuit must be fully isolated, locked off, and proved dead before testing. All persons must be kept clear of exposed conductors during the test. After testing, the stored capacitive charge must be safely discharged before anyone touches the conductors or equipment is reconnected."
+          >
             <p>
               Every electrical conductor is surrounded by insulating material — whether it is the
               PVC sheath of a cable, the varnish on a motor winding, or the ceramic body of a busbar
@@ -387,12 +370,12 @@ const MOETModule4Section5_1 = () => {
             </p>
             <p>
               The test works by applying a known d.c. voltage across the insulation and measuring
-              the resulting leakage current. Using Ohm's law (R = V/I), the instrument calculates
-              the insulation resistance. High resistance (measured in megohms) indicates healthy
-              insulation with minimal leakage; low resistance indicates degraded insulation that
-              allows significant leakage current. The test uses d.c. rather than a.c. because cables
-              have inherent capacitance, and a.c. would cause capacitive current flow that is not
-              related to insulation quality, giving misleadingly low readings.
+              the resulting leakage current. Using Ohm&apos;s law (R = V/I), the instrument
+              calculates the insulation resistance. High resistance (measured in megohms) indicates
+              healthy insulation with minimal leakage; low resistance indicates degraded insulation
+              that allows significant leakage current. The test uses d.c. rather than a.c. because
+              cables have inherent capacitance, and a.c. would cause capacitive current flow that is
+              not related to insulation quality, giving misleadingly low readings.
             </p>
             <p>
               Insulation does not fail suddenly in most cases — it degrades gradually over time due
@@ -403,158 +386,85 @@ const MOETModule4Section5_1 = () => {
               declining trend indicates active deterioration that requires investigation, even if
               the current reading still exceeds the minimum.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Table 6.3 — Test Voltages and Minimum Values
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Circuit Nominal Voltage
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Test Voltage (d.c.)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum IR</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        SELV and PELV (up to 50 V)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">250 V d.c.</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Up to and including 500 V (excl. SELV/PELV)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">500 V d.c.</td>
-                      <td className="border border-white/10 px-3 py-2">1 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Above 500 V</td>
-                      <td className="border border-white/10 px-3 py-2">1000 V d.c.</td>
-                      <td className="border border-white/10 px-3 py-2">1 MΩ</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <InsulationResistanceTest />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Safety Warning</p>
-              <p className="text-sm text-white">
-                Insulation resistance testing applies voltages of up to 1000 V d.c. to the circuit
-                under test. The circuit must be fully isolated, locked off, and proved dead before
-                testing. All persons must be kept clear of exposed conductors during the test. After
-                testing, the stored capacitive charge must be safely discharged before anyone
-                touches the conductors or equipment is reconnected.
-              </p>
-            </div>
-          </div>
-        </section>
+          <AppendixTable
+            caption="Test Voltages and Minimum Values"
+            source="BS 7671 Table 64"
+            headers={['Circuit Nominal Voltage', 'Test Voltage (d.c.)', 'Minimum IR']}
+            rows={[
+              ['SELV and PELV (up to 50 V)', '250 V d.c.', '0.5 MΩ'],
+              ['Up to and including 500 V (excl. SELV/PELV)', '500 V d.c.', '1 MΩ'],
+              ['Above 500 V', '1000 V d.c.', '1 MΩ'],
+            ]}
+          />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Preparation and Pre-Test Procedures
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Preparation and pre-test procedures</ContentEyebrow>
+
+          <ConceptBlock title="Preparation and Pre-Test Procedures">
             <p>
               Thorough preparation is essential for obtaining accurate insulation resistance
               readings and for ensuring the safety of the technician and the integrity of connected
               equipment. Inadequate preparation is the most common cause of misleading results and
               equipment damage during insulation resistance testing.
             </p>
-
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Safe Isolation
-                </h3>
-                <p className="text-sm text-white">
-                  Isolate the circuit or installation to be tested using an appropriate isolation
-                  device. Apply a lock and warning notice. Prove dead at the point of work using a
-                  voltage indicator that has been proved on a known live source (prove-test-prove
-                  procedure). Insulation resistance testing must never be carried out on live
-                  circuits — the test instrument readings will be meaningless, and the instrument
-                  may be damaged.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Disconnect Sensitive Equipment
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Before applying the test voltage, disconnect or isolate all equipment that could
-                  be damaged by the d.c. test voltage:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safe isolation.</strong> Isolate the circuit or installation to be tested
+                using an appropriate isolation device. Apply a lock and warning notice. Prove dead
+                at the point of work using a voltage indicator that has been proved on a known live
+                source (prove-test-prove procedure). Insulation resistance testing must never be
+                carried out on live circuits — the test instrument readings will be meaningless, and
+                the instrument may be damaged.
+              </li>
+              <li>
+                <strong>Disconnect sensitive equipment.</strong> Before applying the test voltage,
+                disconnect or isolate all equipment that could be damaged by the d.c. test voltage:
+                <ul className="mt-2 list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+                  <li>
                     Electronic equipment: computers, servers, PLCs, control systems, BMS controllers
                   </li>
-                  <li className="pl-1">Variable speed drives (VSDs) and soft starters</li>
-                  <li className="pl-1">
-                    Surge protective devices (SPDs) — these will conduct at the test voltage
-                  </li>
-                  <li className="pl-1">LED drivers and electronic ballasts</li>
-                  <li className="pl-1">Dimmer switches and electronic timers</li>
-                  <li className="pl-1">
-                    Capacitors (will charge during the test and may give misleading readings)
-                  </li>
-                  <li className="pl-1">Lamps — remove or disconnect to avoid affecting readings</li>
+                  <li>Variable speed drives (VSDs) and soft starters</li>
+                  <li>Surge protective devices (SPDs) — these will conduct at the test voltage</li>
+                  <li>LED drivers and electronic ballasts</li>
+                  <li>Dimmer switches and electronic timers</li>
+                  <li>Capacitors (will charge during the test and may give misleading readings)</li>
+                  <li>Lamps — remove or disconnect to avoid affecting readings</li>
                 </ul>
-              </div>
+              </li>
+              <li>
+                <strong>Prepare the circuit.</strong> Ensure all switches, circuit breakers, and
+                fused switches in the circuit under test are in the closed (on) position so that the
+                test voltage reaches all parts of the circuit. For lighting circuits, switches
+                should be on and lamps removed. For socket outlet circuits, ensure any switched
+                sockets are on. The aim is to test the maximum extent of the circuit wiring in a
+                single test. Record the ambient temperature, as this affects the insulation
+                resistance value and is needed for accurate trending.
+              </li>
+              <li>
+                <strong>Verify the test instrument.</strong> Before testing, verify the insulation
+                resistance test instrument: check battery condition (low battery gives inaccurate
+                readings), test with leads open-circuited (should read infinity/overrange), and test
+                with leads short-circuited (should read approximately zero). Confirm the instrument
+                is within its calibration date. Select the correct test voltage range for the
+                circuit under test.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Prepare the Circuit
-                </h3>
-                <p className="text-sm text-white">
-                  Ensure all switches, circuit breakers, and fused switches in the circuit under
-                  test are in the closed (on) position so that the test voltage reaches all parts of
-                  the circuit. For lighting circuits, switches should be on and lamps removed. For
-                  socket outlet circuits, ensure any switched sockets are on. The aim is to test the
-                  maximum extent of the circuit wiring in a single test. Record the ambient
-                  temperature, as this affects the insulation resistance value and is needed for
-                  accurate trending.
-                </p>
-              </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Verify the Test Instrument
-                </h3>
-                <p className="text-sm text-white">
-                  Before testing, verify the insulation resistance test instrument: check battery
-                  condition (low battery gives inaccurate readings), test with leads open-circuited
-                  (should read infinity/overrange), and test with leads short-circuited (should read
-                  approximately zero). Confirm the instrument is within its calibration date. Select
-                  the correct test voltage range for the circuit under test.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>Test configurations and procedure</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Test Configurations and Procedure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Test Configurations and Procedure">
             <p>
               Insulation resistance is tested between each combination of conductors to check every
               insulation barrier in the circuit. The specific test configurations depend on the
@@ -562,77 +472,65 @@ const MOETModule4Section5_1 = () => {
               circuit, the number increases to account for all phase-to-phase combinations. Each
               test checks a different potential fault path.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Single-Phase Test Configurations
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Line to Neutral (L-N):</strong> Tests the insulation between the line and
-                  neutral conductors. A low reading indicates a potential short-circuit path between
-                  the two current-carrying conductors.
-                </li>
-                <li className="pl-1">
-                  <strong>Line to Earth (L-E):</strong> Tests the insulation between the line
-                  conductor and the circuit protective conductor (earth). A low reading indicates a
-                  potential earth fault path that could cause RCD tripping or, in TN systems,
-                  overcurrent protection operation.
-                </li>
-                <li className="pl-1">
-                  <strong>Neutral to Earth (N-E):</strong> Tests the insulation between the neutral
-                  conductor and earth. A low reading here may indicate a neutral-earth fault that
-                  can cause circulating currents, electromagnetic interference, and RCD nuisance
-                  tripping.
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Single-phase test configurations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Line to Neutral (L-N):</strong> Tests the insulation between the line and
+                neutral conductors. A low reading indicates a potential short-circuit path between
+                the two current-carrying conductors.
+              </li>
+              <li>
+                <strong>Line to Earth (L-E):</strong> Tests the insulation between the line
+                conductor and the circuit protective conductor (earth). A low reading indicates a
+                potential earth fault path that could cause RCD tripping or, in TN systems,
+                overcurrent protection operation.
+              </li>
+              <li>
+                <strong>Neutral to Earth (N-E):</strong> Tests the insulation between the neutral
+                conductor and earth. A low reading here may indicate a neutral-earth fault that can
+                cause circulating currents, electromagnetic interference, and RCD nuisance tripping.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Three-Phase Test Configurations
-              </p>
-              <p className="text-sm text-white mb-2">
-                For three-phase circuits, the following additional tests between phases are
-                required:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">L1 to L2, L2 to L3, L1 to L3 (phase-to-phase insulation)</li>
-                <li className="pl-1">L1 to N, L2 to N, L3 to N (each phase to neutral)</li>
-                <li className="pl-1">L1 to E, L2 to E, L3 to E (each phase to earth)</li>
-                <li className="pl-1">N to E (neutral to earth)</li>
-              </ul>
-              <p className="text-sm text-white mt-2">
-                This gives a total of ten tests for a complete three-phase assessment. Each reading
-                must be recorded individually on the Schedule of Test Results.
-              </p>
-            </div>
+          <ConceptBlock title="Three-phase test configurations">
+            <p>
+              For three-phase circuits, the following additional tests between phases are required:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>L1 to L2, L2 to L3, L1 to L3 (phase-to-phase insulation)</li>
+              <li>L1 to N, L2 to N, L3 to N (each phase to neutral)</li>
+              <li>L1 to E, L2 to E, L3 to E (each phase to earth)</li>
+              <li>N to E (neutral to earth)</li>
+            </ul>
+            <p>
+              This gives a total of ten tests for a complete three-phase assessment. Each reading
+              must be recorded individually on the Schedule of Test Results.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Conducting the Test</h3>
-              <p className="text-sm text-white">
-                Connect the test leads to the appropriate conductors at the distribution board or
-                origin of the circuit. Apply the test voltage and hold until the reading stabilises
-                — this typically takes 10-30 seconds for short circuits but may take longer for
-                circuits with significant capacitance (long cable runs, motor windings). Record the
-                stabilised reading. If the reading does not stabilise and continues to decrease,
-                this may indicate moisture absorption (polarisation index testing may be appropriate
-                for motor windings). After each test, discharge the stored capacitive charge before
-                moving the test leads.
-              </p>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Conducting the test">
+            <p>
+              Connect the test leads to the appropriate conductors at the distribution board or
+              origin of the circuit. Apply the test voltage and hold until the reading stabilises —
+              this typically takes 10-30 seconds for short circuits but may take longer for circuits
+              with significant capacitance (long cable runs, motor windings). Record the stabilised
+              reading. If the reading does not stabilise and continues to decrease, this may
+              indicate moisture absorption (polarisation index testing may be appropriate for motor
+              windings). After each test, discharge the stored capacitive charge before moving the
+              test leads.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Interpreting Results and Common Causes of Low Readings
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Interpreting results and common causes of low readings</ContentEyebrow>
+
+          <ConceptBlock title="Interpreting Results and Common Causes of Low Readings">
             <p>
               Interpreting insulation resistance results requires more than simply comparing the
               reading to the minimum acceptable value. A competent technician considers the reading
@@ -642,85 +540,80 @@ const MOETModule4Section5_1 = () => {
               acceptable, while the same reading on a new installation would indicate a serious
               problem.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Causes of Low Insulation Resistance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Moisture ingress:</strong> Water in cable joints, junction boxes, or
-                  distribution boards. Often caused by failed glands, cracked enclosures, or
-                  condensation in unheated spaces
-                </li>
-                <li className="pl-1">
-                  <strong>Physical damage:</strong> Cable insulation damaged by nails, screws,
-                  rodent activity, or mechanical impact. May be localised and difficult to detect
-                  visually
-                </li>
-                <li className="pl-1">
-                  <strong>Thermal degradation:</strong> Insulation aged by sustained overheating —
-                  from overloaded cables, poor ventilation, or thermal insulation covering cables
-                  not rated for it
-                </li>
-                <li className="pl-1">
-                  <strong>Chemical contamination:</strong> Oil, solvents, or industrial chemicals
-                  that break down insulation materials. Common in industrial environments
-                </li>
-                <li className="pl-1">
-                  <strong>Age-related deterioration:</strong> Natural ageing of insulation
-                  materials, particularly in older installations with rubber or lead-sheathed cables
-                </li>
-                <li className="pl-1">
-                  <strong>Connected equipment:</strong> Faulty equipment or equipment not
-                  disconnected before testing can give misleadingly low readings
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common causes of low insulation resistance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Moisture ingress:</strong> Water in cable joints, junction boxes, or
+                distribution boards. Often caused by failed glands, cracked enclosures, or
+                condensation in unheated spaces
+              </li>
+              <li>
+                <strong>Physical damage:</strong> Cable insulation damaged by nails, screws, rodent
+                activity, or mechanical impact. May be localised and difficult to detect visually
+              </li>
+              <li>
+                <strong>Thermal degradation:</strong> Insulation aged by sustained overheating —
+                from overloaded cables, poor ventilation, or thermal insulation covering cables not
+                rated for it
+              </li>
+              <li>
+                <strong>Chemical contamination:</strong> Oil, solvents, or industrial chemicals that
+                break down insulation materials. Common in industrial environments
+              </li>
+              <li>
+                <strong>Age-related deterioration:</strong> Natural ageing of insulation materials,
+                particularly in older installations with rubber or lead-sheathed cables
+              </li>
+              <li>
+                <strong>Connected equipment:</strong> Faulty equipment or equipment not disconnected
+                before testing can give misleadingly low readings
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Fault Localisation Techniques
-              </h3>
-              <p className="text-sm text-white">
-                When an insulation resistance test reveals a low reading, the next step is to
-                localise the fault. Start by disconnecting all equipment and accessories from the
-                circuit and retesting the cable alone. If the cable alone reads satisfactorily, the
-                fault is in a connected device. If the cable reading is still low, progressively
-                disconnect the circuit at accessible junction points and retest each section
-                individually. This halving technique narrows down the fault location efficiently.
-                For long cable runs where access is limited, specialist cable fault location
-                equipment (time-domain reflectometers or surge generators) may be required.
-              </p>
-            </div>
+          <ConceptBlock title="Fault localisation techniques">
+            <p>
+              When an insulation resistance test reveals a low reading, the next step is to localise
+              the fault. Start by disconnecting all equipment and accessories from the circuit and
+              retesting the cable alone. If the cable alone reads satisfactorily, the fault is in a
+              connected device. If the cable reading is still low, progressively disconnect the
+              circuit at accessible junction points and retest each section individually. This
+              halving technique narrows down the fault location efficiently. For long cable runs
+              where access is limited, specialist cable fault location equipment (time-domain
+              reflectometers or surge generators) may be required.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Interpreting Parallel Circuit Readings
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Reading a low combined result as roughly fine"
+            whatHappens={
+              <p>
                 When multiple circuits are tested simultaneously (e.g., testing all circuits from a
                 distribution board together), the overall reading is the parallel combination of all
                 individual circuit resistances. This will always be lower than the lowest individual
                 circuit resistance. An overall reading of 2 MΩ from ten circuits in parallel means
                 the average individual circuit resistance is approximately 20 MΩ — probably
                 satisfactory. However, one circuit at 0.5 MΩ among nine at 200 MΩ would give an
-                overall reading of approximately 0.5 MΩ. Individual circuit testing is essential
-                when the overall reading is below the minimum.
+                overall reading of approximately 0.5 MΩ.
               </p>
-            </div>
-          </div>
-        </section>
+            }
+            doInstead={
+              <p>
+                Individual circuit testing is essential when the overall reading is below the
+                minimum.
+              </p>
+            }
+          />
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Trending and Condition-Based Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Trending and condition-based maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Trending and Condition-Based Maintenance">
             <p>
               The true power of insulation resistance testing in a maintenance context lies not in
               individual pass/fail assessments but in the systematic trending of results over time.
@@ -729,145 +622,124 @@ const MOETModule4Section5_1 = () => {
               transforms insulation resistance testing from a reactive verification into a proactive
               condition monitoring tool.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Building a Trending Programme
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Consistent methodology:</strong> Test at the same points, using the same
-                  test voltage, with the same preparation procedure each time to ensure readings are
-                  comparable
-                </li>
-                <li className="pl-1">
-                  <strong>Temperature correction:</strong> Record the ambient and conductor
-                  temperature at each test. Apply correction factors when comparing readings taken
-                  at different temperatures (IR approximately halves for each 10°C rise)
-                </li>
-                <li className="pl-1">
-                  <strong>Regular intervals:</strong> Establish a testing schedule appropriate to
-                  the criticality and age of the installation. More frequent testing for critical
-                  circuits and older installations
-                </li>
-                <li className="pl-1">
-                  <strong>Alert thresholds:</strong> Set intervention thresholds above the minimum
-                  acceptable value. For example, investigate when IR drops below 5 MΩ rather than
-                  waiting for it to reach 1 MΩ
-                </li>
-                <li className="pl-1">
-                  <strong>Graphical presentation:</strong> Plot IR values against time for each
-                  circuit. A declining trend line is a clear visual indicator of deterioration
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Building a trending programme">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Consistent methodology:</strong> Test at the same points, using the same
+                test voltage, with the same preparation procedure each time to ensure readings are
+                comparable
+              </li>
+              <li>
+                <strong>Temperature correction:</strong> Record the ambient and conductor
+                temperature at each test. Apply correction factors when comparing readings taken at
+                different temperatures (IR approximately halves for each 10°C rise)
+              </li>
+              <li>
+                <strong>Regular intervals:</strong> Establish a testing schedule appropriate to the
+                criticality and age of the installation. More frequent testing for critical circuits
+                and older installations
+              </li>
+              <li>
+                <strong>Alert thresholds:</strong> Set intervention thresholds above the minimum
+                acceptable value. For example, investigate when IR drops below 5 MΩ rather than
+                waiting for it to reach 1 MΩ
+              </li>
+              <li>
+                <strong>Graphical presentation:</strong> Plot IR values against time for each
+                circuit. A declining trend line is a clear visual indicator of deterioration
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Polarisation Index Testing
-              </h3>
-              <p className="text-sm text-white">
-                For motor windings and transformers, the polarisation index (PI) test provides
-                additional diagnostic information beyond a standard insulation resistance reading.
-                The PI is the ratio of the insulation resistance at 10 minutes to the resistance at
-                1 minute (PI = R10min / R1min). In healthy insulation, the resistance increases over
-                time as the dielectric absorption effect reduces the leakage current. A PI of 2.0 or
-                above generally indicates good insulation condition. A PI close to 1.0 suggests
-                contamination or moisture saturation. This test is particularly valuable for
-                assessing the condition of large rotating machines where a single resistance reading
-                may not tell the full story.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
-              in condition monitoring and predictive maintenance techniques. Insulation resistance
-              trending is a foundational skill in this area, demonstrating your ability to move
-              beyond reactive fault-finding to proactive condition-based maintenance.
+          <ConceptBlock title="Polarisation index testing">
+            <p>
+              For motor windings and transformers, the polarisation index (PI) test provides
+              additional diagnostic information beyond a standard insulation resistance reading. The
+              PI is the ratio of the insulation resistance at 10 minutes to the resistance at 1
+              minute (PI = R10min / R1min). In healthy insulation, the resistance increases over
+              time as the dielectric absorption effect reduces the leakage current. A PI of 2.0 or
+              above generally indicates good insulation condition. A PI close to 1.0 suggests
+              contamination or moisture saturation. This test is particularly valuable for assessing
+              the condition of large rotating machines where a single resistance reading may not
+              tell the full story.
             </p>
-          </div>
-        </section>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> The maintenance technician
+              standard requires competence in condition monitoring and predictive maintenance
+              techniques. Insulation resistance trending is a foundational skill in this area,
+              demonstrating your ability to move beyond reactive fault-finding to proactive
+              condition-based maintenance.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=MLTM-OJE0Lo"
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+            title="Calculating Combined Insulation Resistance Tests"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Test Procedure Summary</p>
-                <ul className="space-y-0.5">
-                  <li>1. Isolate, lock off, prove dead</li>
-                  <li>2. Disconnect sensitive equipment and SPDs</li>
-                  <li>3. Close all switches in the circuit</li>
-                  <li>4. Verify test instrument (open/short/battery)</li>
-                  <li>5. Test L-N, L-E, N-E (and phase-phase for 3-phase)</li>
-                  <li>6. Record readings, discharge, reconnect</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Values (BS 7671)</p>
-                <ul className="space-y-0.5">
-                  <li>SELV/PELV: 250 V d.c., minimum 0.5 MΩ</li>
-                  <li>Up to 500 V: 500 V d.c., minimum 1 MΩ</li>
-                  <li>Above 500 V: 1000 V d.c., minimum 1 MΩ</li>
-                  <li>New installation typical: 200+ MΩ</li>
-                  <li>Investigate below: 2 MΩ (IET GN3)</li>
-                </ul>
-              </div>
+            channel="SparkyNinja"
+
+            duration="11:30"
+
+            topic="Why parallel circuits drag a combined IR reading down"
+
+            caption="Goes past the procedure into the arithmetic — useful when a global test reads low and you need to work out whether that is one bad circuit or simply many good ones in parallel."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Test procedure: isolate, lock off, prove dead; disconnect sensitive equipment and SPDs; close all switches in the circuit; verify test instrument (open/short/battery); test L-N, L-E, N-E (and phase-phase for 3-phase); record readings, discharge, reconnect.',
+              'SELV/PELV: 250 V d.c., minimum 0.5 MΩ.',
+              'Up to 500 V: 500 V d.c., minimum 1 MΩ.',
+              'Above 500 V: 1000 V d.c., minimum 1 MΩ.',
+              'New installation typical: 200+ MΩ.',
+              'Investigate below: 2 MΩ (IET GN3).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Testing and inspection
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Continuity Testing
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-2">
-              Next: Continuity Testing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

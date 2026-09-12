@@ -13,7 +13,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
   const hasInsurance = profile.insuranceProvider && profile.insuranceProvider !== 'none';
 
   return (
-    <section className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+    <section className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden">
       <div className="px-5 sm:px-6 lg:px-8 py-6 sm:py-7 lg:py-8 space-y-6 sm:space-y-8">
         {/* Header: photo + name + edit */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 pb-6 border-b border-white/[0.06]">
@@ -51,7 +51,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
         </div>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-elec-yellow/35 rounded-2xl overflow-hidden">
           <StatCell
             label="Qualifications"
             value={String(profile.qualifications.length).padStart(2, '0')}
@@ -94,10 +94,10 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
                       <p className="text-[13px] text-white truncate">{profile.companyName}</p>
                     )}
                     {profile.companyPhone && (
-                      <p className="text-[12px] text-white/65 truncate">{profile.companyPhone}</p>
+                      <p className="text-[12px] text-white truncate">{profile.companyPhone}</p>
                     )}
                     {profile.companyEmail && (
-                      <p className="text-[12px] text-white/65 truncate">{profile.companyEmail}</p>
+                      <p className="text-[12px] text-white truncate">{profile.companyEmail}</p>
                     )}
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
                   {profile.registrationScheme}
                 </p>
                 {profile.registrationNumber && (
-                  <p className="mt-0.5 text-[12px] text-white/65">#{profile.registrationNumber}</p>
+                  <p className="mt-0.5 text-[12px] text-white">#{profile.registrationNumber}</p>
                 )}
                 <div className="mt-2">
                   <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
@@ -128,7 +128,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
                   {profile.insuranceProvider}
                 </p>
                 {profile.insuranceCoverage && (
-                  <p className="mt-0.5 text-[12px] text-white/65">{profile.insuranceCoverage}</p>
+                  <p className="mt-0.5 text-[12px] text-white">{profile.insuranceCoverage}</p>
                 )}
                 <div className="mt-2">
                   <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-blue-400">
@@ -176,7 +176,7 @@ function StatCell({
           ? 'text-purple-400'
           : 'text-white';
   return (
-    <div className="flex flex-col items-start bg-[hsl(0_0%_12%)] px-4 py-5 sm:px-5 sm:py-6">
+    <div className="flex flex-col items-start bg-white/[0.05] px-4 py-5 sm:px-5 sm:py-6">
       <Eyebrow>{label}</Eyebrow>
       <span className={`mt-2 text-lg sm:text-xl font-semibold tracking-tight leading-none ${valueClass}`}>
         {value}

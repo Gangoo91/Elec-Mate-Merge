@@ -200,6 +200,13 @@ interface RcStats {
   paidUsers: Array<{ id: string; full_name: string; subscription_tier: string }>;
 }
 
+/*
+  Accounts an admin created on Bulk create (college tutors, cohorts, demo,
+  beta) are not signups and never pay. Keep them out of every signup number.
+*/
+const NOT_ADMIN_MADE = 'created_via.is.null,created_via.neq.admin_bulk';
+const isSelfSignup = (u: { created_via?: string | null }) => u.created_via !== 'admin_bulk';
+
 type ListKey = 'live' | 'signups' | 'inbox' | 'leaving';
 
 interface SentryOverview {
@@ -411,11 +418,13 @@ export default function AdminDashboard() {
     queryFn: async () => {
       const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
       const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      // Accounts made on Bulk create (tutors, cohorts, demo) are not signups.
       const [totalUsersRes, signupsWeekRes, activeTodayRes] = await Promise.all([
-        supabase.from('profiles').select('*', { count: 'exact', head: true }),
+        supabase.from('profiles').select('*', { count: 'exact', head: true }).or(NOT_ADMIN_MADE),
         supabase
           .from('profiles')
           .select('*', { count: 'exact', head: true })
+          .or(NOT_ADMIN_MADE)
           .gte('created_at', weekAgo.toISOString()),
         supabase
           .from('user_presence')
@@ -426,7 +435,7 @@ export default function AdminDashboard() {
         totalUsers: totalUsersRes.count || 0,
         signupsThisWeek: signupsWeekRes.count || 0,
         activeToday: activeTodayRes.count || 0,
-        recentSignups: (baseUsers || []).slice(0, 50),
+        recentSignups: (baseUsers || []).filter(isSelfSignup).slice(0, 50),
       };
     },
   });
@@ -863,7 +872,9 @@ export default function AdminDashboard() {
   const hotspotTop = liveHotspots.slice(0, 3);
   const hotspotRest = liveHotspots.slice(3).reduce((t, [, n]) => t + n, 0);
 
-  const weekSignups = (baseUsers ?? []).filter((u) => new Date(u.created_at).getTime() > weekAgoMs);
+  const weekSignups = (baseUsers ?? []).filter(
+    (u) => isSelfSignup(u) && new Date(u.created_at).getTime() > weekAgoMs
+  );
   const weekFunnel = {
     paying: weekSignups.filter((u) => u.subscribed).length,
     abandoned: weekSignups.filter((u) => !u.subscribed && u.stripe_customer_id).length,
@@ -905,7 +916,6 @@ export default function AdminDashboard() {
   const unreadSupportCount = inboxSorted.filter((m) => !m.read_at).length;
   const oldestUnread = inboxSorted.find((m) => !m.read_at);
   const oldestWait = oldestUnread ? shortAgo(oldestUnread.created_at) : null;
-
 
   const findUser = (id: string) => baseUsers?.find((u) => u.id === id) ?? null;
   const openUser = (id: string) => {
@@ -1138,9 +1148,7 @@ export default function AdminDashboard() {
               }
               unread={!m.read_at}
               cells={<Money>{shortAgo(m.created_at)}</Money>}
-              onClick={() =>
-                setThread({ id: m.sender_id, name: m.sender?.full_name || 'Unknown' })
-              }
+              onClick={() => setThread({ id: m.sender_id, name: m.sender?.full_name || 'Unknown' })}
             />
           ))
       )}
@@ -1283,7 +1291,9 @@ export default function AdminDashboard() {
         return (
           <div className="mt-3 text-[12px] leading-[18px]">
             <span className="font-semibold">Who left on Stripe, {monthName(cur.month)}:</span>{' '}
-            {cur.byPlan.map((p) => `${tierLabel(p.tier)} ${p.count} · ${gbp(p.mrrLost)}`).join(' · ')}
+            {cur.byPlan
+              .map((p) => `${tierLabel(p.tier)} ${p.count} · ${gbp(p.mrrLost)}`)
+              .join(' · ')}
           </div>
         );
       })()}

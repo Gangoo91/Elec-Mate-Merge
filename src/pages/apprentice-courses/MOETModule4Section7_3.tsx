@@ -1,8 +1,52 @@
-import { ArrowLeft, BarChart3, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 7.3 · Subsection 3 — Criticality Analysis of Equipment
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge  · "Equipment life cycle considerations."
+ *              · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *
+ * Numeric detail (criticality scoring bands, RPN formula) is copied
+ * verbatim from the original page; the bs7671_facets RAG holds regulation
+ * rules, not this kind of maintenance-management scoring, so it could not
+ * be checked against it. The page's own "5-yearly" periodic inspection
+ * mention for a General-rated asset is presented as typical practice, not
+ * as a mandated interval, and has been left as written.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Criticality Analysis of Equipment - MOET Module 4 Section 7.3';
@@ -258,118 +302,71 @@ const faqs = [
 ];
 
 const MOETModule4Section7_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <BarChart3 className="h-4 w-4" />
-            <span>Module 4.7.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Criticality Analysis of Equipment
-          </h1>
-          <p className="text-white">
-            Ranking assets by failure consequences to focus maintenance where it matters most
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.7 · Subsection 3"
+        title="Criticality Analysis of Equipment"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section7"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Ranking assets by failure consequences to focus maintenance where it matters most.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Consequence-based:</strong> Criticality reflects failure impact, not
-                equipment cost or size
-              </li>
-              <li className="pl-1">
-                <strong>ABC classification:</strong> Critical, Important, General — drives
-                maintenance strategy
-              </li>
-              <li className="pl-1">
-                <strong>Multi-factor:</strong> Safety, environment, production, repair time,
-                redundancy
-              </li>
-              <li className="pl-1">
-                <strong>Resource allocation:</strong> Focus maintenance effort on the assets that
-                matter most
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Consequence-based: Criticality reflects failure impact, not equipment cost or size',
+              'ABC classification: Critical, Important, General — drives maintenance strategy',
+              'Multi-factor: Safety, environment, production, repair time, redundancy',
+              'Resource allocation: Focus maintenance effort on the assets that matter most',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Work prioritisation:</strong> Critical assets take priority when tasks
                 compete for time
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Practical input:</strong> Your failure mode knowledge improves criticality
                 accuracy
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Strategy understanding:</strong> Explains why different assets have
                 different PM schedules
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Demonstrates understanding of maintenance planning and
                 prioritisation
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the purpose of criticality analysis in maintenance management',
               'Identify the factors that determine equipment criticality',
               'Apply a criticality matrix to rank electrical equipment by failure consequence',
               'Describe how criticality ratings drive maintenance strategy selection',
               'Explain the role of redundancy in criticality assessment',
               'Contribute to criticality reviews using practical maintenance knowledge',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Why criticality analysis matters</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Why Criticality Analysis Matters
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Why Criticality Analysis Matters"
+            onSite="Key point: Criticality is a property of the asset in its operating context, not a property of the equipment type. The same model of motor, VSD or panel can have different criticality ratings depending on what it does, where it is, and what happens if it fails."
+          >
             <p>
               Every maintenance organisation has limited resources — there are never enough
               technicians, enough time, enough budget or enough shutdown windows to do everything
@@ -386,79 +383,70 @@ const MOETModule4Section7_3 = () => {
               motor is money well spent. The same programme on a non-critical ventilation fan in a
               storage room would be wasteful.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Problem Without Criticality Analysis
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Over-maintenance of non-critical assets:</strong> Technician time spent on
-                  equipment where failure has minimal consequences
-                </li>
-                <li className="pl-1">
-                  <strong>Under-maintenance of critical assets:</strong> Important equipment does
-                  not receive the attention it needs because resources are spread too thinly
-                </li>
-                <li className="pl-1">
-                  <strong>Reactive firefighting:</strong> Without prioritisation, every breakdown
-                  feels equally urgent, leading to constant firefighting
-                </li>
-                <li className="pl-1">
-                  <strong>Inefficient spare parts:</strong> Stock held for non-critical items while
-                  critical spares are not available
-                </li>
-                <li className="pl-1">
-                  <strong>No basis for investment:</strong> Difficult to justify condition
-                  monitoring or PM investment without documented criticality
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The problem without criticality analysis">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Over-maintenance of non-critical assets:</strong> Technician time spent on
+                equipment where failure has minimal consequences
+              </li>
+              <li>
+                <strong>Under-maintenance of critical assets:</strong> Important equipment does not
+                receive the attention it needs because resources are spread too thinly
+              </li>
+              <li>
+                <strong>Reactive firefighting:</strong> Without prioritisation, every breakdown
+                feels equally urgent, leading to constant firefighting
+              </li>
+              <li>
+                <strong>Inefficient spare parts:</strong> Stock held for non-critical items while
+                critical spares are not available
+              </li>
+              <li>
+                <strong>No basis for investment:</strong> Difficult to justify condition monitoring
+                or PM investment without documented criticality
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Practical Example: Two Motors, Same Model
-              </p>
-              <p className="text-sm text-white mb-2">
-                Consider two identical 30 kW motors — same manufacturer, same model, same age:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor A:</strong> Drives the main production line conveyor. No standby.
-                  Failure stops the entire factory. 8-hour repair time. Lost production cost is very
-                  high per hour
-                </li>
-                <li className="pl-1">
-                  <strong>Motor B:</strong> Drives a ventilation fan in the warehouse. Standby fan
-                  available. Failure causes minor inconvenience. 4-hour repair time. No production
-                  impact
-                </li>
-              </ul>
-              <p className="text-sm text-white mt-2 italic">
+          <Scenario
+            title="Practical example: two motors, same model"
+            situation={
+              <>
+                <p>
+                  Consider two identical 30 kW motors — same manufacturer, same model, same age:
+                </p>
+                <ul className="list-disc space-y-1.5 pl-5 marker:text-cyan-400/70">
+                  <li>
+                    <strong>Motor A:</strong> Drives the main production line conveyor. No standby.
+                    Failure stops the entire factory. 8-hour repair time. Lost production cost is
+                    very high per hour
+                  </li>
+                  <li>
+                    <strong>Motor B:</strong> Drives a ventilation fan in the warehouse. Standby fan
+                    available. Failure causes minor inconvenience. 4-hour repair time. No production
+                    impact
+                  </li>
+                </ul>
+              </>
+            }
+            whatToDo={
+              <p>
                 Same motor, entirely different criticality. Motor A is Critical (A) — full condition
                 monitoring, comprehensive PM, priority spares. Motor B is General (C) — basic
                 inspection, run-to-failure acceptable. This is criticality in action.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Criticality is a property of the asset in its operating
-              context, not a property of the equipment type. The same model of motor, VSD or panel
-              can have different criticality ratings depending on what it does, where it is, and
-              what happens if it fails.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Criticality Matrix
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The criticality matrix</ContentEyebrow>
+
+          <ConceptBlock title="The Criticality Matrix">
             <p>
               A criticality matrix provides a structured, repeatable method for assessing and
               scoring the criticality of each asset. By scoring multiple consequence factors on a
@@ -467,91 +455,45 @@ const MOETModule4Section7_3 = () => {
               that criticality decisions are based on objective criteria rather than subjective
               opinion.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Criticality Scoring Matrix
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Factor</th>
-                      <th className="border border-white/10 px-3 py-2 text-center">
-                        Score 1 (Low)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-center">
-                        Score 3 (Medium)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-center">
-                        Score 5 (High)
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Safety</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        No risk to people
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Minor injury possible
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Serious injury or fatality possible
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Environment</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        No environmental impact
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Minor contained release
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Reportable environmental incident
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Production</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        No impact on output
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Reduced output or quality
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Complete production stop
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Repair Time</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">Under 1 hour</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">1-8 hours</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">Over 8 hours</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Redundancy</td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Full backup available
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        Partial mitigation possible
-                      </td>
-                      <td className="border border-white/10 px-3 py-2 text-center">
-                        No redundancy at all
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-white mt-2">
-                Total score: 5-9 = General (C), 10-17 = Important (B), 18-25 = Critical (A). Safety
-                score of 5 automatically overrides to Critical (A) regardless of total.
-              </p>
-            </div>
+          <AppendixTable
+            caption="Typical Criticality Scoring Matrix"
+            headers={['Factor', 'Score 1 (Low)', 'Score 3 (Medium)', 'Score 5 (High)']}
+            rows={[
+              [
+                'Safety',
+                'No risk to people',
+                'Minor injury possible',
+                'Serious injury or fatality possible',
+              ],
+              [
+                'Environment',
+                'No environmental impact',
+                'Minor contained release',
+                'Reportable environmental incident',
+              ],
+              [
+                'Production',
+                'No impact on output',
+                'Reduced output or quality',
+                'Complete production stop',
+              ],
+              ['Repair Time', 'Under 1 hour', '1-8 hours', 'Over 8 hours'],
+              [
+                'Redundancy',
+                'Full backup available',
+                'Partial mitigation possible',
+                'No redundancy at all',
+              ],
+            ]}
+            notes="Total score: 5-9 = General (C), 10-17 = Important (B), 18-25 = Critical (A). Safety score of 5 automatically overrides to Critical (A) regardless of total."
+          />
 
+          <ConceptBlock
+            title="Applying the matrix"
+            onSite="Key point: Any asset with a safety score of 5 (serious injury or fatality possible) should automatically be rated Critical (A) regardless of the other scores. Safety consequences override all other considerations. This is a non-negotiable principle that reflects legal and ethical obligations."
+          >
             <p>
               The matrix should be applied systematically to every asset in the maintenance
               register. The scoring is typically done by a small team that includes a maintenance
@@ -560,25 +502,18 @@ const MOETModule4Section7_3 = () => {
               the system). The resulting scores are documented in the criticality register and
               linked to the CMMS asset record.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Any asset with a safety score of 5 (serious injury or
-              fatality possible) should automatically be rated Critical (A) regardless of the other
-              scores. Safety consequences override all other considerations. This is a
-              non-negotiable principle that reflects legal and ethical obligations.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            From Criticality to Maintenance Strategy
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>From criticality to maintenance strategy</ContentEyebrow>
+
+          <ConceptBlock
+            title="From Criticality to Maintenance Strategy"
+            onSite="Key point: The maintenance strategy must be proportional to the criticality. Applying a Critical (A) strategy to a General (C) asset wastes resources. Applying a General (C) strategy to a Critical (A) asset creates unacceptable risk. Getting this alignment right is one of the most important decisions in maintenance management."
+          >
             <p>
               The criticality rating directly determines the maintenance strategy for each asset.
               This is the practical output of the analysis — it translates the criticality
@@ -586,109 +521,70 @@ const MOETModule4Section7_3 = () => {
               failure response procedures. The link between criticality and strategy must be
               documented, understood and followed.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                <h3 className="text-sm font-medium text-red-400 mb-2">
-                  Critical (A) — Comprehensive Proactive Strategy
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Full condition monitoring programme (vibration, thermography, IR testing, oil
-                    analysis as applicable)
-                  </li>
-                  <li className="pl-1">Comprehensive PPM schedule with shorter intervals</li>
-                  <li className="pl-1">Detailed FMEA to identify all significant failure modes</li>
-                  <li className="pl-1">
-                    Priority spare parts held in stock or on guaranteed rapid delivery
-                  </li>
-                  <li className="pl-1">Documented emergency response and repair procedures</li>
-                  <li className="pl-1">
-                    Root cause analysis mandatory for every unplanned failure
-                  </li>
-                  <li className="pl-1">Regular review of maintenance effectiveness</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
-                <h3 className="text-sm font-medium text-yellow-400 mb-2">
-                  Important (B) — Targeted Proactive Strategy
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Selective condition monitoring (thermography, key measurements)
-                  </li>
-                  <li className="pl-1">
-                    Standard PPM schedule based on manufacturer recommendations and experience
-                  </li>
-                  <li className="pl-1">
-                    Key spare parts identified and sourced (not necessarily held in stock)
-                  </li>
-                  <li className="pl-1">
-                    Root cause analysis for repeated failures or significant events
-                  </li>
-                  <li className="pl-1">Periodic review of failure history to adjust strategy</li>
-                </ul>
-              </div>
-              <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                <h3 className="text-sm font-medium text-green-400 mb-2">
-                  General (C) — Basic or Reactive Strategy
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Basic periodic inspection (as part of statutory requirements e.g. BS 7671)
-                  </li>
-                  <li className="pl-1">Run-to-failure acceptable for most failure modes</li>
-                  <li className="pl-1">Spare parts sourced when needed (standard supply chain)</li>
-                  <li className="pl-1">Repair on failure, no detailed investigation required</li>
-                  <li className="pl-1">Consider for replacement rather than expensive repair</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Critical (A) — comprehensive proactive strategy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Full condition monitoring programme (vibration, thermography, IR testing, oil
+                analysis as applicable)
+              </li>
+              <li>Comprehensive PPM schedule with shorter intervals</li>
+              <li>Detailed FMEA to identify all significant failure modes</li>
+              <li>Priority spare parts held in stock or on guaranteed rapid delivery</li>
+              <li>Documented emergency response and repair procedures</li>
+              <li>Root cause analysis mandatory for every unplanned failure</li>
+              <li>Regular review of maintenance effectiveness</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Example: Distribution Board Hierarchy
-              </p>
-              <p className="text-sm text-white mb-2">
-                Consider three distribution boards in a manufacturing facility:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Main switchboard (MSB):</strong> Feeds the entire facility. Critical (A).
-                  Annual thermographic survey, 6-monthly insulation testing, trip test programme for
-                  all protection, spare MCCB held in stock
-                </li>
-                <li className="pl-1">
-                  <strong>Production sub-board (DB1):</strong> Feeds one production line. Standby
-                  changeover available. Important (B). Annual thermographic survey, annual
-                  inspection, key spares identified
-                </li>
-                <li className="pl-1">
-                  <strong>Office lighting board (DB7):</strong> Feeds office lighting only. General
-                  (C). 5-yearly periodic inspection per BS 7671, repair on fault report
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Important (B) — targeted proactive strategy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Selective condition monitoring (thermography, key measurements)</li>
+              <li>Standard PPM schedule based on manufacturer recommendations and experience</li>
+              <li>Key spare parts identified and sourced (not necessarily held in stock)</li>
+              <li>Root cause analysis for repeated failures or significant events</li>
+              <li>Periodic review of failure history to adjust strategy</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The maintenance strategy must be proportional to the
-              criticality. Applying a Critical (A) strategy to a General (C) asset wastes resources.
-              Applying a General (C) strategy to a Critical (A) asset creates unacceptable risk.
-              Getting this alignment right is one of the most important decisions in maintenance
-              management.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock title="General (C) — basic or reactive strategy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Basic periodic inspection (as part of statutory requirements e.g. BS 7671)</li>
+              <li>Run-to-failure acceptable for most failure modes</li>
+              <li>Spare parts sourced when needed (standard supply chain)</li>
+              <li>Repair on failure, no detailed investigation required</li>
+              <li>Consider for replacement rather than expensive repair</li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Practical example: distribution board hierarchy">
+            <p>Consider three distribution boards in a manufacturing facility:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Main switchboard (MSB):</strong> Feeds the entire facility. Critical (A).
+                Annual thermographic survey, 6-monthly insulation testing, trip test programme for
+                all protection, spare MCCB held in stock
+              </li>
+              <li>
+                <strong>Production sub-board (DB1):</strong> Feeds one production line. Standby
+                changeover available. Important (B). Annual thermographic survey, annual inspection,
+                key spares identified
+              </li>
+              <li>
+                <strong>Office lighting board (DB7):</strong> Feeds office lighting only. General
+                (C). 5-yearly periodic inspection per BS 7671, repair on fault report
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Implementing and Maintaining the Criticality Register
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Implementing and maintaining the criticality register</ContentEyebrow>
+
+          <ConceptBlock title="Implementing and Maintaining the Criticality Register">
             <p>
               A criticality register is only valuable if it is implemented effectively, kept
               current, and used to drive real maintenance decisions. Too often, organisations invest
@@ -696,176 +592,114 @@ const MOETModule4Section7_3 = () => {
               or allow it to become outdated. The register must be a living document that actively
               shapes day-to-day maintenance priorities.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Create the asset register.</strong> List all maintainable electrical assets:
+                motors, drives, panels, transformers, generators, UPS systems, protection devices,
+                control systems and instrumentation. Each asset should have a unique identifier (tag
+                number) linked to the CMMS. Include the asset&apos;s function, location and the
+                system it serves.
+              </li>
+              <li>
+                <strong>Score each asset.</strong> Apply the criticality matrix to each asset as a
+                team exercise. Score safety, environment, production, repair time and redundancy.
+                Document the scores and the rationale. Identify any assets where the rating is
+                uncertain and flag them for further review or discussion with operations.
+              </li>
+              <li>
+                <strong>Assign maintenance strategies.</strong> Map each criticality category to a
+                maintenance strategy template. Link the strategies to specific CMMS PM schedules,
+                condition monitoring routes and spare parts lists. Ensure every Critical (A) asset
+                has a comprehensive strategy, every Important (B) asset has a targeted strategy, and
+                every General (C) asset has at minimum the statutory inspection requirements
+                covered.
+              </li>
+              <li>
+                <strong>Review and update.</strong> Schedule annual reviews of the criticality
+                register. Update when: new assets are installed, assets are decommissioned,
+                production requirements change, redundancy is added or removed, a failure reveals
+                previously unrecognised consequences, or regulatory requirements change. Track
+                changes to maintain an audit trail.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 1 — Create the Asset Register
-                </h3>
-                <p className="text-sm text-white">
-                  List all maintainable electrical assets: motors, drives, panels, transformers,
-                  generators, UPS systems, protection devices, control systems and instrumentation.
-                  Each asset should have a unique identifier (tag number) linked to the CMMS.
-                  Include the asset's function, location and the system it serves.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 2 — Score Each Asset
-                </h3>
-                <p className="text-sm text-white">
-                  Apply the criticality matrix to each asset as a team exercise. Score safety,
-                  environment, production, repair time and redundancy. Document the scores and the
-                  rationale. Identify any assets where the rating is uncertain and flag them for
-                  further review or discussion with operations.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 3 — Assign Maintenance Strategies
-                </h3>
-                <p className="text-sm text-white">
-                  Map each criticality category to a maintenance strategy template. Link the
-                  strategies to specific CMMS PM schedules, condition monitoring routes and spare
-                  parts lists. Ensure every Critical (A) asset has a comprehensive strategy, every
-                  Important (B) asset has a targeted strategy, and every General (C) asset has at
-                  minimum the statutory inspection requirements covered.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Step 4 — Review and Update
-                </h3>
-                <p className="text-sm text-white">
-                  Schedule annual reviews of the criticality register. Update when: new assets are
-                  installed, assets are decommissioned, production requirements change, redundancy
-                  is added or removed, a failure reveals previously unrecognised consequences, or
-                  regulatory requirements change. Track changes to maintain an audit trail.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Signs of effective implementation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Technicians know which assets are critical in their area</li>
+              <li>PM schedules reflect criticality (more tasks on A, fewer on C)</li>
+              <li>Spare parts stock aligns with criticality priorities</li>
+              <li>Breakdown response prioritises critical equipment</li>
+              <li>Criticality register is referenced in maintenance reviews</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Signs of Effective Implementation
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Technicians know which assets are critical in their area</li>
-                  <li className="pl-1">
-                    PM schedules reflect criticality (more tasks on A, fewer on C)
-                  </li>
-                  <li className="pl-1">Spare parts stock aligns with criticality priorities</li>
-                  <li className="pl-1">Breakdown response prioritises critical equipment</li>
-                  <li className="pl-1">
-                    Criticality register is referenced in maintenance reviews
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Common Implementation Failures
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Analysis done but not linked to CMMS or PM schedules</li>
-                  <li className="pl-1">Register created but never reviewed or updated</li>
-                  <li className="pl-1">
-                    Criticality not communicated to technicians and operators
-                  </li>
-                  <li className="pl-1">Same PM applied to all assets regardless of rating</li>
-                  <li className="pl-1">No process for challenging or updating ratings</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Criticality analysis is not a one-off project — it is an
-              ongoing management process. The initial analysis establishes the baseline, but the
-              real value comes from using it daily to guide maintenance decisions, and updating it
-              continuously as the organisation learns more about its assets and their failure
-              behaviour. A well-maintained criticality register is one of the most valuable tools in
-              the maintenance manager's toolkit.
+          <ConceptBlock title="Common implementation failures">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Analysis done but not linked to CMMS or PM schedules</li>
+              <li>Register created but never reviewed or updated</li>
+              <li>Criticality not communicated to technicians and operators</li>
+              <li>Same PM applied to all assets regardless of rating</li>
+              <li>No process for challenging or updating ratings</li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> Criticality analysis is not a one-off
+              project — it is an ongoing management process. The initial analysis establishes the
+              baseline, but the real value comes from using it daily to guide maintenance decisions,
+              and updating it continuously as the organisation learns more about its assets and
+              their failure behaviour. A well-maintained criticality register is one of the most
+              valuable tools in the maintenance manager&apos;s toolkit.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Criticality assessment factors: safety impact (injury/fatality potential); environmental impact (release/contamination); production impact (output/quality/delivery); repair time and cost; redundancy and backup availability; failure frequency and detectability.',
+              'ABC maintenance strategy: A (Critical) — full CBM, comprehensive PPM, priority spares; B (Important) — selective CBM, standard PPM, key spares; C (General) — basic inspection, run-to-failure, repair/replace. Safety score 5 = auto-Critical (A). Review annually and on change. Document rationale in the criticality register.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Criticality Assessment Factors</p>
-                <ul className="space-y-0.5">
-                  <li>Safety impact (injury/fatality potential)</li>
-                  <li>Environmental impact (release/contamination)</li>
-                  <li>Production impact (output/quality/delivery)</li>
-                  <li>Repair time and cost</li>
-                  <li>Redundancy and backup availability</li>
-                  <li>Failure frequency and detectability</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">ABC Maintenance Strategy</p>
-                <ul className="space-y-0.5">
-                  <li>A (Critical): Full CBM, comprehensive PPM, priority spares</li>
-                  <li>B (Important): Selective CBM, standard PPM, key spares</li>
-                  <li>C (General): Basic inspection, run-to-failure, repair/replace</li>
-                  <li>Safety score 5 = auto-Critical (A)</li>
-                  <li>Review annually + on change</li>
-                  <li>Document rationale in criticality register</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Balancing PPM and Corrective Maintenance
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Industry Best Practices in RCM
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Balancing PPM and Corrective
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-4">
-              Next: Industry Best Practices in RCM
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

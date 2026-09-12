@@ -311,7 +311,7 @@ const MotorStartingCurrentCalculator = () => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Motor Starting Current Calculator',
+        title: 'Motor Starting Current',
         subtitle: 'Starting current, cable sizing and protection coordination',
       },
       headline: [
@@ -328,21 +328,50 @@ const MotorStartingCurrentCalculator = () => {
           heading: 'Inputs',
           rows: [
             { label: 'Motor power', value: `${power} kW` },
+            ...(ratedCurrent ? [{ label: 'Nameplate current', value: `${ratedCurrent} A` }] : []),
             { label: 'Supply voltage', value: `${voltage} V` },
             { label: 'Phases', value: phases === '3' ? 'Three phase' : 'Single phase' },
+            { label: 'Efficiency', value: efficiency },
+            { label: 'Power factor', value: powerFactor },
             {
               label: 'Starting method',
               value:
                 startingMethodOptions.find((o) => o.value === startingMethod)?.label ||
                 startingMethod,
             },
+            {
+              label: 'Load type',
+              value: loadTypeOptions.find((o) => o.value === loadType)?.label || loadType,
+            },
+            { label: 'Starting time', value: `${startingTime} s` },
             { label: 'Cable length', value: `${cableLength} m` },
+            {
+              label: 'Cable type',
+              value: cableTypeOptions.find((o) => o.value === cableType)?.label || cableType,
+            },
+            {
+              label: 'Installation method',
+              value:
+                installationMethodOptions.find((o) => o.value === installationMethod)?.label ||
+                installationMethod,
+            },
+            { label: 'Ambient temperature', value: `${serviceTemperature} °C` },
+            {
+              label: 'Grouping',
+              value:
+                groupingArrangementOptions.find((o) => o.value === groupingArrangement)?.label ||
+                groupingArrangement,
+              note: `${groupingCircuits} circuit(s)`,
+            },
+            ...(cableSize ? [{ label: 'Proposed cable size', value: `${cableSize} mm²` }] : []),
+            ...(breakerRating
+              ? [{ label: 'Proposed device rating', value: `${breakerRating} A` }]
+              : []),
           ],
         },
         {
           heading: 'Result',
           rows: [
-            { label: 'Full load current', value: `${result.fullLoadCurrent.toFixed(1)} A` },
             {
               label: 'Starting current',
               value: `${result.startingCurrent.toFixed(0)} A (${result.startingMultiplier.toFixed(1)}×)`,
@@ -362,7 +391,9 @@ const MotorStartingCurrentCalculator = () => {
           ],
         },
       ],
-      notes: result.warnings.length ? result.warnings : undefined,
+      notes: [...result.warnings, ...result.recommendations, ...result.notes].filter((n) =>
+        n.trim()
+      ),
     };
   };
 

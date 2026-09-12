@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Loader2, ArrowLeft, Send, Zap, Phone, X } from 'lucide-react';
+import { Heart, Loader2, ArrowLeft, Send, Clock, Phone, X } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
   PeerSupporter,
@@ -417,18 +417,38 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
   // ─── Supporter Detail View ──────────────────────────────────────────────
   if (viewState === 'supporter-detail' && selectedSupporter) {
-    const getResponseTime = () => {
+    /*
+      When this person was last here — not an invented response time.
+
+      This used to return "Usually responds within an hour" for ANY
+      `last_active_at` older than sixty minutes, so five months of absence and
+      sixty-one minutes produced the same sentence. Worse, `last_active_at` is
+      written in exactly one place — when a supporter toggles their own
+      availability on (`peerSupportService.updateProfile`) — so it is not a
+      measure of responsiveness at all, and "usually" implied observed
+      behaviour that had never been observed. On 11 Sep 2026 all three
+      supporters were being advertised as responding within the hour while
+      between them they had never sent a single message.
+
+      Telling someone in distress how long a stranger will take to reply is a
+      promise we cannot keep. When they were last around is a fact, and it
+      lets a person pick someone who is actually here.
+    */
+    const getLastActive = () => {
       if (!selectedSupporter.last_active_at) return null;
-      const diffMins = Math.floor(
+      const mins = Math.floor(
         (Date.now() - new Date(selectedSupporter.last_active_at).getTime()) / 60000
       );
-      if (diffMins < 5) return 'Usually responds instantly';
-      if (diffMins < 30) return 'Usually responds in ~5 minutes';
-      if (diffMins < 60) return 'Usually responds in ~30 minutes';
-      return 'Usually responds within an hour';
+      if (mins < 60) return 'Active in the last hour';
+      if (mins < 60 * 24) return 'Last active today';
+      const days = Math.floor(mins / (60 * 24));
+      if (days === 1) return 'Last active yesterday';
+      if (days < 7) return `Last active ${days} days ago`;
+      if (days < 30) return `Last active ${Math.floor(days / 7)} week${Math.floor(days / 7) === 1 ? '' : 's'} ago`;
+      return `Last active ${Math.floor(days / 30)} month${Math.floor(days / 30) === 1 ? '' : 's'} ago`;
     };
 
-    const responseTime = getResponseTime();
+    const responseTime = getLastActive();
     const topics = selectedSupporter.topics_comfortable_with || [];
     const trainingTone =
       selectedSupporter.training_level === 'mhfa_certified'
@@ -483,7 +503,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               <div className="flex-1 min-w-0 space-y-4">
                 {responseTime && (
                   <div className="inline-flex items-center gap-1.5 text-[12px] text-white/85">
-                    <Zap className="w-3.5 h-3.5" />
+                    <Clock className="w-3.5 h-3.5" />
                     {responseTime}
                   </div>
                 )}

@@ -1,24 +1,23 @@
 import React from 'react';
+import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Arrow, Eyebrow } from '@/components/college/primitives';
 
 interface SettingsRowProps {
-  /** Top label — rendered as uppercase eyebrow */
+  /** Top label — rendered as a small uppercase eyebrow */
   label: string;
   /** Bottom value — the actual field value */
   value: React.ReactNode;
-  /** Optional trailing slot (pill, text action, arrow, etc.) */
+  /** Optional trailing slot (pill, text action, etc.) */
   trailing?: React.ReactNode;
-  /** If set, the row becomes a drill-in button and ends with an Arrow */
+  /** If set, the row becomes a drill-in button and ends with a chevron */
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
 }
 
 /**
- * Canonical key/value row for Settings. Label is 10px uppercase white/40,
- * value is 15px white. If onClick is set, a trailing Arrow is rendered
- * unless a custom trailing slot is supplied.
+ * Canonical key/value row for Settings. Label is a 10px uppercase eyebrow,
+ * value is 15px. Both white — nothing on this ground is allowed to be grey.
  */
 const SettingsRow: React.FC<SettingsRowProps> = ({
   label,
@@ -30,20 +29,19 @@ const SettingsRow: React.FC<SettingsRowProps> = ({
 }) => {
   const Inner = (
     <>
-      <div className="flex-1 min-w-0">
-        <Eyebrow>{label}</Eyebrow>
-        <div className="mt-1 text-[15px] text-white truncate">{value}</div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white">{label}</div>
+        <div className="mt-1 truncate text-[15px] text-white">{value}</div>
       </div>
       {trailing ? (
         <div className="shrink-0">{trailing}</div>
       ) : onClick ? (
-        <Arrow />
+        <ChevronRight className="h-4 w-4 shrink-0 text-white transition-transform group-hover:translate-x-0.5 group-hover:text-elec-yellow" />
       ) : null}
     </>
   );
 
-  const base =
-    'w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation';
+  const base = 'flex w-full items-center gap-4 px-4 py-3.5 text-left touch-manipulation sm:px-5';
 
   if (onClick) {
     return (
@@ -53,8 +51,8 @@ const SettingsRow: React.FC<SettingsRowProps> = ({
         disabled={disabled}
         className={cn(
           base,
-          'group hover:bg-[hsl(0_0%_15%)] transition-colors',
-          disabled && 'opacity-50 cursor-not-allowed',
+          'group transition-colors hover:bg-white/[0.04]',
+          disabled && 'cursor-not-allowed opacity-50',
           className
         )}
       >

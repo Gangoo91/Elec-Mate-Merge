@@ -1,8 +1,53 @@
-import { ArrowLeft, FileCheck, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 4 · Subsection 5 — Documentation and Sign-Off
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *              · "Electrical. Conduct functional testing."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *
+ * ⚠️ Corrected during conversion (not a silent content change to teaching
+ * prose — a factual qualification reference): the source named "City &
+ * Guilds 2391/2394/2395" as the inspector/tester qualification. 2394 and 2395
+ * were withdrawn and replaced in 2017 by the 2391-50/-51/-52 suite (2391-50 =
+ * Initial Verification, 2391-51 = Periodic Inspection and Testing, 2391-52 =
+ * the combined Initial and Periodic award). Rewritten below to name the
+ * current suite, while keeping the surrounding point unchanged: EAWR
+ * Regulation 16 and BS 7671 Part 2 require competence, not a named
+ * certificate — the qualification is evidence of that competence, not a
+ * substitute for it.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Documentation and Sign-Off - MOET Module 4.4.5';
@@ -264,119 +309,66 @@ const faqs = [
 ];
 
 const MOETModule4Section4_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <FileCheck className="h-4 w-4" />
-            <span>Module 4.4.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Documentation and Sign-Off
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.4 · Subsection 5"
+        title="Documentation and Sign-Off"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Completion documentation, handover procedures, and regulatory sign-off for electrical
             maintenance work
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Certificates:</strong> EIC, Minor Works, and EICR — each has a specific
-                purpose and format
-              </li>
-              <li className="pl-1">
-                <strong>Handover:</strong> As-built drawings, test results, O&M manuals, warranties
-              </li>
-              <li className="pl-1">
-                <strong>Sign-off:</strong> Competent persons must verify and sign within their scope
-                of responsibility
-              </li>
-              <li className="pl-1">
-                <strong>Retention:</strong> Records kept for the lifetime of the installation
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>BS 7671:</strong> Defines certificate requirements for all electrical work
-              </li>
-              <li className="pl-1">
-                <strong>EAWR 1989:</strong> Legal duty to maintain and document electrical systems
-              </li>
-              <li className="pl-1">
-                <strong>Part P:</strong> Building regulation notification for notifiable domestic
-                work
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to quality assurance and documentation competencies
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Certificates: EIC, Minor Works, and EICR — each has a specific purpose and format.',
+              'Handover: as-built drawings, test results, O&M manuals, warranties.',
+              'Sign-off: competent persons must verify and sign within their scope of responsibility.',
+              'Retention: records kept for the lifetime of the installation.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify the correct certificate type (EIC, Minor Works, EICR) for different scopes of work',
               'Describe the information required on each certificate and who must sign it',
               'Explain the handover documentation process and its components',
               'Understand the regulatory framework governing electrical documentation',
               'Apply proper procedures for recording test results on Schedules of Test Results',
               'Describe document retention requirements and responsibilities under EAWR 1989',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>BS 7671:</strong> defines certificate requirements for all electrical work.
+              </li>
+              <li>
+                <strong>EAWR 1989:</strong> legal duty to maintain and document electrical systems.
+              </li>
+              <li>
+                <strong>Part P:</strong> building regulation notification for notifiable domestic
+                work.
+              </li>
+              <li>
+                <strong>ST1426:</strong> maps to quality assurance and documentation competencies.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Importance of Documentation in Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The importance of documentation</ContentEyebrow>
+
+          <ConceptBlock title="The importance of documentation in electrical maintenance">
             <p>
               Documentation is not an afterthought in electrical maintenance — it is an integral
               part of the work itself. Every repair, modification, test, and inspection must be
@@ -403,82 +395,64 @@ const MOETModule4Section4_5 = () => {
               standard, understanding these documentation requirements is a core competency — not an
               optional administrative skill.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Documentation Framework — Key Standards
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Standard/Regulation
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Documentation Requirement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BS 7671 Part 6</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electrical Installation Certificates, Minor Works Certificates, EICRs,
-                        Schedules of Test Results
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EAWR 1989 Reg 4(2)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Maintenance records demonstrating systems are maintained to prevent danger
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Building Regs Part P</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Building control notification or self-certification for notifiable domestic
-                        work
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CDM 2015</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Health and safety file including electrical information for future
-                        maintenance
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Documentation framework — key standards">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Standard/regulation</th>
+                    <th className="py-2 font-medium text-white">Documentation requirement</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">BS 7671 Part 6</td>
+                    <td className="py-2">
+                      Electrical Installation Certificates, Minor Works Certificates, EICRs,
+                      Schedules of Test Results
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">EAWR 1989 Reg 4(2)</td>
+                    <td className="py-2">
+                      Maintenance records demonstrating systems are maintained to prevent danger
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Building Regs Part P</td>
+                    <td className="py-2">
+                      Building control notification or self-certification for notifiable domestic
+                      work
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">CDM 2015</td>
+                    <td className="py-2">
+                      Health and safety file including electrical information for future maintenance
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+            <p>
+              Inadequate documentation has real consequences. Property sales can be delayed or fail
+              due to missing electrical certificates. Insurance claims may be refused if the insurer
+              cannot verify that the electrical installation was properly maintained. In the event
+              of a fire or electrocution, the absence of documentation may be treated as evidence of
+              negligence. For competent person scheme members, failure to issue certificates can
+              result in removal from the scheme and loss of the right to self-certify.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Cost of Poor Documentation
-              </p>
-              <p className="text-sm text-white">
-                Inadequate documentation has real consequences. Property sales can be delayed or
-                fail due to missing electrical certificates. Insurance claims may be refused if the
-                insurer cannot verify that the electrical installation was properly maintained. In
-                the event of a fire or electrocution, the absence of documentation may be treated as
-                evidence of negligence. For competent person scheme members, failure to issue
-                certificates can result in removal from the scheme and loss of the right to
-                self-certify.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Types of Electrical Certificates and Reports
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Types of electrical certificates and reports</ContentEyebrow>
+
+          <ConceptBlock title="Types of electrical certificates and reports">
             <p>
               BS 7671 defines three principal document types for electrical work: the Electrical
               Installation Certificate (EIC), the Minor Electrical Installation Works Certificate,
@@ -486,113 +460,93 @@ const MOETModule4Section4_5 = () => {
               purpose and is appropriate for a specific scope of work. Selecting the correct
               document is the first step in proper documentation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Installation Certificate (EIC)
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  The EIC is required for all new installations and for alterations or additions
-                  that include the provision of new circuits. It certifies that the design,
-                  construction, and inspection and testing of the work comply with BS 7671. The
-                  certificate must be signed by three competent persons (or by one person fulfilling
-                  all three roles):
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Designer:</strong> Confirms that the design of the installation complies
-                    with BS 7671
-                  </li>
-                  <li className="pl-1">
-                    <strong>Installer (constructor):</strong> Confirms that the installation has
-                    been constructed in accordance with the design
-                  </li>
-                  <li className="pl-1">
-                    <strong>Inspector/tester:</strong> Confirms that the installation has been
-                    inspected and tested in accordance with BS 7671 Part 6
-                  </li>
-                </ul>
-                <p className="text-sm text-white mt-3">
-                  The EIC must be accompanied by a Schedule of Inspections and a Schedule of Test
-                  Results for every circuit in the installation.
-                </p>
-              </div>
+          <ConceptBlock title="Electrical Installation Certificate (EIC)">
+            <p>
+              The EIC is required for all new installations and for alterations or additions that
+              include the provision of new circuits. It certifies that the design, construction, and
+              inspection and testing of the work comply with BS 7671. The certificate must be signed
+              by three competent persons (or by one person fulfilling all three roles):
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Designer:</strong> confirms that the design of the installation complies
+                with BS 7671.
+              </li>
+              <li>
+                <strong>Installer (constructor):</strong> confirms that the installation has been
+                constructed in accordance with the design.
+              </li>
+              <li>
+                <strong>Inspector/tester:</strong> confirms that the installation has been inspected
+                and tested in accordance with BS 7671 Part 6.
+              </li>
+            </ul>
+            <p>
+              The EIC must be accompanied by a Schedule of Inspections and a Schedule of Test
+              Results for every circuit in the installation.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Minor Electrical Installation Works Certificate
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  The Minor Works Certificate is appropriate for small-scale work that does not
-                  include the provision of a new circuit. Typical examples include adding a socket
-                  outlet to an existing circuit, replacing a light fitting, or installing a fused
-                  connection unit. The certificate requires only one signature — the person who
-                  designed, installed, inspected, and tested the minor work.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Adding a socket outlet or lighting point to an existing circuit
-                  </li>
-                  <li className="pl-1">
-                    Replacing accessories such as switches, socket outlets, or fused connection
-                    units
-                  </li>
-                  <li className="pl-1">
-                    Like-for-like replacement of a consumer unit (though some competent person
-                    schemes now require an EIC for this work)
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Minor Electrical Installation Works Certificate">
+            <p>
+              The Minor Works Certificate is appropriate for small-scale work that does not include
+              the provision of a new circuit. Typical examples include adding a socket outlet to an
+              existing circuit, replacing a light fitting, or installing a fused connection unit.
+              The certificate requires only one signature — the person who designed, installed,
+              inspected, and tested the minor work.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Adding a socket outlet or lighting point to an existing circuit.</li>
+              <li>
+                Replacing accessories such as switches, socket outlets, or fused connection units.
+              </li>
+              <li>
+                Like-for-like replacement of a consumer unit (though some competent person schemes
+                now require an EIC for this work).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Electrical Installation Condition Report (EICR)
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  The EICR is used to report on the condition of an existing electrical
-                  installation. It does not certify new work — it assesses whether the installation
-                  is safe for continued use. The report uses a classification coding system to
-                  categorise observations:
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>C1 — Danger present:</strong> Risk of injury. Immediate remedial action
-                    required
-                  </li>
-                  <li className="pl-1">
-                    <strong>C2 — Potentially dangerous:</strong> Urgent remedial action required
-                  </li>
-                  <li className="pl-1">
-                    <strong>C3 — Improvement recommended:</strong> Not immediately dangerous but
-                    improvement would enhance safety
-                  </li>
-                  <li className="pl-1">
-                    <strong>FI — Further investigation:</strong> Investigation required without
-                    delay to determine the nature and extent of the deficiency
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The selection of the correct certificate type is not
+          <ConceptBlock title="Electrical Installation Condition Report (EICR)">
+            <p>
+              The EICR is used to report on the condition of an existing electrical installation. It
+              does not certify new work — it assesses whether the installation is safe for continued
+              use. The report uses a classification coding system to categorise observations:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>C1 — Danger present:</strong> risk of injury. Immediate remedial action
+                required.
+              </li>
+              <li>
+                <strong>C2 — Potentially dangerous:</strong> urgent remedial action required.
+              </li>
+              <li>
+                <strong>C3 — Improvement recommended:</strong> not immediately dangerous but
+                improvement would enhance safety.
+              </li>
+              <li>
+                <strong>FI — Further investigation:</strong> investigation required without delay to
+                determine the nature and extent of the deficiency.
+              </li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> the selection of the correct certificate type is not
               discretionary. Using a Minor Works Certificate for work that requires an EIC, or
               failing to issue any certificate at all, is a breach of BS 7671 and potentially a
               regulatory offence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Handover Documentation and As-Built Records
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Handover documentation and as-built records</ContentEyebrow>
+
+          <ConceptBlock title="Handover documentation and as-built records">
             <p>
               The handover process marks the formal transfer of responsibility for the completed
               work from the contractor or maintenance team to the client or duty holder. A thorough
@@ -603,93 +557,77 @@ const MOETModule4Section4_5 = () => {
               histories make future work more difficult, more time-consuming, and potentially more
               dangerous.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Handover Documentation Pack — Contents
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Electrical certificates:</strong> EIC, Minor Works Certificates, or EICR
-                  as appropriate, with all accompanying schedules
-                </li>
-                <li className="pl-1">
-                  <strong>As-built drawings:</strong> Schematic diagrams, distribution board
-                  schedules, cable route drawings, and layout drawings updated to reflect the actual
-                  installation
-                </li>
-                <li className="pl-1">
-                  <strong>Test results:</strong> Full Schedule of Test Results, functional test
-                  records, and commissioning data
-                </li>
-                <li className="pl-1">
-                  <strong>Operation and maintenance manuals:</strong> Manufacturer's documentation
-                  for all installed equipment, including operating instructions, maintenance
-                  schedules, and spare parts lists
-                </li>
-                <li className="pl-1">
-                  <strong>Warranty information:</strong> Product warranties, extended warranty
-                  certificates, and warranty conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Risk assessments and method statements:</strong> Relevant documents for
-                  ongoing maintenance activities
-                </li>
-                <li className="pl-1">
-                  <strong>Training records:</strong> Evidence that operators have been trained on
-                  the installed systems where applicable
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Handover documentation pack — contents">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical certificates:</strong> EIC, Minor Works Certificates, or EICR as
+                appropriate, with all accompanying schedules.
+              </li>
+              <li>
+                <strong>As-built drawings:</strong> schematic diagrams, distribution board
+                schedules, cable route drawings, and layout drawings updated to reflect the actual
+                installation.
+              </li>
+              <li>
+                <strong>Test results:</strong> full Schedule of Test Results, functional test
+                records, and commissioning data.
+              </li>
+              <li>
+                <strong>Operation and maintenance manuals:</strong> manufacturer&apos;s
+                documentation for all installed equipment, including operating instructions,
+                maintenance schedules, and spare parts lists.
+              </li>
+              <li>
+                <strong>Warranty information:</strong> product warranties, extended warranty
+                certificates, and warranty conditions.
+              </li>
+              <li>
+                <strong>Risk assessments and method statements:</strong> relevant documents for
+                ongoing maintenance activities.
+              </li>
+              <li>
+                <strong>Training records:</strong> evidence that operators have been trained on the
+                installed systems where applicable.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                As-Built Drawings — Why They Matter
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Design drawings show what was intended; as-built drawings show what was actually
-                installed. During construction or maintenance, variations from the original design
-                are common — cable routes may change due to unforeseen obstacles, equipment
-                locations may shift, additional circuits may be added, or protective device ratings
-                may be adjusted. If these changes are not captured in updated drawings, future
-                maintenance technicians will be working from inaccurate information.
-              </p>
-              <p className="text-sm text-white">
-                The consequences of inaccurate drawings can be severe: incorrect circuit
-                identification leading to work on live conductors, inability to locate cables before
-                drilling or excavating, wrong protective device settings after a replacement, or
-                failure to account for circuits during an isolation procedure. Every modification,
-                no matter how small, should be marked up and incorporated into the as-built drawing
-                set.
-              </p>
-            </div>
+          <ConceptBlock title="As-built drawings — why they matter">
+            <p>
+              Design drawings show what was intended; as-built drawings show what was actually
+              installed. During construction or maintenance, variations from the original design are
+              common — cable routes may change due to unforeseen obstacles, equipment locations may
+              shift, additional circuits may be added, or protective device ratings may be adjusted.
+              If these changes are not captured in updated drawings, future maintenance technicians
+              will be working from inaccurate information.
+            </p>
+            <p>
+              The consequences of inaccurate drawings can be severe: incorrect circuit
+              identification leading to work on live conductors, inability to locate cables before
+              drilling or excavating, wrong protective device settings after a replacement, or
+              failure to account for circuits during an isolation procedure. Every modification, no
+              matter how small, should be marked up and incorporated into the as-built drawing set.
+            </p>
+            <p>
+              For projects falling under the Construction (Design and Management) Regulations 2015,
+              electrical documentation must be included in the health and safety file compiled by
+              the principal designer. This file is a living document that should be updated
+              throughout the life of the building and passed on whenever the building changes hands.
+              It must contain information about the design, construction, and maintenance of the
+              electrical installation that will be needed by anyone carrying out future work on the
+              building.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                CDM 2015 Health and Safety File
-              </p>
-              <p className="text-sm text-white">
-                For projects falling under the Construction (Design and Management) Regulations
-                2015, electrical documentation must be included in the health and safety file
-                compiled by the principal designer. This file is a living document that should be
-                updated throughout the life of the building and passed on whenever the building
-                changes hands. It must contain information about the design, construction, and
-                maintenance of the electrical installation that will be needed by anyone carrying
-                out future work on the building.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Sign-Off Procedures and Responsibilities
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Sign-off procedures and responsibilities</ContentEyebrow>
+
+          <ConceptBlock title="Sign-off procedures and responsibilities">
             <p>
               The sign-off process is more than just putting a signature on a piece of paper. It is
               a formal declaration that the signatory is satisfied that the work within their scope
@@ -698,85 +636,76 @@ const MOETModule4Section4_5 = () => {
               responsibility — the signatory is personally accountable for the accuracy of the
               information on the certificate and the quality of the work they are certifying.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Who Can Sign?</h3>
-                <p className="text-sm text-white mb-3">
-                  Only competent persons can sign electrical certificates. Competence in this
-                  context means having the appropriate knowledge, skills, and experience for the
-                  specific aspect of work being certified. BS 7671 and the relevant guidance notes
-                  provide detailed requirements for the competence of designers, installers, and
-                  inspectors/testers.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Designer:</strong> Must have adequate knowledge of electrical design
-                    principles, BS 7671, and the specific application
-                  </li>
-                  <li className="pl-1">
-                    <strong>Installer:</strong> Must be a skilled person (electrically) or be
-                    adequately supervised by a skilled person
-                  </li>
-                  <li className="pl-1">
-                    <strong>Inspector/tester:</strong> Must hold a recognised inspection and testing
-                    qualification (e.g., City & Guilds 2391/2394/2395 or equivalent) and have
-                    experience of the type of installation being inspected
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Who can sign?">
+            <p>
+              Only competent persons can sign electrical certificates. Competence in this context
+              means having the appropriate knowledge, skills, and experience for the specific aspect
+              of work being certified. BS 7671 and the relevant guidance notes provide detailed
+              requirements for the competence of designers, installers, and inspectors/testers.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Designer:</strong> must have adequate knowledge of electrical design
+                principles, BS 7671, and the specific application.
+              </li>
+              <li>
+                <strong>Installer:</strong> must be a skilled person (electrically) or be adequately
+                supervised by a skilled person.
+              </li>
+              <li>
+                <strong>Inspector/tester:</strong> must hold a recognised inspection and testing
+                qualification (e.g., City &amp; Guilds 2391-52, or 2391-50/-51 for the separate
+                initial and periodic awards, or equivalent) and have experience of the type of
+                installation being inspected. The older 2394/2395 qualifications were withdrawn and
+                replaced by this suite in 2017; they remain valid for people who already hold them,
+                but are not a route a learner could take today. Under EAWR Regulation 16 and BS 7671
+                Part 2, competence — not possession of any one named certificate — is the legal
+                requirement; a recognised qualification is evidence of that competence.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  The Sign-Off Process
-                </h3>
-                <p className="text-sm text-white">
-                  Before signing, each signatory must satisfy themselves that the work within their
-                  responsibility has been completed to the required standard. For the
-                  inspector/tester, this means personally conducting or supervising the inspection
-                  and testing — not simply reviewing paperwork completed by someone else. The
-                  sign-off should follow a clear process: review of all documentation, physical
-                  verification where appropriate, resolution of any outstanding issues or
-                  deficiencies, and formal signature with date. Any conditions, limitations, or
-                  reservations should be clearly noted on the certificate.
-                </p>
-              </div>
+          <ConceptBlock title="The sign-off process">
+            <p>
+              Before signing, each signatory must satisfy themselves that the work within their
+              responsibility has been completed to the required standard. For the inspector/tester,
+              this means personally conducting or supervising the inspection and testing — not
+              simply reviewing paperwork completed by someone else. The sign-off should follow a
+              clear process: review of all documentation, physical verification where appropriate,
+              resolution of any outstanding issues or deficiencies, and formal signature with date.
+              Any conditions, limitations, or reservations should be clearly noted on the
+              certificate.
+            </p>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Multi-Party Sign-Off
-                </h3>
-                <p className="text-sm text-white">
-                  On larger projects, the sign-off process involves multiple parties: the electrical
-                  contractor's competent persons, the principal contractor, the client's
-                  representative, and potentially building control or the competent person scheme.
-                  Each party signs off on their area of responsibility in a defined sequence. Delays
-                  in this process can hold up project completion, so proactive management of the
-                  sign-off chain is important. Digital documentation systems can expedite this by
-                  allowing remote review and electronic signature.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Professional responsibility:</strong> Never sign a certificate for work you
+          <ConceptBlock title="Multi-party sign-off">
+            <p>
+              On larger projects, the sign-off process involves multiple parties: the electrical
+              contractor&apos;s competent persons, the principal contractor, the client&apos;s
+              representative, and potentially building control or the competent person scheme. Each
+              party signs off on their area of responsibility in a defined sequence. Delays in this
+              process can hold up project completion, so proactive management of the sign-off chain
+              is important. Digital documentation systems can expedite this by allowing remote
+              review and electronic signature.
+            </p>
+            <p>
+              <strong>Professional responsibility:</strong> never sign a certificate for work you
               have not personally verified. Signing a certificate you know to be inaccurate, or
               signing for work that has not been properly completed, is professional misconduct. It
               also creates personal legal liability in the event of an incident resulting from the
               certified work.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Record Keeping and Document Management
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Record keeping and document management</ContentEyebrow>
+
+          <ConceptBlock title="Record keeping and document management">
             <p>
               Effective record keeping extends beyond the initial certification. Electrical
               documentation forms a living record that grows throughout the life of the
@@ -785,162 +714,126 @@ const MOETModule4Section4_5 = () => {
               fault diagnosis, compliance demonstration, and informed decision-making about
               equipment replacement and upgrade.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Essential Records for Ongoing Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Original certificates:</strong> EIC, Minor Works, and EICR from initial
-                  installation and all subsequent work
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance logbook:</strong> Chronological record of all maintenance
-                  activities, inspections, tests, and repairs
-                </li>
-                <li className="pl-1">
-                  <strong>Test result trends:</strong> Historical insulation resistance, earth fault
-                  loop impedance, and RCD operation times to identify deterioration trends
-                </li>
-                <li className="pl-1">
-                  <strong>Modification register:</strong> Record of all modifications to the
-                  original installation, with reasons, authorisation, and updated drawings
-                </li>
-                <li className="pl-1">
-                  <strong>Fault/incident log:</strong> Record of all faults, failures, and incidents
-                  with root cause analysis and corrective actions taken
-                </li>
-                <li className="pl-1">
-                  <strong>Equipment inventory:</strong> List of all major items of electrical
-                  equipment with specifications, installation dates, and expected life
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Essential records for ongoing maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Original certificates:</strong> EIC, Minor Works, and EICR from initial
+                installation and all subsequent work.
+              </li>
+              <li>
+                <strong>Maintenance logbook:</strong> chronological record of all maintenance
+                activities, inspections, tests, and repairs.
+              </li>
+              <li>
+                <strong>Test result trends:</strong> historical insulation resistance, earth fault
+                loop impedance, and RCD operation times to identify deterioration trends.
+              </li>
+              <li>
+                <strong>Modification register:</strong> record of all modifications to the original
+                installation, with reasons, authorisation, and updated drawings.
+              </li>
+              <li>
+                <strong>Fault/incident log:</strong> record of all faults, failures, and incidents
+                with root cause analysis and corrective actions taken.
+              </li>
+              <li>
+                <strong>Equipment inventory:</strong> list of all major items of electrical
+                equipment with specifications, installation dates, and expected life.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Digital vs Paper Documentation
-              </h3>
-              <p className="text-sm text-white">
-                The shift from paper-based to digital documentation systems is well underway in the
-                electrical industry. Digital systems offer powerful advantages: automatic backup and
-                disaster recovery, instant searchability, trend analysis of test results over time,
-                integration with maintenance management systems, and easy distribution to
-                stakeholders. Mobile devices allow technicians to complete documentation on site,
-                attach photographs, and submit records in real time. However, digital systems must
-                be properly managed — they require robust access controls, regular backups, data
-                integrity checks, and compliance with data protection legislation. Whatever system
-                is used, the fundamental requirement remains the same: accurate, complete, and
-                retrievable records.
-              </p>
-            </div>
+          <ConceptBlock title="Digital vs paper documentation">
+            <p>
+              The shift from paper-based to digital documentation systems is well underway in the
+              electrical industry. Digital systems offer powerful advantages: automatic backup and
+              disaster recovery, instant searchability, trend analysis of test results over time,
+              integration with maintenance management systems, and easy distribution to
+              stakeholders. Mobile devices allow technicians to complete documentation on site,
+              attach photographs, and submit records in real time. However, digital systems must be
+              properly managed — they require robust access controls, regular backups, data
+              integrity checks, and compliance with data protection legislation. Whatever system is
+              used, the fundamental requirement remains the same: accurate, complete, and
+              retrievable records.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Retention and Transfer of Records
-              </h3>
-              <p className="text-sm text-white">
-                Electrical records should be retained for the lifetime of the installation. When a
-                property changes ownership, the documentation pack should be transferred to the new
-                duty holder as part of the handover process. For commercial properties, this is
-                typically managed through the property transaction process. For domestic properties,
-                the homeowner should receive all certificates and retain them with their property
-                documents. Lost certificates can sometimes be recovered from the issuing contractor,
-                the competent person scheme, or local authority building control, but prevention
-                through proper record keeping is always preferable to retrospective recovery.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires competence
+          <ConceptBlock title="Retention and transfer of records">
+            <p>
+              Electrical records should be retained for the lifetime of the installation. When a
+              property changes ownership, the documentation pack should be transferred to the new
+              duty holder as part of the handover process. For commercial properties, this is
+              typically managed through the property transaction process. For domestic properties,
+              the homeowner should receive all certificates and retain them with their property
+              documents. Lost certificates can sometimes be recovered from the issuing contractor,
+              the competent person scheme, or local authority building control, but prevention
+              through proper record keeping is always preferable to retrospective recovery.
+            </p>
+            <p className="italic">
+              <strong>ST1426 link:</strong> the maintenance technician standard requires competence
               in maintaining accurate maintenance records, using documentation systems, and
               contributing to continuous improvement through proper record keeping. Your ability to
               demonstrate thorough documentation practices is assessed as part of the end-point
               assessment.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'New installation or new circuit → EIC.',
+              'Minor work, no new circuit → Minor Works.',
+              'Condition assessment of existing installation → EICR.',
+              'All certificates must include a Schedule of Test Results.',
+              'EIC requires three signatures (design, install, inspect/test).',
+              'As-built drawings (not design drawings) go in the handover pack.',
+              'All electrical certificates and test schedules go in the handover pack.',
+              'Operation and maintenance manuals go in the handover pack.',
+              'Warranty documentation goes in the handover pack.',
+              'Training records for operators go in the handover pack.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Certificate Selection Guide</p>
-                <ul className="space-y-0.5">
-                  <li>New installation or new circuit → EIC</li>
-                  <li>Minor work, no new circuit → Minor Works</li>
-                  <li>Condition assessment of existing installation → EICR</li>
-                  <li>All certificates must include Schedule of Test Results</li>
-                  <li>EIC requires three signatures (design, install, inspect/test)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Handover Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>As-built drawings (not design drawings)</li>
-                  <li>All electrical certificates and test schedules</li>
-                  <li>Operation and maintenance manuals</li>
-                  <li>Warranty documentation</li>
-                  <li>Training records for operators</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section4-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Use of Approved Spare Parts
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Insulation Resistance Testing
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Assembly Techniques
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section4">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

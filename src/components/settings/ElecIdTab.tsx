@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
@@ -84,7 +85,20 @@ const ELEC_ID_TABS: ElecIdSubTab[] = [
 ];
 
 const ElecIdTab = () => {
-  const [activeSubTab, setActiveSubTab] = useState('overview');
+  const [searchParams, setSearchParams] = useSearchParams();
+  // Deep link: /settings?tab=elec-id&section=<id> (used by settings search).
+  // Consumed once, then removed from the URL.
+  const [activeSubTab, setActiveSubTab] = useState(() => {
+    const wanted = searchParams.get('section');
+    return wanted && ELEC_ID_TABS.some((t) => t.id === wanted) ? wanted : 'overview';
+  });
+  useEffect(() => {
+    if (searchParams.get('section')) {
+      searchParams.delete('section');
+      setSearchParams(searchParams, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const { profile, isLoading, isActivated, activateProfile, refetch } = useElecIdProfile();
   const { user } = useAuth();
   const isMobile = useIsMobile();
@@ -190,7 +204,7 @@ const ElecIdTab = () => {
     };
 
     return (
-      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <div className="bg-white/[0.05] border border-elec-yellow/35 rounded-2xl overflow-hidden">
         <div className="p-5 sm:p-6">
           <ElecIdOnboarding
             onComplete={handleOnboardingComplete}
@@ -230,7 +244,7 @@ const ElecIdTab = () => {
               <div className="text-[15px] font-semibold text-white truncate">
                 {activeConfig?.label}
               </div>
-              <div className="text-[11px] text-white/65 truncate">
+              <div className="text-[11px] text-white truncate">
                 {activeConfig?.description}
               </div>
             </div>
@@ -266,7 +280,7 @@ const ElecIdTab = () => {
                     'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
                     isActive
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.04] text-white/65 hover:text-white'
+                      : 'bg-white/[0.04] text-white hover:text-white'
                   )}
                 >
                   {tab.shortLabel}

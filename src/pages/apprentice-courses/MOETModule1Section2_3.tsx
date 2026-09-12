@@ -1,8 +1,47 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 1 · Section 1.2 · Subsection 3 — Personal Protective Equipment
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here.
+ *   Knowledge  · "Work environment hazards and risks. Risk assessments."
+ *              · "Safe systems of work."
+ *   Skills     · "Apply health, safety, and environmental procedures in
+ *                 compliance with regulations, standards, and guidance."
+ *   Behaviours · "Prioritise safe working practices."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Personal Protective Equipment (PPE) - MOET Module 1.2.3';
@@ -27,12 +66,7 @@ const quickCheckQuestions = [
     id: 'glove-classes',
     question:
       'Which class of insulating glove is rated for use on low voltage systems up to 1000 V AC?',
-    options: [
-      'Class 2',
-      'Class 1',
-      'Class 00',
-      'Class 0',
-    ],
+    options: ['Class 2', 'Class 1', 'Class 00', 'Class 0'],
     correctIndex: 3,
     explanation:
       'Class 0 insulating gloves are rated for a maximum use voltage of 1000 V AC (1500 V DC) and are the standard choice for low voltage electrical work. Class 00 is rated to 500 V AC, while Classes 1 through 4 are for progressively higher voltages up to 36,000 V AC (Class 4). Always check the voltage rating matches or exceeds the system voltage.',
@@ -40,12 +74,7 @@ const quickCheckQuestions = [
   {
     id: 'arc-flash-cat2',
     question: 'Category 2 arc flash PPE must have an arc rating of at least:',
-    options: [
-      '4 cal/cm²',
-      '8 cal/cm²',
-      '25 cal/cm²',
-      '40 cal/cm²',
-    ],
+    options: ['4 cal/cm²', '8 cal/cm²', '25 cal/cm²', '40 cal/cm²'],
     correctIndex: 1,
     explanation:
       'Category 2 arc flash PPE must have a minimum arc rating of 8 cal/cm². Category 1 requires 4 cal/cm², Category 3 requires 25 cal/cm² and Category 4 requires 40 cal/cm². The required category is determined by the incident energy calculation for the specific equipment and working distance.',
@@ -96,12 +125,7 @@ const quizQuestions = [
   {
     id: 3,
     question: 'How often should Class 0 insulating gloves be electrically retested?',
-    options: [
-      'Every 12 months',
-      'Every month',
-      'Only when visually damaged',
-      'Every 6 months',
-    ],
+    options: ['Every 12 months', 'Every month', 'Only when visually damaged', 'Every 6 months'],
     correctAnswer: 3,
     explanation:
       'BS EN 60903 and industry best practice recommend that insulating gloves are electrically retested at intervals not exceeding 6 months. Some organisations test more frequently (e.g., every 3 months for daily-use gloves). Between formal electrical tests, gloves should be visually inspected and air-tested (inflated to check for pinholes) before each use.',
@@ -149,9 +173,9 @@ const quizQuestions = [
     id: 7,
     question: 'Under the PPE at Work Regulations 2022, a key change from the 1992 regulations was:',
     options: [
-      "Workers became responsible for buying their own PPE",
-      "Arc flash suits were made compulsory for all electrical work",
-      "Insulating gloves no longer required periodic retesting",
+      'Workers became responsible for buying their own PPE',
+      'Arc flash suits were made compulsory for all electrical work',
+      'Insulating gloves no longer required periodic retesting',
       "The duty to provide PPE was extended to cover 'limb (b) workers' — those personally performing work under a contract",
     ],
     correctAnswer: 3,
@@ -175,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: 'Before using insulating gloves, a user should perform which daily check?',
     options: [
-      "A full laboratory dielectric proof test to the glove class voltage",
+      'A full laboratory dielectric proof test to the glove class voltage',
       "Inflate each glove by rolling from the cuff and check for air leaks (the 'air test')",
-      "Measure the resistance across the glove with an insulation tester",
-      "Soak the gloves in water and check for bubbles forming",
+      'Measure the resistance across the glove with an insulation tester',
+      'Soak the gloves in water and check for bubbles forming',
     ],
     correctAnswer: 1,
     explanation:
@@ -255,115 +279,64 @@ const faqs = [
 ];
 
 const MOETModule1Section2_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section Overview
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 1.2.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Personal Protective Equipment (PPE)
-          </h1>
-          <p className="text-white">
-            Selection, use, inspection and maintenance of PPE for electrical maintenance work
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 1 · Section 1.2 · Subsection 3"
+        title="Personal Protective Equipment (PPE)"
+        backTo="/study-centre/apprentice/m-o-e-t-module1-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Selection, use, inspection and maintenance of PPE for electrical maintenance work.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Hierarchy:</strong> PPE is the LAST resort — after all other controls
-              </li>
-              <li className="pl-1">
-                <strong>Gloves:</strong> Class 00-4 insulating gloves (BS EN 60903)
-              </li>
-              <li className="pl-1">
-                <strong>Arc flash:</strong> CAT 1-4 rated suits, hoods and visors
-              </li>
-              <li className="pl-1">
-                <strong>Duty:</strong> Employer provides free of charge (PPE Regs 2022)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Key Standards
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Hierarchy: PPE is the LAST resort — after all other controls',
+              'Gloves: Class 00-4 insulating gloves (BS EN 60903)',
+              'Arc flash: CAT 1-4 rated suits, hoods and visors',
+              'Duty: employer provides free of charge (PPE Regs 2022)',
+            ]}
+          />
+
+          <ConceptBlock title="Key standards at a glance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>BS EN 60903:</strong> Insulating gloves for live working
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>NFPA 70E / IEEE 1584:</strong> Arc flash PPE categories
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>PPE Regulations 2022:</strong> Employer duties and worker coverage
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>CE/UKCA marking:</strong> Product conformity for UK/EU market
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the hierarchy of controls and why PPE is the last resort',
               'Identify the types of PPE required for electrical maintenance work',
               'Select the correct class of insulating glove for LV and HV work',
               'Describe arc flash PPE categories (CAT 1-4) and ATPV/EBT ratings',
               'Carry out inspection, testing and replacement of electrical PPE',
               'State employer duties under the PPE at Work Regulations 2022',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>PPE as last resort</ContentEyebrow>
 
-        {/* Section 01: Hierarchy of Controls */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The Hierarchy of Controls — PPE as Last Resort
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="The Hierarchy of Controls — PPE as Last Resort">
             <p>
               The hierarchy of controls is a fundamental principle of risk management established in
               the Management of Health and Safety at Work Regulations 1999 and reinforced by BS 7671
@@ -379,273 +352,189 @@ const MOETModule1Section2_3 = () => {
               reduced voltage) and administrative controls (safe systems of work, permits, competent
               persons) must be applied before PPE is considered.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Five Levels — Applied to Electrical Work
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>1. Elimination:</strong> Work dead — isolate and prove dead before
-                  starting work. This completely removes the electrical hazard (EAWR Reg 12)
-                </li>
-                <li className="pl-1">
-                  <strong>2. Substitution:</strong> Use a reduced voltage supply (e.g., 110 V CTE
-                  for portable tools instead of 230 V). Use SELV where possible
-                </li>
-                <li className="pl-1">
-                  <strong>3. Engineering controls:</strong> Install barriers, shrouds, insulating
-                  covers over live parts. Use interlocked switchgear. Apply temporary insulation
-                </li>
-                <li className="pl-1">
-                  <strong>4. Administrative controls:</strong> Permit to work systems, safe systems
-                  of work, method statements, competence requirements, accompaniment, warning signs
-                </li>
-                <li className="pl-1">
-                  <strong>5. PPE:</strong> Insulating gloves, arc flash suits, face shields, safety
-                  boots, helmets — protecting the individual worker when residual risk remains
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The Five Levels — Applied to Electrical Work">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>1. Elimination:</strong> Work dead — isolate and prove dead before starting
+                work. This completely removes the electrical hazard (EAWR Reg 12)
+              </li>
+              <li>
+                <strong>2. Substitution:</strong> Use a reduced voltage supply (e.g., 110 V CTE for
+                portable tools instead of 230 V). Use SELV where possible
+              </li>
+              <li>
+                <strong>3. Engineering controls:</strong> Install barriers, shrouds, insulating
+                covers over live parts. Use interlocked switchgear. Apply temporary insulation
+              </li>
+              <li>
+                <strong>4. Administrative controls:</strong> Permit to work systems, safe systems of
+                work, method statements, competence requirements, accompaniment, warning signs
+              </li>
+              <li>
+                <strong>5. PPE:</strong> Insulating gloves, arc flash suits, face shields, safety
+                boots, helmets — protecting the individual worker when residual risk remains
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Why PPE Is the Least Effective Control
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+          <CommonMistake
+            title="Why PPE is the least effective control"
+            whatHappens={
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-orange-300/70">
+                <li>
                   <strong>Single point of failure:</strong> If the PPE fails, is damaged or is
                   incorrectly used, the worker is immediately exposed to the full hazard
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Individual protection only:</strong> PPE protects only the person wearing
                   it — other workers in the area may be unprotected
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Human factors:</strong> PPE depends on the worker selecting it correctly,
                   putting it on properly, wearing it consistently and maintaining it
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Comfort and compliance:</strong> PPE can be uncomfortable, hot and
                   restrictive, leading to non-compliance particularly on long tasks
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>False sense of security:</strong> Wearing PPE can lead workers to take
                   greater risks, believing they are fully protected
                 </li>
               </ul>
-            </div>
+            }
+            doInstead={
+              <>
+                If you find yourself relying entirely on PPE for protection, the risk assessment
+                should be reviewed. There should always be other control measures in place alongside
+                PPE to create a layered defence.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                PPE at Work Regulations 2022 — Key Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Employer duty:</strong> Provide suitable PPE free of charge where risks
-                  cannot be controlled by other means
-                </li>
-                <li className="pl-1">
-                  <strong>Suitability assessment:</strong> PPE must be suitable for the risk, the
-                  user and the working conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Compatibility:</strong> Where multiple PPE items are worn together, they
-                  must be compatible (e.g., safety helmet with arc flash visor)
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance:</strong> Employer must ensure PPE is maintained, repaired or
-                  replaced as necessary
-                </li>
-                <li className="pl-1">
-                  <strong>Storage:</strong> Appropriate storage must be provided to keep PPE in good
-                  condition
-                </li>
-                <li className="pl-1">
-                  <strong>Training:</strong> Workers must be instructed and trained in the use,
-                  storage and maintenance of PPE
-                </li>
-                <li className="pl-1">
-                  <strong>Worker duty:</strong> Workers must use PPE as instructed and report any
-                  defects or loss
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="PPE at Work Regulations 2022 — Key Requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Employer duty:</strong> Provide suitable PPE free of charge where risks
+                cannot be controlled by other means
+              </li>
+              <li>
+                <strong>Suitability assessment:</strong> PPE must be suitable for the risk, the user
+                and the working conditions
+              </li>
+              <li>
+                <strong>Compatibility:</strong> Where multiple PPE items are worn together, they
+                must be compatible (e.g., safety helmet with arc flash visor)
+              </li>
+              <li>
+                <strong>Maintenance:</strong> Employer must ensure PPE is maintained, repaired or
+                replaced as necessary
+              </li>
+              <li>
+                <strong>Storage:</strong> Appropriate storage must be provided to keep PPE in good
+                condition
+              </li>
+              <li>
+                <strong>Training:</strong> Workers must be instructed and trained in the use,
+                storage and maintenance of PPE
+              </li>
+              <li>
+                <strong>Worker duty:</strong> Workers must use PPE as instructed and report any
+                defects or loss
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> If you find yourself relying entirely on PPE for
-              protection, the risk assessment should be reviewed. There should always be other
-              control measures in place alongside PPE to create a layered defence.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02: Insulating Gloves */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Insulating Gloves for Electrical Work
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Insulating gloves</ContentEyebrow>
+
+          <ConceptBlock title="Insulating Gloves for Electrical Work">
             <p>
               Insulating gloves are the most critical item of PPE for electrical work. They provide
-              a barrier between the worker's hands and live conductors, preventing current from
+              a barrier between the worker&apos;s hands and live conductors, preventing current from
               flowing through the body. The selection, use, testing and storage of insulating gloves
-              must follow strict procedures, as any failure in the glove's insulation can result in
-              fatal electric shock.
+              must follow strict procedures, as any failure in the glove&apos;s insulation can
+              result in fatal electric shock.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Insulating Glove Classes (BS EN 60903)
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Class</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Max Use Voltage (AC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Max Use Voltage (DC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Proof Test Voltage (AC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 00</td>
-                      <td className="border border-white/10 px-3 py-2">500 V</td>
-                      <td className="border border-white/10 px-3 py-2">750 V</td>
-                      <td className="border border-white/10 px-3 py-2">2,500 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Low voltage work up to 500 V
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 0</td>
-                      <td className="border border-white/10 px-3 py-2">1,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">1,500 V</td>
-                      <td className="border border-white/10 px-3 py-2">5,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard LV work (230/400 V)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 1</td>
-                      <td className="border border-white/10 px-3 py-2">7,500 V</td>
-                      <td className="border border-white/10 px-3 py-2">11,250 V</td>
-                      <td className="border border-white/10 px-3 py-2">10,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV distribution up to 7.5 kV
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 2</td>
-                      <td className="border border-white/10 px-3 py-2">17,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">25,500 V</td>
-                      <td className="border border-white/10 px-3 py-2">20,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV distribution up to 17 kV
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 3</td>
-                      <td className="border border-white/10 px-3 py-2">26,500 V</td>
-                      <td className="border border-white/10 px-3 py-2">39,750 V</td>
-                      <td className="border border-white/10 px-3 py-2">30,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV transmission up to 26.5 kV
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Class 4</td>
-                      <td className="border border-white/10 px-3 py-2">36,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">54,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">40,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HV transmission up to 36 kV
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Insulating Glove Classes (BS EN 60903)"
+            headers={[
+              'Class',
+              'Max Use Voltage (AC)',
+              'Max Use Voltage (DC)',
+              'Proof Test Voltage (AC)',
+              'Typical Application',
+            ]}
+            rows={[
+              ['Class 00', '500 V', '750 V', '2,500 V', 'Low voltage work up to 500 V'],
+              ['Class 0', '1,000 V', '1,500 V', '5,000 V', 'Standard LV work (230/400 V)'],
+              ['Class 1', '7,500 V', '11,250 V', '10,000 V', 'HV distribution up to 7.5 kV'],
+              ['Class 2', '17,000 V', '25,500 V', '20,000 V', 'HV distribution up to 17 kV'],
+              ['Class 3', '26,500 V', '39,750 V', '30,000 V', 'HV transmission up to 26.5 kV'],
+              ['Class 4', '36,000 V', '54,000 V', '40,000 V', 'HV transmission up to 36 kV'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Inspection, Testing and Replacement
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Before each use — visual inspection:</strong> Check for cuts, punctures,
-                  embedded objects, swelling, softening, hardening, sticky patches or discolouration
-                </li>
-                <li className="pl-1">
-                  <strong>Before each use — air test:</strong> Roll the cuff towards the fingers to
-                  trap air, squeeze gently and check for leaks. Any leak means immediate withdrawal
-                </li>
-                <li className="pl-1">
-                  <strong>Every 6 months — electrical retest:</strong> Laboratory dielectric test to
-                  the proof voltage for the glove class. Must be carried out by an approved test
-                  facility
-                </li>
-                <li className="pl-1">
-                  <strong>Immediate withdrawal if:</strong> Exposed to an electrical fault,
-                  mechanical damage, chemical contamination, excessive heat, or any visible defect
-                </li>
-                <li className="pl-1">
-                  <strong>Shelf life:</strong> Even unused gloves have a limited shelf life. Most
-                  manufacturers recommend a maximum of 12 months from date of test, whether used or
-                  not
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Inspection, Testing and Replacement">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Before each use — visual inspection:</strong> Check for cuts, punctures,
+                embedded objects, swelling, softening, hardening, sticky patches or discolouration
+              </li>
+              <li>
+                <strong>Before each use — air test:</strong> Roll the cuff towards the fingers to
+                trap air, squeeze gently and check for leaks. Any leak means immediate withdrawal
+              </li>
+              <li>
+                <strong>Every 6 months — electrical retest:</strong> Laboratory dielectric test to
+                the proof voltage for the glove class. Must be carried out by an approved test
+                facility
+              </li>
+              <li>
+                <strong>Immediate withdrawal if:</strong> Exposed to an electrical fault, mechanical
+                damage, chemical contamination, excessive heat, or any visible defect
+              </li>
+              <li>
+                <strong>Shelf life:</strong> Even unused gloves have a limited shelf life. Most
+                manufacturers recommend a maximum of 12 months from date of test, whether used or
+                not
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Storage Requirements</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Store in protective canvas bag or purpose-made canister — natural shape, not
-                  folded
-                </li>
-                <li className="pl-1">
-                  Keep away from direct sunlight, UV sources, ozone (electric motors, generators)
-                </li>
-                <li className="pl-1">Store at room temperature — avoid extremes of heat or cold</li>
-                <li className="pl-1">Keep away from oils, solvents, chemicals and sharp objects</li>
-                <li className="pl-1">
-                  Do not store with leather over-gloves inside the insulating gloves (moisture trap)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Storage Requirements"
+            onSite="Always wear leather over-gloves on top of insulating gloves during practical work. The leather protects the insulating rubber from cuts, punctures and abrasion. The combination provides both electrical insulation and mechanical protection."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Store in protective canvas bag or purpose-made canister — natural shape, not folded
+              </li>
+              <li>
+                Keep away from direct sunlight, UV sources, ozone (electric motors, generators)
+              </li>
+              <li>Store at room temperature — avoid extremes of heat or cold</li>
+              <li>Keep away from oils, solvents, chemicals and sharp objects</li>
+              <li>
+                Do not store with leather over-gloves inside the insulating gloves (moisture trap)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Remember:</strong> Always wear leather over-gloves on top of insulating gloves
-              during practical work. The leather protects the insulating rubber from cuts, punctures
-              and abrasion. The combination provides both electrical insulation and mechanical
-              protection.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03: Arc Flash PPE */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Arc Flash PPE and Thermal Protection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Arc flash PPE</ContentEyebrow>
+
+          <ConceptBlock title="Arc Flash PPE and Thermal Protection">
             <p>
               Arc flash PPE is designed to protect against the thermal energy, radiant heat, UV
               radiation, molten metal and blast effects of an electrical arc. The required level of
@@ -653,133 +542,111 @@ const MOETModule1Section2_3 = () => {
               incident energy at the working distance for the specific equipment. Arc flash PPE is
               categorised into four levels, each providing progressively greater protection.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Arc Flash PPE Categories — Detailed Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category 1 (4 cal/cm²):</strong> Single layer arc-rated shirt and
-                  trousers, safety glasses, hearing protection, leather gloves. Typical for
-                  low-energy LV work at distance
-                </li>
-                <li className="pl-1">
-                  <strong>Category 2 (8 cal/cm²):</strong> Arc-rated shirt and trousers, arc-rated
-                  face shield with balaclava, hearing protection, leather gloves, safety boots.
-                  Standard for most LV distribution work
-                </li>
-                <li className="pl-1">
-                  <strong>Category 3 (25 cal/cm²):</strong> Arc flash suit (coverall or
-                  jacket/trousers) with arc-rated hood and face shield visor, arc-rated gloves,
-                  leather work boots. Required for higher-energy LV and lower-energy HV work
-                </li>
-                <li className="pl-1">
-                  <strong>Category 4 (40 cal/cm²):</strong> Multi-layer arc flash suit with
-                  arc-rated hood and visor, heavy-duty arc-rated gloves, leather boots with
-                  arc-rated gaiters. Required for high-energy HV switchgear work
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Arc Flash PPE Categories — Detailed Requirements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category 1 (4 cal/cm²):</strong> Single layer arc-rated shirt and trousers,
+                safety glasses, hearing protection, leather gloves. Typical for low-energy LV work
+                at distance
+              </li>
+              <li>
+                <strong>Category 2 (8 cal/cm²):</strong> Arc-rated shirt and trousers, arc-rated
+                face shield with balaclava, hearing protection, leather gloves, safety boots.
+                Standard for most LV distribution work
+              </li>
+              <li>
+                <strong>Category 3 (25 cal/cm²):</strong> Arc flash suit (coverall or
+                jacket/trousers) with arc-rated hood and face shield visor, arc-rated gloves,
+                leather work boots. Required for higher-energy LV and lower-energy HV work
+              </li>
+              <li>
+                <strong>Category 4 (40 cal/cm²):</strong> Multi-layer arc flash suit with arc-rated
+                hood and visor, heavy-duty arc-rated gloves, leather boots with arc-rated gaiters.
+                Required for high-energy HV switchgear work
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                ATPV and EBT — Understanding Arc Ratings
-              </p>
-              <p className="text-sm text-white mb-3">
-                Every arc-rated garment is tested and assigned an arc rating based on two criteria:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>ATPV (Arc Thermal Performance Value):</strong> The incident energy at
-                  which there is a 50% probability of the onset of a second-degree burn THROUGH the
-                  intact fabric. The fabric provides thermal protection but does not break open
-                </li>
-                <li className="pl-1">
-                  <strong>EBT (Energy Breakopen Threshold):</strong> The incident energy at which
-                  there is a 50% probability the fabric will break open, directly exposing the skin
-                  to the arc. This is typically a lower value than ATPV
-                </li>
-                <li className="pl-1">
-                  <strong>Arc Rating:</strong> The lower of ATPV and EBT. This is the value used to
-                  select PPE — it must equal or exceed the calculated incident energy for the task
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Arc Flash PPE Components
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Arc-rated shirt and trousers (or coverall)</li>
-                  <li className="pl-1">Arc-rated face shield or hood with visor</li>
-                  <li className="pl-1">Arc-rated balaclava for neck and chin protection</li>
-                  <li className="pl-1">Arc-rated gloves (leather or arc-specific)</li>
-                  <li className="pl-1">Safety boots with insulating soles</li>
-                  <li className="pl-1">Hard hat (electrically rated)</li>
-                  <li className="pl-1">Hearing protection (earplugs or arc-rated ear muffs)</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">What NOT to Wear</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Synthetic fabrics (polyester, nylon) — melt onto skin</li>
-                  <li className="pl-1">Loose clothing that could catch in equipment</li>
-                  <li className="pl-1">Metal jewellery, watches, piercings — conductive</li>
-                  <li className="pl-1">Standard safety glasses without side shields</li>
-                  <li className="pl-1">Metal-framed spectacles near live parts</li>
-                  <li className="pl-1">Non-arc-rated clothing under arc flash PPE</li>
-                  <li className="pl-1">Clothing contaminated with oil or grease (flammable)</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maintenance and Care of Arc Flash PPE
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Laundering:</strong> Follow manufacturer's instructions. Industrial
-                  laundering at specified temperatures. Do not use bleach or fabric softener — these
-                  can degrade arc-rated properties
-                </li>
-                <li className="pl-1">
-                  <strong>Inspection:</strong> Check for tears, thinning, holes, contamination and
-                  legible labelling before each use
-                </li>
-                <li className="pl-1">
-                  <strong>Replacement:</strong> After any arc flash exposure (even without visible
-                  damage), when fabric shows wear or thinning, or when labels are illegible
-                </li>
-                <li className="pl-1">
-                  <strong>Repairs:</strong> Only repairs using arc-rated materials and approved
-                  methods. Standard patches or stitching will create a weak point
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Natural fibre clothing (100% cotton) does not melt like
-              synthetics and can provide limited thermal protection, but it is NOT arc-rated and
-              should not be relied upon as arc flash protection. Only garments specifically tested
-              and rated to a recognised standard (ASTM F1506, IEC 61482-2) provide verified arc
-              protection.
+          <ConceptBlock title="ATPV and EBT — Understanding Arc Ratings">
+            <p>
+              Every arc-rated garment is tested and assigned an arc rating based on two criteria:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>ATPV (Arc Thermal Performance Value):</strong> The incident energy at which
+                there is a 50% probability of the onset of a second-degree burn THROUGH the intact
+                fabric. The fabric provides thermal protection but does not break open
+              </li>
+              <li>
+                <strong>EBT (Energy Breakopen Threshold):</strong> The incident energy at which
+                there is a 50% probability the fabric will break open, directly exposing the skin to
+                the arc. This is typically a lower value than ATPV
+              </li>
+              <li>
+                <strong>Arc Rating:</strong> The lower of ATPV and EBT. This is the value used to
+                select PPE — it must equal or exceed the calculated incident energy for the task
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Arc Flash PPE Components">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Arc-rated shirt and trousers (or coverall)</li>
+              <li>Arc-rated face shield or hood with visor</li>
+              <li>Arc-rated balaclava for neck and chin protection</li>
+              <li>Arc-rated gloves (leather or arc-specific)</li>
+              <li>Safety boots with insulating soles</li>
+              <li>Hard hat (electrically rated)</li>
+              <li>Hearing protection (earplugs or arc-rated ear muffs)</li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04: Other Electrical PPE and Selection */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Other Electrical PPE, Selection Criteria and CE/UKCA Marking
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="What NOT to Wear">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Synthetic fabrics (polyester, nylon) — melt onto skin</li>
+              <li>Loose clothing that could catch in equipment</li>
+              <li>Metal jewellery, watches, piercings — conductive</li>
+              <li>Standard safety glasses without side shields</li>
+              <li>Metal-framed spectacles near live parts</li>
+              <li>Non-arc-rated clothing under arc flash PPE</li>
+              <li>Clothing contaminated with oil or grease (flammable)</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Maintenance and Care of Arc Flash PPE"
+            onSite="Natural fibre clothing (100% cotton) does not melt like synthetics and can provide limited thermal protection, but it is NOT arc-rated and should not be relied upon as arc flash protection. Only garments specifically tested and rated to a recognised standard (ASTM F1506, IEC 61482-2) provide verified arc protection."
+          >
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Laundering:</strong> Follow manufacturer&apos;s instructions. Industrial
+                laundering at specified temperatures. Do not use bleach or fabric softener — these
+                can degrade arc-rated properties
+              </li>
+              <li>
+                <strong>Inspection:</strong> Check for tears, thinning, holes, contamination and
+                legible labelling before each use
+              </li>
+              <li>
+                <strong>Replacement:</strong> After any arc flash exposure (even without visible
+                damage), when fabric shows wear or thinning, or when labels are illegible
+              </li>
+              <li>
+                <strong>Repairs:</strong> Only repairs using arc-rated materials and approved
+                methods. Standard patches or stitching will create a weak point
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Other PPE and selection</ContentEyebrow>
+
+          <ConceptBlock title="Other Electrical PPE, Selection Criteria and CE/UKCA Marking">
             <p>
               Beyond insulating gloves and arc flash clothing, electrical maintenance technicians
               require a range of additional PPE items. Each must be selected to match the specific
@@ -787,237 +654,157 @@ const MOETModule1Section2_3 = () => {
               condition. All PPE placed on the UK market must carry the appropriate conformity
               marking.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Additional PPE for Electrical Work
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">PPE Item</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Standard</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Purpose</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Inspection</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety helmet</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 397 / BS EN 50365</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Head protection; electrical insulation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check shell, harness, chin strap. Replace if cracked, UV-damaged or impacted
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety boots</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        BS EN ISO 20345 (EH rated)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulating soles; toe protection
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check soles, stitching, toe cap. Replace if sole separation or wear-through
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety glasses</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 166</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eye protection from debris and flash
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Clean lenses, check for scratches and frame integrity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Face shield</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 166 / arc rated</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full face protection from arc flash
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check visor for cracks, crazing or discolouration. Replace after arc
-                        exposure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Hearing protection</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 352</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protection from arc flash noise (up to 160 dB)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check seal, cushions, headband tension
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulating matting</td>
-                      <td className="border border-white/10 px-3 py-2">BS EN 61111</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Floor insulation in front of switchgear
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check for cuts, punctures, contamination. Periodic dielectric test
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Additional PPE for Electrical Work"
+            headers={['PPE Item', 'Standard', 'Purpose', 'Inspection']}
+            rows={[
+              [
+                'Safety helmet',
+                'BS EN 397 / BS EN 50365',
+                'Head protection; electrical insulation',
+                'Check shell, harness, chin strap. Replace if cracked, UV-damaged or impacted',
+              ],
+              [
+                'Safety boots',
+                'BS EN ISO 20345 (EH rated)',
+                'Insulating soles; toe protection',
+                'Check soles, stitching, toe cap. Replace if sole separation or wear-through',
+              ],
+              [
+                'Safety glasses',
+                'BS EN 166',
+                'Eye protection from debris and flash',
+                'Clean lenses, check for scratches and frame integrity',
+              ],
+              [
+                'Face shield',
+                'BS EN 166 / arc rated',
+                'Full face protection from arc flash',
+                'Check visor for cracks, crazing or discolouration. Replace after arc exposure',
+              ],
+              [
+                'Hearing protection',
+                'BS EN 352',
+                'Protection from arc flash noise (up to 160 dB)',
+                'Check seal, cushions, headband tension',
+              ],
+              [
+                'Insulating matting',
+                'BS EN 61111',
+                'Floor insulation in front of switchgear',
+                'Check for cuts, punctures, contamination. Periodic dielectric test',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">PPE Selection Criteria</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Hazard matching:</strong> PPE must be rated for the specific hazard —
-                  voltage level, incident energy, mechanical hazards present
-                </li>
-                <li className="pl-1">
-                  <strong>Correct sizing:</strong> Ill-fitting PPE is dangerous — gloves that are
-                  too large reduce dexterity, boots that are too small cause fatigue
-                </li>
-                <li className="pl-1">
-                  <strong>Compatibility:</strong> All PPE items must work together — e.g., face
-                  shield must fit with hard hat, gloves must not interfere with tool use
-                </li>
-                <li className="pl-1">
-                  <strong>Comfort and wearability:</strong> If PPE is uncomfortable, it will not be
-                  worn consistently. Select the most comfortable option that meets the safety
-                  requirement
-                </li>
-                <li className="pl-1">
-                  <strong>Environment:</strong> Consider temperature, humidity, confined spaces and
-                  the duration of wear. Breathable fabrics reduce heat stress
-                </li>
-                <li className="pl-1">
-                  <strong>Dexterity:</strong> Electrical work requires fine motor skills. Select
-                  gloves that provide adequate protection without excessive loss of dexterity
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="PPE Selection Criteria">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard matching:</strong> PPE must be rated for the specific hazard —
+                voltage level, incident energy, mechanical hazards present
+              </li>
+              <li>
+                <strong>Correct sizing:</strong> Ill-fitting PPE is dangerous — gloves that are too
+                large reduce dexterity, boots that are too small cause fatigue
+              </li>
+              <li>
+                <strong>Compatibility:</strong> All PPE items must work together — e.g., face shield
+                must fit with hard hat, gloves must not interfere with tool use
+              </li>
+              <li>
+                <strong>Comfort and wearability:</strong> If PPE is uncomfortable, it will not be
+                worn consistently. Select the most comfortable option that meets the safety
+                requirement
+              </li>
+              <li>
+                <strong>Environment:</strong> Consider temperature, humidity, confined spaces and
+                the duration of wear. Breathable fabrics reduce heat stress
+              </li>
+              <li>
+                <strong>Dexterity:</strong> Electrical work requires fine motor skills. Select
+                gloves that provide adequate protection without excessive loss of dexterity
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">CE and UKCA Marking</p>
-              <p className="text-sm text-white mb-3">
-                All PPE sold in the UK must carry the appropriate conformity marking as evidence
-                that it meets the essential health and safety requirements of the PPE Regulation.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Category I (simple PPE):</strong> Low-risk protection (e.g., gardening
-                  gloves). Self-certified by manufacturer
-                </li>
-                <li className="pl-1">
-                  <strong>Category II (intermediate PPE):</strong> Most general-purpose PPE (e.g.,
-                  safety glasses, hard hats, general work gloves). Requires EU-type examination by a
-                  Notified Body
-                </li>
-                <li className="pl-1">
-                  <strong>Category III (complex PPE):</strong> Protection against mortal danger or
-                  irreversible health damage (e.g., insulating gloves, arc flash suits, fall
-                  protection). Requires EU-type examination AND ongoing production quality assurance
-                  by a Notified Body
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard requires you to
-              select, use and maintain appropriate PPE for the task. You must demonstrate
-              understanding of why PPE is the last resort, how to inspect it, and when to replace
-              it. This is assessed through practical observation during your End-Point Assessment.
+          <ConceptBlock
+            title="CE and UKCA Marking"
+            onSite="The maintenance technician standard requires you to select, use and maintain appropriate PPE for the task. You must demonstrate understanding of why PPE is the last resort, how to inspect it, and when to replace it. This is assessed through practical observation during your End-Point Assessment."
+          >
+            <p>
+              All PPE sold in the UK must carry the appropriate conformity marking as evidence that
+              it meets the essential health and safety requirements of the PPE Regulation.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Category I (simple PPE):</strong> Low-risk protection (e.g., gardening
+                gloves). Self-certified by manufacturer
+              </li>
+              <li>
+                <strong>Category II (intermediate PPE):</strong> Most general-purpose PPE (e.g.,
+                safety glasses, hard hats, general work gloves). Requires EU-type examination by a
+                Notified Body
+              </li>
+              <li>
+                <strong>Category III (complex PPE):</strong> Protection against mortal danger or
+                irreversible health damage (e.g., insulating gloves, arc flash suits, fall
+                protection). Requires EU-type examination AND ongoing production quality assurance
+                by a Notified Body
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            title="Quick reference"
+            points={[
+              'Insulating glove classes: Class 00 — 500 V AC max; Class 0 — 1,000 V AC max (standard LV); Class 1 — 7,500 V AC max; Class 2 — 17,000 V AC max; Class 3 — 26,500 V AC max; Class 4 — 36,000 V AC max.',
+              'Key references: PPE at Work Regulations 2022; BS EN 60903 — insulating gloves; NFPA 70E / IEEE 1584 — arc flash; BS EN 61111 — insulating matting; ST1426 — maintenance technician KSBs.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Insulating Glove Classes</p>
-                <ul className="space-y-0.5">
-                  <li>Class 00 — 500 V AC max</li>
-                  <li>Class 0 — 1,000 V AC max (standard LV)</li>
-                  <li>Class 1 — 7,500 V AC max</li>
-                  <li>Class 2 — 17,000 V AC max</li>
-                  <li>Class 3 — 26,500 V AC max</li>
-                  <li>Class 4 — 36,000 V AC max</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key References</p>
-                <ul className="space-y-0.5">
-                  <li>PPE at Work Regulations 2022</li>
-                  <li>BS EN 60903 — Insulating gloves</li>
-                  <li>NFPA 70E / IEEE 1584 — Arc flash</li>
-                  <li>BS EN 61111 — Insulating matting</li>
-                  <li>ST1426 — Maintenance technician KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Personal protective equipment knowledge check" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Safe Use of Tools and Test Equipment
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module1-section2-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Approach Distances
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Safe Use of Tools
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module1-section2-4">
-              Next: Approach Distances
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

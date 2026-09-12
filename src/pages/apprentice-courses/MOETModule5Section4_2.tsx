@@ -1,8 +1,46 @@
-import { ArrowLeft, RotateCcw, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 5 · Section 4 · Subsection 2 — PID Control Loops
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not invent
+ * codes here. The conversion brief for this course does not list a Module 5
+ * KSB set, so only statements that already appear verbatim in the brief's
+ * verified lists for other modules — and that genuinely fit this page's
+ * content — are used here.
+ *   Knowledge  · "Electrical. Electrical maintenance tools, measurement, and
+ *                 test equipment application, operation, care and
+ *                 calibration requirements."
+ *              · "Electrical. Electrical fault-finding and rectification
+ *                 techniques; diagnostic equipment."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'PID Control Loops - MOET Module 5 Section 4.2';
@@ -70,12 +108,7 @@ const quizQuestions = [
     id: 1,
     question:
       'A proportional controller with a gain of 2 receives an error signal of 5%. What is the controller output change?',
-    options: [
-      '2.5%',
-      '10%',
-      '5%',
-      '7%',
-    ],
+    options: ['2.5%', '10%', '5%', '7%'],
     correctAnswer: 1,
     explanation:
       'Output change = Gain x Error = 2 x 5% = 10%. Proportional action multiplies the error by the gain to determine the output. A higher gain gives a more aggressive response to errors.',
@@ -84,12 +117,7 @@ const quizQuestions = [
     id: 2,
     question:
       "The 'proportional band' of a controller is set to 50%. This is equivalent to a gain of:",
-    options: [
-      '50',
-      '0.5',
-      '2',
-      '5',
-    ],
+    options: ['50', '0.5', '2', '5'],
     correctAnswer: 2,
     explanation:
       'Gain = 100 / Proportional Band = 100 / 50 = 2. Proportional band and gain are inversely related. A narrow proportional band gives a high gain (more aggressive), while a wide proportional band gives a low gain (less aggressive). Different controller manufacturers use different conventions, so always check the documentation.',
@@ -125,10 +153,10 @@ const quizQuestions = [
     id: 5,
     question: 'The Ziegler-Nichols tuning method involves:',
     options: [
-      'Set P first to achieve acceptable response, then add I to eliminate offset, then add D if needed for faster response',
+      'Setting the integral and derivative terms to maximum and reducing them until stable',
       'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
-      'Reducing the integral time in small steps until the offset disappears completely',
-      'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
+      'Calculating the PID terms directly from the control valve characteristic curve',
+      'Adjusting each term by trial and error until the operator is satisfied with the response',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +165,7 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Derivative action is generally NOT used on which type of process variable?',
-    options: [
-      'Temperature',
-      'Level in a large vessel',
-      'Flow',
-      'Pressure in a gas system',
-    ],
+    options: ['Temperature', 'Level in a large vessel', 'Flow', 'Pressure in a gas system'],
     correctAnswer: 2,
     explanation:
       'Flow measurement is typically noisy due to turbulence and pulsation. Since derivative action responds to the rate of change, it amplifies this noise, causing erratic controller output and valve wear. PI control (without D) is the standard choice for flow loops. Derivative is more useful on slow, smooth processes like temperature control in large thermal masses.',
@@ -256,114 +279,67 @@ const faqs = [
 ];
 
 const MOETModule5Section4_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <RotateCcw className="h-4 w-4" />
-            <span>Module 5.4.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            PID Control Loops
-          </h1>
-          <p className="text-white">
-            Proportional, integral and derivative control principles and tuning
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 5 · Section 5.4 · Subsection 2"
+        title="PID Control Loops"
+        backTo="/study-centre/apprentice/m-o-e-t-module5-section4"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Proportional, integral and derivative control principles and tuning.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>P:</strong> Output proportional to error — fast but has offset
-              </li>
-              <li className="pl-1">
-                <strong>I:</strong> Accumulates error over time — eliminates offset
-              </li>
-              <li className="pl-1">
-                <strong>D:</strong> Responds to rate of change — anticipates trends
-              </li>
-              <li className="pl-1">
-                <strong>PI:</strong> Most common industrial configuration
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Tuning:</strong> Adjust P, I, D parameters for stable control
-              </li>
-              <li className="pl-1">
-                <strong>Oscillation:</strong> Usually caused by gain too high or Ti too short
-              </li>
-              <li className="pl-1">
-                <strong>Offset:</strong> Sustained error means integral action is needed
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Basic PID understanding required for EPA
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'P: output proportional to error — fast but has offset.',
+              'I: accumulates error over time — eliminates offset.',
+              'D: responds to rate of change — anticipates trends.',
+              'PI is the most common industrial configuration.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the function of proportional, integral and derivative control actions',
               'Calculate controller output for given error signals and PID parameters',
               'Identify common PID tuning problems from process trends',
               'Describe manual and automatic tuning methods for PID controllers',
               'Recognise the effects of integral wind-up and controller saturation',
               'Apply PID knowledge to fault diagnosis under ST1426 requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Tuning:</strong> adjust P, I, D parameters for stable control.
+              </li>
+              <li>
+                <strong>Oscillation:</strong> usually caused by gain too high or Ti too short.
+              </li>
+              <li>
+                <strong>Offset:</strong> sustained error means integral action is needed.
+              </li>
+              <li>
+                <strong>ST1426:</strong> basic PID understanding is required for the EPA.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Proportional Control (P)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Proportional control</ContentEyebrow>
+
+          <ConceptBlock
+            title="Proportional control (P)"
+            onSite="A proportional-only temperature controller with a gain of 5 is controlling a furnace at 200 degrees C setpoint. Under load, the furnace needs 60% output to maintain temperature. With 50% bias, the error must be (60-50)/5 = 2 degrees C, so the actual temperature settles at 198 degrees C — a 2 degree offset."
+          >
             <p>
               Proportional control is the foundation of PID. The controller output is directly
               proportional to the error signal — the difference between setpoint and process
@@ -371,81 +347,69 @@ const MOETModule5Section4_2 = () => {
               output is small. This provides an immediate, intuitive response to deviations from
               setpoint.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Proportional Equation
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm font-mono mb-3">
-                Output = Kp x Error + Bias
-              </div>
-              <p className="text-sm text-white mb-2">Where:</p>
-              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Kp</strong> = Proportional gain (dimensionless ratio)
-                </li>
-                <li className="pl-1">
-                  <strong>Error</strong> = Setpoint minus Process Variable (SP - PV)
-                </li>
-                <li className="pl-1">
-                  <strong>Bias</strong> = The output value when error is zero (typically 50%)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="The proportional equation">
+            <p className="rounded bg-white/5 p-3 font-mono text-[13px]">
+              Output = Kp x Error + Bias
+            </p>
+            <p>Where:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Kp</strong> = proportional gain (dimensionless ratio).
+              </li>
+              <li>
+                <strong>Error</strong> = setpoint minus process variable (SP − PV).
+              </li>
+              <li>
+                <strong>Bias</strong> = the output value when error is zero (typically 50%).
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Proportional Band</p>
-              <p className="text-sm text-white mb-3">
-                Proportional band (PB) is an alternative way to express the proportional
-                sensitivity. It represents the range of the process variable over which the
-                controller output moves from 0% to 100%.
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm font-mono mb-3">
-                PB (%) = 100 / Kp &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; Kp = 100 / PB (%)
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Narrow PB (e.g., 10%):</strong> High gain (Kp = 10), very sensitive —
-                  large output change for small error
-                </li>
-                <li className="pl-1">
-                  <strong>Wide PB (e.g., 200%):</strong> Low gain (Kp = 0.5), gentle — small output
-                  change for large error
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Proportional band">
+            <p>
+              Proportional band (PB) is an alternative way to express the proportional sensitivity.
+              It represents the range of the process variable over which the controller output moves
+              from 0% to 100%.
+            </p>
+            <p className="rounded bg-white/5 p-3 font-mono text-[13px]">
+              PB (%) = 100 / Kp or Kp = 100 / PB (%)
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Narrow PB (e.g., 10%):</strong> high gain (Kp = 10), very sensitive — large
+                output change for small error.
+              </li>
+              <li>
+                <strong>Wide PB (e.g., 200%):</strong> low gain (Kp = 0.5), gentle — small output
+                change for large error.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">The Offset Problem</p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="The offset problem"
+            whatHappens={
+              <p>
                 The fundamental limitation of proportional-only control is offset — a permanent
                 difference between setpoint and process variable. Because the output is proportional
                 to the error, the controller needs a non-zero error to produce a non-zero output.
                 When the process is under load, the controller must maintain an output to balance
                 the load, which requires a sustained error. Increasing the gain reduces the offset
-                but increases the risk of oscillation. Only integral action can eliminate offset
-                completely.
+                but increases the risk of oscillation.
               </p>
-            </div>
+            }
+            doInstead={<p>Only integral action can eliminate offset completely.</p>}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical example:</strong> A proportional-only temperature controller with a
-              gain of 5 is controlling a furnace at 200 degrees C setpoint. Under load, the furnace
-              needs 60% output to maintain temperature. With 50% bias, the error must be (60-50)/5 =
-              2 degrees C, so the actual temperature settles at 198 degrees C — a 2 degree offset.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Integral Control (I) — Eliminating Offset
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Integral control</ContentEyebrow>
+
+          <ConceptBlock title="Integral control (I) — eliminating offset">
             <p>
               Integral action addresses the offset limitation of proportional control. It works by
               accumulating (integrating) the error over time. Even if the error is very small, the
@@ -453,211 +417,177 @@ const MOETModule5Section4_2 = () => {
               why PI control — proportional plus integral — is the most widely used control
               configuration in industry.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                How Integral Action Works
-              </p>
-              <p className="text-sm text-white mb-3">
-                The integral contribution is proportional to the sum of all past errors multiplied
-                by the time interval. In mathematical terms, it is the area under the error-time
-                curve.
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm font-mono mb-3">
-                I output = (Kp / Ti) x integral of error over time
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Ti (integral time):</strong> Determines the speed of integral action.
-                  Short Ti = fast integral = aggressive offset elimination. Long Ti = slow integral
-                  = gentle correction
-                </li>
-                <li className="pl-1">
-                  <strong>Repeats per minute:</strong> Some controllers express integral as
-                  repeats/minute (the inverse of Ti in minutes). More repeats = faster integral
-                  action
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="How integral action works">
+            <p>
+              The integral contribution is proportional to the sum of all past errors multiplied by
+              the time interval. In mathematical terms, it is the area under the error-time curve.
+            </p>
+            <p className="rounded bg-white/5 p-3 font-mono text-[13px]">
+              I output = (Kp / Ti) x integral of error over time
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ti (integral time):</strong> determines the speed of integral action. Short
+                Ti = fast integral = aggressive offset elimination. Long Ti = slow integral = gentle
+                correction.
+              </li>
+              <li>
+                <strong>Repeats per minute:</strong> some controllers express integral as
+                repeats/minute (the inverse of Ti in minutes). More repeats = faster integral
+                action.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Benefits of Integral Action
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Eliminates steady-state offset completely</li>
-                  <li className="pl-1">Ensures the PV reaches setpoint exactly</li>
-                  <li className="pl-1">Automatically compensates for slow load changes</li>
-                  <li className="pl-1">Essential for processes requiring zero-offset accuracy</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Risks of Integral Action
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Slows the overall loop response</li>
-                  <li className="pl-1">Can cause overshoot if Ti is too short</li>
-                  <li className="pl-1">Integral wind-up during saturation periods</li>
-                  <li className="pl-1">Makes noisy loops oscillate if set aggressively</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Benefits of integral action">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Eliminates steady-state offset completely.</li>
+              <li>Ensures the PV reaches setpoint exactly.</li>
+              <li>Automatically compensates for slow load changes.</li>
+              <li>Essential for processes requiring zero-offset accuracy.</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Integral Wind-Up</p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="Risks of integral action">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Slows the overall loop response.</li>
+              <li>Can cause overshoot if Ti is too short.</li>
+              <li>Integral wind-up during saturation periods.</li>
+              <li>Makes noisy loops oscillate if set aggressively.</li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Integral wind-up"
+            whatHappens={
+              <p>
                 Integral wind-up is a dangerous condition that occurs when the controller output
                 saturates at its maximum (or minimum) limit but the error persists — for example,
                 during a large setpoint change when the valve is fully open but the process has not
                 yet reached setpoint. The integral term continues to accumulate, building up a large
                 value. When the PV finally crosses setpoint, the wound-up integral prevents the
-                controller from reducing its output, causing significant overshoot. Modern
-                controllers include anti-wind-up features that stop the integral accumulating when
-                the output is saturated.
+                controller from reducing its output, causing significant overshoot.
               </p>
-            </div>
+            }
+            doInstead={
+              <>
+                <p>
+                  Modern controllers include anti-wind-up features that stop the integral
+                  accumulating when the output is saturated.
+                </p>
+                <p>
+                  If you see a process overshooting significantly after a setpoint change or after
+                  recovering from a disturbance, integral wind-up is a likely cause. Check the
+                  anti-wind-up settings in the controller configuration and ensure they are enabled.
+                </p>
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Maintenance tip:</strong> If you see a process overshooting significantly
-              after a setpoint change or after recovering from a disturbance, integral wind-up is a
-              likely cause. Check the anti-wind-up settings in the controller configuration and
-              ensure they are enabled.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Derivative Control (D) — Anticipating Change
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Derivative control</ContentEyebrow>
+
+          <ConceptBlock
+            title="Derivative control (D) — anticipating change"
+            onSite="Full PID control is less common than you might expect. In most industrial applications, PI control (without derivative) provides adequate performance. PID with all three terms active is reserved for processes where the improved response to rapid changes justifies the additional complexity of tuning and the risk of noise amplification."
+          >
             <p>
               Derivative action is the third component of PID control. It responds to the rate of
               change of the error — how fast the error is changing, rather than its current
               magnitude or accumulated history. By responding to the rate of change, derivative
               action provides an anticipatory element, acting before the error becomes large.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                How Derivative Action Works
-              </p>
-              <div className="p-3 rounded bg-white/5 text-sm font-mono mb-3">
-                D output = Kp x Td x (rate of change of error)
-              </div>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Td (derivative time):</strong> Determines the strength of derivative
-                  action. Longer Td = more derivative effect
-                </li>
-                <li className="pl-1">
-                  <strong>When error is changing rapidly:</strong> D output is large, adding extra
-                  correction
-                </li>
-                <li className="pl-1">
-                  <strong>When error is constant:</strong> D output is zero — derivative only
-                  responds to change
-                </li>
-                <li className="pl-1">
-                  <strong>When error is decreasing:</strong> D output opposes the proportional
-                  action, acting as a brake to prevent overshoot
-                </li>
-              </ul>
+          <ConceptBlock title="How derivative action works">
+            <p className="rounded bg-white/5 p-3 font-mono text-[13px]">
+              D output = Kp x Td x (rate of change of error)
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Td (derivative time):</strong> determines the strength of derivative action.
+                Longer Td = more derivative effect.
+              </li>
+              <li>
+                <strong>When error is changing rapidly:</strong> D output is large, adding extra
+                correction.
+              </li>
+              <li>
+                <strong>When error is constant:</strong> D output is zero — derivative only responds
+                to change.
+              </li>
+              <li>
+                <strong>When error is decreasing:</strong> D output opposes the proportional action,
+                acting as a brake to prevent overshoot.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="When to use derivative action">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Suitable for D action</th>
+                    <th className="py-2 font-medium text-white">NOT suitable for D action</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Temperature control (slow, smooth signal)</td>
+                    <td className="py-2">Flow control (noisy signal)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Large thermal mass processes</td>
+                    <td className="py-2">Level control in agitated vessels</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Processes with significant dead time</td>
+                    <td className="py-2">Pressure control in gas systems</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Batch process temperature ramps</td>
+                    <td className="py-2">Any process with noisy measurement</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Use Derivative Action
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Suitable for D Action
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        NOT Suitable for D Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Temperature control (slow, smooth signal)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow control (noisy signal)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Large thermal mass processes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Level control in agitated vessels
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Processes with significant dead time
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Pressure control in gas systems
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Batch process temperature ramps
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Any process with noisy measurement
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Derivative and Signal Noise
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Derivative and signal noise"
+            whatHappens={
+              <p>
                 The biggest practical problem with derivative action is its sensitivity to noise.
                 Since it responds to the rate of change, any high-frequency noise on the measurement
                 signal is amplified. This causes rapid, erratic changes in controller output, which
-                can damage actuators and valves. Most modern controllers include a derivative filter
-                that limits the high-frequency response, but on noisy signals it is often better to
-                disable derivative entirely and use PI control only.
+                can damage actuators and valves.
               </p>
-            </div>
+            }
+            doInstead={
+              <p>
+                Most modern controllers include a derivative filter that limits the high-frequency
+                response, but on noisy signals it is often better to disable derivative entirely and
+                use PI control only.
+              </p>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Full PID control is less common than you might expect. In
-              most industrial applications, PI control (without derivative) provides adequate
-              performance. PID with all three terms active is reserved for processes where the
-              improved response to rapid changes justifies the additional complexity of tuning and
-              the risk of noise amplification.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Tuning Methods for PID Controllers
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Tuning methods</ContentEyebrow>
+
+          <ConceptBlock
+            title="Tuning methods for PID controllers"
+            onSite="The maintenance technician standard expects you to be able to recognise the symptoms of poor tuning, carry out basic adjustments, and know when to involve a specialist instrument engineer for complex tuning problems."
+          >
             <p>
               Tuning a PID controller means adjusting the P, I and D parameters to achieve the best
               possible control performance for the specific process. Good tuning results in stable,
@@ -665,372 +595,316 @@ const MOETModule5Section4_2 = () => {
               causes constant oscillation, sluggish response, or both — wasting energy, reducing
               product quality and wearing out actuators.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Method 1: Manual Tuning (Trial and Error)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  The most fundamental method, suitable when you have access to the controller and
-                  can observe the process response in real time.
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">
-                    Set integral to maximum Ti (slowest) and derivative to zero
-                  </li>
-                  <li className="pl-1">
-                    Adjust proportional gain until the response to a small setpoint change shows
-                    approximately quarter-wave damping (each successive oscillation is about
-                    one-quarter the amplitude of the previous)
-                  </li>
-                  <li className="pl-1">
-                    Reduce integral time (increase speed) until offset is eliminated without causing
-                    oscillation
-                  </li>
-                  <li className="pl-1">
-                    If needed, increase derivative time cautiously to reduce overshoot on setpoint
-                    changes
-                  </li>
-                  <li className="pl-1">
-                    Make one change at a time and allow the process to stabilise before making the
-                    next adjustment
-                  </li>
-                </ol>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Method 2: Ziegler-Nichols Ultimate Gain
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  A systematic method that determines tuning parameters from the point of sustained
-                  oscillation.
-                </p>
-                <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
-                  <li className="pl-1">Set I and D to off (Ti = maximum, Td = 0)</li>
-                  <li className="pl-1">
-                    Gradually increase Kp until the loop sustains continuous oscillation at constant
-                    amplitude
-                  </li>
-                  <li className="pl-1">
-                    Record the ultimate gain (Ku) and the oscillation period (Pu)
-                  </li>
-                  <li className="pl-1">
-                    Calculate PID parameters: Kp = 0.6 x Ku, Ti = Pu / 2, Td = Pu / 8
-                  </li>
-                  <li className="pl-1">
-                    Apply values and fine-tune as needed (Z-N often gives aggressive starting
-                    values)
-                  </li>
-                </ol>
-              </div>
-
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Method 3: Auto-Tuning
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Many modern controllers and DCS systems include built-in auto-tune functions that
-                  automate the tuning process. The controller applies a test disturbance, analyses
-                  the response, and calculates appropriate PID parameters.
-                </p>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Initiated from the controller front panel or engineering station
-                  </li>
-                  <li className="pl-1">Usually uses relay feedback or step-test methodology</li>
-                  <li className="pl-1">
-                    Provides good starting parameters but may need manual refinement
-                  </li>
-                  <li className="pl-1">
-                    Should only be run when the process is stable and within normal operating range
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Recognising Tuning Problems from Trends
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Symptom on Trend
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Likely Cause</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Corrective Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Growing oscillation</td>
-                      <td className="border border-white/10 px-3 py-2">Gain too high</td>
-                      <td className="border border-white/10 px-3 py-2">Reduce Kp (widen PB)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Constant amplitude oscillation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Gain at critical value</td>
-                      <td className="border border-white/10 px-3 py-2">Reduce Kp slightly</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Slow oscillation with overshoot
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Integral too aggressive (Ti too short)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Increase Ti</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Persistent offset, no oscillation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insufficient integral action
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Decrease Ti or check I is enabled
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sluggish, very slow response
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Gain too low</td>
-                      <td className="border border-white/10 px-3 py-2">Increase Kp (narrow PB)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Erratic, noisy output signal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Derivative on noisy signal
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Reduce or remove Td</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The maintenance technician standard expects you to be
-              able to recognise the symptoms of poor tuning, carry out basic adjustments, and know
-              when to involve a specialist instrument engineer for complex tuning problems.
+          <ConceptBlock title="Method 1: manual tuning (trial and error)">
+            <p>
+              The most fundamental method, suitable when you have access to the controller and can
+              observe the process response in real time.
             </p>
-          </div>
-        </section>
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Set integral to maximum Ti (slowest) and derivative to zero.</li>
+              <li>
+                Adjust proportional gain until the response to a small setpoint change shows
+                approximately quarter-wave damping (each successive oscillation is about one-quarter
+                the amplitude of the previous).
+              </li>
+              <li>
+                Reduce integral time (increase speed) until offset is eliminated without causing
+                oscillation.
+              </li>
+              <li>
+                If needed, increase derivative time cautiously to reduce overshoot on setpoint
+                changes.
+              </li>
+              <li>
+                Make one change at a time and allow the process to stabilise before making the next
+                adjustment.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Method 2: Ziegler-Nichols ultimate gain">
+            <p>
+              A systematic method that determines tuning parameters from the point of sustained
+              oscillation.
+            </p>
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Set I and D to off (Ti = maximum, Td = 0).</li>
+              <li>
+                Gradually increase Kp until the loop sustains continuous oscillation at constant
+                amplitude.
+              </li>
+              <li>Record the ultimate gain (Ku) and the oscillation period (Pu).</li>
+              <li>Calculate PID parameters: Kp = 0.6 x Ku, Ti = Pu / 2, Td = Pu / 8.</li>
+              <li>
+                Apply values and fine-tune as needed (Z-N often gives aggressive starting values).
+              </li>
+            </ol>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Practical Considerations and Controller Configurations
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Method 3: auto-tuning">
+            <p>
+              Many modern controllers and DCS systems include built-in auto-tune functions that
+              automate the tuning process. The controller applies a test disturbance, analyses the
+              response, and calculates appropriate PID parameters.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Initiated from the controller front panel or engineering station.</li>
+              <li>Usually uses relay feedback or step-test methodology.</li>
+              <li>Provides good starting parameters but may need manual refinement.</li>
+              <li>
+                Should only be run when the process is stable and within normal operating range.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Recognising tuning problems from trends">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Symptom on trend</th>
+                    <th className="py-2 pr-4 font-medium text-white">Likely cause</th>
+                    <th className="py-2 font-medium text-white">Corrective action</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Growing oscillation</td>
+                    <td className="py-2 pr-4">Gain too high</td>
+                    <td className="py-2">Reduce Kp (widen PB)</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Constant amplitude oscillation</td>
+                    <td className="py-2 pr-4">Gain at critical value</td>
+                    <td className="py-2">Reduce Kp slightly</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Slow oscillation with overshoot</td>
+                    <td className="py-2 pr-4">Integral too aggressive (Ti too short)</td>
+                    <td className="py-2">Increase Ti</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Persistent offset, no oscillation</td>
+                    <td className="py-2 pr-4">Insufficient integral action</td>
+                    <td className="py-2">Decrease Ti or check I is enabled</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Sluggish, very slow response</td>
+                    <td className="py-2 pr-4">Gain too low</td>
+                    <td className="py-2">Increase Kp (narrow PB)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Erratic, noisy output signal</td>
+                    <td className="py-2 pr-4">Derivative on noisy signal</td>
+                    <td className="py-2">Reduce or remove Td</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Practical considerations</ContentEyebrow>
+
+          <ConceptBlock
+            title="Practical considerations and controller configurations"
+            onSite="When fault-finding a control loop, always check the controller configuration first — action direction, PID parameters, alarm limits, output limits and signal range. Many apparent 'process problems' are actually controller configuration errors introduced during maintenance or software updates."
+          >
             <p>
               In real-world industrial applications, PID controllers must deal with practical issues
               that textbook theory does not always address. Understanding these practical
               considerations is what separates an effective maintenance technician from one who can
               only follow procedures.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Manual vs Automatic Mode
+          <ConceptBlock title="Manual vs automatic mode">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Automatic:</strong> the controller calculates and applies the output based
+                on the PID algorithm — normal operating mode.
+              </li>
+              <li>
+                <strong>Manual:</strong> the operator directly sets the controller output — used
+                during commissioning, tuning, fault-finding or when the control loop has a problem.
+              </li>
+              <li>
+                <strong>Bumpless transfer:</strong> when switching between manual and automatic, the
+                controller should match the output so there is no sudden jump (bump) in the process.
+                Most modern controllers handle this automatically, but it must be verified during
+                commissioning.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Direct and reverse action">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Direct action:</strong> output increases when PV increases — used for
+                cooling applications (valve opens more to provide more cooling as temperature
+                rises).
+              </li>
+              <li>
+                <strong>Reverse action:</strong> output decreases when PV increases — used for
+                heating applications (valve closes as temperature rises above setpoint).
+              </li>
+              <li>
+                <strong>Critical check:</strong> incorrect action setting causes the controller to
+                drive the process away from setpoint rather than towards it — always verify during
+                commissioning.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Common controller configurations">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Configuration</th>
+                    <th className="py-2 pr-4 font-medium text-white">Typical application</th>
+                    <th className="py-2 font-medium text-white">Reason</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">P only</td>
+                    <td className="py-2 pr-4">Level control (non-critical)</td>
+                    <td className="py-2">Offset is acceptable; simple and stable</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PI</td>
+                    <td className="py-2 pr-4">Flow, pressure, most temperature loops</td>
+                    <td className="py-2">Eliminates offset; D not needed or signal too noisy</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">PID</td>
+                    <td className="py-2 pr-4">Slow temperature processes, batch control</td>
+                    <td className="py-2">D improves response on slow, clean signals</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">PD (rare)</td>
+                    <td className="py-2 pr-4">Some position control systems</td>
+                    <td className="py-2">Fast response needed; offset acceptable</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <Scenario
+            title="A temperature loop that hunts after a valve is replaced"
+
+            situation={
+              <>
+                <p>
+                  A jacket heating loop held its setpoint steadily for years. After a control valve
+                  was replaced with a different make, the temperature now oscillates either side of
+                  setpoint by about 4 °C on a roughly two-minute cycle, and will not settle.
+                </p>
+
+                <p>The PID settings were not touched during the valve change.</p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Recognise the symptom before adjusting anything. A steady oscillation that neither
+                  grows nor dies away usually means the loop gain is too high for the process as it
+                  now stands — and the process has changed, because the valve has.
+                </p>
+
+                <p>
+                  Check the valve characteristic against the old one. A linear valve swapped for an
+                  equal-percentage valve, or a valve with a different Cv, changes how much process
+                  response you get per per cent of controller output. The controller is unchanged
+                  but its effective gain is not.
+                </p>
+
+                <p>
+                  Reduce the proportional gain first and see whether the oscillation decays. If it
+                  does, the diagnosis is confirmed and the loop needs retuning for the new valve
+                  rather than the controller being suspect.
+                </p>
+
+                <p>
+                  Only then consider the integral term. Integral action that was appropriate before
+                  will now be winding up against a differently sized correction, and shortening the
+                  integral time at this stage usually makes the hunting worse, not better.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                Tuning constants are not properties of the controller — they are properties of the
+                whole loop, including the valve and the process. Changing any element in the chain
+                invalidates the tuning, and the most common mistake is to treat continued
+                oscillation as a controller fault and start adjusting terms at random. Knowing that
+                the gain became wrong the moment the valve changed turns an afternoon of trial and
+                error into one deliberate adjustment.
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Automatic:</strong> The controller calculates and applies the output based
-                  on PID algorithm — normal operating mode
-                </li>
-                <li className="pl-1">
-                  <strong>Manual:</strong> The operator directly sets the controller output — used
-                  during commissioning, tuning, fault-finding or when the control loop has a problem
-                </li>
-                <li className="pl-1">
-                  <strong>Bumpless transfer:</strong> When switching between manual and automatic,
-                  the controller should match the output so there is no sudden jump (bump) in the
-                  process. Most modern controllers handle this automatically, but it must be
-                  verified during commissioning
-                </li>
-              </ul>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'P — output proportional to error (immediate); I — accumulates error over time (eliminates offset); D — responds to rate of change (anticipatory); PI is the most common industrial configuration.',
+              'Growing oscillation points to Kp too high.',
+              'Persistent offset means the loop needs more integral action.',
+              'Slow oscillation with overshoot points to Ti too short.',
+              'Noisy output points to Td too high, or a noisy signal that should not carry derivative at all.',
+              'Sluggish response points to Kp too low.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Principles of Process Control
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module5-section4-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Pneumatic and Hydraulic Controls
+                </div>
+              </button>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Direct and Reverse Action
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Direct action:</strong> Output increases when PV increases — used for
-                  cooling applications (valve opens more to provide more cooling as temperature
-                  rises)
-                </li>
-                <li className="pl-1">
-                  <strong>Reverse action:</strong> Output decreases when PV increases — used for
-                  heating applications (valve closes as temperature rises above setpoint)
-                </li>
-                <li className="pl-1">
-                  <strong>Critical check:</strong> Incorrect action setting causes the controller to
-                  drive the process away from setpoint rather than towards it — always verify during
-                  commissioning
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Common Controller Configurations
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Configuration</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Reason</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">P only</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Level control (non-critical)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Offset is acceptable; simple and stable
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PI</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Flow, pressure, most temperature loops
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Eliminates offset; D not needed or signal too noisy
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PID</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Slow temperature processes, batch control
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        D improves response on slow, clean signals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PD (rare)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Some position control systems
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fast response needed; offset acceptable
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> When fault-finding a control loop, always check the controller
-              configuration first — action direction, PID parameters, alarm limits, output limits
-              and signal range. Many apparent 'process problems' are actually controller
-              configuration errors introduced during maintenance or software updates.
-            </p>
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">PID Actions</p>
-                <ul className="space-y-0.5">
-                  <li>P — Output proportional to error (immediate)</li>
-                  <li>I — Accumulates error over time (eliminates offset)</li>
-                  <li>D — Responds to rate of change (anticipatory)</li>
-                  <li>PI — Most common industrial configuration</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Tuning Symptom Guide</p>
-                <ul className="space-y-0.5">
-                  <li>Growing oscillation = Kp too high</li>
-                  <li>Persistent offset = needs more integral</li>
-                  <li>Slow oscillation = Ti too short</li>
-                  <li>Noisy output = Td too high or noisy signal</li>
-                  <li>Sluggish response = Kp too low</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Principles of Process Control
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5-section4-3">
-              Next: Pneumatic and Hydraulic Controls
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

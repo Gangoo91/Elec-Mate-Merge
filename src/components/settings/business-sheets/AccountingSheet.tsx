@@ -30,8 +30,8 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Accounting software">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -53,7 +53,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                 className={
                   xeroConnected
                     ? 'relative overflow-hidden rounded-2xl border border-[#13B5EA]/30 bg-[#13B5EA]/10 p-4'
-                    : 'relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 hover:bg-[hsl(0_0%_15%)] transition-colors'
+                    : 'relative overflow-hidden rounded-2xl border border-elec-yellow/35 bg-white/[0.05] p-4 hover:bg-white/[0.06] transition-colors'
                 }
               >
                 <div className="flex items-center justify-between mb-3">
@@ -72,7 +72,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                   )}
                 </div>
                 <h4 className="text-[15px] font-semibold text-white">{xeroProvider.name}</h4>
-                <p className="text-[12px] text-white/65 mt-0.5 mb-3">
+                <p className="text-[12px] text-white mt-0.5 mb-3">
                   {xeroConnected
                     ? xeroIntegration?.tenantName || 'Organisation connected'
                     : xeroProvider.description}
@@ -107,7 +107,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                 className={
                   qbConnected
                     ? 'relative overflow-hidden rounded-2xl border border-[#2CA01C]/30 bg-[#2CA01C]/10 p-4'
-                    : 'relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 hover:bg-[hsl(0_0%_15%)] transition-colors'
+                    : 'relative overflow-hidden rounded-2xl border border-elec-yellow/35 bg-white/[0.05] p-4 hover:bg-white/[0.06] transition-colors'
                 }
               >
                 <div className="flex items-center justify-between mb-3">
@@ -130,7 +130,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                   )}
                 </div>
                 <h4 className="text-[15px] font-semibold text-white">{qbProvider.name}</h4>
-                <p className="text-[12px] text-white/65 mt-0.5 mb-3">
+                <p className="text-[12px] text-white mt-0.5 mb-3">
                   {qbConnected ? (
                     qbIntegration?.tenantName || 'Company connected'
                   ) : (
@@ -168,7 +168,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
               </div>
 
               {/* Sage — coming soon */}
-              <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 opacity-60">
+              <div className="relative overflow-hidden rounded-2xl border border-elec-yellow/35 bg-white/[0.05] p-4 opacity-60">
                 <div className="flex items-center justify-between mb-3">
                   <div className="w-11 h-11 rounded-xl overflow-hidden shrink-0">
                     <img
@@ -183,19 +183,19 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                   </span>
                 </div>
                 <h4 className="text-[15px] font-semibold text-white">Sage</h4>
-                <p className="text-[12px] text-white/65 mt-0.5 mb-3">Enterprise accounting</p>
+                <p className="text-[12px] text-white mt-0.5 mb-3">Enterprise accounting</p>
                 <button
                   type="button"
                   disabled
-                  className="w-full h-11 rounded-xl border border-white/[0.06] bg-white/[0.04] text-white text-[13px] font-medium cursor-not-allowed"
+                  className="w-full h-11 rounded-xl border border-elec-yellow/35 bg-white/[0.04] text-white text-[13px] font-medium cursor-not-allowed"
                 >
                   Coming soon
                 </button>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-              <p className="text-[12px] text-white/65 leading-relaxed">
+            <div className="rounded-2xl border border-elec-yellow/35 bg-white/[0.05] px-4 py-3">
+              <p className="text-[12px] text-white leading-relaxed">
                 Once connected, sync invoices directly to your accounting software. Contacts and
                 line items are created automatically.
               </p>

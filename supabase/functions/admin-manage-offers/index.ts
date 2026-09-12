@@ -78,12 +78,31 @@ Deno.serve(async (req) => {
 
     switch (action) {
       case 'list': {
-        const { data, error } = await supabaseAdmin
-          .from('promo_offers')
-          .select('*')
-          .order('created_at', { ascending: false });
-        if (error) throw error;
-        result = { offers: data };
+        /*
+          🔴 Paged, because PostgREST caps a plain select at 1,000 rows.
+          
+          `promo_offers` holds 2,357 rows and this returned the newest 1,000
+          with no error and no indication anything was missing — the page
+          showed "Active 1000 · All 1000" and looked perfectly healthy. What it
+          was actually hiding on 12 Sep 2026: 612 of the 613 college-scheme
+          codes and 746 of the 1,746 employer codes. The college scheme is the
+          reason most of these rows exist, and exactly one of them was visible.
+          
+          Keep pulling until a page comes back short of the page size.
+        */
+        const PAGE = 1000;
+        const all: unknown[] = [];
+        for (let from = 0; ; from += PAGE) {
+          const { data, error } = await supabaseAdmin
+            .from('promo_offers')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .range(from, from + PAGE - 1);
+          if (error) throw error;
+          all.push(...(data ?? []));
+          if (!data || data.length < PAGE) break;
+        }
+        result = { offers: all };
         break;
       }
 

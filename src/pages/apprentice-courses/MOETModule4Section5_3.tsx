@@ -1,8 +1,70 @@
-import { ArrowLeft, CircuitBoard, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 5.3 · Subsection 3 — Earth Fault Loop Impedance Testing
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *              · "Electrical. Inspect and test electrical aspects of plant.
+ *                 For example, visual checks, insulation and continuity
+ *                 checks, thermographic surveys, and voltage levels."
+ *              · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *
+ * Numeric values (Zs limits, Ze typical values, disconnection times) are copied
+ * verbatim from the original page and could not be checked against the RAG,
+ * which holds regulation rules rather than numeric tables.
+ *
+ * ✎ The 80% rule on this page is CORRECT — an earlier conversion note called it
+ * a GN3 rule of thumb and that was wrong. Verified in bs7671_facets against
+ * BS 7671:2018+A4:2026. Both factors are in the Regs and they do different jobs:
+ *   · Cmin = 0.95 is the minimum voltage factor inside the formula that sets the
+ *     MAXIMUM permitted Zs — "Zs × Ia ≤ Up × Cmin" (Reg 411.4.4 / 411.5.4). For
+ *     an LV supply under the ESQCR, Cmin is given the value 0.95.
+ *   · 0.8 is the factor applied when comparing a MEASURED Zs, taken at ambient
+ *     temperature, against that maximum: the requirement is considered met when
+ *     "Zs(m) < 0.8 × (Up / (I × Cmin))". It allows for conductors being hotter
+ *     under fault than they were when you tested.
+ * So the page teaching "measured Zs must not exceed 80% of the tabulated
+ * maximum" is right. What the page does not explain is where the tabulated
+ * maximum itself comes from — that is the Cmin formula above. Do not "correct"
+ * 0.8 to 0.95; they are not alternatives to each other.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Earth Fault Loop Impedance Testing - MOET Module 4.5.3';
@@ -40,10 +102,10 @@ const quickCheckQuestions = [
     id: 'efli-ze-measurement',
     question: 'How is the external earth fault loop impedance (Ze) measured?',
     options: [
-      "At the furthest socket outlet of each final circuit, with the circuit energised",
-      "At the origin, with the main earthing conductor disconnected from the earth terminal",
-      "By measuring the main earthing conductor resistance with a low-resistance ohmmeter",
-      "At the consumer unit, with all final circuits connected and loaded to rated current",
+      'At the furthest socket outlet of each final circuit, with the circuit energised',
+      'At the origin, with the main earthing conductor disconnected from the earth terminal',
+      'By measuring the main earthing conductor resistance with a low-resistance ohmmeter',
+      'At the consumer unit, with all final circuits connected and loaded to rated current',
     ],
     correctIndex: 1,
     explanation:
@@ -84,12 +146,7 @@ const quizQuestions = [
     id: 2,
     question:
       'The maximum disconnection time for a socket outlet circuit in a TN system under BS 7671 is:',
-    options: [
-      '5 seconds',
-      '0.2 seconds',
-      '0.4 seconds',
-      '10 seconds',
-    ],
+    options: ['5 seconds', '0.2 seconds', '0.4 seconds', '10 seconds'],
     correctAnswer: 2,
     explanation:
       'BS 7671 requires a maximum disconnection time of 0.4 seconds for circuits supplying socket outlets and portable equipment in TN systems. This shorter time is required because users are likely to be in direct contact with earthed equipment (via the plug and cord) when a fault occurs, creating a higher risk of electric shock.',
@@ -139,12 +196,7 @@ const quizQuestions = [
     id: 6,
     question:
       'If the measured Ze is 0.35 Ω and the calculated R1+R2 for a circuit is 0.42 Ω, the expected Zs at the furthest point is:',
-    options: [
-      '0.35 Ω',
-      '0.42 Ω',
-      '0.77 Ω',
-      '0.07 Ω',
-    ],
+    options: ['0.35 Ω', '0.42 Ω', '0.77 Ω', '0.07 Ω'],
     correctAnswer: 2,
     explanation:
       'Zs = Ze + (R1+R2) = 0.35 + 0.42 = 0.77 Ω. This calculated value can be used to verify the live Zs measurement — the two should agree within reasonable tolerance. If the measured Zs is significantly different from the calculated value, this indicates a measurement error, an incorrect Ze value, or a problem with the circuit conductors.',
@@ -263,119 +315,98 @@ const faqs = [
 ];
 
 const MOETModule4Section5_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <CircuitBoard className="h-4 w-4" />
-            <span>Module 4.5.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Earth Fault Loop Impedance Testing
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.5 · Subsection 3"
+        title="Earth Fault Loop Impedance Testing"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Ze and Zs measurements, disconnection time verification, and protective device
-            coordination
+            coordination.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Purpose:</strong> Verify protective devices will disconnect within required
-                time
-              </li>
-              <li className="pl-1">
-                <strong>Formula:</strong> Zs = Ze + (R1+R2) — total loop impedance
-              </li>
-              <li className="pl-1">
-                <strong>80% rule:</strong> Measured Zs must not exceed 80% of tabulated maximum
-              </li>
-              <li className="pl-1">
-                <strong>Times:</strong> 0.4 s for sockets, 5 s for fixed equipment (TN systems)
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Purpose: Verify protective devices will disconnect within required time',
+              'Formula: Zs = Ze + (R1+R2) — total loop impedance',
+              '80% rule: Measured Zs must not exceed 80% of tabulated maximum',
+              'Times: 0.4 s for sockets, 5 s for fixed equipment (TN systems)',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Live test:</strong> Zs tested on energised circuits — requires care and
                 competence
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>RCD interaction:</strong> Test may trip RCDs — use non-trip mode where
                 available
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Verification:</strong> Compare measured Zs against calculated (Ze + R1+R2)
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to testing, verification, and protection coordination
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'Continuity testing',
+
+                gist: 'Measuring R1+R2 and ring final continuity, and what those readings let you predict without a live test.',
+
+                where: '4.5.2',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the earth fault loop and why its impedance determines protective device operating time',
               'Distinguish between Ze and Zs and describe how each is measured',
               'Apply the 80% rule to determine whether measured Zs values are satisfactory',
               'Identify the maximum disconnection times for different circuit types in TN and TT systems',
               'Use Zs values to calculate prospective earth fault current',
               'Describe the differences in earth fault protection between TN, TT, and TN-C-S systems',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Understanding the earth fault loop</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Understanding the Earth Fault Loop
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Understanding the Earth Fault Loop"
+            onSite="Why this test is safety-critical: If the earth fault loop impedance is too high, a line-to-earth fault will not generate enough current to trip the protective device quickly. This means that any exposed metalwork connected to the faulty circuit remains at a dangerous voltage for an extended period — potentially indefinitely if the fault current is below the device's minimum operating current. During this time, anyone touching the metalwork and earth simultaneously will receive an electric shock."
+          >
             <p>
               The earth fault loop is the complete circuit that fault current follows when a line
               conductor makes contact with an earthed part — such as the metal casing of an
@@ -395,85 +426,32 @@ const MOETModule4Section5_3 = () => {
             </p>
             <p>
               For the protective device to operate within the required disconnection time, the fault
-              current must exceed the device's instantaneous trip threshold. For a 32 A Type B MCB,
-              this threshold is 5 times the rated current (160 A), requiring a maximum Zs of 230/160
-              = 1.44 Ω (the tabulated value in BS 7671 is 1.37 Ω, accounting for a slightly reduced
-              voltage during the fault). If the loop impedance is too high, the fault current will
-              be too low, and the MCB will not trip instantly — it may trip on its thermal element
-              after several seconds, or it may not trip at all.
+              current must exceed the device&apos;s instantaneous trip threshold. For a 32 A Type B
+              MCB, this threshold is 5 times the rated current (160 A), requiring a maximum Zs of
+              230/160 = 1.44 Ω (the tabulated value in BS 7671 is 1.37 Ω, accounting for a slightly
+              reduced voltage during the fault). If the loop impedance is too high, the fault
+              current will be too low, and the MCB will not trip instantly — it may trip on its
+              thermal element after several seconds, or it may not trip at all.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Typical Ze Values for UK Earthing Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Earthing System
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Maximum Ze
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Earth Fault Return Path
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-C-S (PME)</td>
-                      <td className="border border-white/10 px-3 py-2">0.35 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combined neutral/earth (PEN) conductor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TN-S</td>
-                      <td className="border border-white/10 px-3 py-2">0.80 Ω</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Separate metallic earth conductor (cable sheath)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">TT</td>
-                      <td className="border border-white/10 px-3 py-2">21 Ω (variable)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Mass of earth between electrodes
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Typical Ze Values for UK Earthing Systems"
+            headers={['Earthing System', 'Typical Maximum Ze', 'Earth Fault Return Path']}
+            rows={[
+              ['TN-C-S (PME)', '0.35 Ω', 'Combined neutral/earth (PEN) conductor'],
+              ['TN-S', '0.80 Ω', 'Separate metallic earth conductor (cable sheath)'],
+              ['TT', '21 Ω (variable)', 'Mass of earth between electrodes'],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Why This Test Is Safety-Critical
-              </p>
-              <p className="text-sm text-white">
-                If the earth fault loop impedance is too high, a line-to-earth fault will not
-                generate enough current to trip the protective device quickly. This means that any
-                exposed metalwork connected to the faulty circuit remains at a dangerous voltage for
-                an extended period — potentially indefinitely if the fault current is below the
-                device's minimum operating current. During this time, anyone touching the metalwork
-                and earth simultaneously will receive an electric shock.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Measuring Ze — External Earth Fault Loop Impedance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Measuring Ze — external earth fault loop impedance</ContentEyebrow>
+
+          <ConceptBlock title="Measuring Ze — External Earth Fault Loop Impedance">
             <p>
               The external earth fault loop impedance (Ze) represents the impedance of the earth
               fault loop outside the installation — from the supply transformer, through the
@@ -483,62 +461,47 @@ const MOETModule4Section5_3 = () => {
               it directly affects the maximum circuit lengths that can be achieved while maintaining
               adequate disconnection times.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Ze Measurement Procedure
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Measuring Ze requires care because the main earthing conductor must be temporarily
-                  disconnected:
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Isolate the complete installation from the supply</li>
-                  <li className="pl-1">
-                    Disconnect the main earthing conductor from the main earthing terminal
-                  </li>
-                  <li className="pl-1">
-                    Re-energise the supply (with the installation still isolated internally)
-                  </li>
-                  <li className="pl-1">
-                    Measure between the incoming line terminal and the incoming earth terminal using
-                    the earth loop impedance test function
-                  </li>
-                  <li className="pl-1">Record the Ze value</li>
-                  <li className="pl-1">
-                    De-energise the supply, reconnect the main earthing conductor, and restore the
-                    installation
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Ze measurement procedure">
+            <p>
+              Measuring Ze requires care because the main earthing conductor must be temporarily
+              disconnected:
+            </p>
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Isolate the complete installation from the supply</li>
+              <li>Disconnect the main earthing conductor from the main earthing terminal</li>
+              <li>Re-energise the supply (with the installation still isolated internally)</li>
+              <li>
+                Measure between the incoming line terminal and the incoming earth terminal using the
+                earth loop impedance test function
+              </li>
+              <li>Record the Ze value</li>
+              <li>
+                De-energise the supply, reconnect the main earthing conductor, and restore the
+                installation
+              </li>
+            </ol>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Alternative: Calculating Ze from Zs and R1+R2
-                </h3>
-                <p className="text-sm text-white">
-                  If Ze cannot be measured directly (for example, in a domestic property where the
-                  supply cannot be readily accessed), it can be calculated by measuring Zs at the
-                  origin of the installation (at the main switch or consumer unit) and subtracting
-                  the R1+R2 of the meter tails: Ze = Zs(origin) - R1+R2(tails). Alternatively, the
-                  enquiry Ze value provided by the distribution network operator (DNO) can be used
-                  for design purposes, though measured values are preferred for verification.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Alternative: calculating Ze from Zs and R1+R2">
+            <p>
+              If Ze cannot be measured directly (for example, in a domestic property where the
+              supply cannot be readily accessed), it can be calculated by measuring Zs at the origin
+              of the installation (at the main switch or consumer unit) and subtracting the R1+R2 of
+              the meter tails: Ze = Zs(origin) - R1+R2(tails). Alternatively, the enquiry Ze value
+              provided by the distribution network operator (DNO) can be used for design purposes,
+              though measured values are preferred for verification.
+            </p>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Measuring Zs — Total Earth Fault Loop Impedance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Measuring Zs — total earth fault loop impedance</ContentEyebrow>
+
+          <ConceptBlock title="Measuring Zs — Total Earth Fault Loop Impedance">
             <p>
               Zs is measured at each point where disconnection time verification is required —
               typically at the furthest point of each circuit. Unlike Ze, Zs is measured on the
@@ -546,135 +509,97 @@ const MOETModule4Section5_3 = () => {
               instrument briefly creates a controlled fault condition to measure the loop impedance,
               and the technician must be aware of the implications.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Zs Test Procedure</h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Energise the circuit:</strong> The circuit must be live for a Zs
-                  measurement — this is a live test
-                </li>
-                <li className="pl-1">
-                  <strong>Connect the instrument:</strong> At the furthest point of the circuit
-                  (furthest socket outlet or furthest fixed equipment point), connect the test
-                  instrument between line and earth
-                </li>
-                <li className="pl-1">
-                  <strong>Take the reading:</strong> The instrument creates a brief controlled fault
-                  and displays the Zs value
-                </li>
-                <li className="pl-1">
-                  <strong>Apply the 80% rule:</strong> Compare the measured value against 80% of the
-                  maximum tabulated value for the protective device type and rating
-                </li>
-                <li className="pl-1">
-                  <strong>Cross-check:</strong> Verify the measured Zs against the calculated value
-                  (Ze + R1+R2) — they should be in reasonable agreement
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Zs test procedure">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Energise the circuit:</strong> The circuit must be live for a Zs measurement
+                — this is a live test
+              </li>
+              <li>
+                <strong>Connect the instrument:</strong> At the furthest point of the circuit
+                (furthest socket outlet or furthest fixed equipment point), connect the test
+                instrument between line and earth
+              </li>
+              <li>
+                <strong>Take the reading:</strong> The instrument creates a brief controlled fault
+                and displays the Zs value
+              </li>
+              <li>
+                <strong>Apply the 80% rule:</strong> Compare the measured value against 80% of the
+                maximum tabulated value for the protective device type and rating
+              </li>
+              <li>
+                <strong>Cross-check:</strong> Verify the measured Zs against the calculated value
+                (Ze + R1+R2) — they should be in reasonable agreement
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">RCD Interaction</h3>
-              <p className="text-sm text-white">
-                Standard earth loop impedance test instruments draw a significant test current
-                (typically 10-25 A for a fraction of a second). On circuits protected by 30 mA RCDs,
-                this test current will almost certainly trip the RCD. Options include: using the
-                instrument's non-trip earth loop test mode (which uses a lower test current and a
-                different measurement technique), testing from the line side of the RCD, or
-                accepting that the RCD will trip and resetting it after the test. Some modern
-                instruments can measure Zs without tripping a 30 mA RCD, but the result may be less
-                accurate.
-              </p>
-            </div>
+          <ConceptBlock
+            title="RCD interaction"
+            onSite="Live working precautions: Zs testing is one of the few tests that requires the circuit to be energised. The technician must use GS 38-compliant test leads (with fused probes, finger guards, and limited exposed tip length), ensure they are competent to work on or near live equipment, and have appropriate personal protective equipment available. The test should be planned and the risks assessed before proceeding."
+          >
+            <p>
+              Standard earth loop impedance test instruments draw a significant test current
+              (typically 10-25 A for a fraction of a second). On circuits protected by 30 mA RCDs,
+              this test current will almost certainly trip the RCD. Options include: using the
+              instrument&apos;s non-trip earth loop test mode (which uses a lower test current and a
+              different measurement technique), testing from the line side of the RCD, or accepting
+              that the RCD will trip and resetting it after the test. Some modern instruments can
+              measure Zs without tripping a 30 mA RCD, but the result may be less accurate.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Live Working Precautions</p>
-              <p className="text-sm text-white">
-                Zs testing is one of the few tests that requires the circuit to be energised. The
-                technician must use GS 38-compliant test leads (with fused probes, finger guards,
-                and limited exposed tip length), ensure they are competent to work on or near live
-                equipment, and have appropriate personal protective equipment available. The test
-                should be planned and the risks assessed before proceeding.
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Disconnection Times and Protective Device Coordination
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Disconnection times and protective device coordination</ContentEyebrow>
+
+          <ConceptBlock title="Disconnection Times and Protective Device Coordination">
             <p>
               The maximum disconnection time is the longest acceptable period between the occurrence
               of an earth fault and the operation of the protective device to disconnect the supply.
               BS 7671 specifies different disconnection times depending on the type of circuit and
               the earthing system, reflecting the different levels of risk associated with each.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Maximum Disconnection Times — TN Systems
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Circuit Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Max Time</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Rationale</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlet circuits (32 A and below)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">0.4 s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Users in direct contact with equipment via plug and cord
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fixed equipment circuits</td>
-                      <td className="border border-white/10 px-3 py-2">5 s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Lower risk — equipment permanently connected, less direct contact
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Distribution circuits</td>
-                      <td className="border border-white/10 px-3 py-2">5 s</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Supplying sub-distribution boards, not final equipment
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Maximum Disconnection Times — TN Systems"
+            headers={['Circuit Type', 'Max Time', 'Rationale']}
+            rows={[
+              [
+                'Socket outlet circuits (32 A and below)',
+                '0.4 s',
+                'Users in direct contact with equipment via plug and cord',
+              ],
+              [
+                'Fixed equipment circuits',
+                '5 s',
+                'Lower risk — equipment permanently connected, less direct contact',
+              ],
+              [
+                'Distribution circuits',
+                '5 s',
+                'Supplying sub-distribution boards, not final equipment',
+              ],
+            ]}
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                TT Systems — RCD Protection
-              </h3>
-              <p className="text-sm text-white">
-                In TT systems, the earth fault loop impedance is typically too high for overcurrent
-                devices to provide disconnection within the required times. RCD protection is
-                therefore essential. The maximum Zs for a 30 mA RCD to disconnect within 0.2 seconds
-                (as required by BS 7671 for TT systems) is 1667 Ω — vastly higher than could be
-                achieved by an MCB. This is because the RCD detects the imbalance between line and
-                neutral currents (caused by the fault current flowing through earth) and does not
-                rely on the magnitude of the fault current to operate.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="TT systems — RCD protection">
+            <p>
+              In TT systems, the earth fault loop impedance is typically too high for overcurrent
+              devices to provide disconnection within the required times. RCD protection is
+              therefore essential. The maximum Zs for a 30 mA RCD to disconnect within 0.2 seconds
+              (as required by BS 7671 for TT systems) is 1667 Ω — vastly higher than could be
+              achieved by an MCB. This is because the RCD detects the imbalance between line and
+              neutral currents (caused by the fault current flowing through earth) and does not rely
+              on the magnitude of the fault current to operate.
+            </p>
+            <p>
               <strong>Key point:</strong> The earth fault loop impedance test is the ultimate
               verification that the protective device will do its job when called upon. All the
               other tests — continuity, insulation resistance, polarity — contribute to the overall
@@ -682,18 +607,15 @@ const MOETModule4Section5_3 = () => {
               determines whether the protective device can disconnect a fault within the time
               necessary to prevent electric shock.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Prospective Fault Current and Recording Results
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Prospective fault current and recording results</ContentEyebrow>
+
+          <ConceptBlock title="Prospective Fault Current and Recording Results">
             <p>
               Closely related to earth fault loop impedance is the prospective fault current (Ipf) —
               the maximum current that would flow during a fault at a given point in the
@@ -702,129 +624,108 @@ const MOETModule4Section5_3 = () => {
               interrupting this current without sustaining damage — its breaking capacity must equal
               or exceed the Ipf.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Calculating Prospective Fault Current
-              </p>
-              <p className="text-sm text-white mb-2">
-                For an earth fault: Ipf = Uo / Zs (where Uo is the nominal line-to-earth voltage,
-                230 V in the UK)
-              </p>
-              <p className="text-sm text-white mb-2">
-                For a short-circuit fault (line-to-neutral): Ipf = Uo / (R1+Rn), where Rn is the
-                neutral conductor resistance
-              </p>
-              <p className="text-sm text-white">
-                Modern multifunction test instruments can measure both Ipf values directly. The
-                highest Ipf is typically at the origin of the installation where the loop impedance
-                is lowest. This value is compared against the breaking capacity of the protective
-                devices to ensure they can safely interrupt the maximum possible fault current.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Recording Results</h3>
-              <p className="text-sm text-white">
-                Earth fault loop impedance results are recorded on the Schedule of Test Results —
-                one entry for each circuit tested. The Zs value at the furthest point is recorded,
-                along with the protective device type and rating. For EICRs, the results are
-                compared against the maximum permitted values, and any circuits where Zs exceeds the
-                limit are coded accordingly (typically C2 for potentially dangerous). The Ze value
-                is recorded in the general section of the certificate, as it applies to the entire
-                installation.
-              </p>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>ST1426 link:</strong> Understanding earth fault loop impedance and its
-              relationship to protective device operation is a fundamental competency for
-              maintenance technicians. The ability to measure Zs, compare it against tabulated
-              values, apply the 80% rule, and identify circuits that do not meet the required
-              standard is directly assessed in the end-point assessment.
+          <ConceptBlock title="Calculating prospective fault current">
+            <p>
+              For an earth fault: Ipf = Uo / Zs (where Uo is the nominal line-to-earth voltage, 230
+              V in the UK)
             </p>
-          </div>
-        </section>
+            <p>
+              For a short-circuit fault (line-to-neutral): Ipf = Uo / (R1+Rn), where Rn is the
+              neutral conductor resistance
+            </p>
+            <p>
+              Modern multifunction test instruments can measure both Ipf values directly. The
+              highest Ipf is typically at the origin of the installation where the loop impedance is
+              lowest. This value is compared against the breaking capacity of the protective devices
+              to ensure they can safely interrupt the maximum possible fault current.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Recording results">
+            <p>
+              Earth fault loop impedance results are recorded on the Schedule of Test Results — one
+              entry for each circuit tested. The Zs value at the furthest point is recorded, along
+              with the protective device type and rating. For EICRs, the results are compared
+              against the maximum permitted values, and any circuits where Zs exceeds the limit are
+              coded accordingly (typically C2 for potentially dangerous). The Ze value is recorded
+              in the general section of the certificate, as it applies to the entire installation.
+            </p>
+            <p className="italic">
+              <strong className="not-italic">ST1426 link:</strong> Understanding earth fault loop
+              impedance and its relationship to protective device operation is a fundamental
+              competency for maintenance technicians. The ability to measure Zs, compare it against
+              tabulated values, apply the 80% rule, and identify circuits that do not meet the
+              required standard is directly assessed in the end-point assessment.
+            </p>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <SectionRule />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <VideoCard
+            url="https://www.youtube.com/watch?v=UwBo23MUJT4"
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Key Formulae</p>
-                <ul className="space-y-0.5">
-                  <li>Zs = Ze + (R1+R2)</li>
-                  <li>Ipf = Uo / Zs (earth fault current)</li>
-                  <li>Max measured Zs = 0.8 x tabulated Zs</li>
-                  <li>TN-C-S typical Ze: 0.35 Ω max</li>
-                  <li>TN-S typical Ze: 0.80 Ω max</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Disconnection Times (TN)</p>
-                <ul className="space-y-0.5">
-                  <li>Socket outlets: 0.4 s maximum</li>
-                  <li>Fixed equipment: 5 s maximum</li>
-                  <li>Distribution circuits: 5 s maximum</li>
-                  <li>TT systems: RCD required (0.2 s typical)</li>
-                  <li>Always apply the 80% rule to measurements</li>
-                </ul>
-              </div>
+            title="Zs Testing and GN3 — The Facts"
+
+            channel="Craig Wiltshire"
+
+            duration="3:42"
+
+            topic="Where the correction factor for measured Zs actually comes from"
+
+            caption="Directly relevant to this page: it separates the rule for comparing a measured Zs from the tabulated maximum itself, which is where most of the confusion sits."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Key formulae: Zs = Ze + (R1+R2); Ipf = Uo / Zs (earth fault current); max measured Zs = 0.8 x tabulated Zs.',
+              'Typical Ze: TN-C-S 0.35 Ω max; TN-S 0.80 Ω max.',
+              'Disconnection times (TN): socket outlets 0.4 s maximum; fixed equipment 5 s maximum; distribution circuits 5 s maximum.',
+              'TT systems require RCD protection (0.2 s typical) rather than relying on overcurrent devices alone.',
+              'Always apply the 80% rule to live-measured Zs values before comparing against the tabulated maximum.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Continuity Testing
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section5-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Functional Testing
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Continuity Testing
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section5-4">
-              Next: Functional Testing
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

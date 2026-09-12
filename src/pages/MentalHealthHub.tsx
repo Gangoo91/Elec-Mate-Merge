@@ -554,10 +554,18 @@ export default function MentalHealthHub() {
   const { moodHistory, addMoodEntry } = useMoodData();
   const { score, band, pillars, isLoading: scoreLoading } = useWellbeingScore();
   const { insights } = useWellbeingInsights();
-  // Live count of Mental Health Mates online — a real person being available
-  // right now is the strongest nudge to actually talk.
+  /*
+    Mates who have said they are open to being contacted — NOT who is online.
+
+    `is_available` is a switch a supporter flips on their own profile and then
+    leaves; nothing clears it and nothing measures presence. On 11 Sep 2026 all
+    three were set available while none had opened the app in 5 weeks, 3 months
+    and 5 months respectively, and none had ever sent a message. Calling that
+    "online now" told someone reaching out at their lowest that a person was
+    sitting there waiting.
+  */
   const { data: availableSupporters } = useAvailableSupporters(profile?.id);
-  const matesOnline = availableSupporters?.length ?? 0;
+  const matesAvailable = availableSupporters?.length ?? 0;
 
   const todayKey = new Date().toISOString().split('T')[0];
   const todaysMood = useMemo(() => {
@@ -812,8 +820,8 @@ export default function MentalHealthHub() {
             items={quickActions.map((q) => ({
               title: q.label,
               description:
-                q.id === 'talk' && matesOnline > 0
-                  ? `${matesOnline} mate${matesOnline === 1 ? '' : 's'} online now`
+                q.id === 'talk' && matesAvailable > 0
+                  ? `${matesAvailable} mate${matesAvailable === 1 ? '' : 's'} open to a chat`
                   : q.sub,
               onClick: () => setActiveSection(q.id),
               primary: q.id === 'mood',

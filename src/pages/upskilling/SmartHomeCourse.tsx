@@ -1,17 +1,84 @@
-import { BookOpen, Wifi, Lightbulb, Thermometer, Shield, Smartphone, Wrench, ClipboardCheck } from 'lucide-react';
+import {
+  BookOpen,
+  Wifi,
+  Lightbulb,
+  Thermometer,
+  Shield,
+  Smartphone,
+  Wrench,
+  ClipboardCheck,
+  BookMarked,
+} from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
 import { CourseShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const modules = [
-  { moduleNumber: 1, title: 'Introduction to smart home systems', description: 'Smart home fundamentals, components, architectures and retrofit vs new build.', icon: BookOpen, duration: '40 mins', link: '../smart-home-module-1' },
-  { moduleNumber: 2, title: 'Smart protocols: Zigbee, Z-Wave, Wi-Fi and more', description: 'Wireless protocols, mesh networks, Matter and hub vs hubless ecosystems.', icon: Wifi, duration: '55 mins', link: '../smart-home-module-2' },
-  { moduleNumber: 3, title: 'Smart lighting and scene programming', description: 'Lighting types, scene control, dimming, RGBW and motion-based logic.', icon: Lightbulb, duration: '50 mins', link: '../smart-home-module-3' },
-  { moduleNumber: 4, title: 'Heating, HVAC and environmental control', description: 'Smart thermostats, heat pumps, environmental sensors and BMS integration.', icon: Thermometer, duration: '60 mins', link: '../smart-home-module-4' },
-  { moduleNumber: 5, title: 'Access control, CCTV and security integration', description: 'Smart locks, CCTV, contact sensors, remote alerts and network security.', icon: Shield, duration: '55 mins', link: '../smart-home-module-5' },
-  { moduleNumber: 6, title: 'Smart hubs, voice assistants and interoperability', description: 'Hub types, voice assistants, routine logic and bridging legacy devices.', icon: Smartphone, duration: '45 mins', link: '../smart-home-module-6' },
-  { moduleNumber: 7, title: 'Installation, testing and safety requirements', description: 'Wiring, commissioning, RF verification, BS 7671 alignment and handover.', icon: Wrench, duration: '50 mins', link: '../smart-home-module-7' },
-  { moduleNumber: 8, title: 'Mock exam', description: 'Comprehensive assessment covering every smart home module.', icon: ClipboardCheck, duration: '60 mins', link: '../smart-home-module-8', isExam: true },
+  {
+    moduleNumber: 1,
+    title: 'Introduction to smart home systems',
+    description: 'Smart home fundamentals, components, architectures and retrofit vs new build.',
+    icon: BookOpen,
+    duration: '40 mins',
+    link: '../smart-home-module-1',
+  },
+  {
+    moduleNumber: 2,
+    title: 'Smart protocols: Zigbee, Z-Wave, Wi-Fi and more',
+    description: 'Wireless protocols, mesh networks, Matter and hub vs hubless ecosystems.',
+    icon: Wifi,
+    duration: '55 mins',
+    link: '../smart-home-module-2',
+  },
+  {
+    moduleNumber: 3,
+    title: 'Smart lighting and scene programming',
+    description: 'Lighting types, scene control, dimming, RGBW and motion-based logic.',
+    icon: Lightbulb,
+    duration: '50 mins',
+    link: '../smart-home-module-3',
+  },
+  {
+    moduleNumber: 4,
+    title: 'Heating, HVAC and environmental control',
+    description: 'Smart thermostats, heat pumps, environmental sensors and BMS integration.',
+    icon: Thermometer,
+    duration: '60 mins',
+    link: '../smart-home-module-4',
+  },
+  {
+    moduleNumber: 5,
+    title: 'Access control, CCTV and security integration',
+    description: 'Smart locks, CCTV, contact sensors, remote alerts and network security.',
+    icon: Shield,
+    duration: '55 mins',
+    link: '../smart-home-module-5',
+  },
+  {
+    moduleNumber: 6,
+    title: 'Smart hubs, voice assistants and interoperability',
+    description: 'Hub types, voice assistants, routine logic and bridging legacy devices.',
+    icon: Smartphone,
+    duration: '45 mins',
+    link: '../smart-home-module-6',
+  },
+  {
+    moduleNumber: 7,
+    title: 'Installation, testing and safety requirements',
+    description: 'Wiring, commissioning, RF verification, BS 7671 alignment and handover.',
+    icon: Wrench,
+    duration: '50 mins',
+    link: '../smart-home-module-7',
+  },
+  {
+    moduleNumber: 8,
+    title: 'Mock exam',
+    description: 'Comprehensive assessment covering every smart home module.',
+    icon: ClipboardCheck,
+    duration: '60 mins',
+    link: '../smart-home-module-8',
+    isExam: true,
+  },
 ];
 
 export default function SmartHomeCourse() {
@@ -47,6 +114,15 @@ export default function SmartHomeCourse() {
           index={index}
         />
       ))}
+      <ModuleCard
+        to="/study-centre/glossary?course=smart-home"
+        moduleNumber={modules.length + 1}
+        title="Glossary"
+        description="Every abbreviation this course uses, defined in plain English — shared across the study centre so a term means the same thing wherever you meet it."
+        icon={BookMarked}
+        duration="Reference"
+        index={modules.length}
+      />
     </CourseShell>
   );
 }

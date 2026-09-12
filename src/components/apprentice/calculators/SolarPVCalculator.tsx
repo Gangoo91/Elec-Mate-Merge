@@ -379,7 +379,7 @@ const SolarPVCalculator = () => {
     if (!result) return null;
     return {
       meta: {
-        title: 'Solar PV System Calculator',
+        title: 'Solar PV System',
         subtitle: `${systemSize} kWp system — ${location}, ${roofOrientation} facing`,
       },
       headline: [
@@ -399,6 +399,7 @@ const SolarPVCalculator = () => {
             { label: 'Self-consumption rate', value: `${selfConsumptionRate}%` },
             { label: 'Electricity rate', value: `£${electricityRate}/kWh` },
             { label: 'SEG export rate', value: `£${exportRate}/kWh` },
+            { label: 'VAT rate', value: `${vatRate}%` },
           ],
         },
         {
@@ -422,12 +423,34 @@ const SolarPVCalculator = () => {
             },
             {
               label: 'Estimated system cost',
-              value: `£${result.costEstimate.totalCost.toLocaleString()}`,
-              note: result.costEstimate.category,
+              value: `£${result.costEstimate.totalCost.toFixed(2)}`,
+              note: `${result.costEstimate.category} — £${result.costEstimate.costPerKw.toFixed(2)}/kW installed`,
             },
             { label: 'Payback period (estimate)', value: `${result.paybackPeriod} years` },
             { label: 'CO₂ saved per year', value: `${result.co2Savings} kg` },
             { label: 'Grid connection', value: result.dnoConnectionType },
+          ],
+        },
+        // FIX (#8): the cost breakdown was shown on screen item-by-item but the PDF only ever
+        // carried the total — a client asking "what's the £X made up of" had nothing to check it
+        // against.
+        {
+          heading: 'Estimated cost breakdown',
+          rows: [
+            { label: 'Panels', value: `£${result.costEstimate.breakdown.panels.toFixed(2)}` },
+            { label: 'Inverter', value: `£${result.costEstimate.breakdown.inverter.toFixed(2)}` },
+            {
+              label: 'Installation',
+              value: `£${result.costEstimate.breakdown.installation.toFixed(2)}`,
+            },
+            { label: 'Electrical', value: `£${result.costEstimate.breakdown.electrical.toFixed(2)}` },
+            {
+              label: 'Scaffolding',
+              value: `£${result.costEstimate.breakdown.scaffolding.toFixed(2)}`,
+            },
+            { label: 'MCS & DNO', value: `£${result.costEstimate.breakdown.mcsAndDno.toFixed(2)}` },
+            { label: `VAT (${vatRate}%)`, value: `£${result.costEstimate.breakdown.vat.toFixed(2)}` },
+            { label: 'Total (estimate)', value: `£${result.costEstimate.totalCost.toFixed(2)}` },
           ],
         },
       ],

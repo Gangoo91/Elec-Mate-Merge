@@ -2,13 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import SecuritySection from './SecuritySection';
@@ -23,6 +17,16 @@ import {
 } from '@/components/college/primitives';
 import { SettingsCard } from '@/components/settings/rows';
 import { ECS_CARD_TYPES, getEcsCardLabel } from '@/data/uk-electrician-constants';
+import { cn } from '@/lib/utils';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  hintCn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/settings/formStyles';
 
 // UK Job Titles for electricians
 const UK_JOB_TITLES = [
@@ -82,6 +86,24 @@ const COMPANY_SIZES = [
   { value: '21-50', label: '21-50 employees' },
   { value: '50+', label: '50+ employees' },
 ];
+
+const APPRENTICE_YEARS = [
+  { value: '1', label: 'Year 1' },
+  { value: '2', label: 'Year 2' },
+  { value: '3', label: 'Year 3' },
+  { value: '4', label: 'Year 4' },
+];
+
+const ECS_CARD_STATUSES = [
+  { value: 'not_applied', label: 'Not applied' },
+  { value: 'applied', label: 'Applied' },
+  { value: 'received', label: 'Received' },
+] as const;
+
+const ECS_CARD_PICKER_OPTIONS = ECS_CARD_TYPES.map((card) => ({
+  value: card.value,
+  label: card.label,
+}));
 
 const getLabel = (options: { value: string; label: string }[], value: string) => {
   return options.find((opt) => opt.value === value)?.label || 'Not set';
@@ -293,7 +315,7 @@ const AccountTab = () => {
     <button
       onClick={onClick}
       disabled={isSaving}
-      className="text-[13px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
+      className="text-[13px] font-medium text-elec-yellow hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
     >
       {isSaving ? 'Saving…' : showSuccess ? 'Saved' : 'Save'}
     </button>
@@ -333,7 +355,7 @@ const AccountTab = () => {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className={`relative h-16 w-16 rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.08] flex items-center justify-center touch-manipulation ${
+              className={`relative h-16 w-16 rounded-2xl overflow-hidden bg-white/[0.04] border border-elec-yellow/35 flex items-center justify-center touch-manipulation ${
                 uploading ? 'animate-pulse' : ''
               }`}
               aria-label="Change profile photo"
@@ -357,7 +379,7 @@ const AccountTab = () => {
                 {displayName || 'Not set'}
               </div>
               <div className="mt-1 flex items-center gap-2">
-                <span className="text-[12.5px] text-white/65 truncate">
+                <span className="text-[12.5px] text-white truncate">
                   {user?.email || 'Not set'}
                 </span>
                 {user?.email && (
@@ -481,40 +503,36 @@ const AccountTab = () => {
 
       {/* ── PROFILE EDIT SHEET ── */}
       <Sheet open={isEditingProfile} onOpenChange={setIsEditingProfile}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent className="bg-elec-dark flex flex-col" title="Edit Profile">
           <div className="lg:hidden flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
           <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingProfile(false)}
-              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
+              className="text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
             <h2 className="text-[15px] font-semibold text-white">Edit Profile</h2>
             {renderSaveButton(handleSaveProfile)}
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Display Name
-              </Label>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-4 pb-10">
+            <div>
+              <Label className={labelCn}>Display name</Label>
               <Input
                 placeholder="Your name"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className={inputCn}
               />
             </div>
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Email
-              </Label>
-              <div className="h-11 flex items-center bg-white/[0.04] rounded-xl px-4 border border-white/[0.10]">
-                <p className="text-[15px] text-white">{user?.email || ''}</p>
+            <div className="border-t border-white/[0.1] pt-4">
+              <Label className={labelCn}>Email</Label>
+              <div className="h-11 flex items-center border-b border-white/[0.15] px-1">
+                <p className="text-base font-medium text-white">{user?.email || ''}</p>
               </div>
-              <p className="text-[11.5px] text-white">Email cannot be changed here</p>
+              <p className={hintCn}>Email cannot be changed here</p>
             </div>
           </div>
         </SettingsSheetContent>
@@ -522,93 +540,77 @@ const AccountTab = () => {
 
       {/* ── APPRENTICE EDIT SHEET ── */}
       <Sheet open={isEditingApprentice} onOpenChange={setIsEditingApprentice}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent className="bg-elec-dark flex flex-col" title="Apprentice Details">
           <div className="lg:hidden flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
           <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingApprentice(false)}
-              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
+              className="text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
             <h2 className="text-[15px] font-semibold text-white">Apprentice Details</h2>
             {renderSaveButton(handleSaveApprentice)}
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Course Level
-              </Label>
-              <Select value={apprenticeLevel} onValueChange={setApprenticeLevel}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {APPRENTICE_LEVELS.map((level) => (
-                    <SelectItem key={level.value} value={level.value}>
-                      {level.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-4 pb-10">
+            <div>
+              <Label className={labelCn}>Course level</Label>
+              <MobileSelectPicker
+                value={apprenticeLevel}
+                onValueChange={setApprenticeLevel}
+                options={APPRENTICE_LEVELS}
+                placeholder="Select level"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Current Year
-              </Label>
-              <Select value={apprenticeYear} onValueChange={setApprenticeYear}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  <SelectItem value="1">Year 1</SelectItem>
-                  <SelectItem value="2">Year 2</SelectItem>
-                  <SelectItem value="3">Year 3</SelectItem>
-                  <SelectItem value="4">Year 4</SelectItem>
-                </SelectContent>
-              </Select>
+            <div>
+              <Label className={labelCn}>Current year</Label>
+              <MobileSelectPicker
+                value={apprenticeYear}
+                onValueChange={setApprenticeYear}
+                options={APPRENTICE_YEARS}
+                placeholder="Select year"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Training Provider
-              </Label>
+            <div>
+              <Label className={labelCn}>Training provider</Label>
               <Input
                 placeholder="e.g. City College"
                 value={trainingProvider}
                 onChange={(e) => setTrainingProvider(e.target.value)}
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className={inputCn}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                ECS Card Status
-              </Label>
-              <Select value={ecsCardStatus} onValueChange={setEcsCardStatus}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  <SelectItem value="not_applied">Not Applied</SelectItem>
-                  <SelectItem value="applied">Applied</SelectItem>
-                  <SelectItem value="received">Received</SelectItem>
-                </SelectContent>
-              </Select>
+            <div>
+              <Label className={labelCn}>ECS card status</Label>
+              <div className="flex gap-2">
+                {ECS_CARD_STATUSES.map((status) => (
+                  <button
+                    key={status.value}
+                    type="button"
+                    onClick={() => setEcsCardStatus(status.value)}
+                    className={cn(chipBase, ecsCardStatus === status.value ? chipOn : chipOff)}
+                    aria-pressed={ecsCardStatus === status.value}
+                  >
+                    {status.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Supervisor
-              </Label>
+            <div>
+              <Label className={labelCn}>Supervisor</Label>
               <Input
                 placeholder="Supervisor name"
                 value={supervisorName}
                 onChange={(e) => setSupervisorName(e.target.value)}
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className={inputCn}
               />
             </div>
           </div>
@@ -617,61 +619,45 @@ const AccountTab = () => {
 
       {/* ── ELECTRICIAN EDIT SHEET ── */}
       <Sheet open={isEditingElectrician} onOpenChange={setIsEditingElectrician}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent className="bg-elec-dark flex flex-col" title="Professional Details">
           <div className="lg:hidden flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
           <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingElectrician(false)}
-              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
+              className="text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
             <h2 className="text-[15px] font-semibold text-white">Professional Details</h2>
             {renderSaveButton(handleSaveElectrician)}
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Job Title
-              </Label>
-              <Select value={jobTitle} onValueChange={setJobTitle}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select job title" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {UK_JOB_TITLES.map((title) => (
-                    <SelectItem key={title.value} value={title.value}>
-                      {title.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-4 pb-10">
+            <div>
+              <Label className={labelCn}>Job title</Label>
+              <MobileSelectPicker
+                value={jobTitle}
+                onValueChange={setJobTitle}
+                options={UK_JOB_TITLES}
+                placeholder="Select job title"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Specialisation
-              </Label>
-              <Select value={specialisation} onValueChange={setSpecialisation}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select area" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {UK_SPECIALISATIONS.map((spec) => (
-                    <SelectItem key={spec.value} value={spec.value}>
-                      {spec.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div>
+              <Label className={labelCn}>Specialisation</Label>
+              <MobileSelectPicker
+                value={specialisation}
+                onValueChange={setSpecialisation}
+                options={UK_SPECIALISATIONS}
+                placeholder="Select area"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Years Experience
-              </Label>
+            <div>
+              <Label className={labelCn}>Years experience</Label>
               <Input
                 type="number"
                 min="0"
@@ -679,26 +665,19 @@ const AccountTab = () => {
                 placeholder="0"
                 value={yearsExperience}
                 onChange={(e) => setYearsExperience(e.target.value)}
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className={inputCn}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                ECS Card Type
-              </Label>
-              <Select value={ecsCardType} onValueChange={setEcsCardType}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select card type" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {ECS_CARD_TYPES.map((card) => (
-                    <SelectItem key={card.value} value={card.value}>
-                      {card.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div>
+              <Label className={labelCn}>ECS card type</Label>
+              <MobileSelectPicker
+                value={ecsCardType}
+                onValueChange={setEcsCardType}
+                options={ECS_CARD_PICKER_OPTIONS}
+                placeholder="Select card type"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
           </div>
         </SettingsSheetContent>
@@ -706,55 +685,41 @@ const AccountTab = () => {
 
       {/* ── EMPLOYER EDIT SHEET ── */}
       <Sheet open={isEditingEmployer} onOpenChange={setIsEditingEmployer}>
-        <SettingsSheetContent className="bg-[hsl(0_0%_12%)] flex flex-col">
+        <SettingsSheetContent className="bg-elec-dark flex flex-col" title="Business Role">
           <div className="lg:hidden flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
           <div className="flex items-center justify-between px-5 pt-4 lg:pt-6 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingEmployer(false)}
-              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
+              className="text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
             <h2 className="text-[15px] font-semibold text-white">Business Role</h2>
             {renderSaveButton(handleSaveEmployer)}
           </div>
-          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Position
-              </Label>
-              <Select value={businessPosition} onValueChange={setBusinessPosition}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select position" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {EMPLOYER_POSITIONS.map((pos) => (
-                    <SelectItem key={pos.value} value={pos.value}>
-                      {pos.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-4 pb-10">
+            <div>
+              <Label className={labelCn}>Position</Label>
+              <MobileSelectPicker
+                value={businessPosition}
+                onValueChange={setBusinessPosition}
+                options={EMPLOYER_POSITIONS}
+                placeholder="Select position"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
-                Company Size
-              </Label>
-              <Select value={companySize} onValueChange={setCompanySize}>
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.12] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
-                  <SelectValue placeholder="Select size" />
-                </SelectTrigger>
-                <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                  {COMPANY_SIZES.map((size) => (
-                    <SelectItem key={size.value} value={size.value}>
-                      {size.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div>
+              <Label className={labelCn}>Company size</Label>
+              <MobileSelectPicker
+                value={companySize}
+                onValueChange={setCompanySize}
+                options={COMPANY_SIZES}
+                placeholder="Select size"
+                triggerClassName={selectTriggerCn}
+              />
             </div>
           </div>
         </SettingsSheetContent>

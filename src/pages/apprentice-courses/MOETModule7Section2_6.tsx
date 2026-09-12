@@ -1,8 +1,44 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 7 · Section 2 · Subsection 6 — Assessment Marking Criteria Awareness
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. This section of Module 7 covers technique for the EPA
+ * practical observation rather than a specific piece of engineering
+ * knowledge, so no ST1426 knowledge/skill/behaviour statement is quoted
+ * here — none of the verified KSB statements checked for this conversion
+ * describe assessment-preparation technique.
+ *
+ * This is the last subsection of Section 2. The original page's "next"
+ * button pointed back to the section hub because Module 7 Section 3 had not
+ * been written yet. Section 3 (3.1 Building a Work-Based Portfolio) now
+ * exists in the same module, so the next button below points there instead,
+ * matching how every other section-to-section boundary in this course is
+ * handled.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Assessment Marking Criteria Awareness - MOET Module 7 Section 2.6';
@@ -150,7 +186,7 @@ const quizQuestions = [
     options: [
       'The speed of completion and the number of tasks attempted within the time limit',
       "The candidate's physical strength and stamina when handling heavy equipment",
-      "The cost of the tools and instruments the candidate brings to the observation",
+      'The cost of the tools and instruments the candidate brings to the observation',
       'Safety consciousness, initiative, communication, teamwork, time management, attention to detail, and continuous improvement',
     ],
     correctAnswer: 3,
@@ -253,489 +289,377 @@ const faqs = [
 ];
 
 const MOETModule7Section2_6 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 7.2.6</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Assessment Marking Criteria Awareness
-          </h1>
-          <p className="text-white">
-            Understanding what assessors look for and how to achieve your best grade in the EPA
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 7 · Section 7.2 · Subsection 6"
+        title="Assessment Marking Criteria Awareness"
+        backTo="/study-centre/apprentice/m-o-e-t-module7-section2"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Understanding what assessors look for and how to achieve your best grade in the EPA.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Grades:</strong> Fail, pass, distinction — no merit
-              </li>
-              <li className="pl-1">
-                <strong>Pass:</strong> Competent to the required standard
-              </li>
-              <li className="pl-1">
-                <strong>Distinction:</strong> Exceptional quality, initiative, depth
-              </li>
-              <li className="pl-1">
-                <strong>Criteria:</strong> Published grading descriptors for each component
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              EPA Assessment Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Components:</strong> Knowledge test, practical, professional discussion
-              </li>
-              <li className="pl-1">
-                <strong>KSBs:</strong> Knowledge, skills and behaviours assessed
-              </li>
-              <li className="pl-1">
-                <strong>Objective:</strong> Standardised criteria across all EPAOs
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Full standard mapped to assessment
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Grades: fail, pass, distinction — no merit.',
+              'Pass: competent to the required standard.',
+              'Distinction: exceptional quality, initiative, depth.',
+              'Criteria: published grading descriptors for each component.',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Understand the EPA grading structure and what each grade requires',
               'Identify the key marking criteria for the practical observation component',
               'Recognise the difference between pass and distinction-level performance',
               'Understand how professional behaviours contribute to your overall grade',
               'Identify common fail points and how to avoid them during assessment',
               'Prepare effectively using the official grading descriptors and criteria',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ConceptBlock title="EPA assessment context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Components:</strong> knowledge test, practical, professional discussion.
+              </li>
+              <li>
+                <strong>KSBs:</strong> knowledge, skills and behaviours assessed.
+              </li>
+              <li>
+                <strong>Objective:</strong> standardised criteria across all EPAOs.
+              </li>
+              <li>
+                <strong>ST1426:</strong> full standard mapped to assessment.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            The EPA Grading Structure
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The EPA grading structure</ContentEyebrow>
+
+          <ConceptBlock title="The EPA grading structure">
             <p>
               The MOET End-Point Assessment uses a straightforward grading structure: fail, pass,
               and distinction. Understanding what each grade requires helps you target your
               preparation and performance. The key is that the EPA is not a competition against
               other candidates — it is an assessment of your competence against defined standards.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Grade Definitions</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Grade</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">What It Means</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Indicators</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-red-400">
-                        Fail
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Not yet competent to the required standard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safety-critical errors, insufficient knowledge, unable to complete key tasks
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-green-400">
-                        Pass
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Competent to the required standard
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Safe working, correct procedures, acceptable workmanship, adequate knowledge
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium text-elec-yellow">
-                        Distinction
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Exceeds the required standard with exceptional performance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proactive safety, superior workmanship, deep understanding, confident
-                        communication, initiative
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Grade definitions">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Grade</th>
+                    <th className="py-2 pr-4 font-medium text-white">What it means</th>
+                    <th className="py-2 font-medium text-white">Key indicators</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium text-red-400">Fail</td>
+                    <td className="py-2 pr-4">Not yet competent to the required standard</td>
+                    <td className="py-2">
+                      Safety-critical errors, insufficient knowledge, unable to complete key tasks
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4 font-medium text-green-400">Pass</td>
+                    <td className="py-2 pr-4">Competent to the required standard</td>
+                    <td className="py-2">
+                      Safe working, correct procedures, acceptable workmanship, adequate knowledge
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4 font-medium text-elec-yellow">Distinction</td>
+                    <td className="py-2 pr-4">
+                      Exceeds the required standard with exceptional performance
+                    </td>
+                    <td className="py-2">
+                      Proactive safety, superior workmanship, deep understanding, confident
+                      communication, initiative
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Automatic Fail Criteria</p>
-              <p className="text-sm text-white">
-                Certain errors result in an automatic fail regardless of performance in other areas.
-                These include: working on live conductors without safe isolation, failing to use or
-                correctly apply the prove-test-prove sequence, bypassing safety interlocks or
-                devices, and creating an unsafe situation that could endanger yourself or others.
-                These are non-negotiable safety requirements.
-              </p>
-            </div>
+          <CommonMistake
+            title="Automatic fail criteria"
+            whatHappens={
+              <>
+                Certain errors result in an automatic fail regardless of performance in other areas:
+                working on live conductors without safe isolation, failing to use or correctly apply
+                the prove-test-prove sequence, bypassing safety interlocks or devices, and creating
+                an unsafe situation that could endanger yourself or others.
+              </>
+            }
+            doInstead={<>These are non-negotiable safety requirements.</>}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Aim for distinction in your preparation, even if you would
-              be happy with a pass. Preparing to the highest standard gives you the best margin for
-              success under assessment pressure.
-            </p>
-          </div>
-        </section>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>Key point:</strong> aim for distinction in your preparation, even if you would
+            be happy with a pass. Preparing to the highest standard gives you the best margin for
+            success under assessment pressure.
+          </p>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Practical Observation Marking Criteria
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Practical observation marking criteria</ContentEyebrow>
+
+          <ConceptBlock title="Practical observation marking criteria">
             <p>
               The practical observation is where your hands-on competence is directly assessed. The
               assessor uses structured criteria to evaluate multiple aspects of your performance
               simultaneously. Understanding these criteria allows you to demonstrate the right
               evidence at the right time.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                What the Assessor Evaluates
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Safety:</strong> Safe isolation, PPE use, risk awareness, safe working
-                  throughout — this is the foundation
-                </li>
-                <li className="pl-1">
-                  <strong>Methodology:</strong> Systematic approach, logical sequence, correct
-                  procedures followed
-                </li>
-                <li className="pl-1">
-                  <strong>Technical skill:</strong> Correct use of tools, instruments, and
-                  techniques; accuracy of work
-                </li>
-                <li className="pl-1">
-                  <strong>Workmanship:</strong> Quality of connections, cable management, component
-                  installation, finish
-                </li>
-                <li className="pl-1">
-                  <strong>Communication:</strong> Explaining actions, reasoning, and technical
-                  understanding verbally
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Testing completed work, confirming correct
-                  operation, documenting results
-                </li>
-                <li className="pl-1">
-                  <strong>Professionalism:</strong> Organisation, time management, housekeeping,
-                  attention to detail
-                </li>
-              </ul>
+          <ConceptBlock title="What the assessor evaluates">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Safety:</strong> safe isolation, PPE use, risk awareness, safe working
+                throughout — this is the foundation.
+              </li>
+              <li>
+                <strong>Methodology:</strong> systematic approach, logical sequence, correct
+                procedures followed.
+              </li>
+              <li>
+                <strong>Technical skill:</strong> correct use of tools, instruments, and techniques;
+                accuracy of work.
+              </li>
+              <li>
+                <strong>Workmanship:</strong> quality of connections, cable management, component
+                installation, finish.
+              </li>
+              <li>
+                <strong>Communication:</strong> explaining actions, reasoning, and technical
+                understanding verbally.
+              </li>
+              <li>
+                <strong>Verification:</strong> testing completed work, confirming correct operation,
+                documenting results.
+              </li>
+              <li>
+                <strong>Professionalism:</strong> organisation, time management, housekeeping,
+                attention to detail.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Pass vs distinction — practical examples">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-[13.5px]">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="py-2 pr-4 font-medium text-white">Criterion</th>
+                    <th className="py-2 pr-4 font-medium text-white">Pass level</th>
+                    <th className="py-2 font-medium text-white">Distinction level</th>
+                  </tr>
+                </thead>
+                <tbody className="text-white">
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Safe isolation</td>
+                    <td className="py-2 pr-4">Completes correctly with prompting</td>
+                    <td className="py-2">Completes confidently, explains each step unprompted</td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Fault diagnosis</td>
+                    <td className="py-2 pr-4">Uses systematic method, finds fault</td>
+                    <td className="py-2">
+                      Uses efficient method, explains reasoning clearly, identifies root cause
+                    </td>
+                  </tr>
+                  <tr className="border-b border-white/5">
+                    <td className="py-2 pr-4">Workmanship</td>
+                    <td className="py-2 pr-4">Acceptable quality, functional</td>
+                    <td className="py-2">
+                      Exceptional quality, neat, professional finish, uses torque settings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4">Communication</td>
+                    <td className="py-2 pr-4">Answers questions when asked</td>
+                    <td className="py-2">
+                      Proactively explains, references standards, shows deep understanding
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Pass vs Distinction — Practical Examples
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Criterion</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Pass Level</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Distinction Level
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safe isolation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Completes correctly with prompting
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Completes confidently, explains each step unprompted
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fault diagnosis</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uses systematic method, finds fault
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Uses efficient method, explains reasoning clearly, identifies root cause
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Workmanship</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Acceptable quality, functional
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Exceptional quality, neat, professional finish, uses torque settings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Communication</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Answers questions when asked
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Proactively explains, references standards, shows deep understanding
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Distinction is not about perfection — it is about
+            <p>
+              <strong>Key point:</strong> distinction is not about perfection — it is about
               consistent excellence across all criteria. You do not need to be perfect in every
               area, but you need to demonstrate exceptional performance in the majority of them.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Common Pitfalls and How to Avoid Them
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Common pitfalls and how to avoid them</ContentEyebrow>
+
+          <ConceptBlock title="Common pitfalls and how to avoid them">
             <p>
               Understanding common fail points and pitfalls helps you avoid them. These are not
               obscure traps — they are predictable errors that assessment experience shows
               candidates repeatedly make. Being aware of them is your best defence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Top 10 Candidate Pitfalls
-              </p>
-              <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Skipping safe isolation steps</strong> — rushing or assuming the circuit
-                  is dead without proving it
-                </li>
-                <li className="pl-1">
-                  <strong>Not explaining actions</strong> — working silently so the assessor cannot
-                  assess understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Poor cable preparation</strong> — nicked conductors, wrong strip length,
-                  missing ferrules
-                </li>
-                <li className="pl-1">
-                  <strong>Ignoring manufacturer's data</strong> — not checking component
-                  specifications before installation
-                </li>
-                <li className="pl-1">
-                  <strong>Skipping functional verification</strong> — assuming the repair is correct
-                  without testing
-                </li>
-                <li className="pl-1">
-                  <strong>Random fault diagnosis</strong> — replacing components without systematic
-                  diagnosis
-                </li>
-                <li className="pl-1">
-                  <strong>Poor time management</strong> — spending too long on early tasks and
-                  rushing later ones
-                </li>
-                <li className="pl-1">
-                  <strong>Not updating labelling</strong> — leaving outdated or missing circuit
-                  identification
-                </li>
-                <li className="pl-1">
-                  <strong>Messy work area</strong> — poor housekeeping throughout the assessment
-                </li>
-                <li className="pl-1">
-                  <strong>Nervousness preventing communication</strong> — freezing up instead of
-                  explaining actions
-                </li>
-              </ol>
-            </div>
+          <ConceptBlock title="Top 10 candidate pitfalls">
+            <ol className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Skipping safe isolation steps</strong> — rushing or assuming the circuit is
+                dead without proving it.
+              </li>
+              <li>
+                <strong>Not explaining actions</strong> — working silently so the assessor cannot
+                assess understanding.
+              </li>
+              <li>
+                <strong>Poor cable preparation</strong> — nicked conductors, wrong strip length,
+                missing ferrules.
+              </li>
+              <li>
+                <strong>Ignoring manufacturer&apos;s data</strong> — not checking component
+                specifications before installation.
+              </li>
+              <li>
+                <strong>Skipping functional verification</strong> — assuming the repair is correct
+                without testing.
+              </li>
+              <li>
+                <strong>Random fault diagnosis</strong> — replacing components without systematic
+                diagnosis.
+              </li>
+              <li>
+                <strong>Poor time management</strong> — spending too long on early tasks and rushing
+                later ones.
+              </li>
+              <li>
+                <strong>Not updating labelling</strong> — leaving outdated or missing circuit
+                identification.
+              </li>
+              <li>
+                <strong>Messy work area</strong> — poor housekeeping throughout the assessment.
+              </li>
+              <li>
+                <strong>Nervousness preventing communication</strong> — freezing up instead of
+                explaining actions.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Managing Assessment Nerves</p>
-              <p className="text-sm text-white">
-                Nervousness is natural and expected. The best antidote is thorough preparation — the
-                more you have practised, the more your responses become automatic under pressure.
-                Focus on one step at a time rather than thinking about the entire assessment. If you
-                feel overwhelmed, take a breath and return to the procedure you know. The assessor
-                understands that candidates are nervous and will not penalise natural anxiety — only
-                the impact on your performance.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Most failures are preventable. Thorough preparation,
+          <ConceptBlock title="Managing assessment nerves">
+            <p>
+              Nervousness is natural and expected. The best antidote is thorough preparation — the
+              more you have practised, the more your responses become automatic under pressure.
+              Focus on one step at a time rather than thinking about the entire assessment. If you
+              feel overwhelmed, take a breath and return to the procedure you know. The assessor
+              understands that candidates are nervous and will not penalise natural anxiety — only
+              the impact on your performance.
+            </p>
+            <p>
+              <strong>Key point:</strong> most failures are preventable. Thorough preparation,
               practised procedures, and awareness of common pitfalls will see you through the
               assessment with confidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Preparing to Meet the Criteria
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Preparing to meet the criteria</ContentEyebrow>
+
+          <ConceptBlock title="Preparing to meet the criteria">
             <p>
               Effective EPA preparation is targeted — you need to know what you are preparing for
               and practise specifically against the marking criteria. Generic revision is less
               effective than focused preparation against the published grading descriptors.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Preparation Strategy</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Obtain the grading descriptors:</strong> Get the official EPA
-                  specification from your training provider or IfATE
-                </li>
-                <li className="pl-1">
-                  <strong>Self-assess honestly:</strong> Rate yourself against each criterion —
-                  where are your strengths and gaps?
-                </li>
-                <li className="pl-1">
-                  <strong>Practise to distinction standard:</strong> Do not practise to just pass —
-                  practise to the highest level
-                </li>
-                <li className="pl-1">
-                  <strong>Mock assessments:</strong> Complete at least two full mock assessments
-                  under timed conditions
-                </li>
-                <li className="pl-1">
-                  <strong>Seek feedback:</strong> Ask your training provider and workplace mentor
-                  for honest feedback
-                </li>
-                <li className="pl-1">
-                  <strong>Address gaps:</strong> Focus additional practice time on your weakest
-                  areas
-                </li>
-                <li className="pl-1">
-                  <strong>Practise communication:</strong> Explain your actions out loud until it
-                  feels natural
-                </li>
-                <li className="pl-1">
-                  <strong>Prepare your portfolio:</strong> Ensure all evidence is complete,
-                  organised and clearly linked to KSBs
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Preparation strategy">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Obtain the grading descriptors:</strong> get the official EPA specification
+                from your training provider or IfATE.
+              </li>
+              <li>
+                <strong>Self-assess honestly:</strong> rate yourself against each criterion — where
+                are your strengths and gaps?
+              </li>
+              <li>
+                <strong>Practise to distinction standard:</strong> do not practise to just pass —
+                practise to the highest level.
+              </li>
+              <li>
+                <strong>Mock assessments:</strong> complete at least two full mock assessments under
+                timed conditions.
+              </li>
+              <li>
+                <strong>Seek feedback:</strong> ask your training provider and workplace mentor for
+                honest feedback.
+              </li>
+              <li>
+                <strong>Address gaps:</strong> focus additional practice time on your weakest areas.
+              </li>
+              <li>
+                <strong>Practise communication:</strong> explain your actions out loud until it
+                feels natural.
+              </li>
+              <li>
+                <strong>Prepare your portfolio:</strong> ensure all evidence is complete, organised
+                and clearly linked to KSBs.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Mock Assessment Checklist
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  Complete at least two full mock practical assessments under timed conditions
-                </li>
-                <li className="pl-1">
-                  Have your training provider observe and provide feedback against the grading
-                  descriptors
-                </li>
-                <li className="pl-1">
-                  Practise the professional discussion with prepared portfolio evidence
-                </li>
-                <li className="pl-1">
-                  Complete timed mock knowledge tests to build exam technique
-                </li>
-                <li className="pl-1">
-                  Record and review your communication — are you explaining actions clearly?
-                </li>
-                <li className="pl-1">
-                  Identify and address weaknesses revealed during mock assessments
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Mock assessments are the closest you can get to the real
+          <ConceptBlock title="Mock assessment checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Complete at least two full mock practical assessments under timed conditions.</li>
+              <li>
+                Have your training provider observe and provide feedback against the grading
+                descriptors.
+              </li>
+              <li>Practise the professional discussion with prepared portfolio evidence.</li>
+              <li>Complete timed mock knowledge tests to build exam technique.</li>
+              <li>Record and review your communication — are you explaining actions clearly?</li>
+              <li>Identify and address weaknesses revealed during mock assessments.</li>
+            </ul>
+            <p>
+              <strong>Key point:</strong> mock assessments are the closest you can get to the real
               thing. Treat them seriously — dress as you would for the EPA, use the same tools, and
               work under the same time pressure. The more realistic your practice, the more
               confident you will be on the day.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            On the Day — Maximising Your Performance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>On the day — maximising your performance</ContentEyebrow>
+
+          <ConceptBlock title="On the day — maximising your performance">
             <p>
               Your performance on assessment day is the culmination of months of preparation.
               Understanding how to manage the day itself — from practical logistics to psychological
@@ -743,176 +667,187 @@ const MOETModule7Section2_6 = () => {
               assessor is looking for a competent, confident professional, and how you conduct
               yourself matters as much as your technical ability.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Assessment Day Preparation
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Tools and equipment:</strong> Check everything the night before — all
-                  tools present, test instruments calibrated, batteries charged
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Bring your portfolio, any required ID, and writing
-                  materials
-                </li>
-                <li className="pl-1">
-                  <strong>PPE:</strong> Clean, appropriate PPE ready — safety boots, overalls, eye
-                  protection, gloves
-                </li>
-                <li className="pl-1">
-                  <strong>Arrive early:</strong> Give yourself time to settle, familiarise yourself
-                  with the environment, and compose yourself
-                </li>
-                <li className="pl-1">
-                  <strong>Listen carefully:</strong> Pay close attention to the assessor's briefing
-                  — ask clarifying questions if anything is unclear
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                During the Assessment
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Talk through your actions:</strong> Narrate what you are doing and why —
-                  this lets the assessor hear your understanding
-                </li>
-                <li className="pl-1">
-                  <strong>Follow your procedures:</strong> Stick to the safe working practices you
-                  have rehearsed
-                </li>
-                <li className="pl-1">
-                  <strong>Manage your time:</strong> Keep an awareness of time without
-                  clock-watching — pace yourself steadily
-                </li>
-                <li className="pl-1">
-                  <strong>Stay calm if things go wrong:</strong> Recognise errors, correct them, and
-                  explain your correction
-                </li>
-                <li className="pl-1">
-                  <strong>Maintain professionalism:</strong> Tidy as you go, organise your
-                  workspace, treat it as a real job
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">The Power of Communication</p>
-              <p className="text-sm text-white">
-                The single most common difference between pass and distinction candidates is
-                communication. Distinction candidates naturally explain what they are doing and why,
-                reference relevant standards, and demonstrate understanding through their
-                commentary. If you are naturally quiet, practise speaking through your actions
-                during mock assessments until it becomes second nature. The assessor cannot mark
-                what they cannot observe or hear.
-              </p>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> Understanding the marking criteria is itself a
-              professional behaviour — it shows that you take your development seriously and prepare
-              methodically for important milestones. This same approach will serve you throughout
-              your career whenever you face assessments, audits, or professional reviews.
-            </p>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4">Quick Reference</h2>
-          <div className="p-4 rounded-lg bg-white/5">
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-              <li className="pl-1">
-                <strong>Grades:</strong> Fail, pass, distinction — no merit grade exists for MOET
+          <ConceptBlock title="Assessment day preparation">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Tools and equipment:</strong> check everything the night before — all tools
+                present, test instruments calibrated, batteries charged.
               </li>
-              <li className="pl-1">
-                <strong>Components:</strong> Knowledge test + practical observation + professional
-                discussion
+              <li>
+                <strong>Documentation:</strong> bring your portfolio, any required ID, and writing
+                materials.
               </li>
-              <li className="pl-1">
-                <strong>Must pass all:</strong> Failing any single component means failing overall
+              <li>
+                <strong>PPE:</strong> clean, appropriate PPE ready — safety boots, overalls, eye
+                protection, gloves.
               </li>
-              <li className="pl-1">
-                <strong>Automatic fail:</strong> Unsafe isolation, bypassing safety devices, working
-                live without authorisation
+              <li>
+                <strong>Arrive early:</strong> give yourself time to settle, familiarise yourself
+                with the environment, and compose yourself.
               </li>
-              <li className="pl-1">
-                <strong>Distinction indicators:</strong> Proactive safety, confident communication,
-                exceptional workmanship, initiative
-              </li>
-              <li className="pl-1">
-                <strong>Grading descriptors:</strong> Available from IfATE and your EPAO — review
-                them thoroughly
-              </li>
-              <li className="pl-1">
-                <strong>Mock assessments:</strong> Complete at least two under realistic timed
-                conditions
-              </li>
-              <li className="pl-1">
-                <strong>Communication:</strong> Talk through your actions — the assessor cannot mark
-                what they cannot hear
+              <li>
+                <strong>Listen carefully:</strong> pay close attention to the assessor&apos;s
+                briefing — ask clarifying questions if anything is unclear.
               </li>
             </ul>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="During the assessment">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Talk through your actions:</strong> narrate what you are doing and why —
+                this lets the assessor hear your understanding.
+              </li>
+              <li>
+                <strong>Follow your procedures:</strong> stick to the safe working practices you
+                have rehearsed.
+              </li>
+              <li>
+                <strong>Manage your time:</strong> keep an awareness of time without clock-watching
+                — pace yourself steadily.
+              </li>
+              <li>
+                <strong>Stay calm if things go wrong:</strong> recognise errors, correct them, and
+                explain your correction.
+              </li>
+              <li>
+                <strong>Maintain professionalism:</strong> tidy as you go, organise your workspace,
+                treat it as a real job.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge — Marking Criteria" questions={quizQuestions} />
-        </section>
+          <ConceptBlock title="The power of communication">
+            <p>
+              The single most common difference between pass and distinction candidates is
+              communication. Distinction candidates naturally explain what they are doing and why,
+              reference relevant standards, and demonstrate understanding through their commentary.
+              If you are naturally quiet, practise speaking through your actions during mock
+              assessments until it becomes second nature. The assessor cannot mark what they cannot
+              observe or hear.
+            </p>
+          </ConceptBlock>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Industry Standards
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <p className="text-[14.5px] leading-relaxed text-white">
+            <strong>ST1426 link:</strong> understanding the marking criteria is itself a
+            professional behaviour — it shows that you take your development seriously and prepare
+            methodically for important milestones. This same approach will serve you throughout your
+            career whenever you face assessments, audits, or professional reviews.
+          </p>
+
+          <SectionRule />
+
+          <Scenario
+            title="Doing the job right and still losing marks"
+
+            situation={
+              <>
+                <p>
+                  During a practical observation you diagnose and repair a control fault correctly
+                  and the machine works. You score lower than you expected.
+                </p>
+
+                <p>
+                  The feedback mentions that you did not explain your reasoning and did not record
+                  what you found.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Read the marking criteria before the assessment, not after. Assessors mark against
+                  defined criteria, and several of them are usually about process and communication
+                  rather than the technical outcome.
+                </p>
+
+                <p>
+                  Narrate your reasoning as you work. "I am checking the interlock first because the
+                  fault only appears after a guard has been opened" demonstrates diagnostic
+                  thinking; doing the same check silently demonstrates only that you checked
+                  something.
+                </p>
+
+                <p>
+                  Treat the documentation as part of the task, not the paperwork afterwards. If the
+                  criteria include recording findings, an unrecorded repair is an incomplete task
+                  however well the machine runs.
+                </p>
+
+                <p>
+                  Ask what the criteria are if you genuinely do not know. Wanting to understand how
+                  you will be assessed is a reasonable question, not an attempt to game it.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                A practical assessment is not only testing whether you can fix the machine — your
+                employer already knows that. It is testing whether you can show competence in a way
+                somebody else can verify, which is a different skill and one that transfers directly
+                to working under a permit, handing over to another shift, or defending a decision
+                later. Fixing it silently and correctly is exactly what a good technician does on a
+                bad site.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Grades: fail, pass, distinction — no merit grade exists for MOET.',
+              'Components: knowledge test + practical observation + professional discussion.',
+              'Must pass all: failing any single component means failing overall.',
+              'Automatic fail: unsafe isolation, bypassing safety devices, working live without authorisation.',
+              'Distinction indicators: proactive safety, confident communication, exceptional workmanship, initiative.',
+              'Grading descriptors are available from IfATE and your EPAO — review them thoroughly.',
+              'Complete at least two mock assessments under realistic timed conditions.',
+              'Communication: talk through your actions — the assessor cannot mark what they cannot hear.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge — Marking Criteria" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section2-5')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Completing Work to Industry Standards
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module7-section3-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Building a Work-Based Portfolio
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

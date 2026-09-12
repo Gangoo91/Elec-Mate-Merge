@@ -250,7 +250,7 @@ export function GridTieInverterCalculator() {
     if (!result) return null;
     return {
       meta: {
-        title: 'Grid-Tie Inverter Calculator',
+        title: 'Grid-Tie Inverter',
         subtitle: `${result.dcArrayPower} kWp array on a ${result.inverterAcPower} kW inverter`,
         standard: 'BS 7671:2018+A4:2026 — Section 712 · G98/G99',
       },
@@ -258,7 +258,7 @@ export function GridTieInverterCalculator() {
         { label: 'Annual generation', value: result.yearlyGeneration.toFixed(0), unit: 'kWh' },
         {
           label: 'Annual value (estimate)',
-          value: `£${result.totalAnnualValue.toFixed(2)}`,
+          value: `£${result.totalAnnualValue.toFixed(0)}`,
         },
         {
           label: 'Grid connection',
@@ -278,22 +278,20 @@ export function GridTieInverterCalculator() {
           ],
         },
         {
+          // Deliberately does not repeat the headline's annual generation or
+          // annual value figures verbatim — this shows the journey (ratio →
+          // daily → the two income components) that those totals come from.
           heading: 'Result',
           rows: [
             { label: 'DC:AC ratio', value: result.dcAcRatio.toFixed(2) },
             { label: 'Daily generation', value: `${result.dailyGeneration.toFixed(1)} kWh` },
-            { label: 'Annual generation', value: `${result.yearlyGeneration.toFixed(0)} kWh` },
             {
               label: 'Bill savings (estimate)',
-              value: `£${result.billSavings.toFixed(2)}`,
+              value: `£${result.billSavings.toFixed(0)}`,
             },
             {
               label: 'Export income (estimate)',
-              value: `£${result.exportIncome.toFixed(2)}`,
-            },
-            {
-              label: 'Total annual value (estimate)',
-              value: `£${result.totalAnnualValue.toFixed(2)}`,
+              value: `£${result.exportIncome.toFixed(0)}`,
             },
             ...(result.paybackYears > 0
               ? [{ label: 'Payback period (estimate)', value: `${result.paybackYears.toFixed(1)} years` }]

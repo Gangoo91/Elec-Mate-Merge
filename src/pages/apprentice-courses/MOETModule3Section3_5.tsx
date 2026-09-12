@@ -1,8 +1,46 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.3 · Subsection 5 — Labelling and Identification
+ * Standards
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *      requirements: removing and replacing parts, inspecting, testing,
+ *      setting up, adjusting, cleaning, and functional testing."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Labelling and Identification Standards - MOET Module 3.3.5';
@@ -28,10 +66,10 @@ const quickCheckQuestions = [
     question:
       'What warning label is required on any enclosure where a voltage exceeding 230 V exists between simultaneously accessible terminals?',
     options: [
-      "A green safe-condition label showing the location of the nearest first-aid point",
-      "A blue mandatory label instructing that PPE must be worn at all times",
+      'A green safe-condition label showing the location of the nearest first-aid point',
+      'A blue mandatory label instructing that PPE must be worn at all times',
       "A yellow warning triangle reading 'Danger — 400 V' (or the actual voltage present)",
-      "A red prohibition label stating that the enclosure must never be opened",
+      'A red prohibition label stating that the enclosure must never be opened',
     ],
     correctIndex: 2,
     explanation:
@@ -258,111 +296,69 @@ const faqs = [
 ];
 
 const MOETModule3Section3_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.3.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Labelling and Identification Standards
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.3 · Subsection 5"
+        title="Labelling and Identification Standards"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Identification systems, labelling standards and documentation for safe electrical
-            maintenance
+            maintenance — the difference between isolating the circuit you meant to and the one you
+            guessed at.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Circuit charts:</strong> Required at every DB (BS 7671 Reg 514.9)
-              </li>
-              <li className="pl-1">
-                <strong>Warning labels:</strong> Voltage, dual supply, earthing notices
-              </li>
-              <li className="pl-1">
-                <strong>Cable marking:</strong> At origin, destination and intermediate points
-              </li>
-              <li className="pl-1">
-                <strong>Standards:</strong> BS EN 81346, BS EN ISO 7010, BS 7671 Part 5
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Safe isolation:</strong> Correct identification prevents wrong-circuit work
-              </li>
-              <li className="pl-1">
-                <strong>Updates:</strong> Charts must be updated after every modification
-              </li>
-              <li className="pl-1">
-                <strong>Inspection:</strong> Missing or illegible labels are recordable defects
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Documentation and record-keeping competency
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Circuit charts: required at every DB (BS 7671 Reg 514.9).',
+              'Warning labels: voltage, dual supply, earthing notices.',
+              'Cable marking: at origin, destination and intermediate points.',
+              'Standards: BS EN 81346, BS EN ISO 7010, BS 7671 Part 5.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Explain the BS 7671 requirements for circuit charts and warning labels',
               'Apply cable identification practices at origin, destination and intermediate points',
               'Describe the BS EN 81346 reference designation system for industrial equipment',
               'Identify the safety sign colour standards under BS EN ISO 7010',
               'Maintain and update labelling systems following installation modifications',
               'Recognise labelling defects during periodic inspection and maintenance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Circuit charts and distribution board labelling</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Circuit Charts and Distribution Board Labelling
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Circuit Charts and Distribution Board Labelling">
             <p>
               The circuit chart is arguably the most important single document for safe electrical
               maintenance. It is the first thing a maintenance technician looks at when identifying
@@ -376,95 +372,90 @@ const MOETModule3Section3_5 = () => {
               it supplies, and indicating the area served. This is not optional — it is a mandatory
               requirement of the Wiring Regulations.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Circuit Chart Best Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Format:</strong> Clear, legible table format with circuit number, device
-                  type/rating, conductor size, description and area served
-                </li>
-                <li className="pl-1">
-                  <strong>Durability:</strong> Laminated or in a protective sleeve; resistant to the
-                  environment (heat, moisture, dust)
-                </li>
-                <li className="pl-1">
-                  <strong>Accuracy:</strong> Must exactly match the current installation — update
-                  after every modification
-                </li>
-                <li className="pl-1">
-                  <strong>Position:</strong> Fixed at or adjacent to the distribution board, visible
-                  when the board is accessed
-                </li>
-                <li className="pl-1">
-                  <strong>Spares:</strong> Blank entries for spare ways should be marked as 'Spare'
-                  — not left blank
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The Cost of Poor Circuit Identification
-              </p>
-              <p className="text-sm text-white">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Format:</strong> Clear, legible table format with circuit number, device
+                type/rating, conductor size, description and area served.
+              </li>
+              <li>
+                <strong>Durability:</strong> Laminated or in a protective sleeve; resistant to the
+                environment (heat, moisture, dust).
+              </li>
+              <li>
+                <strong>Accuracy:</strong> Must exactly match the current installation — update
+                after every modification.
+              </li>
+              <li>
+                <strong>Position:</strong> Fixed at or adjacent to the distribution board, visible
+                when the board is accessed.
+              </li>
+              <li>
+                <strong>Spares:</strong> Blank entries for spare ways should be marked as 'Spare' —
+                not left blank.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="The cost of poor circuit identification"
+            whatHappens={
+              <>
                 HSE incident reports document cases where maintenance technicians isolated the wrong
                 circuit because of inaccurate or missing circuit charts. In the worst cases, this
                 resulted in work being carried out on a live circuit with fatal consequences. Even
                 in less serious cases, wrong-circuit isolation causes unplanned outages, data loss
-                and disruption to critical services. Always verify isolation by proving dead — never
-                rely solely on the circuit chart.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Circuit Chart Formats and Templates
-              </h3>
-              <p className="text-sm text-white mb-3">
-                While BS 7671 specifies the minimum information required, the format and level of
-                detail in a circuit chart can vary significantly. Using a comprehensive format saves
-                time during every subsequent maintenance task.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Basic format (minimum):</strong> Circuit number, protective device type
-                  and rating, circuit description, areas served — meets BS 7671 Regulation 514.9
-                </li>
-                <li className="pl-1">
-                  <strong>Enhanced format (recommended):</strong> Adds conductor size, cable type,
-                  RCD details, maximum Zs, measured Zs, IR reading — provides essential test data
-                  for future inspections
-                </li>
-                <li className="pl-1">
-                  <strong>Digital format:</strong> Electronic circuit charts linked to a database;
-                  can be updated remotely, printed on demand, and cross-referenced with CMMS work
-                  orders and test records
-                </li>
-                <li className="pl-1">
-                  <strong>Photographic supplement:</strong> Photographs of the distribution board
-                  interior, showing circuit breaker positions and cable routes — invaluable for
-                  remote fault diagnosis
-                </li>
-              </ul>
-            </div>
+                and disruption to critical services.
+              </>
+            }
+            doInstead={
+              <>Always verify isolation by proving dead — never rely solely on the circuit chart.</>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> When you modify an installation (add a circuit, change a
-              protective device, rewire a circuit to a different area), update the circuit chart
-              immediately. Do not leave it for someone else to do — it will be forgotten.
+          <ConceptBlock title="Circuit chart formats and templates">
+            <p>
+              While BS 7671 specifies the minimum information required, the format and level of
+              detail in a circuit chart can vary significantly. Using a comprehensive format saves
+              time during every subsequent maintenance task.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Basic format (minimum):</strong> Circuit number, protective device type and
+                rating, circuit description, areas served — meets BS 7671 Regulation 514.9.
+              </li>
+              <li>
+                <strong>Enhanced format (recommended):</strong> Adds conductor size, cable type, RCD
+                details, maximum Zs, measured Zs, IR reading — provides essential test data for
+                future inspections.
+              </li>
+              <li>
+                <strong>Digital format:</strong> Electronic circuit charts linked to a database; can
+                be updated remotely, printed on demand, and cross-referenced with CMMS work orders
+                and test records.
+              </li>
+              <li>
+                <strong>Photographic supplement:</strong> Photographs of the distribution board
+                interior, showing circuit breaker positions and cable routes — invaluable for remote
+                fault diagnosis.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              When you modify an installation (add a circuit, change a protective device, rewire a
+              circuit to a different area), update the circuit chart immediately. Do not leave it
+              for someone else to do — it will be forgotten.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Warning Labels and Safety Notices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Warning labels and safety notices</ContentEyebrow>
+
+          <ConceptBlock title="Warning Labels and Safety Notices">
             <p>
               Warning labels and safety notices are a critical layer of protection in electrical
               installations. They communicate hazards, provide instructions, and alert maintenance
@@ -472,340 +463,330 @@ const MOETModule3Section3_5 = () => {
               labels, and additional labels are required by other regulations and standards. Missing
               or incorrect labels are frequently recorded as defects during periodic inspections.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Mandatory Labels under BS 7671
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Mandatory labels under BS 7671
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Label</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Regulation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">When Required</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Voltage warning</td>
-                      <td className="border border-white/10 px-3 py-2">514.10</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Where exceeding 230 V between accessible terminals
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Earthing/bonding notice</td>
-                      <td className="border border-white/10 px-3 py-2">514.13</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At earthing and bonding connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD test notice</td>
-                      <td className="border border-white/10 px-3 py-2">514.12</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At or near origin or RCD location
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Dual/alternative supply</td>
-                      <td className="border border-white/10 px-3 py-2">514.15</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Where more than one source of supply exists
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Mixed colours warning</td>
-                      <td className="border border-white/10 px-3 py-2">514.14</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Where old and new colour codes are present
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Periodic inspection date</td>
-                      <td className="border border-white/10 px-3 py-2">514.12</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        At or near the origin of the installation
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Label</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Regulation</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">When required</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Voltage warning</td>
+                    <td className="border border-white/10 px-3 py-2">514.10</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Where exceeding 230 V between accessible terminals
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Earthing/bonding notice</td>
+                    <td className="border border-white/10 px-3 py-2">514.13</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      At earthing and bonding connections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">RCD test notice</td>
+                    <td className="border border-white/10 px-3 py-2">514.12</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      At or near origin or RCD location
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Dual/alternative supply</td>
+                    <td className="border border-white/10 px-3 py-2">514.15</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Where more than one source of supply exists
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Mixed colours warning</td>
+                    <td className="border border-white/10 px-3 py-2">514.14</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Where old and new colour codes are present
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Periodic inspection date</td>
+                    <td className="border border-white/10 px-3 py-2">514.12</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      At or near the origin of the installation
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Safety Sign Colour Standards
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Safety signs and labels must comply with the Health and Safety (Safety Signs and
-                Signals) Regulations 1996 and BS EN ISO 7010. The colour system is standardised and
-                must not be used for any other purpose.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Electrical Example
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prohibition / fire equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Do Not Switch On" isolation tags
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Yellow</td>
-                      <td className="border border-white/10 px-3 py-2">Warning / caution</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Danger — 400 V" voltage warnings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">Mandatory instruction</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        "Switch Off Before Opening"
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Green</td>
-                      <td className="border border-white/10 px-3 py-2">Safe condition</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Emergency exit routes, first-aid points
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Additional Safety Notices
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Beyond the mandatory labels specified in BS 7671, other regulations and standards
-                require additional safety notices in specific situations. Maintenance technicians
-                must be aware of these additional requirements.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Fire alarm panels (BS 5839-1):</strong> Zone charts showing detector
-                  locations, cause and effect matrices, and zone descriptions must be displayed at
-                  the fire alarm control panel
-                </li>
-                <li className="pl-1">
-                  <strong>Emergency lighting (BS 5266-1):</strong> Log books must be maintained at a
-                  designated location, with notices indicating the testing schedule and responsible
-                  person
-                </li>
-                <li className="pl-1">
-                  <strong>UPS systems:</strong> Warning labels indicating that circuits remain live
-                  when the mains supply is disconnected; must be present at the UPS, at each
-                  distribution board fed by the UPS, and at each socket outlet on a UPS-supplied
-                  circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Photovoltaic systems:</strong> DC isolation warnings at the inverter, at
-                  the consumer unit, and at the meter position — solar panels generate DC voltage
-                  whenever exposed to light, even when the AC supply is isolated
-                </li>
-                <li className="pl-1">
-                  <strong>Battery systems:</strong> Chemical hazard warnings, DC shock risk notices,
-                  and emergency procedures displayed at battery installations
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Warning labels save lives. A dual-supply warning at a
-              distribution board alerts a technician that isolating the main switch alone may not
-              make the board dead. Without this label, a fatally dangerous assumption could be made.
-              Always check for and install required labels during every maintenance visit.
+          <ConceptBlock title="Safety sign colour standards">
+            <p>
+              Safety signs and labels must comply with the Health and Safety (Safety Signs and
+              Signals) Regulations 1996 and BS EN ISO 7010. The colour system is standardised and
+              must not be used for any other purpose.
             </p>
-          </div>
-        </section>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Colour</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Meaning</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Electrical example
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Red</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Prohibition / fire equipment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      "Do Not Switch On" isolation tags
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Yellow</td>
+                    <td className="border border-white/10 px-3 py-2">Warning / caution</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      "Danger — 400 V" voltage warnings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Blue</td>
+                    <td className="border border-white/10 px-3 py-2">Mandatory instruction</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      "Switch Off Before Opening"
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Green</td>
+                    <td className="border border-white/10 px-3 py-2">Safe condition</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Emergency exit routes, first-aid points
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Additional safety notices">
+            <p>
+              Beyond the mandatory labels specified in BS 7671, other regulations and standards
+              require additional safety notices in specific situations. Maintenance technicians must
+              be aware of these additional requirements.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fire alarm panels (BS 5839-1):</strong> Zone charts showing detector
+                locations, cause and effect matrices, and zone descriptions must be displayed at the
+                fire alarm control panel.
+              </li>
+              <li>
+                <strong>Emergency lighting (BS 5266-1):</strong> Log books must be maintained at a
+                designated location, with notices indicating the testing schedule and responsible
+                person.
+              </li>
+              <li>
+                <strong>UPS systems:</strong> Warning labels indicating that circuits remain live
+                when the mains supply is disconnected; must be present at the UPS, at each
+                distribution board fed by the UPS, and at each socket outlet on a UPS-supplied
+                circuit.
+              </li>
+              <li>
+                <strong>Photovoltaic systems:</strong> DC isolation warnings at the inverter, at the
+                consumer unit, and at the meter position — solar panels generate DC voltage whenever
+                exposed to light, even when the AC supply is isolated.
+              </li>
+              <li>
+                <strong>Battery systems:</strong> Chemical hazard warnings, DC shock risk notices,
+                and emergency procedures displayed at battery installations.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Cable and Equipment Identification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Warning labels save lives. A dual-supply warning at a distribution board alerts a
+              technician that isolating the main switch alone may not make the board dead. Without
+              this label, a fatally dangerous assumption could be made. Always check for and install
+              required labels during every maintenance visit.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cable and equipment identification</ContentEyebrow>
+
+          <ConceptBlock title="Cable and Equipment Identification">
             <p>
               Beyond distribution board labelling, every cable and piece of equipment in an
               installation should be uniquely identified. In large industrial and commercial
               buildings with hundreds or thousands of cables and items of switchgear, positive
               identification is the foundation of safe and efficient maintenance.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Cable Identification Methods
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat-shrink markers:</strong> Permanent, durable, resistant to heat and
-                  chemicals; ideal for SWA cable identification at glands
-                </li>
-                <li className="pl-1">
-                  <strong>Wrap-around labels:</strong> Self-laminating labels that wrap around the
-                  cable and protect the printed text; good for intermediate points
-                </li>
-                <li className="pl-1">
-                  <strong>Cable tags:</strong> Tie-on tags for larger cables on trays and ladders;
-                  must be secured to prevent loss
-                </li>
-                <li className="pl-1">
-                  <strong>Colour bands:</strong> Painted or applied colour bands for circuit or
-                  system identification on cable trays
-                </li>
-                <li className="pl-1">
-                  <strong>Direct printing:</strong> Industrial cable labelling machines print
-                  directly onto the cable sheath; permanent but requires access
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                BS EN 81346 Equipment Designation
-              </h3>
-              <p className="text-sm text-white mb-3">
-                For large industrial installations, BS EN 81346 provides a structured reference
-                designation system. Equipment is identified by a hierarchical code indicating its
-                location, the system it belongs to, and its specific function. This creates a unique
-                identifier for every item that can be used consistently across drawings, CMMS
-                systems, spare parts records and physical labels.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Q:</strong> Switching device (circuit breaker, isolator, contactor)
-                </li>
-                <li className="pl-1">
-                  <strong>M:</strong> Motor
-                </li>
-                <li className="pl-1">
-                  <strong>K:</strong> Relay, contactor (control function)
-                </li>
-                <li className="pl-1">
-                  <strong>T:</strong> Transformer
-                </li>
-                <li className="pl-1">
-                  <strong>F:</strong> Protective device (fuse, overload relay)
-                </li>
-                <li className="pl-1">
-                  <strong>W:</strong> Cable, conductor, busbar
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Control Panel Terminal Identification
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Within control panels, every terminal must be uniquely identified and correspond
-                exactly to the circuit diagrams and wiring schedules. This one-to-one relationship
-                between drawing and physical installation is essential for fault diagnosis,
-                modification and maintenance.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Terminal numbering:</strong> Sequential numbering within each terminal
-                  rail, matching the wiring diagram terminal schedule
-                </li>
-                <li className="pl-1">
-                  <strong>Wire numbering:</strong> Every wire within the panel should carry a
-                  ferrule marker or wrap-around label with its circuit reference
-                </li>
-                <li className="pl-1">
-                  <strong>Component labelling:</strong> Every component (contactor, relay, MCB, VSD)
-                  must carry a label matching its drawing reference designation
-                </li>
-                <li className="pl-1">
-                  <strong>Drawing pockets:</strong> Panels should contain a pocket or holder for the
-                  current circuit diagrams — accessible without removing the panel door
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Case Study: Cable Misidentification
-              </p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="Cable identification methods">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Heat-shrink markers:</strong> Permanent, durable, resistant to heat and
+                chemicals; ideal for SWA cable identification at glands.
+              </li>
+              <li>
+                <strong>Wrap-around labels:</strong> Self-laminating labels that wrap around the
+                cable and protect the printed text; good for intermediate points.
+              </li>
+              <li>
+                <strong>Cable tags:</strong> Tie-on tags for larger cables on trays and ladders;
+                must be secured to prevent loss.
+              </li>
+              <li>
+                <strong>Colour bands:</strong> Painted or applied colour bands for circuit or system
+                identification on cable trays.
+              </li>
+              <li>
+                <strong>Direct printing:</strong> Industrial cable labelling machines print directly
+                onto the cable sheath; permanent but requires access.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="BS EN 81346 equipment designation">
+            <p>
+              For large industrial installations, BS EN 81346 provides a structured reference
+              designation system. Equipment is identified by a hierarchical code indicating its
+              location, the system it belongs to, and its specific function. This creates a unique
+              identifier for every item that can be used consistently across drawings, CMMS systems,
+              spare parts records and physical labels.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Q:</strong> Switching device (circuit breaker, isolator, contactor).
+              </li>
+              <li>
+                <strong>M:</strong> Motor.
+              </li>
+              <li>
+                <strong>K:</strong> Relay, contactor (control function).
+              </li>
+              <li>
+                <strong>T:</strong> Transformer.
+              </li>
+              <li>
+                <strong>F:</strong> Protective device (fuse, overload relay).
+              </li>
+              <li>
+                <strong>W:</strong> Cable, conductor, busbar.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Control panel terminal identification">
+            <p>
+              Within control panels, every terminal must be uniquely identified and correspond
+              exactly to the circuit diagrams and wiring schedules. This one-to-one relationship
+              between drawing and physical installation is essential for fault diagnosis,
+              modification and maintenance.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Terminal numbering:</strong> Sequential numbering within each terminal rail,
+                matching the wiring diagram terminal schedule.
+              </li>
+              <li>
+                <strong>Wire numbering:</strong> Every wire within the panel should carry a ferrule
+                marker or wrap-around label with its circuit reference.
+              </li>
+              <li>
+                <strong>Component labelling:</strong> Every component (contactor, relay, MCB, VSD)
+                must carry a label matching its drawing reference designation.
+              </li>
+              <li>
+                <strong>Drawing pockets:</strong> Panels should contain a pocket or holder for the
+                current circuit diagrams — accessible without removing the panel door.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <Scenario
+            title="Cable misidentification"
+            situation={
+              <>
                 In a reported industrial incident, a maintenance technician needed to disconnect a
                 cable in a basement cable rack containing over 200 cables. No intermediate cable
                 labels had been applied, and the cable schedule was out of date following several
-                modifications. The technician identified the cable by colour and position, but
-                disconnected the wrong cable — a supply to a critical process system. The resulting
-                unplanned shutdown cost the facility an estimated 100,000 pounds in lost production.
-                Had the cables been correctly labelled at the cable rack access point, the correct
-                cable could have been positively identified in seconds.
-              </p>
-            </div>
+                modifications.
+              </>
+            }
+            whatToDo={
+              <>
+                The technician identified the cable by colour and position, but disconnected the
+                wrong cable — a supply to a critical process system.
+              </>
+            }
+            whyItMatters={
+              <>
+                The resulting unplanned shutdown cost the facility an estimated 100,000 pounds in
+                lost production. Had the cables been correctly labelled at the cable rack access
+                point, the correct cable could have been positively identified in seconds.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Equipment Nameplate Information
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Equipment nameplates and rating plates are a form of identification that maintenance
-                technicians rely on daily. Understanding what information they contain and where to
-                find it is essential for safe and accurate maintenance work.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor nameplates:</strong> Rated voltage, full-load current, power factor,
-                  speed, frame size, insulation class, duty rating — essential for protective device
-                  selection and cable sizing
-                </li>
-                <li className="pl-1">
-                  <strong>Switchgear ratings:</strong> Rated current, rated voltage, prospective
-                  fault level, IP rating, operating temperature range — critical for replacement
-                  specifications
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer nameplates:</strong> kVA rating, primary and secondary
-                  voltages, impedance percentage, vector group, cooling type — needed for fault
-                  calculations
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance tip:</strong> If a nameplate is missing or illegible, record
-                  the equipment details from drawings, commissioning records, or the manufacturer's
-                  records before fitting a replacement label
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A labelling system is only as good as its maintenance.
-              Labels must be checked during every maintenance visit and replaced immediately if
-              damaged, illegible or incorrect. An outdated label is worse than no label — it
-              provides false information that could lead to dangerous errors.
+          <ConceptBlock title="Equipment nameplate information">
+            <p>
+              Equipment nameplates and rating plates are a form of identification that maintenance
+              technicians rely on daily. Understanding what information they contain and where to
+              find it is essential for safe and accurate maintenance work.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor nameplates:</strong> Rated voltage, full-load current, power factor,
+                speed, frame size, insulation class, duty rating — essential for protective device
+                selection and cable sizing.
+              </li>
+              <li>
+                <strong>Switchgear ratings:</strong> Rated current, rated voltage, prospective fault
+                level, IP rating, operating temperature range — critical for replacement
+                specifications.
+              </li>
+              <li>
+                <strong>Transformer nameplates:</strong> kVA rating, primary and secondary voltages,
+                impedance percentage, vector group, cooling type — needed for fault calculations.
+              </li>
+              <li>
+                <strong>Maintenance tip:</strong> If a nameplate is missing or illegible, record the
+                equipment details from drawings, commissioning records, or the manufacturer's
+                records before fitting a replacement label.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              A labelling system is only as good as its maintenance. Labels must be checked during
+              every maintenance visit and replaced immediately if damaged, illegible or incorrect.
+              An outdated label is worse than no label — it provides false information that could
+              lead to dangerous errors.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Maintaining Identification Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Maintaining identification systems</ContentEyebrow>
+
+          <ConceptBlock title="Maintaining Identification Systems">
             <p>
               Labelling and identification are not one-time installation tasks — they require
               ongoing maintenance. Labels degrade over time due to heat, UV exposure, chemicals and
@@ -813,159 +794,142 @@ const MOETModule3Section3_5 = () => {
               documentation is not updated. A commitment to maintaining the identification system is
               a hallmark of a well-managed installation.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Label Maintenance Checklist
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Check all labels for legibility during every maintenance visit
-                  </li>
-                  <li className="pl-1">Replace degraded or damaged labels immediately</li>
-                  <li className="pl-1">Verify circuit charts match the actual installation</li>
-                  <li className="pl-1">Update documentation after every modification</li>
-                  <li className="pl-1">Check all mandatory warning labels are present</li>
-                  <li className="pl-1">
-                    Photograph label condition as part of maintenance records
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Digital Documentation
-                </h3>
-                <p className="text-sm text-white">
-                  Modern maintenance practice increasingly uses digital tools for documentation: QR
-                  codes linking to digital circuit charts and cable schedules; CMMS (Computerised
-                  Maintenance Management Systems) with equipment databases referencing BS EN 81346
-                  designations; digital twins of installations for remote identification; and
-                  photographic records of label conditions. These tools supplement, but do not
-                  replace, the physical labels required at the point of access.
-                </p>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Label Material Selection Guide
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Selecting the correct label material for the environment ensures labels remain
-                legible and functional throughout the installation's life. The wrong material will
-                degrade, losing its protective function.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Recommended Material
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Indoor, clean, dry</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Laminated vinyl, engraved laminate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Most economical; industrial label printers produce durable results
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Industrial (heat, oil)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Engraved Traffolyte, stainless steel
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Resistant to chemicals, heat and physical damage
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Outdoor / UV exposed</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Anodised aluminium, UV-resistant laminate
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard vinyl fades rapidly in direct sunlight
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Corrosive / chemical</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Stainless steel, chemical-resistant polymer
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must resist specific chemicals present in the environment
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Cable identification</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat-shrink markers, self-laminating wrap-around
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heat-shrink for permanent; wrap-around for intermediate points
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Label Audit Process</h3>
-              <p className="text-sm text-white mb-3">
-                A systematic label audit during routine maintenance visits ensures that the
-                identification system remains effective and compliant. This should be a standard
-                part of every planned maintenance activity.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Check all mandatory BS 7671 labels are present (circuit
-                  charts, voltage warnings, earthing notices, RCD test notices, dual supply
-                  warnings)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Verify circuit chart accuracy — compare at least 3 random
-                  circuits against the physical installation
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Inspect cable labels for legibility — replace any that
-                  are faded, damaged or peeling
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Check equipment identification labels match current
-                  drawings and CMMS records
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Record audit findings in the maintenance log, including
-                  any labels replaced and any discrepancies found
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Label maintenance checklist">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Check all labels for legibility during every maintenance visit.</li>
+              <li>Replace degraded or damaged labels immediately.</li>
+              <li>Verify circuit charts match the actual installation.</li>
+              <li>Update documentation after every modification.</li>
+              <li>Check all mandatory warning labels are present.</li>
+              <li>Photograph label condition as part of maintenance records.</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Documentation is a living system. Every modification,
-              every label replacement, every circuit chart update must be recorded. An
-              installation's documentation quality is a direct reflection of its maintenance
-              quality.
+          <ConceptBlock title="Digital documentation">
+            <p>
+              Modern maintenance practice increasingly uses digital tools for documentation: QR
+              codes linking to digital circuit charts and cable schedules; CMMS (Computerised
+              Maintenance Management Systems) with equipment databases referencing BS EN 81346
+              designations; digital twins of installations for remote identification; and
+              photographic records of label conditions. These tools supplement, but do not replace,
+              the physical labels required at the point of access.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Label material selection guide">
+            <p>
+              Selecting the correct label material for the environment ensures labels remain legible
+              and functional throughout the installation's life. The wrong material will degrade,
+              losing its protective function.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Environment</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Recommended material
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Indoor, clean, dry</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Laminated vinyl, engraved laminate
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Most economical; industrial label printers produce durable results
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Industrial (heat, oil)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Engraved Traffolyte, stainless steel
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Resistant to chemicals, heat and physical damage
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Outdoor / UV exposed</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Anodised aluminium, UV-resistant laminate
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Standard vinyl fades rapidly in direct sunlight
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Corrosive / chemical</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Stainless steel, chemical-resistant polymer
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Must resist specific chemicals present in the environment
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Cable identification</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Heat-shrink markers, self-laminating wrap-around
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Heat-shrink for permanent; wrap-around for intermediate points
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Periodic Inspection Findings and Compliance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Label audit process">
+            <p>
+              A systematic label audit during routine maintenance visits ensures that the
+              identification system remains effective and compliant. This should be a standard part
+              of every planned maintenance activity.
+            </p>
+            <ul className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Check all mandatory BS 7671 labels are present (circuit charts, voltage warnings,
+                earthing notices, RCD test notices, dual supply warnings).
+              </li>
+              <li>
+                Verify circuit chart accuracy — compare at least 3 random circuits against the
+                physical installation.
+              </li>
+              <li>
+                Inspect cable labels for legibility — replace any that are faded, damaged or
+                peeling.
+              </li>
+              <li>
+                Check equipment identification labels match current drawings and CMMS records.
+              </li>
+              <li>
+                Record audit findings in the maintenance log, including any labels replaced and any
+                discrepancies found.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Documentation is a living system. Every modification, every label replacement, every
+              circuit chart update must be recorded. An installation's documentation quality is a
+              direct reflection of its maintenance quality.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Periodic inspection findings and compliance</ContentEyebrow>
+
+          <ConceptBlock title="Periodic Inspection Findings and Compliance">
             <p>
               Labelling deficiencies are among the most frequently recorded findings during periodic
               inspection and testing (EICR). Missing circuit charts, absent warning labels,
@@ -982,219 +946,181 @@ const MOETModule3Section3_5 = () => {
               legible circuit chart might be classified as C3 (improvement recommended).
               Understanding this classification helps prioritise remedial work.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Labelling Defects Found During Inspection
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Missing circuit chart:</strong> No chart at distribution board — C2 if
-                  circuits cannot be safely identified
-                </li>
-                <li className="pl-1">
-                  <strong>Inaccurate circuit chart:</strong> Chart does not reflect current
-                  installation — C2 or C3 depending on severity
-                </li>
-                <li className="pl-1">
-                  <strong>Missing voltage warning:</strong> No 400 V label on three-phase enclosure
-                  — C2
-                </li>
-                <li className="pl-1">
-                  <strong>Missing dual supply warning:</strong> Generator or alternative supply
-                  present without label — C2
-                </li>
-                <li className="pl-1">
-                  <strong>Missing earthing/bonding label:</strong> No 'Safety Electrical Connection'
-                  labels — C3
-                </li>
-                <li className="pl-1">
-                  <strong>Missing RCD test notice:</strong> No quarterly test reminder notice — C3
-                </li>
-                <li className="pl-1">
-                  <strong>Missing mixed colours notice:</strong> Old and new colour codes present
-                  without warning — C3
-                </li>
-                <li className="pl-1">
-                  <strong>Illegible cable labels:</strong> Cable identification unreadable — C3
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Proactive Maintenance Approach
-              </h3>
-              <p className="text-sm text-white">
-                Rather than waiting for an inspector to identify labelling deficiencies, a proactive
-                maintenance approach includes labelling checks in every routine inspection. A simple
-                checklist — circuit chart accuracy, all mandatory warning labels present, cable
-                identification legible, equipment labels matching drawings — takes minutes to
-                complete but can prevent dangerous situations and avoid remedial costs after
-                periodic inspection. Many organisations now include label condition photography in
-                their maintenance records, creating a visual audit trail.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                EICR Labelling Deficiency Classification
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Inspectors classify labelling deficiencies using the EICR coding system.
-                Understanding these classifications helps maintenance technicians prioritise
-                remedial work and maintain installations between periodic inspections.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Deficiency</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Typical Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Action Required
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing circuit chart — circuits unidentifiable
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">C2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Urgent remedial action required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing dual supply warning
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">C2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Urgent — potentially dangerous
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing voltage warning (400 V)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">C2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Urgent — risk of electric shock
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Circuit chart inaccurate (minor)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">C3</td>
-                      <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Missing earthing/bonding label
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">C3</td>
-                      <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Missing RCD test notice</td>
-                      <td className="border border-white/10 px-3 py-2">C3</td>
-                      <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must maintain accurate
-              records and ensure installation documentation remains current. This includes circuit
-              charts, cable schedules, equipment registers and all labelling systems. Record-keeping
-              is assessed as part of the end-point assessment portfolio evidence.
+          <ConceptBlock title="Common labelling defects found during inspection">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Missing circuit chart:</strong> No chart at distribution board — C2 if
+                circuits cannot be safely identified.
+              </li>
+              <li>
+                <strong>Inaccurate circuit chart:</strong> Chart does not reflect current
+                installation — C2 or C3 depending on severity.
+              </li>
+              <li>
+                <strong>Missing voltage warning:</strong> No 400 V label on three-phase enclosure —
+                C2.
+              </li>
+              <li>
+                <strong>Missing dual supply warning:</strong> Generator or alternative supply
+                present without label — C2.
+              </li>
+              <li>
+                <strong>Missing earthing/bonding label:</strong> No 'Safety Electrical Connection'
+                labels — C3.
+              </li>
+              <li>
+                <strong>Missing RCD test notice:</strong> No quarterly test reminder notice — C3.
+              </li>
+              <li>
+                <strong>Missing mixed colours notice:</strong> Old and new colour codes present
+                without warning — C3.
+              </li>
+              <li>
+                <strong>Illegible cable labels:</strong> Cable identification unreadable — C3.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Proactive maintenance approach">
+            <p>
+              Rather than waiting for an inspector to identify labelling deficiencies, a proactive
+              maintenance approach includes labelling checks in every routine inspection. A simple
+              checklist — circuit chart accuracy, all mandatory warning labels present, cable
+              identification legible, equipment labels matching drawings — takes minutes to complete
+              but can prevent dangerous situations and avoid remedial costs after periodic
+              inspection. Many organisations now include label condition photography in their
+              maintenance records, creating a visual audit trail.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">BS 7671 Mandatory Labels</p>
-                <ul className="space-y-0.5">
-                  <li>Circuit chart at every DB (Reg 514.9)</li>
-                  <li>Voltage warning where &gt;230 V (Reg 514.10)</li>
-                  <li>RCD test notice (Reg 514.12)</li>
-                  <li>Earthing/bonding labels (Reg 514.13)</li>
-                  <li>Mixed colours warning (Reg 514.14)</li>
-                  <li>Dual/alternative supply (Reg 514.15)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS EN 81346 — equipment reference designations</li>
-                  <li>BS EN ISO 7010 — safety sign symbols</li>
-                  <li>Safety signs colours: red, yellow, blue, green</li>
-                  <li>Cable labels at origin, destination, intermediate points</li>
-                  <li>Update charts immediately after every modification</li>
-                  <li>Replace illegible labels as found during maintenance</li>
-                </ul>
-              </div>
+          <ConceptBlock title="EICR labelling deficiency classification">
+            <p>
+              Inspectors classify labelling deficiencies using the EICR coding system. Understanding
+              these classifications helps maintenance technicians prioritise remedial work and
+              maintain installations between periodic inspections.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Deficiency</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Typical code</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Action required</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Missing circuit chart — circuits unidentifiable
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">C2</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Urgent remedial action required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Missing dual supply warning
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">C2</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Urgent — potentially dangerous
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Missing voltage warning (400 V)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">C2</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Urgent — risk of electric shock
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Circuit chart inaccurate (minor)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">C3</td>
+                    <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">
+                      Missing earthing/bonding label
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">C3</td>
+                    <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Missing RCD test notice</td>
+                    <td className="border border-white/10 px-3 py-2">C3</td>
+                    <td className="border border-white/10 px-3 py-2">Improvement recommended</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
+          <ConceptBlock title="Note">
+            <p className="italic">
+              Under ST1426, maintenance technicians must maintain accurate records and ensure
+              installation documentation remains current. This includes circuit charts, cable
+              schedules, equipment registers and all labelling systems. Record-keeping is assessed
+              as part of the end-point assessment portfolio evidence.
+            </p>
+          </ConceptBlock>
 
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Trunking &amp; Conduits
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'BS 7671 mandatory labels: circuit chart at every DB (Reg 514.9); voltage warning where >230 V (Reg 514.10); RCD test notice (Reg 514.12); earthing/bonding labels (Reg 514.13); mixed colours warning (Reg 514.14); dual/alternative supply (Reg 514.15).',
+              'Key standards: BS EN 81346 (equipment reference designations), BS EN ISO 7010 (safety sign symbols).',
+              'Safety sign colours: red (prohibition/fire), yellow (warning), blue (mandatory), green (safe condition).',
+              'Cable labels belong at origin, destination and every accessible intermediate point.',
+              'Update circuit charts immediately after every modification — never leave it for later.',
+              'Replace illegible labels as soon as they are found during maintenance — an outdated label is worse than no label.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Trunking, Conduits and Cable Management
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section4-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  General Lighting Circuits
+                </div>
+              </button>
+            </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

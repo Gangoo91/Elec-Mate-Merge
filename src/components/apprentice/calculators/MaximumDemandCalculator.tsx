@@ -274,70 +274,92 @@ const MaximumDemandCalculator = () => {
     setSupplyVoltage(next === 'three-phase' ? '400' : '230');
   };
 
+  // FIX (#8): the report previously bundled the assessed circuit loads into an "Inputs" section
+  // alongside the supply configuration and showed a "Load schedule" that carried no regulatory
+  // basis for the diversity applied per type — a maximum-demand figure a client cannot see the
+  // justification for. Rebuilt to mirror the diversity calculator's report, which uses the
+  // engine's own breakdownByType[].regulation as the visible basis for each reduction.
   const buildReport = (): CalcReport | null => {
     if (!result) return null;
     const supplyInfo = calculateSupplyRequirements(result.diversifiedLoad);
+    const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
+    const installationLabel = location.charAt(0).toUpperCase() + location.slice(1);
+    const supplyLabel = supplyType === 'three-phase' ? 'Three phase' : 'Single phase';
+    const reductionKw = result.totalInstalledLoad - result.diversifiedLoad;
+
+    const perTypePrefixes = result.breakdownByType.map((b) => `${b.displayName}:`);
+    // The per-type notes restate what "Diversity applied" already shows against the
+    // actual kW, so keep only the notes that add something (the Reg 536.4.202 warning,
+    // the basis of the tables, and any engine caution).
+    const generalNotes = (result.complianceNotes ?? []).filter(
+      (n) => n.trim() && !perTypePrefixes.some((prefix) => n.startsWith(prefix))
+    );
+
     return {
       meta: {
         title: 'Maximum Demand',
-        subtitle: 'Diversified load and supply assessment',
+        subtitle: `Diversified load and supply assessment — ${supplyLabel} ${supplyVoltage} V, ${installationLabel.toLowerCase()}`,
         standard: 'IET On-Site Guide — Appendix A, Table A2',
       },
       headline: [
         { label: 'Maximum demand', value: result.diversifiedLoad.toFixed(2), unit: 'kW' },
         { label: 'Diversified current', value: result.diversifiedCurrent.toFixed(1), unit: 'A' },
+        { label: 'Overall diversity', value: pct(result.overallDiversityFactor) },
       ],
       sections: [
         {
-          heading: 'Inputs',
+          heading: 'Supply',
           rows: [
-            {
-              label: 'Installation type',
-              value: location.charAt(0).toUpperCase() + location.slice(1),
-            },
-            {
-              label: 'Supply type',
-              value: supplyType === 'three-phase' ? 'Three phase' : 'Single phase',
-            },
-            { label: 'Voltage', value: `${supplyVoltage} V` },
-            ...loadsWithPower.map((l) => ({
-              label: l.name,
-              value: `${l.power} kW`,
-            })),
+            { label: 'Installation type', value: installationLabel },
+            { label: 'Supply', value: `${supplyLabel}, ${supplyVoltage} V` },
           ],
         },
+        ...(loadsWithPower.length
+          ? [
+              {
+                heading: 'Circuit loads assessed',
+                rows: loadsWithPower.map((l) => ({ label: l.name, value: `${l.power} kW` })),
+              },
+            ]
+          : []),
         {
-          heading: 'Result',
+          heading: 'Diversity applied',
+          // Per-type, with the engine's own regulation string — the justification for the
+          // reduction, and the reason a client can trust the headline figure.
+          rows: result.breakdownByType.map((b) => ({
+            label: `${b.displayName}${b.count > 1 ? ` (×${b.count})` : ''}`,
+            value: `${b.diversifiedLoad.toFixed(2)} kW`,
+            note: `${pct(b.diversityFactor)} of ${b.installedLoad.toFixed(2)} kW · ${b.regulation}`,
+          })),
+        },
+        {
+          heading: 'Summary',
+          // Deliberately does not repeat the headline figures verbatim — shows the journey from
+          // connected load to assessed demand and supply adequacy.
           rows: [
-            { label: 'Connected load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
-            {
-              label: 'Maximum demand (after diversity)',
-              value: `${result.diversifiedLoad.toFixed(2)} kW`,
-            },
-            { label: 'Diversified current', value: `${result.diversifiedCurrent.toFixed(1)} A` },
-            {
-              label: 'Overall diversity factor',
-              value: `${(result.overallDiversityFactor * 100).toFixed(0)}%`,
-            },
+            { label: 'Total connected load', value: `${result.totalInstalledLoad.toFixed(2)} kW` },
             {
               label: 'Total design current (no diversity)',
               value: `${result.totalDesignCurrent.toFixed(1)} A`,
               note: 'Reg 536.4.202 — the assembly rating check uses this figure, not the diversified current',
             },
+            {
+              label: 'Reduction from diversity',
+              value: `${reductionKw.toFixed(2)} kW`,
+              note:
+                result.totalInstalledLoad > 0
+                  ? `${((reductionKw / result.totalInstalledLoad) * 100).toFixed(0)}% of the connected load`
+                  : undefined,
+            },
             { label: 'Supply assessment', value: supplyInfo.supplyAdequacy },
             { label: 'Recommended main switch', value: supplyInfo.mainSwitchRecommendation },
           ],
         },
-        {
-          heading: 'Load schedule',
-          rows: result.breakdownByType.map((b) => ({
-            label: b.displayName,
-            value: `${b.diversifiedLoad.toFixed(1)} kW`,
-            note: `Installed ${b.installedLoad.toFixed(1)} kW`,
-          })),
-        },
       ],
-      notes: result.complianceNotes?.length ? result.complianceNotes : undefined,
+      // The engine's first notes restate the per-type diversity basis, which the
+      // "Diversity applied" section above now carries in more detail (and against
+      // the actual kW). Keeping both would print the same justification twice.
+      notes: generalNotes.length ? generalNotes : undefined,
     };
   };
 

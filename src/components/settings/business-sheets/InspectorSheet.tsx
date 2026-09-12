@@ -3,13 +3,7 @@ import { Sheet } from '@/components/ui/sheet';
 import SettingsSheetContent from '@/components/settings/SettingsSheetContent';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { SchemeLogoPicker } from '@/components/settings/settings/SchemeLogoPicker';
 import { CompanyProfile } from '@/types/company';
@@ -17,6 +11,14 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Eyebrow } from '@/components/college/primitives';
 import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
+import {
+  chipBase,
+  chipOff,
+  chipOn,
+  inputCn,
+  labelCn,
+  selectTriggerCn,
+} from '@/components/settings/formStyles';
 
 // Single source of truth — shared with EICR Inspector Details + EIC Declarations
 const AVAILABLE_QUALIFICATIONS = INSPECTOR_QUALIFICATIONS;
@@ -38,6 +40,12 @@ const INSURANCE_PROVIDERS = [
 ];
 
 const INSURANCE_COVERAGE_OPTIONS = ['£1,000,000', '£2,000,000', '£5,000,000', '£10,000,000'];
+
+const INSURANCE_PROVIDER_PICKER_OPTIONS = INSURANCE_PROVIDERS.map((p) => ({ value: p, label: p }));
+const INSURANCE_COVERAGE_PICKER_OPTIONS = INSURANCE_COVERAGE_OPTIONS.map((c) => ({
+  value: c,
+  label: c,
+}));
 
 interface InspectorSheetProps {
   open: boolean;
@@ -113,8 +121,8 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SettingsSheetContent className="bg-[hsl(0_0%_12%)]">
-        <div className="flex flex-col h-full bg-[hsl(0_0%_12%)]">
+      <SettingsSheetContent className="bg-elec-dark" title="Inspector details">
+        <div className="flex flex-col h-full bg-elec-dark">
           <div className="lg:hidden flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
@@ -130,12 +138,12 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
           <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">
             {/* Inspector name */}
             <div className="space-y-1.5">
-              <Label className="text-white font-medium text-[13px]">Inspector name</Label>
+              <Label className={labelCn}>Inspector name</Label>
               <Input
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
                 placeholder="Full name"
-                className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                className={inputCn}
               />
             </div>
 
@@ -169,12 +177,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                           isSelected ? prev.filter((q) => q !== qual) : [...prev, qual]
                         );
                       }}
-                      className={cn(
-                        'px-3 py-2 rounded-xl text-[13px] font-medium transition-colors touch-manipulation border',
-                        isSelected
-                          ? 'bg-elec-yellow text-black border-elec-yellow'
-                          : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
-                      )}
+                      className={cn(chipBase, 'flex-none px-3', isSelected ? chipOn : chipOff)}
                       aria-pressed={isSelected}
                     >
                       {isSelected && <span className="mr-1.5 font-semibold">✓</span>}
@@ -192,51 +195,41 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
               <Eyebrow>Insurance details</Eyebrow>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[12px]">Provider</Label>
-                  <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
-                    <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
-                      <SelectValue placeholder="Provider" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                      {INSURANCE_PROVIDERS.map((provider) => (
-                        <SelectItem key={provider} value={provider}>
-                          {provider}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label className={labelCn}>Provider</Label>
+                  <MobileSelectPicker
+                    value={insuranceProvider}
+                    onValueChange={setInsuranceProvider}
+                    options={INSURANCE_PROVIDER_PICKER_OPTIONS}
+                    placeholder="Provider"
+                    triggerClassName={selectTriggerCn}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[12px]">Coverage</Label>
-                  <Select value={insuranceCoverage} onValueChange={setInsuranceCoverage}>
-                    <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
-                      <SelectValue placeholder="Coverage" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_16%)] border-white/[0.12] shadow-xl shadow-black/50 text-white">
-                      {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
-                        <SelectItem key={coverage} value={coverage}>
-                          {coverage}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label className={labelCn}>Coverage</Label>
+                  <MobileSelectPicker
+                    value={insuranceCoverage}
+                    onValueChange={setInsuranceCoverage}
+                    options={INSURANCE_COVERAGE_PICKER_OPTIONS}
+                    placeholder="Coverage"
+                    triggerClassName={selectTriggerCn}
+                  />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[12px]">Policy number</Label>
+                  <Label className={labelCn}>Policy number</Label>
                   <Input
                     value={insurancePolicyNumber}
                     onChange={(e) => setInsurancePolicyNumber(e.target.value)}
                     placeholder="Policy number"
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <Label className="text-white font-medium text-[12px]">Expiry</Label>
+                  <Label className={labelCn}>Expiry</Label>
                   <Input
                     type="date"
                     value={insuranceExpiry}
                     onChange={(e) => setInsuranceExpiry(e.target.value)}
-                    className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                    className={inputCn}
                   />
                 </div>
               </div>
@@ -259,7 +252,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
             >
               {isSaving ? 'Saving…' : 'Save'}
             </button>

@@ -1,5 +1,7 @@
 import { copyToClipboard } from '@/utils/clipboard';
 import { useState, useCallback } from 'react';
+import type { CalcReport } from '@/lib/calculator-report';
+import { useProvideCalcReport } from '@/lib/calculator-report-context';
 import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -242,6 +244,108 @@ const PFCCalculator = () => {
     parsePositive(zeValue) !== null &&
     parsePositive(r1r2Value) !== null &&
     parsePositive(zLineNeutral) !== null;
+
+  const buildReport = (): CalcReport | null => {
+    if (!result) return null;
+
+    const systemLabel =
+      systemTypeOptions.find(
+        (o) => o.value === (result.isThreePhase ? 'three-phase' : 'single-phase')
+      )?.label || (result.isThreePhase ? 'Three phase' : 'Single phase');
+
+    // Each fault Appendix 14 asks for, with the basis of the reported figure
+    // flagged so the client can see which one the PFC came from.
+    const faultRows = [
+      {
+        label: 'Line–earth fault current',
+        value: `${result.earthFaultCurrent.toFixed(0)} A`,
+        note: `U₀ ÷ Zs = ${result.voltage} ÷ ${result.zsTotal.toFixed(3)} Ω${
+          result.pfcBasis === 'line–earth (earth fault loop)' ? ' · highest — reported above' : ''
+        }`,
+      },
+      {
+        label: 'Line–neutral fault current',
+        value: `${result.shortCircuitLN.toFixed(0)} A`,
+        note: `U₀ ÷ Z(L–N) = ${result.voltage} ÷ ${result.zLineNeutralValue} Ω${
+          result.pfcBasis === 'line–neutral short-circuit' ? ' · highest — reported above' : ''
+        }`,
+      },
+      ...(result.shortCircuitLL !== null
+        ? [
+            {
+              label: 'Line–line fault current',
+              value: `${result.shortCircuitLL.toFixed(0)} A`,
+              note: 'Line–neutral value × √3',
+            },
+          ]
+        : []),
+      ...(result.shortCircuit3Ph !== null
+        ? [
+            {
+              label: 'All three line conductors',
+              value: `${result.shortCircuit3Ph.toFixed(0)} A`,
+              note: `Line–neutral value × 2${
+                result.pfcBasis === 'three-phase (all line conductors)'
+                  ? ' · highest — reported above'
+                  : ''
+              }`,
+            },
+          ]
+        : []),
+    ];
+
+    return {
+      meta: {
+        title: 'Prospective Fault Current',
+        subtitle: `Fault current at the point assessed — ${systemLabel}, external loop impedance ${result.zeValue} Ω with a circuit R1+R2 of ${result.r1r2Value} Ω`,
+        standard: 'BS 7671 — Appendix 14',
+      },
+      headline: [
+        { label: 'Prospective fault current', value: result.pfcValue.toFixed(0), unit: 'A' },
+        { label: 'Minimum breaking capacity', value: result.breakingCapacity },
+        { label: 'Fault level', value: result.assessmentLevel },
+      ],
+      sections: [
+        {
+          heading: 'Inputs',
+          rows: [
+            { label: 'System type', value: systemLabel },
+            { label: 'U₀ — nominal line-to-neutral voltage', value: `${result.voltage} V` },
+            { label: 'Ze — external loop impedance', value: `${result.zeValue} Ω` },
+            { label: 'R1+R2 — circuit conductor resistance', value: `${result.r1r2Value} Ω` },
+            { label: 'Line–neutral loop impedance', value: `${result.zLineNeutralValue} Ω` },
+          ],
+        },
+        { heading: 'Fault currents assessed', rows: faultRows },
+        {
+          heading: 'Result',
+          rows: [
+            {
+              label: 'Earth fault loop impedance (Zs)',
+              value: `${result.zsTotal.toFixed(3)} Ω`,
+              note: `Ze ${result.zeValue} Ω + R1+R2 ${result.r1r2Value} Ω`,
+            },
+            {
+              label: 'Fault the reported figure comes from',
+              value: result.pfcBasis,
+              note: `${(result.pfcValue / 1000).toFixed(2)} kA — the greatest of the values above`,
+            },
+            {
+              label: 'Device requirement',
+              value: `${result.breakingCapacity} rated breaking capacity`,
+              note: 'Every protective device at this point must be able to interrupt the fault current safely (Reg 432.1)',
+            },
+          ],
+        },
+      ],
+      notes: [
+        'BS 7671 Appendix 14: the prospective fault current is the greater of the line–neutral and line–earth values. In a three-phase installation the highest value comes from a simultaneous fault on all line conductors, taken as twice the line–neutral figure.',
+        ...result.recommendations,
+      ].filter((t) => t.trim()),
+    };
+  };
+
+  useProvideCalcReport(result ? buildReport : null);
 
   return (
     <CalculatorCard

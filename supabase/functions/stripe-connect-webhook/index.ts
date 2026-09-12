@@ -342,7 +342,9 @@ serve(async (req) => {
         if (electricianUserId) {
           const paymentAmount = session.amount_total ? session.amount_total / 100 : 0;
           const payTitle = `Payment received · ${formatCurrency(paymentAmount)}`;
-          const payBody = `Invoice ${invoiceNumber} paid by card.`;
+          // `invoiceNumber` already carries the word — this rendered as
+          // "Invoice Invoice/S502 paid by card."
+          const payBody = `${invoiceNumber} paid by card.`;
 
           await supabase
             .from('push_notification_log')

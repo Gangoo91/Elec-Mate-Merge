@@ -504,11 +504,17 @@ const CircuitBreakerSelectorCalculator = () => {
         {
           heading: 'Inputs',
           rows: [
-            { label: 'Circuit type', value: circuitType },
+            {
+              label: 'Circuit type',
+              value: circuitTypes.find((c) => c.value === circuitType)?.label ?? circuitType,
+            },
             { label: 'Premises', value: premises === 'domestic' ? 'Domestic (household)' : 'Commercial / industrial' },
             { label: 'Design current (Ib)', value: `${designCurrent} A` },
             ...(cableIz ? [{ label: 'Cable capacity (Iz)', value: `${cableIz} A` }] : []),
-            { label: 'System type', value: systemType },
+            {
+              label: 'System type',
+              value: systemTypes.find((s) => s.value === systemType)?.label ?? systemType,
+            },
             ...(prospectiveFault
               ? [{ label: 'Prospective fault current', value: `${prospectiveFault} kA` }]
               : []),
@@ -517,17 +523,20 @@ const CircuitBreakerSelectorCalculator = () => {
           ],
         },
         {
-          heading: 'Result',
+          // The recommended device, its Max Zs and its breaking capacity are
+          // already the headline — repeating them verbatim here would restate
+          // rather than add detail, so this section carries only what the
+          // headline doesn't: the rating/curve breakdown, the Zs basis and the
+          // RCD requirement.
+          heading: 'Result detail',
           rows: [
-            { label: 'Recommended device', value: result.recommendedLabel },
             { label: 'Rating', value: `${result.rating} A` },
             {
               label: 'Trip curve',
               value: result.curveType === 'N/A' ? '—' : `Type ${result.curveType}`,
             },
-            { label: 'Breaking capacity', value: `${result.breakingCapacity} kA` },
             {
-              label: 'Max Zs',
+              label: 'Max Zs basis',
               value: result.maxZs > 0 ? `${result.maxZs.toFixed(2)} Ω` : '—',
               note: result.zsBasis,
             },

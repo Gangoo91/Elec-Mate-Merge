@@ -4,43 +4,42 @@ import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
-    {
-      number: '4.6.1',
-      title: 'Identifying underlying failures',
-      description: 'Techniques for identifying root causes rather than symptoms',
-      icon: Search,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6-1',
-    },
-    {
-      number: '4.6.2',
-      title: "The '5 Whys' Technique",
-      description: 'Using the 5 Whys method for systematic root cause investigation',
-      icon: HelpCircle,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6-2',
-    },
-    {
-      number: '4.6.3',
-      title: 'Fishbone (ishikawa) diagrams',
-      description: 'Creating and using fishbone diagrams for cause analysis',
-      icon: GitBranch,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6-3',
-    },
-    {
-      number: '4.6.4',
-      title: 'Corrective vs preventive actions',
-      description: 'Developing appropriate corrective and preventive action plans',
-      icon: Target,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6-4',
-    },
-    {
-      number: '4.6.5',
-      title: 'Recording and reporting RCA outcomes',
-      description: 'Documentation and communication of root cause analysis results',
-      icon: FileText,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6-5',
-    },
-  ];
-
+  {
+    number: '4.6.1',
+    title: 'Identifying underlying failures',
+    description: 'Techniques for identifying root causes rather than symptoms',
+    icon: Search,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section6-1',
+  },
+  {
+    number: '4.6.2',
+    title: "The '5 Whys' Technique",
+    description: 'Using the 5 Whys method for systematic root cause investigation',
+    icon: HelpCircle,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section6-2',
+  },
+  {
+    number: '4.6.3',
+    title: 'Fishbone (ishikawa) diagrams',
+    description: 'Creating and using fishbone diagrams for cause analysis',
+    icon: GitBranch,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section6-3',
+  },
+  {
+    number: '4.6.4',
+    title: 'Corrective vs preventive actions',
+    description: 'Developing appropriate corrective and preventive action plans',
+    icon: Target,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section6-4',
+  },
+  {
+    number: '4.6.5',
+    title: 'Recording and reporting RCA outcomes',
+    description: 'Documentation and communication of root cause analysis results',
+    icon: FileText,
+    href: '/study-centre/apprentice/m-o-e-t-module4-section6-5',
+  },
+];
 
 const MOETModule4Section6 = () => {
   useSEO(

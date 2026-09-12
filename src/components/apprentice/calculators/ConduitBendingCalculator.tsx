@@ -100,7 +100,9 @@ const ConduitBendingCalculator = () => {
     return takeUpValues[size] || 100;
   };
 
-  // Get minimum bend radius based on conduit size (BS 7671 Table 4F1)
+  // Minimum internal bend radii. BS 7671 522.8.3 sets a performance requirement
+  // only — it specifies NO numeric radius — so these are the conventional trade
+  // figures (roughly 5x conduit diameter). Never present them as a BS 7671 table.
   const getMinBendRadius = (size: string): number => {
     const radii: Record<string, number> = {
       '20': 100,
@@ -454,9 +456,7 @@ const ConduitBendingCalculator = () => {
       );
     }
 
-    const resultRows: { label: string; value: string; note?: string }[] = [
-      { label: 'First bend mark', value: `${result.firstBendMark.toFixed(1)} mm` },
-    ];
+    const resultRows: { label: string; value: string; note?: string }[] = [];
     if (result.secondBendMark > 0)
       resultRows.push({ label: 'Second bend mark', value: `${result.secondBendMark.toFixed(1)} mm` });
     if (result.thirdBendMark)
@@ -470,14 +470,11 @@ const ConduitBendingCalculator = () => {
         label: 'Distance between bends',
         value: `${result.distanceBetweenBends.toFixed(1)} mm`,
       });
-    resultRows.push(
-      { label: 'Take-up (90°)', value: `${result.takeUp} mm` },
-      { label: 'Minimum bend radius', value: `${result.minBendRadius} mm`, note: 'Table 4F1' }
-    );
+    resultRows.push({ label: 'Take-up (90°)', value: `${result.takeUp} mm` });
 
     return {
       meta: {
-        title: 'Conduit Bending Calculator',
+        title: 'Conduit Bending',
         subtitle: `${result.bendType} — ${conduitSize} mm conduit`,
       },
       headline: [
@@ -773,8 +770,14 @@ const ConduitBendingCalculator = () => {
                   <CollapsibleContent className="pt-2">
                     <div className="space-y-3 pl-1">
                       <h4 className="font-medium text-amber-400 mb-2 text-sm">
-                        Table 4F1 - Minimum Internal Bend Radii
+                        Minimum internal bend radii — trade guidance
                       </h4>
+                      <p className="mb-2 text-xs text-white">
+                        BS 7671 Reg 522.8.3 requires only that a bend does not damage the
+                        cable or stress its terminations — it sets no numeric radius. The
+                        figures below are the conventional trade minima; check the conduit
+                        and cable manufacturer&rsquo;s data where it is more onerous.
+                      </p>
                       <div className="grid grid-cols-2 gap-2 text-xs">
                         <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
                           <span className="text-white">20mm:</span>{' '}

@@ -34,17 +34,26 @@ interface CalcReportContextValue {
   publish: (fn: ReportFn | null) => void;
   /** Read by the page's button. Null when the calculator has no result yet. */
   current: ReportFn | null;
+  /** Registry slug of the active calculator, if the host knows it. */
+  calculatorSlug?: string;
 }
 
 const CalcReportContext = createContext<CalcReportContextValue | null>(null);
 
-export function CalcReportProvider({ children }: { children: ReactNode }) {
+export function CalcReportProvider({
+  children,
+  calculatorSlug,
+}: {
+  children: ReactNode;
+  /** Registry slug of the active calculator, stored with a saved report. */
+  calculatorSlug?: string;
+}) {
   const [current, setCurrent] = useState<ReportFn | null>(null);
   const value = useMemo<CalcReportContextValue>(
     // Stored via the updater form: a function in state would otherwise be
     // treated as a state updater and invoked instead of kept.
-    () => ({ publish: (fn) => setCurrent(() => fn), current }),
-    [current]
+    () => ({ publish: (fn) => setCurrent(() => fn), current, calculatorSlug }),
+    [current, calculatorSlug]
   );
   return <CalcReportContext.Provider value={value}>{children}</CalcReportContext.Provider>;
 }
@@ -78,4 +87,9 @@ export function useProvideCalcReport(fn: ReportFn | null) {
 /** Used by the page to render its button. */
 export function useCalcReport(): ReportFn | null {
   return useContext(CalcReportContext)?.current ?? null;
+}
+
+/** The active calculator's slug, stored alongside a saved report. */
+export function useCalcReportSlug(): string | undefined {
+  return useContext(CalcReportContext)?.calculatorSlug;
 }

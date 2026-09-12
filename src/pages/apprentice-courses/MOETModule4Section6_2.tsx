@@ -1,8 +1,49 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 6.2 · Subsection 2 — The Five Whys Technique
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge  · "Electrical. Problem solving and critical reasoning
+ *                 techniques."
+ *   Behaviour  · "Continuous improvement (CI) systems and techniques."
+ *
+ * The worked examples (distribution board fire, repeated motor failure, UPS
+ * failure, cable joint failure) are the original page's own scenarios,
+ * preserved verbatim and mapped onto the Scenario component.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = "The '5 Whys' Technique - MOET Module 4.6.2";
@@ -28,9 +69,9 @@ const quickCheckQuestions = [
     question: "When should you stop asking 'why' in a 5 Whys analysis?",
     options: [
       "When you reach a cause that is within the organisation's control to correct and that would prevent recurrence",
-      "Always after exactly five questions, regardless of whether a root cause has been reached",
-      "As soon as you identify the component that physically failed",
-      "When the cause can be attributed to a specific individual who made the error",
+      'Always after exactly five questions, regardless of whether a root cause has been reached',
+      'As soon as you identify the component that physically failed',
+      'When the cause can be attributed to a specific individual who made the error',
     ],
     correctIndex: 0,
     explanation:
@@ -55,8 +96,8 @@ const quickCheckQuestions = [
     options: [
       "Confirm that exactly five 'why' questions were asked, no more and no fewer",
       "Read the causal chain in reverse — if each 'therefore' statement logically leads to the next, the chain is valid",
-      "Check that the analysis identifies a single individual responsible for the failure",
-      "Ensure the analysis was completed within fifteen minutes of the failure occurring",
+      'Check that the analysis identifies a single individual responsible for the failure',
+      'Ensure the analysis was completed within fifteen minutes of the failure occurring',
     ],
     correctIndex: 1,
     explanation:
@@ -110,8 +151,8 @@ const quizQuestions = [
     question: "In a 5 Whys analysis, what does 'branching' refer to?",
     options: [
       "Following multiple causal pathways when a single 'why' produces more than one valid answer",
-      "Skipping intermediate steps to reach the root cause more quickly",
-      "Splitting the investigation team into separate groups for each failure",
+      'Skipping intermediate steps to reach the root cause more quickly',
+      'Splitting the investigation team into separate groups for each failure',
       "Asking the same 'why' question repeatedly until the answer changes",
     ],
     correctAnswer: 0,
@@ -218,9 +259,9 @@ const quizQuestions = [
       'Which of the following would strengthen a 5 Whys analysis of an electrical equipment failure?',
     options: [
       "Supporting each 'why' answer with factual evidence such as test data, maintenance records, photographs or manufacturer specifications",
-      "Limiting the chain to exactly five questions so the analysis stays consistent across every investigation",
+      'Limiting the chain to exactly five questions so the analysis stays consistent across every investigation',
       "Recording only the final root cause, since the intermediate 'why' answers are not needed once it is reached",
-      "Completing the analysis as quickly as possible so the equipment can be returned to service without delay",
+      'Completing the analysis as quickly as possible so the equipment can be returned to service without delay',
     ],
     correctAnswer: 0,
     explanation:
@@ -258,403 +299,331 @@ const faqs = [
 ];
 
 const MOETModule4Section6_2 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 4.6.2</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            The '5 Whys' Technique
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.6 · Subsection 2"
+        title="The 5 Whys Technique"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Using iterative questioning for systematic root cause investigation in electrical
-            maintenance
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Method:</strong> Iteratively ask 'why' to trace from symptom to root cause
-              </li>
-              <li className="pl-1">
-                <strong>Origin:</strong> Toyota Production System — Sakichi Toyoda
-              </li>
-              <li className="pl-1">
-                <strong>Branching:</strong> Multiple valid answers create a cause tree
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> 'Therefore' test reads the chain in reverse
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Electrical Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              "Method: Iteratively ask 'why' to trace from symptom to root cause",
+              'Origin: Toyota Production System — Sakichi Toyoda',
+              'Branching: Multiple valid answers create a cause tree',
+              "Verification: 'Therefore' test reads the chain in reverse",
+            ]}
+          />
+
+          <ConceptBlock title="Electrical maintenance context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Application:</strong> Motor failures, tripping, overheating, cable faults
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Depth:</strong> Moves beyond component replacement to systemic prevention
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Team:</strong> Best conducted with cross-functional knowledge
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Maps to fault diagnosis and continuous improvement
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the origins and principles of the 5 Whys technique',
               'Apply the 5 Whys method to electrical maintenance failure scenarios',
               'Handle branching causal chains when multiple causes exist',
               "Use the 'therefore' test to verify the logical validity of the analysis",
               'Recognise the limitations of the 5 Whys and when to supplement with other techniques',
               'Document and communicate 5 Whys findings effectively under ST1426 requirements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Origins and principles of the 5 Whys</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Origins and Principles of the 5 Whys
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Origins and Principles of the 5 Whys"
+            onSite="Important distinction: The 5 Whys is a root cause analysis tool, not a fault-finding procedure. Fault-finding identifies what has failed and locates the defective component. Root cause analysis asks why the component failed in the first place. Both are essential skills for the maintenance technician, but they serve different purposes. You must first find the fault (using systematic fault diagnosis), then ask why it occurred (using root cause analysis)."
+          >
             <p>
               The 5 Whys technique was developed by Sakichi Toyoda, the founder of Toyota
               Industries, in the 1930s. It became a fundamental component of the Toyota Production
               System and has since been adopted across virtually every industry as one of the
               simplest and most effective root cause analysis tools available. Its beauty lies in
               its simplicity: it requires no statistical knowledge, no specialist software, and no
-              expensive equipment — just a willingness to keep asking "why" until the real reason
-              for a failure is uncovered.
+              expensive equipment — just a willingness to keep asking &quot;why&quot; until the real
+              reason for a failure is uncovered.
             </p>
             <p>
-              The principle is deceptively simple. When a problem or failure occurs, you ask "why
-              did this happen?" and obtain an answer. You then take that answer and ask "why?"
-              again. You continue this iterative process, peeling back each layer of causation,
-              until you arrive at a root cause — a fundamental deficiency that, if corrected, would
-              prevent the failure from recurring. The number five is not prescriptive; it is simply
-              an observation that five iterations are often sufficient to move from a surface-level
-              symptom to a meaningful root cause.
+              The principle is deceptively simple. When a problem or failure occurs, you ask
+              &quot;why did this happen?&quot; and obtain an answer. You then take that answer and
+              ask &quot;why?&quot; again. You continue this iterative process, peeling back each
+              layer of causation, until you arrive at a root cause — a fundamental deficiency that,
+              if corrected, would prevent the failure from recurring. The number five is not
+              prescriptive; it is simply an observation that five iterations are often sufficient to
+              move from a surface-level symptom to a meaningful root cause.
             </p>
             <p>
               In electrical maintenance, the 5 Whys transforms the way technicians approach fault
               diagnosis. Instead of simply replacing the failed component and moving on, the
               technique encourages deeper thinking: Why did the component fail? Was it the wrong
               component for the application? Was the maintenance schedule adequate? Was the
-              installation carried out correctly? Each "why" moves the investigation from the
-              technical symptom towards the human and organisational factors that created the
+              installation carried out correctly? Each &quot;why&quot; moves the investigation from
+              the technical symptom towards the human and organisational factors that created the
               conditions for the failure.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Core Principles</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Start with the problem statement:</strong> Define the failure clearly and
-                  specifically — "Motor M-101 tripped on overload at 14:35 on 12 January" is better
-                  than "the motor stopped"
-                </li>
-                <li className="pl-1">
-                  <strong>Ask 'why' iteratively:</strong> Each answer becomes the basis for the next
-                  question
-                </li>
-                <li className="pl-1">
-                  <strong>Base answers on evidence:</strong> Avoid speculation and opinion — use
-                  data, records, test results, and observations
-                </li>
-                <li className="pl-1">
-                  <strong>Follow all branches:</strong> When a question has multiple valid answers,
-                  follow each branch
-                </li>
-                <li className="pl-1">
-                  <strong>Stop at actionable causes:</strong> Continue until you reach a cause the
-                  organisation can control and correct
-                </li>
-                <li className="pl-1">
-                  <strong>Avoid blame:</strong> Focus on systemic causes, not individual fault
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Core principles">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Start with the problem statement:</strong> Define the failure clearly and
+                specifically — &quot;Motor M-101 tripped on overload at 14:35 on 12 January&quot; is
+                better than &quot;the motor stopped&quot;
+              </li>
+              <li>
+                <strong>Ask &apos;why&apos; iteratively:</strong> Each answer becomes the basis for
+                the next question
+              </li>
+              <li>
+                <strong>Base answers on evidence:</strong> Avoid speculation and opinion — use data,
+                records, test results, and observations
+              </li>
+              <li>
+                <strong>Follow all branches:</strong> When a question has multiple valid answers,
+                follow each branch
+              </li>
+              <li>
+                <strong>Stop at actionable causes:</strong> Continue until you reach a cause the
+                organisation can control and correct
+              </li>
+              <li>
+                <strong>Avoid blame:</strong> Focus on systemic causes, not individual fault
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Important Distinction</p>
-              <p className="text-sm text-white">
-                The 5 Whys is a root cause analysis tool, not a fault-finding procedure.
-                Fault-finding identifies what has failed and locates the defective component. Root
-                cause analysis asks why the component failed in the first place. Both are essential
-                skills for the maintenance technician, but they serve different purposes. You must
-                first find the fault (using systematic fault diagnosis), then ask why it occurred
-                (using root cause analysis).
-              </p>
-            </div>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Worked Examples in Electrical Maintenance
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Worked examples in electrical maintenance</ContentEyebrow>
+
+          <ConceptBlock title="Worked Examples in Electrical Maintenance">
             <p>
               The best way to understand the 5 Whys is through practical examples. The following
               worked examples demonstrate how the technique applies to common electrical maintenance
-              scenarios, illustrating how each "why" peels back a layer of causation to reveal
-              deeper systemic issues.
+              scenarios, illustrating how each &quot;why&quot; peels back a layer of causation to
+              reveal deeper systemic issues.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example 1: Distribution Board Fire
-              </h3>
-              <p className="text-sm text-white mb-3 italic">
-                Problem: A distribution board in a commercial premises caught fire, causing
-                extensive damage.
-              </p>
-              <div className="space-y-2 text-sm text-white">
+          <Scenario
+            title="Example 1: Distribution Board Fire"
+            situation={
+              <>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 1:</strong> Why did the distribution
-                  board catch fire?{' '}
+                  Problem: A distribution board in a commercial premises caught fire, causing
+                  extensive damage.
+                </p>
+                <p>
+                  <strong>Why 1:</strong> Why did the distribution board catch fire?{' '}
                   <em>Because a cable termination overheated to the point of ignition.</em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 2:</strong> Why did the termination
-                  overheat?{' '}
+                  <strong>Why 2:</strong> Why did the termination overheat?{' '}
                   <em>
                     Because the connection had become loose, creating high resistance and localised
                     heating.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 3:</strong> Why was the connection
-                  loose?{' '}
+                  <strong>Why 3:</strong> Why was the connection loose?{' '}
                   <em>
                     Because the terminal screws were not tightened to the correct torque when the
                     circuit was installed.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 4:</strong> Why were the screws not
-                  correctly torqued?{' '}
+                  <strong>Why 4:</strong> Why were the screws not correctly torqued?{' '}
                   <em>
                     Because the installer did not use a torque screwdriver and relied on feel.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 5:</strong> Why did the installer not
-                  use a torque screwdriver?{' '}
+                  <strong>Why 5:</strong> Why did the installer not use a torque screwdriver?{' '}
                   <em>
-                    Because the company's installation procedure did not require torque-controlled
-                    tightening, and no torque tools were provided.
+                    Because the company&apos;s installation procedure did not require
+                    torque-controlled tightening, and no torque tools were provided.
                   </em>
                 </p>
-              </div>
-              <div className="mt-3 p-3 rounded bg-white/5">
-                <p className="text-sm text-white">
+              </>
+            }
+            whatToDo={
+              <>
+                <p>
                   <strong>Root cause:</strong> Organisational — the installation procedure did not
                   specify torque-controlled tightening and the company did not provide appropriate
                   tools.
                 </p>
-                <p className="text-sm text-white mt-1">
+                <p>
                   <strong>Corrective actions:</strong> Update installation procedures to require
                   torque-controlled tightening to manufacturer specifications; procure calibrated
                   torque screwdrivers for all installation teams; implement spot-check inspections
                   on completed work.
                 </p>
-              </div>
-            </div>
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example 2: Repeated Motor Failure
-              </h3>
-              <p className="text-sm text-white mb-3 italic">
-                Problem: A pump motor on a water treatment plant fails every 6-8 months despite
-                replacement.
-              </p>
-              <div className="space-y-2 text-sm text-white">
+          <Scenario
+            title="Example 2: Repeated Motor Failure"
+            situation={
+              <>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 1:</strong> Why does the motor keep
-                  failing? <em>Because the winding insulation breaks down.</em>
+                  Problem: A pump motor on a water treatment plant fails every 6-8 months despite
+                  replacement.
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 2:</strong> Why does the insulation
-                  break down?{' '}
+                  <strong>Why 1:</strong> Why does the motor keep failing?{' '}
+                  <em>Because the winding insulation breaks down.</em>
+                </p>
+                <p>
+                  <strong>Why 2:</strong> Why does the insulation break down?{' '}
                   <em>
                     Because the motor runs at temperatures significantly above its rated thermal
                     class.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 3:</strong> Why does the motor
-                  overheat?{' '}
+                  <strong>Why 3:</strong> Why does the motor overheat?{' '}
                   <em>
                     Because the cooling fan shroud is partially blocked with debris, and the motor
                     is running at higher than design current.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 4:</strong> Why is the current higher
-                  than design?{' '}
+                  <strong>Why 4:</strong> Why is the current higher than design?{' '}
                   <em>
                     Because the pump throughput was increased by 30% last year to meet higher
                     demand, but the motor was not upsized.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 5:</strong> Why was the motor not
-                  upsized when throughput was increased?{' '}
+                  <strong>Why 5:</strong> Why was the motor not upsized when throughput was
+                  increased?{' '}
                   <em>
                     Because the process change was implemented by the operations team without a
                     management of change review that would have flagged the impact on the motor.
                   </em>
                 </p>
-              </div>
-              <div className="mt-3 p-3 rounded bg-white/5">
-                <p className="text-sm text-white">
+              </>
+            }
+            whatToDo={
+              <>
+                <p>
                   <strong>Root cause:</strong> Organisational — no management of change (MOC)
                   process to assess the engineering impact of operational changes on equipment
                   ratings.
                 </p>
-                <p className="text-sm text-white mt-1">
+                <p>
                   <strong>Corrective actions:</strong> Install correctly rated motor; implement a
                   management of change procedure requiring engineering review of all process
                   changes; clean and maintain fan shroud as part of PPM schedule.
                 </p>
-              </div>
-            </div>
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Example 3: UPS Failure During Power Cut
-              </h3>
-              <p className="text-sm text-white mb-3 italic">
-                Problem: A UPS system failed to support the critical load during a mains power
-                failure in a data centre.
-              </p>
-              <div className="space-y-2 text-sm text-white">
+          <Scenario
+            title="Example 3: UPS Failure During Power Cut"
+            situation={
+              <>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 1:</strong> Why did the UPS fail to
-                  support the load?{' '}
+                  Problem: A UPS system failed to support the critical load during a mains power
+                  failure in a data centre.
+                </p>
+                <p>
+                  <strong>Why 1:</strong> Why did the UPS fail to support the load?{' '}
                   <em>Because the battery bank could not deliver sufficient capacity.</em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 2:</strong> Why was the battery
-                  capacity insufficient?{' '}
+                  <strong>Why 2:</strong> Why was the battery capacity insufficient?{' '}
                   <em>
                     Because several battery cells had failed and were not delivering their rated
                     capacity.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 3:</strong> Why had the cells failed?{' '}
+                  <strong>Why 3:</strong> Why had the cells failed?{' '}
                   <em>
                     Because the batteries had reached end of life — they were 8 years old in a
                     system designed for 5-year battery life.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 4:</strong> Why were the batteries not
-                  replaced at their design life?{' '}
+                  <strong>Why 4:</strong> Why were the batteries not replaced at their design life?{' '}
                   <em>
                     Because the battery replacement was deferred twice due to budget constraints.
                   </em>
                 </p>
                 <p>
-                  <strong className="text-elec-yellow/80">Why 5:</strong> Why were budget
-                  constraints allowed to override a critical maintenance requirement?{' '}
+                  <strong>Why 5:</strong> Why were budget constraints allowed to override a critical
+                  maintenance requirement?{' '}
                   <em>
                     Because the maintenance team had no formal process for escalating
                     safety-critical deferrals to senior management for risk acceptance.
                   </em>
                 </p>
-              </div>
-              <div className="mt-3 p-3 rounded bg-white/5">
-                <p className="text-sm text-white">
-                  <strong>Root cause:</strong> Organisational — no formal escalation process for
-                  safety-critical maintenance deferrals, allowing budget decisions to override
-                  engineering necessity without informed risk acceptance by senior management.
-                </p>
-              </div>
-            </div>
+              </>
+            }
+            whatToDo={
+              <p>
+                <strong>Root cause:</strong> Organisational — no formal escalation process for
+                safety-critical maintenance deferrals, allowing budget decisions to override
+                engineering necessity without informed risk acceptance by senior management.
+              </p>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="What these examples show">
+            <p>
               <strong>Key point:</strong> Notice how all three examples moved from a technical
               symptom to an organisational root cause. This is typical of well-conducted 5 Whys
               analyses — the deepest causes are almost always found in management systems,
               procedures, or organisational culture.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Branching and the Cause Tree
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Branching and the cause tree</ContentEyebrow>
+
+          <ConceptBlock title="Branching and the Cause Tree">
             <p>
-              In practice, many failures have more than one causal pathway. When you ask "why?" and
-              receive two or more equally valid answers, each answer represents a branch that should
-              be followed independently. This transforms the simple linear chain of the basic 5 Whys
-              into a cause tree — a more comprehensive representation of the failure's multiple root
-              causes.
+              In practice, many failures have more than one causal pathway. When you ask
+              &quot;why?&quot; and receive two or more equally valid answers, each answer represents
+              a branch that should be followed independently. This transforms the simple linear
+              chain of the basic 5 Whys into a cause tree — a more comprehensive representation of
+              the failure&apos;s multiple root causes.
             </p>
             <p>
               Branching is not a complication to be avoided; it is a natural and valuable feature of
@@ -663,475 +632,339 @@ const MOETModule4Section6_2 = () => {
               could lead to future failures. The cause tree provides a complete picture, enabling a
               comprehensive set of corrective and preventive actions.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Branching Example: Cable Joint Failure
-              </h3>
-              <p className="text-sm text-white mb-3 italic">
-                Problem: An underground cable joint failed, causing loss of supply to a critical
-                process.
-              </p>
-              <div className="space-y-2 text-sm text-white">
-                <p>
-                  <strong className="text-elec-yellow/80">Why 1:</strong> Why did the cable joint
-                  fail? <em>Because water ingress caused insulation breakdown.</em>
-                </p>
-                <p className="text-sm text-white mt-2 mb-1">This branches into two paths:</p>
-              </div>
-              <div className="ml-4 mt-2 space-y-3">
-                <div className="p-3 rounded bg-white/5 border-l-2 border-elec-yellow/30">
-                  <p className="text-sm text-white font-medium mb-2">
-                    Branch A — Why was there water ingress?
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 2A:</strong> The heat-shrink sleeve
-                    did not seal properly.
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 3A:</strong> The jointer did not
-                    apply sufficient heat to achieve a full seal.
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 4A:</strong> The jointer had not
-                    received refresher training on the updated joint kit that required higher
-                    temperatures.
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    <em>
-                      Root cause A: Training gap — no refresher training provided when joint kit
-                      specifications changed.
-                    </em>
-                  </p>
-                </div>
-                <div className="p-3 rounded bg-white/5 border-l-2 border-elec-yellow/30">
-                  <p className="text-sm text-white font-medium mb-2">
-                    Branch B — Why was the insulation vulnerable to water?
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 2B:</strong> The cable joint pit did
-                    not have adequate drainage.
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 3B:</strong> The original drainage
-                    was blocked by silt and debris.
-                  </p>
-                  <p className="text-sm text-white">
-                    <strong className="text-elec-yellow/80">Why 4B:</strong> Cable joint pit
-                    inspection and drainage clearance was not included in the PPM schedule.
-                  </p>
-                  <p className="text-sm text-white mt-1">
-                    <em>
-                      Root cause B: Maintenance programme gap — cable joint pit maintenance not
-                      scheduled.
-                    </em>
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm text-white mt-3">
-                Both root causes need to be addressed: updating training for the new joint kit
-                specification and adding cable joint pit inspection to the PPM schedule. Correcting
-                only one branch would leave the other vulnerability in place.
-              </p>
-            </div>
+          <ConceptBlock title="Branching example: cable joint failure">
+            <p>
+              Problem: An underground cable joint failed, causing loss of supply to a critical
+              process.
+            </p>
+            <p>
+              <strong>Why 1:</strong> Why did the cable joint fail?{' '}
+              <em>Because water ingress caused insulation breakdown.</em> This branches into two
+              paths:
+            </p>
+            <p>
+              <strong>Branch A — Why was there water ingress?</strong>
+              <br />
+              <strong>Why 2A:</strong> The heat-shrink sleeve did not seal properly.
+              <br />
+              <strong>Why 3A:</strong> The jointer did not apply sufficient heat to achieve a full
+              seal.
+              <br />
+              <strong>Why 4A:</strong> The jointer had not received refresher training on the
+              updated joint kit that required higher temperatures.
+              <br />
+              <em>
+                Root cause A: Training gap — no refresher training provided when joint kit
+                specifications changed.
+              </em>
+            </p>
+            <p>
+              <strong>Branch B — Why was the insulation vulnerable to water?</strong>
+              <br />
+              <strong>Why 2B:</strong> The cable joint pit did not have adequate drainage.
+              <br />
+              <strong>Why 3B:</strong> The original drainage was blocked by silt and debris.
+              <br />
+              <strong>Why 4B:</strong> Cable joint pit inspection and drainage clearance was not
+              included in the PPM schedule.
+              <br />
+              <em>
+                Root cause B: Maintenance programme gap — cable joint pit maintenance not scheduled.
+              </em>
+            </p>
+            <p>
+              Both root causes need to be addressed: updating training for the new joint kit
+              specification and adding cable joint pit inspection to the PPM schedule. Correcting
+              only one branch would leave the other vulnerability in place.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Managing Branching in Practice
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Document each branch:</strong> Use a tree diagram or indented list format
-                  to keep track of multiple branches
-                </li>
-                <li className="pl-1">
-                  <strong>Prioritise branches:</strong> If time is limited, focus first on branches
-                  that relate to safety or that are most likely to lead to recurrence
-                </li>
-                <li className="pl-1">
-                  <strong>Merge where branches converge:</strong> Different branches sometimes lead
-                  to the same root cause — this is strong evidence that the identified root cause is
-                  significant
-                </li>
-                <li className="pl-1">
-                  <strong>Do not force branches to converge:</strong> Different root causes are
-                  perfectly normal — not every failure has a single root cause
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+          <ConceptBlock title="Managing branching in practice">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Document each branch:</strong> Use a tree diagram or indented list format to
+                keep track of multiple branches
+              </li>
+              <li>
+                <strong>Prioritise branches:</strong> If time is limited, focus first on branches
+                that relate to safety or that are most likely to lead to recurrence
+              </li>
+              <li>
+                <strong>Merge where branches converge:</strong> Different branches sometimes lead to
+                the same root cause — this is strong evidence that the identified root cause is
+                significant
+              </li>
+              <li>
+                <strong>Do not force branches to converge:</strong> Different root causes are
+                perfectly normal — not every failure has a single root cause
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            The 'Therefore' Test and Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>The &apos;therefore&apos; test and verification</ContentEyebrow>
+
+          <ConceptBlock title="The 'Therefore' Test and Verification">
             <p>
               Once you have completed a 5 Whys chain, it is essential to verify that the causal
-              logic is sound. The 'therefore' test is a simple but effective verification method
-              that reads the causal chain in reverse, using the word "therefore" to connect each
-              step. If every "therefore" statement makes logical sense, the chain is valid. If any
-              link breaks down logically, the analysis needs revision at that point.
+              logic is sound. The &apos;therefore&apos; test is a simple but effective verification
+              method that reads the causal chain in reverse, using the word &quot;therefore&quot; to
+              connect each step. If every &quot;therefore&quot; statement makes logical sense, the
+              chain is valid. If any link breaks down logically, the analysis needs revision at that
+              point.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Applying the 'Therefore' Test
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Using Example 1 (Distribution Board Fire) from the previous section:
-              </p>
-              <div className="space-y-2 text-sm text-white">
-                <p>
-                  "The installation procedure did not require torque-controlled tightening,{' '}
-                  <strong className="text-elec-yellow/80">therefore</strong> the installer did not
-                  use a torque screwdriver."
-                </p>
-                <p>
-                  "The installer did not use a torque screwdriver,{' '}
-                  <strong className="text-elec-yellow/80">therefore</strong> the terminal screws
-                  were not correctly torqued."
-                </p>
-                <p>
-                  "The terminal screws were not correctly torqued,{' '}
-                  <strong className="text-elec-yellow/80">therefore</strong> the connection became
-                  loose over time."
-                </p>
-                <p>
-                  "The connection became loose,{' '}
-                  <strong className="text-elec-yellow/80">therefore</strong> it overheated due to
-                  high resistance."
-                </p>
-                <p>
-                  "The connection overheated,{' '}
-                  <strong className="text-elec-yellow/80">therefore</strong> the distribution board
-                  caught fire."
-                </p>
-              </div>
-              <p className="text-sm text-white mt-3">
-                Each "therefore" statement is logically sound, confirming the causal chain is valid.
-                If any statement did not follow logically — for example, if the installer had used a
-                torque screwdriver but used the wrong setting — the chain would need to be revised
-                at that point to reflect the actual evidence.
-              </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Verification Errors</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Logical leaps:</strong> Skipping intermediate steps in the causal chain,
-                  making the "therefore" link unconvincing
-                </li>
-                <li className="pl-1">
-                  <strong>Assumed causation:</strong> Stating that A caused B without evidence —
-                  correlation is not causation
-                </li>
-                <li className="pl-1">
-                  <strong>Circular reasoning:</strong> The chain loops back on itself, with a later
-                  "why" answer being the same as an earlier one
-                </li>
-                <li className="pl-1">
-                  <strong>Opinion masquerading as fact:</strong> "Why" answers based on assumption
-                  rather than evidence
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Documenting the 5 Whys Analysis
-              </h3>
-              <p className="text-sm text-white mb-3">
-                A well-documented 5 Whys analysis should include the following elements:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Problem statement:</strong> Clear, specific description of the failure,
-                  including date, time, location and equipment identification
-                </li>
-                <li className="pl-1">
-                  <strong>Investigation team:</strong> Names and roles of all participants
-                </li>
-                <li className="pl-1">
-                  <strong>Evidence gathered:</strong> List of data sources — test results,
-                  maintenance records, photographs, witness statements
-                </li>
-                <li className="pl-1">
-                  <strong>The causal chain:</strong> Each "why" question and answer, clearly
-                  numbered and with supporting evidence referenced
-                </li>
-                <li className="pl-1">
-                  <strong>Root cause statement:</strong> A clear, concise statement of the root
-                  cause(s) identified
-                </li>
-                <li className="pl-1">
-                  <strong>Corrective actions:</strong> Specific actions to address the root cause,
-                  with owners and target dates
-                </li>
-                <li className="pl-1">
-                  <strong>Preventive actions:</strong> Actions to prevent similar failures
-                  elsewhere, including lessons learned
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> How and when the effectiveness of the corrective
-                  actions will be verified
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>ST1426 link:</strong> The ability to document and communicate the findings of
-              a root cause investigation is assessed under the maintenance technician standard. Your
-              documentation should be clear enough that someone unfamiliar with the failure could
-              understand the complete causal chain and the rationale for the corrective actions.
+          <ConceptBlock title="Applying the 'therefore' test">
+            <p>Using Example 1 (Distribution Board Fire) from the previous section:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                &quot;The installation procedure did not require torque-controlled tightening,{' '}
+                <strong>therefore</strong> the installer did not use a torque screwdriver.&quot;
+              </li>
+              <li>
+                &quot;The installer did not use a torque screwdriver, <strong>therefore</strong> the
+                terminal screws were not correctly torqued.&quot;
+              </li>
+              <li>
+                &quot;The terminal screws were not correctly torqued, <strong>therefore</strong> the
+                connection became loose over time.&quot;
+              </li>
+              <li>
+                &quot;The connection became loose, <strong>therefore</strong> it overheated due to
+                high resistance.&quot;
+              </li>
+              <li>
+                &quot;The connection overheated, <strong>therefore</strong> the distribution board
+                caught fire.&quot;
+              </li>
+            </ul>
+            <p>
+              Each &quot;therefore&quot; statement is logically sound, confirming the causal chain
+              is valid. If any statement did not follow logically — for example, if the installer
+              had used a torque screwdriver but used the wrong setting — the chain would need to be
+              revised at that point to reflect the actual evidence.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Common verification errors">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Logical leaps:</strong> Skipping intermediate steps in the causal chain,
+                making the &quot;therefore&quot; link unconvincing
+              </li>
+              <li>
+                <strong>Assumed causation:</strong> Stating that A caused B without evidence —
+                correlation is not causation
+              </li>
+              <li>
+                <strong>Circular reasoning:</strong> The chain loops back on itself, with a later
+                &quot;why&quot; answer being the same as an earlier one
+              </li>
+              <li>
+                <strong>Opinion masquerading as fact:</strong> &quot;Why&quot; answers based on
+                assumption rather than evidence
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Limitations and When to Use Other Techniques
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Documenting the 5 Whys analysis"
+            onSite="ST1426 link: The ability to document and communicate the findings of a root cause investigation is assessed under the maintenance technician standard. Your documentation should be clear enough that someone unfamiliar with the failure could understand the complete causal chain and the rationale for the corrective actions."
+          >
+            <p>A well-documented 5 Whys analysis should include the following elements:</p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Problem statement:</strong> Clear, specific description of the failure,
+                including date, time, location and equipment identification
+              </li>
+              <li>
+                <strong>Investigation team:</strong> Names and roles of all participants
+              </li>
+              <li>
+                <strong>Evidence gathered:</strong> List of data sources — test results, maintenance
+                records, photographs, witness statements
+              </li>
+              <li>
+                <strong>The causal chain:</strong> Each &quot;why&quot; question and answer, clearly
+                numbered and with supporting evidence referenced
+              </li>
+              <li>
+                <strong>Root cause statement:</strong> A clear, concise statement of the root
+                cause(s) identified
+              </li>
+              <li>
+                <strong>Corrective actions:</strong> Specific actions to address the root cause,
+                with owners and target dates
+              </li>
+              <li>
+                <strong>Preventive actions:</strong> Actions to prevent similar failures elsewhere,
+                including lessons learned
+              </li>
+              <li>
+                <strong>Verification:</strong> How and when the effectiveness of the corrective
+                actions will be verified
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Limitations and when to use other techniques</ContentEyebrow>
+
+          <ConceptBlock title="Limitations and When to Use Other Techniques">
             <p>
               The 5 Whys is a powerful and accessible tool, but it has limitations that maintenance
               technicians should understand. Recognising these limitations is not a criticism of the
               technique — it is a sign of maturity in root cause analysis, enabling you to select
               the right tool for each investigation and to supplement the 5 Whys where necessary.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Limitations</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Subjectivity:</strong> The quality of the analysis depends entirely on the
-                  knowledge and experience of the participants. If no one in the team understands a
-                  particular failure mechanism, the 5 Whys will not lead to it
-                </li>
-                <li className="pl-1">
-                  <strong>Single-track thinking:</strong> Without deliberate effort to identify
-                  branches, the basic 5 Whys can funnel the investigation into a single linear
-                  chain, missing other causal pathways
-                </li>
-                <li className="pl-1">
-                  <strong>Difficulty with complex interactions:</strong> For failures involving
-                  complex interactions between multiple systems or subsystems, the simple "why"
-                  chain may not capture the full picture. Fishbone diagrams (covered in Section
-                  4.6.3) are better suited to these situations
-                </li>
-                <li className="pl-1">
-                  <strong>No inherent structure for evidence:</strong> The technique does not
-                  naturally prompt the investigator to gather specific types of evidence — this
-                  discipline must be added consciously
-                </li>
-                <li className="pl-1">
-                  <strong>Blame tendency:</strong> Without careful facilitation, the "why" chain can
-                  drift towards personal blame rather than systemic causes — particularly under
-                  organisational pressure to find someone at fault
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Key limitations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Subjectivity:</strong> The quality of the analysis depends entirely on the
+                knowledge and experience of the participants. If no one in the team understands a
+                particular failure mechanism, the 5 Whys will not lead to it
+              </li>
+              <li>
+                <strong>Single-track thinking:</strong> Without deliberate effort to identify
+                branches, the basic 5 Whys can funnel the investigation into a single linear chain,
+                missing other causal pathways
+              </li>
+              <li>
+                <strong>Difficulty with complex interactions:</strong> For failures involving
+                complex interactions between multiple systems or subsystems, the simple
+                &quot;why&quot; chain may not capture the full picture. Fishbone diagrams (covered
+                in Section 4.6.3) are better suited to these situations
+              </li>
+              <li>
+                <strong>No inherent structure for evidence:</strong> The technique does not
+                naturally prompt the investigator to gather specific types of evidence — this
+                discipline must be added consciously
+              </li>
+              <li>
+                <strong>Blame tendency:</strong> Without careful facilitation, the &quot;why&quot;
+                chain can drift towards personal blame rather than systemic causes — particularly
+                under organisational pressure to find someone at fault
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When to Use Other Techniques
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Situation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Better Technique
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Why</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Multiple interacting causes
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fishbone (Ishikawa) diagram
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Structured categories help identify causes across all domains
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Complex system with many components
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Fault tree analysis (FTA)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Top-down logical analysis of failure combinations
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Recurring failures with data history
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Pareto analysis + 5 Whys</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Data identifies the most frequent causes; 5 Whys investigates each
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Human error in complex tasks
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Human factors analysis (HEART/SHERPA)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Specialist techniques designed for human error analysis
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Major incident with regulatory scrutiny
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Formal RCFA (Root Cause Failure Analysis)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Comprehensive methodology with evidence standards suitable for regulatory
-                        reporting
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="When to Use Other Techniques"
+            headers={['Situation', 'Better Technique', 'Why']}
+            rows={[
+              [
+                'Multiple interacting causes',
+                'Fishbone (Ishikawa) diagram',
+                'Structured categories help identify causes across all domains',
+              ],
+              [
+                'Complex system with many components',
+                'Fault tree analysis (FTA)',
+                'Top-down logical analysis of failure combinations',
+              ],
+              [
+                'Recurring failures with data history',
+                'Pareto analysis + 5 Whys',
+                'Data identifies the most frequent causes; 5 Whys investigates each',
+              ],
+              [
+                'Human error in complex tasks',
+                'Human factors analysis (HEART/SHERPA)',
+                'Specialist techniques designed for human error analysis',
+              ],
+              [
+                'Major incident with regulatory scrutiny',
+                'Formal RCFA (Root Cause Failure Analysis)',
+                'Comprehensive methodology with evidence standards suitable for regulatory reporting',
+              ],
+            ]}
+          />
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Best Practice Tips</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Involve people with direct knowledge of the equipment</li>
-                  <li className="pl-1">Base every answer on evidence, not assumption</li>
-                  <li className="pl-1">Follow all branches — do not discard valid answers</li>
-                  <li className="pl-1">Always verify with the "therefore" test</li>
-                  <li className="pl-1">Keep asking until you reach a systemic, actionable cause</li>
-                  <li className="pl-1">Document everything for future reference</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Combining Techniques
-                </h3>
-                <p className="text-sm text-white">
-                  The most effective approach is often to combine the 5 Whys with other techniques.
-                  Use a fishbone diagram to brainstorm all potential causes across different
-                  categories, then apply the 5 Whys to each of the most likely causes to drill down
-                  to root causes. This combination provides both breadth (fishbone) and depth (5
-                  Whys) in the investigation.
-                </p>
-              </div>
-            </div>
+          <ConceptBlock title="Best practice tips">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Involve people with direct knowledge of the equipment</li>
+              <li>Base every answer on evidence, not assumption</li>
+              <li>Follow all branches — do not discard valid answers</li>
+              <li>Always verify with the &quot;therefore&quot; test</li>
+              <li>Keep asking until you reach a systemic, actionable cause</li>
+              <li>Document everything for future reference</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> The 5 Whys is at its best for straightforward, well-defined
-              failures where the causal chain is relatively clear. For complex, multi-factor
-              incidents — particularly those involving safety — consider using it as a starting
-              point and then validating and expanding the findings with more structured techniques.
+          <ConceptBlock title="Combining techniques">
+            <p>
+              The most effective approach is often to combine the 5 Whys with other techniques. Use
+              a fishbone diagram to brainstorm all potential causes across different categories,
+              then apply the 5 Whys to each of the most likely causes to drill down to root causes.
+              This combination provides both breadth (fishbone) and depth (5 Whys) in the
+              investigation.
             </p>
-          </div>
-        </section>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> The 5 Whys is at its best for
+              straightforward, well-defined failures where the causal chain is relatively clear. For
+              complex, multi-factor incidents — particularly those involving safety — consider using
+              it as a starting point and then validating and expanding the findings with more
+              structured techniques.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              '5 Whys process: define the problem statement clearly; ask "why?" and answer with evidence; take the answer and ask "why?" again; follow all branches where multiple causes exist; continue until an actionable root cause is reached; verify with the "therefore" test.',
+              'Key principles: evidence-based answers, not assumptions; follow all branches — do not force single-track; stop at actionable, controllable causes; focus on systemic causes, not individual blame; document with supporting evidence references.',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">5 Whys Process</p>
-                <ul className="space-y-0.5">
-                  <li>1. Define the problem statement clearly</li>
-                  <li>2. Ask "why?" and answer with evidence</li>
-                  <li>3. Take the answer and ask "why?" again</li>
-                  <li>4. Follow all branches where multiple causes exist</li>
-                  <li>5. Continue until an actionable root cause is reached</li>
-                  <li>6. Verify with the "therefore" test</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Principles</p>
-                <ul className="space-y-0.5">
-                  <li>Evidence-based answers, not assumptions</li>
-                  <li>Follow all branches — do not force single-track</li>
-                  <li>Stop at actionable, controllable causes</li>
-                  <li>Focus on systemic causes, not individual blame</li>
-                  <li>Document with supporting evidence references</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-1')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Identifying Underlying Failures
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Fishbone (Ishikawa) Diagrams
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Identifying Underlying Failures
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-3">
-              Next: Fishbone (Ishikawa) Diagrams
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

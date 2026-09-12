@@ -1,8 +1,52 @@
-import { ArrowLeft, Settings, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 7.1 · Subsection 1 — Principles of Reliability-Centred Maintenance
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge  · "Maintenance strategies: planned preventative maintenance
+ *                 (PPM), condition-based maintenance (CBM), scheduled
+ *                 maintenance, total productive maintenance (TPM),
+ *                 breakdown and run to failure maintenance."
+ *              · "Equipment life cycle considerations."
+ *
+ * Numeric detail (failure-pattern percentages, P-F interval examples) is
+ * copied verbatim from the original page; the bs7671_facets RAG holds
+ * regulation rules, not this kind of reliability-engineering data, so it
+ * could not be checked against it. The P-F curve ASCII diagram is the
+ * original page's own rendering, kept as-is.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Principles of Reliability-Centred Maintenance (RCM) - MOET Module 4 Section 7.1';
@@ -26,12 +70,7 @@ const quickCheckQuestions = [
   {
     id: 'rcm-seven-questions',
     question: 'The RCM process is built around how many fundamental questions about each asset?',
-    options: [
-      'Ten',
-      'Seven',
-      'Three',
-      'Five',
-    ],
+    options: ['Ten', 'Seven', 'Three', 'Five'],
     correctIndex: 1,
     explanation:
       'The RCM process centres on seven questions: (1) What are the functions of the asset? (2) In what ways can it fail to fulfil those functions? (3) What causes each functional failure? (4) What happens when each failure occurs? (5) In what way does each failure matter? (6) What can be done to predict or prevent each failure? (7) What should be done if no suitable proactive task can be found? These questions systematically build from understanding the asset to selecting the right maintenance strategy.',
@@ -257,117 +296,70 @@ const faqs = [
 ];
 
 const MOETModule4Section7_1 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Settings className="h-4 w-4" />
-            <span>Module 4.7.1</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Principles of Reliability-Centred Maintenance (RCM)
-          </h1>
-          <p className="text-white">
-            A structured process for determining the right maintenance strategy for every asset
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.7 · Subsection 1"
+        title="Principles of Reliability-Centred Maintenance (RCM)"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section7"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            A structured process for determining the right maintenance strategy for every asset.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Function-focused:</strong> Maintenance exists to preserve asset functions,
-                not just prevent breakdowns
-              </li>
-              <li className="pl-1">
-                <strong>Seven questions:</strong> Structured framework covering functions, failures,
-                consequences and tasks
-              </li>
-              <li className="pl-1">
-                <strong>Consequence-driven:</strong> Maintenance strategy depends on what happens
-                when a failure occurs
-              </li>
-              <li className="pl-1">
-                <strong>Evidence-based:</strong> Every maintenance task must be technically feasible
-                and worth doing
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'Function-focused: Maintenance exists to preserve asset functions, not just prevent breakdowns',
+              'Seven questions: Structured framework covering functions, failures, consequences and tasks',
+              'Consequence-driven: Maintenance strategy depends on what happens when a failure occurs',
+              'Evidence-based: Every maintenance task must be technically feasible and worth doing',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Rationale:</strong> Explains why different assets have different maintenance
                 approaches
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>FMEA:</strong> Technicians contribute failure mode knowledge to RCM reviews
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>P-F interval:</strong> Determines how often condition monitoring should be
                 performed
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Demonstrates understanding of maintenance strategy and
                 continuous improvement
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Explain the origin and purpose of reliability-centred maintenance (RCM)',
               "Apply the seven RCM questions to analyse an asset's maintenance requirements",
               'Describe the role of failure modes and effects analysis (FMEA) within the RCM process',
               'Classify failure consequences using the RCM consequence framework',
               'Explain the P-F curve and how it determines condition monitoring intervals',
               'Select appropriate maintenance strategies based on failure mode characteristics and consequences',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Origins and purpose of RCM</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Origins and Purpose of RCM
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Origins and Purpose of RCM"
+            onSite="Key point: RCM does not eliminate maintenance — it rationalises it. The result is a maintenance programme where every task has a clear justification based on the failure mode it manages and the consequence it prevents. Tasks that do not meet this criterion are eliminated, freeing resources for tasks that do."
+          >
             <p>
               Reliability-centred maintenance (RCM) is a structured, systematic process for
               determining the maintenance requirements of any physical asset in its operating
@@ -376,100 +368,70 @@ const MOETModule4Section7_1 = () => {
               1978 report fundamentally changed how the world thinks about maintenance.
             </p>
             <p>
-              Before RCM, the prevailing assumption was that all equipment had a 'right' overhaul
-              interval — that components wore out predictably, and that regular time-based overhaul
-              was the best way to maintain reliability. Nowlan and Heap's research, based on the
-              analysis of hundreds of thousands of components in commercial aircraft, showed that
-              this assumption was wrong for the vast majority of failure modes. Only about 11% of
-              failure modes showed an age-related increase in failure probability. The remaining 89%
-              showed either random failure patterns or a higher probability of failure immediately
-              after maintenance (infant mortality).
+              Before RCM, the prevailing assumption was that all equipment had a &apos;right&apos;
+              overhaul interval — that components wore out predictably, and that regular time-based
+              overhaul was the best way to maintain reliability. Nowlan and Heap&apos;s research,
+              based on the analysis of hundreds of thousands of components in commercial aircraft,
+              showed that this assumption was wrong for the vast majority of failure modes. Only
+              about 11% of failure modes showed an age-related increase in failure probability. The
+              remaining 89% showed either random failure patterns or a higher probability of failure
+              immediately after maintenance (infant mortality).
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                The Six Failure Patterns
-              </p>
-              <p className="text-sm text-white mb-3">
-                RCM research identified six distinct failure patterns:
-              </p>
-              <div className="space-y-2">
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">A</span>
-                  <span>
-                    Bathtub curve — high infant mortality, then constant, then wear-out (4% of
-                    failure modes)
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">B</span>
-                  <span>
-                    Constant failure rate then wear-out — no infant mortality phase (2% of failure
-                    modes)
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">C</span>
-                  <span>
-                    Gradually increasing failure rate — no identifiable wear-out age (5% of failure
-                    modes)
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">D</span>
-                  <span>
-                    Low when new, then rapid increase to constant — initial low reliability (7% of
-                    failure modes)
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">E</span>
-                  <span>
-                    Random — constant probability of failure at any age (14% of failure modes)
-                  </span>
-                </div>
-                <div className="flex items-start gap-3 text-sm">
-                  <span className="text-elec-yellow/80 font-mono font-medium min-w-[24px]">F</span>
-                  <span>
-                    Infant mortality then constant — highest failure rate when new, then random (68%
-                    of failure modes)
-                  </span>
-                </div>
-              </div>
-              <p className="text-xs text-white mt-3">
-                Pattern F (infant mortality then random) accounted for 68% of all failure modes
-                studied. This means that for the majority of failures, overhauling equipment at a
-                fixed interval actually increases the failure rate by reintroducing infant
-                mortality.
-              </p>
-            </div>
-
+          <ConceptBlock title="The six failure patterns">
+            <p>RCM research identified six distinct failure patterns:</p>
+            <ul className="list-none space-y-2 pl-0">
+              <li>
+                <strong className="font-mono text-elec-yellow/80">A</strong> — Bathtub curve — high
+                infant mortality, then constant, then wear-out (4% of failure modes)
+              </li>
+              <li>
+                <strong className="font-mono text-elec-yellow/80">B</strong> — Constant failure rate
+                then wear-out — no infant mortality phase (2% of failure modes)
+              </li>
+              <li>
+                <strong className="font-mono text-elec-yellow/80">C</strong> — Gradually increasing
+                failure rate — no identifiable wear-out age (5% of failure modes)
+              </li>
+              <li>
+                <strong className="font-mono text-elec-yellow/80">D</strong> — Low when new, then
+                rapid increase to constant — initial low reliability (7% of failure modes)
+              </li>
+              <li>
+                <strong className="font-mono text-elec-yellow/80">E</strong> — Random — constant
+                probability of failure at any age (14% of failure modes)
+              </li>
+              <li>
+                <strong className="font-mono text-elec-yellow/80">F</strong> — Infant mortality then
+                constant — highest failure rate when new, then random (68% of failure modes)
+              </li>
+            </ul>
+            <p className="text-[13px]">
+              Pattern F (infant mortality then random) accounted for 68% of all failure modes
+              studied. This means that for the majority of failures, overhauling equipment at a
+              fixed interval actually increases the failure rate by reintroducing infant mortality.
+            </p>
             <p>
               This finding had profound implications. If time-based overhaul does not reduce the
               failure rate for most failure modes, then a different approach is needed. RCM provides
-              that approach: instead of asking "how often should we overhaul this equipment?", it
-              asks "what must we do to manage the consequences of each failure mode?" This shifts
-              the focus from calendar-driven maintenance to consequence-driven maintenance.
+              that approach: instead of asking &quot;how often should we overhaul this
+              equipment?&quot;, it asks &quot;what must we do to manage the consequences of each
+              failure mode?&quot; This shifts the focus from calendar-driven maintenance to
+              consequence-driven maintenance.
             </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> RCM does not eliminate maintenance — it rationalises it.
-              The result is a maintenance programme where every task has a clear justification based
-              on the failure mode it manages and the consequence it prevents. Tasks that do not meet
-              this criterion are eliminated, freeing resources for tasks that do.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            The Seven RCM Questions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>The seven RCM questions</ContentEyebrow>
+
+          <ConceptBlock
+            title="The Seven RCM Questions"
+            onSite="Key point: The seven questions must be answered in sequence. Skipping to maintenance task selection without first understanding functions, functional failures, failure modes, failure effects and consequences leads to maintenance programmes that are either wasteful (doing too much) or ineffective (doing the wrong things)."
+          >
             <p>
               The RCM process is built around seven fundamental questions that are asked about each
               asset in its operating context. These questions follow a logical sequence: first
@@ -477,114 +439,80 @@ const MOETModule4Section7_1 = () => {
               done about each failure. Working through all seven questions ensures a complete and
               rigorous analysis.
             </p>
+            <ol className="list-decimal space-y-3 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>
+                  What are the functions and associated performance standards of the asset in its
+                  present operating context?
+                </strong>{' '}
+                Define every function the asset performs, including primary functions (the reason it
+                was acquired) and secondary functions (safety, containment, appearance,
+                environmental compliance). Each function must include a performance standard.
+                Example: &quot;Supply 415V three-phase power to distribution board DB3 continuously
+                during production hours, within +10%/-6% voltage tolerance.&quot;
+              </li>
+              <li>
+                <strong>
+                  In what ways can it fail to fulfil its functions? (Functional Failures)
+                </strong>{' '}
+                For each function, identify all the ways the asset can fail to meet the performance
+                standard. A functional failure can be total (complete loss of function) or partial
+                (function degraded below the required standard). Example: &quot;Total loss of supply
+                to DB3&quot; and &quot;Voltage to DB3 outside tolerance limits&quot; are both
+                functional failures of the function above.
+              </li>
+              <li>
+                <strong>What causes each functional failure? (Failure Modes)</strong> For each
+                functional failure, identify all the failure modes — the specific events or
+                processes that cause it. Failure modes should be described precisely enough to
+                enable appropriate maintenance task selection. Example: &quot;Transformer winding
+                insulation breakdown due to moisture ingress&quot; is a failure mode that points to
+                specific monitoring tasks (insulation resistance testing, dissolved gas analysis).
+              </li>
+              <li>
+                <strong>What happens when each failure occurs? (Failure Effects)</strong> Describe
+                what happens when each failure mode occurs: what evidence does the operator see,
+                hear or smell? What does the failure do to production, safety or the environment?
+                How long does it take to repair? What secondary damage occurs? This information is
+                essential for assessing consequences in the next question.
+              </li>
+              <li>
+                <strong>In what way does each failure matter? (Failure Consequences)</strong>{' '}
+                Classify the consequences of each failure mode: hidden failure (not evident under
+                normal conditions), safety or environmental, operational (affects production), or
+                non-operational (economic cost only). The consequence category determines which
+                maintenance strategies are acceptable and how much effort is justified.
+              </li>
+              <li>
+                <strong>
+                  What can be done to predict or prevent each failure? (Proactive Tasks)
+                </strong>{' '}
+                For each failure mode, identify whether a proactive maintenance task is technically
+                feasible and worth doing. Options include: condition-based tasks (monitoring for
+                deterioration), scheduled restoration (overhaul at fixed intervals), scheduled
+                discard (replacement at fixed intervals), and failure-finding tasks (periodic
+                testing of hidden functions).
+              </li>
+              <li>
+                <strong>
+                  What should be done if no suitable proactive task can be found? (Default Actions)
+                </strong>{' '}
+                If no proactive task is technically feasible and worth doing: for hidden failures
+                and safety consequences, redesign is mandatory; for operational consequences,
+                run-to-failure may be acceptable if the economic impact is tolerable; for
+                non-operational consequences, run-to-failure is the default. Every failure mode must
+                have a documented strategy.
+              </li>
+            </ol>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 1: What are the functions and associated performance standards of the
-                  asset in its present operating context?
-                </h3>
-                <p className="text-sm text-white">
-                  Define every function the asset performs, including primary functions (the reason
-                  it was acquired) and secondary functions (safety, containment, appearance,
-                  environmental compliance). Each function must include a performance standard.
-                  Example: "Supply 415V three-phase power to distribution board DB3 continuously
-                  during production hours, within +10%/-6% voltage tolerance."
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 2: In what ways can it fail to fulfil its functions? (Functional
-                  Failures)
-                </h3>
-                <p className="text-sm text-white">
-                  For each function, identify all the ways the asset can fail to meet the
-                  performance standard. A functional failure can be total (complete loss of
-                  function) or partial (function degraded below the required standard). Example:
-                  "Total loss of supply to DB3" and "Voltage to DB3 outside tolerance limits" are
-                  both functional failures of the function above.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 3: What causes each functional failure? (Failure Modes)
-                </h3>
-                <p className="text-sm text-white">
-                  For each functional failure, identify all the failure modes — the specific events
-                  or processes that cause it. Failure modes should be described precisely enough to
-                  enable appropriate maintenance task selection. Example: "Transformer winding
-                  insulation breakdown due to moisture ingress" is a failure mode that points to
-                  specific monitoring tasks (insulation resistance testing, dissolved gas analysis).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 4: What happens when each failure occurs? (Failure Effects)
-                </h3>
-                <p className="text-sm text-white">
-                  Describe what happens when each failure mode occurs: what evidence does the
-                  operator see, hear or smell? What does the failure do to production, safety or the
-                  environment? How long does it take to repair? What secondary damage occurs? This
-                  information is essential for assessing consequences in the next question.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 5: In what way does each failure matter? (Failure Consequences)
-                </h3>
-                <p className="text-sm text-white">
-                  Classify the consequences of each failure mode: hidden failure (not evident under
-                  normal conditions), safety or environmental, operational (affects production), or
-                  non-operational (economic cost only). The consequence category determines which
-                  maintenance strategies are acceptable and how much effort is justified.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 6: What can be done to predict or prevent each failure? (Proactive Tasks)
-                </h3>
-                <p className="text-sm text-white">
-                  For each failure mode, identify whether a proactive maintenance task is
-                  technically feasible and worth doing. Options include: condition-based tasks
-                  (monitoring for deterioration), scheduled restoration (overhaul at fixed
-                  intervals), scheduled discard (replacement at fixed intervals), and
-                  failure-finding tasks (periodic testing of hidden functions).
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Question 7: What should be done if no suitable proactive task can be found?
-                  (Default Actions)
-                </h3>
-                <p className="text-sm text-white">
-                  If no proactive task is technically feasible and worth doing: for hidden failures
-                  and safety consequences, redesign is mandatory; for operational consequences,
-                  run-to-failure may be acceptable if the economic impact is tolerable; for
-                  non-operational consequences, run-to-failure is the default. Every failure mode
-                  must have a documented strategy.
-                </p>
-              </div>
-            </div>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The seven questions must be answered in sequence. Skipping
-              to maintenance task selection without first understanding functions, functional
-              failures, failure modes, failure effects and consequences leads to maintenance
-              programmes that are either wasteful (doing too much) or ineffective (doing the wrong
-              things).
-            </p>
-          </div>
-        </section>
+          <SectionRule />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ContentEyebrow>FMEA and the P-F curve</ContentEyebrow>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            FMEA and the P-F Curve
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="FMEA and the P-F Curve">
             <p>
               Failure modes and effects analysis (FMEA) is the analytical engine of the RCM process.
               It provides the structured framework for answering questions 2 through 5 — identifying
@@ -592,155 +520,105 @@ const MOETModule4Section7_1 = () => {
               document becomes the permanent record of the analysis and the foundation for the
               maintenance programme.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                FMEA Information Sheet — Typical Structure
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Column</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Content</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Function</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What the asset is required to do, with performance standard
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Functional Failure
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        How the function can be lost (total or partial)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Failure Mode</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        The specific cause of the functional failure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">
-                        Failure Effect
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What happens when the failure mode occurs (evidence, impact, repair time)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-medium">Consequence</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hidden, safety/environmental, operational, or non-operational
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="FMEA Information Sheet — Typical Structure"
+            headers={['Column', 'Content']}
+            rows={[
+              ['Function', 'What the asset is required to do, with performance standard'],
+              ['Functional Failure', 'How the function can be lost (total or partial)'],
+              ['Failure Mode', 'The specific cause of the functional failure'],
+              [
+                'Failure Effect',
+                'What happens when the failure mode occurs (evidence, impact, repair time)',
+              ],
+              ['Consequence', 'Hidden, safety/environmental, operational, or non-operational'],
+            ]}
+          />
 
+          <ConceptBlock
+            title="The P-F curve"
+            onSite="Key point: Condition-based maintenance is only feasible when the P-F interval is long enough to allow detection and planned response. If the failure mode goes from detectable deterioration to functional failure in minutes or hours, condition monitoring is not practical — a different strategy (scheduled replacement, redesign, or run-to-failure) is needed."
+          >
             <p>
               The P-F curve is a fundamental concept in RCM that determines whether condition-based
-              maintenance is feasible for a given failure mode. "P" represents the point of
-              potential failure — the earliest point at which deterioration can be detected using a
-              monitoring technique. "F" represents the point of functional failure — where the asset
-              can no longer perform its required function. The time between P and F is the P-F
-              interval.
+              maintenance is feasible for a given failure mode. &quot;P&quot; represents the point
+              of potential failure — the earliest point at which deterioration can be detected using
+              a monitoring technique. &quot;F&quot; represents the point of functional failure —
+              where the asset can no longer perform its required function. The time between P and F
+              is the P-F interval.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">The P-F Curve</p>
-              <div className="bg-white/5 rounded p-3 text-sm text-white space-y-1 font-mono">
-                <p>Condition</p>
-                <p>&nbsp;&nbsp;&nbsp;|</p>
-                <p>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;Normal operating condition</p>
-                <p>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;================================</p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-                </p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-                  P (Potential failure)
-                </p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-                </p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-                  &lt;-- P-F interval --&gt;
-                </p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-                </p>
-                <p>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F
-                  (Functional failure)
-                </p>
-                <p>&nbsp;&nbsp;&nbsp;+------------------------------------------&gt; Time</p>
-              </div>
-              <p className="text-xs text-white mt-2">
-                The monitoring interval must be shorter than the P-F interval (typically half or
-                less) to ensure deterioration is always detected before functional failure.
+            <div className="space-y-1 rounded bg-white/5 p-3 font-mono text-sm text-white">
+              <p>Condition</p>
+              <p>&nbsp;&nbsp;&nbsp;|</p>
+              <p>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;Normal operating condition</p>
+              <p>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;================================</p>
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
               </p>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                P-F Intervals for Common Electrical Failure Modes
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                P (Potential failure)
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor bearing vibration:</strong> P-F interval typically 1-9 months —
-                  monitor vibration monthly
-                </li>
-                <li className="pl-1">
-                  <strong>Loose electrical connections (thermography):</strong> P-F interval weeks
-                  to months — thermal survey quarterly
-                </li>
-                <li className="pl-1">
-                  <strong>Motor winding insulation (IR testing):</strong> P-F interval months to
-                  years — test annually or six-monthly
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer oil degradation (DGA):</strong> P-F interval months to years —
-                  sample annually for critical units
-                </li>
-                <li className="pl-1">
-                  <strong>Cable insulation (partial discharge):</strong> P-F interval months to
-                  years — test during shutdowns
-                </li>
-                <li className="pl-1">
-                  <strong>Contactor tip wear:</strong> P-F interval short — often managed by
-                  scheduled discard based on operations count
-                </li>
-              </ul>
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+                &lt;-- P-F interval --&gt;
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
+              </p>
+              <p>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F
+                (Functional failure)
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;+------------------------------------------&gt; Time</p>
             </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Condition-based maintenance is only feasible when the P-F
-              interval is long enough to allow detection and planned response. If the failure mode
-              goes from detectable deterioration to functional failure in minutes or hours,
-              condition monitoring is not practical — a different strategy (scheduled replacement,
-              redesign, or run-to-failure) is needed.
+            <p className="text-[13px]">
+              The monitoring interval must be shorter than the P-F interval (typically half or less)
+              to ensure deterioration is always detected before functional failure.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="P-F intervals for common electrical failure modes">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor bearing vibration:</strong> P-F interval typically 1-9 months —
+                monitor vibration monthly
+              </li>
+              <li>
+                <strong>Loose electrical connections (thermography):</strong> P-F interval weeks to
+                months — thermal survey quarterly
+              </li>
+              <li>
+                <strong>Motor winding insulation (IR testing):</strong> P-F interval months to years
+                — test annually or six-monthly
+              </li>
+              <li>
+                <strong>Transformer oil degradation (DGA):</strong> P-F interval months to years —
+                sample annually for critical units
+              </li>
+              <li>
+                <strong>Cable insulation (partial discharge):</strong> P-F interval months to years
+                — test during shutdowns
+              </li>
+              <li>
+                <strong>Contactor tip wear:</strong> P-F interval short — often managed by scheduled
+                discard based on operations count
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Failure Consequences and Maintenance Strategy Selection
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Failure consequences and maintenance strategy selection</ContentEyebrow>
+
+          <ConceptBlock title="Failure Consequences and Maintenance Strategy Selection">
             <p>
               The consequence of failure is the single most important factor in determining the
               appropriate maintenance strategy. RCM uses a structured decision logic that
@@ -749,223 +627,161 @@ const MOETModule4Section7_1 = () => {
               the probability of failure alone — RCM considers both the probability and the
               consequence.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-3">
-                RCM Consequence Categories and Strategy Selection
-              </p>
-              <div className="space-y-3">
-                <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-                  <h3 className="text-sm font-medium text-red-400 mb-1">
-                    Hidden Failure Consequences
-                  </h3>
-                  <p className="text-sm text-white">
-                    Failure is not evident under normal conditions (protective devices, standby
-                    systems). Strategy: failure-finding task at an interval that provides the
-                    required availability. If no task is feasible, redesign is mandatory.
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
-                  <h3 className="text-sm font-medium text-orange-400 mb-1">
-                    Safety and Environmental Consequences
-                  </h3>
-                  <p className="text-sm text-white">
-                    Failure could injure or kill someone, or cause environmental damage. Strategy: a
-                    proactive task that reduces the probability of failure to a tolerable level. If
-                    no task is feasible, redesign is mandatory. Run-to-failure is never acceptable.
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-                  <h3 className="text-sm font-medium text-blue-400 mb-1">
-                    Operational Consequences
-                  </h3>
-                  <p className="text-sm text-white">
-                    Failure affects production, quality or service level. Strategy: a proactive task
-                    is worth doing if the total cost of the task over time is less than the total
-                    cost of the operational consequences over the same period. Otherwise,
-                    run-to-failure with planned response.
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                  <h3 className="text-sm font-medium text-green-400 mb-1">
-                    Non-Operational (Economic) Consequences
-                  </h3>
-                  <p className="text-sm text-white">
-                    The only consequence is the direct cost of repair. Strategy: a proactive task is
-                    worth doing only if the cost of the task over time is less than the cost of
-                    repair over the same period. Run-to-failure is the default.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <ConceptBlock title="RCM consequence categories and strategy selection">
+            <ul className="list-disc space-y-2.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hidden failure consequences.</strong> Failure is not evident under normal
+                conditions (protective devices, standby systems). Strategy: failure-finding task at
+                an interval that provides the required availability. If no task is feasible,
+                redesign is mandatory.
+              </li>
+              <li>
+                <strong>Safety and environmental consequences.</strong> Failure could injure or kill
+                someone, or cause environmental damage. Strategy: a proactive task that reduces the
+                probability of failure to a tolerable level. If no task is feasible, redesign is
+                mandatory. Run-to-failure is never acceptable.
+              </li>
+              <li>
+                <strong>Operational consequences.</strong> Failure affects production, quality or
+                service level. Strategy: a proactive task is worth doing if the total cost of the
+                task over time is less than the total cost of the operational consequences over the
+                same period. Otherwise, run-to-failure with planned response.
+              </li>
+              <li>
+                <strong>Non-operational (economic) consequences.</strong> The only consequence is
+                the direct cost of repair. Strategy: a proactive task is worth doing only if the
+                cost of the task over time is less than the cost of repair over the same period.
+                Run-to-failure is the default.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Practical Example: Motor on a Packaging Line
-              </p>
-              <p className="text-sm text-white mb-2">
-                Consider a 15 kW motor driving a packaging conveyor. Different failure modes have
-                different consequences:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Bearing failure:</strong> Operational consequence (stops production). P-F
-                  interval 3-6 months. Strategy: condition-based (vibration monitoring monthly)
-                </li>
-                <li className="pl-1">
-                  <strong>Winding earth fault:</strong> Safety consequence (electric shock risk).
-                  P-F interval 6-12 months. Strategy: condition-based (insulation resistance testing
-                  six-monthly)
-                </li>
-                <li className="pl-1">
-                  <strong>Overload relay failure:</strong> Hidden failure (not evident until motor
-                  overloads). Strategy: failure-finding task (test relay operation every 6 months)
-                </li>
-                <li className="pl-1">
-                  <strong>Terminal box gasket degradation:</strong> Non-operational (moisture
-                  ingress risk, but contained by other protection). Strategy: scheduled discard at
-                  5-year interval
-                </li>
-              </ul>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Proactive Task Types
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Condition-based:</strong> Monitor for deterioration (vibration,
-                    thermography, oil analysis, IR testing)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Scheduled restoration:</strong> Overhaul at fixed intervals (where
-                    age-related wear-out is evident)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Scheduled discard:</strong> Replace at fixed intervals (where
-                    restoration is not feasible)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Failure-finding:</strong> Periodic testing of hidden functions (trip
-                    tests, function tests)
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Default Actions (No Suitable Proactive Task)
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    <strong>Hidden failures:</strong> Redesign mandatory (must make failure evident
-                    or add redundancy)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Safety consequences:</strong> Redesign mandatory (must reduce risk to
-                    acceptable level)
-                  </li>
-                  <li className="pl-1">
-                    <strong>Operational consequences:</strong> Run-to-failure may be acceptable if
-                    cost is tolerable
-                  </li>
-                  <li className="pl-1">
-                    <strong>Non-operational:</strong> Run-to-failure is the default strategy
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> RCM does not mandate the most technically advanced maintenance
-              approach — it mandates the most appropriate one. For some failure modes, the most
-              appropriate strategy is run-to-failure. This is not neglect; it is a conscious,
-              justified decision that the consequences of failure are acceptable and that proactive
-              maintenance would cost more than it saves. Every maintenance task in an RCM programme
-              earns its place.
+          <ConceptBlock title="Practical example: motor on a packaging line">
+            <p>
+              Consider a 15 kW motor driving a packaging conveyor. Different failure modes have
+              different consequences:
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bearing failure:</strong> Operational consequence (stops production). P-F
+                interval 3-6 months. Strategy: condition-based (vibration monitoring monthly)
+              </li>
+              <li>
+                <strong>Winding earth fault:</strong> Safety consequence (electric shock risk). P-F
+                interval 6-12 months. Strategy: condition-based (insulation resistance testing
+                six-monthly)
+              </li>
+              <li>
+                <strong>Overload relay failure:</strong> Hidden failure (not evident until motor
+                overloads). Strategy: failure-finding task (test relay operation every 6 months)
+              </li>
+              <li>
+                <strong>Terminal box gasket degradation:</strong> Non-operational (moisture ingress
+                risk, but contained by other protection). Strategy: scheduled discard at 5-year
+                interval
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Proactive task types">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Condition-based:</strong> Monitor for deterioration (vibration,
+                thermography, oil analysis, IR testing)
+              </li>
+              <li>
+                <strong>Scheduled restoration:</strong> Overhaul at fixed intervals (where
+                age-related wear-out is evident)
+              </li>
+              <li>
+                <strong>Scheduled discard:</strong> Replace at fixed intervals (where restoration is
+                not feasible)
+              </li>
+              <li>
+                <strong>Failure-finding:</strong> Periodic testing of hidden functions (trip tests,
+                function tests)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Default actions (no suitable proactive task)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hidden failures:</strong> Redesign mandatory (must make failure evident or
+                add redundancy)
+              </li>
+              <li>
+                <strong>Safety consequences:</strong> Redesign mandatory (must reduce risk to
+                acceptable level)
+              </li>
+              <li>
+                <strong>Operational consequences:</strong> Run-to-failure may be acceptable if cost
+                is tolerable
+              </li>
+              <li>
+                <strong>Non-operational:</strong> Run-to-failure is the default strategy
+              </li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> RCM does not mandate the most
+              technically advanced maintenance approach — it mandates the most appropriate one. For
+              some failure modes, the most appropriate strategy is run-to-failure. This is not
+              neglect; it is a conscious, justified decision that the consequences of failure are
+              acceptable and that proactive maintenance would cost more than it saves. Every
+              maintenance task in an RCM programme earns its place.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">The Seven RCM Questions</p>
-                <ul className="space-y-0.5">
-                  <li>1. What are its functions?</li>
-                  <li>2. How can it fail? (Functional failures)</li>
-                  <li>3. What causes each failure? (Failure modes)</li>
-                  <li>4. What happens? (Failure effects)</li>
-                  <li>5. Does it matter? (Consequences)</li>
-                  <li>6. Can we predict/prevent it? (Proactive tasks)</li>
-                  <li>7. What if no task works? (Default actions)</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">RCM Maintenance Strategies</p>
-                <ul className="space-y-0.5">
-                  <li>Condition-based — monitor for deterioration</li>
-                  <li>Scheduled restoration — overhaul at fixed intervals</li>
-                  <li>Scheduled discard — replace at fixed intervals</li>
-                  <li>Failure-finding — test hidden functions periodically</li>
-                  <li>Run-to-failure — repair when it breaks (justified)</li>
-                  <li>Redesign — change the asset to eliminate the risk</li>
-                </ul>
-              </div>
+          <KeyTakeaways
+            points={[
+              'The seven RCM questions: what are its functions?; how can it fail? (functional failures); what causes each failure? (failure modes); what happens? (failure effects); does it matter? (consequences); can we predict/prevent it? (proactive tasks); what if no task works? (default actions).',
+              'RCM maintenance strategies: condition-based (monitor for deterioration); scheduled restoration (overhaul at fixed intervals); scheduled discard (replace at fixed intervals); failure-finding (test hidden functions periodically); run-to-failure (repair when it breaks, justified); redesign (change the asset to eliminate the risk).',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to section
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Reliability-centred maintenance
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-2')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Balancing PPM and Corrective Maintenance
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 7
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-2">
-              Next: Balancing PPM and Corrective Maintenance
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

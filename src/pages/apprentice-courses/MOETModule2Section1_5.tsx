@@ -1,8 +1,49 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 2.1 · Subsection 5 — Electrical Symbols and
+ * Conventions
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Types of diagrams used to represent circuits; symbols
+ *     and abbreviations used to represent components in electrical
+ *     schematics."
+ *   · "Engineering standards - British (BSI) and International (ISO)."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
+import {
+  ResistorSymbol,
+  CapacitorSymbol,
+  InductorSymbol,
+  ContactorSymbol,
+} from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electrical Symbols and Conventions - MOET Module 2 Section 1.5';
@@ -14,12 +55,7 @@ const quickCheckQuestions = [
     id: 'symbol-standard',
     question:
       'Which international standard defines the graphical symbols used in electrical circuit diagrams?',
-    options: [
-      'BS EN 61439',
-      'IEC 60617',
-      'BS 7671:2018',
-      'BS EN 61008',
-    ],
+    options: ['BS EN 61439', 'IEC 60617', 'BS 7671:2018', 'BS EN 61008'],
     correctIndex: 1,
     explanation:
       'IEC 60617 (identical to IEC 60617) is the international standard for graphical symbols used in electrotechnical documentation. It defines symbols for components, connections, and devices used in circuit diagrams, schematic diagrams, and wiring diagrams. BS 7671 references these symbols but does not define them.',
@@ -54,12 +90,7 @@ const quickCheckQuestions = [
     id: 'terminal-id',
     question:
       'According to IEC 60445, which letter identifies the protective earth terminal on electrical equipment?',
-    options: [
-      'N',
-      'PE',
-      'L',
-      'E',
-    ],
+    options: ['N', 'PE', 'L', 'E'],
     correctIndex: 1,
     explanation:
       "IEC 60445 designates the protective earth terminal as PE (Protective Earth). The neutral terminal is designated N, and line (live) terminals are designated L1, L2, L3 (or L for single-phase). While the letter 'E' is commonly used colloquially and on older equipment, PE is the correct current designation per IEC standards.",
@@ -255,432 +286,334 @@ const faqs = [
 ];
 
 const MOETModule2Section1_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 2.1.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Electrical Symbols and Conventions
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.1 · Subsection 5"
+        title="Electrical Symbols and Conventions"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section1"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Reading and interpreting circuit diagrams, symbols and technical drawings for
-            maintenance
+            maintenance.
           </p>
-        </header>
 
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Standard:</strong> IEC 60617 (IEC 60617) defines graphical symbols
-              </li>
-              <li className="pl-1">
-                <strong>Diagram types:</strong> Schematic (logical), wiring (physical), single-line
-                (overview)
-              </li>
-              <li className="pl-1">
-                <strong>Components:</strong> Standardised symbols for all common components
-              </li>
-              <li className="pl-1">
-                <strong>Terminals:</strong> IEC 60445 — L1/L2/L3, N, PE designations
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Read schematics to trace circuit logic
-              </li>
-              <li className="pl-1">
-                <strong>Wiring:</strong> Follow wiring diagrams for physical connections
-              </li>
-              <li className="pl-1">
-                <strong>Relay cross-ref:</strong> Trace coils to contacts by designation codes
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Technical drawing interpretation KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Standard: IEC 60617 defines graphical symbols',
+              'Diagram types: schematic (logical), wiring (physical), single-line (overview)',
+              'Components: standardised symbols for all common components',
+              'Terminals: IEC 60445 — L1/L2/L3, N, PE designations',
+              'Fault-finding: read schematics to trace circuit logic',
+              'Wiring: follow wiring diagrams for physical connections',
+              'Relay cross-ref: trace coils to contacts by designation codes',
+              'ST1426: technical drawing interpretation KSBs',
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Identify common electrical symbols per IEC 60617 for circuit components',
               'Distinguish between schematic diagrams, wiring diagrams and single-line diagrams',
               'Read single-line distribution diagrams for commercial and industrial installations',
               'Interpret relay and contactor cross-referencing in control circuit drawings',
               'Apply IEC terminal identification conventions (L, N, PE, U1-W2)',
               'Navigate manufacturer technical drawings for fault-finding and maintenance',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>IEC 60617 — the symbol standard</ContentEyebrow>
 
-        {/* Section 01: IEC 60617 Symbol Standard */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            IEC 60617 — The Symbol Standard
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="IEC 60617 — The Symbol Standard">
             <p>
-              IEC 60617 (identical to IEC 60617) is the international standard for graphical
-              symbols used in diagrams for electrotechnical documentation. It provides a
-              comprehensive library of standardised symbols that enable electrical engineers,
-              designers, and maintenance technicians across the world to read and understand each
-              other's drawings without ambiguity.
+              IEC 60617 (identical to IEC 60617) is the international standard for graphical symbols
+              used in diagrams for electrotechnical documentation. It provides a comprehensive
+              library of standardised symbols that enable electrical engineers, designers, and
+              maintenance technicians across the world to read and understand each other's drawings
+              without ambiguity.
             </p>
-
             <p>
               The standard is organised into parts covering different categories of components and
               devices. As a maintenance technician, you need to be familiar with the symbols you
               will encounter most frequently — passive components, switches, protective devices,
               motors, transformers, and control devices.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Passive Component Symbols
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Component</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Symbol Description
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Relevance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Resistor (fixed)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangle (IEC) or zigzag line (older/US)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Heating elements, current limiting, voltage dividers
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Variable resistor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangle with diagonal arrow through it
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Speed controls, dimmer circuits, calibration pots
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Capacitor (fixed)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two parallel lines (one straight, one curved for polarised)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        PFC capacitors, motor start/run, filtering
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Inductor/coil</td>
-                      <td className="border border-white/10 px-3 py-2">Series of loops or arcs</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Relay coils, chokes, transformer windings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Transformer</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Two coils with parallel lines (core) between
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power transformers, control transformers, CTs, VTs
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Common Passive Component Symbols">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Component</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Symbol Description
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Maintenance Relevance
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Resistor (fixed)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Rectangle (IEC) or zigzag line (older/US)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Heating elements, current limiting, voltage dividers
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Variable resistor</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Rectangle with diagonal arrow through it
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Speed controls, dimmer circuits, calibration pots
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Capacitor (fixed)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Two parallel lines (one straight, one curved for polarised)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      PFC capacitors, motor start/run, filtering
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Inductor/coil</td>
+                    <td className="border border-white/10 px-3 py-2">Series of loops or arcs</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Relay coils, chokes, transformer windings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Transformer</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Two coils with parallel lines (core) between
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Power transformers, control transformers, CTs, VTs
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Switching and Protection Device Symbols
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Device</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Symbol Description
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Feature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Isolator (disconnector)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Simple switch contact (open position shown)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No tripping capability — manual operation only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Fuse</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Rectangle with line through centre
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-shot protection — must be replaced
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch with thermal (rectangle) and/or magnetic (arc) trip
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overload and short-circuit protection
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Similar to MCB, often with adjustable trip shown
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher breaking capacity, adjustable settings
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch with current-sensing toroid and test button
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault protection — detects residual current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCBO</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Combined MCB and RCD symbols
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Overcurrent + earth fault protection combined
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Contactor</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Switch symbol with coil designation
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Electromagnetically operated — remote switching
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <div className="flex flex-wrap items-start gap-6">
+            <ResistorSymbol />
+            <CapacitorSymbol />
+            <InductorSymbol />
+          </div>
+
+          <ConceptBlock title="Switching and Protection Device Symbols">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Device</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Symbol Description
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key Feature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Isolator (disconnector)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Simple switch contact (open position shown)
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      No tripping capability — manual operation only
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Fuse</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Rectangle with line through centre
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Single-shot protection — must be replaced
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCB</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Switch with thermal (rectangle) and/or magnetic (arc) trip
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Overload and short-circuit protection
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCCB</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Similar to MCB, often with adjustable trip shown
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher breaking capacity, adjustable settings
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">RCD</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Switch with current-sensing toroid and test button
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Earth fault protection — detects residual current
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">RCBO</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Combined MCB and RCD symbols
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Overcurrent + earth fault protection combined
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Contactor</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Switch symbol with coil designation
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Electromagnetically operated — remote switching
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor and Generator Symbols
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Motor:</strong> Circle with 'M' inside. Additions: 3~ (three-phase AC), 1~
-                  (single-phase AC), = (DC)
-                </li>
-                <li className="pl-1">
-                  <strong>Generator:</strong> Circle with 'G' inside. Same phase/type additions as
-                  motors
-                </li>
-                <li className="pl-1">
-                  <strong>Transformer:</strong> Two coils with core lines. Variations for auto,
-                  current (CT), and voltage (VT) transformers
-                </li>
-                <li className="pl-1">
-                  <strong>Battery:</strong> Long and short parallel lines alternating (long =
-                  positive, short = negative)
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Motor and Generator Symbols">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Motor:</strong> Circle with 'M' inside. Additions: 3~ (three-phase AC), 1~
+                (single-phase AC), = (DC)
+              </li>
+              <li>
+                <strong>Generator:</strong> Circle with 'G' inside. Same phase/type additions as
+                motors
+              </li>
+              <li>
+                <strong>Transformer:</strong> Two coils with core lines. Variations for auto,
+                current (CT), and voltage (VT) transformers
+              </li>
+              <li>
+                <strong>Battery:</strong> Long and short parallel lines alternating (long =
+                positive, short = negative)
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Check the drawing's symbol legend">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Key point:</strong> While you do not need to memorise every symbol in BS EN
               60617, you must be able to recognise the common symbols listed above. Most drawings
               include a symbol legend or key — always check this first when reading an unfamiliar
               drawing, as some manufacturers use slight variations or additional notation.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        {/* Section 02: Types of Electrical Diagrams */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Types of Electrical Diagrams
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Types of electrical diagrams</ContentEyebrow>
+
+          <ConceptBlock title="Types of Electrical Diagrams">
             <p>
               Different types of electrical diagrams serve different purposes. As a maintenance
               technician, you will use several types depending on whether you are understanding the
               system overview, tracing a circuit fault, or making a physical wiring connection.
               Knowing which diagram to use for which task is a key skill.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Schematic (Circuit) Diagram
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Shows the <strong>logical function</strong> of a circuit using standardised
-                  symbols. Components are arranged for clarity of understanding, not according to
-                  their physical position. This is the most useful diagram for understanding how a
-                  circuit works and for systematic fault-finding.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Shows the electrical connections between components</li>
-                  <li className="pl-1">
-                    Components arranged for logical clarity, not physical layout
-                  </li>
-                  <li className="pl-1">
-                    Best for understanding circuit operation and fault-finding
-                  </li>
-                  <li className="pl-1">
-                    Used for control circuits, power circuits, and electronic circuits
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Schematic (Circuit) Diagram">
+            <p>
+              Shows the <strong>logical function</strong> of a circuit using standardised symbols.
+              Components are arranged for clarity of understanding, not according to their physical
+              position. This is the most useful diagram for understanding how a circuit works and
+              for systematic fault-finding.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Shows the electrical connections between components</li>
+              <li>Components arranged for logical clarity, not physical layout</li>
+              <li>Best for understanding circuit operation and fault-finding</li>
+              <li>Used for control circuits, power circuits, and electronic circuits</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Wiring Diagram (Connection Diagram)
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Shows the <strong>physical connections</strong> and wiring between components.
-                  Components are shown in approximately their physical positions, and terminal
-                  numbers, cable identifications, and routing information are included.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Shows terminal numbers and cable identifications</li>
-                  <li className="pl-1">Components shown in approximate physical positions</li>
-                  <li className="pl-1">Best for making or checking physical connections</li>
-                  <li className="pl-1">
-                    Essential for wiring control panels and distribution boards
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Wiring Diagram (Connection Diagram)">
+            <p>
+              Shows the <strong>physical connections</strong> and wiring between components.
+              Components are shown in approximately their physical positions, and terminal numbers,
+              cable identifications, and routing information are included.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Shows terminal numbers and cable identifications</li>
+              <li>Components shown in approximate physical positions</li>
+              <li>Best for making or checking physical connections</li>
+              <li>Essential for wiring control panels and distribution boards</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Single-Line (One-Line) Diagram
-                </h3>
-                <p className="text-sm text-white mb-2">
-                  Shows the <strong>overall arrangement</strong> of an electrical distribution
-                  system in simplified form. A single line represents all conductors of a circuit
-                  (live, neutral, earth, and all phases).
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Simplifies complex distribution systems to a readable overview
-                  </li>
-                  <li className="pl-1">
-                    Shows the hierarchy: incoming supply, transformers, switchboards, distribution
-                    boards
-                  </li>
-                  <li className="pl-1">
-                    Includes protective device ratings, cable sizes, and circuit designations
-                  </li>
-                  <li className="pl-1">
-                    Best for understanding the overall system and planning maintenance work
-                  </li>
-                </ul>
-              </div>
+          <ConceptBlock title="Single-Line (One-Line) Diagram">
+            <p>
+              Shows the <strong>overall arrangement</strong> of an electrical distribution system in
+              simplified form. A single line represents all conductors of a circuit (live, neutral,
+              earth, and all phases).
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Simplifies complex distribution systems to a readable overview</li>
+              <li>
+                Shows the hierarchy: incoming supply, transformers, switchboards, distribution
+                boards
+              </li>
+              <li>Includes protective device ratings, cable sizes, and circuit designations</li>
+              <li>Best for understanding the overall system and planning maintenance work</li>
+            </ul>
+          </ConceptBlock>
 
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Block Diagram</h3>
-                <p className="text-sm text-white mb-2">
-                  Shows the major functional blocks of a system and the relationships between them,
-                  without detailed circuit information. Useful for understanding the overall system
-                  architecture before diving into detailed drawings.
-                </p>
-                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
-                  <li className="pl-1">Shows major system components as labelled blocks</li>
-                  <li className="pl-1">Arrows show signal or power flow direction</li>
-                  <li className="pl-1">Best for initial system understanding and overview</li>
-                  <li className="pl-1">
-                    Often used in manufacturer technical manuals as an introduction
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="Block Diagram">
+            <p>
+              Shows the major functional blocks of a system and the relationships between them,
+              without detailed circuit information. Useful for understanding the overall system
+              architecture before diving into detailed drawings.
+            </p>
+            <ul className="list-disc space-y-1 pl-5 marker:text-elec-yellow/70">
+              <li>Shows major system components as labelled blocks</li>
+              <li>Arrows show signal or power flow direction</li>
+              <li>Best for initial system understanding and overview</li>
+              <li>Often used in manufacturer technical manuals as an introduction</li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">Choosing the Right Diagram</p>
-              <p className="text-sm text-white">
-                For fault-finding a control circuit, start with the schematic diagram to understand
-                the circuit logic, then use the wiring diagram to locate the physical connections
-                you need to test. For planning isolation before maintenance, use the single-line
-                diagram to identify the distribution hierarchy and the protective devices you need
-                to lock off. Using the wrong diagram for the task wastes time and increases the risk
-                of error.
-              </p>
-            </div>
+          <ConceptBlock title="Choosing the Right Diagram">
+            <p>
+              For fault-finding a control circuit, start with the schematic diagram to understand
+              the circuit logic, then use the wiring diagram to locate the physical connections you
+              need to test. For planning isolation before maintenance, use the single-line diagram
+              to identify the distribution hierarchy and the protective devices you need to lock
+              off. Using the wrong diagram for the task wastes time and increases the risk of error.
+            </p>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Verify drawings are current">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Maintenance application:</strong> Always verify that the drawings you are
               using are current and reflect the actual installation. Modifications made since the
               original installation may not be shown on older drawings. If you discover
@@ -688,18 +621,15 @@ const MOETModule2Section1_5 = () => {
               that the drawings are updated. Working from inaccurate drawings is a significant
               safety risk.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        {/* Section 03: Single-Line Diagrams */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Reading Single-Line Distribution Diagrams
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Reading single-line distribution diagrams</ContentEyebrow>
+
+          <ConceptBlock title="Reading Single-Line Distribution Diagrams">
             <p>
               Single-line diagrams are the most common type of drawing you will encounter for power
               distribution systems. They provide a clear overview of how the electrical supply is
@@ -707,116 +637,106 @@ const MOETModule2Section1_5 = () => {
               final circuits. Learning to read these diagrams fluently is essential for maintenance
               planning, isolation, and fault investigation.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Common Elements on Single-Line Diagrams
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Incoming supply:</strong> Shown at the top or left, with details of supply
-                  type, voltage, number of phases, and earthing arrangement (TN-S, TN-C-S, TT)
-                </li>
-                <li className="pl-1">
-                  <strong>Main switchboard (MSB):</strong> Central distribution point with main
-                  switch/MCCB, bus-section switches, and outgoing ways
-                </li>
-                <li className="pl-1">
-                  <strong>Sub-distribution boards:</strong> Fed from the MSB, each with its own
-                  incoming isolator and outgoing circuits
-                </li>
-                <li className="pl-1">
-                  <strong>Protective devices:</strong> MCBs, MCCBs, fuses, RCDs — shown with their
-                  ratings (e.g., 32A Type B MCB)
-                </li>
-                <li className="pl-1">
-                  <strong>Cable details:</strong> Size, type, and number of cores (e.g., 4c 25mm²
-                  XLPE/SWA)
-                </li>
-                <li className="pl-1">
-                  <strong>Circuit designations:</strong> Unique reference numbers for each circuit
-                </li>
-                <li className="pl-1">
-                  <strong>Metering:</strong> kWh meters, CT metering, maximum demand indicators
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Common Elements on Single-Line Diagrams">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Incoming supply:</strong> Shown at the top or left, with details of supply
+                type, voltage, number of phases, and earthing arrangement (TN-S, TN-C-S, TT)
+              </li>
+              <li>
+                <strong>Main switchboard (MSB):</strong> Central distribution point with main
+                switch/MCCB, bus-section switches, and outgoing ways
+              </li>
+              <li>
+                <strong>Sub-distribution boards:</strong> Fed from the MSB, each with its own
+                incoming isolator and outgoing circuits
+              </li>
+              <li>
+                <strong>Protective devices:</strong> MCBs, MCCBs, fuses, RCDs — shown with their
+                ratings (e.g., 32A Type B MCB)
+              </li>
+              <li>
+                <strong>Cable details:</strong> Size, type, and number of cores (e.g., 4c 25mm²
+                XLPE/SWA)
+              </li>
+              <li>
+                <strong>Circuit designations:</strong> Unique reference numbers for each circuit
+              </li>
+              <li>
+                <strong>Metering:</strong> kWh meters, CT metering, maximum demand indicators
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Notation Conventions on Single-Line Diagrams
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Hash marks:</strong> Short diagonal lines across a conductor indicate the
-                  number of individual conductors (e.g., three hash marks = three-phase, three
-                  conductors)
-                </li>
-                <li className="pl-1">
-                  <strong>Dot notation:</strong> A dot at a junction indicates an electrical
-                  connection; crossing lines without a dot are not connected
-                </li>
-                <li className="pl-1">
-                  <strong>Bus bars:</strong> Shown as thick horizontal or vertical lines
-                  representing the distribution busbars
-                </li>
-                <li className="pl-1">
-                  <strong>Earth symbol:</strong> Three horizontal lines of decreasing length, or a
-                  single line to a ground symbol
-                </li>
-                <li className="pl-1">
-                  <strong>Numbering:</strong> Circuits are numbered sequentially from the supply end
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Notation Conventions on Single-Line Diagrams">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hash marks:</strong> Short diagonal lines across a conductor indicate the
+                number of individual conductors (e.g., three hash marks = three-phase, three
+                conductors)
+              </li>
+              <li>
+                <strong>Dot notation:</strong> A dot at a junction indicates an electrical
+                connection; crossing lines without a dot are not connected
+              </li>
+              <li>
+                <strong>Bus bars:</strong> Shown as thick horizontal or vertical lines representing
+                the distribution busbars
+              </li>
+              <li>
+                <strong>Earth symbol:</strong> Three horizontal lines of decreasing length, or a
+                single line to a ground symbol
+              </li>
+              <li>
+                <strong>Numbering:</strong> Circuits are numbered sequentially from the supply end
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Earthing System Designations on Diagrams
-              </h3>
-              <p className="text-sm text-white mb-2">
-                Single-line diagrams show the earthing arrangement using standard BS 7671
-                designations:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>TN-S:</strong> Separate neutral and earth conductors from the supply
-                  transformer — the earth is via the cable sheath
-                </li>
-                <li className="pl-1">
-                  <strong>TN-C-S (PME):</strong> Combined neutral-earth in the supply cable,
-                  separated at the consumer's installation — protective multiple earthing
-                </li>
-                <li className="pl-1">
-                  <strong>TT:</strong> No earth from the supply — the installation relies on its own
-                  earth electrode
-                </li>
-                <li className="pl-1">
-                  <strong>IT:</strong> Isolated or impedance-earthed supply — used in specialist
-                  applications
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Earthing System Designations on Diagrams">
+            <p>
+              Single-line diagrams show the earthing arrangement using standard BS 7671
+              designations:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>TN-S:</strong> Separate neutral and earth conductors from the supply
+                transformer — the earth is via the cable sheath
+              </li>
+              <li>
+                <strong>TN-C-S (PME):</strong> Combined neutral-earth in the supply cable, separated
+                at the consumer's installation — protective multiple earthing
+              </li>
+              <li>
+                <strong>TT:</strong> No earth from the supply — the installation relies on its own
+                earth electrode
+              </li>
+              <li>
+                <strong>IT:</strong> Isolated or impedance-earthed supply — used in specialist
+                applications
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Start with the single-line diagram when planning">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Key point:</strong> When planning maintenance work, always start with the
               single-line diagram to understand the supply hierarchy. Identify which protective
               device you need to isolate, trace the circuit back to the supply, and check for
               alternative feeds (such as standby generators or bus-section switches) that could
               re-energise the circuit from an unexpected source.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        {/* Section 04: Control Circuit Conventions and Cross-Referencing */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Control Circuit Conventions and Cross-Referencing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Control circuit conventions and cross-referencing</ContentEyebrow>
+
+          <ConceptBlock title="Control Circuit Conventions and Cross-Referencing">
             <p>
               Control circuit drawings are more detailed than single-line diagrams and require
               specific conventions to manage the complexity of multi-page drawings with numerous
@@ -824,135 +744,126 @@ const MOETModule2Section1_5 = () => {
               essential for fault-finding in motor control centres, automated systems, and BMS
               panels.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Device Designation Codes (IEC 61346 / EN 81346)
-              </p>
-              <p className="text-sm text-white mb-3">
-                Control devices are identified by letter codes that indicate their function:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Code</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Device Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">KM</td>
-                      <td className="border border-white/10 px-3 py-2">Contactor (motor)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        KM1 — main motor contactor
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">KA</td>
-                      <td className="border border-white/10 px-3 py-2">Auxiliary relay</td>
-                      <td className="border border-white/10 px-3 py-2">KA3 — interlock relay</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">KT</td>
-                      <td className="border border-white/10 px-3 py-2">Timer relay</td>
-                      <td className="border border-white/10 px-3 py-2">KT1 — star-delta timer</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">SB</td>
-                      <td className="border border-white/10 px-3 py-2">Push button</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SB1 — start button, SB0 — stop button
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">SA</td>
-                      <td className="border border-white/10 px-3 py-2">Selector switch</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        SA1 — auto/manual selector
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">QF</td>
-                      <td className="border border-white/10 px-3 py-2">Circuit breaker</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        QF1 — motor circuit breaker
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">FR</td>
-                      <td className="border border-white/10 px-3 py-2">Thermal overload relay</td>
-                      <td className="border border-white/10 px-3 py-2">FR1 — motor overload</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2 font-mono">HL</td>
-                      <td className="border border-white/10 px-3 py-2">Indicator lamp</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        HL1 — run lamp (green), HL2 — trip lamp (red)
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Device Designation Codes (IEC 61346 / EN 81346)">
+            <p>Control devices are identified by letter codes that indicate their function:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Code</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Device Type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">KM</td>
+                    <td className="border border-white/10 px-3 py-2">Contactor (motor)</td>
+                    <td className="border border-white/10 px-3 py-2">KM1 — main motor contactor</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">KA</td>
+                    <td className="border border-white/10 px-3 py-2">Auxiliary relay</td>
+                    <td className="border border-white/10 px-3 py-2">KA3 — interlock relay</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">KT</td>
+                    <td className="border border-white/10 px-3 py-2">Timer relay</td>
+                    <td className="border border-white/10 px-3 py-2">KT1 — star-delta timer</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">SB</td>
+                    <td className="border border-white/10 px-3 py-2">Push button</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      SB1 — start button, SB0 — stop button
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">SA</td>
+                    <td className="border border-white/10 px-3 py-2">Selector switch</td>
+                    <td className="border border-white/10 px-3 py-2">SA1 — auto/manual selector</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">QF</td>
+                    <td className="border border-white/10 px-3 py-2">Circuit breaker</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      QF1 — motor circuit breaker
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">FR</td>
+                    <td className="border border-white/10 px-3 py-2">Thermal overload relay</td>
+                    <td className="border border-white/10 px-3 py-2">FR1 — motor overload</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2 font-mono">HL</td>
+                    <td className="border border-white/10 px-3 py-2">Indicator lamp</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      HL1 — run lamp (green), HL2 — trip lamp (red)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contact Cross-Referencing
-              </p>
-              <p className="text-sm text-white mb-3">
-                In complex control drawings, a relay coil and its contacts appear in different
-                places on the drawing. Cross-referencing links them together:
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  The relay coil (e.g., KM1) is drawn in the control circuit where it is energised
-                </li>
-                <li className="pl-1">
-                  Each contact of KM1 is drawn in the circuit where it performs its function,
-                  labelled 'KM1'
-                </li>
-                <li className="pl-1">
-                  Adjacent to the coil, a cross-reference table lists the page/line numbers where
-                  each contact is drawn
-                </li>
-                <li className="pl-1">
-                  Contacts are shown in their de-energised (normal) state — NO contacts open, NC
-                  contacts closed
-                </li>
-                <li className="pl-1">
-                  When tracing a fault, identify the coil, check it is energised, then trace each
-                  contact to verify it has changed state
-                </li>
-              </ul>
-            </div>
+          <div className="flex flex-wrap items-start gap-6">
+            <ContactorSymbol />
+          </div>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Contact Terminal Numbering (IEC 60947-5-1)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Coil terminals:</strong> A1 (positive) and A2 (negative/common)
-                </li>
-                <li className="pl-1">
-                  <strong>NO contacts:</strong> Terminals ending in 3-4 (e.g., 13-14, 23-24, 33-34)
-                </li>
-                <li className="pl-1">
-                  <strong>NC contacts:</strong> Terminals ending in 1-2 (e.g., 11-12, 21-22, 31-32)
-                </li>
-                <li className="pl-1">
-                  <strong>Changeover contacts:</strong> Terminals ending in 1-2-4 (e.g., 11-12-14)
-                </li>
-                <li className="pl-1">
-                  <strong>Main contacts (contactors):</strong> 1-2, 3-4, 5-6 for three-phase power
-                  contacts
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Contact Cross-Referencing">
+            <p>
+              In complex control drawings, a relay coil and its contacts appear in different places
+              on the drawing. Cross-referencing links them together:
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                The relay coil (e.g., KM1) is drawn in the control circuit where it is energised
+              </li>
+              <li>
+                Each contact of KM1 is drawn in the circuit where it performs its function, labelled
+                'KM1'
+              </li>
+              <li>
+                Adjacent to the coil, a cross-reference table lists the page/line numbers where each
+                contact is drawn
+              </li>
+              <li>
+                Contacts are shown in their de-energised (normal) state — NO contacts open, NC
+                contacts closed
+              </li>
+              <li>
+                When tracing a fault, identify the coil, check it is energised, then trace each
+                contact to verify it has changed state
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Contact Terminal Numbering (IEC 60947-5-1)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Coil terminals:</strong> A1 (positive) and A2 (negative/common)
+              </li>
+              <li>
+                <strong>NO contacts:</strong> Terminals ending in 3-4 (e.g., 13-14, 23-24, 33-34)
+              </li>
+              <li>
+                <strong>NC contacts:</strong> Terminals ending in 1-2 (e.g., 11-12, 21-22, 31-32)
+              </li>
+              <li>
+                <strong>Changeover contacts:</strong> Terminals ending in 1-2-4 (e.g., 11-12-14)
+              </li>
+              <li>
+                <strong>Main contacts (contactors):</strong> 1-2, 3-4, 5-6 for three-phase power
+                contacts
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Trace the fault systematically">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Maintenance application:</strong> When fault-finding a control circuit, use
               the cross-reference system systematically. Start at the output (what is not working —
               e.g., motor not running). Trace back to the contactor coil — is it energised? If not,
@@ -960,158 +871,145 @@ const MOETModule2Section1_5 = () => {
               along the way. The designation codes tell you exactly which device to check and the
               terminal numbers tell you exactly where to put your test probes.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        {/* Section 05: Terminal Identification and Labelling */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Terminal Identification and Labelling Conventions
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Terminal identification and labelling conventions</ContentEyebrow>
+
+          <ConceptBlock title="Terminal Identification and Labelling Conventions">
             <p>
               Correct terminal identification is a fundamental safety requirement. Connecting to the
               wrong terminal can cause equipment damage, protection failure, or danger to persons.
               IEC 60445 and BS 7671 define standard conventions for identifying terminals on
               electrical equipment and in installations.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Standard Terminal Designations
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Terminal</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Designation</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Conductor Colour (BS 7671)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line (single-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">L</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Previously 'phase' or 'live' (red)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line 1 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">L1</td>
-                      <td className="border border-white/10 px-3 py-2">Brown</td>
-                      <td className="border border-white/10 px-3 py-2">Previously R (red)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line 2 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">L2</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                      <td className="border border-white/10 px-3 py-2">Previously Y (yellow)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Line 3 (three-phase)</td>
-                      <td className="border border-white/10 px-3 py-2">L3</td>
-                      <td className="border border-white/10 px-3 py-2">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">Previously B (blue)</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Neutral</td>
-                      <td className="border border-white/10 px-3 py-2">N</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">Previously black</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Protective earth</td>
-                      <td className="border border-white/10 px-3 py-2">PE</td>
-                      <td className="border border-white/10 px-3 py-2">Green-and-yellow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Never used for any other purpose
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+          <ConceptBlock title="Standard Terminal Designations">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Terminal</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Designation</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Conductor Colour (BS 7671)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Line (single-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">L</td>
+                    <td className="border border-white/10 px-3 py-2">Brown</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Previously 'phase' or 'live' (red)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Line 1 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">L1</td>
+                    <td className="border border-white/10 px-3 py-2">Brown</td>
+                    <td className="border border-white/10 px-3 py-2">Previously R (red)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Line 2 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">L2</td>
+                    <td className="border border-white/10 px-3 py-2">Black</td>
+                    <td className="border border-white/10 px-3 py-2">Previously Y (yellow)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Line 3 (three-phase)</td>
+                    <td className="border border-white/10 px-3 py-2">L3</td>
+                    <td className="border border-white/10 px-3 py-2">Grey</td>
+                    <td className="border border-white/10 px-3 py-2">Previously B (blue)</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Neutral</td>
+                    <td className="border border-white/10 px-3 py-2">N</td>
+                    <td className="border border-white/10 px-3 py-2">Blue</td>
+                    <td className="border border-white/10 px-3 py-2">Previously black</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Protective earth</td>
+                    <td className="border border-white/10 px-3 py-2">PE</td>
+                    <td className="border border-white/10 px-3 py-2">Green-and-yellow</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Never used for any other purpose
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Motor Winding Terminal Designations (IEC 60034-8)
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Phase U winding:</strong> U1 (start) and U2 (end)
-                </li>
-                <li className="pl-1">
-                  <strong>Phase V winding:</strong> V1 (start) and V2 (end)
-                </li>
-                <li className="pl-1">
-                  <strong>Phase W winding:</strong> W1 (start) and W2 (end)
-                </li>
-                <li className="pl-1">
-                  <strong>Star connection:</strong> Link U2-V2-W2 together. Supply to U1, V1, W1
-                </li>
-                <li className="pl-1">
-                  <strong>Delta connection:</strong> Link U1-W2, V1-U2, W1-V2. Supply to U1, V1, W1
-                </li>
-                <li className="pl-1">
-                  <strong>Star-delta starting:</strong> All six terminals must be accessible for the
-                  starter to reconfigure the connections during starting
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Motor Winding Terminal Designations (IEC 60034-8)">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Phase U winding:</strong> U1 (start) and U2 (end)
+              </li>
+              <li>
+                <strong>Phase V winding:</strong> V1 (start) and V2 (end)
+              </li>
+              <li>
+                <strong>Phase W winding:</strong> W1 (start) and W2 (end)
+              </li>
+              <li>
+                <strong>Star connection:</strong> Link U2-V2-W2 together. Supply to U1, V1, W1
+              </li>
+              <li>
+                <strong>Delta connection:</strong> Link U1-W2, V1-U2, W1-V2. Supply to U1, V1, W1
+              </li>
+              <li>
+                <strong>Star-delta starting:</strong> All six terminals must be accessible for the
+                starter to reconfigure the connections during starting
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Old vs New Colour Codes</p>
-              <p className="text-sm text-white">
-                During maintenance, you will encounter both the old and new conductor colour codes.
-                The harmonised colours were introduced by Amendment 2 to BS 7671:2001 (2004) and
-                became mandatory for new work from April 2006. Old installations use: Red
-                (L1), Yellow (L2), Blue (L3), Black (N). New installations use: Brown (L1), Black
-                (L2), Grey (L3), Blue (N). Particular care is needed where old and new systems meet
-                — blue was previously L3 but is now N, and black was previously N but is now L2.
-                Always verify by testing, never assume based on colour alone. Conversion labels at
-                interface points remain sound practice and are what an inspector expects to see,
-                but note that Appendix 7 and Regulation 514.14 — which used to carry the
-                non-standard-colours requirements — were both deleted by BS 7671:2018+A2:2022.
-                Conductor identification is now set out in Table 51 of Chapter 51.
-              </p>
-            </div>
+          <ConceptBlock title="Old vs New Colour Codes">
+            <p>
+              During maintenance, you will encounter both the old and new conductor colour codes.
+              The harmonised colours were introduced by Amendment 2 to BS 7671:2001 (2004) and
+              became mandatory for new work from April 2006. Old installations use: Red (L1), Yellow
+              (L2), Blue (L3), Black (N). New installations use: Brown (L1), Black (L2), Grey (L3),
+              Blue (N). Particular care is needed where old and new systems meet — blue was
+              previously L3 but is now N, and black was previously N but is now L2. Always verify by
+              testing, never assume based on colour alone. Conversion labels at interface points
+              remain sound practice and are what an inspector expects to see, but note that Appendix
+              7 and Regulation 514.14 — which used to carry the non-standard-colours requirements —
+              were both deleted by BS 7671:2018+A2:2022. Conductor identification is now set out in
+              Table 51 of Chapter 51.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Labelling Best Practice for Maintenance
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  All circuits must be clearly labelled at the distribution board with a durable
-                  circuit chart per BS 7671 Reg 514.9
-                </li>
-                <li className="pl-1">
-                  Cables should be labelled at both ends with the circuit designation
-                </li>
-                <li className="pl-1">
-                  Terminal blocks in control panels should be numbered sequentially and match the
-                  wiring diagram
-                </li>
-                <li className="pl-1">
-                  Warning and caution labels must be provided where multiple supplies feed equipment
-                </li>
-                <li className="pl-1">
-                  Labels must be durable, legible, and fixed securely — handwritten temporary labels
-                  should be replaced with permanent labels during maintenance
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Labelling Best Practice for Maintenance">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                All circuits must be clearly labelled at the distribution board with a durable
+                circuit chart per BS 7671 Reg 514.9
+              </li>
+              <li>Cables should be labelled at both ends with the circuit designation</li>
+              <li>
+                Terminal blocks in control panels should be numbered sequentially and match the
+                wiring diagram
+              </li>
+              <li>
+                Warning and caution labels must be provided where multiple supplies feed equipment
+              </li>
+              <li>
+                Labels must be durable, legible, and fixed securely — handwritten temporary labels
+                should be replaced with permanent labels during maintenance
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Reading drawings is an assessed competence">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>ST1426 link:</strong> The ability to read and interpret technical drawings,
               identify electrical symbols, and follow wiring conventions is a core competence for
               the maintenance technician standard. You will be expected to demonstrate these skills
@@ -1119,94 +1017,55 @@ const MOETModule2Section1_5 = () => {
               accurate, up-to-date drawings and labelling is also part of good maintenance practice,
               contributing to the safety of everyone who works on the installation in the future.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'Diagram types: schematic — logical function (fault-finding); wiring — physical connections (installation); single-line — system overview (planning); block — functional overview (orientation).',
+              'Contact terminals: NO contacts x3-x4 (13-14, 23-24); NC contacts x1-x2 (11-12, 21-22); coil A1, A2.',
+              'Key standards: IEC 60617 (graphical symbols); IEC 60445 (terminal marking); IEC 60034-8 (motor terminal designations); IEC 60947-5-1 (contact terminal numbering); IEC 61082 (documentation conventions); BS 7671 Reg 514.9 (circuit labelling).',
+            ]}
+          />
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Diagram Types</p>
-                <ul className="space-y-0.5">
-                  <li>Schematic — logical function (fault-finding)</li>
-                  <li>Wiring — physical connections (installation)</li>
-                  <li>Single-line — system overview (planning)</li>
-                  <li>Block — functional overview (orientation)</li>
-                </ul>
-                <p className="font-medium text-white mb-1 mt-2">Contact Terminals</p>
-                <ul className="space-y-0.5">
-                  <li>NO contacts: x3-x4 (13-14, 23-24)</li>
-                  <li>NC contacts: x1-x2 (11-12, 21-22)</li>
-                  <li>Coil: A1, A2</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>IEC 60617 — Graphical symbols</li>
-                  <li>IEC 60445 — Terminal marking</li>
-                  <li>IEC 60034-8 — Motor terminal designations</li>
-                  <li>IEC 60947-5-1 — Contact terminal numbering</li>
-                  <li>IEC 61082 — Documentation conventions</li>
-                  <li>BS 7671 Reg 514.9 — Circuit labelling</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section1-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Units and Measurement
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section2-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Direct Current Principles
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Units and Measurement
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section1">
-              Back to Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

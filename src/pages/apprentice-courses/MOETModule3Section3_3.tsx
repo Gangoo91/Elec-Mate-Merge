@@ -1,8 +1,45 @@
-import { ArrowLeft, Shield, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 3 · Section 3.3 · Subsection 3 — Terminations and Connectors
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered — the published K/S/B
+ * numbering is unverified, so never write a code here:
+ *   · "Electrical. Electrical plant, equipment, and systems maintenance
+ *      requirements: removing and replacing parts, inspecting, testing,
+ *      setting up, adjusting, cleaning, and functional testing."
+ *   · "Electrical. Electricity at Work regulations. IET wiring regulations."
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  Scenario,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Terminations and Connectors - MOET Module 3.3.3';
@@ -254,112 +291,48 @@ const faqs = [
 ];
 
 const MOETModule3Section3_3 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centred Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Shield className="h-4 w-4" />
-            <span>Module 3.3.3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Terminations and Connectors
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 3 · Section 3.3 · Subsection 3"
+        title="Terminations and Connectors"
+        backTo="/study-centre/apprentice/m-o-e-t-module3-section3"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Termination techniques, connector types and installation methods for reliable electrical
-            connections
+            connections — the joint is where nearly every fault, and every fire, begins.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Crimping:</strong> Compression lugs with calibrated tools and correct dies
-              </li>
-              <li className="pl-1">
-                <strong>Glands:</strong> BW (indoor), CW (outdoor), EMC (screened cables)
-              </li>
-              <li className="pl-1">
-                <strong>Torque:</strong> Manufacturer-specified values, calibrated wrench
-              </li>
-              <li className="pl-1">
-                <strong>Verification:</strong> Pull test, thermographic survey, continuity
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Hot spots:</strong> Failing terminations are the top cause of electrical
-                fires
-              </li>
-              <li className="pl-1">
-                <strong>Re-torquing:</strong> Annual checks prevent thermal runaway failures
-              </li>
-              <li className="pl-1">
-                <strong>MI cable:</strong> Specialist termination; moisture ingress is critical
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Core competence in termination and connection skills
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'Crimping: compression lugs with calibrated tools and correct dies.',
+              'Glands: BW (indoor), CW (outdoor), EMC (screened cables).',
+              'Torque: manufacturer-specified values, calibrated wrench.',
+              'Verification: pull test, thermographic survey, continuity.',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You Will Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Apply correct crimping techniques using calibrated tools and matched die sets',
               'Select appropriate cable glands for different cable types and environments',
               'Explain the importance of torque control for electrical terminations',
               'Describe termination methods for MI cable, SWA cable and screened cables',
               'Identify common termination failures and their causes during maintenance',
               'Use thermographic surveys and pull tests to verify termination integrity',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Compression crimping</ContentEyebrow>
 
-        {/* Section 01 */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Compression Crimping
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Compression Crimping">
             <p>
               Compression crimping is the preferred method for making power cable terminations in
               industrial and commercial electrical installations. A properly executed crimp creates
@@ -374,332 +347,295 @@ const MOETModule3Section3_3 = () => {
               Unlike soldered joints, crimped connections do not soften with heat and do not suffer
               from solder creep under sustained load.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crimping Best Practice</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Lug selection:</strong> Match the lug barrel size to the conductor
-                  cross-sectional area and the palm hole to the terminal stud size
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor preparation:</strong> Cut conductor square, remove insulation to
-                  the correct length (barrel depth plus 2-3 mm), do not nick or cut individual
-                  strands
-                </li>
-                <li className="pl-1">
-                  <strong>Die selection:</strong> Use the die specified by the lug manufacturer for
-                  that specific barrel size — dies are not interchangeable between manufacturers
-                </li>
-                <li className="pl-1">
-                  <strong>Tool calibration:</strong> Hydraulic tools must be regularly serviced and
-                  calibrated; ratchet tools must complete full cycle
-                </li>
-                <li className="pl-1">
-                  <strong>Verification:</strong> Visual check (full die indent, no strand
-                  protrusion, insulation grip) plus pull test to manufacturer's minimum force
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">Common Crimping Failures</p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Wrong die:</strong> Lug barrel not fully compressed, creating voids that
-                  oxidise and increase resistance
-                </li>
-                <li className="pl-1">
-                  <strong>Incomplete insertion:</strong> Conductor not fully inserted into barrel,
-                  reducing contact area
-                </li>
-                <li className="pl-1">
-                  <strong>Strand damage:</strong> Nicked strands during insulation stripping reduce
-                  the effective conductor area
-                </li>
-                <li className="pl-1">
-                  <strong>Wrong lug size:</strong> Oversized barrel does not compress fully;
-                  undersized barrel cannot accommodate all strands
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Crimp Tool Types</h3>
-              <p className="text-sm text-white mb-3">
-                Different conductor sizes require different crimping tools. Using the wrong tool
-                type is a common cause of unreliable terminations.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Hand ratchet crimpers:</strong> For conductor sizes up to 16 mm squared;
-                  the ratchet mechanism ensures the crimp cycle is completed before the tool can be
-                  released
-                </li>
-                <li className="pl-1">
-                  <strong>Hydraulic crimpers:</strong> For conductor sizes from 16 mm squared to 630
-                  mm squared; provide the consistent, high force needed for reliable large-cable
-                  terminations
-                </li>
-                <li className="pl-1">
-                  <strong>Battery-powered crimpers:</strong> Portable hydraulic tools with
-                  interchangeable die heads; increasingly used for on-site work where mains power is
-                  unavailable
-                </li>
-                <li className="pl-1">
-                  <strong>Ferrule crimpers:</strong> Dedicated tools for bootlace ferrules; use a
-                  square or hexagonal profile matched to the ferrule design
-                </li>
-              </ul>
-            </div>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lug selection:</strong> Match the lug barrel size to the conductor
+                cross-sectional area and the palm hole to the terminal stud size.
+              </li>
+              <li>
+                <strong>Conductor preparation:</strong> Cut conductor square, remove insulation to
+                the correct length (barrel depth plus 2-3 mm), do not nick or cut individual
+                strands.
+              </li>
+              <li>
+                <strong>Die selection:</strong> Use the die specified by the lug manufacturer for
+                that specific barrel size — dies are not interchangeable between manufacturers.
+              </li>
+              <li>
+                <strong>Tool calibration:</strong> Hydraulic tools must be regularly serviced and
+                calibrated; ratchet tools must complete full cycle.
+              </li>
+              <li>
+                <strong>Verification:</strong> Visual check (full die indent, no strand protrusion,
+                insulation grip) plus pull test to manufacturer's minimum force.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Conductor Preparation for Crimping
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The quality of any crimp termination begins with correct conductor preparation. Poor
-                preparation is responsible for more crimp failures than incorrect tool or die
-                selection.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Stripping length:</strong> Strip insulation to the exact barrel depth plus
-                  2-3 mm — too short means insufficient contact area; too long means exposed
-                  conductor outside the barrel
-                </li>
-                <li className="pl-1">
-                  <strong>Stripping tool:</strong> Use a calibrated stripping tool set to the
-                  correct conductor diameter — side cutters and knives nick strands, reducing the
-                  effective cross-sectional area
-                </li>
-                <li className="pl-1">
-                  <strong>Strand inspection:</strong> After stripping, inspect all strands — any
-                  nicked, cut or missing strands reduce the conductor's current-carrying capacity
-                  and must be addressed by cutting back to undamaged conductor
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor cleaning:</strong> For aluminium conductors, abrade the surface
-                  immediately before insertion to remove the oxide layer, then apply anti-oxidation
-                  compound
-                </li>
-                <li className="pl-1">
-                  <strong>Conductor alignment:</strong> Ensure all strands are aligned and none are
-                  crossed over or doubled back before inserting into the lug barrel
-                </li>
-              </ul>
-            </div>
+          <CommonMistake
+            title="Common crimping failures"
+            whatHappens={
+              <>
+                <strong>Wrong die:</strong> lug barrel not fully compressed, creating voids that
+                oxidise and increase resistance. <strong>Incomplete insertion:</strong> conductor
+                not fully inserted into barrel, reducing contact area.{' '}
+                <strong>Strand damage:</strong> nicked strands during insulation stripping reduce
+                the effective conductor area. <strong>Wrong lug size:</strong> oversized barrel does
+                not compress fully; undersized barrel cannot accommodate all strands.
+              </>
+            }
+            doInstead={
+              <>
+                Match lug, die and tool to the conductor exactly, and verify with a pull test and
+                visual check every time.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> A well-crimped joint has lower resistance than the
-              equivalent length of conductor. A poorly crimped joint is a ticking time bomb — it
-              will generate heat, oxidise, increase in resistance and eventually fail, potentially
-              causing a fire.
+          <ConceptBlock title="Crimp tool types">
+            <p>
+              Different conductor sizes require different crimping tools. Using the wrong tool type
+              is a common cause of unreliable terminations.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hand ratchet crimpers:</strong> For conductor sizes up to 16 mm squared; the
+                ratchet mechanism ensures the crimp cycle is completed before the tool can be
+                released.
+              </li>
+              <li>
+                <strong>Hydraulic crimpers:</strong> For conductor sizes from 16 mm squared to 630
+                mm squared; provide the consistent, high force needed for reliable large-cable
+                terminations.
+              </li>
+              <li>
+                <strong>Battery-powered crimpers:</strong> Portable hydraulic tools with
+                interchangeable die heads; increasingly used for on-site work where mains power is
+                unavailable.
+              </li>
+              <li>
+                <strong>Ferrule crimpers:</strong> Dedicated tools for bootlace ferrules; use a
+                square or hexagonal profile matched to the ferrule design.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Conductor preparation for crimping">
+            <p>
+              The quality of any crimp termination begins with correct conductor preparation. Poor
+              preparation is responsible for more crimp failures than incorrect tool or die
+              selection.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stripping length:</strong> Strip insulation to the exact barrel depth plus
+                2-3 mm — too short means insufficient contact area; too long means exposed conductor
+                outside the barrel.
+              </li>
+              <li>
+                <strong>Stripping tool:</strong> Use a calibrated stripping tool set to the correct
+                conductor diameter — side cutters and knives nick strands, reducing the effective
+                cross-sectional area.
+              </li>
+              <li>
+                <strong>Strand inspection:</strong> After stripping, inspect all strands — any
+                nicked, cut or missing strands reduce the conductor's current-carrying capacity and
+                must be addressed by cutting back to undamaged conductor.
+              </li>
+              <li>
+                <strong>Conductor cleaning:</strong> For aluminium conductors, abrade the surface
+                immediately before insertion to remove the oxide layer, then apply anti-oxidation
+                compound.
+              </li>
+              <li>
+                <strong>Conductor alignment:</strong> Ensure all strands are aligned and none are
+                crossed over or doubled back before inserting into the lug barrel.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 02 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Cable Glands and Entry Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              A well-crimped joint has lower resistance than the equivalent length of conductor. A
+              poorly crimped joint is a ticking time bomb — it will generate heat, oxidise, increase
+              in resistance and eventually fail, potentially causing a fire.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Cable glands and entry systems</ContentEyebrow>
+
+          <ConceptBlock title="Cable Glands and Entry Systems">
             <p>
               Cable glands serve three critical functions: they provide a secure mechanical anchor
               for the cable, they maintain the IP rating of the enclosure, and — for armoured cables
               — they establish the earth continuity path through the cable armour. Selecting and
               installing the correct gland is as important as the cable itself.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Gland Types for SWA Cables
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Gland types for SWA cables
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Gland Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Application</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Key Feature</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">BW</td>
-                      <td className="border border-white/10 px-3 py-2">Indoor, dry locations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Standard indoor gland with armour clamp
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CW</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Outdoor, wet or damp locations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Weather seal (neoprene shroud) added
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">E1W</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Hazardous areas (Ex zones)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Certified flameproof/increased safety
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">A2</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Non-armoured cable, indoor
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compression seal on outer sheath only
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">EMC</td>
-                      <td className="border border-white/10 px-3 py-2">Screened/shielded cables</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        360-degree screen clamp for EMC integrity
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Gland type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Application</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key feature</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">BW</td>
+                    <td className="border border-white/10 px-3 py-2">Indoor, dry locations</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Standard indoor gland with armour clamp
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CW</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Outdoor, wet or damp locations
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Weather seal (neoprene shroud) added
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">E1W</td>
+                    <td className="border border-white/10 px-3 py-2">Hazardous areas (Ex zones)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Certified flameproof/increased safety
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">A2</td>
+                    <td className="border border-white/10 px-3 py-2">Non-armoured cable, indoor</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Compression seal on outer sheath only
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">EMC</td>
+                    <td className="border border-white/10 px-3 py-2">Screened/shielded cables</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      360-degree screen clamp for EMC integrity
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                SWA Cable Gland Installation Procedure
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Step 1:</strong> Cut outer sheath to expose armour wires (length depends
-                  on gland size)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 2:</strong> Fan out armour wires evenly around the cable
-                  circumference
-                </li>
-                <li className="pl-1">
-                  <strong>Step 3:</strong> Slide gland back-nut and cone onto cable
-                </li>
-                <li className="pl-1">
-                  <strong>Step 4:</strong> Cut armour wires to length (typically 10-15 mm proud of
-                  cone)
-                </li>
-                <li className="pl-1">
-                  <strong>Step 5:</strong> Insert cable through gland body mounted in enclosure
-                </li>
-                <li className="pl-1">
-                  <strong>Step 6:</strong> Seat armour wires around cone, tighten back-nut to
-                  compress cone and clamp armour
-                </li>
-                <li className="pl-1">
-                  <strong>Step 7:</strong> Fit earth tag and locknut; tighten to specified torque
-                </li>
-                <li className="pl-1">
-                  <strong>Step 8:</strong> Verify mechanical security and earth continuity
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Gland Sizing and Selection
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Correct gland sizing is essential. A gland that is too large for the cable cannot
-                grip the sheath properly, compromising strain relief and IP rating. A gland that is
-                too small cannot accommodate the cable and will damage the sheath during tightening.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Size selection:</strong> Match the gland to the cable outer diameter —
-                  manufacturers provide range charts showing minimum and maximum cable diameters for
-                  each gland size
-                </li>
-                <li className="pl-1">
-                  <strong>Thread size:</strong> Standard metric thread sizes (M16, M20, M25, M32,
-                  M40, M50, M63, M75) for panel entry; must match the gland plate knockout or
-                  drilled hole
-                </li>
-                <li className="pl-1">
-                  <strong>Material selection:</strong> Brass is standard; nickel-plated brass for
-                  slightly corrosive environments; stainless steel for highly corrosive
-                  environments; nylon for non-metallic requirements
-                </li>
-                <li className="pl-1">
-                  <strong>Earth tag:</strong> Always fit the earth tag between the gland locknut and
-                  the panel, with the tag connected to the panel earth bar — this provides the
-                  armour-to-earth continuity path
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                Common Gland Installation Errors
-              </p>
-              <p className="text-sm text-white">
+          <ConceptBlock title="SWA cable gland installation procedure">
+            <ul className="list-decimal space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Cut outer sheath to expose armour wires (length depends on gland size).</li>
+              <li>Fan out armour wires evenly around the cable circumference.</li>
+              <li>Slide gland back-nut and cone onto cable.</li>
+              <li>Cut armour wires to length (typically 10-15 mm proud of cone).</li>
+              <li>Insert cable through gland body mounted in enclosure.</li>
+              <li>
+                Seat armour wires around cone, tighten back-nut to compress cone and clamp armour.
+              </li>
+              <li>Fit earth tag and locknut; tighten to specified torque.</li>
+              <li>Verify mechanical security and earth continuity.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Gland sizing and selection">
+            <p>
+              Correct gland sizing is essential. A gland that is too large for the cable cannot grip
+              the sheath properly, compromising strain relief and IP rating. A gland that is too
+              small cannot accommodate the cable and will damage the sheath during tightening.
+            </p>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Size selection:</strong> Match the gland to the cable outer diameter —
+                manufacturers provide range charts showing minimum and maximum cable diameters for
+                each gland size.
+              </li>
+              <li>
+                <strong>Thread size:</strong> Standard metric thread sizes (M16, M20, M25, M32, M40,
+                M50, M63, M75) for panel entry; must match the gland plate knockout or drilled hole.
+              </li>
+              <li>
+                <strong>Material selection:</strong> Brass is standard; nickel-plated brass for
+                slightly corrosive environments; stainless steel for highly corrosive environments;
+                nylon for non-metallic requirements.
+              </li>
+              <li>
+                <strong>Earth tag:</strong> Always fit the earth tag between the gland locknut and
+                the panel, with the tag connected to the panel earth bar — this provides the
+                armour-to-earth continuity path.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Common gland installation errors"
+            whatHappens={
+              <>
                 Frequent gland installation errors include: armour wires cut too short (failing to
                 engage in the clamp ring); armour wires not evenly distributed around the
                 circumference (creating an off-centre clamp); back-nut not tightened sufficiently
                 (loose cable, poor earth); earth tag omitted or not connected; and using BW glands
-                in outdoor locations where CW glands are required. Each of these errors compromises
-                either the mechanical retention, IP rating or earth continuity of the installation.
-              </p>
-            </div>
+                in outdoor locations where CW glands are required.
+              </>
+            }
+            doInstead={
+              <>
+                Each of these errors compromises either the mechanical retention, IP rating or earth
+                continuity of the installation.
+              </>
+            }
+          />
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                IP Rating and Gland Performance
-              </h3>
-              <p className="text-sm text-white mb-3">
-                The IP (Ingress Protection) rating of an enclosure is only as good as its weakest
-                entry point. Cable glands must maintain the enclosure's specified IP rating when
-                correctly installed.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>IP66 requirement:</strong> For outdoor or wash-down environments; CW
-                  glands with correctly seated weather seals and neoprene washers are essential
-                </li>
-                <li className="pl-1">
-                  <strong>IP68 requirement:</strong> For submersible or continuously wet
-                  applications; specialist sealed glands with compression O-rings required
-                </li>
-                <li className="pl-1">
-                  <strong>Blank entries:</strong> All unused knockouts and gland holes must be
-                  sealed with blanking plugs rated for the enclosure IP rating — a single open entry
-                  reduces the entire enclosure to IP00
-                </li>
-                <li className="pl-1">
-                  <strong>Maintenance check:</strong> During periodic inspection, verify all glands
-                  are tight, seals are intact, and no blank entries have been removed without being
-                  re-sealed
-                </li>
-              </ul>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Every gland must be correctly tightened — loose glands
-              allow cable movement, compromise IP rating and create unreliable earth paths. Blank
-              off all unused gland holes to maintain the enclosure IP rating.
+          <ConceptBlock title="IP rating and gland performance">
+            <p>
+              The IP (Ingress Protection) rating of an enclosure is only as good as its weakest
+              entry point. Cable glands must maintain the enclosure's specified IP rating when
+              correctly installed.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>IP66 requirement:</strong> For outdoor or wash-down environments; CW glands
+                with correctly seated weather seals and neoprene washers are essential.
+              </li>
+              <li>
+                <strong>IP68 requirement:</strong> For submersible or continuously wet applications;
+                specialist sealed glands with compression O-rings required.
+              </li>
+              <li>
+                <strong>Blank entries:</strong> All unused knockouts and gland holes must be sealed
+                with blanking plugs rated for the enclosure IP rating — a single open entry reduces
+                the entire enclosure to IP00.
+              </li>
+              <li>
+                <strong>Maintenance check:</strong> During periodic inspection, verify all glands
+                are tight, seals are intact, and no blank entries have been removed without being
+                re-sealed.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Every gland must be correctly tightened — loose glands allow cable movement,
+              compromise IP rating and create unreliable earth paths. Blank off all unused gland
+              holes to maintain the enclosure IP rating.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Torque Control and Connection Integrity
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[1]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Torque control and connection integrity</ContentEyebrow>
+
+          <ConceptBlock title="Torque Control and Connection Integrity">
             <p>
               The reliability of every electrical connection depends on maintaining the correct
               contact pressure throughout its service life. This pressure is controlled by the
@@ -708,127 +644,125 @@ const MOETModule3Section3_3 = () => {
               both. Using a calibrated torque wrench and the manufacturer's specified values is not
               optional — it is an essential safety requirement.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Torque Values</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Terminal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Torque Range
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCB terminals</td>
-                      <td className="border border-white/10 px-3 py-2">2.0-3.5 Nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Check manufacturer's marking on device
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">MCCB terminals</td>
-                      <td className="border border-white/10 px-3 py-2">5-15 Nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Varies significantly by rating
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbar bolted joints (M8)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">20-25 Nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Depends on bolt grade and washer type
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Busbar bolted joints (M10)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">35-45 Nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Belleville washers maintain pressure
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">DIN rail terminals</td>
-                      <td className="border border-white/10 px-3 py-2">0.5-1.2 Nm</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Marked on terminal housing
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                The High-Resistance Joint Problem
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Typical torque values
               </p>
-              <p className="text-sm text-white">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Terminal type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical torque range
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCB terminals</td>
+                    <td className="border border-white/10 px-3 py-2">2.0-3.5 Nm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Check manufacturer's marking on device
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">MCCB terminals</td>
+                    <td className="border border-white/10 px-3 py-2">5-15 Nm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Varies significantly by rating
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Busbar bolted joints (M8)</td>
+                    <td className="border border-white/10 px-3 py-2">20-25 Nm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Depends on bolt grade and washer type
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Busbar bolted joints (M10)</td>
+                    <td className="border border-white/10 px-3 py-2">35-45 Nm</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Belleville washers maintain pressure
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">DIN rail terminals</td>
+                    <td className="border border-white/10 px-3 py-2">0.5-1.2 Nm</td>
+                    <td className="border border-white/10 px-3 py-2">Marked on terminal housing</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="The high-resistance joint problem"
+            whatHappens={
+              <>
                 A high-resistance joint generates heat according to P = I squared R. As the joint
                 heats up, oxidation increases, further raising resistance. This creates a positive
                 feedback loop — thermal runaway — that can reach temperatures sufficient to ignite
-                surrounding insulation and cause fire. Thermographic surveys during maintenance
-                detect these developing faults before they reach dangerous temperatures.
-                High-resistance joints are the leading cause of electrical fires in commercial and
-                industrial installations.
-              </p>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Torque Wrench Selection and Use
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Using the correct torque wrench for the application is as important as knowing the
-                correct torque value. Different connection types require different torque ranges and
-                tool types.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Click-type torque wrench:</strong> The most common type for electrical
-                  work; provides an audible click when the set torque is reached; available in
-                  ranges from 0.5-50 Nm
-                </li>
-                <li className="pl-1">
-                  <strong>Torque screwdriver:</strong> For small terminals (DIN rail terminals, MCB
-                  connections) where a standard torque wrench cannot access; typical range 0.2-5 Nm
-                </li>
-                <li className="pl-1">
-                  <strong>Digital torque wrench:</strong> Provides exact torque readout; useful for
-                  documenting torque values in maintenance records; can store data for multiple
-                  connections
-                </li>
-                <li className="pl-1">
-                  <strong>Calibration:</strong> Torque tools must be calibrated regularly (typically
-                  annually) and a calibration certificate maintained — an out-of-calibration tool
-                  provides false assurance
-                </li>
-              </ul>
-            </div>
+                surrounding insulation and cause fire.
+              </>
+            }
+            doInstead={
+              <>
+                Thermographic surveys during maintenance detect these developing faults before they
+                reach dangerous temperatures. High-resistance joints are the leading cause of
+                electrical fires in commercial and industrial installations.
+              </>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Every maintenance inspection should include connection
-              torque checks on power terminations. The first retorque after installation is
-              particularly important, as conductors settle under sustained pressure and thermal
-              cycling, reducing the initial clamping force.
+          <ConceptBlock title="Torque wrench selection and use">
+            <p>
+              Using the correct torque wrench for the application is as important as knowing the
+              correct torque value. Different connection types require different torque ranges and
+              tool types.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Click-type torque wrench:</strong> The most common type for electrical work;
+                provides an audible click when the set torque is reached; available in ranges from
+                0.5-50 Nm.
+              </li>
+              <li>
+                <strong>Torque screwdriver:</strong> For small terminals (DIN rail terminals, MCB
+                connections) where a standard torque wrench cannot access; typical range 0.2-5 Nm.
+              </li>
+              <li>
+                <strong>Digital torque wrench:</strong> Provides exact torque readout; useful for
+                documenting torque values in maintenance records; can store data for multiple
+                connections.
+              </li>
+              <li>
+                <strong>Calibration:</strong> Torque tools must be calibrated regularly (typically
+                annually) and a calibration certificate maintained — an out-of-calibration tool
+                provides false assurance.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Every maintenance inspection should include connection torque checks on power
+              terminations. The first retorque after installation is particularly important, as
+              conductors settle under sustained pressure and thermal cycling, reducing the initial
+              clamping force.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 04 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Ferrules, Spring-Cage Terminals and Modern Connection Methods
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>
+            Ferrules, spring-cage terminals and modern connection methods
+          </ContentEyebrow>
+
+          <ConceptBlock title="Ferrules, Spring-Cage Terminals and Modern Connection Methods">
             <p>
               Modern control panels increasingly use spring-cage and push-in terminal technology
               instead of traditional screw terminals. These terminals offer faster installation,
@@ -844,383 +778,394 @@ const MOETModule3Section3_3 = () => {
               The ferrule ensures that all conductor strands are captured and compressed, preventing
               strand separation and ensuring full current-carrying contact with the terminal.
             </p>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Terminal Technology Comparison
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Terminal technology comparison
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Terminal Type</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Maintenance Need
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Screw terminal</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Familiar, widely available, accepts solid or stranded
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Periodic retorquing required
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Spring-cage</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Constant pressure, vibration-resistant, no retorque
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ferrules essential for stranded conductors
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Push-in</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Tool-free insertion (solid or ferrule), fastest wiring
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Ferrules required for stranded; release tool needed
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation displacement</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        No stripping required, gas-tight joint
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-use; must be replaced if disturbed
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Terminal type</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Advantages</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Maintenance need</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Screw terminal</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Familiar, widely available, accepts solid or stranded
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Periodic retorquing required
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Spring-cage</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Constant pressure, vibration-resistant, no retorque
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Ferrules essential for stranded conductors
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Push-in</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Tool-free insertion (solid or ferrule), fastest wiring
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Ferrules required for stranded; release tool needed
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Insulation displacement</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      No stripping required, gas-tight joint
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Single-use; must be replaced if disturbed
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Ferrule Colour Coding and Selection
-              </h3>
-              <p className="text-sm text-white mb-3">
-                Ferrules are colour-coded by conductor size to ensure correct selection. Using the
-                wrong ferrule size is a common error that results in unreliable connections.
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Conductor Size</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Ferrule Colour</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Typical Application
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.5 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">White</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Signal wiring, PLC inputs
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">0.75 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">Control circuits</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.0 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Control and light power circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">1.5 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Black</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Contactor coils, lighting
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">2.5 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Blue</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Power circuits, motor controls
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">4.0 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Grey</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Higher-rated power connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">6.0 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Yellow</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Sub-distribution connections
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">10 mm squared</td>
-                      <td className="border border-white/10 px-3 py-2">Red</td>
-                      <td className="border border-white/10 px-3 py-2">Main power connections</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> Spring-cage terminals eliminate the need for periodic
-              retorquing — a significant maintenance advantage. However, they absolutely require
-              ferrules on stranded conductors. Inserting a bare stranded conductor into a
-              spring-cage terminal will result in strand separation and an unreliable connection.
+          <ConceptBlock title="Ferrule colour coding and selection">
+            <p>
+              Ferrules are colour-coded by conductor size to ensure correct selection. Using the
+              wrong ferrule size is a common error that results in unreliable connections.
             </p>
-          </div>
-        </section>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Conductor size</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Ferrule colour</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Typical application
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">0.5 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">White</td>
+                    <td className="border border-white/10 px-3 py-2">Signal wiring, PLC inputs</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">0.75 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Grey</td>
+                    <td className="border border-white/10 px-3 py-2">Control circuits</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">1.0 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Red</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Control and light power circuits
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">1.5 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Black</td>
+                    <td className="border border-white/10 px-3 py-2">Contactor coils, lighting</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">2.5 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Blue</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Power circuits, motor controls
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">4.0 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Grey</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Higher-rated power connections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">6.0 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Yellow</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Sub-distribution connections
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">10 mm squared</td>
+                    <td className="border border-white/10 px-3 py-2">Red</td>
+                    <td className="border border-white/10 px-3 py-2">Main power connections</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <ConceptBlock title="Key point">
+            <p className="text-elec-yellow/70">
+              Spring-cage terminals eliminate the need for periodic retorquing — a significant
+              maintenance advantage. However, they absolutely require ferrules on stranded
+              conductors. Inserting a bare stranded conductor into a spring-cage terminal will
+              result in strand separation and an unreliable connection.
+            </p>
+          </ConceptBlock>
 
-        {/* Section 05 */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Specialist Terminations and Maintenance Practices
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <InlineCheck {...quickCheckQuestions[3]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Specialist terminations and maintenance practices</ContentEyebrow>
+
+          <ConceptBlock title="Specialist Terminations and Maintenance Practices">
             <p>
               Beyond standard crimping and bolted connections, maintenance technicians encounter
               specialist termination methods that require additional training and equipment. MI
               cable termination, plug-in busbar connections, and high-voltage cable terminations
               each have unique requirements and failure modes.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  MI Cable Termination
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Strip sheath using dedicated MI stripping tool — do not use a hacksaw (copper
-                    filings short-circuit conductors)
-                  </li>
-                  <li className="pl-1">
-                    Fit the sealing disc and screw-on pot quickly to minimise moisture absorption
-                  </li>
-                  <li className="pl-1">
-                    Fill the pot with compound and fit the disc and gland nut
-                  </li>
-                  <li className="pl-1">
-                    If insulation resistance is low, the seal has failed — the entire termination
-                    must be remade
-                  </li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Plug-in Connections
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Used in MCC drawout units and plug-in busbar systems</li>
-                  <li className="pl-1">
-                    Silver-plated contacts maintain low resistance and prevent welding
-                  </li>
-                  <li className="pl-1">Check contact pressure springs during maintenance</li>
-                  <li className="pl-1">
-                    Clean contacts with approved contact cleaner — never use abrasives
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Maintenance Inspection Checklist for Terminations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Visual inspection:</strong> Check for discolouration (overheating),
-                  corrosion, loose connections, damaged insulation
-                </li>
-                <li className="pl-1">
-                  <strong>Thermographic survey:</strong> Scan all power terminations under load —
-                  compare with reference temperatures
-                </li>
-                <li className="pl-1">
-                  <strong>Torque verification:</strong> Check and re-torque all power connections to
-                  manufacturer specification
-                </li>
-                <li className="pl-1">
-                  <strong>Continuity testing:</strong> Verify earth continuity through glands,
-                  armour and protective conductors
-                </li>
-                <li className="pl-1">
-                  <strong>Insulation resistance:</strong> Test MI cable terminations for moisture
-                  ingress
-                </li>
-                <li className="pl-1">
-                  <strong>Documentation:</strong> Record all findings, torque values and any
-                  remedial actions taken
-                </li>
-              </ul>
-            </div>
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Soldering in Electrical Maintenance
-              </h3>
-              <p className="text-sm text-white mb-3">
-                While compression crimping is the preferred method for power connections, soldering
-                still has a role in certain maintenance applications. Understanding when soldering
-                is and is not appropriate prevents both unsafe connections and unnecessary rework.
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Acceptable applications:</strong> PCB repair, electronic component
-                  replacement, low-current signal connections, temporary test connections
-                </li>
-                <li className="pl-1">
-                  <strong>Not acceptable:</strong> Power circuit connections subject to vibration,
-                  heat cycling or mechanical stress — solder creep under sustained load causes joint
-                  failure
-                </li>
-                <li className="pl-1">
-                  <strong>Lead-free solder:</strong> RoHS compliance requires lead-free solder for
-                  most applications; higher melting point requires adjusted technique
-                </li>
-                <li className="pl-1">
-                  <strong>Flux selection:</strong> Use rosin-core flux for electrical connections;
-                  acid-core flux (used in plumbing) causes corrosion and must never be used on
-                  electrical connections
-                </li>
-                <li className="pl-1">
-                  <strong>Joint quality:</strong> A good solder joint is shiny and concave; a cold
-                  joint (dull, grainy appearance) has high resistance and will fail
-                </li>
-              </ul>
-            </div>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">
-                Insulation Materials for Terminations
-              </h3>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Heat-shrink tubing:</strong> Provides a permanent, mechanically robust
-                  seal; available in adhesive-lined versions for moisture protection; shrinks to fit
-                  tightly around the termination
-                </li>
-                <li className="pl-1">
-                  <strong>Self-amalgamating tape:</strong> Fuses to itself forming a solid rubber
-                  mass; excellent for moisture sealing; stretches to conform to irregular shapes
-                </li>
-                <li className="pl-1">
-                  <strong>PVC insulation tape:</strong> Minimum standard for basic indoor
-                  connections; degrades in heat and UV; not suitable for permanent outdoor or
-                  industrial use
-                </li>
-                <li className="pl-1">
-                  <strong>Fire-rated coverings:</strong> Required on fire-rated cable terminations;
-                  standard materials may not maintain integrity during fire conditions
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="MI cable termination">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                Strip sheath using dedicated MI stripping tool — do not use a hacksaw (copper
+                filings short-circuit conductors).
+              </li>
+              <li>
+                Fit the sealing disc and screw-on pot quickly to minimise moisture absorption.
+              </li>
+              <li>Fill the pot with compound and fit the disc and gland nut.</li>
+              <li>
+                If insulation resistance is low, the seal has failed — the entire termination must
+                be remade.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> Under ST1426, maintenance technicians must demonstrate
-              competence in making safe, reliable electrical connections using appropriate tools and
-              techniques. Termination quality is assessed as part of the end-point assessment
-              practical observation.
+          <ConceptBlock title="Plug-in connections">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Used in MCC drawout units and plug-in busbar systems.</li>
+              <li>Silver-plated contacts maintain low resistance and prevent welding.</li>
+              <li>Check contact pressure springs during maintenance.</li>
+              <li>Clean contacts with approved contact cleaner — never use abrasives.</li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Maintenance inspection checklist for terminations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Visual inspection:</strong> Check for discolouration (overheating),
+                corrosion, loose connections, damaged insulation.
+              </li>
+              <li>
+                <strong>Thermographic survey:</strong> Scan all power terminations under load —
+                compare with reference temperatures.
+              </li>
+              <li>
+                <strong>Torque verification:</strong> Check and re-torque all power connections to
+                manufacturer specification.
+              </li>
+              <li>
+                <strong>Continuity testing:</strong> Verify earth continuity through glands, armour
+                and protective conductors.
+              </li>
+              <li>
+                <strong>Insulation resistance:</strong> Test MI cable terminations for moisture
+                ingress.
+              </li>
+              <li>
+                <strong>Documentation:</strong> Record all findings, torque values and any remedial
+                actions taken.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock title="Soldering in electrical maintenance">
+            <p>
+              While compression crimping is the preferred method for power connections, soldering
+              still has a role in certain maintenance applications. Understanding when soldering is
+              and is not appropriate prevents both unsafe connections and unnecessary rework.
             </p>
-          </div>
-        </section>
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Acceptable applications:</strong> PCB repair, electronic component
+                replacement, low-current signal connections, temporary test connections.
+              </li>
+              <li>
+                <strong>Not acceptable:</strong> Power circuit connections subject to vibration,
+                heat cycling or mechanical stress — solder creep under sustained load causes joint
+                failure.
+              </li>
+              <li>
+                <strong>Lead-free solder:</strong> RoHS compliance requires lead-free solder for
+                most applications; higher melting point requires adjusted technique.
+              </li>
+              <li>
+                <strong>Flux selection:</strong> Use rosin-core flux for electrical connections;
+                acid-core flux (used in plumbing) causes corrosion and must never be used on
+                electrical connections.
+              </li>
+              <li>
+                <strong>Joint quality:</strong> A good solder joint is shiny and concave; a cold
+                joint (dull, grainy appearance) has high resistance and will fail.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <ConceptBlock title="Insulation materials for terminations">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Heat-shrink tubing:</strong> Provides a permanent, mechanically robust seal;
+                available in adhesive-lined versions for moisture protection; shrinks to fit tightly
+                around the termination.
+              </li>
+              <li>
+                <strong>Self-amalgamating tape:</strong> Fuses to itself forming a solid rubber
+                mass; excellent for moisture sealing; stretches to conform to irregular shapes.
+              </li>
+              <li>
+                <strong>PVC insulation tape:</strong> Minimum standard for basic indoor connections;
+                degrades in heat and UV; not suitable for permanent outdoor or industrial use.
+              </li>
+              <li>
+                <strong>Fire-rated coverings:</strong> Required on fire-rated cable terminations;
+                standard materials may not maintain integrity during fire conditions.
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ConceptBlock title="Note">
+            <p className="italic">
+              Under ST1426, maintenance technicians must demonstrate competence in making safe,
+              reliable electrical connections using appropriate tools and techniques. Termination
+              quality is assessed as part of the end-point assessment practical observation.
+            </p>
+          </ConceptBlock>
 
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        {/* Quick Reference */}
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Termination Methods</p>
-                <ul className="space-y-0.5">
-                  <li>Compression crimp — calibrated tool, matched die, pull test</li>
-                  <li>BW gland — indoor SWA, armour clamp + cone</li>
-                  <li>CW gland — outdoor SWA, adds weather seal</li>
-                  <li>EMC gland — 360-degree screen termination</li>
-                  <li>Ferrules — essential for spring-cage terminals</li>
-                  <li>MI termination — moisture-tight seal critical</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Maintenance Checks</p>
-                <ul className="space-y-0.5">
-                  <li>Thermographic survey — detect high-resistance joints</li>
-                  <li>Retorque all power connections annually</li>
-                  <li>Pull test on new crimp terminations</li>
-                  <li>Earth continuity through glands and armour</li>
-                  <li>Insulation resistance on MI cable terminations</li>
-                  <li>Visual check for discolouration and corrosion</li>
-                </ul>
-              </div>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=sfrMhHpjJMM"
+
+            title="SWA Gland Technique"
+
+            channel="Toolbox Talk For Electricians"
+
+            duration="5:33"
+
+            topic="Making off a steel-wire armoured gland so the armour actually does its job"
+
+            caption="Short and entirely practical. A badly made SWA gland loses the CPC, which is exactly what this page is about."
+          />
+
+          <SectionRule />
+
+          <Scenario
+            title="A gland that passed inspection and lost the earth"
+
+            situation={
+              <>
+                <p>
+                  An SWA cable is terminated into a steel enclosure. The visual inspection passes:
+                  the gland is tight, the armour is clamped, the enclosure is earthed.
+                </p>
+
+                <p>
+                  A later continuity test finds the armour is not providing a reliable earth path.
+                </p>
+              </>
+            }
+
+            whatToDo={
+              <>
+                <p>
+                  Check what the armour is landing on. A gland fitted through a painted or
+                  powder-coated enclosure wall relies on a serrated washer or a cleaned face to make
+                  contact — paint is an insulator, and the gland can be mechanically tight while
+                  electrically isolated.
+                </p>
+
+                <p>
+                  Check the cone and the armour wires themselves. If the wires were cut short,
+                  splayed unevenly, or trapped under the cone rather than around it, the clamp may
+                  be gripping insulation rather than steel.
+                </p>
+
+                <p>
+                  Measure rather than inspect. Armour continuity is a test, not a judgement — and it
+                  is the only way to distinguish a tight gland from a conducting one.
+                </p>
+
+                <p>
+                  Where armour is being used as the protective conductor, verify it is adequate for
+                  that duty rather than assuming; on some cable sizes it is not, and a separate CPC
+                  is required.
+                </p>
+              </>
+            }
+
+            whyItMatters={
+              <p>
+                This fault is invisible to the inspection most likely to be carried out on it. The
+                gland looks right, feels right and is mechanically sound, and the fault only appears
+                under the test that most people skip because the gland looked right. It is also a
+                fault that stays hidden until there is an earth fault — at which point the armour
+                that was supposed to carry it does not.
+              </p>
+            }
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Compression crimping (correct lug, die and tool, verified by pull test) is the preferred method for power terminations — soldering creeps under load.',
+              'Gland selection: BW for indoor SWA with an armour clamp, CW adds a weather seal for outdoor, EMC gives 360-degree screen termination.',
+              'Torque is a safety control, not a finishing touch: under-torque causes high-resistance joints, over-torque damages conductors and terminals.',
+              'Ferrules are essential on stranded conductors going into spring-cage or push-in terminals — bare strands splay and miss contact.',
+              'MI cable terminations live or die on a moisture-tight seal — MgO insulation is hygroscopic and fails fast if exposed.',
+              'Thermographic survey plus periodic retorquing is the core preventive maintenance regime for every power termination.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-2')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Cable Types and Selection
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3-section3-4')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next subsection <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Trunking, Conduits and Cable Management
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous: Cable Types
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module3-section3-4">
-              Next: Trunking &amp; Conduits
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

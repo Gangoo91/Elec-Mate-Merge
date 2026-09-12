@@ -1,8 +1,53 @@
-import { ArrowLeft, ClipboardList, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 4 · Section 6.5 · Subsection 5 — Recording and Reporting RCA Outcomes
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge  · "Documentation requirements: documentation control,
+ *                 auditable records."
+ *   Skills     · "Record information."
+ *              · "Produce or update documents. For example, handover notes
+ *                 and reports."
+ *   Behaviour  · "Continuous improvement (CI) systems and techniques."
+ *
+ * This is the last subsection of Section 6 — "next" moves into Section 7
+ * (Reliability-centred maintenance), correcting the original page's
+ * next-button target, which pointed back to the section overview instead of
+ * continuing the course chain.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  AppendixTable,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Recording and Reporting RCA Outcomes - MOET Module 4 Section 6.5';
@@ -241,109 +286,67 @@ const faqs = [
 ];
 
 const MOETModule4Section6_5 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <ClipboardList className="h-4 w-4" />
-            <span>Module 4.6.5</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Recording and Reporting RCA Outcomes
-          </h1>
-          <p className="text-white">
-            Documenting and communicating root cause analysis findings for continuous improvement
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 4 · Section 4.6 · Subsection 5"
+        title="Recording and Reporting RCA Outcomes"
+        backTo="/study-centre/apprentice/m-o-e-t-module4-section6"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
+            Documenting and communicating root cause analysis findings for continuous improvement.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>RCA report:</strong> Executive summary, findings, root cause, actions,
-                lessons
-              </li>
-              <li className="pl-1">
-                <strong>Multiple audiences:</strong> Management, technicians, auditors, CMMS
-              </li>
-              <li className="pl-1">
-                <strong>Action tracking:</strong> Owner, deadline, status, verification
-              </li>
-              <li className="pl-1">
-                <strong>Knowledge sharing:</strong> Lessons learned benefit the entire team
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
+          <TLDR
+            points={[
+              'RCA report: Executive summary, findings, root cause, actions, lessons',
+              'Multiple audiences: Management, technicians, auditors, CMMS',
+              'Action tracking: Owner, deadline, status, verification',
+              'Knowledge sharing: Lessons learned benefit the entire team',
+            ]}
+          />
+
+          <ConceptBlock title="Maintenance technician context">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
                 <strong>Professional writing:</strong> Factual, evidence-based, no blame
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Aggregate analysis:</strong> Patterns across multiple RCAs drive strategy
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>Legal significance:</strong> Reports may be disclosed in investigations
               </li>
-              <li className="pl-1">
+              <li>
                 <strong>ST1426:</strong> Communication and reporting assessed at EPA
               </li>
             </ul>
-          </div>
-        </div>
+          </ConceptBlock>
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <LearningOutcomes
+            outcomes={[
               'Structure an RCA report with executive summary, findings, root cause and recommendations',
               'Write clear, factual findings that avoid blame and focus on systemic causes',
               'Present RCA outcomes to different audiences using appropriate language and focus',
               'Track corrective and preventive actions through to verified completion',
               'Use aggregate RCA data to identify patterns and drive maintenance strategy improvement',
               'Understand the legal and regulatory significance of RCA documentation',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Structuring the RCA report</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Structuring the RCA Report
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Structuring the RCA Report"
+            onSite="Writing principle: Be factual, not emotional. Be specific, not vague. Be constructive, not accusatory. The report should read as an objective technical document that any competent person could understand and act upon."
+          >
             <p>
               The RCA report is the formal output of the root cause investigation. It transforms the
               analytical work of the 5 Whys, fishbone diagram or other technique into a documented
@@ -351,75 +354,58 @@ const MOETModule4Section6_5 = () => {
               well-structured report is easy to read, clearly presents the evidence and findings,
               and makes actionable recommendations that are specific, measurable and time-bound.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-3">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Executive Summary</h3>
-                <p className="text-sm text-white">
-                  One page maximum. States the problem, the root cause, the impact (safety,
-                  downtime, cost) and the key recommendations. Written for decision-makers who may
-                  not read the full report.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Problem Description
-                </h3>
-                <p className="text-sm text-white">
-                  Detailed description of the fault: what equipment, when, what symptoms, what
-                  impact. Include the timeline of events from first occurrence to the start of
-                  investigation.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Investigation Methodology and Findings
-                </h3>
-                <p className="text-sm text-white">
-                  The diagnostic steps taken, test results, observations, maintenance history
-                  reviewed and evidence collected. Include the 5 Whys chain, fishbone diagram or
-                  other analysis tool used. Present all evidence — including normal findings that
-                  helped eliminate possible causes.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Root Cause Statement
-                </h3>
-                <p className="text-sm text-white">
-                  A clear, concise statement of the confirmed root cause, supported by the evidence
-                  presented. Distinguish between the immediate cause (what failed), the root cause
-                  (why it failed) and any contributing factors.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Recommendations and Actions
-                </h3>
-                <p className="text-sm text-white">
-                  Specific corrective and preventive actions with responsible persons, deadlines and
-                  expected outcomes. Each action should be clearly linked to the root cause
-                  findings. Include cost estimates and resource requirements where relevant.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Writing principle:</strong> Be factual, not emotional. Be specific, not vague.
-              Be constructive, not accusatory. The report should read as an objective technical
-              document that any competent person could understand and act upon.
+          <ConceptBlock title="Executive summary">
+            <p>
+              One page maximum. States the problem, the root cause, the impact (safety, downtime,
+              cost) and the key recommendations. Written for decision-makers who may not read the
+              full report.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <ConceptBlock title="Problem description">
+            <p>
+              Detailed description of the fault: what equipment, when, what symptoms, what impact.
+              Include the timeline of events from first occurrence to the start of investigation.
+            </p>
+          </ConceptBlock>
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Communicating Findings to Stakeholders
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock title="Investigation methodology and findings">
+            <p>
+              The diagnostic steps taken, test results, observations, maintenance history reviewed
+              and evidence collected. Include the 5 Whys chain, fishbone diagram or other analysis
+              tool used. Present all evidence — including normal findings that helped eliminate
+              possible causes.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Root cause statement">
+            <p>
+              A clear, concise statement of the confirmed root cause, supported by the evidence
+              presented. Distinguish between the immediate cause (what failed), the root cause (why
+              it failed) and any contributing factors.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock title="Recommendations and actions">
+            <p>
+              Specific corrective and preventive actions with responsible persons, deadlines and
+              expected outcomes. Each action should be clearly linked to the root cause findings.
+              Include cost estimates and resource requirements where relevant.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...quickCheckQuestions[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>Communicating findings to stakeholders</ContentEyebrow>
+
+          <ConceptBlock
+            title="Communicating Findings to Stakeholders"
+            onSite='Key point: The ability to communicate technical findings clearly to non-technical stakeholders is a valuable professional skill. Practice translating technical language into business language: instead of "the IR reading dropped below 1 megohm", say "the insulation had degraded to a level that could cause equipment failure and presents a safety risk".'
+          >
             <p>
               Different stakeholders need different information from the RCA. The maintenance team
               needs technical detail. Management needs business impact and cost-benefit analysis of
@@ -427,87 +413,50 @@ const MOETModule4Section6_5 = () => {
               coded data. Effective communication means tailoring the message to the audience while
               maintaining the accuracy and integrity of the findings.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Communicating to Different Audiences
-              </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Audience</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Focus</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Format</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Senior management</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Business impact, cost, risk, recommendations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Executive summary, presentation
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Maintenance team</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Technical findings, diagnostic approach, lessons
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full report, toolbox talk
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Operations</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        What happened, what changed, any limitations
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">Briefing, handover note</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Safety adviser</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Risk assessment, safety implications
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full report with risk context
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Auditors</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Compliance evidence, systematic process
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Full report with action tracking
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <AppendixTable
+            caption="Communicating to Different Audiences"
+            headers={['Audience', 'Focus', 'Format']}
+            rows={[
+              [
+                'Senior management',
+                'Business impact, cost, risk, recommendations',
+                'Executive summary, presentation',
+              ],
+              [
+                'Maintenance team',
+                'Technical findings, diagnostic approach, lessons',
+                'Full report, toolbox talk',
+              ],
+              [
+                'Operations',
+                'What happened, what changed, any limitations',
+                'Briefing, handover note',
+              ],
+              [
+                'Safety adviser',
+                'Risk assessment, safety implications',
+                'Full report with risk context',
+              ],
+              [
+                'Auditors',
+                'Compliance evidence, systematic process',
+                'Full report with action tracking',
+              ],
+            ]}
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Key point:</strong> The ability to communicate technical findings clearly to
-              non-technical stakeholders is a valuable professional skill. Practice translating
-              technical language into business language: instead of "the IR reading dropped below 1
-              megohm", say "the insulation had degraded to a level that could cause equipment
-              failure and presents a safety risk".
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <SectionRule />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Action Tracking and Verification
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Action tracking and verification</ContentEyebrow>
+
+          <ConceptBlock
+            title="Action Tracking and Verification"
+            onSite="Practical tip: Review open RCA actions at every maintenance team meeting. A visible action tracker (physical board or CMMS dashboard) keeps actions in focus and creates peer accountability. Celebrate completed actions to reinforce the value of the process."
+          >
             <p>
               The RCA report is only as valuable as the actions it generates. Without a robust
               tracking system, recommendations are forgotten, deadlines pass without action, and the
@@ -515,70 +464,62 @@ const MOETModule4Section6_5 = () => {
               improvement, ensuring that every recommendation is followed through to verified
               completion.
             </p>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Action Tracking Elements
-              </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
-                  <strong>Action description:</strong> Specific, clear and unambiguous — what
-                  exactly needs to be done
-                </li>
-                <li className="pl-1">
-                  <strong>Responsible person:</strong> Named individual (not a department or team)
-                  who owns the action
-                </li>
-                <li className="pl-1">
-                  <strong>Deadline:</strong> Realistic but firm completion date based on risk
-                  priority
-                </li>
-                <li className="pl-1">
-                  <strong>Status:</strong> Open, in progress, completed, overdue — updated regularly
-                </li>
-                <li className="pl-1">
-                  <strong>Completion evidence:</strong> What evidence confirms the action was done
-                  correctly
-                </li>
-                <li className="pl-1">
-                  <strong>Effectiveness verification:</strong> Has the action achieved its intended
-                  result
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock title="Action tracking elements">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Action description:</strong> Specific, clear and unambiguous — what exactly
+                needs to be done
+              </li>
+              <li>
+                <strong>Responsible person:</strong> Named individual (not a department or team) who
+                owns the action
+              </li>
+              <li>
+                <strong>Deadline:</strong> Realistic but firm completion date based on risk priority
+              </li>
+              <li>
+                <strong>Status:</strong> Open, in progress, completed, overdue — updated regularly
+              </li>
+              <li>
+                <strong>Completion evidence:</strong> What evidence confirms the action was done
+                correctly
+              </li>
+              <li>
+                <strong>Effectiveness verification:</strong> Has the action achieved its intended
+                result
+              </li>
+            </ul>
+          </ConceptBlock>
 
-            <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm font-medium text-red-400 mb-2">
-                Common Action Tracking Failures
-              </p>
-              <p className="text-sm text-white">
+          <CommonMistake
+            title="Untracked, unowned actions"
+            whatHappens={
+              <p>
                 The most common failures in action tracking are: actions assigned to departments
                 rather than named individuals (no one takes ownership), unrealistic deadlines that
                 are immediately abandoned, no regular review of open actions (out of sight, out of
                 mind), completion based on self-declaration without evidence, and no verification of
-                effectiveness (assuming it worked). Address these failure modes by insisting on
-                named owners, realistic deadlines, regular review meetings, documented evidence of
-                completion, and post-implementation monitoring.
+                effectiveness (assuming it worked).
               </p>
-            </div>
+            }
+            doInstead={
+              <p>
+                Address these failure modes by insisting on named owners, realistic deadlines,
+                regular review meetings, documented evidence of completion, and post-implementation
+                monitoring.
+              </p>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Practical tip:</strong> Review open RCA actions at every maintenance team
-              meeting. A visible action tracker (physical board or CMMS dashboard) keeps actions in
-              focus and creates peer accountability. Celebrate completed actions to reinforce the
-              value of the process.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <SectionRule />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Aggregate Analysis and Continuous Improvement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Aggregate analysis and continuous improvement</ContentEyebrow>
+
+          <ConceptBlock title="Aggregate Analysis and Continuous Improvement">
             <p>
               Individual RCA reports are valuable. Aggregate analysis of multiple RCA reports is
               transformative. By looking across all investigations over a period, patterns emerge
@@ -586,119 +527,83 @@ const MOETModule4Section6_5 = () => {
               inform strategic decisions about maintenance approach, capital investment, training
               priorities and design improvements that deliver the greatest return on investment.
             </p>
+          </ConceptBlock>
 
-            <div className="grid sm:grid-cols-2 gap-4 my-6">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  What Aggregate Analysis Reveals
-                </h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Most common root cause categories</li>
-                  <li className="pl-1">Equipment types with highest failure rates</li>
-                  <li className="pl-1">Environmental factors most frequently involved</li>
-                  <li className="pl-1">Effectiveness of PM programmes</li>
-                  <li className="pl-1">Training and competence gaps</li>
-                  <li className="pl-1">Cost of failure vs cost of prevention</li>
-                </ul>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">RCA Programme KPIs</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">Number of RCAs completed vs qualifying events</li>
-                  <li className="pl-1">Average time from event to RCA completion</li>
-                  <li className="pl-1">Percentage of actions completed on time</li>
-                  <li className="pl-1">Repeat failure rate (same root cause)</li>
-                  <li className="pl-1">MTBF improvement trend</li>
-                  <li className="pl-1">Maintenance cost per unit of output</li>
-                </ul>
-              </div>
-            </div>
+          <ConceptBlock title="What aggregate analysis reveals">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Most common root cause categories</li>
+              <li>Equipment types with highest failure rates</li>
+              <li>Environmental factors most frequently involved</li>
+              <li>Effectiveness of PM programmes</li>
+              <li>Training and competence gaps</li>
+              <li>Cost of failure vs cost of prevention</li>
+            </ul>
+          </ConceptBlock>
 
-            <p className="text-sm text-white italic">
-              <strong>Note:</strong> The ultimate measure of an RCA programme's success is not the
-              number of reports produced but the reduction in failure rate and maintenance cost over
-              time. If the same root causes keep appearing in your RCA reports, the programme is
-              identifying problems but the organisation is not addressing them. The data is there —
-              it needs to be acted upon.
+          <ConceptBlock title="RCA programme KPIs">
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+              <li>Number of RCAs completed vs qualifying events</li>
+              <li>Average time from event to RCA completion</li>
+              <li>Percentage of actions completed on time</li>
+              <li>Repeat failure rate (same root cause)</li>
+              <li>MTBF improvement trend</li>
+              <li>Maintenance cost per unit of output</li>
+            </ul>
+            <p className="italic">
+              <strong className="not-italic">Note:</strong> The ultimate measure of an RCA
+              programme&apos;s success is not the number of reports produced but the reduction in
+              failure rate and maintenance cost over time. If the same root causes keep appearing in
+              your RCA reports, the programme is identifying problems but the organisation is not
+              addressing them. The data is there — it needs to be acted upon.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <KeyTakeaways
+            points={[
+              'RCA report structure: executive summary (one page); problem description and timeline; investigation method and findings; root cause statement with evidence; recommendations and actions; lessons learned and appendices.',
+              'Action tracking essentials: named owner (not a department); realistic deadline (risk-based priority); regular status review; evidence of completion; effectiveness verification.',
+            ]}
+          />
 
-        <hr className="border-white/5 my-12" />
+          <FAQ items={faqs} />
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">RCA Report Structure</p>
-                <ul className="space-y-0.5">
-                  <li>1. Executive summary (one page)</li>
-                  <li>2. Problem description and timeline</li>
-                  <li>3. Investigation method and findings</li>
-                  <li>4. Root cause statement with evidence</li>
-                  <li>5. Recommendations and actions</li>
-                  <li>6. Lessons learned and appendices</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Action Tracking Essentials</p>
-                <ul className="space-y-0.5">
-                  <li>Named owner (not a department)</li>
-                  <li>Realistic deadline (risk-based priority)</li>
-                  <li>Regular status review</li>
-                  <li>Evidence of completion</li>
-                  <li>Effectiveness verification</li>
-                  <li>ST1426 — reporting and communication KSBs</li>
-                </ul>
-              </div>
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section6-4')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Previous subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Corrective vs Preventive Actions
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module4-section7-1')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next section <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Principles of Reliability-Centred Maintenance
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6-4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back: Corrective vs Preventive Actions
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4-section6">
-              Section Overview
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 

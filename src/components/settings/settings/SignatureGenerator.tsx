@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { inputCn, labelCn } from '@/components/settings/formStyles';
 
 interface SignatureGeneratorProps {
   onSave: (signatureData: string) => void;
@@ -57,7 +58,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
   return (
     <div className="space-y-5">
       <div className="space-y-1.5">
-        <Label htmlFor="signatureName" className="text-white font-medium text-[13px]">
+        <Label htmlFor="signatureName" className={labelCn}>
           Your name
         </Label>
         <Input
@@ -65,7 +66,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Enter your full name"
-          className="h-11 bg-white/[0.06] border-white/[0.12] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+          className={inputCn}
         />
       </div>
 
@@ -82,7 +83,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
                 className={cn(
                   'flex flex-col items-center justify-center rounded-2xl border p-4 min-h-[72px] transition-colors touch-manipulation',
                   isSelected
-                    ? 'border-elec-yellow/60 bg-elec-yellow/10'
+                    ? 'border-elec-yellow/60 bg-white/[0.06]'
                     : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08]'
                 )}
                 aria-pressed={isSelected}
@@ -120,7 +121,7 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
         type="button"
         onClick={handleSave}
         disabled={!text}
-        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white/70 disabled:cursor-not-allowed"
+        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:bg-white/[0.08] disabled:text-white disabled:cursor-not-allowed"
       >
         Save signature
       </button>

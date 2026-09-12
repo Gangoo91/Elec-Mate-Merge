@@ -263,7 +263,7 @@ const TransformerCalculator = () => {
 
     return {
       meta: {
-        title: 'Transformer Calculator',
+        title: 'Transformer',
         subtitle: `${primaryVoltage} V / ${secondaryVoltage} V, ${kvaRating} kVA (${result.transformerType})`,
         standard: 'BS 7671:2018+A4:2026 — Regs 434.1, 434.5.1, 433.1.1',
       },
@@ -287,6 +287,14 @@ const TransformerCalculator = () => {
             { label: 'Phase', value: phase === 'three' ? 'Three phase' : 'Single phase' },
             { label: 'Power factor', value: powerFactor },
             { label: 'Percentage impedance', value: `${percentImpedance}%` },
+            { label: 'Connection type', value: connectionType },
+            { label: 'Frequency', value: `${frequency} Hz` },
+            { label: 'Ambient temperature', value: `${ambientTemp} °C` },
+            { label: 'Altitude', value: `${altitude} m` },
+            ...(sourceFaultLevel
+              ? [{ label: 'Upstream source fault level', value: `${sourceFaultLevel} MVA` }]
+              : []),
+            { label: 'Harmonic loads present', value: harmonics ? 'Yes' : 'No' },
           ],
         },
         {
@@ -310,6 +318,24 @@ const TransformerCalculator = () => {
                   },
                 ]
               : []),
+            // FIX (#8): temperature and altitude derating were computed and shown on screen but
+            // dropped entirely from the client PDF.
+            ...(result.temperatureDerating !== undefined
+              ? [
+                  {
+                    label: 'Temperature derating',
+                    value: `${(result.temperatureDerating * 100).toFixed(0)}%`,
+                  },
+                ]
+              : []),
+            ...(result.altitudeDerating !== undefined
+              ? [
+                  {
+                    label: 'Altitude derating',
+                    value: `${(result.altitudeDerating * 100).toFixed(0)}%`,
+                  },
+                ]
+              : []),
           ],
         },
         {
@@ -317,7 +343,13 @@ const TransformerCalculator = () => {
           rows: [
             {
               label: 'Recommended MCCB',
-              value: `${getRecommendedMCCB(result.secondaryRatedCurrent)} A`,
+              // FIX (#4): getRecommendedMCCB returns the string 'Contact manufacturer' once the
+              // secondary current exceeds the standard ladder — appending " A" unconditionally
+              // produced "Contact manufacturer A".
+              value:
+                typeof getRecommendedMCCB(result.secondaryRatedCurrent) === 'number'
+                  ? `${getRecommendedMCCB(result.secondaryRatedCurrent)} A`
+                  : `${getRecommendedMCCB(result.secondaryRatedCurrent)}`,
               note: 'Reg 433.1.1(a) — confirm cable Iz before selecting, per Reg 433.1.1(b)',
             },
             {
@@ -343,7 +375,7 @@ const TransformerCalculator = () => {
     <CalculatorCard
       category={CAT}
       title="Transformer Calculator"
-      description="Comprehensive transformer calculations with BS 7671 18th Edition compliance"
+      description="Comprehensive transformer calculations with BS 7671 compliance checks"
     >
       <CalculatorPanes
         form={

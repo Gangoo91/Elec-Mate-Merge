@@ -1,8 +1,54 @@
-import { ArrowLeft, TestTube, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * MOET · Module 2 · Section 5.4 · Subsection 4 — Test Equipment
+ *
+ * Standard: ST1426 Engineering maintenance technician – single discipline,
+ * electrical option. NOT ST0154 (the "MOET" the course is named after) —
+ * ST0154 v1.6 is still live, but its own EPA plan records that the Electrical
+ * Technician option "was retired 31/12/2025" and was replaced by ST1426
+ * (single discipline) or ST1443 (dual discipline). The course keeps the MOET
+ * name because that is what employers and colleges still call the role.
+ *
+ * KSBs covered, quoted rather than numbered: the IfATE/Skills England API
+ * publishes these statements without their K/S/B codes, and the published
+ * numbering has not been verified against a primary source — so do not
+ * invent codes here.
+ *   Knowledge · "Electrical. Electrical maintenance tools, measurement, and
+ *                test equipment application, operation, care and
+ *                calibration requirements."
+ *
+ * This is the last page of Module 2 — "next" moves into Module 3.
+ *
+ * Numeric values (insulation resistance test voltages, minimum acceptable
+ * resistances, RCD test currents, loop impedance limits) are copied verbatim
+ * from the original page. The bs7671_facets RAG holds regulation rules, not
+ * numeric tables, so none of these can be checked against it — see the
+ * conversion report for what should be checked against the On-Site Guide.
+ *
+ * Converted onto the study-centre learning kit. Content preserved from the
+ * original page; structure, shell and reading measure rebuilt.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+import { HubPage, HubBody, HubMasthead } from '@/components/hub/HubPrimitives';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import {
+  StudyPage,
+  Bleed,
+  ReadingProgress,
+  TLDR,
+  ConceptBlock,
+  CommonMistake,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  Prerequisites,
+  ContentEyebrow,
+  SectionRule,
+  VideoCard,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Test Equipment - MOET Module 2 Section 5.4';
@@ -55,10 +101,10 @@ const quickCheckQuestions = [
     id: 'proving-unit',
     question: "Why must a voltage indicator be 'proved' before and after use with a proving unit?",
     options: [
-      "Proving only confirms the battery has enough charge to complete the test",
-      "Proving confirms the indicator is set to the AC range rather than the DC range",
-      "Proving warms the indicator so its readings stabilise before the dead test",
-      "It confirms the indicator detected voltage both before and after the dead test",
+      'Proving only confirms the battery has enough charge to complete the test',
+      'Proving confirms the indicator is set to the AC range rather than the DC range',
+      'Proving warms the indicator so its readings stabilise before the dead test',
+      'It confirms the indicator detected voltage both before and after the dead test',
     ],
     correctIndex: 3,
     explanation:
@@ -203,9 +249,9 @@ const quizQuestions = [
     id: 11,
     question: 'A non-contact voltage detector (voltage stick) is used for:',
     options: [
-      "Measuring the precise voltage on a conductor for recording on a test sheet",
-      "Confirming a circuit is dead before working on it, replacing a two-pole tester",
-      "Detecting DC voltage on solar PV and battery circuits where AC testers fail",
+      'Measuring the precise voltage on a conductor for recording on a test sheet',
+      'Confirming a circuit is dead before working on it, replacing a two-pole tester',
+      'Detecting DC voltage on solar PV and battery circuits where AC testers fail',
       "Quick preliminary checks for AC voltage, never confirming 'dead' before work",
     ],
     correctAnswer: 3,
@@ -261,113 +307,80 @@ const faqs = [
 ];
 
 const MOETModule2Section5_4 = () => {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <TestTube className="h-4 w-4" />
-            <span>Module 2.5.4</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Test Equipment
-          </h1>
-          <p className="text-white">
+    <HubPage ground="reading">
+      <HubMasthead
+        section="Module 2 · Section 2.5 · Subsection 4"
+        title="Test Equipment"
+        backTo="/study-centre/apprentice/m-o-e-t-module2-section5"
+      />
+      <ReadingProgress />
+      <HubBody pushContext="Get notified about your course progress, quiz streaks and new study content">
+        <StudyPage>
+          <p className="text-[13px] leading-relaxed text-white">
             Multimeters, clamp meters, insulation testers and multifunction testers for maintenance
-            work
+            work — what each instrument actually measures, the standard that keeps your probes from
+            being the hazard, and the sequence that keeps a test result honest.
           </p>
-        </header>
 
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2 text-center sm:text-left">
-              In 30 Seconds
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>MFT:</strong> Multifunction tester — the core instrument for BS 7671 testing
-              </li>
-              <li className="pl-1">
-                <strong>GS38:</strong> Test probe safety — finger guards, limited tip exposure,
-                fused leads
-              </li>
-              <li className="pl-1">
-                <strong>CAT rating:</strong> Match the meter category to the measurement location
-              </li>
-              <li className="pl-1">
-                <strong>Prove-test-prove:</strong> Always verify your instrument works before and
-                after
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2 text-center sm:text-left">
-              Maintenance Technician Context
-            </p>
-            <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 text-left">
-              <li className="pl-1">
-                <strong>Verification:</strong> Periodic inspection and testing requires calibrated
-                instruments
-              </li>
-              <li className="pl-1">
-                <strong>Fault-finding:</strong> Correct use of test equipment locates faults
-                efficiently
-              </li>
-              <li className="pl-1">
-                <strong>Safety:</strong> Improper use of test equipment is a major cause of injury
-              </li>
-              <li className="pl-1">
-                <strong>ST1426:</strong> Maps to testing, inspection and diagnostic skills KSBs
-              </li>
-            </ul>
-          </div>
-        </div>
+          <TLDR
+            points={[
+              'MFT: multifunction tester — the core instrument for BS 7671 testing',
+              'GS38: test probe safety — finger guards, limited tip exposure, fused leads',
+              'CAT rating: match the meter category to the measurement location',
+              'Prove-test-prove: always verify your instrument works before and after',
+            ]}
+          />
 
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
+          <Prerequisites
+            items={[
+              {
+                term: 'Circuit protection and earthing',
+
+                gist: 'Fuses, circuit breakers, RCDs and RCBOs, earthing arrangements and protective bonding — what each device protects against and how fault current gets back to source.',
+
+                where: '2.4',
+              },
+
+              {
+                term: 'BS 7671 and where it sits',
+
+                gist: 'The Wiring Regulations are a standard, not statute — compliance is how you demonstrate the EAWR duties have been met. Current edition 2018+A4:2026.',
+
+                where: '1.4.3',
+              },
+
+              {
+                term: 'Safe isolation',
+
+                gist: 'Identify the supply, switch off, isolate, lock off and prove dead at the point of work — with a GS38-compliant indicator proved before and after.',
+
+                where: '1.1.2',
+              },
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
               'Identify the key test instruments used for BS 7671 verification and maintenance fault-finding',
               'Understand measurement category (CAT) ratings and select instruments appropriate for the location',
               'Apply the prove-test-prove procedure and GS38 requirements for safe electrical testing',
               'Perform insulation resistance, continuity, loop impedance and RCD tests correctly',
               'Use clamp meters for non-invasive current measurement on live circuits',
               'Maintain test instruments including calibration, lead inspection and safe storage',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+            ]}
+            initialVisibleCount={3}
+          />
 
-        <hr className="border-white/5 mb-12" />
+          <ContentEyebrow>Multimeters, voltage indicators and safe testing</ContentEyebrow>
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Multimeters, Voltage Indicators and Safe Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ConceptBlock
+            title="Multimeters, Voltage Indicators and Safe Testing"
+            onSite="Before testing for the absence of voltage, prove your voltage indicator on a known live source (or proving unit). Test the circuit. Prove the indicator again on the known source. If the indicator fails the second prove, the 'dead' reading cannot be trusted. This three-step procedure is non-negotiable."
+          >
             <p>
               The multimeter is the most frequently used test instrument in electrical maintenance.
               A digital multimeter (DMM) measures voltage (AC and DC), current, resistance, and
@@ -381,88 +394,84 @@ const MOETModule2Section5_4 = () => {
               at each measurement location. Using a meter at a location exceeding its CAT rating
               risks explosive failure during a transient event.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Measurement Categories</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Category</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Location</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Example</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT I</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protected electronic equipment
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Signal levels, telecom circuits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT II</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Single-phase receptacle level
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Socket outlets, appliance testing
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT III</td>
-                      <td className="border border-white/10 px-3 py-2">Distribution level</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Distribution boards, sub-mains, fixed wiring
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">CAT IV</td>
-                      <td className="border border-white/10 px-3 py-2">Origin of installation</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Service head, meter, main switch
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <p className="text-sm font-medium text-orange-400 mb-2">
-                GS38 Test Probe Requirements
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Measurement categories
               </p>
-              <p className="text-sm text-white">
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Category</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Location</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Example</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CAT I</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Protected electronic equipment
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Signal levels, telecom circuits
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CAT II</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Single-phase receptacle level
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Socket outlets, appliance testing
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CAT III</td>
+                    <td className="border border-white/10 px-3 py-2">Distribution level</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Distribution boards, sub-mains, fixed wiring
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">CAT IV</td>
+                    <td className="border border-white/10 px-3 py-2">Origin of installation</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Service head, meter, main switch
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Standard probes that do not comply with GS38"
+            whatHappens={
+              <p>
+                Standard multimeter probes with long exposed tips do NOT comply with GS38. Used at a
+                distribution board or in a panel with closely spaced terminals, the exposed metal
+                can bridge live parts, causing a short-circuit or arc flash — and there is nothing
+                stopping a hand sliding onto a live terminal.
+              </p>
+            }
+            doInstead={
+              <p>
                 HSE Guidance Note GS38 specifies that test probes must have finger barriers (guards)
                 to prevent the hand sliding onto live parts, spring-loaded retractable tips with a
                 maximum of 2-4 mm exposed metal, and fused test leads (typically 500 mA HRC fuse).
-                Standard multimeter probes with long exposed tips do NOT comply with GS38 and must
-                be replaced with compliant probes or fitted with shrouded adaptors before use on
+                Replace non-compliant probes with GS38 probes or fit shrouded adaptors before use on
                 electrical installations.
               </p>
-            </div>
+            }
+          />
 
-            <p className="text-sm text-elec-yellow/70">
-              <strong>Prove-test-prove:</strong> Before testing for the absence of voltage, prove
-              your voltage indicator on a known live source (or proving unit). Test the circuit.
-              Prove the indicator again on the known source. If the indicator fails the second
-              prove, the "dead" reading cannot be trusted. This three-step procedure is
-              non-negotiable.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...quickCheckQuestions[0]} />
 
-        <InlineCheck {...quickCheckQuestions[0]} />
+          <SectionRule />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Insulation Resistance Testers (Megohmmeters)
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <ContentEyebrow>Insulation resistance testers (megohmmeters)</ContentEyebrow>
+
+          <ConceptBlock title="Insulation Resistance Testers (Megohmmeters)">
             <p>
               The insulation resistance tester (megohmmeter, "megger") applies a high DC voltage
               between conductors (or between conductors and earth) and measures the extremely small
@@ -476,230 +485,180 @@ const MOETModule2Section5_4 = () => {
               earth. Deteriorating insulation is a precursor to earth faults, short-circuits,
               electric shock and fire.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                BS 7671 Insulation Resistance Requirements (Table 6A)
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                BS 7671 insulation resistance requirements (Table 6A)
               </p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Circuit Voltage
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Test Voltage (DC)
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">Minimum IR</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">SELV / PELV</td>
-                      <td className="border border-white/10 px-3 py-2">250 V</td>
-                      <td className="border border-white/10 px-3 py-2">0.5 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">
-                        Up to 500 V (incl. 230 V)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">500 V</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Above 500 V</td>
-                      <td className="border border-white/10 px-3 py-2">1,000 V</td>
-                      <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Circuit voltage</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">
+                      Test voltage (DC)
+                    </th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Minimum IR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">SELV / PELV</td>
+                    <td className="border border-white/10 px-3 py-2">250 V</td>
+                    <td className="border border-white/10 px-3 py-2">0.5 MΩ</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Up to 500 V (incl. 230 V)</td>
+                    <td className="border border-white/10 px-3 py-2">500 V</td>
+                    <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Above 500 V</td>
+                    <td className="border border-white/10 px-3 py-2">1,000 V</td>
+                    <td className="border border-white/10 px-3 py-2">1.0 MΩ</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Test Procedure</h3>
-                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                  <li className="pl-1">
-                    Isolate the circuit from the mains supply and verify dead
-                  </li>
-                  <li className="pl-1">
-                    Disconnect all loads, electronic equipment and surge protection devices
-                  </li>
-                  <li className="pl-1">
-                    Close all switches to include all fixed wiring in the test
-                  </li>
-                  <li className="pl-1">
-                    Test between line and neutral (L-N), line and earth (L-E), and neutral and earth
-                    (N-E)
-                  </li>
-                  <li className="pl-1">
-                    Record the lowest reading — all must be above the minimum
-                  </li>
-                  <li className="pl-1">
-                    Discharge the cable capacitance safely after testing (the megohmmeter stores
-                    charge)
-                  </li>
-                </ul>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">Test procedure</p>
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>Isolate the circuit from the mains supply and verify dead</li>
+                <li>Disconnect all loads, electronic equipment and surge protection devices</li>
+                <li>Close all switches to include all fixed wiring in the test</li>
+                <li>
+                  Test between line and neutral (L-N), line and earth (L-E), and neutral and earth
+                  (N-E)
+                </li>
+                <li>Record the lowest reading — all must be above the minimum</li>
+                <li>
+                  Discharge the cable capacitance safely after testing (the megohmmeter stores
+                  charge)
+                </li>
+              </ul>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Disconnect sensitive equipment before testing">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Warning:</strong> The 500 V DC test voltage can damage electronic equipment,
               LED drivers, SPDs, dimmer switches and other sensitive components. These must be
               disconnected before testing. If in doubt about any connected equipment, disconnect it
               before applying the insulation resistance test.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[1]} />
+          <InlineCheck {...quickCheckQuestions[1]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Clamp Meters and Current Measurement
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Clamp meters and current measurement</ContentEyebrow>
+
+          <ConceptBlock title="Clamp Meters and Current Measurement">
             <p>
               The clamp meter is an essential diagnostic tool for maintenance technicians. It allows
               current measurement on a live, operating circuit without breaking the circuit or
               disconnecting any conductors. This non-invasive measurement capability makes it
               invaluable for load monitoring, fault diagnosis, and verifying circuit operation.
             </p>
+            <p>
+              <strong>AC current clamp (CT type).</strong> Uses a split-core current transformer
+              around the conductor. The alternating magnetic field induces a proportional current in
+              the clamp winding. AC-only clamp meters are common and adequate for most maintenance
+              tasks. They measure the RMS (root mean square) current. True-RMS meters provide
+              accurate readings on distorted waveforms (common with electronic loads, VFDs, LED
+              drivers). Average-responding meters may give inaccurate readings on non-sinusoidal
+              currents.
+            </p>
+            <p>
+              <strong>DC current clamp (Hall-effect).</strong> Uses a Hall-effect sensor to detect
+              both AC and DC magnetic fields. More expensive than CT-type clamps but essential for
+              measuring DC circuits (solar PV, battery systems, DC drives). The Hall-effect sensor
+              requires a battery to operate and must be zeroed before each measurement to compensate
+              for residual magnetism in the clamp jaws.
+            </p>
+            <p>
+              <strong>Leakage clamp meter.</strong> A specialised high-sensitivity clamp meter
+              designed to measure very small currents (typically 0.001 to 100 mA). Used for
+              measuring earth leakage current by clamping around all the circuit conductors (line +
+              neutral) together — any current not returning through the neutral is leaking to earth.
+              Invaluable for diagnosing nuisance RCD tripping caused by cumulative leakage from
+              multiple circuits.
+            </p>
+          </ConceptBlock>
 
-            <div className="my-6 space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  AC Current Clamp (CT Type)
-                </h3>
-                <p className="text-sm text-white">
-                  Uses a split-core current transformer around the conductor. The alternating
-                  magnetic field induces a proportional current in the clamp winding. AC-only clamp
-                  meters are common and adequate for most maintenance tasks. They measure the RMS
-                  (root mean square) current. True-RMS meters provide accurate readings on distorted
-                  waveforms (common with electronic loads, VFDs, LED drivers). Average-responding
-                  meters may give inaccurate readings on non-sinusoidal currents.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  DC Current Clamp (Hall-Effect)
-                </h3>
-                <p className="text-sm text-white">
-                  Uses a Hall-effect sensor to detect both AC and DC magnetic fields. More expensive
-                  than CT-type clamps but essential for measuring DC circuits (solar PV, battery
-                  systems, DC drives). The Hall-effect sensor requires a battery to operate and must
-                  be zeroed before each measurement to compensate for residual magnetism in the
-                  clamp jaws.
-                </p>
-              </div>
-              <div className="p-4 rounded-lg bg-white/5">
-                <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Leakage Clamp Meter
-                </h3>
-                <p className="text-sm text-white">
-                  A specialised high-sensitivity clamp meter designed to measure very small currents
-                  (typically 0.001 to 100 mA). Used for measuring earth leakage current by clamping
-                  around all the circuit conductors (line + neutral) together — any current not
-                  returning through the neutral is leaking to earth. Invaluable for diagnosing
-                  nuisance RCD tripping caused by cumulative leakage from multiple circuits.
-                </p>
-              </div>
-            </div>
-
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="A flexible coil reaches conductors a rigid clamp cannot">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Practical tip:</strong> When measuring current in a distribution board, it may
               not be possible to separate individual conductors to clamp around a single one. Many
               clamp meters have a flexible (Rogowski) coil accessory that can be threaded around
               conductors in tight spaces. Alternatively, use a purpose-made current monitoring
               system for permanent or semi-permanent load monitoring.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[2]} />
+          <InlineCheck {...quickCheckQuestions[2]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Multifunction Testers, Loop and RCD Testing
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Multifunction testers, loop and RCD testing</ContentEyebrow>
+
+          <ConceptBlock title="Multifunction Testers, Loop and RCD Testing">
             <p>
               The multifunction tester (MFT) is the primary instrument for BS 7671 initial
               verification and periodic inspection. It combines all the mandatory test functions in
               a single, calibrated instrument: continuity, insulation resistance, loop impedance,
               RCD testing, and prospective fault current measurement.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">MFT Test Functions</p>
-              <div className="overflow-x-auto">
-                <table className="text-sm text-white w-full border-collapse">
-                  <thead>
-                    <tr className="bg-white/5">
-                      <th className="border border-white/10 px-3 py-2 text-left">Test</th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        What It Measures
-                      </th>
-                      <th className="border border-white/10 px-3 py-2 text-left">
-                        Key Requirement
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Continuity (R1+R2)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Protective conductor resistance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        200 mA minimum test current
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Insulation integrity (MΩ)
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        500 V DC test voltage (up to 500 V circuits)
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">Loop impedance (Zs)</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Earth fault loop impedance
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must be within BS 7671 limits
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">PFC / PSCC</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Prospective fault current
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must not exceed device breaking capacity
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border border-white/10 px-3 py-2">RCD test</td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Trip time and sensitivity
-                      </td>
-                      <td className="border border-white/10 px-3 py-2">
-                        Must trip within BS 7671 time limits
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">MFT test functions</p>
+              <table className="w-full border-collapse text-left text-sm text-white">
+                <thead>
+                  <tr className="bg-white/5">
+                    <th className="border border-white/10 px-3 py-2 text-left">Test</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">What it measures</th>
+                    <th className="border border-white/10 px-3 py-2 text-left">Key requirement</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Continuity (R1+R2)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Protective conductor resistance
+                    </td>
+                    <td className="border border-white/10 px-3 py-2">
+                      200 mA minimum test current
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Insulation resistance</td>
+                    <td className="border border-white/10 px-3 py-2">Insulation integrity (MΩ)</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      500 V DC test voltage (up to 500 V circuits)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">Loop impedance (Zs)</td>
+                    <td className="border border-white/10 px-3 py-2">Earth fault loop impedance</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Must be within BS 7671 limits
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">PFC / PSCC</td>
+                    <td className="border border-white/10 px-3 py-2">Prospective fault current</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Must not exceed device breaking capacity
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-white/10 px-3 py-2">RCD test</td>
+                    <td className="border border-white/10 px-3 py-2">Trip time and sensitivity</td>
+                    <td className="border border-white/10 px-3 py-2">
+                      Must trip within BS 7671 time limits
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
             <p>
               Loop impedance testing verifies that the earth fault path has sufficiently low
               impedance for the protective device to operate within the required disconnection time.
@@ -708,7 +667,6 @@ const MOETModule2Section5_4 = () => {
               of the circuit must not exceed 1.37 ohms (BS 7671 Table 41.3). Higher impedance means
               lower fault current, which means slower disconnection — potentially dangerously slow.
             </p>
-
             <p>
               RCD testing verifies that the residual current device operates at the correct
               sensitivity and within the required time. The MFT passes a controlled test current
@@ -716,17 +674,15 @@ const MOETModule2Section5_4 = () => {
               (must NOT trip), 100% (must trip within 300 ms), and 5&times; rated current (must trip
               within 40 ms for non-delayed types).
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <InlineCheck {...quickCheckQuestions[3]} />
+          <InlineCheck {...quickCheckQuestions[3]} />
 
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            Instrument Care, Calibration and Records
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
+          <SectionRule />
+
+          <ContentEyebrow>Instrument care, calibration and records</ContentEyebrow>
+
+          <ConceptBlock title="Instrument Care, Calibration and Records">
             <p>
               Test instruments are precision measuring devices that require proper care, regular
               calibration, and systematic record-keeping. The accuracy of every test result — and
@@ -734,150 +690,141 @@ const MOETModule2Section5_4 = () => {
               report — depends on the instruments being in good condition and within their
               calibration period.
             </p>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Instrument Maintenance Checklist
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Instrument maintenance checklist
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>Calibration:</strong> Check calibration date before every use. Arrange
                   annual calibration through a UKAS-accredited laboratory. Retain all calibration
                   certificates.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Test leads:</strong> Inspect leads before every use for damage, fraying,
                   cracked insulation, loose connections. Replace damaged leads immediately — never
                   repair them.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Probes:</strong> Verify GS38 compliance — finger guards present, tip
                   shrouds intact, fuse in-place and correct rating.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Battery:</strong> Check battery condition — low battery can give
                   inaccurate readings. Replace batteries as recommended by the manufacturer.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Zeroing:</strong> Zero the continuity function leads before testing (null
                   the lead resistance). Zero the clamp meter before each measurement session.
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>Storage:</strong> Store in the manufacturer's case, clean and dry. Protect
                   from impact, extreme temperatures and moisture.
                 </li>
               </ul>
             </div>
-
-            <div className="my-6 p-4 rounded-lg bg-white/5">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Key Standards for Test Instruments
+            <div className="overflow-x-auto">
+              <p className="mb-2 text-[13px] font-medium text-elec-yellow/80">
+                Key standards for test instruments
               </p>
-              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
-                <li className="pl-1">
+              <ul className="list-disc space-y-1.5 pl-5 marker:text-elec-yellow/70">
+                <li>
                   <strong>BS EN 61557:</strong> Defines requirements for each type of test
                   instrument used for BS 7671 verification
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>IEC 61010-1:</strong> Safety requirements for electrical equipment for
                   measurement — defines CAT ratings
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>GS38:</strong> HSE guidance on electrical test equipment safety — probe
                   and lead requirements
                 </li>
-                <li className="pl-1">
+                <li>
                   <strong>BS 7671 Regulation 643.1:</strong> Requires instruments to comply with BS
                   EN 61557
                 </li>
               </ul>
             </div>
+          </ConceptBlock>
 
-            <p className="text-sm text-elec-yellow/70">
+          <ConceptBlock title="Out-of-tolerance instruments can invalidate a whole job">
+            <p className="text-[13px] text-elec-yellow/70">
               <strong>Professional practice:</strong> Record the make, model and serial number of
               every test instrument used on each job, along with the calibration due date. This
               information should appear on the electrical installation certificate or condition
               report. If a calibration check later reveals an instrument was out of tolerance, all
               results taken with that instrument during the affected period may need to be repeated.
             </p>
-          </div>
-        </section>
+          </ConceptBlock>
 
-        <hr className="border-white/5 my-12" />
+          <SectionRule />
 
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <VideoCard
+            url="https://www.youtube.com/watch?v=4lAyzRxsbDc"
 
-        <hr className="border-white/5 my-12" />
+            title="How to Use a Multimeter Like a Pro — The Ultimate Guide"
 
-        <section className="mb-10">
-          <div className="p-5 rounded-lg bg-transparent">
-            <h3 className="text-sm font-medium text-white mb-4">Quick Reference</h3>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
-              <div>
-                <p className="font-medium text-white mb-1">Essential Test Instruments</p>
-                <ul className="space-y-0.5">
-                  <li>Multifunction tester (MFT) — all BS 7671 tests</li>
-                  <li>Two-pole voltage indicator — proving dead</li>
-                  <li>Proving unit — prove-test-prove procedure</li>
-                  <li>Clamp meter — non-invasive current measurement</li>
-                  <li>Non-contact voltage detector — preliminary checks</li>
-                  <li>Thermal imaging camera — hot spot detection</li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-medium text-white mb-1">Key Standards</p>
-                <ul className="space-y-0.5">
-                  <li>BS EN 61557 — Test instrument requirements</li>
-                  <li>IEC 61010-1 — CAT ratings and safety</li>
-                  <li>GS38 — Test probe and lead safety</li>
-                  <li>BS 7671 Chapter 64 — Initial verification</li>
-                  <li>BS 7671 Chapter 65 — Periodic inspection</li>
-                  <li>BS 7671 Table 6A — IR test voltages and limits</li>
-                </ul>
-              </div>
+            channel="The Engineering Mindset"
+
+            duration="28:43"
+
+            topic="Ranges, modes and the measurements you actually take on plant"
+
+            caption="Thorough rather than quick. Worth watching once properly before you rely on a meter for proving dead."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'CAT ratings (IEC 61010-1): CAT I — protected electronic equipment; CAT II — socket outlets; CAT III — distribution boards, sub-mains, fixed wiring; CAT IV — origin of installation.',
+              'GS38 test probes: finger guards, 2-4 mm maximum exposed tip, fused leads (typically 500 mA), clear voltage/current markings.',
+              'BS 7671 Table 6A insulation resistance: SELV/PELV — 250 V DC test, minimum 0.5 MΩ; up to 500 V (incl. 230 V) — 500 V DC test, minimum 1.0 MΩ; above 500 V — 1,000 V DC test, minimum 1.0 MΩ.',
+              'RCD trip times: 50% rated current must NOT trip; 100% must trip within 300 ms (200 ms for Type S); 5x rated current must trip within 40 ms (non-delayed types).',
+              'Clamp meters measure a single conductor only — clamping line and neutral together cancels the field to near zero; that principle is what leakage clamp meters use deliberately.',
+              'Test sequence: dead tests first (continuity, insulation resistance), then live tests (polarity, Zs, PFC, RCD) once the supply is reconnected.',
+              'Key references: BS EN 61557; IEC 61010-1; GS38; BS 7671 Regulation 643.1; BS 7671 Chapter 64 (initial verification) and Chapter 65 (periodic inspection); Table 6A; Table 41.3.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <Bleed>
+            <Quiz title="Test Your Knowledge" questions={quizQuestions} />
+          </Bleed>
+
+          <Bleed>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module2-section5-3')}
+                className="touch-manipulation rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_16%)] p-4 text-left transition-colors hover:bg-[hsl(0_0%_19%)] active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                  <ChevronLeft className="h-3 w-3" /> Back to subsection
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-white">
+                  Selection and Use of Power Tools
+                </div>
+              </button>
+              <button
+                onClick={() => navigate('/study-centre/apprentice/m-o-e-t-module3')}
+                className="touch-manipulation rounded-2xl border border-elec-yellow bg-elec-yellow p-4 text-right transition-colors hover:bg-elec-yellow/90 active:scale-[0.99]"
+              >
+                <div className="flex items-center justify-end gap-2 text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                  Next module <ChevronRight className="h-3 w-3" />
+                </div>
+                <div className="mt-1 truncate text-[14px] font-semibold text-black">
+                  Module 3 · Electrical plant, equipment and systems
+                </div>
+              </button>
             </div>
-          </div>
-        </section>
-
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2-section5-3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Power Tools
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module2">
-              Complete Module 2
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
-    </div>
+          </Bleed>
+        </StudyPage>
+      </HubBody>
+    </HubPage>
   );
 };
 
