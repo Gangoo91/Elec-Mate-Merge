@@ -13,6 +13,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
 import SignatureInput from '@/components/signature/SignatureInput';
 import EICRScheduleOfTests from '@/components/EICRScheduleOfTests';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -525,6 +526,9 @@ const {
         </div>
         <Field label="Notes"><Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} placeholder="Additional notes..." /></Field>
       </section>
+      {/* ELE-1729 — photos of what was tested, including any already taken
+          against the job. */}
+      <SitePhotosSection reportId={savedReportId} reportType="testing-only" />
     </div>
   );
 

@@ -36,6 +36,22 @@ export interface ResendSendParams {
     filename: string;
     content: string | Uint8Array; // base64 string or raw bytes
   }>;
+  /**
+   * Opt in to a send record in `email_logs` (ELE-1731).
+   *
+   * Absent by default ON PURPOSE. The bulk/lifecycle senders already write
+   * their own rows, and logging unconditionally here would double them. Set it
+   * on anything client-facing — an invoice, a quote, a certificate — where
+   * "did my customer actually receive it?" is a question support has to answer.
+   */
+  log?: {
+    /** e.g. 'payment_reminder', 'invoice_send', 'cert_send'. */
+    template: string;
+    /** The thing the email is about, so a row can be traced to an invoice. */
+    entityId?: string | null;
+    /** The electrician who sent it, where known. */
+    userId?: string | null;
+  };
 }
 
 export interface ResendSendResult {
@@ -170,6 +186,78 @@ async function brevoSend(
   }
 }
 
+/**
+ * Record that a send was attempted (ELE-1731).
+ *
+ * Mark Glowacki's customer said invoices were not arriving and we could not
+ * answer him: `resend.emails.send(...)` returned a Brevo message id and we threw
+ * it away, so nothing in the database knew the email had ever been attempted.
+ * The only honest answer to any deliverability question was "I'll check Brevo".
+ *
+ * Deliberately:
+ *  - plain fetch, no supabase-js, matching this file's no-SDK rule;
+ *  - never throws, and is HARD-CAPPED at LOG_TIMEOUT_MS. This is awaited, and an
+ *    un-timed-out await here would stall the send, time the function out, show
+ *    the user a failure and invite them to press send again — which is the
+ *    duplicate-email bug this very ticket exists to stop. Bookkeeping must never
+ *    be able to break the thing it is bookkeeping;
+ *  - stores the PROVIDER MESSAGE ID, which is the handle that makes a support
+ *    question traceable all the way into Brevo.
+ */
+/** A send is never delayed by more than this for the sake of its own log row. */
+const LOG_TIMEOUT_MS = 3000;
+
+async function recordSend(
+  params: ResendSendParams,
+  result: ResendSendResult
+): Promise<void> {
+  const log = params.log;
+  if (!log) return;
+
+  const url = Deno.env.get('SUPABASE_URL');
+  const key = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (!url || !key) return;
+
+  const recipients = Array.isArray(params.to) ? params.to : [params.to];
+  const primary = recipients[0];
+  if (!primary) return;
+
+  try {
+    await fetch(`${url}/rest/v1/email_logs`, {
+      method: 'POST',
+      // Bounded: a slow or unreachable PostgREST costs a few seconds of logging,
+      // never the email itself.
+      signal: AbortSignal.timeout(LOG_TIMEOUT_MS),
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal',
+      },
+      body: JSON.stringify({
+        to_email: primary,
+        to_user_id: log.userId ?? null,
+        from_email: parseAddress(params.from).email,
+        subject: params.subject,
+        template: log.template,
+        status: result.error ? 'failed' : 'sent',
+        error_message: result.error?.message ?? null,
+        metadata: {
+          entity_id: log.entityId ?? null,
+          provider: 'brevo',
+          provider_message_id: result.data?.id ?? null,
+          // Every recipient, so a send to several addresses is not misread as
+          // one. The row itself is keyed on the first.
+          recipients,
+        },
+      }),
+    });
+  } catch (e) {
+    // Swallowed on purpose — see the note above.
+    console.warn('[mailer] send-log failed (non-fatal):', e);
+  }
+}
+
 // ─── Drop-in Resend class ───────────────────────────────────────
 export class Resend {
   private apiKey: string;
@@ -189,7 +277,14 @@ export class Resend {
     const brevoEnv = Deno.env.get('BREVO_API_KEY');
     this.apiKey = brevoEnv || apiKey || Deno.env.get('RESEND_API_KEY') || '';
 
-    this.emails = { send: (p) => brevoSend(this.apiKey, p) };
+    this.emails = {
+      send: async (p) => {
+        const result = await brevoSend(this.apiKey, p);
+        // Hooked here rather than in each caller so a sender cannot forget it.
+        await recordSend(p, result);
+        return result;
+      },
+    };
 
     this.batch = {
       // Brevo has no multi-recipient atomic batch endpoint. We serial-send
@@ -202,7 +297,11 @@ export class Resend {
         for (let i = 0; i < emails.length; i += concurrency) {
           const slice = emails.slice(i, i + concurrency);
           const settled = await Promise.all(
-            slice.map((e) => brevoSend(this.apiKey, e))
+            slice.map(async (e) => {
+              const r = await brevoSend(this.apiKey, e);
+              await recordSend(e, r);
+              return r;
+            })
           );
           for (const r of settled) {
             if (r.error) errors.push(r.error.message);
@@ -223,7 +322,9 @@ export async function sendEmail(
   params: ResendSendParams
 ): Promise<ResendSendResult> {
   const apiKey = Deno.env.get('BREVO_API_KEY') || Deno.env.get('RESEND_API_KEY') || '';
-  return brevoSend(apiKey, params);
+  const result = await brevoSend(apiKey, params);
+  await recordSend(params, result);
+  return result;
 }
 
 // ─── Client-facing sender helper ────────────────────────────────

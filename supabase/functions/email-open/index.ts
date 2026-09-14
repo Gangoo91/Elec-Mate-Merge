@@ -7,7 +7,13 @@
  * notification to the electrician so they know straight away.
  *
  * URL shape:
- *   /functions/v1/email-open?type=<entity_type>&id=<entity_id>
+ *   /functions/v1/email-open?type=<entity_type>&id=<entity_id>&r=<recipient email>
+ *
+ * `r` is optional but should always be set by the sender. Without it the open
+ * is recorded with a null recipient, and a proxy fetch, the customer, and the
+ * electrician's own copy all become indistinguishable after the fact — which is
+ * exactly how an invoice came to be marked "viewed" when only the electrician
+ * had opened his copy (ELE-1730). All 757 rows predating this were null.
  *
  * entity_type values (string, free-form so new email types don't need
  * a schema change):
@@ -281,6 +287,9 @@ const handler = async (req: Request): Promise<Response> => {
     const url = new URL(req.url);
     const entityType = (url.searchParams.get('type') || '').trim();
     const entityId = (url.searchParams.get('id') || '').trim();
+    // Who the email was addressed to. Lets support answer "did the CUSTOMER
+    // open it, or did something else fetch the image?"
+    const recipientEmail = (url.searchParams.get('r') || '').trim().toLowerCase() || null;
 
     if (!entityType || !entityId) return pixelResponse();
 
@@ -296,6 +305,29 @@ const handler = async (req: Request): Promise<Response> => {
       null;
     const userAgent = req.headers.get('user-agent') || null;
 
+    /*
+     * ELE-1730 — which fetches are NOT a person reading the email.
+     *
+     * 🔴 Getting this wrong in BOTH directions is easy, and I did once.
+     *
+     * Nearly every open carries `Brevo/1.0 (redirection-images …)`, which looks
+     * like a bot until you know that `_shared/mailer.ts` is a Resend-shaped shim
+     * backed by BREVO (Resend banned the domain, ELE-765). Brevo proxies the
+     * images in our own emails, so its agent is the NORMAL path for a real open.
+     * The data says so too: of 756 such opens, 275 recur across MORE THAN A DAY
+     * and one reached 7 opens — a send-time prefetch would fire exactly once.
+     * Suppressing those silently killed "your customer opened your invoice" for
+     * every user. Gmail's image proxy behaves the same way: it fetches when the
+     * recipient opens.
+     *
+     * What genuinely is not a person: security gateways that scan every inbound
+     * message on delivery, and crawlers. Those fire whether or not anyone looks.
+     */
+    const isMachineFetch =
+      /mimecast|proofpoint|barracuda|symantec|forcepoint|mailcontrol|urldefense|bot\b|crawler|spider/i.test(
+        userAgent || ''
+      );
+
     const ctx = await resolveEntity(supabase, entityType, entityId);
     if (!ctx) {
       console.warn(`email-open: unknown entity ${entityType}/${entityId}`);
@@ -307,7 +339,7 @@ const handler = async (req: Request): Promise<Response> => {
       p_entity_type: entityType,
       p_entity_id: entityId,
       p_owner_user_id: ctx.ownerUserId,
-      p_recipient_email: null,
+      p_recipient_email: recipientEmail,
       p_ip: ip,
       p_user_agent: userAgent,
     });
@@ -320,7 +352,9 @@ const handler = async (req: Request): Promise<Response> => {
     const isFirstOpen: boolean = Array.isArray(openRows)
       ? !!openRows[0]?.is_first_open
       : !!(openRows as { is_first_open?: boolean })?.is_first_open;
-    console.log(`email-open: ${entityType}/${entityId} isFirstOpen=${isFirstOpen} owner=${ctx.ownerUserId}`);
+    console.log(
+      `email-open: ${entityType}/${entityId} isFirstOpen=${isFirstOpen} machine=${isMachineFetch} recipient=${recipientEmail ?? 'unknown'} owner=${ctx.ownerUserId}`
+    );
 
     // Mirror quote_send opens to quote_views (back-compat with the
     // existing QuoteDetailView UI that reads email_opened_at from
@@ -372,8 +406,10 @@ const handler = async (req: Request): Promise<Response> => {
       }
     }
 
-    // Fire push + in-app notification only on first open.
-    if (isFirstOpen) {
+    // Fire push + in-app notification only on a first open that a person
+    // plausibly caused. A proxy prefetch is recorded above but never claims
+    // the customer read it.
+    if (isFirstOpen && !isMachineFetch) {
       const { title, body } = composePush(entityType, ctx);
 
       // Push notification — use direct fetch with explicit service-role

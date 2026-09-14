@@ -43,6 +43,13 @@ export const JOB_STAGE_META: Record<JobStage, { label: string; dot: string; text
 export interface SparkProject {
   id: string;
   userId: string;
+  /**
+   * Per-user reference, e.g. JOB-014 (ELE-1727). Assigned by a database
+   * trigger, so it is always present on a row the app has read back — but
+   * optional here because a locally-constructed project has not been through
+   * the insert yet.
+   */
+  jobNumber?: string;
   title: string;
   description?: string;
   projectType?: string;
@@ -88,6 +95,8 @@ export interface CreateProjectInput {
 interface ProjectRow {
   id: string;
   user_id: string;
+  /** Assigned by the `trg_assign_job_number` trigger (ELE-1727). */
+  job_number?: string | null;
   title: string;
   description?: string | null;
   project_type?: string | null;
@@ -111,6 +120,7 @@ function mapRow(row: ProjectRow, taskCounts?: { total: number; done: number }): 
   return {
     id: row.id,
     userId: row.user_id,
+    jobNumber: row.job_number || undefined,
     title: row.title,
     description: row.description || undefined,
     projectType: row.project_type || undefined,
@@ -161,6 +171,9 @@ function mapOverviewRow(row: OverviewRow): SparkProject {
   return {
     id: row.id,
     userId: row.user_id,
+    // The list reads get_jobs_overview(), NOT spark_projects — mapping it in
+    // mapProjectRow alone left the number invisible and unsearchable here.
+    jobNumber: row.job_number || undefined,
     title: row.title,
     description: row.description || undefined,
     projectType: row.project_type || undefined,

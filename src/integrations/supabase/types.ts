@@ -34622,6 +34622,7 @@ export type Database = {
       };
       spark_projects: {
         Row: {
+          job_number: string | null;
           ai_notes: Json;
           calendar_event_id: string | null;
           completed_at: string | null;
@@ -34643,6 +34644,7 @@ export type Database = {
           user_id: string;
         };
         Insert: {
+          job_number?: string | null;
           ai_notes?: Json;
           calendar_event_id?: string | null;
           completed_at?: string | null;
@@ -34664,6 +34666,7 @@ export type Database = {
           user_id: string;
         };
         Update: {
+          job_number?: string | null;
           ai_notes?: Json;
           calendar_event_id?: string | null;
           completed_at?: string | null;
@@ -42098,6 +42101,7 @@ export type Database = {
         Args: never;
         Returns: {
           booked_slot: string;
+          job_number: string;
           cert_count: number;
           completed_at: string;
           created_at: string;

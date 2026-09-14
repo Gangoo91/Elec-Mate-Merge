@@ -4,6 +4,7 @@ import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
 import DefectCodesReference from './DefectCodesReference';
 import DefectObservationsSection from './DefectObservationsSection';
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { supabase } from '@/integrations/supabase/client';
 import { useEICRForm } from './eicr/EICRFormProvider';
@@ -821,6 +822,16 @@ const EICRInspectionChecklist = ({
           />
         </div>
       </section>
+
+      {/* Site photos — the installation as found, and anything already
+          photographed against the job (ELE-1729). Sits below the schedule and
+          observations because it is evidence for the report as a whole, not a
+          step in the inspection workflow. */}
+      <SitePhotosSection
+        reportId={effectiveReportId}
+        reportType="eicr"
+        customerId={formData.customerId}
+      />
 
       {/* Reference Guide — at bottom for reference, not workflow */}
       <DefectCodesReference />

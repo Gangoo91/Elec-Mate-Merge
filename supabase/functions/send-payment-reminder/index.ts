@@ -215,7 +215,10 @@ const handler = async (req: Request): Promise<Response> => {
         : null,
       tone: reminderType as PaymentReminderTone,
       markPaidUrl,
-      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoiceId}`,
+      // `r` names the recipient so an open can be attributed. Without it the
+      // customer, a proxy and the electrician's own copy are indistinguishable
+      // (ELE-1730).
+      trackingPixelUrl: `${Deno.env.get('SUPABASE_URL')}/functions/v1/email-open?type=payment_reminder&id=${invoiceId}&r=${encodeURIComponent(clientEmail)}`,
     });
 
     console.log(`📧 Sending ${reminderType} payment reminder for ${invoice.invoice_number} to ${clientEmail}`);
@@ -249,6 +252,9 @@ const handler = async (req: Request): Promise<Response> => {
       subject: finalSubject,
       html: finalHtml,
       text: customBody ? customBody : htmlToPlainText(emailContent.html),
+      // ELE-1731 — record the send so "did my customer receive it?" is
+      // answerable from our own data instead of the Brevo dashboard.
+      log: { template: 'payment_reminder', entityId: invoiceId, userId: invoice.user_id },
     });
 
     if (emailError) {
@@ -266,11 +272,36 @@ const handler = async (req: Request): Promise<Response> => {
     const electricianEmail = sender.replyTo || undefined;
     if (electricianEmail && electricianEmail.toLowerCase() !== clientEmail.toLowerCase()) {
       const copyBanner = `<div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:12px 16px;margin-bottom:16px;font-family:sans-serif;font-size:14px;color:#78350f;"><strong>Copy for your records</strong> — this reminder was sent to your customer at ${clientEmail}.</div>`;
+
+      /*
+       * ELE-1730 — STRIP THE TRACKING PIXEL FROM THE ELECTRICIAN'S COPY.
+       *
+       * The copy reused `finalHtml`, which carries the same
+       * `email-open?type=payment_reminder&id=<invoiceId>` pixel as the
+       * customer's email — same invoice id. So the electrician opening their
+       * own copy marked the CUSTOMER'S invoice as viewed. Mark Glowacki, 13 Sep:
+       * "It says the invoice has been viewed but that was only when I opened
+       * the reminder sent to me."
+       *
+       * `email_opens` also records no `recipient_email` (null on all 757 rows),
+       * so a copy-open and a real customer open are indistinguishable after the
+       * fact. Until that is fixed, the only safe thing is for the copy never to
+       * be able to register an open at all.
+       */
+      const copyHtml = copyBanner + finalHtml.replace(/<img[^>]*email-open[^>]*>/gi, '');
+
       const { error: copyError } = await resend.emails.send({
         ...sender,
         to: [electricianEmail],
         subject: `Copy: ${finalSubject}`,
-        html: copyBanner + finalHtml,
+        html: copyHtml,
+        // Logged under its own template so the electrician's copy is never
+        // mistaken for the customer's email when reading the send history.
+        log: {
+          template: 'payment_reminder_copy',
+          entityId: invoiceId,
+          userId: invoice.user_id,
+        },
         text: `COPY FOR YOUR RECORDS — this reminder was sent to your customer at ${clientEmail}.\n\n${customBody ? customBody : htmlToPlainText(emailContent.html)}`,
       });
       if (copyError) {

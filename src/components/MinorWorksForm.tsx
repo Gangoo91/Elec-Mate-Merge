@@ -37,6 +37,7 @@ import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
 import { useMinorWorksValidation } from '@/hooks/useMinorWorksValidation';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { scrollToTopForStepChange } from '@/utils/scroll';
@@ -1212,7 +1213,18 @@ const MinorWorksForm = ({
   const tabContent: Record<string, React.ReactNode> = {
     details: <MWDetailsTab formData={formData} onUpdate={handleUpdate} />,
     circuit: <MWCircuitTab formData={formData} onUpdate={handleUpdate} />,
-    testing: <MWTestingTab formData={formData} onUpdate={handleUpdate} />,
+    testing: (
+      <div className="space-y-4">
+        <MWTestingTab formData={formData} onUpdate={handleUpdate} />
+        {/* ELE-1729 — minor works has no inspections tab, so the evidence
+            photos sit with the test results. */}
+        <SitePhotosSection
+          reportId={currentReportId}
+          reportType="minor-works"
+          customerId={formData.customerId}
+        />
+      </div>
+    ),
     declaration: (
       <>
         <MWDeclarationTab formData={formData} onUpdate={handleUpdate} />

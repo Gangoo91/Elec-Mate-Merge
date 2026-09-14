@@ -13,6 +13,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
 import SignatureInput from '@/components/signature/SignatureInput';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import CertShellHeader from '@/components/inspection/shared/CertShellHeader';
@@ -876,6 +877,10 @@ const {
         <Section title="Notes" className="lg:col-span-2">
           <Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} placeholder="Additional notes..." />
         </Section>
+        {/* ELE-1729 */}
+        <div className="lg:col-span-2">
+          <SitePhotosSection reportId={savedReportId} reportType="smoke-co-alarm" />
+        </div>
       </>
     ),
   };

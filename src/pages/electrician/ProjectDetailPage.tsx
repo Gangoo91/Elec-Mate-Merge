@@ -1358,6 +1358,14 @@ const ProjectDetailPage = () => {
                 )}
               />
               <div className="flex-1 min-w-0">
+                {/* ELE-1727 — the job's own reference. Above the title because it
+                    is what you read out to a customer on the phone, and what a
+                    scanned paper job card is matched back on. */}
+                {project.job_number && (
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow">
+                    {project.job_number}
+                  </p>
+                )}
                 <h1 className="text-[20px] sm:text-[24px] font-bold text-white leading-tight tracking-tight">
                   {project.title}
                 </h1>

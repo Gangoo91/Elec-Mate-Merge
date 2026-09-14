@@ -8,6 +8,8 @@ import EVChargingTabNavigation from './EVChargingTabNavigation';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
+
 interface EVChargingFormTabsProps {
   currentTab: EVChargingTabValue;
   onTabChange: (value: string) => void;
@@ -73,7 +75,18 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       />
     ),
     supply: <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />,
-    testing: <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />,
+    testing: (
+      <div className="space-y-4">
+        <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
+        {/* ELE-1729 — photos of the installation, and any already taken
+            against the job. */}
+        <SitePhotosSection
+          reportId={reportId}
+          reportType="ev-charging"
+          customerId={customerId}
+        />
+      </div>
+    ),
     declarations: <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />,
   };
 

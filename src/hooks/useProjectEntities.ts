@@ -5,6 +5,8 @@ import type { SparkTask, TaskPriority, TaskStatus } from '@/hooks/useSparkTasks'
 
 export interface ProjectData {
   id: string;
+  /** Per-user reference, e.g. JOB-014 (ELE-1727). Assigned by a DB trigger. */
+  job_number?: string;
   title: string;
   description?: string;
   project_type?: string;
@@ -184,6 +186,7 @@ export function useProjectEntities(projectId: string | undefined) {
 
       setProject({
         id: proj.id,
+        job_number: proj.job_number || undefined,
         title: proj.title,
         description: proj.description,
         project_type: proj.project_type,

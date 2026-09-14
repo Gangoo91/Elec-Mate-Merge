@@ -1397,6 +1397,108 @@ async function findOrCreateXeroContact(
   return createResult.Contacts[0].ContactID;
 }
 
+/**
+ * Find an invoice in QuickBooks by its document number.
+ *
+ * ELE-1730. The duplicate guard keyed entirely on our stored
+ * `external_invoice_id`: if it was null we went straight to create, every time.
+ * That left every invoice which never got an id back — six of Mark Glowacki's
+ * from June — permanently unprotected, so each resend minted another copy in
+ * his books. The stored id is our memory of the sync; it is not the truth about
+ * what QuickBooks holds.
+ *
+ * Asking the provider is idempotent whatever our local state says, and it
+ * retro-protects historical invoices without a backfill.
+ *
+ * Returns null when nothing matches, and on ANY failure — the caller keeps its
+ * existing behaviour rather than treating a lookup blip as "no invoice exists",
+ * which would be the very mistake ELE-1561 fixed one level up.
+ */
+async function findQBInvoiceByDocNumber(
+  accessToken: string,
+  realmId: string,
+  docNumber: string
+): Promise<{ id: string; syncToken: string; customerId: string | null } | null> {
+  try {
+    // QuickBooks' query language escapes a single quote by doubling it.
+    const safeDocNumber = docNumber.replace(/'/g, "''");
+    const query =
+      `SELECT Id, SyncToken, DocNumber, CustomerRef, TotalAmt, Balance, PrivateNote ` +
+      `FROM Invoice WHERE DocNumber = '${safeDocNumber}'`;
+    const url = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' },
+    });
+    if (!res.ok) {
+      console.warn(
+        `[findQBInvoiceByDocNumber] lookup failed (${res.status}) for "${docNumber}" — treating as not found`
+      );
+      return null;
+    }
+
+    const matches: Record<string, unknown>[] = (await res.json())?.QueryResponse?.Invoice ?? [];
+    if (!matches.length) return null;
+
+    /*
+     * 🔴 SKIP VOIDED INVOICES.
+     *
+     * This guard exists because resends duplicated invoices, and the user's
+     * remedy was to VOID the extras by hand (ELE-1561). So the very books this
+     * runs against are the most likely to hold voided invoices wearing exactly
+     * the number we are looking up. Adopting one would write to — and
+     * potentially revive — an invoice somebody deliberately killed.
+     *
+     * A voided QuickBooks invoice keeps its DocNumber, zeroes its total and
+     * carries "Voided" in PrivateNote. Requiring BOTH signals avoids mistaking
+     * a genuine £0 invoice for a voided one. Not adopting is the safe answer
+     * anyway: if the only match is void, creating a fresh invoice is correct.
+     */
+    const live = matches.filter((m) => {
+      const total = Number(m.TotalAmt ?? 0);
+      const note = String(m.PrivateNote ?? '');
+      const looksVoided = total === 0 && /voided/i.test(note);
+      return !looksVoided;
+    });
+    if (!live.length) {
+      console.log(
+        `[findQBInvoiceByDocNumber] "${docNumber}" exists in QuickBooks but every match is voided — not adopting`
+      );
+      return null;
+    }
+
+    /*
+     * More than one live invoice can share a number — that is precisely the
+     * mess this guard cleans up. Pick deterministically: the newest (highest
+     * Id) wins, so repeated syncs converge on one invoice rather than
+     * alternating between two.
+     */
+    const chosen = live.sort((a, b) => Number(b.Id ?? 0) - Number(a.Id ?? 0))[0];
+    if (live.length > 1) {
+      console.warn(
+        `[findQBInvoiceByDocNumber] "${docNumber}" has ${live.length} live invoices in QuickBooks — ` +
+          `adopting the newest (${String(chosen.Id)}). The others are pre-existing duplicates.`
+      );
+    }
+
+    // No SyncToken means we cannot safely update: QuickBooks rejects a stale or
+    // absent token with fault 5010. Better to not adopt than to fail the sync.
+    if (chosen.SyncToken == null || !chosen.Id) return null;
+
+    return {
+      id: String(chosen.Id),
+      syncToken: String(chosen.SyncToken),
+      customerId:
+        (chosen.CustomerRef as Record<string, unknown> | undefined)?.value != null
+          ? String((chosen.CustomerRef as Record<string, unknown>).value)
+          : null,
+    };
+  } catch (e) {
+    console.warn('[findQBInvoiceByDocNumber] threw — treating as not found:', e);
+    return null;
+  }
+}
+
 async function syncToQuickBooks(
   accessToken: string,
   realmId: string,
@@ -1670,10 +1772,49 @@ async function syncToQuickBooks(
     }
   }
 
-  const isUpdate = Boolean(existingQbId && syncToken !== null);
+  /*
+   * ELE-1730 — nothing stored locally, so ASK QUICKBOOKS before creating.
+   *
+   * `existingQbId` is only ever our own record of a previous sync. Mark
+   * Glowacki's June invoices carry none — they never got an id back — so this
+   * function went straight to create on every resend and duplicated them in his
+   * books each time. Looking the number up makes the sync idempotent regardless
+   * of what we stored.
+   *
+   * Only adopted when the CUSTOMER matches too. A bare DocNumber match could be
+   * an unrelated invoice in a company that uses its own numbering, and updating
+   * a stranger's invoice is far worse than creating a duplicate. Where the
+   * customer differs we leave it alone and the existing 6140 auto-numbering
+   * fallback handles it, exactly as before.
+   */
+  let adoptedQbId: string | null = existingQbId;
+  let adoptedSyncToken: string | null = syncToken;
 
+  if (!adoptedQbId && invoice.invoiceNumber) {
+    const match = await findQBInvoiceByDocNumber(accessToken, realmId, invoice.invoiceNumber);
+    if (match && match.customerId && match.customerId === customerId) {
+      adoptedQbId = match.id;
+      adoptedSyncToken = match.syncToken;
+      console.log(
+        `Adopting existing QuickBooks invoice ${match.id} for DocNumber "${invoice.invoiceNumber}" ` +
+          `(no external id stored locally) — updating instead of creating a duplicate`
+      );
+    } else if (match) {
+      console.warn(
+        `DocNumber "${invoice.invoiceNumber}" already exists in QuickBooks as ${match.id} but for a ` +
+          `different customer (${match.customerId} vs ${customerId}) — not adopting`
+      );
+    }
+  }
+
+  const isUpdate = Boolean(adoptedQbId && adoptedSyncToken !== null);
+
+  // Reads the adopted id at CALL time, not at definition time, so an invoice
+  // adopted late (see the 6140 handler) is updated rather than duplicated.
   const buildInvoicePayload = (includeDocNumber: boolean) => ({
-    ...(isUpdate ? { Id: existingQbId, SyncToken: syncToken, sparse: true } : {}),
+    ...(adoptedQbId && adoptedSyncToken !== null
+      ? { Id: adoptedQbId, SyncToken: adoptedSyncToken, sparse: true }
+      : {}),
     CustomerRef: { value: customerId },
     // Net lines + QuickBooks adds VAT on top (UK). Only set when we resolved a
     // tax code, so US Automated-Sales-Tax companies are untouched. ELE-1235.
@@ -1731,8 +1872,46 @@ async function syncToQuickBooks(
      * it should surface, not silently branch.
      */
     if (isDuplicateDocNumber && invoice.invoiceNumber && !isUpdate) {
+      /*
+       * ELE-1730 — 6140 means QuickBooks ALREADY HAS this number. Ask once more
+       * who owns it before minting a second invoice.
+       *
+       * The pre-create lookup above returns null on any failure, so a rate
+       * limit or a five-second blip lands here with nothing adopted — and the
+       * old answer was to auto-number, producing exactly the duplicate this
+       * ticket exists to stop, wearing a number the electrician never chose.
+       * QuickBooks has just told us the number is taken; that is the moment to
+       * check rather than guess.
+       */
+      const lateMatch = await findQBInvoiceByDocNumber(
+        accessToken,
+        realmId,
+        invoice.invoiceNumber
+      );
+      if (lateMatch && lateMatch.customerId && lateMatch.customerId === customerId) {
+        adoptedQbId = lateMatch.id;
+        adoptedSyncToken = lateMatch.syncToken;
+        console.log(
+          `Duplicate DocNumber "${invoice.invoiceNumber}" resolved to our own invoice ` +
+            `${lateMatch.id} — updating it instead of auto-numbering a duplicate`
+        );
+        const adoptResponse = await postInvoice(buildInvoicePayload(true));
+        if (!adoptResponse.ok) {
+          const adoptErrorText = await adoptResponse.text();
+          console.error('QuickBooks adopt-and-update failed:', adoptResponse.status, adoptErrorText);
+          throw new ExternalAPIError('QuickBooks', {
+            status: adoptResponse.status,
+            error: adoptErrorText,
+          });
+        }
+        // Fall through to the shared tail below, exactly as the auto-number
+        // retry does — it reads the id and url off `response`.
+        response = adoptResponse;
+      }
+
       console.log(
-        `Duplicate DocNumber "${invoice.invoiceNumber}" — retrying with QuickBooks auto-numbering`
+        `Duplicate DocNumber "${invoice.invoiceNumber}" belongs to another customer or could not ` +
+          `be resolved — retrying with QuickBooks auto-numbering`
       );
       const retryResponse = await postInvoice(buildInvoicePayload(false));
       if (!retryResponse.ok) {

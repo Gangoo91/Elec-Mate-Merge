@@ -266,6 +266,9 @@ const ProjectsPage = () => {
       list = list.filter(
         (p) =>
           p.title.toLowerCase().includes(q) ||
+          // ELE-1727 — the whole point of a job number is being able to quote it
+          // back. "JOB-014", "job-014" and plain "14" all have to find it.
+          (p.jobNumber || '').toLowerCase().includes(q) ||
           (p.customerName || '').toLowerCase().includes(q) ||
           (p.location || '').toLowerCase().includes(q)
       );
@@ -939,8 +942,18 @@ const ProjectsPage = () => {
                               >
                                 {project.title}
                               </h3>
-                              {(project.customerName || project.location) && (
+                              {(project.jobNumber ||
+                                project.customerName ||
+                                project.location) && (
                                 <p className="mt-0.5 text-[12.5px] text-white/50 truncate leading-snug">
+                                  {project.jobNumber && (
+                                    <span className="font-semibold tabular-nums text-white/70">
+                                      {project.jobNumber}
+                                    </span>
+                                  )}
+                                  {project.jobNumber &&
+                                    (project.customerName || project.location) &&
+                                    ' · '}
                                   {[project.customerName, project.location]
                                     .filter(Boolean)
                                     .join(' · ')}

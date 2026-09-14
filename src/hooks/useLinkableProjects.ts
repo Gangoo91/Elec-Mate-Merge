@@ -3,6 +3,8 @@ import { supabase } from '@/integrations/supabase/client';
 
 export interface LinkableProject {
   id: string;
+  /** ELE-1727. Titles repeat ("Job — John Smith"); the reference does not. */
+  jobNumber: string | null;
   title: string;
   customerId: string | null;
   location: string | null;
@@ -30,7 +32,7 @@ export function useLinkableProjects(enabled = true) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase as any)
         .from('spark_projects')
-        .select('id, title, customer_id, location, status, updated_at')
+        .select('id, job_number, title, customer_id, location, status, updated_at')
         .eq('user_id', user.id)
         .not('status', 'in', '("completed","cancelled")')
         .order('updated_at', { ascending: false })
@@ -40,6 +42,7 @@ export function useLinkableProjects(enabled = true) {
 
       return ((data ?? []) as Array<Record<string, unknown>>).map((row) => ({
         id: row.id as string,
+        jobNumber: (row.job_number as string | null) ?? null,
         title: (row.title as string) ?? 'Untitled project',
         customerId: (row.customer_id as string | null) ?? null,
         location: (row.location as string | null) ?? null,

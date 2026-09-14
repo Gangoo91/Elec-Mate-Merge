@@ -6,6 +6,7 @@ import EICScheduleOfTesting from './EICScheduleOfTesting';
 import EICDeclarations from './EICDeclarations';
 import EICCertificateTab from './EICCertificateTab';
 import EICObservationsSection from './EICObservationsSection';
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
 import { EICObservation } from '@/hooks/useEICObservations';
 
 interface EICTabContentProps {
@@ -78,6 +79,13 @@ const EICTabContent: React.FC<EICTabContentProps> = ({
             onRemoveObservation={observationsProps.onRemoveObservation}
             onSyncToInspectionItem={observationsProps.onSyncToInspectionItem}
             className="mt-6"
+          />
+          {/* ELE-1729 — photos of the installation as found, including any
+              already taken against the job. */}
+          <SitePhotosSection
+            reportId={observationsProps.reportId}
+            reportType="eic"
+            customerId={formData.customerId}
           />
         </div>
       );

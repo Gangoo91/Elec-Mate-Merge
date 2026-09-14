@@ -48,6 +48,8 @@ interface PATTestingFormTabsProps {
   onCopyApplianceData: (data: Partial<Appliance>) => void;
 }
 
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
+
 const TAB_ORDER: PATTestingTabValue[] = ['client', 'appliances', 'declarations'];
 
 const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
@@ -84,7 +86,14 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
         onCopyApplianceData={onCopyApplianceData}
       />
     ),
-    declarations: <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />,
+    declarations: (
+      <div className="space-y-4">
+        <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />
+        {/* ELE-1729 — PAT has no inspection schedule, so evidence photos sit
+            with the declarations at the end of the run. */}
+        <SitePhotosSection reportId={reportId} reportType="pat-testing" />
+      </div>
+    ),
   };
 
   const isLast = currentTab === 'declarations';

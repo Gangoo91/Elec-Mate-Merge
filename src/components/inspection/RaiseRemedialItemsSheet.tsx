@@ -197,7 +197,12 @@ const RaiseRemedialItemsSheet = ({
                               : 'bg-white/[0.03] hover:bg-white/[0.06]'
                           )}
                         >
-                          <span className="flex-1 truncate text-[14px] font-medium text-white">
+                          <span className="min-w-0 flex-1 truncate text-[14px] font-medium text-white">
+                            {p.jobNumber && (
+                              <span className="mr-2 font-semibold tabular-nums text-white/60">
+                                {p.jobNumber}
+                              </span>
+                            )}
                             {p.title}
                           </span>
                           {chosenProjectId === p.id && (

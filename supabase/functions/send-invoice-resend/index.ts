@@ -561,12 +561,16 @@ const handler = async (req: Request): Promise<Response> => {
       html: string;
       text?: string;
       attachments?: Array<{ filename: string; content: string }>;
+      log?: { template: string; entityId?: string | null; userId?: string | null };
     } = {
       ...sender,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
       text: htmlToPlainText(emailHtml),
+      // ELE-1731 — this is the button Mark Glowacki presses, and the one his
+      // customer says never arrives. Record it so the question is answerable.
+      log: { template: 'invoice_send', entityId: invoiceId, userId: invoice?.user_id ?? null },
     };
 
     if (pdfAttachmentSuccess && pdfBase64) {

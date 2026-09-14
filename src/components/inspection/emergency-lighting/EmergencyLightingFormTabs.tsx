@@ -43,6 +43,8 @@ interface EmergencyLightingFormTabsProps {
   canGenerateCertificate?: boolean;
 }
 
+import { SitePhotosSection } from '@/components/inspection/site-photos/SitePhotosSection';
+
 const TAB_ORDER: EmergencyLightingTabValue[] = [
   'installation',
   'luminaires',
@@ -67,7 +69,16 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
   const content: Record<EmergencyLightingTabValue, React.ReactNode> = {
     installation: <EmergencyLightingInstallationDetails formData={formData} onUpdate={onUpdate} />,
     luminaires: <EmergencyLightingLuminaireSchedule formData={formData} onUpdate={onUpdate} />,
-    testing: <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />,
+    testing: (
+      <div className="space-y-4">
+        <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />
+        {/* ELE-1729 */}
+        <SitePhotosSection
+          reportId={tabNavigationProps.reportId}
+          reportType="emergency-lighting"
+        />
+      </div>
+    ),
     declarations: <EmergencyLightingDeclarations formData={formData} onUpdate={onUpdate} />,
   };
 
